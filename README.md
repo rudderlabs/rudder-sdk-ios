@@ -11,10 +11,6 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Installation
 
 RudderSDKCore is available through [CocoaPods](https://cocoapods.org). To install
