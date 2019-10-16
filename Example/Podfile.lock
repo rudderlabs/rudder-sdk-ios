@@ -1,0 +1,16 @@
+PODS:
+  - RudderSDKCore (0.1.0)
+
+DEPENDENCIES:
+  - RudderSDKCore (from `../`)
+
+EXTERNAL SOURCES:
+  RudderSDKCore:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  RudderSDKCore: 34d3d78d2261facc950ddc3d43b431c26bfe26b8
+
+PODFILE CHECKSUM: df81960089721832df97d3f1c97fad3454f1bdeb
+
+COCOAPODS: 1.8.3

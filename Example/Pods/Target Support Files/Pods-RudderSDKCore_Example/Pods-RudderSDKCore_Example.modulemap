@@ -1,0 +1,6 @@
+framework module Pods_RudderSDKCore_Example {
+  umbrella header "Pods-RudderSDKCore_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module Pods_RudderSDKCore_Tests {
+  umbrella header "Pods-RudderSDKCore_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
