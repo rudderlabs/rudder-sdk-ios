@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class RudderClient: NSObject {
+@objcMembers public class RudderClient: NSObject {
     
     private static var instance: RudderClient? = nil;
     private var repository: EventRepository? = nil
@@ -25,7 +25,7 @@ public class RudderClient: NSObject {
     /*
      * API for getting instance of RudderClient with writeKey (bare minimum)
      * */
-    public static func getInstance(writeKey: String) -> RudderClient {
+    @objc public static func getInstance(writeKey: String) -> RudderClient {
         return getInstance(writeKey: writeKey, config: RudderConfig())
     }
     
@@ -171,21 +171,21 @@ public class RudderClient: NSObject {
     /*
      * method for `identify` messages
      * */
-    public func identify(message: RudderMessage) {
+    @objc public func identify(message: RudderMessage) {
         
     }
     
-    public func identify(builder: RudderMessageBuilder) {
+    @objc public func identify(builder: RudderMessageBuilder) {
         
     }
     
-    public func identify(traits: RudderTraits, options: AnyCodable) {
+    @objc public func identify(traits: RudderTraits, options: AnyCodable) {
         
     }
     
-    public func identify(builder: RudderTraitsBuilder) {
+    //public func identify(builder: RudderTraitsBuilder) {
         
-    }
+    //}
     
     public func identify(userId: String) {
         

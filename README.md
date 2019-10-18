@@ -18,7 +18,7 @@ RudderSDKCore is available through [CocoaPods](https://cocoapods.org).
 To install it, simply add the following line to your Podfile:
 
 ```xcode
-pod 'RudderSDKCore'
+pod 'RudderSDKCore', :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git', :branch => 'swift-fix-for-objective-c'
 ```
 
 In case you do not have CocoaPods installed, you can install the same using the following command

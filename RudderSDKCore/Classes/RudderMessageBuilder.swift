@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public class RudderMessageBuilder : NSObject {
+@objcMembers public class RudderMessageBuilder : NSObject {
     @objc public override init() {
         
     }

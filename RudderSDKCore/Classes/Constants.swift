@@ -13,7 +13,7 @@ import Foundation
  * */
 class Constants {
     // default base url or rudder-backend-server
-    static let BASE_URL: String = "https://api.rudderlabs.com"
+    static let BASE_URL: String = "http://10.24.20.122:8080"
     // default flush queue size for the events to be flushed to server
     static let FLUSH_QUEUE_SIZE: Int32 = 30
     // default threshold of number of events to be persisted in sqlite db

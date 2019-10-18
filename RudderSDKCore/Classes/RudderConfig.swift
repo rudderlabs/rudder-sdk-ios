@@ -8,7 +8,8 @@
 
 import Foundation
 
-open class RudderConfig {
+@objcMembers
+public class RudderConfig : NSObject {
     private var endpointUrl: String
     private var flushQueueSize: Int32
     private var dbCountThreshold: Int32
@@ -16,7 +17,7 @@ open class RudderConfig {
     private var logLevel: Int
     private var factories: [RudderIntegration<Any>.Factory]
     
-    init() {
+    @objc override init() {
         self.endpointUrl = Constants.BASE_URL
         self.flushQueueSize = Constants.FLUSH_QUEUE_SIZE
         self.dbCountThreshold = Constants.DB_COUNT_THRESHOLD
@@ -87,8 +88,8 @@ open class RudderConfig {
         return self.factories
     }
     
-    public class Builder {
-        public init() {
+    @objcMembers public class Builder : NSObject {
+        @objc public override init() {
             
         }
         
@@ -106,7 +107,7 @@ open class RudderConfig {
         
         private var endPointUrl: String = Constants.BASE_URL
         
-        public func withEndPointUrl(endPointUrl: String) -> Builder {
+        @objc public func withEndPointUrl(endPointUrl: String) -> Builder {
             self.endPointUrl = endPointUrl
             return self
         }
