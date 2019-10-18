@@ -27,7 +27,7 @@ Rudder is a platform for collecting, storing and routing customer event data to 
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Rudderlabs' => 'arnab@rudderlabs.com' }
-  s.source           = { :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
