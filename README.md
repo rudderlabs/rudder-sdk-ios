@@ -13,12 +13,61 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Installation
 
-RudderSDKCore is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+RudderSDKCore is available through [CocoaPods](https://cocoapods.org). 
 
-```ruby
+To install it, simply add the following line to your Podfile:
+
+```xcode
 pod 'RudderSDKCore'
 ```
+
+In case you do not have CocoaPods installed, you can install the same using the following command
+
+
+```xcode
+sudo gem install cocoapods
+```
+
+
+Following are some URLs providing instructions regarding usage of Swift Pod Frameworks in Objective-C
+
+https://medium.com/@anum.amin/swift-pod-library-in-objective-c-project-c6d1c5af997d
+
+https://stackoverflow.com/questions/27995691/how-to-import-and-use-swift-pod-framework-in-objective-c-project
+
+Remember to include the following code in all .m files where you want to use Swift classes from the SDK
+
+```xcode
+
+@import RudderSDKCore;
+
+```
+
+Following are few sample usages of the SDK (code to be included in .m files)
+
+
+```xcode
+   RudderClient *client 
+	= [RudderClient getInstanceWithWriteKey:@"1SN4NTGwxMoR2PLhl9TlLpErpge"];
+
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder withEventNameWithEventName:@"Objective-C Test"];
+    RudderMessage *message = [builder build];
+    
+    [client trackWithMessage:message];
+
+```
+```xcode
+    RudderClient *client 
+	= [RudderClient getInstanceWithWriteKey:@"1SN4NTGwxMoR2PLhl9TlLpErpge"];
+    
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder withEventNameWithEventName:@"Start Game"];
+    RudderMessage *message = [builder build];
+    
+    [client trackWithMessage:message];
+```
+
 
 # Coming Soon
 
