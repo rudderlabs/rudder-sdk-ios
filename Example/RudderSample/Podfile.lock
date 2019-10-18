@@ -1,0 +1,22 @@
+PODS:
+  - RudderSDKCore (0.1.0)
+
+DEPENDENCIES:
+  - RudderSDKCore (from `https://github.com/rudderlabs/rudder-sdk-ios.git`, branch `objective-c-src-code`)
+
+EXTERNAL SOURCES:
+  RudderSDKCore:
+    :branch: objective-c-src-code
+    :git: https://github.com/rudderlabs/rudder-sdk-ios.git
+
+CHECKOUT OPTIONS:
+  RudderSDKCore:
+    :commit: fef8cc18eb70a9d21717471552948abc1b8755b2
+    :git: https://github.com/rudderlabs/rudder-sdk-ios.git
+
+SPEC CHECKSUMS:
+  RudderSDKCore: 88f704e2866bed1beef68a49d86a16b3b8da6672
+
+PODFILE CHECKSUM: a9ac1b00d25c4fada9ba6abcbf4f79c7e2857ec3
+
+COCOAPODS: 1.8.3
