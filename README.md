@@ -32,44 +32,30 @@ Remember to include the following code in all .m files where you want to use
 Rudder SDK classes
 
 ```xcode
-
 #import "RudderSDKCore.h"
-
 ```
 
 Following are few sample usages of the SDK (code to be included in .m files)
 
 
 ```xcode
-
 RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-    
-    [rudderConfigBuilder withEndPointUrl:@"http://10.24.20.122:8080"];
-    
-    
-    RudderClient *client = [RudderClient getInstance:@"1SN4NTGwxMoR2PLhl9TlLpErpge" config: [rudderConfigBuilder build]];
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-    [builder setEventName:@"Objective-C SDK"];
-    RudderMessage *message = [builder build];
-    
-    [client track:message];
-
+[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];
+RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];
+RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+[builder setEventName:@"Objective-C SDK"];
+RudderMessage *message = [builder build];    
+[client track:message];
 ```
 
 ```xcode
-
 RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-    
-    [rudderConfigBuilder withEndPointUrl:@"http://10.24.20.122:8080"];
-    
-    
-    RudderClient *client = [RudderClient getInstance:@"1SN4NTGwxMoR2PLhl9TlLpErpge" config: [rudderConfigBuilder build]];
-    
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-    [builder setEventName:@"Start Game using Objective-C SDK"];
-    RudderMessage *message = [builder build];
-    
-    [client track:message];
+[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];    
+RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];    
+RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+[builder setEventName:@"Start Game using Objective-C SDK"];
+RudderMessage *message = [builder build];
+[client track:message];
 ```
 
 # Coming Soon
