@@ -16,7 +16,7 @@
         _endPointUrl = @"https://api.rudderlabs.com";
         _flushQueueSize = 30;
         _dbCountThreshold = 10000;
-        _sleepTimeout = 2;
+        _sleepTimeout = 10;
         _logLevel = 4;
     }
     return self;
