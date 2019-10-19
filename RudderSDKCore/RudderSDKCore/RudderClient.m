@@ -8,6 +8,7 @@
 
 #import "RudderClient.h"
 #import "EventRepository.h"
+#import "RudderMessageBuilder.h"
 
 static RudderClient *_instance = nil;
 static EventRepository *_repository = nil;
@@ -33,12 +34,35 @@ static EventRepository *_repository = nil;
     return _instance;
 }
 
-- (void) track:(RudderMessage *)message {
+- (void)trackMessage:(RudderMessage *)message {
     if (_repository != nil && message != nil) {
         message.type = @"track";
         [_repository dump:message];
     }
 }
+
+- (void)track:(NSString *)eventName {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:eventName];
+    [self trackMessage:[builder build]];
+}
+
+- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:eventName];
+    [builder setPropertyDict:properties];
+    [self trackMessage:[builder build]];
+}
+
+- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RudderOption *)options {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:eventName];
+    [builder setPropertyDict:properties];
+    [builder setRudderOption:options];
+    [self trackMessage:[builder build]];
+}
+
+
 
 - (void) screen:(RudderMessage *)message {
     if (_repository != nil && message != nil) {

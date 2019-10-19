@@ -6,7 +6,6 @@
 //  Copyright © 2019 Rudderlabs. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "RudderClient.h"
 #import "RudderConfig.h"
 #import "RudderConfigBuilder.h"

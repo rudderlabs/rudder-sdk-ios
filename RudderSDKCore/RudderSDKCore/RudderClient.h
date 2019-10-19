@@ -10,6 +10,7 @@
 #import "RudderConfig.h"
 #import "RudderConfigBuilder.h"
 #import "RudderMessage.h"
+#import "RudderOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) getInstance:(NSString*) writeKey config:(RudderConfig*) config;
 + (instancetype) getInstance:(NSString*) writeKey builder:(RudderConfigBuilder*) builder;
 
-- (void) track:(RudderMessage*) message;
+- (void) trackMessage:(RudderMessage*) message;
+- (void) track: (NSString*) eventName;
+- (void) track: (NSString*) eventName properties: (NSDictionary<NSString*, NSObject*>*) properties;
+- (void) track: (NSString *) eventName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *) options;
 
 - (void) screen:(RudderMessage*) message;
 
