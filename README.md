@@ -17,10 +17,6 @@ To install it, simply add the following line to your Podfile:
 ```xcode
 pod 'RudderSDKCore', :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git', :branch => 'objective-c-src-code'
 ```
-In case you do not have CocoaPods installed, you can install the same using the following command
-```xcode
-sudo gem install cocoapods
-```
 Remember to include the following code in all .m files where you want to use Rudder SDK classes
 ```xcode
 #import "RudderSDKCore.h"
