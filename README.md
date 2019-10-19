@@ -58,6 +58,44 @@ RudderMessage *message = [builder build];
 [client track:message];
 ```
 
+## Initialize Client
+Declare RudderClient as a ```property``` in your ```AppDelegate.h``` file
+```xcode
+@property (nonatomic) RudderClient *rudderClient;
+```
+Now initialize ```RudderClient```
+Put this code in your ```AppDelegate.m``` file under ```didFinishLaunchingWithOptions``` method
+```xcode
+RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
+[builder withEndPointUrl:YOUR_DATA_PLANE_URL];
+self.rudderClient = [RudderClient getInstance:YOUR_WRITE_KEY config:[builder build]];
+```
+
+## Sending Events
+Track events by creating a ```RudderMessage``` using ```RudderMessageBuilder```
+```xcode
+// create properties for the event you want to track
+NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
+[property setValue:@"test_value_1" forKey:@"test_key_1"];
+[property setValue:@"test_value_2" forKey:@"test_key_2"];
+
+// create builder
+RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+[builder setEventName:@"test_event_name"];
+[builder setPropertyDict:property];
+[builder setUserId:userId];
+
+// track event
+[self.rudderClient trackMessage:[builder build]];
+```
+OR
+Send events in Segment compatible way
+```xcode
+[self.rudderClient track:@"test_event_only_name"];
+
+[self.rudderClient track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
+```
+
 # Coming Soon
 
 1. Native platform SDK integration support
