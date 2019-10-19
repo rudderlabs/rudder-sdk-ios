@@ -12,50 +12,53 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Installation
-
 RudderSDKCore is available through [CocoaPods](https://cocoapods.org). 
-
 To install it, simply add the following line to your Podfile:
-
 ```xcode
 pod 'RudderSDKCore', :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git', :branch => 'objective-c-src-code'
 ```
-
-In case you do not have CocoaPods installed, you can install the same using the following command
-
-
-```xcode
-sudo gem install cocoapods
-```
-
-Remember to include the following code in all .m files where you want to use 
-Rudder SDK classes
-
+Remember to include the following code in all .m and .h files where you want to refer to or use Rudder SDK classes
 ```xcode
 #import "RudderSDKCore.h"
 ```
 
-Following are few sample usages of the SDK (code to be included in .m files)
-
+## Initialize Client
+Declare RudderClient as a ```property``` in the  ```.h``` file containing your class definition
+```xcode
+@property (nonatomic) RudderClient *rudderClient;
+```
+Now initialize ```RudderClient```
+Put this code in all your ```.m``` files where you want to use Ruder SDK
 
 ```xcode
-RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];
-RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];
-RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-[builder setEventName:@"Objective-C SDK"];
-RudderMessage *message = [builder build];    
-[client track:message];
+RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
+[builder withEndPointUrl:YOUR_DATA_PLANE_URL];
+self.rudderClient = [RudderClient getInstance:YOUR_WRITE_KEY config:[builder build]];
 ```
 
+## Sending Events
+Track events by creating a ```RudderMessage``` using ```RudderMessageBuilder```
 ```xcode
-RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];    
-RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];    
+// create properties for the event you want to track
+NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
+[property setValue:@"test_value_1" forKey:@"test_key_1"];
+[property setValue:@"test_value_2" forKey:@"test_key_2"];
+
+// create builder
 RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-[builder setEventName:@"Start Game using Objective-C SDK"];
-RudderMessage *message = [builder build];
-[client track:message];
+[builder setEventName:@"test_event_name"];
+[builder setPropertyDict:property];
+[builder setUserId:userId];
+
+// track event
+[self.rudderClient trackMessage:[builder build]];
+```
+OR
+Send events in Segment compatible way
+```xcode
+[self.rudderClient track:@"test_event_only_name"];
+
+[self.rudderClient track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
 ```
 
 # Coming Soon
