@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) page:(RudderMessage*) message;
 
-+ (instancetype _Nullable) sharedAnalytics;
++ (instancetype _Nullable) sharedInstance;
 
 @end
 

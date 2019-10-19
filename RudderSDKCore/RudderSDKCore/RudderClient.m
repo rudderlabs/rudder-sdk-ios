@@ -91,7 +91,7 @@ static EventRepository *_repository = nil;
     }
 }
 
-+ (instancetype)sharedAnalytics {
++ (instancetype)sharedInstance {
     return _instance;
 }
 
