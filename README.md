@@ -23,19 +23,15 @@ Remember to include the following code in all .m and .h files where you want to 
 ```
 
 ## Initialize Client
-Declare RudderClient as a ```property``` in the  ```.h``` file containing your class definition
-```xcode
-@property (nonatomic) RudderClient *rudderClient;
-```
 Now initialize ```RudderClient```
-Put this code in all your ```.m``` files where you want to use Ruder SDK
+Put this code in your ```AppDelegate.m``` file under the method ```didFinishLaunchingWithOptions```
 
 ```xcode
 RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
 [builder withEndPointUrl:YOUR_DATA_PLANE_URL];
-self.rudderClient = [RudderClient getInstance:YOUR_WRITE_KEY config:[builder build]];
+[RudderClient getInstance:YOUR_WRITE_KEY config:[builder build]];
 ```
-
+A shared instance of ```RudderClient``` is accesible after the initialization by ```[RudderClient sharedInstance]```
 ## Sending Events
 Track events by creating a ```RudderMessage``` using ```RudderMessageBuilder```
 ```xcode
@@ -51,14 +47,14 @@ RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
 [builder setUserId:userId];
 
 // track event
-[self.rudderClient trackMessage:[builder build]];
+[[RudderClient sharedInstance] trackMessage:[builder build]];
 ```
 OR
 Send events in Segment compatible way
 ```xcode
-[self.rudderClient track:@"test_event_only_name"];
+[[RudderClient sharedInstance] track:@"test_event_only_name"];
 
-[self.rudderClient track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
+[[RudderClient sharedInstance] track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
 ```
 
 # Coming Soon
