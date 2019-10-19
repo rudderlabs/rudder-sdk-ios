@@ -41,6 +41,10 @@ static EventRepository *_repository = nil;
     }
 }
 
+- (void)trackWithBuilder:(RudderMessageBuilder *)builder{
+    [self trackMessage:[builder build]];
+}
+
 - (void)track:(NSString *)eventName {
     RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
     [builder setEventName:eventName];
@@ -62,13 +66,15 @@ static EventRepository *_repository = nil;
     [self trackMessage:[builder build]];
 }
 
-
-
-- (void) screen:(RudderMessage *)message {
+- (void) screenWithMessage:(RudderMessage *)message {
     if (_repository != nil && message != nil) {
         message.type = @"screen";
         [_repository dump:message];
     }
+}
+
+- (void)screenWithBuilder:(RudderMessageBuilder *)builder {
+    [self screenWithMessage:[builder build]];
 }
 
 - (void) page:(RudderMessage *)message {
@@ -78,11 +84,15 @@ static EventRepository *_repository = nil;
     }
 }
 
-- (void) identify:(RudderMessage *)message {
+- (void) identifyWithMessage:(RudderMessage *)message {
     if (_repository != nil && message != nil) {
         message.type = @"identify";
         [_repository dump:message];
     }
+}
+
++ (instancetype)sharedAnalytics {
+    return _instance;
 }
 
 @end
