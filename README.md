@@ -23,12 +23,13 @@ Remember to include the following code in all .m files where you want to use Rud
 ```
 
 ## Initialize Client
-Declare RudderClient as a ```property``` in your ```AppDelegate.h``` file
+Declare RudderClient as a ```property``` in the  ```.h``` file containing your class definition
 ```xcode
 @property (nonatomic) RudderClient *rudderClient;
 ```
 Now initialize ```RudderClient```
-Put this code in your ```AppDelegate.m``` file under ```didFinishLaunchingWithOptions``` method
+Put this code in all your ```.m``` files where you want to use Ruder SDK
+
 ```xcode
 RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
 [builder withEndPointUrl:YOUR_DATA_PLANE_URL];
