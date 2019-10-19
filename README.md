@@ -12,50 +12,18 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Installation
-
 RudderSDKCore is available through [CocoaPods](https://cocoapods.org). 
-
 To install it, simply add the following line to your Podfile:
-
 ```xcode
 pod 'RudderSDKCore', :git => 'https://github.com/rudderlabs/rudder-sdk-ios.git', :branch => 'objective-c-src-code'
 ```
-
 In case you do not have CocoaPods installed, you can install the same using the following command
-
-
 ```xcode
 sudo gem install cocoapods
 ```
-
-Remember to include the following code in all .m files where you want to use 
-Rudder SDK classes
-
+Remember to include the following code in all .m files where you want to use Rudder SDK classes
 ```xcode
 #import "RudderSDKCore.h"
-```
-
-Following are few sample usages of the SDK (code to be included in .m files)
-
-
-```xcode
-RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];
-RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];
-RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-[builder setEventName:@"Objective-C SDK"];
-RudderMessage *message = [builder build];    
-[client track:message];
-```
-
-```xcode
-RudderConfigBuilder *rudderConfigBuilder = [[RudderConfigBuilder alloc] init];
-[rudderConfigBuilder withEndPointUrl:@"http://dataplaneurl.com"];    
-RudderClient *client = [RudderClient getInstance:@"YOUR_WRITE_KEY" config: [rudderConfigBuilder build]];    
-RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-[builder setEventName:@"Start Game using Objective-C SDK"];
-RudderMessage *message = [builder build];
-[client track:message];
 ```
 
 ## Initialize Client
