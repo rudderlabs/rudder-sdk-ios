@@ -10,10 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderProperty : NSObject
+@interface RudderProperty : NSObject {
+    NSMutableDictionary<NSString*, NSObject*>* propertyDict;
+}
 
-@property (nonatomic, readwrite) NSDictionary<NSString*, NSObject*>* propertyDict;
-
+- (NSDictionary<NSString*, NSObject*>* _Nullable) getPropertyDict;
+- (BOOL) hasProperty: (NSString*) key;
+- (NSObject* _Nullable) getProperty: (NSString*) key;
+- (void) put: (NSString*) key value:(NSObject*) value;
+- (instancetype) putValue: (NSString*) key value:(NSObject*) value;
+-(instancetype) putValue: (NSDictionary*) dictValue;
+-(void) putRevenue: (double) revenue;
+-(void) putCurrency: (NSString*) currency;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*) __getPayloadFromMessages: (NSArray*) messages;
 - (NSString*) __flushEventsToServer: (NSString*) payload;
 
+- (RudderConfig* _Nullable) getConfig;
+
 @end
 
 NS_ASSUME_NONNULL_END

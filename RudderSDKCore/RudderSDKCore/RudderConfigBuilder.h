@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withFlushQueueSize: (int) flushQueueSize;
 - (instancetype) withDebug: (BOOL) debug;
 - (instancetype) withLoglevel: (int) logLevel;
-- (instancetype) withDBThreshold: (int) dbThreshold;
+- (instancetype) withDBCountThreshold: (int) dbCountThreshold;
 - (instancetype) withSleepTimeOut: (int) sleepTimeOut;
 - (RudderConfig*) build;
 

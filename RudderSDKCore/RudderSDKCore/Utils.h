@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (long) getTimeStampLong;
 + (NSString*) getUniqueId;
 + (NSString*) getLocale;
++ (NSString*) getDateString: (NSDate*) date;
 
 @end
 

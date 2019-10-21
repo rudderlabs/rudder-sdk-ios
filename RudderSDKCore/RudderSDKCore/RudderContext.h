@@ -13,15 +13,14 @@
 #import "RudderScreenInfo.h"
 #import "RudderDeviceInfo.h"
 #import "RudderNetwork.h"
+#import "RudderTraits.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderContext : NSObject
 
-- (NSDictionary<NSString* , NSObject *>*) dict;
-
 @property (nonatomic, readwrite) RudderApp* app;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSObject *>* traits;
+@property (nonatomic, readwrite) RudderTraits *traits;
 @property (nonatomic, readwrite) RudderLibraryInfo* library;
 @property (nonatomic, readwrite) RudderOSInfo* os;
 @property (nonatomic, readwrite) RudderScreenInfo* screen;
@@ -30,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) RudderDeviceInfo* device;
 @property (nonatomic, readwrite) RudderNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
+
+- (NSDictionary<NSString* , NSObject *>*) dict;
+- (void) updateTraits: (RudderTraits*) traits;
 
 @end
 

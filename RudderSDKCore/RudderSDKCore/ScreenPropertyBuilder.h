@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RudderProperty.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ScreenPropertyBuilder : NSObject
+@interface ScreenPropertyBuilder : NSObject {
+    RudderProperty *property;
+}
+
+- (instancetype) setScreenName: (NSString*) screenName;
+- (RudderProperty*) build;
 
 @end
 

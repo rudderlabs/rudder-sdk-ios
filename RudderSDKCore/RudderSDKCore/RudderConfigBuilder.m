@@ -7,6 +7,7 @@
 //
 
 #import "RudderConfigBuilder.h"
+#import "RudderLogger.h"
 
 @implementation RudderConfigBuilder
 
@@ -27,26 +28,20 @@
 }
 
 - (instancetype) withDebug: (BOOL) debug {
-    if (config == nil) {
-        config = [[RudderConfig alloc] init];
-    }
-    config.logLevel = 5;
+    [RudderLogger initiate:5];
     return self;
 }
 
 - (instancetype) withLoglevel: (int) logLevel {
-    if (config == nil) {
-        config = [[RudderConfig alloc] init];
-    }
-    config.flushQueueSize = 5;
+    [RudderLogger initiate:logLevel];
     return self;
 }
 
-- (instancetype) withDBThreshold: (int) dbThreshold {
+- (instancetype) withDBCountThreshold: (int) dbCountThreshold {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
     }
-    config.dbCountThreshold = dbThreshold;
+    config.dbCountThreshold = dbCountThreshold;
     return self;
 }
 

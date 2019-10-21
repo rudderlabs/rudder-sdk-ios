@@ -158,4 +158,8 @@ static EventRepository* _instance;
     [self->integrations setValue:[NSNumber numberWithBool:YES] forKey:@"All"];
 }
 
+- (RudderConfig *)getConfig {
+    return self->config;
+}
+
 @end

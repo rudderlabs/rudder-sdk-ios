@@ -10,11 +10,15 @@
 
 @implementation Utils
 
-+ (NSString *)getTimestamp {
++ (NSString*) getDateString:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.timeZone = [[NSTimeZone alloc] initWithName:@"UTC"];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    return [dateFormatter stringFromDate:[[NSDate alloc] init]];
+    return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *)getTimestamp {
+    return [Utils getDateString:[[NSDate alloc] init]];
 }
 
 + (char *)getDBPath {

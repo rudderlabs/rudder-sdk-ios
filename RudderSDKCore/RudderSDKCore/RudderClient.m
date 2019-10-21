@@ -9,6 +9,7 @@
 #import "RudderClient.h"
 #import "EventRepository.h"
 #import "RudderMessageBuilder.h"
+#import "RudderElementCache.h"
 
 static RudderClient *_instance = nil;
 static EventRepository *_repository = nil;
@@ -77,7 +78,51 @@ static EventRepository *_repository = nil;
     [self screenWithMessage:[builder build]];
 }
 
-- (void) page:(RudderMessage *)message {
+- (void)screen:(NSString *)screenName {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
+    [property setValue:screenName forKey:@"name"];
+    [builder setEventName:screenName];
+    [builder setPropertyDict:property];
+    [self screenWithMessage:[builder build]];
+}
+
+- (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:screenName];
+    [builder setPropertyDict:properties];
+    [self screenWithBuilder:builder];
+}
+
+- (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RudderOption *)options {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:screenName];
+    [builder setPropertyDict:properties];
+    [builder setRudderOption:options];
+    [self screenWithBuilder:builder];
+}
+
+- (void)group:(NSString *)groupId{
+    
+}
+
+- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits {
+    
+}
+
+- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits options:(NSDictionary<NSString *,NSObject *> *)options {
+    
+}
+
+- (void)alias:(NSString *)newId {
+    
+}
+
+- (void)alias:(NSString *)newId options:(NSDictionary<NSString *,NSObject *> *)options {
+    
+}
+
+- (void) pageWithMessage:(RudderMessage *)message {
     if (_repository != nil && message != nil) {
         message.type = @"page";
         [_repository dump:message];
@@ -87,8 +132,61 @@ static EventRepository *_repository = nil;
 - (void) identifyWithMessage:(RudderMessage *)message {
     if (_repository != nil && message != nil) {
         message.type = @"identify";
+        NSString *userId = message.context.traits.userId;
+        if (userId != nil) {
+            message.userId = userId;
+        }
         [_repository dump:message];
     }
+}
+
+- (void)identifyWithBuilder:(RudderMessageBuilder *)builder {
+    [self identifyWithMessage:[builder build]];
+}
+
+- (void)identify:(NSString*)userId {
+    RudderTraits* traitsCopy = [[RudderTraits alloc] init];
+    [traitsCopy setUserId:userId];
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:@"identify"];
+    [builder setUserId:userId];
+    [builder setTraits:traitsCopy];
+    [self identifyWithMessage:[builder build]];
+}
+
+- (void)identify:(NSString *)userId traits:(RudderTraits *)traits {
+    [traits setUserId:userId];
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:@"identify"];
+    [builder setUserId:userId];
+    [builder setTraits:traits];
+    [self identifyWithMessage:[builder build]];
+}
+
+- (void)identify:(NSString *)userId traits:(RudderTraits *)traits options:(RudderOption *)options {
+    [traits setUserId:userId];
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setEventName:@"identify"];
+    [builder setUserId:userId];
+    [builder setTraits:traits];
+    [builder setRudderOption:options];
+    [self identifyWithMessage:[builder build]];
+}
+
+- (void)reset {
+    
+}
+
+- (NSString*)getAnonymousId {
+    // returns anonymousId
+    return [RudderElementCache getContext].device.identifier;
+}
+
+- (RudderConfig*)configuration {
+    if (_repository == nil) {
+        return nil;
+    }
+    return [_repository getConfig];
 }
 
 + (instancetype)sharedInstance {

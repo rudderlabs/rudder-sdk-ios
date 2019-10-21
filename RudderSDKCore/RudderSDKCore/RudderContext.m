@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         _app = [[RudderApp alloc] init];
-        _traits = [[NSMutableDictionary alloc] init];
+        _traits = [[RudderTraits alloc] init];
         _library = [[RudderLibraryInfo alloc] init];
         _os = [[RudderOSInfo alloc] init];
         _screen = [[RudderScreenInfo alloc] init];
@@ -31,10 +31,16 @@
     return self;
 }
 
+- (void)updateTraits:(RudderTraits *)traits {
+    if (traits != nil) {
+        self.traits = traits;
+    }
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
-    [tempDict setObject:_traits forKey:@"traits"];
+    [tempDict setObject:[_traits dict] forKey:@"traits"];
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];

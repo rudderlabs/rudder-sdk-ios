@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RudderContext*) getContext;
 
++ (void) updateTraits : (RudderTraits*) traits;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) setProperty: (RudderProperty*) property;
 - (instancetype) setUserProperty: (NSDictionary<NSString*, NSObject*>*) userProperty;
 - (instancetype) setRudderOption: (RudderOption*) option;
+- (instancetype) setTraits: (RudderTraits*) traits;
 
 - (RudderMessage*) build;
 

@@ -7,6 +7,7 @@
 //
 
 #import "RudderMessageBuilder.h"
+#import "RudderElementCache.h"
 
 @implementation RudderMessageBuilder
 
@@ -38,7 +39,7 @@
     if (message == nil) {
         message = [[RudderMessage alloc] init];
     }
-    message.properties = property.propertyDict;
+    message.properties = [property getPropertyDict];
     return self;
 }
 
@@ -55,6 +56,15 @@
         message = [[RudderMessage alloc] init];
     }
     
+    return self;
+}
+
+- (instancetype)setTraits:(RudderTraits *)traits {
+    [RudderElementCache updateTraits: traits];
+    if (message == nil) {
+        message = [[RudderMessage alloc] init];
+    }
+    [message updateTraits:traits];
     return self;
 }
 

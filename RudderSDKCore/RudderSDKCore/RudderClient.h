@@ -12,6 +12,7 @@
 #import "RudderMessage.h"
 #import "RudderOption.h"
 #import "RudderMessageBuilder.h"
+#import "RudderTraits.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) screenWithMessage:(RudderMessage*) message;
 - (void) screenWithBuilder:(RudderMessageBuilder*) builder;
 - (void) screen: (NSString*) screenName;
-- (void) screen: (NSString*) eventName properties: (NSDictionary<NSString*, NSObject*>*) properties;
-- (void) screen: (NSString *) eventName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *) options;
+- (void) screen: (NSString*) screenName properties: (NSDictionary<NSString*, NSObject*>*) properties;
+- (void) screen: (NSString *) screenName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *) options;
 
 - (void)group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits options:(NSDictionary<NSString*, NSObject*>*)options;
 - (void)group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits;
@@ -41,19 +42,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)alias:(NSString *)newId options:(NSDictionary<NSString*, NSObject*>*)options;
 - (void)alias:(NSString *)newId;
 
+- (void) pageWithMessage: (RudderMessage*) message;
+
 - (void) identifyWithMessage:(RudderMessage*) message;
 - (void) identifyWithBuilder:(RudderMessageBuilder*) builder;
-- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, NSObject*>*)traits options:(NSDictionary<NSString*, NSObject*>*)options;
-- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, NSObject*>*)traits;
+- (void)identify:(NSString *_Nullable)userId traits:(RudderTraits*)traits options:(RudderOption*)options;
+- (void)identify:(NSString *_Nullable)userId traits:(RudderTraits*)traits;
 - (void)identify:(NSString *_Nullable)userId;
 
 - (void)reset;
 
-- (NSString *)getAnonymousId;
+- (NSString* _Nullable)getAnonymousId;
 
-- (RudderConfig *)configuration;
-
-- (void) page:(RudderMessage*) message;
+- (RudderConfig* _Nullable)configuration;
 
 + (instancetype _Nullable) sharedInstance;
 

@@ -43,4 +43,16 @@
     
     return [tempDict copy];
 }
+
+- (void)updateContext:(RudderContext *)context {
+    if (context != nil) {
+        self.context = context;
+    }
+}
+
+- (void)updateTraits:(RudderTraits *)traits {
+    if (traits  != nil) {
+        self.context.traits = traits;
+    }
+}
 @end

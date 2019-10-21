@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderMessage : NSObject
 
-- (NSDictionary<NSString*, NSObject*>*) dict;
-
 @property (atomic, readwrite) NSString* messageId;
 @property (atomic, readwrite) NSString* channel;
 @property (atomic, readwrite) RudderContext* context;
@@ -28,6 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* userProperties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* integrations;
 @property (atomic, readwrite) NSString* destinationProps;
+
+- (NSDictionary<NSString*, NSObject*>*) dict;
+- (void) updateContext: (RudderContext*) context;
+- (void) updateTraits: (RudderTraits*) traits;
 
 @end
 

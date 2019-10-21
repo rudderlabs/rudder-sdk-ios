@@ -22,4 +22,8 @@ static RudderContext* context;
     return context;
 }
 
++ (void)updateTraits:(RudderTraits *)traits {
+    context.traits = traits;
+}
+
 @end
