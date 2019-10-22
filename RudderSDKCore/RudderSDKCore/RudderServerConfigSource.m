@@ -10,4 +10,17 @@
 
 @implementation RudderServerConfigSource
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.destinations = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (void)addDestination:(RudderServerDestination *)destination {
+    [self.destinations addObject:destination];
+}
+
 @end

@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol RudderIntegrationFactory;
+@class RudderConfig;
+
 @interface RudderConfigBuilder : NSObject  {
     RudderConfig *config;
 }
@@ -21,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withLoglevel: (int) logLevel;
 - (instancetype) withDBCountThreshold: (int) dbCountThreshold;
 - (instancetype) withSleepTimeOut: (int) sleepTimeOut;
+- (instancetype) withFactory: (id <RudderIntegrationFactory> _Nonnull) factory;
 - (RudderConfig*) build;
 
 @end

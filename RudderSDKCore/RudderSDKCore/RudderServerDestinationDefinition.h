@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderServerDestinationDefinition : NSObject
 
+@property (nonatomic, readwrite) NSString* definitionName;
+@property (nonatomic, readwrite) NSString* displayName;
+@property (nonatomic, readwrite) NSString* updatedAt;
+
 @end
 
 NS_ASSUME_NONNULL_END

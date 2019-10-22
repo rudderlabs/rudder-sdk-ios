@@ -16,10 +16,6 @@ static EventRepository *_repository = nil;
 
 @implementation RudderClient
 
-+ (instancetype) getInstance:(NSString *)writeKey builder:(RudderConfigBuilder *)builder {
-    return [RudderClient getInstance:writeKey config:[builder build]];
-}
-
 + (instancetype) getInstance:(NSString *)writeKey {
     return [RudderClient getInstance:writeKey config:[[RudderConfig alloc] init]];
 }

@@ -18,6 +18,7 @@
         _dbCountThreshold = 10000;
         _sleepTimeout = 10;
         _logLevel = 4;
+        _factories = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -32,6 +33,7 @@
         _dbCountThreshold = dbCountThreshold;
         _sleepTimeout = sleepTimeout;
         _logLevel = logLevel;
+        _factories = [[NSMutableArray alloc] init];
     }
     return self;
 }

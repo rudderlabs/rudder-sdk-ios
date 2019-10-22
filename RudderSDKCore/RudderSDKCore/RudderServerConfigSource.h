@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RudderServerDestination.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderServerConfigSource : NSObject
+@interface RudderServerConfigSource : NSObject 
+
+@property (nonatomic, readwrite) NSString *sourceId;
+@property (nonatomic, readwrite) NSString *sourceName;
+@property (nonatomic, readwrite) BOOL isSourceEnabled;
+@property (nonatomic, readwrite) NSString *updatedAt;
+@property (nonatomic, readwrite) NSMutableArray *destinations;
+
+- (void) addDestination: (RudderServerDestination*) destination;
 
 @end
 

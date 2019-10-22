@@ -18,10 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class RudderClient;
 
+@protocol RudderIntegrationFactory;
+@protocol RudderIntegration;
+@class RudderConfig;
+
 @interface RudderClient : NSObject
 + (instancetype) getInstance:(NSString*) writeKey;
 + (instancetype) getInstance:(NSString*) writeKey config:(RudderConfig*) config;
-+ (instancetype) getInstance:(NSString*) writeKey builder:(RudderConfigBuilder*) builder;
 
 - (void) trackMessage:(RudderMessage*) message;
 - (void) trackWithBuilder:(RudderMessageBuilder*) builder;

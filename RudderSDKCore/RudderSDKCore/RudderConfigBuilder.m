@@ -53,6 +53,14 @@
     return self;
 }
 
+- (instancetype) withFactory:(id<RudderIntegrationFactory>)factory {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    [config.factories addObject:factory];
+    return self;
+}
+
 - (RudderConfig*) build {
     if (config == nil) {
         config = [[RudderConfig alloc] init];

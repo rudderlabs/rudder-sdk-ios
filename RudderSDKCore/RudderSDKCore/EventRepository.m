@@ -36,7 +36,7 @@ static EventRepository* _instance;
         [RudderElementCache initiate];
         
         dbpersistenceManager = [[DBPersistentManager alloc] init];
-        configManager = [[RudderServerConfigManager alloc] init];
+        configManager = [RudderServerConfigManager getInstance:writeKey];
         
         [self __initiateFactories];
         
@@ -45,6 +45,7 @@ static EventRepository* _instance;
     return self;
 }
 
+//TODO
 - (void) __initiateFactories {
     
 }
@@ -153,6 +154,7 @@ static EventRepository* _instance;
     [self->dbpersistenceManager saveEvent:jsonString];
 }
 
+// TODO
 - (void) __prepareIntegrations {
     self->integrations = [[NSMutableDictionary alloc] init];
     [self->integrations setValue:[NSNumber numberWithBool:YES] forKey:@"All"];

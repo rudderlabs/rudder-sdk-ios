@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RudderIntegrationFactory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int dbCountThreshold;
 @property (nonatomic) int sleepTimeout;
 @property (nonatomic) int logLevel;
+@property (nonatomic, readwrite) NSMutableArray* factories;
 
 @end
 

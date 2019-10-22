@@ -7,10 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RudderServerConfigSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderServerConfigManager : NSObject
+@interface RudderServerConfigManager : NSObject {
+    NSString *_writeKey;
+    RudderServerConfigSource *_serverConfig;
+}
+
++ (instancetype) getInstance: (NSString*) writeKey;
+- (BOOL) _isServerConfigOutDated;
+- (RudderServerConfigSource*) _retrieveConfig;
+- (void) _downloadConfig;
+- (RudderServerConfigSource*) getConfig;
+- (RudderServerConfigSource*) _parseConfig: (NSString*) configStr;
+- (NSString*) _networkRequest;
 
 @end
 
