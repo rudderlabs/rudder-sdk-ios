@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "RudderSDKCore"
   spec.version      = "0.1.1"
-  spec.summary      = "A short description of RudderSDKCore."
+  spec.summary      = "Privacy and Security focused Segment-alternative. iOS SDK"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -40,7 +40,7 @@ Rudder is a platform for collecting, storing and routing customer event data to 
   #
 
   # spec.license      = "MIT (example)"
-  spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  spec.license      = { :type => "Apache", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
