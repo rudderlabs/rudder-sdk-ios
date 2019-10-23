@@ -1,6 +1,0 @@
-framework module RudderSDKCore {
-  umbrella header "RudderSDKCore-umbrella.h"
-
-  export *
-  module * { export * }
-}
