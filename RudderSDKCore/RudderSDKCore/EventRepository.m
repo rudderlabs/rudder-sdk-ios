@@ -9,6 +9,7 @@
 #import "EventRepository.h"
 #import "RudderElementCache.h"
 #import "Utils.h"
+#import "RudderLogger.h"
 
 static EventRepository* _instance;
 
@@ -27,6 +28,8 @@ static EventRepository* _instance;
 {
     self = [super init];
     if (self) {
+        self->isFactoryInitialized = NO;
+        
         writeKey = _writeKey;
         config = _config;
         
@@ -45,8 +48,57 @@ static EventRepository* _instance;
     return self;
 }
 
-//TODO
 - (void) __initiateFactories {
+    if (self->config == nil || config.factories == nil || config.factories.count == 0) {
+        [RudderLogger logInfo:@"No native SDK is found"];
+        self->isFactoryInitialized = YES;
+        return;
+    } else {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            RudderClient *client = [RudderClient getInstance];
+            int retryCount = 0;
+            while (self->isFactoryInitialized == NO && retryCount <= 5) {
+                RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+                
+                if (serverConfig != nil && serverConfig.destinations != nil) {
+                    NSArray *destinations = serverConfig.destinations;
+                    if (destinations.count == 0) {
+                        [RudderLogger logInfo:@"No native SDK factory is found"];
+                    } else {
+                        NSMutableDictionary<NSString*, RudderServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
+                        for (RudderServerDestination *destination in destinations) {
+                            [destinationDict setObject:destination forKey:destination.destinationDefinition.definitionName];
+                        }
+                        for (id<RudderIntegrationFactory> factory in self->config.factories) {
+                            RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
+                            if (destination != nil && destination.isDestinationEnabled == YES) {
+                                NSDictionary *destinationConfig = destination.destinationConfig;
+                                if (destinationConfig != nil) {
+                                    id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:client];
+                                    [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
+                                    // put native sdk initialization callback
+                                }
+                            }
+                        }
+                    }
+                    self->isFactoryInitialized = YES;
+                    @synchronized (self->eventReplayMessage) {
+                        NSArray *tempMessages = [self->eventReplayMessage copy];
+                        if (tempMessages.count > 0) {
+                            for (RudderMessage *msg in tempMessages) {
+                                [self makeFactoryDump:msg];
+                            }
+                        }
+                        [self->eventReplayMessage removeAllObjects];
+                    }
+                } else {
+                    retryCount += 1;
+                    [RudderLogger logDebug:@"server config is null. retrying in 10s."];
+                    usleep(10000000);
+                }
+            }
+        });
+    }
     
 }
 
@@ -133,7 +185,7 @@ static EventRepository* _instance;
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
 #if !__has_feature(objc_arc)
-    dispatch_release(sema);
+    dispatch_release(semaphore);
 #endif
     
     return responseStr;
@@ -142,11 +194,7 @@ static EventRepository* _instance;
 - (void) dump:(RudderMessage *)message {
     if (message == nil) return;
     
-    if (self->integrations == nil) {
-        [self __prepareIntegrations];
-    }
-    
-    message.integrations = self->integrations;
+    [self makeFactoryDump: message];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -154,10 +202,41 @@ static EventRepository* _instance;
     [self->dbpersistenceManager saveEvent:jsonString];
 }
 
-// TODO
+- (void) makeFactoryDump:(RudderMessage *)message {
+    if (isFactoryInitialized) {
+        if (self->integrations == nil) {
+            [self __prepareIntegrations];
+        }
+        
+        message.integrations = self->integrations;
+        
+        for (NSString *key in [self->integrationOperationMap allKeys]) {
+            id<RudderIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            if (integration != nil) {
+                [integration dump:message];
+            }
+        }
+    } else {
+        if (self->eventReplayMessage == nil) {
+            self->eventReplayMessage = [[NSMutableArray alloc] init];
+        }
+        [self->eventReplayMessage addObject:message];
+    }
+}
+
 - (void) __prepareIntegrations {
-    self->integrations = [[NSMutableDictionary alloc] init];
-    [self->integrations setValue:[NSNumber numberWithBool:YES] forKey:@"All"];
+    if (self->integrations == nil) {
+        self->integrations = [[NSMutableDictionary alloc] init];
+        
+        RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+        if (serverConfig != nil) {
+            for (RudderServerDestination *destination in serverConfig.destinations) {
+                if ([self->integrations objectForKey:destination.destinationDefinition.definitionName] == nil) {
+                    [self->integrations setObject:[[NSNumber alloc] initWithBool:destination.isDestinationEnabled] forKey:destination.destinationDefinition.definitionName];
+                }
+            }
+        }
+    }
 }
 
 - (RudderConfig *)getConfig {

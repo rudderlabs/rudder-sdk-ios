@@ -21,7 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
     DBPersistentManager* dbpersistenceManager;
     RudderServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
-    NSMutableDictionary<NSString*, NSObject*>* integrationOperationMap;
+    NSMutableDictionary<NSString*, id<RudderIntegration>>* integrationOperationMap;
+    NSMutableArray *eventReplayMessage;
+    BOOL isFactoryInitialized;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RudderConfig*) config;
@@ -32,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*) __flushEventsToServer: (NSString*) payload;
 
 - (RudderConfig* _Nullable) getConfig;
+
+- (void) makeFactoryDump: (RudderMessage*) message;
 
 @end
 
