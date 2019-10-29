@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class RudderConfig;
 
 @interface RudderClient : NSObject
++ (instancetype) getInstance;
 + (instancetype) getInstance:(NSString*) writeKey;
 + (instancetype) getInstance:(NSString*) writeKey config:(RudderConfig*) config;
 

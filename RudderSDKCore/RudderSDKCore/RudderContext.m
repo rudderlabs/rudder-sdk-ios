@@ -20,7 +20,8 @@
         _library = [[RudderLibraryInfo alloc] init];
         _os = [[RudderOSInfo alloc] init];
         _screen = [[RudderScreenInfo alloc] init];
-        _userAgent = @"ios";
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        _userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
         _locale = [Utils getLocale];
         _device = [[RudderDeviceInfo alloc] init];
         _network = [[RudderNetwork alloc] init];
