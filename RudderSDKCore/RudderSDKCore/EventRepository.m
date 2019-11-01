@@ -203,7 +203,7 @@ static EventRepository* _instance;
 }
 
 - (void) makeFactoryDump:(RudderMessage *)message {
-    if (isFactoryInitialized) {
+    if (self->isFactoryInitialized) {
         if (self->integrations == nil) {
             [self __prepareIntegrations];
         }
@@ -225,15 +225,12 @@ static EventRepository* _instance;
 }
 
 - (void) __prepareIntegrations {
-    if (self->integrations == nil) {
+    RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+    if (serverConfig != nil) {
         self->integrations = [[NSMutableDictionary alloc] init];
-        
-        RudderServerConfigSource *serverConfig = [self->configManager getConfig];
-        if (serverConfig != nil) {
-            for (RudderServerDestination *destination in serverConfig.destinations) {
-                if ([self->integrations objectForKey:destination.destinationDefinition.definitionName] == nil) {
-                    [self->integrations setObject:[[NSNumber alloc] initWithBool:destination.isDestinationEnabled] forKey:destination.destinationDefinition.definitionName];
-                }
+        for (RudderServerDestination *destination in serverConfig.destinations) {
+            if ([self->integrations objectForKey:destination.destinationDefinition.definitionName] == nil) {
+                [self->integrations setObject:[[NSNumber alloc] initWithBool:destination.isDestinationEnabled] forKey:destination.destinationDefinition.definitionName];
             }
         }
     }

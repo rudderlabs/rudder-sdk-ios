@@ -90,7 +90,7 @@ NSUserDefaults *userDefaults;
             
             RudderServerDestinationDefinition *destinationDefinition = [[RudderServerDestinationDefinition alloc] init];
             NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];
-            destinationDefinition.definitionName = [definitionDict objectForKey:@"definitionName"];
+            destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
             destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
             destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
             
