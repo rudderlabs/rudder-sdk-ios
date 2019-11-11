@@ -69,17 +69,19 @@ static EventRepository* _instance;
                         for (RudderServerDestination *destination in destinations) {
                             [destinationDict setObject:destination forKey:destination.destinationDefinition.definitionName];
                         }
+                        NSMutableDictionary<NSString*, RudderServerDestination*> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
                         for (id<RudderIntegrationFactory> factory in self->config.factories) {
                             RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
                             if (destination != nil && destination.isDestinationEnabled == YES) {
                                 NSDictionary *destinationConfig = destination.destinationConfig;
                                 if (destinationConfig != nil) {
                                     id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:client];
-                                    [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
+                                    [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
                                     // put native sdk initialization callback
                                 }
                             }
                         }
+                        self->integrationOperationMap = tempIntegrationOpDict;
                     }
                     self->isFactoryInitialized = YES;
                     @synchronized (self->eventReplayMessage) {
@@ -193,6 +195,8 @@ static EventRepository* _instance;
 
 - (void) dump:(RudderMessage *)message {
     if (message == nil) return;
+    
+    NSLog(@"eventName: %@", message.event);
     
     [self makeFactoryDump: message];
     
