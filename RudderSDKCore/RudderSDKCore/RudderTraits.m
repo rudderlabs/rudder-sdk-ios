@@ -12,8 +12,7 @@
 
 @implementation RudderTraits
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         RudderContext *context = [RudderElementCache getContext];
@@ -26,15 +25,28 @@
     return self;
 }
 
-- (instancetype)init: (NSString*) anonymouysId
-{
+- (instancetype) initWithDict: (NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        // if anonymousId is not present in supplied dict
+        NSString *anonymousId = [dict objectForKey:@"anonymousId"];
+        if (anonymousId == nil) {
+            RudderContext *context = [RudderElementCache getContext];
+            _anonymousId = context.device.identifier;
+        }
+        __extras = [[NSMutableDictionary alloc] init];
+        [__extras setValuesForKeysWithDictionary:dict];
+    }
+    return self;
+}
+
+- (instancetype)init: (NSString*) anonymouysId {
     self = [super init];
     if (self) {
         self.anonymousId = anonymouysId;
     }
     return self;
 }
-
 
 - (NSString *)getId {
     return self.userId;
@@ -116,23 +128,57 @@
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary<NSString*, NSObject*> *tempDict = [[NSMutableDictionary alloc] init];
     
-    [tempDict setValue:_anonymousId forKey:@"anonymousId"];
-    [tempDict setValue:_adderess forKey:@"address"];
-    [tempDict setValue:_age forKey:@"age"];
-    [tempDict setValue:_birthday forKey:@"birthday"];
-    [tempDict setValue:_company forKey:@"company"];
-    [tempDict setValue:_createdAt forKey:@"createdAt"];
-    [tempDict setValue:_traitsDescription forKey:@"description"];
-    [tempDict setValue:_email forKey:@"email"];
-    [tempDict setValue:_firstName forKey:@"firstname"];
-    [tempDict setValue:_gender forKey:@"gender"];
-    [tempDict setValue:_userId forKey:@"id"];
-    [tempDict setValue:_lastName forKey:@"lastname"];
-    [tempDict setValue:_name forKey:@"name"];
-    [tempDict setValue:_phone forKey:@"phone"];
-    [tempDict setValue:_title forKey:@"title"];
-    [tempDict setValue:_userName forKey:@"userName"];
-    [tempDict setValuesForKeysWithDictionary:__extras];
+    if (_anonymousId != nil) {
+        [tempDict setValue:_anonymousId forKey:@"anonymousId"];
+    }
+    if (_adderess != nil) {
+        [tempDict setValue:_adderess forKey:@"address"];
+    }
+    if (_age != nil) {
+        [tempDict setValue:_age forKey:@"age"];
+    }
+    if (_birthday != nil) {
+        [tempDict setValue:_birthday forKey:@"birthday"];
+    }
+    if (_company != nil) {
+        [tempDict setValue:_company forKey:@"company"];
+    }
+    if (_createdAt != nil) {
+        [tempDict setValue:_createdAt forKey:@"createdAt"];
+    }
+    if (_traitsDescription != nil) {
+        [tempDict setValue:_traitsDescription forKey:@"description"];
+    }
+    if (_email != nil) {
+        [tempDict setValue:_email forKey:@"email"];
+    }
+    if (_firstName != nil) {
+        [tempDict setValue:_firstName forKey:@"firstname"];
+    }
+    if (_gender != nil) {
+        [tempDict setValue:_gender forKey:@"gender"];
+    }
+    if (_userId != nil) {
+        [tempDict setValue:_userId forKey:@"id"];
+    }
+    if (_lastName != nil) {
+        [tempDict setValue:_lastName forKey:@"lastname"];
+    }
+    if (_name != nil) {
+        [tempDict setValue:_name forKey:@"name"];
+    }
+    if (_phone != nil) {
+        [tempDict setValue:_phone forKey:@"phone"];
+    }
+    if (_title != nil) {
+        [tempDict setValue:_title forKey:@"title"];
+    }
+    if (_userName != nil) {
+        [tempDict setValue:_userName forKey:@"userName"];
+    }
+    if (__extras != nil) {
+        [tempDict setValuesForKeysWithDictionary:__extras];
+    }
     
     return [tempDict copy];
 }

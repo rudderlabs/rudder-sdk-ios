@@ -50,8 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) identifyWithMessage:(RudderMessage*) message;
 - (void) identifyWithBuilder:(RudderMessageBuilder*) builder;
-- (void)identify:(NSString *_Nullable)userId traits:(RudderTraits*)traits options:(RudderOption*)options;
-- (void)identify:(NSString *_Nullable)userId traits:(RudderTraits*)traits;
+- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits options:(NSDictionary*)options;
+- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits;
 - (void)identify:(NSString *_Nullable)userId;
 
 - (void)reset;

@@ -154,22 +154,25 @@ static EventRepository *_repository = nil;
     [self identifyWithMessage:[builder build]];
 }
 
-- (void)identify:(NSString *)userId traits:(RudderTraits *)traits {
-    [traits setUserId:userId];
+- (void)identify:(NSString *)userId traits:(NSDictionary *)traits {
+    RudderTraits* traitsObj = [[RudderTraits alloc] initWithDict: traits];
+    [traitsObj setUserId:userId];
     RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
     [builder setEventName:@"identify"];
     [builder setUserId:userId];
-    [builder setTraits:traits];
+    [builder setTraits:traitsObj];
     [self identifyWithMessage:[builder build]];
 }
 
-- (void)identify:(NSString *)userId traits:(RudderTraits *)traits options:(RudderOption *)options {
-    [traits setUserId:userId];
+- (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(NSDictionary *)options {
+    RudderTraits *traitsObj = [[RudderTraits alloc] initWithDict:traits];
+    [traitsObj setUserId:userId];
     RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
     [builder setEventName:@"identify"];
     [builder setUserId:userId];
-    [builder setTraits:traits];
-    [builder setRudderOption:options];
+    [builder setTraits:traitsObj];
+    RudderOption *optionsObj = [[RudderOption alloc] initWithDict:options];
+    [builder setRudderOption:optionsObj];
     [self identifyWithMessage:[builder build]];
 }
 

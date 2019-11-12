@@ -10,4 +10,12 @@
 
 @implementation RudderOption
 
+- (instancetype)initWithDict:(NSDictionary *)options {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 @end
