@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderOption : NSObject
 
+- (instancetype) initWithDict:(NSDictionary*) options;
+
 @end
 
 NS_ASSUME_NONNULL_END

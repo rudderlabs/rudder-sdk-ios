@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) put: (NSString*) key value: (NSObject*) value;
 
 - (NSDictionary<NSString*, NSObject*>*) dict;
+- (instancetype)initWithDict:(NSDictionary*) dict;
 
 @end
 

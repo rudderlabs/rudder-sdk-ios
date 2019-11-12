@@ -140,15 +140,11 @@ NSUserDefaults *userDefaults;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        NSLog(@"config status code: %ld", (long)httpResponse.statusCode);
-        
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
                 responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             }
         }
-        
-        NSLog(@"config response: %@", responseStr);
         
         dispatch_semaphore_signal(semaphore);
     }];
