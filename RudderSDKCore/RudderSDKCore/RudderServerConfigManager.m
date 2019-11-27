@@ -26,10 +26,20 @@ NSUserDefaults *userDefaults;
         } else {
             self->_writeKey = _writeKey;
             self->_serverConfig = [self _retrieveConfig];
-            if (self->_serverConfig == nil || [self _isServerConfigOutDated]) {
+            if (self->_serverConfig == nil) {
+                [RudderLogger logDebug:@"Server config is not present in preference storage. downloading config"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
                     [self _downloadConfig];
                 });
+            } else {
+                if([self _isServerConfigOutDated]) {
+                    [RudderLogger logDebug:@"Server config is outdated. downloading config again"];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
+                        [self _downloadConfig];
+                    });
+                } else {
+                    [RudderLogger logDebug:@"Server config found. Using existing config"];
+                }
             }
         }
     }
@@ -38,6 +48,7 @@ NSUserDefaults *userDefaults;
 
 + (instancetype) getInstance: (NSString*) writeKey {
     if (_instance == nil) {
+        [RudderLogger logDebug:@"Creating RudderServerConfigManager instance"];
         _instance = [[RudderServerConfigManager alloc] init:writeKey];
     }
     return _instance;
@@ -46,13 +57,13 @@ NSUserDefaults *userDefaults;
 - (BOOL) _isServerConfigOutDated {
     long currentTime = [Utils getTimeStampLong];
     long lastUpdatedTime = [userDefaults integerForKey:@"rl_server_update_time"];
-    
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
     return (currentTime - lastUpdatedTime) > (24 * 60 * 60 * 1000);
 }
 
 - (RudderServerConfigSource*) _retrieveConfig {
     NSString* configStr = [userDefaults stringForKey:@"rl_server_config"];
-    
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {
         return nil;
     } else {
@@ -60,7 +71,6 @@ NSUserDefaults *userDefaults;
     }
 }
 
-//TODO
 - (RudderServerConfigSource *)_parseConfig:(NSString *)configStr {
     NSError *error;
     NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
@@ -119,9 +129,12 @@ NSUserDefaults *userDefaults;
             
             self->_serverConfig = [self _parseConfig:configJson];
             
+            [RudderLogger logDebug:@"server config download successful"];
+            
             isDone = YES;
         } else {
             retryCount += 1;
+            [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
             usleep(10000000 * retryCount);
         }
     }
@@ -132,6 +145,7 @@ NSUserDefaults *userDefaults;
     
     __block NSString *responseStr = nil;
     NSString *configUrl = [@"https://api.rudderlabs.com/source-config?write_key=" stringByAppendingString:self->_writeKey];
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", configUrl]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:configUrl]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", self->_writeKey] dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]] forHTTPHeaderField:@"Authorization"];
@@ -140,9 +154,12 @@ NSUserDefaults *userDefaults;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
+        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"response status code: %ld", (long)httpResponse.statusCode]];
+        
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
                 responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", responseStr]];
             }
         }
         
