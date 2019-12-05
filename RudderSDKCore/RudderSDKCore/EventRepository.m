@@ -211,7 +211,7 @@ static EventRepository* _instance;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        NSLog(@"status code: %ld", (long)httpResponse.statusCode);
+        [RudderLogger logError:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
