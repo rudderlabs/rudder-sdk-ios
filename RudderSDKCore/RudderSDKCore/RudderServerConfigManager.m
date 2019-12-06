@@ -16,7 +16,7 @@ NSUserDefaults *userDefaults;
 
 @implementation RudderServerConfigManager
 
-- (instancetype)init: (NSString*) _writeKey
+- (instancetype)init: (NSString*) _writeKey rudderConfig:(RudderConfig*) rudderConfig
 {
     self = [super init];
     if (self) {
@@ -25,6 +25,7 @@ NSUserDefaults *userDefaults;
             [RudderLogger logError:@"writeKey can not be null or empty"];
         } else {
             self->_writeKey = _writeKey;
+            self->_rudderConfig = rudderConfig;
             self->_serverConfig = [self _retrieveConfig];
             if (self->_serverConfig == nil) {
                 [RudderLogger logDebug:@"Server config is not present in preference storage. downloading config"];
@@ -46,10 +47,10 @@ NSUserDefaults *userDefaults;
     return self;
 }
 
-+ (instancetype) getInstance: (NSString*) writeKey {
++ (instancetype) getInstance: (NSString*) writeKey rudderconfig:(RudderConfig*) rudderConfig {
     if (_instance == nil) {
         [RudderLogger logDebug:@"Creating RudderServerConfigManager instance"];
-        _instance = [[RudderServerConfigManager alloc] init:writeKey];
+        _instance = [[RudderServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
     }
     return _instance;
 }
@@ -58,7 +59,7 @@ NSUserDefaults *userDefaults;
     long currentTime = [Utils getTimeStampLong];
     long lastUpdatedTime = [userDefaults integerForKey:@"rl_server_update_time"];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
-    return (currentTime - lastUpdatedTime) > (24 * 60 * 60 * 1000);
+    return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
 - (RudderServerConfigSource*) _retrieveConfig {
@@ -144,7 +145,7 @@ NSUserDefaults *userDefaults;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *configUrl = [@"https://api.rudderlabs.com/source-config?write_key=" stringByAppendingString:self->_writeKey];
+    NSString *configUrl = @"https://api.rudderlabs.com/sourceConfig";
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", configUrl]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:configUrl]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", self->_writeKey] dataUsingEncoding:NSUTF8StringEncoding];

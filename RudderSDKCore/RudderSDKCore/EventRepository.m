@@ -54,7 +54,7 @@ static EventRepository* _instance;
         dbpersistenceManager = [[DBPersistentManager alloc] init];
         
         [RudderLogger logDebug:@"EventRepository: initiating server config manager"];
-        configManager = [RudderServerConfigManager getInstance:writeKey];
+        configManager = [RudderServerConfigManager getInstance:writeKey rudderConfig:config];
         
         [RudderLogger logDebug:@"EventRepository: initiating processor"];
         [self __initiateProcessor];
