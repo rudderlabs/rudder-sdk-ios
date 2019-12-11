@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RudderContext : NSObject
 
 @property (nonatomic, readwrite) RudderApp* app;
-@property (nonatomic, readwrite) RudderTraits *traits;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString*, NSObject*>* traits;
 @property (nonatomic, readwrite) RudderLibraryInfo* library;
 @property (nonatomic, readwrite) RudderOSInfo* os;
 @property (nonatomic, readwrite) RudderScreenInfo* screen;
@@ -31,7 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSString* timezone;
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
-- (void) updateTraits: (RudderTraits*) traits;
+- (void) updateTraits: (RudderTraits* _Nullable) traits;
+- (void) persistTraits;
+- (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 
 @end
 

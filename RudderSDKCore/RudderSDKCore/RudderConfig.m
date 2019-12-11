@@ -18,13 +18,14 @@
         _dbCountThreshold = 10000;
         _sleepTimeout = 10;
         _logLevel = 4;
+        _configRefreshInterval = 2;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (instancetype)init:
-(NSString *) endPointUrl flushQueueSize: (int) flushQueueSize dbCountThreshold: (int) dbCountThreshold sleepTimeOut: (int) sleepTimeout logLevel: (int) logLevel
+(NSString *) endPointUrl flushQueueSize: (int) flushQueueSize dbCountThreshold: (int) dbCountThreshold sleepTimeOut: (int) sleepTimeout logLevel: (int) logLevel configRefreshInterval: (int) configRefreshInteval
 {
     self = [super init];
     if (self) {
@@ -33,6 +34,7 @@
         _dbCountThreshold = dbCountThreshold;
         _sleepTimeout = sleepTimeout;
         _logLevel = logLevel;
+        _configRefreshInterval = configRefreshInteval;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;

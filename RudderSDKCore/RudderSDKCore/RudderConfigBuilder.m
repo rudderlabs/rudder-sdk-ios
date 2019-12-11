@@ -61,6 +61,14 @@
     return self;
 }
 
+- (instancetype)withConfigRefreshInteval:(int)configRefreshInterval {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.configRefreshInterval = configRefreshInterval;
+    return self;
+}
+
 - (RudderConfig*) build {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
