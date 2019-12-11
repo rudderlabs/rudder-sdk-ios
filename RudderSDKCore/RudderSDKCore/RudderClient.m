@@ -130,13 +130,17 @@ static EventRepository *_repository = nil;
 }
 
 - (void) identifyWithMessage:(RudderMessage *)message {
-    if (_repository != nil && message != nil) {
+    if (message != nil) {
+        // update cached traits and persist
+        [RudderElementCache updateTraitsDict:message.context.traits];
+        [RudderElementCache persistTraits];
+        
+        // set message type to identify
         message.type = @"identify";
-        NSString *userId = message.context.traits.userId;
-        if (userId != nil) {
-            message.userId = userId;
+        
+        if (_repository != nil) {
+            [_repository dump:message];
         }
-        [_repository dump:message];
     }
 }
 
@@ -177,7 +181,7 @@ static EventRepository *_repository = nil;
 }
 
 - (void)reset {
-    
+    [RudderElementCache reset];
 }
 
 - (NSString*)getAnonymousId {

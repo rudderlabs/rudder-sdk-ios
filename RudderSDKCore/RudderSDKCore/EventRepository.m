@@ -86,7 +86,7 @@ static EventRepository* _instance;
                         for (RudderServerDestination *destination in destinations) {
                             [destinationDict setObject:destination forKey:destination.destinationDefinition.definitionName];
                         }
-                        NSMutableDictionary<NSString*, RudderServerDestination*> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
+                        NSMutableDictionary<NSString*, id<RudderIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
                         for (id<RudderIntegrationFactory> factory in self->config.factories) {
                             RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
                             if (destination != nil && destination.isDestinationEnabled == YES) {
@@ -236,6 +236,7 @@ static EventRepository* _instance;
 
 - (void) dump:(RudderMessage *)message {
     if (message == nil) return;
+    message.integrations = @{@"All": @YES};
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -248,13 +249,6 @@ static EventRepository* _instance;
 - (void) makeFactoryDump:(RudderMessage *)message {
     if (self->isFactoryInitialized) {
         [RudderLogger logDebug:@"dumping message to native sdk factories"];
-        
-        if (self->integrations == nil) {
-            [self __prepareIntegrations];
-        }
-        
-        message.integrations = self->integrations;
-        
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
             id<RudderIntegration> integration = [self->integrationOperationMap objectForKey:key];

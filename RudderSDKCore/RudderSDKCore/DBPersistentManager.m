@@ -110,8 +110,7 @@
         while (sqlite3_step(queryStmt) == SQLITE_ROW) {
             int messageId = sqlite3_column_int(queryStmt, 0);
             const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
-            NSString *message = [[NSString alloc] initWithUTF8String:queryResultCol1];
-            
+            NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
             [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
             [messages addObject:message];
         }

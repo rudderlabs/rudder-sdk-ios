@@ -16,6 +16,14 @@ NSUserDefaults *userDefaults;
 
 @implementation RudderServerConfigManager
 
++ (instancetype)getInstance:(NSString *)writeKey rudderConfig:(RudderConfig *)rudderConfig {
+    if (_instance == nil) {
+        [RudderLogger logDebug:@"Creating RudderServerConfigManager instance"];
+        _instance = [[RudderServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
+    }
+    return _instance;
+}
+
 - (instancetype)init: (NSString*) _writeKey rudderConfig:(RudderConfig*) rudderConfig
 {
     self = [super init];
@@ -45,14 +53,6 @@ NSUserDefaults *userDefaults;
         }
     }
     return self;
-}
-
-+ (instancetype) getInstance: (NSString*) writeKey rudderconfig:(RudderConfig*) rudderConfig {
-    if (_instance == nil) {
-        [RudderLogger logDebug:@"Creating RudderServerConfigManager instance"];
-        _instance = [[RudderServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
-    }
-    return _instance;
 }
 
 - (BOOL) _isServerConfigOutDated {

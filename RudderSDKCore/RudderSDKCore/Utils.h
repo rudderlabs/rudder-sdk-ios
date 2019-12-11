@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Utils : NSObject
 
 + (NSString*) getTimestamp;
-+ (char *) getDBPath;
++ (const char *) getDBPath;
 + (long) getTimeStampLong;
 + (NSString*) getUniqueId;
 + (NSString*) getLocale;

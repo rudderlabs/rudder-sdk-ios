@@ -21,9 +21,8 @@
     return [Utils getDateString:[[NSDate alloc] init]];
 }
 
-+ (char *)getDBPath {
++ (const char *)getDBPath {
     NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
-//    NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
     NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
     return [[fileUrl path] UTF8String];
 }
@@ -40,7 +39,12 @@
 
 + (NSString*) getLocale {
     NSLocale *locale = [NSLocale currentLocale];
-    return [[NSString alloc] initWithFormat:@"%@-%@", [locale languageCode], [locale countryCode]];
+    if (@available(iOS 10.0, *)) {
+        return [[NSString alloc] initWithFormat:@"%@-%@", [locale languageCode], [locale countryCode]];
+    } else {
+        // Fallback on earlier versions
+        return @"NA";
+    }
 }
 
 @end

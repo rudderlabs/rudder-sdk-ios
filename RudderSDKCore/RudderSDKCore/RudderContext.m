@@ -16,32 +16,68 @@
     self = [super init];
     if (self) {
         _app = [[RudderApp alloc] init];
-        _traits = [[RudderTraits alloc] init];
+        _device = [[RudderDeviceInfo alloc] init];
         _library = [[RudderLibraryInfo alloc] init];
         _os = [[RudderOSInfo alloc] init];
         _screen = [[RudderScreenInfo alloc] init];
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         _userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
         _locale = [Utils getLocale];
-        _device = [[RudderDeviceInfo alloc] init];
         _network = [[RudderNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
         
-        [_traits setValue:_device.identifier forKey:@"anonymousId"];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *traitsJson = [userDefaults objectForKey:@"rl_traits"];
+        if (traitsJson == nil) {
+            // no persisted traits, create new and persist
+            [self createAndPersistTraits];
+        } else {
+            NSError *error;
+            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _traits = [traitsDict mutableCopy];
+            } else {
+                // persisted traits persing error. initiate blank
+                [self createAndPersistTraits];
+            }
+        }
     }
     return self;
 }
 
+- (void) createAndPersistTraits {
+    RudderTraits* traits = [[RudderTraits alloc] init];
+    traits.anonymousId = _device.identifier;
+    _traits = [[traits dict]  mutableCopy];
+    
+    [self persistTraits];
+}
+
 - (void)updateTraits:(RudderTraits *)traits {
-    if (traits != nil) {
-        self.traits = traits;
+    if(traits == nil) {
+        traits = [[RudderTraits alloc] init];
+        traits.anonymousId = _device.identifier;
     }
+    
+    _traits = [[traits dict] mutableCopy];
+}
+
+-(void) persistTraits {
+    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:_traits options:0 error:nil];
+    NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:traitsString forKey:@"rl_traits"];
+}
+
+- (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
+    _traits = traitsDict;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
-    [tempDict setObject:[_traits dict] forKey:@"traits"];
+    [tempDict setObject:_traits forKey:@"traits"];
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
