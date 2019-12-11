@@ -20,7 +20,8 @@
         _channel = @"mobile";
         _context = [RudderElementCache getContext];
         _originalTimestamp = [Utils getTimestamp];
-        _anonymousId = _context.device.identifier;
+        _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
+        _userId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"id"]];
     }
     return self;
 }
@@ -51,8 +52,6 @@
 }
 
 - (void)updateTraits:(RudderTraits *)traits {
-    if (traits  != nil) {
-        self.context.traits = traits;
-    }
+    [_context updateTraits:traits];
 }
 @end

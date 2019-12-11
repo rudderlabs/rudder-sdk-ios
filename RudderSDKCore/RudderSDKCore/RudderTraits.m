@@ -12,19 +12,6 @@
 
 @implementation RudderTraits
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        RudderContext *context = [RudderElementCache getContext];
-        if (context.traits != nil) {
-            self = context.traits;
-        } else {
-            self.anonymousId = context.device.identifier;
-        }
-    }
-    return self;
-}
-
 - (instancetype) initWithDict: (NSDictionary*) dict {
     self = [super init];
     if(self) {
