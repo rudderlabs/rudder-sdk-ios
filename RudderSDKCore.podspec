@@ -9,7 +9,7 @@ Rudder is a platform for collecting, storing and routing customer event data to 
   spec.license      = { :type => "Apache", :file => "LICENSE" }
   spec.author             = { "Rudderlabs" => "arnab@rudderlabs.com" }
   spec.platform     = :ios, "9.0"
-  spec.source       = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git" }
+  spec.source       = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git" :tag => "v0.1.6"}
   spec.source_files  = "Classes", "RudderSDKCore/**/*.{h,m}"
   spec.ios.deployment_target = '8.0'
 end
