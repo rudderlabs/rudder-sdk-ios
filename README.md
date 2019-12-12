@@ -15,7 +15,7 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 RudderSDKCore is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'RudderSDKCore', '~> 0.1.4'
+pod 'RudderSDKCore', '~> 0.1.6'
 ```
 Remember to include the following code in all .m and .h files where you want to refer to or use Rudder SDK classes
 ```xcode
