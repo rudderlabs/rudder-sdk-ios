@@ -57,6 +57,8 @@ Send events in Segment compatible way
 [[RudderClient sharedInstance] track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
 ```
 
+For more detailed documentation check [here](https://docs.rudderlabs.com/sdk-integration-guide/getting-started-with-ios-sdk)
+
 # Coming Soon
 
 1. Native platform SDK integration support
