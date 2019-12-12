@@ -81,7 +81,11 @@ NSUserDefaults *userDefaults;
         NSDictionary *sourceDict = [configDict objectForKey:@"source"];
         NSString *sourceId = [sourceDict objectForKey:@"id"];
         NSString *sourceName = [sourceDict objectForKey:@"name"];
-        BOOL isSourceEnabled = [sourceDict objectForKey:@"enabled"];
+        NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];
+        BOOL isSourceEnabled = NO;
+        if (sourceEnabled != nil) {
+           isSourceEnabled = [sourceEnabled boolValue];
+        }
         NSString *updatedAt = [sourceDict objectForKey:@"updatedAt"];
         source = [[RudderServerConfigSource alloc] init];
         source.sourceId = sourceId;
@@ -96,7 +100,12 @@ NSUserDefaults *userDefaults;
             RudderServerDestination *destination = [[RudderServerDestination alloc] init];
             destination.destinationId = [destinationDict objectForKey:@"id"];
             destination.destinationName = [destinationDict objectForKey:@"name"];
-            destination.isDestinationEnabled =[destinationDict objectForKey:@"enabled"];
+            NSNumber *destinationEnabled = [destinationDict objectForKey:@"enabled"];
+            BOOL isDestinationEnabled = NO;
+            if (destinationEnabled != nil) {
+                isDestinationEnabled = [destinationEnabled boolValue];
+            }
+            destination.isDestinationEnabled = isDestinationEnabled;
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
             
             RudderServerDestinationDefinition *destinationDefinition = [[RudderServerDestinationDefinition alloc] init];
