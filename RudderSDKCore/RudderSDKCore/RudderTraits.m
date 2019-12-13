@@ -146,7 +146,7 @@
         [tempDict setValue:_gender forKey:@"gender"];
     }
     if (_userId != nil) {
-        [tempDict setValue:_userId forKey:@"id"];
+        [tempDict setValue:_userId forKey:@"userId"];
     }
     if (_lastName != nil) {
         [tempDict setValue:_lastName forKey:@"lastname"];
