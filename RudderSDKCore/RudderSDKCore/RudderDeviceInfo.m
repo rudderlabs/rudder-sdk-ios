@@ -19,6 +19,7 @@
         _manufacturer = @"Apple";
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
+        _type = @"ios";
     }
     return self;
 }
@@ -30,6 +31,7 @@
     [tempDict setValue:_manufacturer forKey:@"manufacturer"];
     [tempDict setValue:_model forKey:@"model"];
     [tempDict setValue:_name forKey:@"name"];
+    [tempDict setValue:_type forKey:@"type"];
     
     return [tempDict copy];
 }
