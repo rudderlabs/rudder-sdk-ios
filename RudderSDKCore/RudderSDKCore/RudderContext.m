@@ -70,7 +70,14 @@
     [userDefaults setObject:traitsString forKey:@"rl_traits"];
 }
 
-- (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
+- (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
+    if (traitsDict == nil) {
+        traitsDict = [[NSMutableDictionary alloc] init];
+    }
+    NSObject *anonymousId = [traitsDict objectForKey:@"anonymousId"];
+    if (anonymousId == nil) {
+        [traitsDict setObject:_device.identifier forKey:@"anonymousId"];
+    }
     _traits = traitsDict;
 }
 
