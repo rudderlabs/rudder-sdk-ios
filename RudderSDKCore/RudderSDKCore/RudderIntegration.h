@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol RudderIntegration<NSObject>
 
 - (void) dump: (RudderMessage*) message;
+- (void) reset;
 
 @end
 

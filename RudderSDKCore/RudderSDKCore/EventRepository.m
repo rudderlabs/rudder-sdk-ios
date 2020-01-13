@@ -72,7 +72,7 @@ static EventRepository* _instance;
         return;
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            RudderClient *client = [RudderClient getInstance];
+            RudderClient *client = [RudderClient sharedInstance];
             int retryCount = 0;
             while (self->isFactoryInitialized == NO && retryCount <= 5) {
                 RudderServerConfigSource *serverConfig = [self->configManager getConfig];
@@ -84,7 +84,7 @@ static EventRepository* _instance;
                     } else {
                         NSMutableDictionary<NSString*, RudderServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
                         for (RudderServerDestination *destination in destinations) {
-                            [destinationDict setObject:destination forKey:destination.destinationDefinition.definitionName];
+                            [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
                         }
                         NSMutableDictionary<NSString*, id<RudderIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
                         for (id<RudderIntegrationFactory> factory in self->config.factories) {
@@ -92,7 +92,7 @@ static EventRepository* _instance;
                             if (destination != nil && destination.isDestinationEnabled == YES) {
                                 NSDictionary *destinationConfig = destination.destinationConfig;
                                 if (destinationConfig != nil) {
-                                    id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:client];
+                                    id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:self->config];
                                     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
                                     [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
                                     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
