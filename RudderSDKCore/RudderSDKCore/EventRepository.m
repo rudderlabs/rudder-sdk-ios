@@ -188,7 +188,7 @@ static EventRepository* _instance;
     return [json copy];
 }
 
-- (NSString*) __flushEventsToServer: (NSString*) payload {
+- (NSString* _Nullable) __flushEventsToServer: (NSString*) payload {
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RudderLogger logError:@"WriteKey was not correct. Aborting flush to server"];
         return nil;
@@ -262,6 +262,20 @@ static EventRepository* _instance;
             self->eventReplayMessage = [[NSMutableArray alloc] init];
         }
         [self->eventReplayMessage addObject:message];
+    }
+}
+
+-(void) reset {
+    if (self->isFactoryInitialized) {
+        for (NSString *key in [self->integrationOperationMap allKeys]) {
+            [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
+            id<RudderIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            if (integration != nil) {
+                [integration reset];
+            }
+        }
+    } else {
+        [RudderLogger logDebug:@"factories are not initialized. ignored"];
     }
 }
 

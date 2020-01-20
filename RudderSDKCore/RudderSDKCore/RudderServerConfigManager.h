@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RudderConfig*) rudderConfig;
 - (BOOL) _isServerConfigOutDated;
-- (RudderServerConfigSource*) _retrieveConfig;
+- (RudderServerConfigSource* _Nullable) _retrieveConfig;
 - (void) _downloadConfig;
 - (RudderServerConfigSource*) getConfig;
 - (RudderServerConfigSource*) _parseConfig: (NSString*) configStr;

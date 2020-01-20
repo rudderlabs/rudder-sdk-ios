@@ -62,7 +62,7 @@ NSUserDefaults *userDefaults;
     return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
-- (RudderServerConfigSource*) _retrieveConfig {
+- (RudderServerConfigSource* _Nullable) _retrieveConfig {
     NSString* configStr = [userDefaults stringForKey:@"rl_server_config"];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {

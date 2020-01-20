@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderApp : NSObject
+@interface RudderApp : NSObject<NSCopying>
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
 

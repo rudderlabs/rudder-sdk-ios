@@ -182,6 +182,9 @@ static EventRepository *_repository = nil;
 
 - (void)reset {
     [RudderElementCache reset];
+    if (_repository != nil) {
+        [_repository reset];
+    }
 }
 
 - (NSString*)getAnonymousId {

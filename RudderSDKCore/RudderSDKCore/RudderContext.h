@@ -17,7 +17,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderContext : NSObject
+@interface RudderContext : NSObject<NSCopying>
 
 @property (nonatomic, readwrite) RudderApp* app;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString*, NSObject*>* traits;
