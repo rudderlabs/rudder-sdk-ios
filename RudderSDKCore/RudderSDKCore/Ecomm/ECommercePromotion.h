@@ -11,6 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ECommercePromotion : NSObject
 
+@property (nonatomic, strong) NSString* promotionId;
+@property (nonatomic, strong) NSString* creative;
+@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSString* position;
+
+- (NSDictionary*) dict;
+
 @end
 
 NS_ASSUME_NONNULL_END

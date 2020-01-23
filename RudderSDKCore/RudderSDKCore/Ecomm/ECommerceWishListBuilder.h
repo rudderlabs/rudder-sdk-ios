@@ -6,10 +6,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceWishList.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ECommerceWishListBuilder : NSObject
+
+@property (nonatomic, strong) ECommerceWishList *wishList;
+
+- (instancetype) withWishListId: (NSString*) wishListId;
+- (instancetype) withWishListName: (NSString*) wishListName;
+- (ECommerceWishList*) build;
+
 
 @end
 

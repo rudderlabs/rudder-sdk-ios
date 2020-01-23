@@ -9,4 +9,27 @@
 
 @implementation ECommerceFilterBuilder
 
+- (instancetype)withType:(NSString *)type {
+    [self _initiate];
+    _filter.type = type;
+    return self;
+}
+
+- (instancetype)withValue:(NSString *)value {
+    [self _initiate];
+    _filter.value = value;
+    return self;
+}
+
+- (ECommerceFilter *)build {
+    [self _initiate];
+    return _filter;
+}
+
+- (void) _initiate {
+    if (_filter == nil) {
+        _filter = [[ECommerceFilter alloc] init];
+    }
+}
+
 @end

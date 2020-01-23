@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderNetwork : NSObject<NSCopying>
+@interface RudderNetwork : NSObject
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
 @property (nonatomic, readwrite) NSString* carrier;

@@ -11,6 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ECommerceWishList : NSObject
 
+@property (nonatomic, strong) NSString* wishListId;
+@property (nonatomic, strong) NSString* wishListName;
+
+- (NSDictionary*) dict;
+
 @end
 
 NS_ASSUME_NONNULL_END

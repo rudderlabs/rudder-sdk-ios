@@ -11,6 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ECommerceFilter : NSObject
 
+@property (nonatomic, strong) NSString* type;
+@property (nonatomic, strong) NSString* value;
+
+- (NSDictionary*) dict;
+
 @end
 
 NS_ASSUME_NONNULL_END
