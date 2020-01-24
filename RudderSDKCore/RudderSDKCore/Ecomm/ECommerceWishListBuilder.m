@@ -27,7 +27,7 @@
 }
 
 - (void) _initiate {
-    if (_wishList != nil) {
+    if (_wishList == nil) {
         _wishList = [[ECommerceWishList alloc] init];
     }
 }
