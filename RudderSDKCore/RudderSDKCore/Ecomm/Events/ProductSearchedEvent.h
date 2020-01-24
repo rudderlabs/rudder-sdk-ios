@@ -6,10 +6,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProductSearchedEvent : NSObject
+
+@property (nonatomic, strong) NSString* query;
+
+- (instancetype) withQuery: (NSString*) query;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

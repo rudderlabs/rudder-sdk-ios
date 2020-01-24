@@ -6,10 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommercePromotion.h"
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PromotionViewedEvent : NSObject
+
+@property (nonatomic, strong) ECommercePromotion *promotion;
+
+- (instancetype) withPromotion: (ECommercePromotion*) promotion;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

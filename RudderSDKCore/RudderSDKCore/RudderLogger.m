@@ -13,51 +13,58 @@ static int logLevel;
 
 @implementation RudderLogger
 
+int const RudderLogLevelVerbose = 5;
+int const RudderLogLevelDebug = 4;
+int const RudderLogLevelInfo = 3;
+int const RudderLogLevelWarning = 2;
+int const RudderLogLevelError = 1;
+int const RudderLogLevelNone = 0;
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        logLevel = 3;
+        logLevel = RudderLogLevelError;
     }
     return self;
 }
 
 + (void)initiate:(int)_logLevel {
-    if (_logLevel > 5) {
-        logLevel = 5;
-    } else if (_logLevel < 0) {
-        logLevel = 0;
+    if (_logLevel > RudderLogLevelVerbose) {
+        logLevel = RudderLogLevelVerbose;
+    } else if (_logLevel < RudderLogLevelNone) {
+        logLevel = RudderLogLevelNone;
     } else {
         logLevel = _logLevel;
     }
 }
 
 + (void)logVerbose:(NSString *)message {
-    if (logLevel >= 5) {
+    if (logLevel >= RudderLogLevelVerbose) {
         NSLog(@"%@:Verbose:%@", TAG, message);
     }
 }
 
 + (void)logDebug:(NSString *)message {
-    if (logLevel >= 4) {
+    if (logLevel >= RudderLogLevelDebug) {
         NSLog(@"%@:Debug:%@", TAG, message);
     }
 }
 
 + (void)logInfo:(NSString *)message {
-    if (logLevel >= 3) {
+    if (logLevel >= RudderLogLevelInfo) {
         NSLog(@"%@:Info:%@", TAG, message);
     }
 }
 
 + (void)logWarn:(NSString *)message {
-    if (logLevel >= 2) {
+    if (logLevel >= RudderLogLevelWarning) {
         NSLog(@"%@:Warn:%@", TAG, message);
     }
 }
 
 + (void)logError:(NSString *)message {
-    if (logLevel >= 1) {
+    if (logLevel >= RudderLogLevelError) {
         NSLog(@"%@:Error:%@", TAG, message);
     }
 }

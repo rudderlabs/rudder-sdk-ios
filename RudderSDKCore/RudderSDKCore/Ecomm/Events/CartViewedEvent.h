@@ -6,10 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceCart.h"
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CartViewedEvent : NSObject
+
+@property (nonatomic, strong) ECommerceCart *cart;
+
+- (instancetype) withCart: (ECommerceCart*) cart;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

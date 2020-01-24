@@ -9,4 +9,21 @@
 
 @implementation ProductRemovedEvent
 
+- (instancetype)withProduct:(ECommerceProduct *)product {
+    _product = product;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommProductRemoved;
+}
+
+- (NSDictionary *)properties {
+    if (_product == nil) {
+        return @{};
+    } else {
+        return [_product dict];
+    }
+}
+
 @end

@@ -6,7 +6,25 @@
 //
 
 #import "PromotionClickedEvent.h"
+#import "ECommerceParamNames.h"
 
 @implementation PromotionClickedEvent
+
+- (instancetype)withPromotion:(ECommercePromotion *)promotion {
+    _promotion = promotion;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommPromotionClicked;
+}
+
+- (NSDictionary *)properties {
+    if (_promotion == nil) {
+        return @{};
+    } else {
+        return [_promotion dict];
+    }
+}
 
 @end

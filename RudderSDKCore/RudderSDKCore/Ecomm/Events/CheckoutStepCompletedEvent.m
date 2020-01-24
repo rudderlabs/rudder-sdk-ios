@@ -9,4 +9,22 @@
 
 @implementation CheckoutStepCompletedEvent
 
+- (instancetype)withCheckout:(ECommerceCheckout *)checkout {
+    _checkout = checkout;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommCheckoutStepCompleted;
+}
+
+- (NSDictionary *)properties {
+    if (_checkout == nil) {
+        return @{};
+    } else {
+        return [_checkout dict];
+    }
+}
+
+
 @end

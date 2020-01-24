@@ -6,7 +6,35 @@
 //
 
 #import "CouponRemovedEvent.h"
+#import "ECommerceParamNames.h"
 
 @implementation CouponRemovedEvent
+
+- (instancetype)withCoupon:(ECommerceCoupon *)coupon {
+    _coupon = coupon;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommCouponRemoved;
+}
+
+- (NSDictionary *)properties {
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    
+    if (_coupon != nil) {
+        [tempDict setValue:_coupon.couponId forKey:KeyCouponId];
+        [tempDict setValue:_coupon.couponName forKey:KeyCouponName];
+        [tempDict setValue:[[NSNumber alloc] initWithFloat:_coupon.discount] forKey:KeyDiscount];
+        if (_coupon.orderId != nil) {
+            [tempDict setValue:_coupon.orderId forKey:KeyOrderId];
+        }
+        if (_coupon.cartId != nil) {
+            [tempDict setValue:_coupon.cartId forKey:KeyCartId];
+        }
+    }
+    
+    return [tempDict copy];
+}
 
 @end

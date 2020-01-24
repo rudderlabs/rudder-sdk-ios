@@ -6,10 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceCheckout.h"
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CheckoutStepViewedEvent : NSObject
+
+@property (nonatomic, strong) ECommerceCheckout *checkout;
+
+- (instancetype) withCheckout: (ECommerceCheckout*) checkout;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

@@ -6,10 +6,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceWishList.h"
+#import "ECommerceProduct.h"
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProductRemovedFromWishListEvent : NSObject
+
+@property (nonatomic, strong) ECommerceWishList *wishList;
+@property (nonatomic, strong) ECommerceProduct *product;
+
+- (instancetype) withWishList: (ECommerceWishList*) wishList;
+- (instancetype) withProduct: (ECommerceProduct*) product;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

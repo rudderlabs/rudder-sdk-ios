@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) withProductId: (NSString*) productId;
 - (instancetype) withSku: (NSString*) sku;
+- (instancetype) withCategory: (NSString*) category;
 - (instancetype) withName: (NSString*) name;
 - (instancetype) withBrand: (NSString*) brand;
 - (instancetype) withVariant: (NSString*) variant;

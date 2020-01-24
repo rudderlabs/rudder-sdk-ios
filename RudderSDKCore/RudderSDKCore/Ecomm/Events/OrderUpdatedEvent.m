@@ -9,4 +9,21 @@
 
 @implementation OrderUpdatedEvent
 
+- (instancetype)withOrder:(ECommerceOrder *)order {
+    _order = order;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommOrderUpdated;
+}
+
+- (NSDictionary *)properties {
+    if (_order == nil) {
+        return @{};
+    } else {
+        return [_order dict];
+    }
+}
+
 @end

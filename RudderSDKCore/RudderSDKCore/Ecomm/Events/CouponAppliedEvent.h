@@ -6,10 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ECommerceCoupon.h"
+#import "ECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CouponAppliedEvent : NSObject
+
+@property (nonatomic, strong) ECommerceCoupon *coupon;
+
+- (instancetype) withCoupon: (ECommerceCoupon*) coupon;
+
+- (nonnull NSString*) event;
+- (nonnull NSDictionary*) properties;
 
 @end
 

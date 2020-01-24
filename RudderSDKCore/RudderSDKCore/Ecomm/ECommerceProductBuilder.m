@@ -21,6 +21,12 @@
     return self;
 }
 
+- (instancetype)withCategory:(NSString *)category {
+    [self _initiate];
+    _product.category = category;
+    return self;
+}
+
 - (instancetype)withName:(NSString *)name {
     [self _initiate];
     _product.name = name;

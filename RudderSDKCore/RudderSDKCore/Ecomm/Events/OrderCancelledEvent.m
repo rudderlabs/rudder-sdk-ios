@@ -9,4 +9,22 @@
 
 @implementation OrderCancelledEvent
 
+- (instancetype)withOrder:(ECommerceOrder *)order {
+    _order = order;
+    return self;
+}
+
+- (NSString *)event {
+    return ECommOrderCancelled;
+}
+
+- (NSDictionary *)properties {
+    if (_order == nil) {
+        return @{};
+    } else {
+        return [_order dict];
+    }
+}
+
+
 @end
