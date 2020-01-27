@@ -10,6 +10,7 @@
 #import "Utils.h"
 #import "RudderLogger.h"
 #import "RudderServerDestination.h"
+#import "Constants.h"
 
 static RudderServerConfigManager *_instance;
 
@@ -153,7 +154,7 @@ static RudderServerConfigManager *_instance;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *configUrl = @"https://api.rudderlabs.com/sourceConfig";
+    NSString *configUrl = [NSString stringWithFormat:@"%@/sourceConfig", RudderConfigPlaneUrl];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", configUrl]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:configUrl]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", self->_writeKey] dataUsingEncoding:NSUTF8StringEncoding];
