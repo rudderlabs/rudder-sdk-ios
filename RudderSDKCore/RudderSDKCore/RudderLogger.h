@@ -12,6 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderLogger : NSObject
 
+extern int const RudderLogLevelVerbose;
+extern int const RudderLogLevelDebug;
+extern int const RudderLogLevelInfo;
+extern int const RudderLogLevelWarning;
+extern int const RudderLogLevelError;
+extern int const RudderLogLevelNone;
+
 + (void) initiate: (int) _logLevel;
 
 + (void) logVerbose: (NSString*) message;
