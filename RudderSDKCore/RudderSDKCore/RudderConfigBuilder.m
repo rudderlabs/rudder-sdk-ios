@@ -69,6 +69,22 @@
     return self;
 }
 
+- (instancetype)withTrackLifecycleEvens:(BOOL)trackLifecycleEvents {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.trackLifecycleEvents = trackLifecycleEvents;
+    return self;
+}
+
+- (instancetype) withRecordScreenViews:(BOOL)recordScreenViews {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.recordScreenViews = recordScreenViews;
+    return self;
+}
+
 - (RudderConfig*) build {
     if (config == nil) {
         config = [[RudderConfig alloc] init];

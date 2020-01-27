@@ -12,7 +12,6 @@
 #import "RudderServerDestination.h"
 
 static RudderServerConfigManager *_instance;
-NSUserDefaults *userDefaults;
 
 @implementation RudderServerConfigManager
 
@@ -28,7 +27,7 @@ NSUserDefaults *userDefaults;
 {
     self = [super init];
     if (self) {
-        userDefaults = [NSUserDefaults standardUserDefaults];
+        self->_preferenceManager = [RudderPreferenceManager getInstance];
         if (_writeKey == nil || [_writeKey isEqualToString:@""]) {
             [RudderLogger logError:@"writeKey can not be null or empty"];
         } else {
@@ -57,13 +56,13 @@ NSUserDefaults *userDefaults;
 
 - (BOOL) _isServerConfigOutDated {
     long currentTime = [Utils getTimeStampLong];
-    long lastUpdatedTime = [userDefaults integerForKey:@"rl_server_update_time"];
+    long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
     return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
 - (RudderServerConfigSource* _Nullable) _retrieveConfig {
-    NSString* configStr = [userDefaults stringForKey:@"rl_server_config"];
+    NSString* configStr = [_preferenceManager getConfigJson];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {
         return nil;
@@ -134,8 +133,8 @@ NSUserDefaults *userDefaults;
         NSString* configJson = [self _networkRequest];
         
         if (configJson != nil) {
-            [userDefaults setObject:configJson forKey:@"rl_server_config"];
-            [userDefaults setObject:[[NSNumber alloc] initWithDouble:[Utils getTimeStampLong]] forKey:@"rl_server_update_time"];
+            [_preferenceManager saveConfigJson:configJson];
+            [_preferenceManager updateLastUpdatedTime:[Utils getTimeStampLong]];
             
             self->_serverConfig = [self _parseConfig:configJson];
             

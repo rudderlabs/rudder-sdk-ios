@@ -56,13 +56,100 @@ static EventRepository* _instance;
         [RudderLogger logDebug:@"EventRepository: initiating server config manager"];
         configManager = [RudderServerConfigManager getInstance:writeKey rudderConfig:config];
         
+        [RudderLogger logDebug:@"EventRepository: initiating preferenceManager"];
+        self->preferenceManager = [RudderPreferenceManager getInstance];
+        
         [RudderLogger logDebug:@"EventRepository: initiating processor"];
         [self __initiateProcessor];
         
         [RudderLogger logDebug:@"EventRepository: initiating factories"];
         [self __initiateFactories];
+        
+        [RudderLogger logDebug:@"EventRepository: tracking application lifecycle"];
+        [self __checkApplicationUpdateStatus];
     }
     return self;
+}
+
+- (void) __checkApplicationUpdateStatus {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
+                              UIApplicationDidFinishLaunchingNotification,
+                              UIApplicationWillEnterForegroundNotification,
+                              UIApplicationWillTerminateNotification,
+                              UIApplicationWillResignActiveNotification,
+                              UIApplicationDidBecomeActiveNotification ]) {
+        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
+    }
+}
+
+- (void) handleAppStateNotification: (NSNotification*) notification {
+    if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
+        [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
+    } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
+        [self _applicationWillEnterForeground];
+    } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
+      [self _applicationDidEnterBackground];
+    }
+}
+
+- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    NSString *previousVersion = [preferenceManager getBuildVersionCode];
+
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+
+    if (!previousVersion) {
+        RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
+        [messageBuilder setEventName:@"Application Installed"];
+        [messageBuilder setPropertyDict:@{
+            @"version": currentVersion
+        }];
+        [self dump:[messageBuilder build]];
+    } else if (![currentVersion isEqualToString:previousVersion]) {
+        RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
+        [messageBuilder setEventName:@"Application Updated"];
+        [messageBuilder setPropertyDict:@{
+            @"previous_version" : previousVersion ?: @"",
+            @"version": currentVersion
+        }];
+        [self dump:[messageBuilder build]];
+    }
+
+    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
+    [messageBuilder setEventName:@"Application Opened"];
+    [messageBuilder setPropertyDict:@{
+        @"from_background" : @NO,
+        @"version" : currentVersion ?: @"",
+        @"referring_application" : launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @"",
+        @"url" : launchOptions[UIApplicationLaunchOptionsURLKey] ?: @"",
+    }];
+    [self dump:[messageBuilder build]];
+
+    [preferenceManager saveBuildVersionCode:currentVersion];
+}
+
+- (void)_applicationWillEnterForeground{
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
+    [messageBuilder setEventName:@"Application Opened"];
+    [messageBuilder setPropertyDict:@{
+        @"from_background" : @YES,
+    }];
+    [self dump:[messageBuilder build]];
+}
+
+- (void)_applicationDidEnterBackground {
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
+    [messageBuilder setEventName:@"Application Backgrounded"];
+    [self dump:[messageBuilder build]];
 }
 
 - (void) __initiateFactories {
@@ -121,7 +208,6 @@ static EventRepository* _instance;
             }
         });
     }
-    
 }
 
 - (void)__initiateProcessor {
