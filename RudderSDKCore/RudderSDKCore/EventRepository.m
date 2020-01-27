@@ -50,6 +50,10 @@ static EventRepository* _instance;
         [RudderLogger logDebug:@"EventRepository: initiating element cache"];
         [RudderElementCache initiate];
         
+        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RudderElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+        anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
+        
         [RudderLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[DBPersistentManager alloc] init];
         
@@ -290,6 +294,7 @@ static EventRepository* _instance;
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
+    [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
     NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:httpBody];
     

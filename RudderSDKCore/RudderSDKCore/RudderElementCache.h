@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RudderContext*) getContext;
 
++ (NSString*) getAnonymousId;
+
 + (void) updateTraits : (RudderTraits*) traits;
 
 + (void) persistTraits;

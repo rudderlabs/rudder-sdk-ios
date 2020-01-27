@@ -39,5 +39,9 @@ static RudderContext* cachedContext;
     [cachedContext updateTraitsDict: traitsDict];
 }
 
++ (NSString *)getAnonymousId {
+    return cachedContext.device.identifier;
+}
+
 
 @end

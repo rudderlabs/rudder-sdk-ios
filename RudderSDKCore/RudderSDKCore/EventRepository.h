@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EventRepository : NSObject {
     NSString* writeKey;
     NSString* authToken;
+    NSString* anonymousIdToken;
     RudderConfig* config;
     DBPersistentManager* dbpersistenceManager;
     RudderServerConfigManager* configManager;
