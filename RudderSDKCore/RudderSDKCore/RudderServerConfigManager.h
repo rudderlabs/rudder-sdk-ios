@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RudderServerConfigSource.h"
 #import "RudderConfig.h"
+#import "RudderPreferenceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *_writeKey;
     RudderServerConfigSource *_serverConfig;
     RudderConfig *_rudderConfig;
+    RudderPreferenceManager *_preferenceManager;
 }
 
 + (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RudderConfig*) rudderConfig;

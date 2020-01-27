@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withDBCountThreshold: (int) dbCountThreshold;
 - (instancetype) withSleepTimeOut: (int) sleepTimeOut;
 - (instancetype) withConfigRefreshInteval: (int) configRefreshInterval;
+- (instancetype) withTrackLifecycleEvens: (BOOL) trackLifecycleEvents;
+- (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
 - (instancetype) withFactory: (id <RudderIntegrationFactory> _Nonnull) factory;
 - (RudderConfig*) build;
 

@@ -11,6 +11,7 @@
 #import "RudderServerConfigManager.h"
 #import "DBPersistentManager.h"
 #import "RudderConfig.h"
+#import "RudderPreferenceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RudderIntegration>>* integrationOperationMap;
     NSMutableArray *eventReplayMessage;
+    RudderPreferenceManager *preferenceManager;
     BOOL isFactoryInitialized;
 }
 

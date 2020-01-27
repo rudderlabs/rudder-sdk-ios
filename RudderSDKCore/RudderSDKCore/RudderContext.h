@@ -14,10 +14,13 @@
 #import "RudderDeviceInfo.h"
 #import "RudderNetwork.h"
 #import "RudderTraits.h"
+#import "RudderPreferenceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderContext : NSObject
+@interface RudderContext : NSObject {
+    RudderPreferenceManager *preferenceManager;
+}
 
 @property (nonatomic, readwrite) RudderApp* app;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString*, NSObject*>* traits;

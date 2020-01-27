@@ -10,9 +10,9 @@
 #import "Utils.h"
 #import "RudderLogger.h"
 #import "RudderServerDestination.h"
+#import "Constants.h"
 
 static RudderServerConfigManager *_instance;
-NSUserDefaults *userDefaults;
 
 @implementation RudderServerConfigManager
 
@@ -28,7 +28,7 @@ NSUserDefaults *userDefaults;
 {
     self = [super init];
     if (self) {
-        userDefaults = [NSUserDefaults standardUserDefaults];
+        self->_preferenceManager = [RudderPreferenceManager getInstance];
         if (_writeKey == nil || [_writeKey isEqualToString:@""]) {
             [RudderLogger logError:@"writeKey can not be null or empty"];
         } else {
@@ -57,13 +57,13 @@ NSUserDefaults *userDefaults;
 
 - (BOOL) _isServerConfigOutDated {
     long currentTime = [Utils getTimeStampLong];
-    long lastUpdatedTime = [userDefaults integerForKey:@"rl_server_update_time"];
+    long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
     return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
 - (RudderServerConfigSource* _Nullable) _retrieveConfig {
-    NSString* configStr = [userDefaults stringForKey:@"rl_server_config"];
+    NSString* configStr = [_preferenceManager getConfigJson];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {
         return nil;
@@ -134,8 +134,8 @@ NSUserDefaults *userDefaults;
         NSString* configJson = [self _networkRequest];
         
         if (configJson != nil) {
-            [userDefaults setObject:configJson forKey:@"rl_server_config"];
-            [userDefaults setObject:[[NSNumber alloc] initWithDouble:[Utils getTimeStampLong]] forKey:@"rl_server_update_time"];
+            [_preferenceManager saveConfigJson:configJson];
+            [_preferenceManager updateLastUpdatedTime:[Utils getTimeStampLong]];
             
             self->_serverConfig = [self _parseConfig:configJson];
             
@@ -154,7 +154,7 @@ NSUserDefaults *userDefaults;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *configUrl = @"https://api.rudderlabs.com/sourceConfig";
+    NSString *configUrl = [NSString stringWithFormat:@"%@/sourceConfig", RudderConfigPlaneUrl];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", configUrl]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:configUrl]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", self->_writeKey] dataUsingEncoding:NSUTF8StringEncoding];
