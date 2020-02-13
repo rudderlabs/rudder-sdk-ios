@@ -10,6 +10,7 @@
 #import "RudderElementCache.h"
 #import "Utils.h"
 #import "RudderLogger.h"
+#import "UIViewController+RudderScreen.h"
 
 static EventRepository* _instance;
 
@@ -69,8 +70,18 @@ static EventRepository* _instance;
         [RudderLogger logDebug:@"EventRepository: initiating factories"];
         [self __initiateFactories];
         
-        [RudderLogger logDebug:@"EventRepository: tracking application lifecycle"];
-        [self __checkApplicationUpdateStatus];
+        if (config.trackLifecycleEvents) {
+            [RudderLogger logDebug:@"EventRepository: tracking application lifecycle"];
+            [self __checkApplicationUpdateStatus];
+        }
+        
+        if (config.recordScreenViews) {
+            [RudderLogger logDebug:@"EventRepository: starting automatic screen records"];
+            [self __prepareScreenRecorder];
+        }
+        
+        
+        
     }
     return self;
 }
@@ -154,6 +165,10 @@ static EventRepository* _instance;
     RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
     [messageBuilder setEventName:@"Application Backgrounded"];
     [self dump:[messageBuilder build]];
+}
+
+- (void) __prepareScreenRecorder {
+    [UIViewController rudder_swizzleView];
 }
 
 - (void) __initiateFactories {
