@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withConfigRefreshInteval: (int) configRefreshInterval;
 - (instancetype) withTrackLifecycleEvens: (BOOL) trackLifecycleEvents;
 - (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
+- (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl;
 - (instancetype) withFactory: (id <RudderIntegrationFactory> _Nonnull) factory;
 - (RudderConfig*) build;
 

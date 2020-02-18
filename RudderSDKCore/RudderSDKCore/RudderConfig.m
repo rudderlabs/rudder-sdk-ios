@@ -23,6 +23,7 @@
         _configRefreshInterval = RudderConfigRefreshInterval;
         _trackLifecycleEvents = RudderTrackLifeCycleEvents;
         _recordScreenViews = RudderRecordScreenViews;
+        _configPlaneUrl = RudderConfigPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;
@@ -36,6 +37,7 @@
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 recordScreenViews: (BOOL) recordScreenViews
+      configPlaneUrl: (NSString *) configPlaneUrl
 {
     self = [super init];
     if (self) {
@@ -47,6 +49,7 @@ recordScreenViews: (BOOL) recordScreenViews
         _configRefreshInterval = configRefreshInteval;
         _trackLifecycleEvents = trackLifecycleEvents;
         _recordScreenViews = recordScreenViews;
+        _configPlaneUrl = configPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;

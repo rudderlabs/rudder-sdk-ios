@@ -8,6 +8,7 @@
 
 #import "RudderConfigBuilder.h"
 #import "RudderLogger.h"
+#import "Constants.h"
 
 @implementation RudderConfigBuilder
 
@@ -28,7 +29,7 @@
 }
 
 - (instancetype) withDebug: (BOOL) debug {
-    [RudderLogger initiate:5];
+    [RudderLogger initiate:RudderLogLevelVerbose];
     return self;
 }
 
@@ -82,6 +83,14 @@
         config = [[RudderConfig alloc] init];
     }
     config.recordScreenViews = recordScreenViews;
+    return self;
+}
+
+- (instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.configPlaneUrl = configPlaneUrl;
     return self;
 }
 

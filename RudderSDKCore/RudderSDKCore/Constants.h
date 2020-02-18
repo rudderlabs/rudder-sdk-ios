@@ -29,7 +29,6 @@ extern NSString *const RudderConfigPlaneUrl;
 extern bool const RudderTrackLifeCycleEvents;
 // whether we should record screen views automatically
 extern bool const RudderRecordScreenViews;
-
 @end
 
 NS_ASSUME_NONNULL_END

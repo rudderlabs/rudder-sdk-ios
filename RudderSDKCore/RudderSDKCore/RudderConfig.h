@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int configRefreshInterval;
 @property (nonatomic) bool trackLifecycleEvents;
 @property (nonatomic) bool recordScreenViews;
+@property (nonatomic, nonnull) NSString *configPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 
 @end
