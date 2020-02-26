@@ -12,4 +12,6 @@ Rudder is a platform for collecting, storing and routing customer event data to 
   spec.source       = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :tag => "v0.1.7"}
   spec.source_files  = "Classes", "RudderSDKCore/**/*.{h,m}"
   spec.ios.deployment_target = '8.0'
+  spec.deprecated = true
+  spec.deprecated_in_favor_of = 'Rudder'
 end
