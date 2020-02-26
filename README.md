@@ -1,7 +1,7 @@
 # What is Rudder?
 
-[![Version](https://img.shields.io/cocoapods/v/RudderSDKCore.svg?style=flat)](https://cocoapods.org/pods/RudderSDKCore)
-[![Platform](https://img.shields.io/cocoapods/p/RudderSDKCore.svg?style=flat)](https://cocoapods.org/pods/RudderSDKCore)
+[![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
+[![Platform](https://img.shields.io/cocoapods/p/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
 
 **Short answer:** 
 Rudder is an open-source Segment alternative written in Go, built for the enterprise. .
@@ -12,14 +12,14 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Installation
-RudderSDKCore is available through [CocoaPods](https://cocoapods.org). 
+Rudder is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'RudderSDKCore', '~> 0.1.6'
+pod 'Rudder'
 ```
 Remember to include the following code in all .m and .h files where you want to refer to or use Rudder SDK classes
 ```xcode
-#import "RudderSDKCore.h"
+#import "Rudder.h"
 ```
 
 ## Initialize Client
@@ -57,11 +57,7 @@ Send events in Segment compatible way
 [[RudderClient sharedInstance] track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
 ```
 
-For more detailed documentation check [here](https://docs.rudderlabs.com/sdk-integration-guide/getting-started-with-ios-sdk)
+For more detailed documentation check [our documentation page](https://docs.rudderlabs.com/sdk-integration-guide/getting-started-with-ios-sdk)
 
-# Coming Soon
-
-1. Native platform SDK integration support
-2. More documentation
-3. More destination support
-
+## Contact Us
+If you come across any issues while configuring or using RudderStack, please feel free to [contact us](https://rudderstack.com/contact/) or start a conversation on our [Discord](https://discordapp.com/invite/xNEdEGw) channel. We will be happy to help you.
