@@ -30,11 +30,19 @@
 
 - (instancetype) withDebug: (BOOL) debug {
     [RudderLogger initiate:RudderLogLevelVerbose];
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.logLevel = RudderLogLevelVerbose;
     return self;
 }
 
 - (instancetype) withLoglevel: (int) logLevel {
     [RudderLogger initiate:logLevel];
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.logLevel = logLevel;
     return self;
 }
 
