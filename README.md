@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
 
 **Short answer:** 
-Rudder is an open-source Segment alternative written in Go, built for the enterprise. .
+Rudder is an open-source Segment alternative written in Go, built for the enterprise.
 
 **Long answer:** 
 Rudder is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
@@ -17,7 +17,7 @@ To install it, simply add the following line to your Podfile:
 ```xcode
 pod 'Rudder'
 ```
-Remember to include the following code in all .m and .h files where you want to refer to or use Rudder SDK classes
+Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
 ```xcode
 #import "Rudder.h"
 ```
@@ -28,8 +28,8 @@ Put this code in your ```AppDelegate.m``` file under the method ```didFinishLaun
 
 ```xcode
 RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-[builder withEndPointUrl:YOUR_DATA_PLANE_URL];
-[RudderClient getInstance:YOUR_WRITE_KEY config:[builder build]];
+[builder withEndPointUrl:<YOUR_DATA_PLANE_URL>];
+[RudderClient getInstance:<YOUR_WRITE_KEY> config:[builder build]];
 ```
 A shared instance of ```RudderClient``` is accesible after the initialization by ```[RudderClient sharedInstance]```
 ## Sending Events
