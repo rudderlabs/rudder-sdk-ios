@@ -13,6 +13,7 @@
 #import "RudderOption.h"
 #import "RudderMessageBuilder.h"
 #import "RudderTraits.h"
+#import "RudderContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -61,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (RudderConfig* _Nullable)configuration;
 
 + (instancetype _Nullable) sharedInstance;
+
+- (RudderContext *) getContext;
 
 @end
 
