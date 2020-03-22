@@ -117,31 +117,22 @@ static EventRepository* _instance;
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
 
     if (!previousVersion) {
-        RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
-        [messageBuilder setEventName:@"Application Installed"];
-        [messageBuilder setPropertyDict:@{
+        [[RudderClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
         }];
-        [self dump:[messageBuilder build]];
     } else if (![currentVersion isEqualToString:previousVersion]) {
-        RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
-        [messageBuilder setEventName:@"Application Updated"];
-        [messageBuilder setPropertyDict:@{
+        [[RudderClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
         }];
-        [self dump:[messageBuilder build]];
     }
-
-    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
-    [messageBuilder setEventName:@"Application Opened"];
-    [messageBuilder setPropertyDict:@{
+    
+    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @NO,
         @"version" : currentVersion ?: @"",
         @"referring_application" : launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @"",
         @"url" : launchOptions[UIApplicationLaunchOptionsURLKey] ?: @"",
     }];
-    [self dump:[messageBuilder build]];
 
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
@@ -150,21 +141,17 @@ static EventRepository* _instance;
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
-    [messageBuilder setEventName:@"Application Opened"];
-    [messageBuilder setPropertyDict:@{
+    
+    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @YES,
     }];
-    [self dump:[messageBuilder build]];
 }
 
 - (void)_applicationDidEnterBackground {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    RudderMessageBuilder *messageBuilder = [[RudderMessageBuilder alloc] init];
-    [messageBuilder setEventName:@"Application Backgrounded"];
-    [self dump:[messageBuilder build]];
+    [[RudderClient sharedInstance] track:@"Application Backgrounded"];
 }
 
 - (void) __prepareScreenRecorder {
