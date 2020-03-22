@@ -1,8 +1,5 @@
 # What is Rudder?
 
-[![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
-[![Platform](https://img.shields.io/cocoapods/p/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
-
 **Short answer:** 
 Rudder is an open-source Segment alternative written in Go, built for the enterprise.
 
@@ -15,7 +12,7 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 Rudder is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'Rudder'
+pod 'Rudder', '1.0.1-beta.4'
 ```
 Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
 ```xcode
