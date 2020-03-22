@@ -9,8 +9,8 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *END_URL = @"https://89aef425.ngrok.io";
-static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
+static NSString *END_URL = @"https://b8a29fd3.ngrok.io";
+static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 
 @implementation _AppDelegate
 
