@@ -1,8 +1,5 @@
 # What is Rudder?
 
-[![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
-[![Platform](https://img.shields.io/cocoapods/p/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
-
 **Short answer:** 
 Rudder is an open-source Segment alternative written in Go, built for the enterprise.
 
