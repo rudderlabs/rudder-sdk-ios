@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderConfig : NSObject
 
-@property (nonatomic, nonnull) NSString *endPointUrl;
+@property (nonatomic, nonnull) NSString *dataPlaneUrl;
 @property (nonatomic) int flushQueueSize;
 @property (nonatomic) int dbCountThreshold;
 @property (nonatomic) int sleepTimeout;
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int configRefreshInterval;
 @property (nonatomic) bool trackLifecycleEvents;
 @property (nonatomic) bool recordScreenViews;
-@property (nonatomic, nonnull) NSString *configPlaneUrl;
+@property (nonatomic, nonnull) NSString *controlPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 
 @end

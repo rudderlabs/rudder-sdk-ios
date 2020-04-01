@@ -14,7 +14,7 @@ NSString *const RudderBaseUrl = @"https://api.rudderlabs.com";
 int const RudderFlushQueueSize = 30;
 int const RudderDBCountThreshold = 10000;
 int const RudderSleepTimeout = 10;
-NSString *const RudderConfigPlaneUrl = @"https://api.rudderlabs.com";
+NSString *const RudderControlPlaneUrl = @"https://api.rudderlabs.com";
 bool const RudderTrackLifeCycleEvents = YES;
 bool const RudderRecordScreenViews = NO;
 

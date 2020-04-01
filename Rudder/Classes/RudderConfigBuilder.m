@@ -12,11 +12,11 @@
 
 @implementation RudderConfigBuilder
 
-- (instancetype) withEndPointUrl: (NSString*) endPointUrl {
+- (instancetype) withDataPlaneUrl: (NSString*) dataPlaneUrl {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
     }
-    config.endPointUrl = endPointUrl;
+    config.dataPlaneUrl = dataPlaneUrl;
     return self;
 }
 
@@ -94,11 +94,11 @@
     return self;
 }
 
-- (instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
+- (instancetype)withControlPlaneUrl:(NSString *)controlPlaneUrl {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
     }
-    config.configPlaneUrl = configPlaneUrl;
+    config.controlPlaneUrl = controlPlaneUrl;
     return self;
 }
 
