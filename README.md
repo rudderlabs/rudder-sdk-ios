@@ -25,7 +25,7 @@ Put this code in your ```AppDelegate.m``` file under the method ```didFinishLaun
 
 ```xcode
 RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-[builder withEndPointUrl:<YOUR_DATA_PLANE_URL>];
+[builder withDataPlaneUrl:<YOUR_DATA_PLANE_URL>];
 [RudderClient getInstance:<YOUR_WRITE_KEY> config:[builder build]];
 ```
 A shared instance of ```RudderClient``` is accesible after the initialization by ```[RudderClient sharedInstance]```

@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 // how often config should be fetched from the server (in hours) (2 hrs by default)
 extern int const RudderConfigRefreshInterval;
 // default base url or rudder-backend-server
-extern NSString *const RudderBaseUrl;
+extern NSString *const RudderDataPlaneUrl;
 // default flush queue size for the events to be flushed to server
 extern int const RudderFlushQueueSize;
 // default threshold of number of events to be persisted in sqlite db
@@ -24,7 +24,7 @@ extern int const RudderDBCountThreshold;
 // events will be flushed to server after sleepTimeOut seconds
 extern int const RudderSleepTimeout;
 // config-plane url to get the config for the writeKey
-extern NSString *const RudderConfigPlaneUrl;
+extern NSString *const RudderControlPlaneUrl;
 // whether we should trackLifecycle events
 extern bool const RudderTrackLifeCycleEvents;
 // whether we should record screen views automatically
