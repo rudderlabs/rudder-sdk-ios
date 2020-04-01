@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        _dataPlaneUrl = RudderBaseUrl;
+        _dataPlaneUrl = RudderDataPlaneUrl;
         _flushQueueSize = RudderFlushQueueSize;
         _dbCountThreshold = RudderDBCountThreshold;
         _sleepTimeout = RudderSleepTimeout;

@@ -154,9 +154,9 @@ static RudderServerConfigManager *_instance;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *configUrl = [NSString stringWithFormat:@"%@/sourceConfig", _rudderConfig.controlPlaneUrl];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", configUrl]];
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:configUrl]];
+    NSString *controlPlaneEndPoint = [NSString stringWithFormat:@"%@/sourceConfig", _rudderConfig.controlPlaneUrl];
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:controlPlaneEndPoint]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]] forHTTPHeaderField:@"Authorization"];
     

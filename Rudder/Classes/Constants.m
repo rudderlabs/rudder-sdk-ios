@@ -10,7 +10,7 @@
 @implementation Constants
 
 int const RudderConfigRefreshInterval = 2;
-NSString *const RudderBaseUrl = @"https://api.rudderlabs.com";
+NSString *const RudderDataPlaneUrl = @"https://api.rudderlabs.com";
 int const RudderFlushQueueSize = 30;
 int const RudderDBCountThreshold = 10000;
 int const RudderSleepTimeout = 10;
