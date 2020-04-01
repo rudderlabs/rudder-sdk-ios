@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        _endPointUrl = RudderBaseUrl;
+        _dataPlaneUrl = RudderDataPlaneUrl;
         _flushQueueSize = RudderFlushQueueSize;
         _dbCountThreshold = RudderDBCountThreshold;
         _sleepTimeout = RudderSleepTimeout;
@@ -23,13 +23,13 @@
         _configRefreshInterval = RudderConfigRefreshInterval;
         _trackLifecycleEvents = RudderTrackLifeCycleEvents;
         _recordScreenViews = RudderRecordScreenViews;
-        _configPlaneUrl = RudderConfigPlaneUrl;
+        _controlPlaneUrl = RudderControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-- (instancetype)init:(NSString *) endPointUrl
+- (instancetype)init:(NSString *) dataPlaneUrl
       flushQueueSize: (int) flushQueueSize
     dbCountThreshold: (int) dbCountThreshold
         sleepTimeOut: (int) sleepTimeout
@@ -37,11 +37,11 @@
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 recordScreenViews: (BOOL) recordScreenViews
-      configPlaneUrl: (NSString *) configPlaneUrl
+      controlPlaneUrl: (NSString *) controlPlaneUrl
 {
     self = [super init];
     if (self) {
-        _endPointUrl = endPointUrl;
+        _dataPlaneUrl = dataPlaneUrl;
         _flushQueueSize = flushQueueSize;
         _dbCountThreshold = dbCountThreshold;
         _sleepTimeout = sleepTimeout;
@@ -49,7 +49,7 @@ recordScreenViews: (BOOL) recordScreenViews
         _configRefreshInterval = configRefreshInteval;
         _trackLifecycleEvents = trackLifecycleEvents;
         _recordScreenViews = recordScreenViews;
-        _configPlaneUrl = configPlaneUrl;
+        _controlPlaneUrl = controlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;

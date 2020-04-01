@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
     RudderConfig *config;
 }
 
-- (instancetype) withEndPointUrl: (NSString*) endPointUrl;
+- (instancetype) withEndPointUrl : (NSString*) endPointUrl __attribute((deprecated("Use withDataPlaneUrl instead.")));
+- (instancetype) withDataPlaneUrl: (NSString*) dataPlaneUrl;
 - (instancetype) withFlushQueueSize: (int) flushQueueSize;
 - (instancetype) withDebug: (BOOL) debug;
 - (instancetype) withLoglevel: (int) logLevel;
@@ -27,7 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withConfigRefreshInteval: (int) configRefreshInterval;
 - (instancetype) withTrackLifecycleEvens: (BOOL) trackLifecycleEvents;
 - (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
-- (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl;
+- (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
+- (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
 - (instancetype) withFactory: (id <RudderIntegrationFactory> _Nonnull) factory;
 - (RudderConfig*) build;
 
