@@ -9,7 +9,8 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *END_URL = @"https://89aef425.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://89aef425.ngrok.io";
+static NSString *CONTROL_PLANE_URL = @"https://api.rudderlabs.com";
 static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
 
 @implementation _AppDelegate
@@ -19,8 +20,8 @@ static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
 {
     // Override point for customization after application launch.
     RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-    [builder withDataPlaneUrl:END_URL];
-    [builder withControlPlaneUrl:@"https://api.rudderlabs.com"];
+    [builder withDataPlaneUrl:DATA_PLANE_URL];
+    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withLoglevel:RudderLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
