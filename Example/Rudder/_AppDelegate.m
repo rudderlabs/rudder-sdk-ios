@@ -19,8 +19,8 @@ static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
 {
     // Override point for customization after application launch.
     RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-    [builder withEndPointUrl:END_URL];
-    [builder withConfigPlaneUrl:END_URL];
+    [builder withDataPlaneUrl:END_URL];
+    [builder withControlPlaneUrl:@"https://api.rudderlabs.com"];
     [builder withLoglevel:RudderLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];

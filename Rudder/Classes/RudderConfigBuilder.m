@@ -12,6 +12,14 @@
 
 @implementation RudderConfigBuilder
 
+- (instancetype) withEndPointUrl:(NSString *)endPointUrl{
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.dataPlaneUrl = endPointUrl;
+    return self;
+}
+
 - (instancetype) withDataPlaneUrl: (NSString*) dataPlaneUrl {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
@@ -91,6 +99,14 @@
         config = [[RudderConfig alloc] init];
     }
     config.recordScreenViews = recordScreenViews;
+    return self;
+}
+
+-(instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.controlPlaneUrl = configPlaneUrl;
     return self;
 }
 
