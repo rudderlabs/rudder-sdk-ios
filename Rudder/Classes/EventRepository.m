@@ -235,7 +235,7 @@ static EventRepository* _instance;
             [RudderLogger logDebug:@"Fetching events to flush to sever"];
             RudderDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
             if (dbMessage.messages.count > 0 && (sleepCount >= self->config.sleepTimeout)) {
-                NSString* payload = [self __getPayloadFromMessages:dbMessage.messages];
+                NSString* payload = [self __getPayloadFromMessages:dbMessage.messages messageIds:dbMessage.messageIds];
                 [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 if (payload != nil) {
                     NSString* response = [self __flushEventsToServer:payload];
@@ -255,7 +255,7 @@ static EventRepository* _instance;
     });
 }
 
-- (NSString*) __getPayloadFromMessages: (NSArray<NSString*>*) messages {
+- (NSString*) __getPayloadFromMessages: (NSMutableArray<NSString*>*) messages messageIds: (NSMutableArray<NSString*>*) messageIds{
     NSString* sentAt = [Utils getTimestamp];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
@@ -265,17 +265,31 @@ static EventRepository* _instance;
     [json appendString:@"{"];
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
-    for (int index = 0; index < messages.count; index++) {
+    int totalBatchSize = [Utils getUTF8Length:json] + 2;// we add 2 characters at the end
+    int index;
+    for (index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
         long length = message.length;
         message = [[NSMutableString alloc] initWithString:[message substringWithRange:NSMakeRange(0, (length-1))]];
-        [message appendFormat:@",\"sentAt\":\"%@\"}", sentAt];
-        [json appendString:message];
-        if (index != messages.count-1) {
-            [json appendString:@","];
+        [message appendFormat:@",\"sentAt\":\"%@\"},", sentAt];
+        // add message size to batch size
+        totalBatchSize += [Utils getUTF8Length:message];
+        // check totalBatchSize
+        if(totalBatchSize > MAX_BATCH_SIZE){
+            [RudderLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            break;
         }
+        [json appendString:message];
+    }
+    if([json characterAtIndex:[json length]-1] == ',') {
+        // remove trailing ','
+        [json deleteCharactersInRange:NSMakeRange([json length]-1, 1)];
     }
     [json appendString:@"]}"];
+    // remove all events which are not in the current batch
+    if(totalBatchSize > MAX_BATCH_SIZE) {
+        [messageIds removeObjectsInRange:NSMakeRange(index, messageIds.count-index)];
+    }
     
     return [json copy];
 }
@@ -335,6 +349,12 @@ static EventRepository* _instance;
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
+    
+    unsigned int messageLength = [Utils getUTF8Length:jsonString];
+    if (messageLength > MAX_EVENT_SIZE) {
+        [RudderLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
+        return;
+    }
     
     [self->dbpersistenceManager saveEvent:jsonString];
 }

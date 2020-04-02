@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) dump:(RudderMessage*) message;
 - (void) __initiateFactories;
 - (void) __initiateProcessor;
-- (NSString*) __getPayloadFromMessages: (NSArray*) messages;
+- (NSString*) __getPayloadFromMessages: (NSMutableArray*) messages messageIds: (NSMutableArray*) messageIds;
 - (NSString* _Nullable) __flushEventsToServer: (NSString*) payload;
 
 - (RudderConfig* _Nullable) getConfig;
