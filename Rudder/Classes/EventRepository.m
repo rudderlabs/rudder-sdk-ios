@@ -265,7 +265,7 @@ static EventRepository* _instance;
     [json appendString:@"{"];
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
-    int totalBatchSize = [Utils getUTF8Length:json] + 2;// we add 2 characters at the end
+    unsigned int totalBatchSize = [Utils getUTF8Length:json] + 2;// we add 2 characters at the end
     int index;
     for (index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
@@ -350,8 +350,8 @@ static EventRepository* _instance;
     
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
     
-    unsigned int messageLength = [Utils getUTF8Length:jsonString];
-    if (messageLength > MAX_EVENT_SIZE) {
+    unsigned int messageSize = [Utils getUTF8Length:jsonString];
+    if (messageSize > MAX_EVENT_SIZE) {
         [RudderLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         return;
     }
