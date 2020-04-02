@@ -235,12 +235,12 @@ static EventRepository* _instance;
             [RudderLogger logDebug:@"Fetching events to flush to sever"];
             RudderDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
             if (dbMessage.messages.count > 0 && (sleepCount >= self->config.sleepTimeout)) {
-                NSString* payload = [self __getPayloadFromMessages:dbMessage.messages messageIds:dbMessage.messageIds];
+                NSString* payload = [self __getPayloadFromMessages:dbMessage];
                 [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 if (payload != nil) {
                     NSString* response = [self __flushEventsToServer:payload];
                     [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
-                    [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messages.count]];
+                    [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                     if (response != nil && [response  isEqual: @"OK"]) {
                         [RudderLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
@@ -255,7 +255,10 @@ static EventRepository* _instance;
     });
 }
 
-- (NSString*) __getPayloadFromMessages: (NSMutableArray<NSString*>*) messages messageIds: (NSMutableArray<NSString*>*) messageIds{
+- (NSString*) __getPayloadFromMessages: (RudderDBMessage*)dbMessage{
+    NSMutableArray<NSString *>* messages = dbMessage.messages;
+    NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
+    NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
     NSString* sentAt = [Utils getTimestamp];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
     [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
@@ -280,16 +283,15 @@ static EventRepository* _instance;
             break;
         }
         [json appendString:message];
+        [batchMessageIds addObject:messageIds[index]];
     }
     if([json characterAtIndex:[json length]-1] == ',') {
         // remove trailing ','
         [json deleteCharactersInRange:NSMakeRange([json length]-1, 1)];
     }
     [json appendString:@"]}"];
-    // remove all events which are not in the current batch
-    if(totalBatchSize > MAX_BATCH_SIZE) {
-        [messageIds removeObjectsInRange:NSMakeRange(index, messageIds.count-index)];
-    }
+    // retain all events that are part of the current event
+    dbMessage.messageIds = batchMessageIds;
     
     return [json copy];
 }
