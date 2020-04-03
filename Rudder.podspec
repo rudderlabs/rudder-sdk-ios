@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Rudder'
-  s.version          = "1.0.1-beta.4"
+  s.version          = "1.0.1-beta.5"
   s.summary          = "Privacy and Security focused Segment-alternative. iOS SDK"
   s.description      = <<-DESC
   Rudder is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => "Apache", :file => "LICENSE" }
   s.author           = { "Rudderstack" => "arnab@rudderlabs.com" }
   s.platform         = :ios, "9.0"
-  s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :commit => "40224f0d2b7e2599e15f1ea7739fb01245fda642"}
+  s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :commit => "0693cc4cf017e6280f066a8c1f15283c27635f68"}
 
   s.ios.deployment_target = '8.0'
 
