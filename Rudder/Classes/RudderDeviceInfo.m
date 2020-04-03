@@ -32,6 +32,9 @@
     [tempDict setValue:_model forKey:@"model"];
     [tempDict setValue:_name forKey:@"name"];
     [tempDict setValue:_type forKey:@"type"];
+    if (_token != nil) {
+        [tempDict setValue:_token forKey:@"token"];
+    }
     
     return [tempDict copy];
 }

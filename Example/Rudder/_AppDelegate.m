@@ -9,12 +9,11 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://89aef425.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://f1bc4b69.ngrok.io";
 static NSString *CONTROL_PLANE_URL = @"https://api.rudderlabs.com";
 static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
 
 @implementation _AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -26,6 +25,9 @@ static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [RudderClient getInstance:WRITE_KEY config:[builder build]];
+    
+    [[[RudderClient sharedInstance] getContext] putDeviceToken:@"example_device_token"];
+    
     return YES;
 }
 
