@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) createSchema;
 -(void) saveEvent: (NSString*) message;
 -(void) clearEventFromDB: (int) messageId;
--(void) clearEventsFromDB: (NSArray*) messageIds;
+-(void) clearEventsFromDB: (NSMutableArray*) messageIds;
 -(RudderDBMessage*) fetchEventsFromDB:(int) count;
 -(int) getDBRecordCount;
 -(void) deleteAllEvents;

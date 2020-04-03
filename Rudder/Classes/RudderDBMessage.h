@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderDBMessage : NSObject
-    @property (nonatomic) NSArray<NSString *>* messages;
-    @property (nonatomic) NSArray<NSString *>* messageIds;
+    @property (nonatomic) NSMutableArray<NSString *>* messages;
+    @property (nonatomic) NSMutableArray<NSString *>* messageIds;
 @end
 
 NS_ASSUME_NONNULL_END
