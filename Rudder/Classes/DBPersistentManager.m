@@ -69,7 +69,7 @@
     
 }
 
-- (void)clearEventsFromDB:(NSArray<NSString *> *)messageIds {
+- (void)clearEventsFromDB:(NSMutableArray<NSString *> *)messageIds {
     NSMutableString *messageIdsCsv = [[NSMutableString alloc] init];
     for (int index = 0; index < messageIds.count; index++) {
         [messageIdsCsv appendString:messageIds[index]];
