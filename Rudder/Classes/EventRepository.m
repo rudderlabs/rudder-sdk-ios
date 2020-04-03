@@ -64,11 +64,8 @@ static EventRepository* _instance;
         [RudderLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RudderPreferenceManager getInstance];
         
-        [RudderLogger logDebug:@"EventRepository: initiating processor"];
-        [self __initiateProcessor];
-        
         [RudderLogger logDebug:@"EventRepository: initiating factories"];
-        [self __initiateFactories];
+        [self __initiateSDK];
         
         if (config.trackLifecycleEvents) {
             [RudderLogger logDebug:@"EventRepository: tracking application lifecycle"];
@@ -79,144 +76,85 @@ static EventRepository* _instance;
             [RudderLogger logDebug:@"EventRepository: starting automatic screen records"];
             [self __prepareScreenRecorder];
         }
-        
-        
-        
     }
     return self;
 }
 
-- (void) __checkApplicationUpdateStatus {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
-                              UIApplicationDidFinishLaunchingNotification,
-                              UIApplicationWillEnterForegroundNotification,
-                              UIApplicationWillTerminateNotification,
-                              UIApplicationWillResignActiveNotification,
-                              UIApplicationDidBecomeActiveNotification ]) {
-        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
-    }
+- (void) __initiateSDK {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int retryCount = 0;
+        while (self->isSDKInitialized == NO && retryCount <= 5) {
+            RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+            if (serverConfig != nil) {
+                // initiate the processor if the source is enabled
+                if  (serverConfig.isSourceEnabled) {
+                    [RudderLogger logDebug:@"EventRepository: initiating processor"];
+                    [self __initiateProcessor];
+                } else {
+                    [RudderLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
+                }
+                
+                // initiate the native SDK factories if destinations are present
+                if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
+                    [RudderLogger logDebug:@"EventRepository: initiating factories"];
+                    [self __initiateFactories: serverConfig.destinations];
+                } else {
+                    [RudderLogger logDebug:@"EventRepository: no device more present"];
+                }
+                self->isSDKInitialized = YES;
+            } else {
+                retryCount += 1;
+                [RudderLogger logDebug:@"server config is null. retrying in 10s."];
+                usleep(10000000);
+            }
+        }
+    });
 }
 
-- (void) handleAppStateNotification: (NSNotification*) notification {
-    if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
-        [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
-    } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
-        [self _applicationWillEnterForeground];
-    } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
-      [self _applicationDidEnterBackground];
-    }
-}
-
-- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    if (!self->config.trackLifecycleEvents) {
-        return;
-    }
-    NSString *previousVersion = [preferenceManager getBuildVersionCode];
-
-    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-
-    if (!previousVersion) {
-        [[RudderClient sharedInstance] track:@"Application Installed" properties:@{
-            @"version": currentVersion
-        }];
-    } else if (![currentVersion isEqualToString:previousVersion]) {
-        [[RudderClient sharedInstance] track:@"Application Updated" properties:@{
-            @"previous_version" : previousVersion ?: @"",
-            @"version": currentVersion
-        }];
-    }
-    
-    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @NO,
-        @"version" : currentVersion ?: @"",
-        @"referring_application" : launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @"",
-        @"url" : launchOptions[UIApplicationLaunchOptionsURLKey] ?: @"",
-    }];
-
-    [preferenceManager saveBuildVersionCode:currentVersion];
-}
-
-- (void)_applicationWillEnterForeground{
-    if (!self->config.trackLifecycleEvents) {
-        return;
-    }
-    
-    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @YES,
-    }];
-}
-
-- (void)_applicationDidEnterBackground {
-    if (!self->config.trackLifecycleEvents) {
-        return;
-    }
-    [[RudderClient sharedInstance] track:@"Application Backgrounded"];
-}
-
-- (void) __prepareScreenRecorder {
-    [UIViewController rudder_swizzleView];
-}
-
-- (void) __initiateFactories {
+- (void) __initiateFactories : (NSArray*) destinations {
     if (self->config == nil || config.factories == nil || config.factories.count == 0) {
         [RudderLogger logInfo:@"EventRepository: No native SDK is found in the config"];
         self->isFactoryInitialized = YES;
         return;
     } else {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            RudderClient *client = [RudderClient sharedInstance];
-            int retryCount = 0;
-            while (self->isFactoryInitialized == NO && retryCount <= 5) {
-                RudderServerConfigSource *serverConfig = [self->configManager getConfig];
-                
-                if (serverConfig != nil && serverConfig.destinations != nil) {
-                    NSArray *destinations = serverConfig.destinations;
-                    if (destinations.count == 0) {
-                        [RudderLogger logInfo:@"EventRepository: No native SDK factory is found in the server config"];
-                    } else {
-                        NSMutableDictionary<NSString*, RudderServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
-                        for (RudderServerDestination *destination in destinations) {
-                            [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
-                        }
-                        NSMutableDictionary<NSString*, id<RudderIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
-                        for (id<RudderIntegrationFactory> factory in self->config.factories) {
-                            RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
-                            if (destination != nil && destination.isDestinationEnabled == YES) {
-                                NSDictionary *destinationConfig = destination.destinationConfig;
-                                if (destinationConfig != nil) {
-                                    id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:self->config];
-                                    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
-                                    [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
-                                    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
-                                    // put native sdk initialization callback
-                                }
-                            }
-                        }
-                        self->integrationOperationMap = tempIntegrationOpDict;
+        if (destinations.count == 0) {
+            [RudderLogger logInfo:@"EventRepository: No native SDK factory is found in the server config"];
+        } else {
+            NSMutableDictionary<NSString*, RudderServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
+            for (RudderServerDestination *destination in destinations) {
+                [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
+            }
+            NSMutableDictionary<NSString*, id<RudderIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
+            for (id<RudderIntegrationFactory> factory in self->config.factories) {
+                RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
+                if (destination != nil && destination.isDestinationEnabled == YES) {
+                    NSDictionary *destinationConfig = destination.destinationConfig;
+                    if (destinationConfig != nil) {
+                        id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:[RudderClient sharedInstance] rudderConfig:self->config];
+                        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
+                        [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
+                        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
+                        // put native sdk initialization callback
                     }
-                    self->isFactoryInitialized = YES;
-                    @synchronized (self->eventReplayMessage) {
-                        [RudderLogger logDebug:@"replaying old messages with factory"];
-                        NSArray *tempMessages = [self->eventReplayMessage copy];
-                        if (tempMessages.count > 0) {
-                            for (RudderMessage *msg in tempMessages) {
-                                [self makeFactoryDump:msg];
-                            }
-                        }
-                        [self->eventReplayMessage removeAllObjects];
-                    }
-                } else {
-                    retryCount += 1;
-                    [RudderLogger logDebug:@"server config is null. retrying in 10s."];
-                    usleep(10000000);
                 }
             }
-        });
+            self->integrationOperationMap = tempIntegrationOpDict;
+        }
+        self->isFactoryInitialized = YES;
+        @synchronized (self->eventReplayMessage) {
+            [RudderLogger logDebug:@"replaying old messages with factory"];
+            NSArray *tempMessages = [self->eventReplayMessage copy];
+            if (tempMessages.count > 0) {
+                for (RudderMessage *msg in tempMessages) {
+                    [self makeFactoryDump:msg];
+                }
+            }
+            [self->eventReplayMessage removeAllObjects];
+        }
     }
 }
 
-- (void)__initiateProcessor {
+- (void) __initiateProcessor {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [RudderLogger logDebug:@"processor started"];
         
@@ -237,11 +175,11 @@ static EventRepository* _instance;
             if (dbMessage.messages.count > 0 && (sleepCount >= self->config.sleepTimeout)) {
                 NSString* payload = [self __getPayloadFromMessages:dbMessage];
                 [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
+                [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
                     NSString* response = [self __flushEventsToServer:payload];
                     [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
-                    [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                    if (response != nil && [response  isEqual: @"OK"]) {
+                    if (response != nil && [response isEqual: @"OK"]) {
                         [RudderLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
@@ -268,7 +206,7 @@ static EventRepository* _instance;
     [json appendString:@"{"];
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
-    unsigned int totalBatchSize = [Utils getUTF8Length:json] + 2;// we add 2 characters at the end
+    unsigned int totalBatchSize = [Utils getUTF8Length:json] + 2; // we add 2 characters at the end
     int index;
     for (index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
@@ -278,7 +216,7 @@ static EventRepository* _instance;
         // add message size to batch size
         totalBatchSize += [Utils getUTF8Length:message];
         // check totalBatchSize
-        if(totalBatchSize > MAX_BATCH_SIZE){
+        if(totalBatchSize > MAX_BATCH_SIZE) {
             [RudderLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
             break;
         }
@@ -409,5 +347,78 @@ static EventRepository* _instance;
 - (RudderConfig *)getConfig {
     return self->config;
 }
+    
+- (void) __checkApplicationUpdateStatus {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
+                              UIApplicationDidFinishLaunchingNotification,
+                              UIApplicationWillEnterForegroundNotification,
+                              UIApplicationWillTerminateNotification,
+                              UIApplicationWillResignActiveNotification,
+                              UIApplicationDidBecomeActiveNotification ]) {
+        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
+    }
+}
+
+- (void) handleAppStateNotification: (NSNotification*) notification {
+    if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
+        [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
+    } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
+        [self _applicationWillEnterForeground];
+    } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
+      [self _applicationDidEnterBackground];
+    }
+}
+
+- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    NSString *previousVersion = [preferenceManager getBuildVersionCode];
+
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+
+    if (!previousVersion) {
+        [[RudderClient sharedInstance] track:@"Application Installed" properties:@{
+            @"version": currentVersion
+        }];
+    } else if (![currentVersion isEqualToString:previousVersion]) {
+        [[RudderClient sharedInstance] track:@"Application Updated" properties:@{
+            @"previous_version" : previousVersion ?: @"",
+            @"version": currentVersion
+        }];
+    }
+    
+    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
+        @"from_background" : @NO,
+        @"version" : currentVersion ?: @"",
+        @"referring_application" : launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @"",
+        @"url" : launchOptions[UIApplicationLaunchOptionsURLKey] ?: @"",
+    }];
+
+    [preferenceManager saveBuildVersionCode:currentVersion];
+}
+
+- (void)_applicationWillEnterForeground{
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    
+    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
+        @"from_background" : @YES,
+    }];
+}
+
+- (void)_applicationDidEnterBackground {
+    if (!self->config.trackLifecycleEvents) {
+        return;
+    }
+    [[RudderClient sharedInstance] track:@"Application Backgrounded"];
+}
+
+- (void) __prepareScreenRecorder {
+    [UIViewController rudder_swizzleView];
+}
+
 
 @end
