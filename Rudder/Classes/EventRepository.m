@@ -40,6 +40,7 @@ static EventRepository* _instance;
         [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
         self->isFactoryInitialized = NO;
+        self->isSDKEnabled = YES;
         
         writeKey = _writeKey;
         config = _config;
@@ -87,19 +88,21 @@ static EventRepository* _instance;
             RudderServerConfigSource *serverConfig = [self->configManager getConfig];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                if  (serverConfig.isSourceEnabled) {
+                self->isSDKEnabled = serverConfig.isSourceEnabled;
+                if  (self->isSDKEnabled) {
                     [RudderLogger logDebug:@"EventRepository: initiating processor"];
                     [self __initiateProcessor];
+                    
+                    // initiate the native SDK factories if destinations are present
+                    if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
+                        [RudderLogger logDebug:@"EventRepository: initiating factories"];
+                        [self __initiateFactories: serverConfig.destinations];
+                    } else {
+                        [RudderLogger logDebug:@"EventRepository: no device more present"];
+                    }
                 } else {
                     [RudderLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
-                }
-                
-                // initiate the native SDK factories if destinations are present
-                if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                    [RudderLogger logDebug:@"EventRepository: initiating factories"];
-                    [self __initiateFactories: serverConfig.destinations];
-                } else {
-                    [RudderLogger logDebug:@"EventRepository: no device more present"];
+                    [dbpersistenceManager flushEventsFromDB];
                 }
                 self->isSDKInitialized = YES;
             } else {
@@ -283,6 +286,8 @@ static EventRepository* _instance;
 
 - (void) dump:(RudderMessage *)message {
     if (message == nil) return;
+    if (!self->isSDKEnabled) return;
+    
     message.integrations = @{@"All": @YES};
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];

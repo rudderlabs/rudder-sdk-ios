@@ -9,8 +9,8 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://80b1f3bb.ngrok.io";
-static NSString *CONTROL_PLANE_URL = @"https://80b1f3bb.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://6984b76e.ngrok.io";
+static NSString *CONTROL_PLANE_URL = @"https://6984b76e.ngrok.io";
 static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
 
 @implementation _AppDelegate
