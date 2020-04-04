@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) initiate: (NSString*) writeKey config: (RudderConfig*) config;
 - (void) dump:(RudderMessage*) message;
 - (void) reset;
-- (RudderConfig *) getConfig;
+- (RudderConfig* _Nullable) getConfig;
 
 @end
 

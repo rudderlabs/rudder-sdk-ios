@@ -64,7 +64,7 @@ static EventRepository* _instance;
         [RudderLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RudderPreferenceManager getInstance];
         
-        [RudderLogger logDebug:@"EventRepository: initiating factories"];
+        [RudderLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
         
         if (config.trackLifecycleEvents) {
