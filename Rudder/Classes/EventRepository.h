@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
     RudderPreferenceManager *preferenceManager;
     BOOL isFactoryInitialized;
     BOOL isSDKInitialized;
+    BOOL isSDKEnabled;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RudderConfig*) config;

@@ -148,8 +148,24 @@
     return count;
 }
 
-- (void)deleteAllEvents {
+- (void)flushEventsFromDB {
+    NSString *deleteSqlString = @"DELETE FROM events;";
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"deleteEventSql: %@", deleteSqlString]];
+    const char* deleteSql = [deleteSqlString UTF8String];
+    sqlite3_stmt *deleteStmt = nil;
+    if (sqlite3_prepare_v2(self->_database, deleteSql, -1, &deleteStmt, nil) == SQLITE_OK) {
+        if (sqlite3_step(deleteStmt) == SQLITE_DONE) {
+            // delete successful
+            [RudderLogger logDebug:@"Events deleted from DB"];
+        } else {
+            // delete failed
+            [RudderLogger logError:@"Event deletion error"];
+        }
+    } else {
+        // wrong statement
+    }
     
+    sqlite3_finalize(deleteStmt);
 }
 
 
