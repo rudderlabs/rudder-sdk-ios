@@ -9,9 +9,9 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://6984b76e.ngrok.io";
-static NSString *CONTROL_PLANE_URL = @"https://6984b76e.ngrok.io";
-static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
+static NSString *DATA_PLANE_URL = @"https://37815361.ngrok.io";
+static NSString *CONTROL_PLANE_URL = @"https://37815361.ngrok.io";
+static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 
 @implementation _AppDelegate
 
@@ -20,15 +20,19 @@ static NSString *WRITE_KEY = @"1Xk22tE75wUqDqCSFvFHqeiYCdT";
     // Override point for customization after application launch.
     RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
+//    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withLoglevel:RudderLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [RudderClient getInstance:WRITE_KEY config:[builder build]];
     
-    [[[RudderClient sharedInstance] getContext] putDeviceToken:@"example_device_token"];
+    [[[RudderClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
     
     return YES;
+}
+
+- (NSString*) getDeviceToken {
+    return @"example_device_token";
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
