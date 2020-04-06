@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
 -(RudderDBMessage*) fetchEventsFromDB:(int) count;
 -(int) getDBRecordCount;
--(void) deleteAllEvents;
+-(void) flushEventsFromDB;
 
 @end
 
