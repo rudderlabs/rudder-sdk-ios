@@ -30,6 +30,8 @@
     
     [[RudderClient sharedInstance] track:@"identified_track_event"];
     
+    [[RudderClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
+    
     [[RudderClient sharedInstance] reset];
     
     [[RudderClient sharedInstance] track:@"reset_track_event"];
