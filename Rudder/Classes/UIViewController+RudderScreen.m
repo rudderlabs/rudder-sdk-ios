@@ -47,7 +47,7 @@
         name = @"Unknown";
     }
     name = [name stringByReplacingOccurrencesOfString:@"ViewController" withString:@""];
-    [[RudderClient sharedInstance] screen:name properties:@{@"automatic": [[NSNumber alloc] initWithBool:YES]}];
+    [[RudderClient sharedInstance] screen:name properties:@{@"automatic": [[NSNumber alloc] initWithBool:YES], @"name": name}];
 
     [self rudder_viewDidAppear:animated];
 }
