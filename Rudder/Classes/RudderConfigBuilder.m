@@ -12,11 +12,19 @@
 
 @implementation RudderConfigBuilder
 
-- (instancetype) withEndPointUrl: (NSString*) endPointUrl {
+- (instancetype) withEndPointUrl:(NSString *)endPointUrl{
     if (config == nil) {
         config = [[RudderConfig alloc] init];
     }
-    config.endPointUrl = endPointUrl;
+    config.dataPlaneUrl = endPointUrl;
+    return self;
+}
+
+- (instancetype) withDataPlaneUrl: (NSString*) dataPlaneUrl {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.dataPlaneUrl = dataPlaneUrl;
     return self;
 }
 
@@ -30,11 +38,19 @@
 
 - (instancetype) withDebug: (BOOL) debug {
     [RudderLogger initiate:RudderLogLevelVerbose];
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.logLevel = RudderLogLevelVerbose;
     return self;
 }
 
 - (instancetype) withLoglevel: (int) logLevel {
     [RudderLogger initiate:logLevel];
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.logLevel = logLevel;
     return self;
 }
 
@@ -86,11 +102,19 @@
     return self;
 }
 
-- (instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
+-(instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
     if (config == nil) {
         config = [[RudderConfig alloc] init];
     }
-    config.configPlaneUrl = configPlaneUrl;
+    config.controlPlaneUrl = configPlaneUrl;
+    return self;
+}
+
+- (instancetype)withControlPlaneUrl:(NSString *)controlPlaneUrl {
+    if (config == nil) {
+        config = [[RudderConfig alloc] init];
+    }
+    config.controlPlaneUrl = controlPlaneUrl;
     return self;
 }
 

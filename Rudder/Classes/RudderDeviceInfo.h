@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSString* model;
 @property (nonatomic, readwrite) NSString* name;
 @property (nonatomic, readwrite) NSString* type;
+@property (nonatomic, readwrite) NSString* token;
 
 @end
 

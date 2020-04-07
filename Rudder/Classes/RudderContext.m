@@ -81,6 +81,10 @@
     _traits = traitsDict;
 }
 
+- (void)putDeviceToken:(NSString *)deviceToken {
+    _device.token = deviceToken;
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];

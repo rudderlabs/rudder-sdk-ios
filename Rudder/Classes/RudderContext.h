@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) updateTraits: (RudderTraits* _Nullable) traits;
 - (void) persistTraits;
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
+- (void) putDeviceToken: (NSString*) deviceToken;
 
 @end
 

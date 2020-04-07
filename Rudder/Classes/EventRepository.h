@@ -27,19 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *eventReplayMessage;
     RudderPreferenceManager *preferenceManager;
     BOOL isFactoryInitialized;
+    BOOL isSDKInitialized;
+    BOOL isSDKEnabled;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RudderConfig*) config;
 - (void) dump:(RudderMessage*) message;
-- (void) __initiateFactories;
-- (void) __initiateProcessor;
-- (NSString*) __getPayloadFromMessages: (NSArray*) messages;
-- (NSString* _Nullable) __flushEventsToServer: (NSString*) payload;
-
-- (RudderConfig* _Nullable) getConfig;
-
-- (void) makeFactoryDump: (RudderMessage*) message;
 - (void) reset;
+- (RudderConfig* _Nullable) getConfig;
 
 @end
 
