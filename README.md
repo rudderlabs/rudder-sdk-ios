@@ -12,7 +12,7 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 Rudder is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'Rudder', '1.0.1-beta.4'
+pod 'Rudder', '1.0.1'
 ```
 Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
 ```xcode
@@ -25,7 +25,7 @@ Put this code in your ```AppDelegate.m``` file under the method ```didFinishLaun
 
 ```xcode
 RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-[builder withEndPointUrl:<YOUR_DATA_PLANE_URL>];
+[builder withDataPlaneUrl:<YOUR_DATA_PLANE_URL>];
 [RudderClient getInstance:<YOUR_WRITE_KEY> config:[builder build]];
 ```
 A shared instance of ```RudderClient``` is accesible after the initialization by ```[RudderClient sharedInstance]```

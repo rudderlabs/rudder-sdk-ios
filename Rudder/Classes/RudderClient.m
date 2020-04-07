@@ -192,6 +192,10 @@ static EventRepository *_repository = nil;
     return [RudderElementCache getContext].device.identifier;
 }
 
+- (RudderContext*) getContext {
+    return [RudderElementCache getContext];
+}
+
 - (RudderConfig*)configuration {
     if (_repository == nil) {
         return nil;
