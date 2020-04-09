@@ -11,6 +11,14 @@
 
 @implementation RudderMessageBuilder
 
+- (instancetype) setPreviousId:(NSString *)previousId {
+    if(message == nil) {
+        message = [[RudderMessage alloc] init];
+    }
+    message.previousId = previousId;
+    return self;
+}
+
 - (instancetype) setEventName:(NSString *)eventName {
     if (message == nil) {
         message = [[RudderMessage alloc] init];

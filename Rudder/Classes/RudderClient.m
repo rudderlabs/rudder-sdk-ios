@@ -114,11 +114,39 @@ static EventRepository *_repository = nil;
     
 }
 
+-(void)aliasWithMessage:(RudderMessage *)message {
+    if(_repository != nil && message !=nil){
+        message.type = @"alias";
+        [_repository dump:message];
+    }
+}
+
+-(void) aliasWithBuilder:(RudderMessageBuilder *)builder {
+    [self aliasWithMessage:[builder build]];
+}
+
 - (void)alias:(NSString *)newId {
+    RudderMessageBuilder *builder =[[RudderMessageBuilder alloc] init];
+    [builder setUserId:newId];
+    [self aliasWithMessage:[builder build]];
+    
     
 }
 
 - (void)alias:(NSString *)newId options:(NSDictionary<NSString *,NSObject *> *)options {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setUserId:newId];
+    
+    RudderContext *rc = [RudderElementCache getContext];
+    NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+    
+    NSString *prevId = [traits objectForKey:@"userId"].description;
+    
+    [builder setPreviousId:prevId];
+    
+    [self aliasWithMessage:[builder build]];
+    
+
     
 }
 
