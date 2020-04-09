@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) setEventName: (NSString*) eventName;
 - (instancetype) setUserId: (NSString*) userId;
+- (instancetype) setPreviousId: (NSString*) previousId;
 - (instancetype) setPropertyDict: (NSDictionary<NSString*, NSObject*>*) property;
 - (instancetype) setProperty: (RudderProperty*) property;
 - (instancetype) setUserProperty: (NSDictionary<NSString*, NSObject*>*) userProperty;
