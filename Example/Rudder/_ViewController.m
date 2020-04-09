@@ -35,6 +35,7 @@
     [[RudderClient sharedInstance] reset];
     
     [[RudderClient sharedInstance] track:@"reset_track_event"];
+    [[RudderClient sharedInstance] alias:@"Ruchira_new"];
 }
 
 - (void)didReceiveMemoryWarning

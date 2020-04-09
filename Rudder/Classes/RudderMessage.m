@@ -20,6 +20,7 @@
         _channel = @"mobile";
         _context = [RudderElementCache getContext];
         _originalTimestamp = [Utils getTimestamp];
+        _previousId = [[NSString alloc]init];
         _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
@@ -38,6 +39,7 @@
     [tempDict setValue:_type forKey:@"type"];
     [tempDict setValue:_action forKey:@"action"];
     [tempDict setValue:_originalTimestamp forKey:@"originalTimestamp"];
+    [tempDict setValue:_previousId forKey:@"previousId"];
     [tempDict setValue:_anonymousId forKey:@"anonymousId"];
     if (_userId != nil) {
         [tempDict setValue:_userId forKey:@"userId"];
