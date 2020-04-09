@@ -10,6 +10,7 @@
 #import "EventRepository.h"
 #import "RudderMessageBuilder.h"
 #import "RudderElementCache.h"
+#import "RudderLogger.h"
 
 static RudderClient *_instance = nil;
 static EventRepository *_repository = nil;
@@ -116,6 +117,9 @@ static EventRepository *_repository = nil;
 
 -(void)aliasWithMessage:(RudderMessage *)message {
     if(_repository != nil && message !=nil){
+        // update cached traits and persist
+               [RudderElementCache updateTraitsDict:message.context.traits];
+               [RudderElementCache persistTraits];
         message.type = @"alias";
         [_repository dump:message];
     }
@@ -128,6 +132,21 @@ static EventRepository *_repository = nil;
 - (void)alias:(NSString *)newId {
     RudderMessageBuilder *builder =[[RudderMessageBuilder alloc] init];
     [builder setUserId:newId];
+    RudderContext *rc = [RudderElementCache getContext];
+    [RudderLogger logDebug:@"Ruchira traits"];
+    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", rc]];
+    
+       NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+      [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", traits]];
+       
+        NSObject *prevId = [traits objectForKey:@"anonymousId"];
+         NSString *stringPrevId = [NSString stringWithFormat:@"%@", prevId];
+         
+         [builder setPreviousId:stringPrevId];
+    RudderTraits* traitsCopy = [[RudderTraits alloc] init];
+    [traitsCopy setUserId:newId];
+     [builder setTraits:traitsCopy];
+    
     [self aliasWithMessage:[builder build]];
     
     
@@ -138,12 +157,20 @@ static EventRepository *_repository = nil;
     [builder setUserId:newId];
     
     RudderContext *rc = [RudderElementCache getContext];
+    [RudderLogger logDebug:@"Ruchira traits"];
+       [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", rc]];
     NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+      [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", traits]];
+    NSObject *prevId = [traits objectForKey:@"userId"];
     
-    NSString *prevId = [traits objectForKey:@"userId"].description;
+    NSString *stringPrevId = [NSString stringWithFormat:@"%@", prevId];
     
-    [builder setPreviousId:prevId];
-    
+    [builder setPreviousId:stringPrevId];
+      RudderOption *optionsObj = [[RudderOption alloc] initWithDict:options];
+    [builder setRudderOption:optionsObj];
+    RudderTraits* traitsCopy = [[RudderTraits alloc] init];
+    [traitsCopy setUserId:newId];
+     [builder setTraits:traitsCopy];
     [self aliasWithMessage:[builder build]];
     
 
