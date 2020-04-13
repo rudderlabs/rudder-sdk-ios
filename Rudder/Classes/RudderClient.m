@@ -103,16 +103,39 @@ static EventRepository *_repository = nil;
     [self screenWithBuilder:builder];
 }
 
+-(void)groupWithMessage:(RudderMessage *)message {
+    if(_repository != nil && message != nil){
+        message.type = @"group";
+        [_repository dump: message];
+    }
+}
+
+-(void)groupWithBuilder:(RudderMessageBuilder *)builder {
+    [self groupWithMessage:[builder build]];
+    
+}
+
 - (void)group:(NSString *)groupId{
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setGroupId:groupId];
+    [self groupWithMessage:[builder build]];
     
 }
 
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits {
+- (void)group:(NSString *)groupId traits:(NSDictionary *)traits {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+       [builder setGroupId:groupId];
+    [builder setGroupTraits:traits];
+       [self groupWithMessage:[builder build]];
     
 }
 
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits options:(NSDictionary<NSString *,NSObject *> *)options {
-    
+- (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RudderOption *)options {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+       [builder setGroupId:groupId];
+    [builder setGroupTraits:traits];
+    [builder setRudderOption:options];
+       [self groupWithMessage:[builder build]];
 }
 
 -(void)aliasWithMessage:(RudderMessage *)message {

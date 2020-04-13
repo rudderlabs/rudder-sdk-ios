@@ -21,6 +21,8 @@
         _context = [RudderElementCache getContext];
         _originalTimestamp = [Utils getTimestamp];
         _previousId = [[NSString alloc]init];
+        _groupId = [[NSString alloc]init];
+        _traits = [[NSDictionary alloc]init];
         _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
@@ -40,6 +42,8 @@
     [tempDict setValue:_action forKey:@"action"];
     [tempDict setValue:_originalTimestamp forKey:@"originalTimestamp"];
     [tempDict setValue:_previousId forKey:@"previousId"];
+    [tempDict setValue:_groupId forKey:@"groupId"];
+    [tempDict setValue:_traits forKey:@"traits"];
     [tempDict setValue:_anonymousId forKey:@"anonymousId"];
     if (_userId != nil) {
         [tempDict setValue:_userId forKey:@"userId"];

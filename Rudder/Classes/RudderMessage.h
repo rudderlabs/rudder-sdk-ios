@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSString* anonymousId;
 @property (atomic, readwrite) NSString* userId;
 @property (atomic, readwrite) NSString* previousId;
+@property (atomic, readwrite) NSString* groupId;
+@property (atomic, readwrite) NSDictionary* traits;
 @property (atomic, readwrite) NSString* event;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* properties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* userProperties;
