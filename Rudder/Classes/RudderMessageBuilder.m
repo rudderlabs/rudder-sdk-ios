@@ -19,6 +19,21 @@
     return self;
 }
 
+-(instancetype) setGroupId:(NSString *)groupId {
+    if(message == nil) {
+        message = [[RudderMessage alloc] init];
+    }
+    message.groupId = groupId;
+    return self;
+}
+
+-(instancetype) setGroupTraits:(NSDictionary *)groupTraits {
+    if(message == nil) {
+        message = [[RudderMessage alloc] init];
+    }
+    message.traits = groupTraits;
+    return self;
+}
 - (instancetype) setEventName:(NSString *)eventName {
     if (message == nil) {
         message = [[RudderMessage alloc] init];
