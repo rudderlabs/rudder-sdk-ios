@@ -102,7 +102,7 @@ static EventRepository* _instance;
                     }
                 } else {
                     [RudderLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
-                    [dbpersistenceManager flushEventsFromDB];
+                    [self->dbpersistenceManager flushEventsFromDB];
                 }
                 self->isSDKInitialized = YES;
             } else {
@@ -397,14 +397,14 @@ static EventRepository* _instance;
     [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @NO,
         @"version" : currentVersion ?: @"",
-        @"referring_application" : launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @"",
-        @"url" : launchOptions[UIApplicationLaunchOptionsURLKey] ?: @"",
+        @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
+        @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
     }];
 
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
 
-- (void)_applicationWillEnterForeground{
+- (void)_applicationWillEnterForeground {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
