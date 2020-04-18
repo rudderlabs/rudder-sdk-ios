@@ -32,7 +32,6 @@ static WKWebView *webView;
 
             [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
                 self->_userAgent = userAgent;
-                NSLog(@"++++++++++++++++++++++++++++ : %@", userAgent);
             }];
         });
         _locale = [Utils getLocale];
