@@ -95,14 +95,6 @@ static WKWebView *webView;
     _device.token = deviceToken;
 }
 
-- (NSString*) getLocalUAString {
-    return [[NSString alloc] initWithFormat:@"%@/%@ %@/%@ %@/%@",
-            _app.name, _app.version,
-            _device.model, _device.name,
-            _os.name, _os.version
-            ];
-}
-
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
@@ -110,7 +102,7 @@ static WKWebView *webView;
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
-    [tempDict setObject:_userAgent ?: [self getLocalUAString] forKey:@"userAgent"];
+    [tempDict setObject:_userAgent ?: @"unknown" forKey:@"userAgent"];
     [tempDict setObject:_locale forKey:@"locale"];
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
