@@ -8,6 +8,9 @@
 
 #import "RudderContext.h"
 #import "Utils.h"
+#import "RudderLogger.h"
+
+static WKWebView *webView;
 
 @implementation RudderContext
 
@@ -22,8 +25,21 @@
         _library = [[RudderLibraryInfo alloc] init];
         _os = [[RudderOSInfo alloc] init];
         _screen = [[RudderScreenInfo alloc] init];
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-        _userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        
+//        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+        [webView loadHTMLString:@"<html></html>" baseURL:nil];
+
+        [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
+            self->_userAgent = userAgent;
+            NSLog(@"++++++++++++++++++++++++++++ : %@", userAgent);
+//            dispatch_semaphore_signal(semaphore);
+        }];
+//        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+//        #if !__has_feature(objc_arc)
+//            dispatch_release(semaphore);
+//        #endif
+
         _locale = [Utils getLocale];
         _network = [[RudderNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
@@ -92,7 +108,9 @@
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
-    [tempDict setObject:_userAgent forKey:@"userAgent"];
+    if (_userAgent != nil) {
+        [tempDict setObject:_userAgent forKey:@"userAgent"];
+    }
     [tempDict setObject:_locale forKey:@"locale"];
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
