@@ -9,9 +9,9 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://37815361.ngrok.io";
-static NSString *CONTROL_PLANE_URL = @"https://37815361.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://c2de320e.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
+//static WKWebView *webView;
 
 @implementation _AppDelegate
 
@@ -20,13 +20,30 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
     // Override point for customization after application launch.
     RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-//    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withLoglevel:RudderLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [RudderClient getInstance:WRITE_KEY config:[builder build]];
     
     [[[RudderClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
+    
+//    webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+//    [webView loadHTMLString:@"<html></html>" baseURL:nil];
+//
+//    [webView evaluateJavaScript:@"navigator.appName" completionHandler:^(id __nullable appName, NSError * __nullable error) {
+//        NSLog(@"======================= : %@", appName);
+//        NSLog(@"======================= : %@", [error localizedDescription]);
+//        // Netscape
+//    }];
+//
+//    [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
+//        NSLog(@"======================= : %@", userAgent);
+//        NSLog(@"======================= : %@", [error localizedDescription]);
+//        // iOS 8.3
+//        // Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F70
+//        // iOS 9.0
+//        // Mozilla/5.0 (iPhone; CPU iPhone OS 9_0 like Mac OS X) AppleWebKit/601.1.32 (KHTML, like Gecko) Mobile/13A4254v
+//    }];
     
     return YES;
 }
