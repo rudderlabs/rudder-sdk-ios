@@ -26,20 +26,15 @@ static WKWebView *webView;
         _os = [[RudderOSInfo alloc] init];
         _screen = [[RudderScreenInfo alloc] init];
         
-//        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        webView = [[WKWebView alloc] initWithFrame:CGRectZero];
-        [webView loadHTMLString:@"<html></html>" baseURL:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+            [webView loadHTMLString:@"<html></html>" baseURL:nil];
 
-        [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
-            self->_userAgent = userAgent;
-            NSLog(@"++++++++++++++++++++++++++++ : %@", userAgent);
-//            dispatch_semaphore_signal(semaphore);
-        }];
-//        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-//        #if !__has_feature(objc_arc)
-//            dispatch_release(semaphore);
-//        #endif
-
+            [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
+                self->_userAgent = userAgent;
+                NSLog(@"++++++++++++++++++++++++++++ : %@", userAgent);
+            }];
+        });
         _locale = [Utils getLocale];
         _network = [[RudderNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
@@ -101,6 +96,14 @@ static WKWebView *webView;
     _device.token = deviceToken;
 }
 
+- (NSString*) getLocalUAString {
+    return [[NSString alloc] initWithFormat:@"%@/%@ %@/%@ %@/%@",
+            _app.name, _app.version,
+            _device.model, _device.name,
+            _os.name, _os.version
+            ];
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
@@ -108,9 +111,7 @@ static WKWebView *webView;
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
-    if (_userAgent != nil) {
-        [tempDict setObject:_userAgent forKey:@"userAgent"];
-    }
+    [tempDict setObject:_userAgent ?: [self getLocalUAString] forKey:@"userAgent"];
     [tempDict setObject:_locale forKey:@"locale"];
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
