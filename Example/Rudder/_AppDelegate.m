@@ -12,6 +12,7 @@
 static NSString *DATA_PLANE_URL = @"https://8dbdd6d4.ngrok.io";
 static NSString *CONTROL_PLANE_URL = @"https://986733ed.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
+//static WKWebView *webView;
 
 @implementation _AppDelegate
 
