@@ -32,11 +32,13 @@
     
     [[RudderClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
     
-    [[RudderClient sharedInstance] reset];
+//    [[RudderClient sharedInstance] reset];
     
     [[RudderClient sharedInstance] track:@"reset_track_event"];
-    //[[RudderClient sharedInstance] alias:@"Ruchira_new"];
-    [[RudderClient sharedInstance] group:@"GroupRuchira" traits:@{@"foo": @"bar", @"foo1": @"bar1", @"email": @"ruchira@gmail.com"}];
+    
+    [[RudderClient sharedInstance] alias:@"new_user_id"];
+    
+    [[RudderClient sharedInstance] group:@"sample_group_id" traits:@{@"foo": @"bar", @"foo1": @"bar1", @"email": @"ruchira@gmail.com"}];
 }
 
 - (void)didReceiveMemoryWarning
