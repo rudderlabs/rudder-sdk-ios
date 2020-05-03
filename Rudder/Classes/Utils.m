@@ -51,7 +51,7 @@
     return (unsigned int)[[message dataUsingEncoding:NSUTF8StringEncoding] length];
 }
 
-unsigned int MAX_EVENT_SIZE = 2*1024;
-unsigned int MAX_BATCH_SIZE = 5*1024;
+unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
+unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 
 @end
