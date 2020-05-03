@@ -32,28 +32,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) trackWithBuilder:(RudderMessageBuilder*) builder;
 - (void) track: (NSString*) eventName;
 - (void) track: (NSString*) eventName properties: (NSDictionary<NSString*, NSObject*>*) properties;
-- (void) track: (NSString *) eventName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *) options;
+- (void) track: (NSString *) eventName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *_Nullable) options;
 
 - (void) screenWithMessage:(RudderMessage*) message;
 - (void) screenWithBuilder:(RudderMessageBuilder*) builder;
 - (void) screen: (NSString*) screenName;
 - (void) screen: (NSString*) screenName properties: (NSDictionary<NSString*, NSObject*>*) properties;
-- (void) screen: (NSString *) screenName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *) options;
+- (void) screen: (NSString *) screenName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RudderOption *_Nullable) options;
 
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits options:(NSDictionary<NSString*, NSObject*>*)options;
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits;
-- (void)group:(NSString *)groupId;
+- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits ooptions:(RudderOption *_Nullable) options;
+- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits;
+- (void) group:(NSString *)groupId;
 
-- (void)alias:(NSString *)newId options:(NSDictionary<NSString*, NSObject*>*)options;
-- (void)alias:(NSString *)newId;
+- (void) alias:(NSString *)newId options:(RudderOption * _Nullable) options;
+- (void) alias:(NSString *)newId;
 
 - (void) pageWithMessage: (RudderMessage*) message;
 
 - (void) identifyWithMessage:(RudderMessage*) message;
 - (void) identifyWithBuilder:(RudderMessageBuilder*) builder;
-- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits options:(NSDictionary*)options;
-- (void)identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits;
-- (void)identify:(NSString *_Nullable)userId;
+- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits options:(RudderOption *_Nullable) options;
+- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits;
+- (void) identify:(NSString *_Nullable)userId;
 
 - (void)reset;
 

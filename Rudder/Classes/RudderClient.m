@@ -10,6 +10,7 @@
 #import "EventRepository.h"
 #import "RudderMessageBuilder.h"
 #import "RudderElementCache.h"
+#import "RudderLogger.h"
 
 static RudderClient *_instance = nil;
 static EventRepository *_repository = nil;
@@ -102,24 +103,87 @@ static EventRepository *_repository = nil;
     [self screenWithBuilder:builder];
 }
 
+-(void)groupWithMessage:(RudderMessage *)message {
+    if(_repository != nil && message != nil){
+        message.type = @"group";
+        [_repository dump: message];
+    }
+}
+
+-(void)groupWithBuilder:(RudderMessageBuilder *)builder {
+    [self groupWithMessage:[builder build]];
+    
+}
+
 - (void)group:(NSString *)groupId{
-    
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setGroupId:groupId];
+    [self groupWithMessage:[builder build]];
 }
 
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits {
-    
+- (void)group:(NSString *)groupId traits:(NSDictionary *)traits {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setGroupId:groupId];
+    [builder setGroupTraits:traits];
+    [self groupWithMessage:[builder build]];
 }
 
-- (void)group:(NSString *)groupId traits:(NSDictionary<NSString *,NSObject *> *)traits options:(NSDictionary<NSString *,NSObject *> *)options {
-    
+- (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RudderOption *)options {
+    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    [builder setGroupId:groupId];
+    [builder setGroupTraits:traits];
+    [builder setRudderOption:options];
+    [self groupWithMessage:[builder build]];
 }
+
+//-(void) aliasWithMessage:(RudderMessage *)message {
+//    if(_repository != nil && message !=nil){
+//        // update cached traits and persist
+//        [RudderElementCache updateTraitsDict:message.context.traits];
+//        [RudderElementCache persistTraits];
+//        message.type = @"alias";
+//        [_repository dump:message];
+//    }
+//}
+
+//-(void) aliasWithBuilder:(RudderMessageBuilder *)builder {
+//    [self aliasWithMessage:[builder build]];
+//}
 
 - (void)alias:(NSString *)newId {
-    
+    [self alias:newId options:nil];
 }
 
-- (void)alias:(NSString *)newId options:(NSDictionary<NSString *,NSObject *> *)options {
+- (void) alias:(NSString *)newId options:(RudderOption *) options {
+    RudderMessageBuilder *builder =[[RudderMessageBuilder alloc] init];
+    [builder setUserId:newId];
+    [builder setRudderOption:options];
     
+    RudderContext *rc = [RudderElementCache getContext];
+    NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+
+    NSObject *prevId = [traits objectForKey:@"userId"];
+    if(prevId == nil) {
+        prevId =[traits objectForKey:@"id"];
+    }
+    
+    if (prevId != nil) {
+        [builder setPreviousId:[NSString stringWithFormat:@"%@", prevId]];
+    }
+    traits[@"id"] = newId;
+    traits[@"userId"] = newId;
+    
+    [RudderElementCache updateTraitsDict:traits];
+    [RudderElementCache persistTraits];
+    
+    RudderMessage *message = [builder build];
+    [message updateTraitsDict:traits];
+    
+    message.type = @"alias";
+    if(_repository != nil && message !=nil){
+        message.type = @"alias";
+        [_repository dump:message];
+    }
 }
 
 - (void) pageWithMessage:(RudderMessage *)message {
