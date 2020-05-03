@@ -20,9 +20,10 @@
         _channel = @"mobile";
         _context = [RudderElementCache getContext];
         _originalTimestamp = [Utils getTimestamp];
-        _previousId = [[NSString alloc]init];
-        _groupId = [[NSString alloc]init];
-        _traits = [[NSDictionary alloc]init];
+        _previousId = nil;
+        _groupId = nil;
+        _traits = nil;
+        _userProperties = nil;
         _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
@@ -41,16 +42,26 @@
     [tempDict setValue:_type forKey:@"type"];
     [tempDict setValue:_action forKey:@"action"];
     [tempDict setValue:_originalTimestamp forKey:@"originalTimestamp"];
-    [tempDict setValue:_previousId forKey:@"previousId"];
-    [tempDict setValue:_groupId forKey:@"groupId"];
-    [tempDict setValue:_traits forKey:@"traits"];
+    if (_previousId != nil) {
+        [tempDict setValue:_previousId forKey:@"previousId"];
+    }
+    if (_groupId != nil) {
+        [tempDict setValue:_groupId forKey:@"groupId"];
+    }
+    if (_traits != nil) {
+        [tempDict setValue:_traits forKey:@"traits"];
+    }
     [tempDict setValue:_anonymousId forKey:@"anonymousId"];
     if (_userId != nil) {
         [tempDict setValue:_userId forKey:@"userId"];
     }
-    [tempDict setValue:_properties forKey:@"properties"];
+    if (_properties != nil) {
+        [tempDict setValue:_properties forKey:@"properties"];
+    }
     [tempDict setValue:_event forKey:@"event"];
-    [tempDict setValue:_userProperties forKey:@"userProperties"];
+    if (_userProperties != nil) {
+        [tempDict setValue:_userProperties forKey:@"userProperties"];
+    }
     [tempDict setValue:_integrations forKey:@"integrations"];
     
     return [tempDict copy];
@@ -64,5 +75,9 @@
 
 - (void)updateTraits:(RudderTraits *)traits {
     [_context updateTraits:traits];
+}
+
+- (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
+    [_context updateTraitsDict:traits];
 }
 @end

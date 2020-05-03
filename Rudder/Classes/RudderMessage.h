@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary<NSString*, NSObject*>*) dict;
 - (void) updateContext: (RudderContext*) context;
 - (void) updateTraits: (RudderTraits*) traits;
+- (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
 
 @end
 
