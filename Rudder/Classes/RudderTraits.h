@@ -55,11 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface Address : NSObject
+@interface RudderTraitsAddress : NSObject
 
 @end
 
-@interface Company : NSObject
+@interface RudderTraitsCompany : NSObject
 
 @end
 
