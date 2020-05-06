@@ -1,12 +1,12 @@
 //
 //  ProductListViewedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductListViewedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductListViewedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductListViewedEvent
 
@@ -15,7 +15,7 @@
     return self;
 }
 
-- (instancetype) withProduct:(ECommerceProduct *)product {
+- (instancetype) withProduct:(RSECommerceProduct *)product {
     if (_products == nil) {
         _products = [[NSMutableArray alloc] init];
     }
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (instancetype)withProducts:(NSArray<ECommerceProduct *> *)products {
+- (instancetype)withProducts:(NSArray<RSECommerceProduct *> *)products {
     if (_products == nil) {
         _products = [products mutableCopy];
     } else {
@@ -54,7 +54,7 @@
     
     if (_products != nil) {
         NSMutableArray *productArr = [[NSMutableArray alloc] init];
-        for (ECommerceProduct *product in _products) {
+        for (RSECommerceProduct *product in _products) {
             if (product != nil) {
                 [productArr addObject:[product dict]];
             }

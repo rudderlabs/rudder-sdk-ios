@@ -1,16 +1,16 @@
 //
 //  CheckoutStartedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CheckoutStartedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSCheckoutStartedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation CheckoutStartedEvent
 
-- (instancetype)withOrder:(ECommerceOrder *)order {
+- (instancetype)withOrder:(RSECommerceOrder *)order {
     _order = order;
     return self;
 }

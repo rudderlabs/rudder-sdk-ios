@@ -1,18 +1,18 @@
 //
-//  ECommerceProductBuilder.h
-//  RudderSDKCore
+//  RSECommerceProductBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceProduct.h"
+#import "RSECommerceProduct.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceProductBuilder : NSObject
+@interface RSECommerceProductBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceProduct *product;
+@property (nonatomic, strong) RSECommerceProduct *product;
 
 - (instancetype) withProductId: (NSString*) productId;
 - (instancetype) withSku: (NSString*) sku;
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withPosition: (int) position;
 - (instancetype) withUrl: (NSString*) url;
 - (instancetype) withImageUrl: (NSString*) imageUrl;
-- (ECommerceProduct*) build;
+- (RSECommerceProduct*) build;
 
 @end
 

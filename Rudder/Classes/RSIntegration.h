@@ -1,18 +1,18 @@
 //
-//  RudderIntegration.h
+//  RSIntegration.h
 //  Pods-DummyTestProject
 //
 //  Created by Arnab Pal on 22/10/19.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderMessage.h"
+#import "RSMessage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol RudderIntegration<NSObject>
+@protocol RSIntegration<NSObject>
 
-- (void) dump: (RudderMessage*) message;
+- (void) dump: (RSMessage*) message;
 - (void) reset;
 
 @end

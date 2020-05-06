@@ -1,30 +1,30 @@
 //
-//  RudderContext.m
-//  RudderSDKCore
+//  RSContext.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderContext.h"
-#import "Utils.h"
-#import "RudderLogger.h"
+#import "RSContext.h"
+#import "RSUtils.h"
+#import "RSLogger.h"
 
 static WKWebView *webView;
 
-@implementation RudderContext
+@implementation RSContext
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        self->preferenceManager = [RudderPreferenceManager getInstance];
+        self->preferenceManager = [RSPreferenceManager getInstance];
         
-        _app = [[RudderApp alloc] init];
-        _device = [[RudderDeviceInfo alloc] init];
-        _library = [[RudderLibraryInfo alloc] init];
-        _os = [[RudderOSInfo alloc] init];
-        _screen = [[RudderScreenInfo alloc] init];
+        _app = [[RSApp alloc] init];
+        _device = [[RSDeviceInfo alloc] init];
+        _library = [[RSLibraryInfo alloc] init];
+        _os = [[RSOSInfo alloc] init];
+        _screen = [[RSScreenInfo alloc] init];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             webView = [[WKWebView alloc] initWithFrame:CGRectZero];
@@ -35,7 +35,7 @@ static WKWebView *webView;
             }];
         });
         _locale = [Utils getLocale];
-        _network = [[RudderNetwork alloc] init];
+        _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
         
         NSString *traitsJson = [preferenceManager getTraits];
@@ -57,16 +57,16 @@ static WKWebView *webView;
 }
 
 - (void) createAndPersistTraits {
-    RudderTraits* traits = [[RudderTraits alloc] init];
+    RSTraits* traits = [[RSTraits alloc] init];
     traits.anonymousId = _device.identifier;
     _traits = [[traits dict]  mutableCopy];
     
     [self persistTraits];
 }
 
-- (void)updateTraits:(RudderTraits *)traits {
+- (void)updateTraits:(RSTraits *)traits {
     if(traits == nil) {
-        traits = [[RudderTraits alloc] init];
+        traits = [[RSTraits alloc] init];
         traits.anonymousId = _device.identifier;
     }
     

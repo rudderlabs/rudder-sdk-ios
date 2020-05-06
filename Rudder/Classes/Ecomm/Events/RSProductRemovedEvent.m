@@ -1,15 +1,15 @@
 //
 //  ProductRemovedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductRemovedEvent.h"
+#import "RSProductRemovedEvent.h"
 
 @implementation ProductRemovedEvent
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

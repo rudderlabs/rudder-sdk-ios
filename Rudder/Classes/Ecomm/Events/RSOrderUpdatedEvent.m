@@ -1,15 +1,15 @@
 //
 //  OrderUpdatedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "OrderUpdatedEvent.h"
+#import "RSOrderUpdatedEvent.h"
 
 @implementation OrderUpdatedEvent
 
-- (instancetype)withOrder:(ECommerceOrder *)order {
+- (instancetype)withOrder:(RSECommerceOrder *)order {
     _order = order;
     return self;
 }

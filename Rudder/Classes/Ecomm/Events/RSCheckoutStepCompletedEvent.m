@@ -1,15 +1,15 @@
 //
 //  CheckoutStepCompletedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CheckoutStepCompletedEvent.h"
+#import "RSCheckoutStepCompletedEvent.h"
 
 @implementation CheckoutStepCompletedEvent
 
-- (instancetype)withCheckout:(ECommerceCheckout *)checkout {
+- (instancetype)withCheckout:(RSECommerceCheckout *)checkout {
     _checkout = checkout;
     return self;
 }

@@ -1,31 +1,31 @@
 //
-//  RudderServerConfigManager.h
-//  RudderSDKCore
+//  RSServerConfigManager.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderServerConfigSource.h"
-#import "RudderConfig.h"
-#import "RudderPreferenceManager.h"
+#import "RSServerConfigSource.h"
+#import "RSConfig.h"
+#import "RSPreferenceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderServerConfigManager : NSObject {
+@interface RSServerConfigManager : NSObject {
     NSString *_writeKey;
-    RudderServerConfigSource *_serverConfig;
-    RudderConfig *_rudderConfig;
-    RudderPreferenceManager *_preferenceManager;
+    RSServerConfigSource *_serverConfig;
+    RSConfig *_rudderConfig;
+    RSPreferenceManager *_preferenceManager;
 }
 
-+ (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RudderConfig*) rudderConfig;
++ (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
 - (BOOL) _isServerConfigOutDated;
-- (RudderServerConfigSource* _Nullable) _retrieveConfig;
+- (RSServerConfigSource* _Nullable) _retrieveConfig;
 - (void) _downloadConfig;
-- (RudderServerConfigSource*) getConfig;
-- (RudderServerConfigSource*) _parseConfig: (NSString*) configStr;
+- (RSServerConfigSource*) getConfig;
+- (RSServerConfigSource*) _parseConfig: (NSString*) configStr;
 - (NSString*) _networkRequest;
 
 @end

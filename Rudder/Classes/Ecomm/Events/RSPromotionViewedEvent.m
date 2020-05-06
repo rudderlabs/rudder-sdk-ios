@@ -1,16 +1,16 @@
 //
 //  PromotionViewedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "PromotionViewedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSPromotionViewedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation PromotionViewedEvent
 
-- (instancetype)withPromotion:(ECommercePromotion *)promotion {
+- (instancetype)withPromotion:(RSECommercePromotion *)promotion {
     _promotion = promotion;
     return self;
 }

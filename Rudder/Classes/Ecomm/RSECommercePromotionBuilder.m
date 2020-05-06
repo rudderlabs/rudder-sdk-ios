@@ -1,13 +1,13 @@
 //
-//  ECommercePromotionBuilder.m
-//  RudderSDKCore
+//  RSECommercePromotionBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommercePromotionBuilder.h"
+#import "RSECommercePromotionBuilder.h"
 
-@implementation ECommercePromotionBuilder
+@implementation RSECommercePromotionBuilder
 
 - (instancetype)withPromotionId:(NSString *)promotionId {
     [self _initiate];
@@ -33,14 +33,14 @@
     return self;
 }
 
-- (ECommercePromotion *)build {
+- (RSECommercePromotion *)build {
     [self _initiate];
     return _promotion;
 }
 
 - (void) _initiate {
     if (_promotion == nil) {
-        _promotion = [[ECommercePromotion alloc] init];
+        _promotion = [[RSECommercePromotion alloc] init];
     }
 }
 

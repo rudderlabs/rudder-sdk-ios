@@ -1,15 +1,15 @@
 //
 //  ProductClickedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductClickedEvent.h"
+#import "RSProductClickedEvent.h"
 
 @implementation ProductClickedEvent
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

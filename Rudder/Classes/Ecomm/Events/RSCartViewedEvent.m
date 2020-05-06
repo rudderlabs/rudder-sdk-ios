@@ -1,16 +1,16 @@
 //
 //  CartViewedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CartViewedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSCartViewedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation CartViewedEvent
 
-- (instancetype)withCart:(ECommerceCart *)cart {
+- (instancetype)withCart:(RSECommerceCart *)cart {
     _cart = cart;
     return self;
 }

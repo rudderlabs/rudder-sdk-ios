@@ -1,13 +1,13 @@
 //
-//  ECommerceWishListBuilder.m
-//  RudderSDKCore
+//  RSECommerceWishListBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceWishListBuilder.h"
+#import "RSECommerceWishListBuilder.h"
 
-@implementation ECommerceWishListBuilder
+@implementation RSECommerceWishListBuilder
 
 - (instancetype)withWishListId:(NSString *)wishListId {
     [self _initiate];
@@ -21,14 +21,14 @@
     return self;
 }
 
-- (ECommerceWishList *)build {
+- (RSECommerceWishList *)build {
     [self _initiate];
     return _wishList;
 }
 
 - (void) _initiate {
     if (_wishList == nil) {
-        _wishList = [[ECommerceWishList alloc] init];
+        _wishList = [[RSECommerceWishList alloc] init];
     }
 }
 

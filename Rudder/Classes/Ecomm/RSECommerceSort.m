@@ -1,13 +1,13 @@
 //
-//  ECommerceSort.m
-//  RudderSDKCore
+//  RSECommerceSort.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceSort.h"
+#import "RSECommerceSort.h"
 
-@implementation ECommerceSort
+@implementation RSECommerceSort
 
 - (NSDictionary*) dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];

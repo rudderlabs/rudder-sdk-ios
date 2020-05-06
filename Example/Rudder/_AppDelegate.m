@@ -9,7 +9,7 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://8dbdd6d4.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://5431254a.ngrok.io";
 static NSString *CONTROL_PLANE_URL = @"https://986733ed.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 //static WKWebView *webView;
@@ -19,14 +19,14 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
+    RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-    [builder withLoglevel:RudderLogLevelDebug];
+    [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
-    [RudderClient getInstance:WRITE_KEY config:[builder build]];
+    [RSClient getInstance:WRITE_KEY config:[builder build]];
     
-    [[[RudderClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
+    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
     
     return YES;
 }

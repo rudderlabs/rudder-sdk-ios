@@ -1,25 +1,25 @@
 //
-//  ECommerceCheckoutBuilder.h
-//  RudderSDKCore
+//  RSECommerceCheckoutBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceCheckout.h"
+#import "RSECommerceCheckout.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceCheckoutBuilder : NSObject
+@interface RSECommerceCheckoutBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceCheckout* checkout;
+@property (nonatomic, strong) RSECommerceCheckout* checkout;
 
 - (instancetype) withCheckoutId: (NSString*) checkoutId;
 - (instancetype) withOrderId: (NSString*) orderId;
 - (instancetype) withStep: (int) step;
 - (instancetype) withShippingMethod: (NSString*) shippingMethod;
 - (instancetype) withPaymentMethod: (NSString*) paymentMethod;
-- (ECommerceCheckout*) build;
+- (RSECommerceCheckout*) build;
 
 @end
 

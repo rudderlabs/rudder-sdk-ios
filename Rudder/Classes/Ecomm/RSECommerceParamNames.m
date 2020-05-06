@@ -1,13 +1,13 @@
 //
-//  ECommerceParamNames.m
-//  RudderSDKCore
+//  RSECommerceParamNames.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 24/01/20.
 //
 
-#import "ECommerceParamNames.h"
+#import "RSECommerceParamNames.h"
 
-@implementation ECommerceParamNames
+@implementation RSECommerceParamNames
 
 NSString *const KeyQuery = @"query";
 NSString *const KeyPrice = @"price";

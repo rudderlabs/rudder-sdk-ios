@@ -1,53 +1,53 @@
 //
-//  RudderServerConfigManager.m
-//  RudderSDKCore
+//  RSServerConfigManager.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderServerConfigManager.h"
-#import "Utils.h"
-#import "RudderLogger.h"
-#import "RudderServerDestination.h"
-#import "Constants.h"
+#import "RSServerConfigManager.h"
+#import "RSUtils.h"
+#import "RSLogger.h"
+#import "RSServerDestination.h"
+#import "RSConstants.h"
 
-static RudderServerConfigManager *_instance;
+static RSServerConfigManager *_instance;
 
-@implementation RudderServerConfigManager
+@implementation RSServerConfigManager
 
-+ (instancetype)getInstance:(NSString *)writeKey rudderConfig:(RudderConfig *)rudderConfig {
++ (instancetype)getInstance:(NSString *)writeKey rudderConfig:(RSConfig *)rudderConfig {
     if (_instance == nil) {
-        [RudderLogger logDebug:@"Creating RudderServerConfigManager instance"];
-        _instance = [[RudderServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
+        [RSLogger logDebug:@"Creating RSServerConfigManager instance"];
+        _instance = [[RSServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
     }
     return _instance;
 }
 
-- (instancetype)init: (NSString*) _writeKey rudderConfig:(RudderConfig*) rudderConfig
+- (instancetype)init: (NSString*) _writeKey rudderConfig:(RSConfig*) rudderConfig
 {
     self = [super init];
     if (self) {
-        self->_preferenceManager = [RudderPreferenceManager getInstance];
+        self->_preferenceManager = [RSPreferenceManager getInstance];
         if (_writeKey == nil || [_writeKey isEqualToString:@""]) {
-            [RudderLogger logError:@"writeKey can not be null or empty"];
+            [RSLogger logError:@"writeKey can not be null or empty"];
         } else {
             self->_writeKey = _writeKey;
             self->_rudderConfig = rudderConfig;
             self->_serverConfig = [self _retrieveConfig];
             if (self->_serverConfig == nil) {
-                [RudderLogger logDebug:@"Server config is not present in preference storage. downloading config"];
+                [RSLogger logDebug:@"Server config is not present in preference storage. downloading config"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
                     [self _downloadConfig];
                 });
             } else {
                 if([self _isServerConfigOutDated]) {
-                    [RudderLogger logDebug:@"Server config is outdated. downloading config again"];
+                    [RSLogger logDebug:@"Server config is outdated. downloading config again"];
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
                         [self _downloadConfig];
                     });
                 } else {
-                    [RudderLogger logDebug:@"Server config found. Using existing config"];
+                    [RSLogger logDebug:@"Server config found. Using existing config"];
                 }
             }
         }
@@ -58,13 +58,13 @@ static RudderServerConfigManager *_instance;
 - (BOOL) _isServerConfigOutDated {
     long currentTime = [Utils getTimeStampLong];
     long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
     return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
-- (RudderServerConfigSource* _Nullable) _retrieveConfig {
+- (RSServerConfigSource* _Nullable) _retrieveConfig {
     NSString* configStr = [_preferenceManager getConfigJson];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {
         return nil;
     } else {
@@ -72,11 +72,11 @@ static RudderServerConfigManager *_instance;
     }
 }
 
-- (RudderServerConfigSource *)_parseConfig:(NSString *)configStr {
+- (RSServerConfigSource *)_parseConfig:(NSString *)configStr {
     NSError *error;
     NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     
-    RudderServerConfigSource *source;
+    RSServerConfigSource *source;
     if (error == nil && configDict != nil) {
         NSDictionary *sourceDict = [configDict objectForKey:@"source"];
         NSString *sourceId = [sourceDict objectForKey:@"id"];
@@ -87,7 +87,7 @@ static RudderServerConfigManager *_instance;
            isSourceEnabled = [sourceEnabled boolValue];
         }
         NSString *updatedAt = [sourceDict objectForKey:@"updatedAt"];
-        source = [[RudderServerConfigSource alloc] init];
+        source = [[RSServerConfigSource alloc] init];
         source.sourceId = sourceId;
         source.sourceName = sourceName;
         source.isSourceEnabled = isSourceEnabled;
@@ -97,7 +97,7 @@ static RudderServerConfigManager *_instance;
         NSMutableArray *destinations = [[NSMutableArray alloc] init];
         for (NSDictionary* destinationDict in destinationArr) {
             // create destination object
-            RudderServerDestination *destination = [[RudderServerDestination alloc] init];
+            RSServerDestination *destination = [[RSServerDestination alloc] init];
             destination.destinationId = [destinationDict objectForKey:@"id"];
             destination.destinationName = [destinationDict objectForKey:@"name"];
             NSNumber *destinationEnabled = [destinationDict objectForKey:@"enabled"];
@@ -108,7 +108,7 @@ static RudderServerConfigManager *_instance;
             destination.isDestinationEnabled = isDestinationEnabled;
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
             
-            RudderServerDestinationDefinition *destinationDefinition = [[RudderServerDestinationDefinition alloc] init];
+            RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
             NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];
             destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
             destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
@@ -121,7 +121,7 @@ static RudderServerConfigManager *_instance;
         }
         source.destinations = destinations;
     } else {
-        [RudderLogger logError:@"config deserializaion error"];
+        [RSLogger logError:@"config deserializaion error"];
     }
     
     return source;
@@ -139,12 +139,12 @@ static RudderServerConfigManager *_instance;
             
             self->_serverConfig = [self _parseConfig:configJson];
             
-            [RudderLogger logDebug:@"server config download successful"];
+            [RSLogger logDebug:@"server config download successful"];
             
             isDone = YES;
         } else {
             retryCount += 1;
-            [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
+            [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
             usleep(10000000 * retryCount);
         }
     }
@@ -155,7 +155,7 @@ static RudderServerConfigManager *_instance;
     
     __block NSString *responseStr = nil;
     NSString *controlPlaneEndPoint = [NSString stringWithFormat:@"%@/sourceConfig", _rudderConfig.controlPlaneUrl];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:controlPlaneEndPoint]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]] forHTTPHeaderField:@"Authorization"];
@@ -164,12 +164,12 @@ static RudderServerConfigManager *_instance;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"response status code: %ld", (long)httpResponse.statusCode]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"response status code: %ld", (long)httpResponse.statusCode]];
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
                 responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", responseStr]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", responseStr]];
             }
         }
         
@@ -185,7 +185,7 @@ static RudderServerConfigManager *_instance;
     return responseStr;
 }
 
-- (RudderServerConfigSource *)getConfig {
+- (RSServerConfigSource *)getConfig {
     if (self->_serverConfig == nil) {
         self->_serverConfig = [self _retrieveConfig];
     }

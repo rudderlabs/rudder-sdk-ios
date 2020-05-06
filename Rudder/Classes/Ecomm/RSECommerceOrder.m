@@ -1,15 +1,15 @@
 //
-//  ECommerceOrder.m
-//  RudderSDKCore
+//  RSECommerceOrder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceOrder.h"
+#import "RSECommerceOrder.h"
 
-@implementation ECommerceOrder
+@implementation RSECommerceOrder
 
-- (void)setProduct:(ECommerceProduct *)product {
+- (void)setProduct:(RSECommerceProduct *)product {
     if(_products == nil) {
         _products = [[NSMutableArray alloc] init];
     }
@@ -40,7 +40,7 @@
     }
     if (_products != nil) {
         NSMutableArray *tempProducts = [[NSMutableArray alloc] init];
-        for (ECommerceProduct *product in _products) {
+        for (RSECommerceProduct *product in _products) {
             if (product != nil) {
                 [tempProducts addObject:[product dict]];
             }

@@ -1,13 +1,13 @@
 //
-//  ECommerceProduct.m
-//  RudderSDKCore
+//  RSECommerceProduct.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceProduct.h"
+#import "RSECommerceProduct.h"
 
-@implementation ECommerceProduct
+@implementation RSECommerceProduct
 
 - (NSDictionary*) dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];

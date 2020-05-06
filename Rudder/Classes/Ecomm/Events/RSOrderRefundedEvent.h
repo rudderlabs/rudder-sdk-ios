@@ -1,25 +1,25 @@
 //
 //  OrderRefundedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceOrder.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceOrder.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OrderRefundedEvent : NSObject
 
-@property (nonatomic, strong) ECommerceOrder *order;
-@property (nonatomic, strong) NSMutableArray<ECommerceProduct*> *products;
+@property (nonatomic, strong) RSECommerceOrder *order;
+@property (nonatomic, strong) NSMutableArray<RSECommerceProduct*> *products;
 @property (nonatomic) float value;
 
-- (instancetype) withOrder: (ECommerceOrder*) order;
-- (instancetype) withProduct: (ECommerceProduct*) product;
-- (instancetype) withProducts: (NSArray<ECommerceProduct*>*) products;
+- (instancetype) withOrder: (RSECommerceOrder*) order;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
+- (instancetype) withProducts: (NSArray<RSECommerceProduct*>*) products;
 - (instancetype) withRefundValue: (float) value;
 
 - (nonnull NSString*) event;

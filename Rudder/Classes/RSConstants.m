@@ -1,21 +1,21 @@
 //
 //  Constants.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 27/01/20.
 //
 
-#import "Constants.h"
+#import "RSConstants.h"
 
-@implementation Constants
+@implementation RSConstants
 
-int const RudderConfigRefreshInterval = 2;
-NSString *const RudderDataPlaneUrl = @"https://hosted.rudderlabs.com";
-int const RudderFlushQueueSize = 30;
-int const RudderDBCountThreshold = 10000;
-int const RudderSleepTimeout = 10;
-NSString *const RudderControlPlaneUrl = @"https://api.rudderlabs.com";
-bool const RudderTrackLifeCycleEvents = YES;
-bool const RudderRecordScreenViews = NO;
+int const RSConfigRefreshInterval = 2;
+NSString *const RSDataPlaneUrl = @"https://hosted.rudderlabs.com";
+int const RSFlushQueueSize = 30;
+int const RSDBCountThreshold = 10000;
+int const RSSleepTimeout = 10;
+NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com";
+bool const RSTrackLifeCycleEvents = YES;
+bool const RSRecordScreenViews = NO;
 
 @end

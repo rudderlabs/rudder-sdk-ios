@@ -1,21 +1,21 @@
 //
-//  RudderMessage.h
-//  RudderSDKCore
+//  RSMessage.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderContext.h"
+#import "RSContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderMessage : NSObject
+@interface RSMessage : NSObject
 
 @property (atomic, readwrite) NSString* messageId;
 @property (atomic, readwrite) NSString* channel;
-@property (atomic, readwrite) RudderContext* context;
+@property (atomic, readwrite) RSContext* context;
 @property (atomic, readwrite) NSString* type;
 @property (atomic, readwrite) NSString* action;
 @property (atomic, readwrite) NSString* originalTimestamp;
@@ -31,8 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSString* destinationProps;
 
 - (NSDictionary<NSString*, NSObject*>*) dict;
-- (void) updateContext: (RudderContext*) context;
-- (void) updateTraits: (RudderTraits*) traits;
+- (void) updateContext: (RSContext*) context;
+- (void) updateTraits: (RSTraits*) traits;
 - (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
 
 @end

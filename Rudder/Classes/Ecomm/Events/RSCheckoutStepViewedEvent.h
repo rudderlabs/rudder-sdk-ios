@@ -1,21 +1,21 @@
 //
 //  CheckoutStepViewedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceCheckout.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceCheckout.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CheckoutStepViewedEvent : NSObject
 
-@property (nonatomic, strong) ECommerceCheckout *checkout;
+@property (nonatomic, strong) RSECommerceCheckout *checkout;
 
-- (instancetype) withCheckout: (ECommerceCheckout*) checkout;
+- (instancetype) withCheckout: (RSECommerceCheckout*) checkout;
 
 - (nonnull NSString*) event;
 - (nonnull NSDictionary*) properties;

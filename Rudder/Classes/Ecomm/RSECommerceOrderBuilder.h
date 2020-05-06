@@ -1,18 +1,18 @@
 //
-//  ECommerceOrderBuilder.h
-//  RudderSDKCore
+//  RSECommerceOrderBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceOrder.h"
+#import "RSECommerceOrder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceOrderBuilder : NSObject
+@interface RSECommerceOrderBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceOrder *order;
+@property (nonatomic, strong) RSECommerceOrder *order;
 
 - (instancetype) withOrderId: (NSString*) orderId;
 - (instancetype) withAffiliation: (NSString*) affiliation;
@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withDiscount: (float) discount;
 - (instancetype) withCoupon: (NSString*) coupon;
 - (instancetype) withCurrency: (NSString*) currency;
-- (instancetype) withProducts: (NSMutableArray<ECommerceProduct*>*) products;
-- (instancetype) withProduct: (ECommerceProduct*) product;
-- (ECommerceOrder*) build;
+- (instancetype) withProducts: (NSMutableArray<RSECommerceProduct*>*) products;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
+- (RSECommerceOrder*) build;
 
 
 @end

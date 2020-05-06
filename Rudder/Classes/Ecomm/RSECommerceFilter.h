@@ -1,6 +1,6 @@
 //
-//  ECommerceFilter.h
-//  RudderSDKCore
+//  RSECommerceFilter.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceFilter : NSObject
+@interface RSECommerceFilter : NSObject
 
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic, strong) NSString* value;

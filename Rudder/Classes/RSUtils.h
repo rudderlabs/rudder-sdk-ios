@@ -1,9 +1,9 @@
 //
 //  Utils.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 18/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getLocale;
 + (NSString*) getDateString: (NSDate*) date;
 + (unsigned int) getUTF8Length: (NSString*) message;
+
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;
 

@@ -1,70 +1,70 @@
 //
-//  RudderLogger.m
-//  RudderSDKCore
+//  RSLogger.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderLogger.h"
+#import "RSLogger.h"
 
-static NSString *TAG = @"RudderSDKCore";
+static NSString *TAG = @"RSStack";
 static int logLevel;
 
-@implementation RudderLogger
+@implementation RSLogger
 
-int const RudderLogLevelVerbose = 5;
-int const RudderLogLevelDebug = 4;
-int const RudderLogLevelInfo = 3;
-int const RudderLogLevelWarning = 2;
-int const RudderLogLevelError = 1;
-int const RudderLogLevelNone = 0;
+int const RSLogLevelVerbose = 5;
+int const RSLogLevelDebug = 4;
+int const RSLogLevelInfo = 3;
+int const RSLogLevelWarning = 2;
+int const RSLogLevelError = 1;
+int const RSLogLevelNone = 0;
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        logLevel = RudderLogLevelError;
+        logLevel = RSLogLevelError;
     }
     return self;
 }
 
 + (void)initiate:(int)_logLevel {
-    if (_logLevel > RudderLogLevelVerbose) {
-        logLevel = RudderLogLevelVerbose;
-    } else if (_logLevel < RudderLogLevelNone) {
-        logLevel = RudderLogLevelNone;
+    if (_logLevel > RSLogLevelVerbose) {
+        logLevel = RSLogLevelVerbose;
+    } else if (_logLevel < RSLogLevelNone) {
+        logLevel = RSLogLevelNone;
     } else {
         logLevel = _logLevel;
     }
 }
 
 + (void)logVerbose:(NSString *)message {
-    if (logLevel >= RudderLogLevelVerbose) {
+    if (logLevel >= RSLogLevelVerbose) {
         NSLog(@"%@:Verbose:%@", TAG, message);
     }
 }
 
 + (void)logDebug:(NSString *)message {
-    if (logLevel >= RudderLogLevelDebug) {
+    if (logLevel >= RSLogLevelDebug) {
         NSLog(@"%@:Debug:%@", TAG, message);
     }
 }
 
 + (void)logInfo:(NSString *)message {
-    if (logLevel >= RudderLogLevelInfo) {
+    if (logLevel >= RSLogLevelInfo) {
         NSLog(@"%@:Info:%@", TAG, message);
     }
 }
 
 + (void)logWarn:(NSString *)message {
-    if (logLevel >= RudderLogLevelWarning) {
+    if (logLevel >= RSLogLevelWarning) {
         NSLog(@"%@:Warn:%@", TAG, message);
     }
 }
 
 + (void)logError:(NSString *)message {
-    if (logLevel >= RudderLogLevelError) {
+    if (logLevel >= RSLogLevelError) {
         NSLog(@"%@:Error:%@", TAG, message);
     }
 }

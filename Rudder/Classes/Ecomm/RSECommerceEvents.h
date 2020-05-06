@@ -1,6 +1,6 @@
 //
-//  ECommerceEvents.h
-//  RudderSDKCore
+//  RSECommerceEvents.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceEvents : NSObject
+@interface RSECommerceEvents : NSObject
 
 extern NSString *const ECommProductsSearched;
 extern NSString *const ECommProductListViewed;

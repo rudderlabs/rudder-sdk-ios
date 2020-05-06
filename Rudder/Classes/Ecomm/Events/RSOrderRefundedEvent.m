@@ -1,21 +1,21 @@
 //
 //  OrderRefundedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "OrderRefundedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSOrderRefundedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation OrderRefundedEvent
 
-- (instancetype)withOrder:(ECommerceOrder *)order {
+- (instancetype)withOrder:(RSECommerceOrder *)order {
     _order = order;
     return self;
 }
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     if (_products == nil) {
         _products = [[NSMutableArray alloc] init];
     }
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (instancetype)withProducts:(NSArray<ECommerceProduct *> *)products {
+- (instancetype)withProducts:(NSArray<RSECommerceProduct *> *)products {
     if (_products == nil) {
         _products = [products mutableCopy];
     } else {
@@ -52,7 +52,7 @@
     
     if (_products != nil) {
         NSMutableArray *productArr = [[NSMutableArray alloc] init];
-        for (ECommerceProduct *product in _products) {
+        for (RSECommerceProduct *product in _products) {
             if (product != nil) {
                 [productArr addObject:product.dict];
             }

@@ -1,36 +1,36 @@
 //
-//  RudderPreferenceManager.m
+//  RSPreferenceManager.m
 //  Pods-DummyTestProject
 //
 //  Created by Arnab Pal on 27/01/20.
 //
 
-#import "RudderPreferenceManager.h"
+#import "RSPreferenceManager.h"
 
-static RudderPreferenceManager *instance;
+static RSPreferenceManager *instance;
 
-@implementation RudderPreferenceManager
+@implementation RSPreferenceManager
 
-NSString *const RudderPrefsKey = @"rl_prefs";
-NSString *const RudderServerConfigKey = @"rl_server_config";
-NSString *const RudderServerLastUpdatedKey = @"rl_server_last_updated";
-NSString *const RudderTraitsKey = @"rl_traits";
-NSString *const RudderApplicationInfoKey = @"rl_application_info_key";
+NSString *const RSPrefsKey = @"rl_prefs";
+NSString *const RSServerConfigKey = @"rl_server_config";
+NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
+NSString *const RSTraitsKey = @"rl_traits";
+NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 
 + (instancetype)getInstance {
     if (instance == nil) {
-        instance = [[RudderPreferenceManager alloc] init];
+        instance = [[RSPreferenceManager alloc] init];
     }
     return instance;
 }
 
 - (void)updateLastUpdatedTime:(long)updatedTime {
-    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RudderServerLastUpdatedKey];
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSServerLastUpdatedKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (long)getLastUpdatedTime {
-    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RudderServerLastUpdatedKey];
+    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSServerLastUpdatedKey];
     if(updatedTime == nil) {
         return -1;
     } else {
@@ -39,30 +39,30 @@ NSString *const RudderApplicationInfoKey = @"rl_application_info_key";
 }
 
 - (void)saveConfigJson:(NSString *)configJson {
-    [[NSUserDefaults standardUserDefaults] setValue:configJson forKey:RudderServerConfigKey];
+    [[NSUserDefaults standardUserDefaults] setValue:configJson forKey:RSServerConfigKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)getConfigJson {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RudderServerConfigKey];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSServerConfigKey];
 }
 
 - (void)saveTraits:(NSString *)traits {
-    [[NSUserDefaults standardUserDefaults] setValue:traits forKey:RudderTraitsKey];
+    [[NSUserDefaults standardUserDefaults] setValue:traits forKey:RSTraitsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)getTraits {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RudderTraitsKey];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSTraitsKey];
 }
 
 - (void)saveBuildVersionCode:(NSString *)versionCode {
-    [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RudderApplicationInfoKey];
+    [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RSApplicationInfoKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)getBuildVersionCode {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RudderApplicationInfoKey];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
 }
 
 @end

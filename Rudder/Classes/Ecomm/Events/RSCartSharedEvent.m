@@ -1,21 +1,21 @@
 //
 //  CartSharedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CartSharedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSCartSharedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation CartSharedEvent
 
-- (instancetype)withCart:(ECommerceCart *)cart {
+- (instancetype)withCart:(RSECommerceCart *)cart {
     _cart = cart;
     return self;
 }
 
-- (instancetype)withCartBuilder:(ECommerceCartBuilder *)builder {
+- (instancetype)withCartBuilder:(RSECommerceCartBuilder *)builder {
     _cart = [builder build];
     return self;
 }
@@ -46,7 +46,7 @@
     NSArray *products = _cart.products;
     NSMutableArray *productArr = [[NSMutableArray alloc] init];
     if (products != nil) {
-        for (ECommerceProduct *product in products) {
+        for (RSECommerceProduct *product in products) {
             [productArr addObject:@{
                 KeyProductId: product.productId
             }];

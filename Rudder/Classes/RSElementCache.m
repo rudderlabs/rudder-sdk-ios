@@ -1,28 +1,28 @@
 //
-//  RudderElementCache.m
-//  RudderSDKCore
+//  RSElementCache.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderElementCache.h"
+#import "RSElementCache.h"
 
-static RudderContext* cachedContext;
+static RSContext* cachedContext;
 
-@implementation RudderElementCache
+@implementation RSElementCache
 
 + (void)initiate {
     if (cachedContext == nil) {
-        cachedContext = [[RudderContext alloc] init];
+        cachedContext = [[RSContext alloc] init];
     }
 }
 
-+ (RudderContext *)getContext {
++ (RSContext *)getContext {
     return cachedContext;
 }
 
-+ (void)updateTraits:(RudderTraits *)traits {
++ (void)updateTraits:(RSTraits *)traits {
     [cachedContext updateTraits:traits];
 }
 

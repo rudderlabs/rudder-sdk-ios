@@ -1,21 +1,21 @@
 //
 //  PromotionViewedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommercePromotion.h"
-#import "ECommerceEvents.h"
+#import "RSECommercePromotion.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PromotionViewedEvent : NSObject
 
-@property (nonatomic, strong) ECommercePromotion *promotion;
+@property (nonatomic, strong) RSECommercePromotion *promotion;
 
-- (instancetype) withPromotion: (ECommercePromotion*) promotion;
+- (instancetype) withPromotion: (RSECommercePromotion*) promotion;
 
 - (nonnull NSString*) event;
 - (nonnull NSDictionary*) properties;

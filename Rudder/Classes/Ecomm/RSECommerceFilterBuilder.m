@@ -1,13 +1,13 @@
 //
-//  ECommerceFilterBuilder.m
-//  RudderSDKCore
+//  RSECommerceFilterBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceFilterBuilder.h"
+#import "RSECommerceFilterBuilder.h"
 
-@implementation ECommerceFilterBuilder
+@implementation RSECommerceFilterBuilder
 
 - (instancetype)withType:(NSString *)type {
     [self _initiate];
@@ -21,14 +21,14 @@
     return self;
 }
 
-- (ECommerceFilter *)build {
+- (RSECommerceFilter *)build {
     [self _initiate];
     return _filter;
 }
 
 - (void) _initiate {
     if (_filter == nil) {
-        _filter = [[ECommerceFilter alloc] init];
+        _filter = [[RSECommerceFilter alloc] init];
     }
 }
 

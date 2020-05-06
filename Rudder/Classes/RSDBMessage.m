@@ -1,13 +1,13 @@
 //
-//  RudderDBMessage.m
-//  RudderSDKCore
+//  RSDBMessage.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 18/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderDBMessage.h"
+#import "RSDBMessage.h"
 
-@implementation RudderDBMessage
+@implementation RSDBMessage
 
 @end

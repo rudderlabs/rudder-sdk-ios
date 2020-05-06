@@ -1,13 +1,13 @@
 //
-//  ECommerceOrderBuilder.m
-//  RudderSDKCore
+//  RSECommerceOrderBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceOrderBuilder.h"
+#import "RSECommerceOrderBuilder.h"
 
-@implementation ECommerceOrderBuilder
+@implementation RSECommerceOrderBuilder
 
 - (instancetype)withOrderId:(NSString *)orderId {
     [self _initiate];
@@ -69,26 +69,26 @@
     return self;
 }
 
-- (instancetype)withProducts:(NSMutableArray<ECommerceProduct *> *)products {
+- (instancetype)withProducts:(NSMutableArray<RSECommerceProduct *> *)products {
     [self _initiate];
     _order.products = products;
     return self;
 }
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     [self _initiate];
     [_order setProduct:product];
     return self;
 }
 
-- (ECommerceOrder *)build {
+- (RSECommerceOrder *)build {
     [self _initiate];
     return _order;
 }
 
 - (void) _initiate {
     if (_order == nil) {
-        _order = [[ECommerceOrder alloc] init];
+        _order = [[RSECommerceOrder alloc] init];
     }
 }
 

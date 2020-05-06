@@ -1,21 +1,21 @@
 //
 //  ProductClickedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceProduct.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceProduct.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProductClickedEvent : NSObject
 
-@property (nonatomic, strong) ECommerceProduct *product;
+@property (nonatomic, strong) RSECommerceProduct *product;
 
-- (instancetype) withProduct: (ECommerceProduct*) product;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
 
 - (nonnull NSString*) event;
 - (nonnull NSDictionary*) properties;

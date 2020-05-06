@@ -1,25 +1,25 @@
 //
-//  RudderElementCache.h
-//  RudderSDKCore
+//  RSElementCache.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderContext.h"
+#import "RSContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderElementCache : NSObject
+@interface RSElementCache : NSObject
 
 + (void) initiate;
 
-+ (RudderContext*) getContext;
++ (RSContext*) getContext;
 
 + (NSString*) getAnonymousId;
 
-+ (void) updateTraits : (RudderTraits*) traits;
++ (void) updateTraits : (RSTraits*) traits;
 
 + (void) persistTraits;
 

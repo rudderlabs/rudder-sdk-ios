@@ -1,24 +1,24 @@
 //
 //  ProductSharedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceEvents.h"
-#import "ECommerceProduct.h"
+#import "RSECommerceEvents.h"
+#import "RSECommerceProduct.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProductSharedEvent : NSObject
 
-@property (nonatomic, strong) ECommerceProduct *product;
+@property (nonatomic, strong) RSECommerceProduct *product;
 @property (nonatomic, strong) NSString *socialChannel;
 @property (nonatomic, strong) NSString *shareMessage;
 @property (nonatomic, strong) NSString *recipient;
 
-- (instancetype) withProduct: (ECommerceProduct*) product;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
 - (instancetype) withSocialChannel: (NSString*) socialChannel;
 - (instancetype) withShareMessage: (NSString*) shareMessage;
 - (instancetype) withRecipient: (NSString*) recipient;

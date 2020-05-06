@@ -1,16 +1,16 @@
 //
 //  ProductAddedToCartEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductAddedToCartEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductAddedToCartEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductAddedToCartEvent
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

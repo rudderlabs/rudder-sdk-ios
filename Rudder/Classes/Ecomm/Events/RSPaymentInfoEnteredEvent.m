@@ -1,16 +1,16 @@
 //
 //  PaymentInfoEnteredEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "PaymentInfoEnteredEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSPaymentInfoEnteredEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation PaymentInfoEnteredEvent
 
-- (instancetype)withCheckout:(ECommerceCheckout *)checkout {
+- (instancetype)withCheckout:(RSECommerceCheckout *)checkout {
     _checkout = checkout;
     return self;
 }

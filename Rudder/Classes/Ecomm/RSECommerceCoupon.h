@@ -1,6 +1,6 @@
 //
-//  ECommerceCoupon.h
-//  RudderSDKCore
+//  RSECommerceCoupon.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceCoupon : NSObject
+@interface RSECommerceCoupon : NSObject
 
 @property (nonatomic, strong) NSString* cartId;
 @property (nonatomic, strong) NSString* orderId;

@@ -1,5 +1,5 @@
  //
-//  RudderPreferenceManager.h
+//  RSPreferenceManager.h
 //  Pods-DummyTestProject
 //
 //  Created by Arnab Pal on 27/01/20.
@@ -9,13 +9,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderPreferenceManager : NSObject
+@interface RSPreferenceManager : NSObject
 
-extern NSString *const RudderPrefsKey;
-extern NSString *const RudderServerConfigKey;
-extern NSString *const RudderServerLastUpdatedKey;
-extern NSString *const RudderTraitsKey;
-extern NSString *const RudderApplicationInfoKey;
+extern NSString *const RSPrefsKey;
+extern NSString *const RSServerConfigKey;
+extern NSString *const RSServerLastUpdatedKey;
+extern NSString *const RSTraitsKey;
+extern NSString *const RSApplicationInfoKey;
 
 + (instancetype) getInstance;
 

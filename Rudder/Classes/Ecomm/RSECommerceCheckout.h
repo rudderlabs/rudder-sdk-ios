@@ -1,6 +1,6 @@
 //
-//  ECommerceCheckout.h
-//  RudderSDKCore
+//  RSECommerceCheckout.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceCheckout : NSObject
+@interface RSECommerceCheckout : NSObject
 
 @property (nonatomic, strong) NSString* checkoutId;
 @property (nonatomic, strong) NSString* orderId;
