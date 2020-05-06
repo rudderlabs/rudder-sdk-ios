@@ -20,29 +20,34 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-//    [[RSClient sharedInstance] track:@"simple_track_event"];
-//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-//        @"key_1" : @"value_1",
-//        @"key_2" : @"value_2"
-//    }];
-    
+    [[RSClient sharedInstance] track:@"simple_track_event"];
+    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    }];
+
     [[RSClient sharedInstance] identify:@"test_user_id"];
-    
+    [[RSClient sharedInstance] identify:@"test_user_id"
+                                 traits:@{@"foo": @"bar",
+                                          @"foo1": @"bar1",
+                                          @"email": @"test@gmail.com"}
+    ];
+
     [[RSClient sharedInstance] track:@"identified_track_event"];
-    
-//    [[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
-    
-//    [[RSClient sharedInstance] reset];
-    
-//    [[RSClient sharedInstance] track:@"reset_track_event"];
-    
+
+    [[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
+
+    [[RSClient sharedInstance] reset];
+
+    [[RSClient sharedInstance] track:@"reset_track_event"];
+
     [[RSClient sharedInstance] alias:@"new_user_id"];
-    
+
     [[RSClient sharedInstance] group:@"sample_group_id"
-                                  traits:@{@"foo": @"bar",
-                                           @"foo1": @"bar1",
-                                           @"email": @"ruchira@gmail.com"}
-     ];
+                              traits:@{@"foo": @"bar",
+                                       @"foo1": @"bar1",
+                                       @"email": @"test@gmail.com"}
+    ];
 }
 
 - (void)didReceiveMemoryWarning
