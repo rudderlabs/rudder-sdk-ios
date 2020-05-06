@@ -1,21 +1,21 @@
 //
 //  ProductAddedToWishListEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductAddedToWishListEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductAddedToWishListEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductAddedToWishListEvent
 
-- (instancetype)withWishList:(ECommerceWishList *)wishList {
+- (instancetype)withWishList:(RSECommerceWishList *)wishList {
     _wishList = wishList;
     return self;
 }
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

@@ -1,15 +1,15 @@
 //
-//  ECommerceCart.m
+//  RSECommerceCart.m
 //  Adjust
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceCart.h"
+#import "RSECommerceCart.h"
 
-@implementation ECommerceCart
+@implementation RSECommerceCart
 
-- (void)setProduct: (ECommerceProduct *) product {
+- (void)setProduct: (RSECommerceProduct *) product {
     if (_products == nil) {
         _products = [[NSMutableArray alloc] init];
     }
@@ -23,7 +23,7 @@
     }
     if (_products != nil) {
         NSMutableArray *tempProductArr = [[NSMutableArray alloc] init];
-        for (ECommerceProduct *product in _products) {
+        for (RSECommerceProduct *product in _products) {
             [tempProductArr addObject:[product dict]];
         }
         [tempDict setValue:tempProductArr forKey:@"products"];

@@ -1,13 +1,13 @@
 //
-//  RudderTraitsBuilder.m
-//  RudderSDKCore
+//  RSTraitsBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderTraitsBuilder.h"
+#import "RSTraitsBuilder.h"
 
-@implementation RudderTraitsBuilder
+@implementation RSTraitsBuilder
 
 @end

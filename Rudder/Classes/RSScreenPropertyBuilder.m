@@ -1,28 +1,28 @@
 //
 //  ScreenPropertyBuilder.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "ScreenPropertyBuilder.h"
-#import "RudderLogger.h"
+#import "RSScreenPropertyBuilder.h"
+#import "RSLogger.h"
 
-@implementation ScreenPropertyBuilder
+@implementation RSScreenPropertyBuilder
 
 - (instancetype)setScreenName:(NSString *)screenName {
     if (self->property == nil) {
-        self->property = [[RudderProperty alloc] init];
+        self->property = [[RSProperty alloc] init];
     }
     [self->property put:@"name" value:screenName];
     return self;
 }
 
-- (RudderProperty *)build {
+- (RSProperty *)build {
     if (self->property == nil) {
-        [RudderLogger logError:@"screen name is not set. returning blank"];
-        self->property = [[RudderProperty alloc] init];
+        [RSLogger logError:@"screen name is not set. returning blank"];
+        self->property = [[RSProperty alloc] init];
     }
     return self->property;
 }

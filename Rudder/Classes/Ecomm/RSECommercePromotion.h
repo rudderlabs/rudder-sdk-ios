@@ -1,6 +1,6 @@
 //
-//  ECommercePromotion.h
-//  RudderSDKCore
+//  RSECommercePromotion.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommercePromotion : NSObject
+@interface RSECommercePromotion : NSObject
 
 @property (nonatomic, strong) NSString* promotionId;
 @property (nonatomic, strong) NSString* creative;

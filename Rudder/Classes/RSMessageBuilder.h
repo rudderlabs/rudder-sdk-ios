@@ -1,20 +1,20 @@
 //
-//  RudderMessageBuilder.h
-//  RudderSDKCore
+//  RSMessageBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderMessage.h"
-#import "RudderProperty.h"
-#import "RudderOption.h"
+#import "RSMessage.h"
+#import "RSProperty.h"
+#import "RSOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderMessageBuilder : NSObject {
-    RudderMessage* message;
+@interface RSMessageBuilder : NSObject {
+    RSMessage* message;
 }
 
 - (instancetype) setEventName: (NSString*) eventName;
@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) setGroupId: (NSString*) groupId;
 - (instancetype) setGroupTraits: (NSDictionary *) groupTraits;
 - (instancetype) setPropertyDict: (NSDictionary<NSString*, NSObject*>*) property;
-- (instancetype) setProperty: (RudderProperty*) property;
+- (instancetype) setProperty: (RSProperty*) property;
 - (instancetype) setUserProperty: (NSDictionary<NSString*, NSObject*>*) userProperty;
-- (instancetype) setRudderOption: (RudderOption*) option;
-- (instancetype) setTraits: (RudderTraits*) traits;
+- (instancetype) setRSOption: (RSOption*) option;
+- (instancetype) setTraits: (RSTraits*) traits;
 
-- (RudderMessage*) build;
+- (RSMessage*) build;
 
 @end
 

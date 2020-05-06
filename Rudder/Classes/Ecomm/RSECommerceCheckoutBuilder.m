@@ -1,13 +1,13 @@
 //
-//  ECommerceCheckoutBuilder.m
-//  RudderSDKCore
+//  RSECommerceCheckoutBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceCheckoutBuilder.h"
+#import "RSECommerceCheckoutBuilder.h"
 
-@implementation ECommerceCheckoutBuilder
+@implementation RSECommerceCheckoutBuilder
 
 - (instancetype)withCheckoutId:(NSString *)checkoutId {
     [self _initiate];
@@ -39,14 +39,14 @@
     return self;
 }
 
-- (ECommerceCheckout *)build {
+- (RSECommerceCheckout *)build {
     [self _initiate];
     return _checkout;
 }
 
 - (void) _initiate {
     if (_checkout == nil) {
-        _checkout = [[ECommerceCheckout alloc] init];
+        _checkout = [[RSECommerceCheckout alloc] init];
     }
 }
 

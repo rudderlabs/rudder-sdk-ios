@@ -1,40 +1,40 @@
 //
 //  EventRepository.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderMessage.h"
-#import "RudderServerConfigManager.h"
-#import "DBPersistentManager.h"
-#import "RudderConfig.h"
-#import "RudderPreferenceManager.h"
+#import "RSMessage.h"
+#import "RSServerConfigManager.h"
+#import "RSDBPersistentManager.h"
+#import "RSConfig.h"
+#import "RSPreferenceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EventRepository : NSObject {
+@interface RSEventRepository : NSObject {
     NSString* writeKey;
     NSString* authToken;
     NSString* anonymousIdToken;
-    RudderConfig* config;
-    DBPersistentManager* dbpersistenceManager;
-    RudderServerConfigManager* configManager;
+    RSConfig* config;
+    RSDBPersistentManager* dbpersistenceManager;
+    RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
-    NSMutableDictionary<NSString*, id<RudderIntegration>>* integrationOperationMap;
+    NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSMutableArray *eventReplayMessage;
-    RudderPreferenceManager *preferenceManager;
+    RSPreferenceManager *preferenceManager;
     BOOL isFactoryInitialized;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
 }
 
-+ (instancetype) initiate: (NSString*) writeKey config: (RudderConfig*) config;
-- (void) dump:(RudderMessage*) message;
++ (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
+- (void) dump:(RSMessage*) message;
 - (void) reset;
-- (RudderConfig* _Nullable) getConfig;
+- (RSConfig* _Nullable) getConfig;
 
 @end
 

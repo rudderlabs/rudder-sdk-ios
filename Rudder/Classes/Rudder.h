@@ -1,64 +1,65 @@
 //
-//  Rudder.h
+//  RS.h
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderClient.h"
-#import "RudderConfig.h"
-#import "RudderConfigBuilder.h"
-#import "RudderMessage.h"
-#import "RudderMessageBuilder.h"
-#import "ScreenPropertyBuilder.h"
-#import "RudderLogger.h"
+#import "RSClient.h"
+
+#import "RSConfig.h"
+#import "RSConfigBuilder.h"
+
+#import "RSMessage.h"
+#import "RSMessageBuilder.h"
+
+#import "RSLogger.h"
 
 // Ecommerce Section
-#import "ECommerceProductBuilder.h"
-#import "ECommerceFilterBuilder.h"
-#import "ECommerceSortBuilder.h"
-#import "ECommercePromotionBuilder.h"
-#import "ECommerceOrderBuilder.h"
-#import "ECommerceCheckoutBuilder.h"
-#import "ECommerceCouponBuilder.h"
-#import "ECommerceWishListBuilder.h"
+#import "RSECommerceProductBuilder.h"
+#import "RSECommerceFilterBuilder.h"
+#import "RSECommerceSortBuilder.h"
+#import "RSECommercePromotionBuilder.h"
+#import "RSECommerceOrderBuilder.h"
+#import "RSECommerceCheckoutBuilder.h"
+#import "RSECommerceCouponBuilder.h"
+#import "RSECommerceWishListBuilder.h"
 
+#import "RSProductSearchedEvent.h"
+#import "RSProductListViewedEvent.h"
+#import "RSProductListFilteredEvent.h"
+#import "RSPromotionViewedEvent.h"
+#import "RSPromotionClickedEvent.h"
+#import "RSProductClickedEvent.h"
+#import "RSProductViewedEvent.h"
+#import "RSProductAddedToCartEvent.h"
+#import "RSProductRemovedEvent.h"
+#import "RSCartViewedEvent.h"
+#import "RSCheckoutStartedEvent.h"
+#import "RSCheckoutStepViewedEvent.h"
+#import "RSCheckoutStepCompletedEvent.h"
+#import "RSPaymentInfoEnteredEvent.h"
+#import "RSOrderUpdatedEvent.h"
+#import "RSOrderCompletedEvent.h"
+#import "RSOrderRefundedEvent.h"
+#import "RSOrderCancelledEvent.h"
+#import "RSCouponEnteredEvent.h"
+#import "RSCouponAppliedEvent.h"
+#import "RSCouponDeniedEvent.h"
+#import "RSCouponRemovedEvent.h"
+#import "RSProductAddedToWishListEvent.h"
+#import "RSProductRemovedFromWishListEvent.h"
+#import "RSWishListProductAddedToCartEvent.h"
+#import "RSProductSharedEvent.h"
+#import "RSCartSharedEvent.h"
+#import "RSProductReviewedEvent.h"
 
-#import "ProductSearchedEvent.h"
-#import "ProductListViewedEvent.h"
-#import "ProductListFilteredEvent.h"
-#import "PromotionViewedEvent.h"
-#import "PromotionClickedEvent.h"
-#import "ProductClickedEvent.h"
-#import "ProductViewedEvent.h"
-#import "ProductAddedToCartEvent.h"
-#import "ProductRemovedEvent.h"
-#import "CartViewedEvent.h"
-#import "CheckoutStartedEvent.h"
-#import "CheckoutStepViewedEvent.h"
-#import "CheckoutStepCompletedEvent.h"
-#import "PaymentInfoEnteredEvent.h"
-#import "OrderUpdatedEvent.h"
-#import "OrderCompletedEvent.h"
-#import "OrderRefundedEvent.h"
-#import "OrderCancelledEvent.h"
-#import "CouponEnteredEvent.h"
-#import "CouponAppliedEvent.h"
-#import "CouponDeniedEvent.h"
-#import "CouponRemovedEvent.h"
-#import "ProductAddedToWishListEvent.h"
-#import "ProductRemovedFromWishListEvent.h"
-#import "WishListProductAddedToCartEvent.h"
-#import "ProductSharedEvent.h"
-#import "CartSharedEvent.h"
-#import "ProductReviewedEvent.h"
+//! Project version number for RS.
+FOUNDATION_EXPORT double RSVersionNumber;
 
-//! Project version number for Rudder.
-FOUNDATION_EXPORT double RudderVersionNumber;
+//! Project version string for RS.
+FOUNDATION_EXPORT const unsigned char RSVersionString[];
 
-//! Project version string for Rudder.
-FOUNDATION_EXPORT const unsigned char RudderVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Rudder/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <RS/PublicHeader.h>
 
 

@@ -1,13 +1,13 @@
 //
-//  ECommerceCouponBuilder.m
-//  RudderSDKCore
+//  RSECommerceCouponBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceCouponBuilder.h"
+#import "RSECommerceCouponBuilder.h"
 
-@implementation ECommerceCouponBuilder
+@implementation RSECommerceCouponBuilder
 
 - (instancetype)withCartId:(NSString *)cartId {
     [self _initiate];
@@ -45,14 +45,14 @@
     return self;
 }
 
-- (ECommerceCoupon *)build {
+- (RSECommerceCoupon *)build {
     [self _initiate];
     return _coupon;
 }
 
 - (void) _initiate {
     if (_coupon == nil) {
-        _coupon = [[ECommerceCoupon alloc] init];
+        _coupon = [[RSECommerceCoupon alloc] init];
     }
 }
 

@@ -1,12 +1,12 @@
 //
 //  ProductListFilteredEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductListFilteredEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductListFilteredEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductListFilteredEvent
 
@@ -15,7 +15,7 @@
     return self;
 }
 
-- (instancetype) withProduct:(ECommerceProduct *)product {
+- (instancetype) withProduct:(RSECommerceProduct *)product {
     if (_products == nil) {
         _products = [[NSMutableArray alloc] init];
     }
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (instancetype)withProducts:(NSArray<ECommerceProduct *> *)products {
+- (instancetype)withProducts:(NSArray<RSECommerceProduct *> *)products {
     if (_products == nil) {
         _products = [products mutableCopy];
     } else {
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (instancetype)withFilters:(NSArray<ECommerceFilter *> *)filters {
+- (instancetype)withFilters:(NSArray<RSECommerceFilter *> *)filters {
     if (_filters == nil) {
         _filters = [filters mutableCopy];
     } else {
@@ -46,7 +46,7 @@
     return self;
 }
 
-- (instancetype)withFilter:(ECommerceFilter *)filter {
+- (instancetype)withFilter:(RSECommerceFilter *)filter {
     if (_filters == nil) {
         _filters = [[NSMutableArray alloc] init];
     }
@@ -54,7 +54,7 @@
     return self;
 }
 
-- (instancetype)withSorts:(NSArray<ECommerceSort *> *)sorts {
+- (instancetype)withSorts:(NSArray<RSECommerceSort *> *)sorts {
     if (_sorts == nil) {
         _sorts = [sorts mutableCopy];
     } else {
@@ -63,7 +63,7 @@
     return self;
 }
 
-- (instancetype)withSort:(ECommerceSort *)sort {
+- (instancetype)withSort:(RSECommerceSort *)sort {
     if (_sorts == nil) {
         _sorts = [[NSMutableArray alloc] init];
     }
@@ -88,7 +88,7 @@
     
     if (_products != nil) {
         NSMutableArray *productArr = [[NSMutableArray alloc] init];
-        for (ECommerceProduct *product in _products) {
+        for (RSECommerceProduct *product in _products) {
             if (product != nil) {
                 [productArr addObject:[product dict]];
             }
@@ -98,7 +98,7 @@
     
     if (_sorts != nil) {
         NSMutableArray *sortsArr = [[NSMutableArray alloc] init];
-        for (ECommerceSort *sort in _sorts) {
+        for (RSECommerceSort *sort in _sorts) {
             if (sort != nil) {
                 [sortsArr addObject:[sort dict]];
             }
@@ -108,7 +108,7 @@
     
     if (_filters != nil) {
         NSMutableArray *filterArr = [[NSMutableArray alloc] init];
-        for (ECommerceFilter *filter in _filters) {
+        for (RSECommerceFilter *filter in _filters) {
             if (filter != nil) {
                 [filterArr addObject:[filter dict]];
             }

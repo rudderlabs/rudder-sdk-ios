@@ -1,13 +1,13 @@
 //
-//  ECommerceCoupon.m
-//  RudderSDKCore
+//  RSECommerceCoupon.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceCoupon.h"
+#import "RSECommerceCoupon.h"
 
-@implementation ECommerceCoupon
+@implementation RSECommerceCoupon
 
 - (NSDictionary*) dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];

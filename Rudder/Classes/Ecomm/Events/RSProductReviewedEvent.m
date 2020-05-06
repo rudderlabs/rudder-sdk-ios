@@ -1,16 +1,16 @@
 //
 //  ProductReviewedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductReviewedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductReviewedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductReviewedEvent
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

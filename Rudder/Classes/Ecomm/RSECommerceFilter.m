@@ -1,13 +1,13 @@
 //
-//  ECommerceFilter.m
-//  RudderSDKCore
+//  RSECommerceFilter.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceFilter.h"
+#import "RSECommerceFilter.h"
 
-@implementation ECommerceFilter
+@implementation RSECommerceFilter
 
 - (NSDictionary*) dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];

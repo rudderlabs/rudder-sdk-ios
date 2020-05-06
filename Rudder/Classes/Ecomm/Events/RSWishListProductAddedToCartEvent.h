@@ -1,29 +1,29 @@
 //
 //  WishListProductAddedToCartEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceWishList.h"
-#import "ECommerceProduct.h"
-#import "ECommerceCart.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceWishList.h"
+#import "RSECommerceProduct.h"
+#import "RSECommerceCart.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WishListProductAddedToCartEvent : NSObject
 
-@property (nonatomic, strong) ECommerceWishList *wishList;
-@property (nonatomic, strong) ECommerceProduct *product;
+@property (nonatomic, strong) RSECommerceWishList *wishList;
+@property (nonatomic, strong) RSECommerceProduct *product;
 @property (nonatomic, strong) NSString *cartId;
-@property (nonatomic, strong) ECommerceCart *cart;
+@property (nonatomic, strong) RSECommerceCart *cart;
 
-- (instancetype) withWishList: (ECommerceWishList*) wishList;
-- (instancetype) withProduct: (ECommerceProduct*) product;
+- (instancetype) withWishList: (RSECommerceWishList*) wishList;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
 - (instancetype) withCartId: (NSString*) cartId;
-- (instancetype) withCart: (ECommerceCart*) cart;
+- (instancetype) withCart: (RSECommerceCart*) cart;
 
 - (nonnull NSString*) event;
 - (nonnull NSDictionary*) properties;

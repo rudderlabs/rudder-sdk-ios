@@ -1,18 +1,18 @@
 //
-//  ECommerceCouponBuilder.h
-//  RudderSDKCore
+//  RSECommerceCouponBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceCoupon.h"
+#import "RSECommerceCoupon.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceCouponBuilder : NSObject
+@interface RSECommerceCouponBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceCoupon* coupon;
+@property (nonatomic, strong) RSECommerceCoupon* coupon;
 
 - (instancetype) withCartId: (NSString*) cartId;
 - (instancetype) withOrderId: (NSString*) orderId;
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withCouponName: (NSString*) couponName;
 - (instancetype) withDiscount: (float) discount;
 - (instancetype) withReason: (NSString*) reason;
-- (ECommerceCoupon*) build;
+- (RSECommerceCoupon*) build;
 
 @end
 

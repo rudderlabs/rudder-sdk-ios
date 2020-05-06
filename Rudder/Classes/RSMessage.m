@@ -1,16 +1,16 @@
 //
-//  RudderMessage.m
-//  RudderSDKCore
+//  RSMessage.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderMessage.h"
-#import "RudderElementCache.h"
-#import "Utils.h"
+#import "RSMessage.h"
+#import "RSElementCache.h"
+#import "RSUtils.h"
 
-@implementation RudderMessage
+@implementation RSMessage
 
 - (instancetype)init
 {
@@ -18,7 +18,7 @@
     if (self) {
         _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [Utils getTimeStampLong], [Utils getUniqueId]];
         _channel = @"mobile";
-        _context = [RudderElementCache getContext];
+        _context = [RSElementCache getContext];
         _originalTimestamp = [Utils getTimestamp];
         _previousId = nil;
         _groupId = nil;
@@ -67,13 +67,13 @@
     return [tempDict copy];
 }
 
-- (void)updateContext:(RudderContext *)context {
+- (void)updateContext:(RSContext *)context {
     if (context != nil) {
         self.context = context;
     }
 }
 
-- (void)updateTraits:(RudderTraits *)traits {
+- (void)updateTraits:(RSTraits *)traits {
     [_context updateTraits:traits];
 }
 

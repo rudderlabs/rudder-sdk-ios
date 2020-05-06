@@ -1,6 +1,6 @@
 //
-//  ECommerceSort.h
-//  RudderSDKCore
+//  RSECommerceSort.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceSort : NSObject
+@interface RSECommerceSort : NSObject
 
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic, strong) NSString* value;

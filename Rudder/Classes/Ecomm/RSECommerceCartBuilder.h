@@ -1,24 +1,24 @@
 //
-//  ECommerceCartBuilder.h
-//  RudderSDKCore
+//  RSECommerceCartBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceCart.h"
-#import "ECommerceProduct.h"
+#import "RSECommerceCart.h"
+#import "RSECommerceProduct.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceCartBuilder : NSObject
+@interface RSECommerceCartBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceCart* cart;
+@property (nonatomic, strong) RSECommerceCart* cart;
 
 - (instancetype) withCartId: (NSString *) cartId;
-- (instancetype) withProducts: (NSArray<ECommerceProduct*>*) products;
-- (instancetype) withProduct: (ECommerceProduct*) product;
-- (ECommerceCart*) build;
+- (instancetype) withProducts: (NSArray<RSECommerceProduct*>*) products;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
+- (RSECommerceCart*) build;
 
 @end
 

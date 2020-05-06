@@ -1,22 +1,22 @@
 //
-//  ECommerceWishListBuilder.h
-//  RudderSDKCore
+//  RSECommerceWishListBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceWishList.h"
+#import "RSECommerceWishList.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceWishListBuilder : NSObject
+@interface RSECommerceWishListBuilder : NSObject
 
-@property (nonatomic, strong) ECommerceWishList *wishList;
+@property (nonatomic, strong) RSECommerceWishList *wishList;
 
 - (instancetype) withWishListId: (NSString*) wishListId;
 - (instancetype) withWishListName: (NSString*) wishListName;
-- (ECommerceWishList*) build;
+- (RSECommerceWishList*) build;
 
 
 @end

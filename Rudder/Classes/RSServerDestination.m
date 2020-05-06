@@ -1,13 +1,13 @@
 //
-//  RudderServerDestination.m
-//  RudderSDKCore
+//  RSServerDestination.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderServerDestination.h"
+#import "RSServerDestination.h"
 
-@implementation RudderServerDestination
+@implementation RSServerDestination
 
 @end

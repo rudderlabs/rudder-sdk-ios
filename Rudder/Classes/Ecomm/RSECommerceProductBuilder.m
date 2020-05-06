@@ -1,13 +1,13 @@
 //
-//  ECommerceProductBuilder.m
-//  RudderSDKCore
+//  RSECommerceProductBuilder.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceProductBuilder.h"
+#import "RSECommerceProductBuilder.h"
 
-@implementation ECommerceProductBuilder
+@implementation RSECommerceProductBuilder
 
 - (instancetype)withProductId:(NSString *)productId {
     [self _initiate];
@@ -87,14 +87,14 @@
     return self;
 }
 
-- (ECommerceProduct *)build {
+- (RSECommerceProduct *)build {
     [self _initiate];
     return _product;
 }
 
 - (void) _initiate {
     if (_product == nil) {
-        _product = [[ECommerceProduct alloc] init];
+        _product = [[RSECommerceProduct alloc] init];
     }
 }
 

@@ -1,165 +1,146 @@
 //
-//  RudderClient.m
-//  RudderSDKCore
+//  RSClient.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderClient.h"
-#import "EventRepository.h"
-#import "RudderMessageBuilder.h"
-#import "RudderElementCache.h"
-#import "RudderLogger.h"
+#import "RSClient.h"
+#import "RSEventRepository.h"
+#import "RSMessageBuilder.h"
+#import "RSElementCache.h"
+#import "RSMessageType.h"
+#import "RSLogger.h"
 
-static RudderClient *_instance = nil;
-static EventRepository *_repository = nil;
+static RSClient *_instance = nil;
+static RSEventRepository *_repository = nil;
 
-@implementation RudderClient
+@implementation RSClient
 
 + (instancetype) getInstance {
     return _instance;
 }
 
 + (instancetype) getInstance:(NSString *)writeKey {
-    return [RudderClient getInstance:writeKey config:[[RudderConfig alloc] init]];
+    return [RSClient getInstance:writeKey config:[[RSConfig alloc] init]];
 }
 
-+ (instancetype) getInstance: (NSString *) writeKey config: (RudderConfig*) config {
++ (instancetype) getInstance: (NSString *) writeKey config: (RSConfig*) config {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
-            _repository = [EventRepository initiate:writeKey config:config];
+            _repository = [RSEventRepository initiate:writeKey config:config];
         });
     }
     return _instance;
 }
 
-- (void)trackMessage:(RudderMessage *)message {
+- (void) trackMessage:(RSMessage *)message {
+    [self dumpInternal:message type:RSTrack];
+}
+
+- (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
     if (_repository != nil && message != nil) {
-        message.type = @"track";
+        if (type == RSIdentify) {
+            [RSElementCache updateTraitsDict:message.context.traits];
+            [RSElementCache persistTraits];
+        }
+        
+        message.type = type;
         [_repository dump:message];
     }
 }
 
-- (void)trackWithBuilder:(RudderMessageBuilder *)builder{
-    [self trackMessage:[builder build]];
+- (void)trackWithBuilder:(RSMessageBuilder *)builder{
+    [self dumpInternal:[builder build] type:RSTrack];
 }
 
 - (void)track:(NSString *)eventName {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
-    [self trackMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSTrack];
 }
 
 - (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
     [builder setPropertyDict:properties];
-    [self trackMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSTrack];
 }
 
-- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RudderOption *)options {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
     [builder setPropertyDict:properties];
-    [builder setRudderOption:options];
-    [self trackMessage:[builder build]];
+    [builder setRSOption:options];
+    [self dumpInternal:[builder build] type:RSTrack];
 }
 
-- (void) screenWithMessage:(RudderMessage *)message {
-    if (_repository != nil && message != nil) {
-        message.type = @"screen";
-        [_repository dump:message];
-    }
+- (void) screenWithMessage:(RSMessage *)message {
+    [self dumpInternal:message type:RSScreen];
 }
 
-- (void)screenWithBuilder:(RudderMessageBuilder *)builder {
-    [self screenWithMessage:[builder build]];
+- (void)screenWithBuilder:(RSMessageBuilder *)builder {
+    [self dumpInternal:[builder build] type:RSScreen];
 }
 
 - (void)screen:(NSString *)screenName {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
     [property setValue:screenName forKey:@"name"];
     [builder setEventName:screenName];
     [builder setPropertyDict:property];
-    [self screenWithMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSScreen];
 }
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:screenName];
     [builder setPropertyDict:properties];
-    [self screenWithBuilder:builder];
+    [self dumpInternal:[builder build] type:RSScreen];
 }
 
-- (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RudderOption *)options {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+- (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:screenName];
     [builder setPropertyDict:properties];
-    [builder setRudderOption:options];
-    [self screenWithBuilder:builder];
-}
-
--(void)groupWithMessage:(RudderMessage *)message {
-    if(_repository != nil && message != nil){
-        message.type = @"group";
-        [_repository dump: message];
-    }
-}
-
--(void)groupWithBuilder:(RudderMessageBuilder *)builder {
-    [self groupWithMessage:[builder build]];
-    
+    [builder setRSOption:options];
+    [self dumpInternal:[builder build] type:RSScreen];
 }
 
 - (void)group:(NSString *)groupId{
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
-    [self groupWithMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSGroup];
 }
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
     [builder setGroupTraits:traits];
-    [self groupWithMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSGroup];
 }
 
-- (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RudderOption *)options {
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
+- (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RSOption *)options {
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
     [builder setGroupTraits:traits];
-    [builder setRudderOption:options];
-    [self groupWithMessage:[builder build]];
+    [builder setRSOption:options];
+    [self dumpInternal:[builder build] type:RSGroup];
 }
-
-//-(void) aliasWithMessage:(RudderMessage *)message {
-//    if(_repository != nil && message !=nil){
-//        // update cached traits and persist
-//        [RudderElementCache updateTraitsDict:message.context.traits];
-//        [RudderElementCache persistTraits];
-//        message.type = @"alias";
-//        [_repository dump:message];
-//    }
-//}
-
-//-(void) aliasWithBuilder:(RudderMessageBuilder *)builder {
-//    [self aliasWithMessage:[builder build]];
-//}
 
 - (void)alias:(NSString *)newId {
     [self alias:newId options:nil];
 }
 
-- (void) alias:(NSString *)newId options:(RudderOption *) options {
-    RudderMessageBuilder *builder =[[RudderMessageBuilder alloc] init];
+- (void) alias:(NSString *)newId options:(RSOption *) options {
+    RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
     [builder setUserId:newId];
-    [builder setRudderOption:options];
+    [builder setRSOption:options];
     
-    RudderContext *rc = [RudderElementCache getContext];
+    RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
 
     NSObject *prevId = [traits objectForKey:@"userId"];
@@ -173,79 +154,61 @@ static EventRepository *_repository = nil;
     traits[@"id"] = newId;
     traits[@"userId"] = newId;
     
-    [RudderElementCache updateTraitsDict:traits];
-    [RudderElementCache persistTraits];
+    [RSElementCache updateTraitsDict:traits];
+    [RSElementCache persistTraits];
     
-    RudderMessage *message = [builder build];
+    RSMessage *message = [builder build];
     [message updateTraitsDict:traits];
     
-    message.type = @"alias";
-    if(_repository != nil && message !=nil){
-        message.type = @"alias";
-        [_repository dump:message];
-    }
+    [self dumpInternal:message type:RSAlias];
 }
 
-- (void) pageWithMessage:(RudderMessage *)message {
-    if (_repository != nil && message != nil) {
-        message.type = @"page";
-        [_repository dump:message];
-    }
+- (void) pageWithMessage:(RSMessage *)message {
+    [RSLogger logWarn:@"Page call is no more supported for iOS source"];
 }
 
-- (void) identifyWithMessage:(RudderMessage *)message {
-    if (message != nil) {
-        // update cached traits and persist
-        [RudderElementCache updateTraitsDict:message.context.traits];
-        [RudderElementCache persistTraits];
-        
-        // set message type to identify
-        message.type = @"identify";
-        
-        if (_repository != nil) {
-            [_repository dump:message];
-        }
-    }
+- (void) identifyWithMessage:(RSMessage *)message {
+    [self dumpInternal:message type:RSIdentify];
 }
 
-- (void)identifyWithBuilder:(RudderMessageBuilder *)builder {
+- (void)identifyWithBuilder:(RSMessageBuilder *)builder {
     [self identifyWithMessage:[builder build]];
 }
 
 - (void)identify:(NSString*)userId {
-    RudderTraits* traitsCopy = [[RudderTraits alloc] init];
+    RSTraits* traitsCopy = [[RSTraits alloc] init];
     [traitsCopy setUserId:userId];
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-    [builder setEventName:@"identify"];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
+    [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsCopy];
-    [self identifyWithMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSIdentify];
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits {
-    RudderTraits* traitsObj = [[RudderTraits alloc] initWithDict: traits];
+    RSTraits* traitsObj = [[RSTraits alloc] initWithDict: traits];
     [traitsObj setUserId:userId];
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-    [builder setEventName:@"identify"];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
+    [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
-    [self identifyWithMessage:[builder build]];
+    [self dumpInternal:[builder build] type:RSIdentify];
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(NSDictionary *)options {
-    RudderTraits *traitsObj = [[RudderTraits alloc] initWithDict:traits];
+    RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
-    RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-    [builder setEventName:@"identify"];
+    RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
+    [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
-    RudderOption *optionsObj = [[RudderOption alloc] initWithDict:options];
-    [builder setRudderOption:optionsObj];
-    [self identifyWithMessage:[builder build]];
+    RSOption *optionsObj = [[RSOption alloc] initWithDict:options];
+    [builder setRSOption:optionsObj];
+    [self dumpInternal:[builder build] type:RSIdentify];
 }
 
 - (void)reset {
-    [RudderElementCache reset];
+    [RSElementCache reset];
     if (_repository != nil) {
         [_repository reset];
     }
@@ -253,14 +216,14 @@ static EventRepository *_repository = nil;
 
 - (NSString*)getAnonymousId {
     // returns anonymousId
-    return [RudderElementCache getContext].device.identifier;
+    return [RSElementCache getContext].device.identifier;
 }
 
-- (RudderContext*) getContext {
-    return [RudderElementCache getContext];
+- (RSContext*) getContext {
+    return [RSElementCache getContext];
 }
 
-- (RudderConfig*)configuration {
+- (RSConfig*)configuration {
     if (_repository == nil) {
         return nil;
     }

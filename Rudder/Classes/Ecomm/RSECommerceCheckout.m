@@ -1,13 +1,13 @@
 //
-//  ECommerceCheckout.m
-//  RudderSDKCore
+//  RSECommerceCheckout.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceCheckout.h"
+#import "RSECommerceCheckout.h"
 
-@implementation ECommerceCheckout
+@implementation RSECommerceCheckout
 
 - (NSDictionary *)dict {
     NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];

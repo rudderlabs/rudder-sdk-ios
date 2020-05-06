@@ -1,15 +1,15 @@
 //
 //  ProductListFilteredEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceProduct.h"
-#import "ECommerceSort.h"
-#import "ECommerceFilter.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceProduct.h"
+#import "RSECommerceSort.h"
+#import "RSECommerceFilter.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) withListId: (NSString*) listId;
 - (instancetype) withCategory: (NSString*) category;
-- (instancetype) withProducts: (NSArray<ECommerceProduct*>*) products;
-- (instancetype) withProduct: (ECommerceProduct*) product;
-- (instancetype) withFilters: (NSArray<ECommerceFilter*>*) filters;
-- (instancetype) withFilter: (ECommerceFilter*) filter;
-- (instancetype) withSorts: (NSArray<ECommerceSort*>*) sorts;
-- (instancetype) withSort: (ECommerceSort*) sort;
+- (instancetype) withProducts: (NSArray<RSECommerceProduct*>*) products;
+- (instancetype) withProduct: (RSECommerceProduct*) product;
+- (instancetype) withFilters: (NSArray<RSECommerceFilter*>*) filters;
+- (instancetype) withFilter: (RSECommerceFilter*) filter;
+- (instancetype) withSorts: (NSArray<RSECommerceSort*>*) sorts;
+- (instancetype) withSort: (RSECommerceSort*) sort;
 
 
 - (nonnull NSString*) event;

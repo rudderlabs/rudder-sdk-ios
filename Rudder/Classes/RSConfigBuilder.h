@@ -1,21 +1,21 @@
 //
-//  RudderConfigBuilder.h
-//  RudderSDKCore
+//  RSConfigBuilder.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "RudderConfig.h"
+#import "RSConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol RudderIntegrationFactory;
-@class RudderConfig;
+@protocol RSIntegrationFactory;
+@class RSConfig;
 
-@interface RudderConfigBuilder : NSObject  {
-    RudderConfig *config;
+@interface RSConfigBuilder : NSObject  {
+    RSConfig *config;
 }
 
 - (instancetype) withEndPointUrl : (NSString*) endPointUrl __attribute((deprecated("Use withDataPlaneUrl instead.")));
@@ -30,8 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
 - (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
 - (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
-- (instancetype) withFactory: (id <RudderIntegrationFactory> _Nonnull) factory;
-- (RudderConfig*) build;
+- (instancetype) withFactory: (id <RSIntegrationFactory> _Nonnull) factory;
+- (RSConfig*) build;
 
 @end
 

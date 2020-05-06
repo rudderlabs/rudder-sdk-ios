@@ -1,21 +1,21 @@
 //
 //  CheckoutStartedEvent.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "ECommerceOrder.h"
-#import "ECommerceEvents.h"
+#import "RSECommerceOrder.h"
+#import "RSECommerceEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CheckoutStartedEvent : NSObject
 
-@property (nonatomic, strong) ECommerceOrder *order;
+@property (nonatomic, strong) RSECommerceOrder *order;
 
-- (instancetype) withOrder: (ECommerceOrder*) order;
+- (instancetype) withOrder: (RSECommerceOrder*) order;
 
 - (nonnull NSString*) event;
 - (nonnull NSDictionary*) properties;

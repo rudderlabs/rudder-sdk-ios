@@ -1,6 +1,6 @@
 //
-//  ECommerceWishList.h
-//  RudderSDKCore
+//  RSECommerceWishList.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceWishList : NSObject
+@interface RSECommerceWishList : NSObject
 
 @property (nonatomic, strong) NSString* wishListId;
 @property (nonatomic, strong) NSString* wishListName;

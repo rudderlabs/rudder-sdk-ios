@@ -1,13 +1,13 @@
 //
-//  ECommerceWishList.m
-//  RudderSDKCore
+//  RSECommerceWishList.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceWishList.h"
+#import "RSECommerceWishList.h"
 
-@implementation ECommerceWishList
+@implementation RSECommerceWishList
 
 - (NSDictionary*) dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];

@@ -1,16 +1,16 @@
 //
-//  RudderTraits.h
-//  RudderSDKCore
+//  RSTraits.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderTraits : NSObject
+@interface RSTraits : NSObject
 
 @property (nonatomic, readwrite) NSString *anonymousId;
 @property (nonatomic) NSMutableDictionary<NSString*, NSObject*> *adderess;
@@ -55,11 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface RudderTraitsAddress : NSObject
+@interface RSTraitsAddress : NSObject
 
 @end
 
-@interface RudderTraitsCompany : NSObject
+@interface RSTraitsCompany : NSObject
 
 @end
 

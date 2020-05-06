@@ -1,14 +1,14 @@
 //
-//  RudderScreenInfo.m
-//  RudderSDKCore
+//  RSScreenInfo.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderScreenInfo.h"
+#import "RSScreenInfo.h"
 
-@implementation RudderScreenInfo
+@implementation RSScreenInfo
 
 - (instancetype)init
 {

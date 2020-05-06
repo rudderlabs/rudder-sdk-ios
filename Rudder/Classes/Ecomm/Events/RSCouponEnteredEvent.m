@@ -1,16 +1,16 @@
 //
 //  CouponEnteredEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CouponEnteredEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSCouponEnteredEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation CouponEnteredEvent
 
-- (instancetype)withCoupon:(ECommerceCoupon *)coupon {
+- (instancetype)withCoupon:(RSECommerceCoupon *)coupon {
     _coupon = coupon;
     return self;
 }

@@ -1,22 +1,22 @@
 //
 //  EventRepository.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "EventRepository.h"
-#import "RudderElementCache.h"
-#import "Utils.h"
-#import "RudderLogger.h"
-#import "UIViewController+RudderScreen.h"
+#import "RSEventRepository.h"
+#import "RSElementCache.h"
+#import "RSUtils.h"
+#import "RSLogger.h"
+#import "UIViewController+RSScreen.h"
 
-static EventRepository* _instance;
+static RSEventRepository* _instance;
 
-@implementation EventRepository
+@implementation RSEventRepository
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RudderConfig *) config {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
         _instance = [[self alloc] init:writeKey config:config];
     }
@@ -25,19 +25,19 @@ static EventRepository* _instance;
 }
 
 /*
- * constructor to be called from RudderClient internally.
+ * constructor to be called from RSClient internally.
  * -- tasks to be performed
  * 1. persist the value of config
- * 2. initiate RudderElementCache
+ * 2. initiate RSElementCache
  * 3. initiate DBPersistentManager for SQLite operations
- * 4. initiate RudderServerConfigManager
+ * 4. initiate RSServerConfigManager
  * 5. start processor thread
  * 6. initiate factories
  * */
-- (instancetype)init : (NSString*) _writeKey config:(RudderConfig*) _config {
+- (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
     self = [super init];
     if (self) {
-        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
         self->isFactoryInitialized = NO;
         self->isSDKEnabled = YES;
@@ -47,34 +47,34 @@ static EventRepository* _instance;
         
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
-        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
         
-        [RudderLogger logDebug:@"EventRepository: initiating element cache"];
-        [RudderElementCache initiate];
+        [RSLogger logDebug:@"EventRepository: initiating element cache"];
+        [RSElementCache initiate];
         
-        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RudderElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
         anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
-        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
         
-        [RudderLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
-        dbpersistenceManager = [[DBPersistentManager alloc] init];
+        [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
+        dbpersistenceManager = [[RSDBPersistentManager alloc] init];
         
-        [RudderLogger logDebug:@"EventRepository: initiating server config manager"];
-        configManager = [RudderServerConfigManager getInstance:writeKey rudderConfig:config];
+        [RSLogger logDebug:@"EventRepository: initiating server config manager"];
+        configManager = [RSServerConfigManager getInstance:writeKey rudderConfig:config];
         
-        [RudderLogger logDebug:@"EventRepository: initiating preferenceManager"];
-        self->preferenceManager = [RudderPreferenceManager getInstance];
+        [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
+        self->preferenceManager = [RSPreferenceManager getInstance];
         
-        [RudderLogger logDebug:@"EventRepository: initiating processor and factories"];
+        [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
         
         if (config.trackLifecycleEvents) {
-            [RudderLogger logDebug:@"EventRepository: tracking application lifecycle"];
+            [RSLogger logDebug:@"EventRepository: tracking application lifecycle"];
             [self __checkApplicationUpdateStatus];
         }
         
         if (config.recordScreenViews) {
-            [RudderLogger logDebug:@"EventRepository: starting automatic screen records"];
+            [RSLogger logDebug:@"EventRepository: starting automatic screen records"];
             [self __prepareScreenRecorder];
         }
     }
@@ -85,29 +85,29 @@ static EventRepository* _instance;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         int retryCount = 0;
         while (self->isSDKInitialized == NO && retryCount <= 5) {
-            RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+            RSServerConfigSource *serverConfig = [self->configManager getConfig];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
                 self->isSDKEnabled = serverConfig.isSourceEnabled;
                 if  (self->isSDKEnabled) {
-                    [RudderLogger logDebug:@"EventRepository: initiating processor"];
+                    [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [self __initiateProcessor];
                     
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                        [RudderLogger logDebug:@"EventRepository: initiating factories"];
+                        [RSLogger logDebug:@"EventRepository: initiating factories"];
                         [self __initiateFactories: serverConfig.destinations];
                     } else {
-                        [RudderLogger logDebug:@"EventRepository: no device more present"];
+                        [RSLogger logDebug:@"EventRepository: no device more present"];
                     }
                 } else {
-                    [RudderLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
+                    [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
                     [self->dbpersistenceManager flushEventsFromDB];
                 }
                 self->isSDKInitialized = YES;
             } else {
                 retryCount += 1;
-                [RudderLogger logDebug:@"server config is null. retrying in 10s."];
+                [RSLogger logDebug:@"server config is null. retrying in 10s."];
                 usleep(10000000);
             }
         }
@@ -116,27 +116,27 @@ static EventRepository* _instance;
 
 - (void) __initiateFactories : (NSArray*) destinations {
     if (self->config == nil || config.factories == nil || config.factories.count == 0) {
-        [RudderLogger logInfo:@"EventRepository: No native SDK is found in the config"];
+        [RSLogger logInfo:@"EventRepository: No native SDK is found in the config"];
         self->isFactoryInitialized = YES;
         return;
     } else {
         if (destinations.count == 0) {
-            [RudderLogger logInfo:@"EventRepository: No native SDK factory is found in the server config"];
+            [RSLogger logInfo:@"EventRepository: No native SDK factory is found in the server config"];
         } else {
-            NSMutableDictionary<NSString*, RudderServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
-            for (RudderServerDestination *destination in destinations) {
+            NSMutableDictionary<NSString*, RSServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
+            for (RSServerDestination *destination in destinations) {
                 [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
             }
-            NSMutableDictionary<NSString*, id<RudderIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
-            for (id<RudderIntegrationFactory> factory in self->config.factories) {
-                RudderServerDestination *destination = [destinationDict objectForKey:factory.key];
+            NSMutableDictionary<NSString*, id<RSIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
+            for (id<RSIntegrationFactory> factory in self->config.factories) {
+                RSServerDestination *destination = [destinationDict objectForKey:factory.key];
                 if (destination != nil && destination.isDestinationEnabled == YES) {
                     NSDictionary *destinationConfig = destination.destinationConfig;
                     if (destinationConfig != nil) {
-                        id<RudderIntegration> nativeOp = [factory initiate:destinationConfig client:[RudderClient sharedInstance] rudderConfig:self->config];
-                        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
+                        id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:[RSClient sharedInstance] rudderConfig:self->config];
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
                         [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
-                        [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
                         // put native sdk initialization callback
                     }
                 }
@@ -145,10 +145,10 @@ static EventRepository* _instance;
         }
         self->isFactoryInitialized = YES;
         @synchronized (self->eventReplayMessage) {
-            [RudderLogger logDebug:@"replaying old messages with factory"];
+            [RSLogger logDebug:@"replaying old messages with factory"];
             NSArray *tempMessages = [self->eventReplayMessage copy];
             if (tempMessages.count > 0) {
-                for (RudderMessage *msg in tempMessages) {
+                for (RSMessage *msg in tempMessages) {
                     [self makeFactoryDump:msg];
                 }
             }
@@ -159,50 +159,50 @@ static EventRepository* _instance;
 
 - (void) __initiateProcessor {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [RudderLogger logDebug:@"processor started"];
+        [RSLogger logDebug:@"processor started"];
         
         int sleepCount = 0;
         
         while (YES) {
             int recordCount = [self->dbpersistenceManager getDBRecordCount];
-            [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
             
             if (recordCount > self->config.dbCountThreshold) {
-                [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - self->config.dbCountThreshold)]];
-                RudderDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold)];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - self->config.dbCountThreshold)]];
+                RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold)];
                 [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
             }
             
-            [RudderLogger logDebug:@"Fetching events to flush to sever"];
-            RudderDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
+            [RSLogger logDebug:@"Fetching events to flush to sever"];
+            RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
             if (dbMessage.messages.count > 0 && (sleepCount >= self->config.sleepTimeout)) {
                 NSString* payload = [self __getPayloadFromMessages:dbMessage];
-                [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
-                [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
                     NSString* response = [self __flushEventsToServer:payload];
-                    [RudderLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
+                    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
                     if (response != nil && [response isEqual: @"OK"]) {
-                        [RudderLogger logDebug:@"clearing events from DB"];
+                        [RSLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
                     }
                 }
             }
-            [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
             usleep(1000000);
         }
     });
 }
 
-- (NSString*) __getPayloadFromMessages: (RudderDBMessage*)dbMessage{
+- (NSString*) __getPayloadFromMessages: (RSDBMessage*)dbMessage{
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
     NSString* sentAt = [Utils getTimestamp];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
     
     NSMutableString* json = [[NSMutableString alloc] init];
     
@@ -220,7 +220,7 @@ static EventRepository* _instance;
         totalBatchSize += [Utils getUTF8Length:message];
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
-            [RudderLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
             break;
         }
         [json appendString:message];
@@ -239,7 +239,7 @@ static EventRepository* _instance;
 
 - (NSString* _Nullable) __flushEventsToServer: (NSString*) payload {
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
-        [RudderLogger logError:@"WriteKey was not correct. Aborting flush to server"];
+        [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
         return nil;
     }
     
@@ -247,7 +247,7 @@ static EventRepository* _instance;
     
     __block NSString *responseStr = nil;
     NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:dataPlaneEndPoint]];
     [urlRequest setHTTPMethod:@"POST"];
@@ -261,7 +261,7 @@ static EventRepository* _instance;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        [RudderLogger logError:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
@@ -269,7 +269,7 @@ static EventRepository* _instance;
             }
         } else {
             NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            [RudderLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
         dispatch_semaphore_signal(semaphore);
@@ -284,7 +284,7 @@ static EventRepository* _instance;
     return responseStr;
 }
 
-- (void) dump:(RudderMessage *)message {
+- (void) dump:(RSMessage *)message {
     if (message == nil) return;
     if (!self->isSDKEnabled) return;
     
@@ -293,29 +293,29 @@ static EventRepository* _instance;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
     
     unsigned int messageSize = [Utils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
-        [RudderLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
+        [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         return;
     }
     
     [self->dbpersistenceManager saveEvent:jsonString];
 }
 
-- (void) makeFactoryDump:(RudderMessage *)message {
+- (void) makeFactoryDump:(RSMessage *)message {
     if (self->isFactoryInitialized) {
-        [RudderLogger logDebug:@"dumping message to native sdk factories"];
+        [RSLogger logDebug:@"dumping message to native sdk factories"];
         for (NSString *key in [self->integrationOperationMap allKeys]) {
-            [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-            id<RudderIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
             if (integration != nil) {
                 [integration dump:message];
             }
         }
     } else {
-        [RudderLogger logDebug:@"factories are not initialized. dumping to replay queue"];
+        [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
         if (self->eventReplayMessage == nil) {
             self->eventReplayMessage = [[NSMutableArray alloc] init];
         }
@@ -326,22 +326,22 @@ static EventRepository* _instance;
 -(void) reset {
     if (self->isFactoryInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
-            [RudderLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
-            id<RudderIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
             if (integration != nil) {
                 [integration reset];
             }
         }
     } else {
-        [RudderLogger logDebug:@"factories are not initialized. ignored"];
+        [RSLogger logDebug:@"factories are not initialized. ignored"];
     }
 }
 
 - (void) __prepareIntegrations {
-    RudderServerConfigSource *serverConfig = [self->configManager getConfig];
+    RSServerConfigSource *serverConfig = [self->configManager getConfig];
     if (serverConfig != nil) {
         self->integrations = [[NSMutableDictionary alloc] init];
-        for (RudderServerDestination *destination in serverConfig.destinations) {
+        for (RSServerDestination *destination in serverConfig.destinations) {
             if ([self->integrations objectForKey:destination.destinationDefinition.definitionName] == nil) {
                 [self->integrations setObject:[[NSNumber alloc] initWithBool:destination.isDestinationEnabled] forKey:destination.destinationDefinition.definitionName];
             }
@@ -349,7 +349,7 @@ static EventRepository* _instance;
     }
 }
 
-- (RudderConfig *)getConfig {
+- (RSConfig *)getConfig {
     return self->config;
 }
     
@@ -384,17 +384,17 @@ static EventRepository* _instance;
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
 
     if (!previousVersion) {
-        [[RudderClient sharedInstance] track:@"Application Installed" properties:@{
+        [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
         }];
     } else if (![currentVersion isEqualToString:previousVersion]) {
-        [[RudderClient sharedInstance] track:@"Application Updated" properties:@{
+        [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
         }];
     }
     
-    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
+    [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @NO,
         @"version" : currentVersion ?: @"",
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
@@ -409,7 +409,7 @@ static EventRepository* _instance;
         return;
     }
     
-    [[RudderClient sharedInstance] track:@"Application Opened" properties:@{
+    [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @YES,
     }];
 }
@@ -418,7 +418,7 @@ static EventRepository* _instance;
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    [[RudderClient sharedInstance] track:@"Application Backgrounded"];
+    [[RSClient sharedInstance] track:@"Application Backgrounded"];
 }
 
 - (void) __prepareScreenRecorder {

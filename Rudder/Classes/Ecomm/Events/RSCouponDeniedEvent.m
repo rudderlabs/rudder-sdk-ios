@@ -1,16 +1,16 @@
 //
 //  CouponDeniedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "CouponDeniedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSCouponDeniedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation CouponDeniedEvent
 
-- (instancetype)withCoupon:(ECommerceCoupon *)coupon {
+- (instancetype)withCoupon:(RSECommerceCoupon *)coupon {
     _coupon = coupon;
     return self;
 }

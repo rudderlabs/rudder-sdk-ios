@@ -1,13 +1,13 @@
 //
-//  ECommerceEvents.m
-//  RudderSDKCore
+//  RSECommerceEvents.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ECommerceEvents.h"
+#import "RSECommerceEvents.h"
 
-@implementation ECommerceEvents
+@implementation RSECommerceEvents
 
 NSString *const ECommProductsSearched = @"Products Searched";
 NSString *const ECommProductListViewed = @"Product List Viewed";

@@ -1,19 +1,19 @@
 //
 //  DBPersistentManager.h
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "RudderDBMessage.h"
-#import "Utils.h"
+#import "RSDBMessage.h"
+#import "RSUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DBPersistentManager : NSObject {
+@interface RSDBPersistentManager : NSObject {
     sqlite3 *_database;
 }
 
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) saveEvent: (NSString*) message;
 -(void) clearEventFromDB: (int) messageId;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
--(RudderDBMessage*) fetchEventsFromDB:(int) count;
+-(RSDBMessage*) fetchEventsFromDB:(int) count;
 -(int) getDBRecordCount;
 -(void) flushEventsFromDB;
 

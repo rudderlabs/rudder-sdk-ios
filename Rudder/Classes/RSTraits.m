@@ -1,16 +1,16 @@
 //
-//  RudderTraits.m
-//  RudderSDKCore
+//  RSTraits.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderTraits.h"
-#import "RudderElementCache.h"
-#import "Utils.h"
+#import "RSTraits.h"
+#import "RSElementCache.h"
+#import "RSUtils.h"
 
-@implementation RudderTraits
+@implementation RSTraits
 
 - (instancetype) initWithDict: (NSDictionary*) dict {
     self = [super init];
@@ -18,7 +18,7 @@
         // if anonymousId is not present in supplied dict
         NSString *anonymousId = [dict objectForKey:@"anonymousId"];
         if (anonymousId == nil) {
-            RudderContext *context = [RudderElementCache getContext];
+            RSContext *context = [RSElementCache getContext];
             _anonymousId = context.device.identifier;
         }
         __extras = [[NSMutableDictionary alloc] init];

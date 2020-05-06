@@ -1,23 +1,23 @@
 //
-//  RudderLogger.h
-//  RudderSDKCore
+//  RSLogger.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderLogger : NSObject
+@interface RSLogger : NSObject
 
-extern int const RudderLogLevelVerbose;
-extern int const RudderLogLevelDebug;
-extern int const RudderLogLevelInfo;
-extern int const RudderLogLevelWarning;
-extern int const RudderLogLevelError;
-extern int const RudderLogLevelNone;
+extern int const RSLogLevelVerbose;
+extern int const RSLogLevelDebug;
+extern int const RSLogLevelInfo;
+extern int const RSLogLevelWarning;
+extern int const RSLogLevelError;
+extern int const RSLogLevelNone;
 
 + (void) initiate: (int) _logLevel;
 

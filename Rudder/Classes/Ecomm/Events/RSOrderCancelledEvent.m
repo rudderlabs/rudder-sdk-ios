@@ -1,15 +1,15 @@
 //
 //  OrderCancelledEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "OrderCancelledEvent.h"
+#import "RSOrderCancelledEvent.h"
 
 @implementation OrderCancelledEvent
 
-- (instancetype)withOrder:(ECommerceOrder *)order {
+- (instancetype)withOrder:(RSECommerceOrder *)order {
     _order = order;
     return self;
 }

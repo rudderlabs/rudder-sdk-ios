@@ -1,16 +1,16 @@
 //
-//  RudderProperty.h
-//  RudderSDKCore
+//  RSProperty.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RudderProperty : NSObject {
+@interface RSProperty : NSObject {
     NSMutableDictionary<NSString*, NSObject*>* propertyDict;
 }
 
@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSObject* _Nullable) getProperty: (NSString*) key;
 - (void) put: (NSString*) key value:(NSObject*) value;
 - (instancetype) putValue: (NSString*) key value:(NSObject*) value;
--(instancetype) putValue: (NSDictionary*) dictValue;
--(void) putRevenue: (double) revenue;
--(void) putCurrency: (NSString*) currency;
+- (instancetype) putValue: (NSDictionary*) dictValue;
+- (void) putRevenue: (double) revenue;
+- (void) putCurrency: (NSString*) currency;
 @end
 
 NS_ASSUME_NONNULL_END

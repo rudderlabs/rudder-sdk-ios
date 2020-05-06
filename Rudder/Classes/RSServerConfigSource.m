@@ -1,14 +1,14 @@
 //
-//  RudderServerConfigSource.m
-//  RudderSDKCore
+//  RSServerConfigSource.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderServerConfigSource.h"
+#import "RSServerConfigSource.h"
 
-@implementation RudderServerConfigSource
+@implementation RSServerConfigSource
 
 - (instancetype)init
 {
@@ -19,7 +19,7 @@
     return self;
 }
 
-- (void)addDestination:(RudderServerDestination *)destination {
+- (void)addDestination:(RSServerDestination *)destination {
     [self.destinations addObject:destination];
 }
 

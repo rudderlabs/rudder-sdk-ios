@@ -1,6 +1,6 @@
 //
-//  ECommerceProduct.h
-//  RudderSDKCore
+//  RSECommerceProduct.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceProduct : NSObject
+@interface RSECommerceProduct : NSObject
 
 @property (nonatomic, strong) NSString* productId;
 @property (nonatomic, strong) NSString* sku;

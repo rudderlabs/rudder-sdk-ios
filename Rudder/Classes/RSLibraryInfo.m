@@ -1,20 +1,20 @@
 //
-//  RudderLibraryInfo.m
-//  RudderSDKCore
+//  RSLibraryInfo.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderLibraryInfo.h"
+#import "RSLibraryInfo.h"
 
-@implementation RudderLibraryInfo
+@implementation RSLibraryInfo
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         _name = @"rudder-ios-library";
-        _version = @"1.0.3-beta.1";
+        _version = @"1.0.3-beta.2";
     }
     return self;
 }

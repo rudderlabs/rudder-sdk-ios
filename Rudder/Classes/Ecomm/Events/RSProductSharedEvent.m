@@ -1,16 +1,16 @@
 //
 //  ProductSharedEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductSharedEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductSharedEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductSharedEvent
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }

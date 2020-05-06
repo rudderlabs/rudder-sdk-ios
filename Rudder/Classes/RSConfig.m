@@ -1,29 +1,29 @@
 //
-//  RudderConfig.m
-//  RudderSDKCore
+//  RSConfig.m
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 Rudderlabs. All rights reserved.
+//  Copyright © 2019 RSlabs. All rights reserved.
 //
 
-#import "RudderConfig.h"
-#import "Constants.h"
-#import "RudderLogger.h"
+#import "RSConfig.h"
+#import "RSConstants.h"
+#import "RSLogger.h"
 
-@implementation RudderConfig
+@implementation RSConfig
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _dataPlaneUrl = RudderDataPlaneUrl;
-        _flushQueueSize = RudderFlushQueueSize;
-        _dbCountThreshold = RudderDBCountThreshold;
-        _sleepTimeout = RudderSleepTimeout;
-        _logLevel = RudderLogLevelError;
-        _configRefreshInterval = RudderConfigRefreshInterval;
-        _trackLifecycleEvents = RudderTrackLifeCycleEvents;
-        _recordScreenViews = RudderRecordScreenViews;
-        _controlPlaneUrl = RudderControlPlaneUrl;
+        _dataPlaneUrl = RSDataPlaneUrl;
+        _flushQueueSize = RSFlushQueueSize;
+        _dbCountThreshold = RSDBCountThreshold;
+        _sleepTimeout = RSSleepTimeout;
+        _logLevel = RSLogLevelError;
+        _configRefreshInterval = RSConfigRefreshInterval;
+        _trackLifecycleEvents = RSTrackLifeCycleEvents;
+        _recordScreenViews = RSRecordScreenViews;
+        _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
     }
     return self;

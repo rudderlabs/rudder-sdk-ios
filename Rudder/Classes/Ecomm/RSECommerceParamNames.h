@@ -1,6 +1,6 @@
 //
-//  ECommerceParamNames.h
-//  RudderSDKCore
+//  RSECommerceParamNames.h
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 24/01/20.
 //
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ECommerceParamNames : NSObject
+@interface RSECommerceParamNames : NSObject
 
 extern NSString *const KeyQuery;
 extern NSString *const KeyPrice;

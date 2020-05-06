@@ -1,21 +1,21 @@
 //
 //  ProductRemovedFromWishListEvent.m
-//  RudderSDKCore
+//  RSSDKCore
 //
 //  Created by Arnab Pal on 22/01/20.
 //
 
-#import "ProductRemovedFromWishListEvent.h"
-#import "ECommerceParamNames.h"
+#import "RSProductRemovedFromWishListEvent.h"
+#import "RSECommerceParamNames.h"
 
 @implementation ProductRemovedFromWishListEvent
 
-- (instancetype)withWishList:(ECommerceWishList *)wishList {
+- (instancetype)withWishList:(RSECommerceWishList *)wishList {
     _wishList = wishList;
     return self;
 }
 
-- (instancetype)withProduct:(ECommerceProduct *)product {
+- (instancetype)withProduct:(RSECommerceProduct *)product {
     _product = product;
     return self;
 }
