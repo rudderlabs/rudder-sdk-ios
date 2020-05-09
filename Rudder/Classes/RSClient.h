@@ -31,17 +31,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) trackMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) trackWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) track: (NSString*) eventName;
-- (void) track: (NSString*) eventName properties: (NSDictionary<NSString*, NSObject*>*) properties;
-- (void) track: (NSString *) eventName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RSOption *_Nullable) options;
+- (void) track: (NSString*) eventName properties: (NSDictionary*) properties;
+- (void) track: (NSString *) eventName properties: (NSDictionary*) properties options:(RSOption *_Nullable) options;
 
 - (void) screenWithMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use screen method instead.")));
 - (void) screenWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use screen method instead.")));
 - (void) screen: (NSString*) screenName;
-- (void) screen: (NSString*) screenName properties: (NSDictionary<NSString*, NSObject*>*) properties;
-- (void) screen: (NSString *) screenName properties: (NSDictionary<NSString*, NSObject*> *) properties options:(RSOption *_Nullable) options;
+- (void) screen: (NSString*) screenName properties: (NSDictionary*) properties;
+- (void) screen: (NSString *) screenName properties: (NSDictionary*) properties options:(RSOption *_Nullable) options;
 
-- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits options:(RSOption *_Nullable) options;
-- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, NSObject*>*)traits;
+- (void) group:(NSString *)groupId traits:(NSDictionary*)traits options:(RSOption *_Nullable) options;
+- (void) group:(NSString *)groupId traits:(NSDictionary*)traits;
 - (void) group:(NSString *)groupId;
 
 - (void) alias:(NSString *)newId options:(RSOption * _Nullable) options;
