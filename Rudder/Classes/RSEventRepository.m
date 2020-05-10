@@ -200,7 +200,7 @@ static RSEventRepository* _instance;
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
-    NSString* sentAt = [Utils getTimestamp];
+    NSString* sentAt = [RSUtils getTimestamp];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
     
@@ -209,7 +209,7 @@ static RSEventRepository* _instance;
     [json appendString:@"{"];
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
-    unsigned int totalBatchSize = [Utils getUTF8Length:json] + 2; // we add 2 characters at the end
+    unsigned int totalBatchSize = [RSUtils getUTF8Length:json] + 2; // we add 2 characters at the end
     int index;
     for (index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
@@ -217,7 +217,7 @@ static RSEventRepository* _instance;
         message = [[NSMutableString alloc] initWithString:[message substringWithRange:NSMakeRange(0, (length-1))]];
         [message appendFormat:@",\"sentAt\":\"%@\"},", sentAt];
         // add message size to batch size
-        totalBatchSize += [Utils getUTF8Length:message];
+        totalBatchSize += [RSUtils getUTF8Length:message];
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
             [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
@@ -295,7 +295,7 @@ static RSEventRepository* _instance;
     
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
     
-    unsigned int messageSize = [Utils getUTF8Length:jsonString];
+    unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         return;

@@ -31,17 +31,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) trackMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) trackWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) track: (NSString*) eventName;
-- (void) track: (NSString*) eventName properties: (NSDictionary*) properties;
-- (void) track: (NSString *) eventName properties: (NSDictionary*) properties options:(RSOption *_Nullable) options;
+- (void) track: (NSString*) eventName properties: (NSDictionary<NSString*, id>*) properties;
+- (void) track: (NSString *) eventName properties: (NSDictionary<NSString*, id>*) properties options:(RSOption *_Nullable) options;
 
 - (void) screenWithMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use screen method instead.")));
 - (void) screenWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use screen method instead.")));
 - (void) screen: (NSString*) screenName;
-- (void) screen: (NSString*) screenName properties: (NSDictionary*) properties;
-- (void) screen: (NSString *) screenName properties: (NSDictionary*) properties options:(RSOption *_Nullable) options;
+- (void) screen: (NSString*) screenName properties: (NSDictionary<NSString*, id>*) properties;
+- (void) screen: (NSString *) screenName properties: (NSDictionary<NSString*, id>*) properties options:(RSOption *_Nullable) options;
 
-- (void) group:(NSString *)groupId traits:(NSDictionary*)traits options:(RSOption *_Nullable) options;
-- (void) group:(NSString *)groupId traits:(NSDictionary*)traits;
+- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, id>*)traits options:(RSOption *_Nullable) options;
+- (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, id>*)traits;
 - (void) group:(NSString *)groupId;
 
 - (void) alias:(NSString *)newId options:(RSOption * _Nullable) options;
@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) identifyWithMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use identify method instead.")));
 - (void) identifyWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use identify method instead.")));
-- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits options:(RSOption *_Nullable) options;
-- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary*)traits;
+- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits options:(RSOption *_Nullable) options;
+- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits;
 - (void) identify:(NSString *_Nullable)userId;
 
 - (void)reset;

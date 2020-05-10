@@ -16,10 +16,10 @@
 {
     self = [super init];
     if (self) {
-        _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [Utils getTimeStampLong], [Utils getUniqueId]];
+        _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [RSUtils getTimeStampLong], [RSUtils getUniqueId]];
         _channel = @"mobile";
         _context = [RSElementCache getContext];
-        _originalTimestamp = [Utils getTimestamp];
+        _originalTimestamp = [RSUtils getTimestamp];
         _previousId = nil;
         _groupId = nil;
         _traits = nil;
@@ -49,18 +49,18 @@
         [tempDict setValue:_groupId forKey:@"groupId"];
     }
     if (_traits != nil) {
-        [tempDict setValue:_traits forKey:@"traits"];
+        [tempDict setValue:[RSUtils serializeDict:_traits] forKey:@"traits"];
     }
     [tempDict setValue:_anonymousId forKey:@"anonymousId"];
     if (_userId != nil) {
         [tempDict setValue:_userId forKey:@"userId"];
     }
     if (_properties != nil) {
-        [tempDict setValue:_properties forKey:@"properties"];
+        [tempDict setValue:[RSUtils serializeDict:_properties] forKey:@"properties"];
     }
     [tempDict setValue:_event forKey:@"event"];
     if (_userProperties != nil) {
-        [tempDict setValue:_userProperties forKey:@"userProperties"];
+        [tempDict setValue:[RSUtils serializeDict:_userProperties] forKey:@"userProperties"];
     }
     [tempDict setValue:_integrations forKey:@"integrations"];
     

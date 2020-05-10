@@ -34,7 +34,7 @@ static WKWebView *webView;
                 self->_userAgent = userAgent;
             }];
         });
-        _locale = [Utils getLocale];
+        _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
         
@@ -70,11 +70,13 @@ static WKWebView *webView;
         traits.anonymousId = _device.identifier;
     }
     
-    _traits = [[traits dict] mutableCopy];
+//    _traits = [[traits dict] mutableCopy];
+    
+    [_traits setValuesForKeysWithDictionary:[traits dict]];
 }
 
 -(void) persistTraits {
-    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:_traits options:0 error:nil];
+    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
     NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
     
     [preferenceManager saveTraits:traitsString];
@@ -98,7 +100,7 @@ static WKWebView *webView;
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
-    [tempDict setObject:_traits forKey:@"traits"];
+    [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];

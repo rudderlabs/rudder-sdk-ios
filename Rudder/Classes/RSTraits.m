@@ -56,7 +56,7 @@
 }
 
 - (void) putBirthday:(NSDate *)birthday {
-    self.birthday = [Utils getDateString: birthday];
+    self.birthday = [RSUtils getDateString: birthday];
 }
 
 - (void)putCompany:(NSMutableDictionary<NSString *,NSObject *> *)company {

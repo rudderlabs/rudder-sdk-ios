@@ -56,7 +56,7 @@ static RSServerConfigManager *_instance;
 }
 
 - (BOOL) _isServerConfigOutDated {
-    long currentTime = [Utils getTimeStampLong];
+    long currentTime = [RSUtils getTimeStampLong];
     long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
     return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
@@ -135,7 +135,7 @@ static RSServerConfigManager *_instance;
         
         if (configJson != nil) {
             [_preferenceManager saveConfigJson:configJson];
-            [_preferenceManager updateLastUpdatedTime:[Utils getTimeStampLong]];
+            [_preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
             self->_serverConfig = [self _parseConfig:configJson];
             
