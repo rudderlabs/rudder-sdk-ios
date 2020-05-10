@@ -22,7 +22,7 @@
 }
 
 - (void)createDB {
-    if (sqlite3_open_v2([Utils getDBPath], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK) {
+    if (sqlite3_open_v2([RSUtils getDBPath], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK) {
         // opened correctly
     }
 }
@@ -47,7 +47,7 @@
 }
 
 - (void)saveEvent:(NSString *)message {
-    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO events (message, updated) VALUES ('%@', %ld);", message, [Utils getTimeStampLong]];
+    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO events (message, updated) VALUES ('%@', %ld);", message, [RSUtils getTimeStampLong]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"saveEventSQL: %@", insertSQLString]];
     const char* insertSQL = [insertSQLString UTF8String];
     sqlite3_stmt *insertStmt = nil;

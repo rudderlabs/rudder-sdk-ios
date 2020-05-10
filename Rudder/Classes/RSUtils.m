@@ -7,8 +7,9 @@
 //
 
 #import "RSUtils.h"
+#import "RSLogger.h"
 
-@implementation Utils
+@implementation RSUtils
 
 + (NSString*) getDateString:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -18,7 +19,7 @@
 }
 
 + (NSString *)getTimestamp {
-    return [Utils getDateString:[[NSDate alloc] init]];
+    return [RSUtils getDateString:[[NSDate alloc] init]];
 }
 
 + (const char *)getDBPath {
@@ -49,6 +50,57 @@
 
 + (unsigned int) getUTF8Length:(NSString *)message {
     return (unsigned int)[[message dataUsingEncoding:NSUTF8StringEncoding] length];
+}
+
++ (id) serializeValue: (id) val {
+    if ([val isKindOfClass:[NSString class]] ||
+        [val isKindOfClass:[NSNumber class]] ||
+        [val isKindOfClass:[NSNull class]]
+        ) {
+        return val;
+    } else if ([val isKindOfClass:[NSArray class]]) {
+        // handle array
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (id i in val) {
+            [array addObject:[self serializeValue:i]];
+        }
+        return [array copy];
+    } else if ([val isKindOfClass:[NSDictionary class]]) {
+        // handle dictionary
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        NSArray *keys = [val allKeys];
+        for (NSString *key in keys) {
+            id value = [dict objectForKey:key];
+            if (![key isKindOfClass:[NSString class]]) {
+                [RSLogger logDebug:@"key should be string. changing it to its description"];
+            }
+            [dict setValue:[self serializeValue:value] forKey:[key description]];
+        }
+        return [dict copy];
+    } else if ([val isKindOfClass:[NSDate class]]) {
+        // handle date // isofy
+        return [self getDateString:val];
+    } else if ([val isKindOfClass:[NSURL class]]) {
+        // handle url
+        return [val absoluteString];
+    }
+    [RSLogger logDebug:@"properties value is not serializable. using description"];
+    return [val description];
+}
+
++ (NSDictionary<NSString *,id> *)serializeDict:(NSDictionary<NSString*, id>*)dict {
+    // if dict is not null
+    if (dict) {
+        NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
+        NSArray *keys = [dict allKeys];
+        for (NSString* key in keys) {
+            id val = [self serializeValue: [dict objectForKey:key]];
+            [returnDict setValue:val forKey:key];
+        }
+        
+        return [returnDict copy];
+    }
+    return dict;
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
