@@ -13,20 +13,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSServerConfigManager : NSObject {
-    NSString *_writeKey;
-    RSServerConfigSource *_serverConfig;
-    RSConfig *_rudderConfig;
-    RSPreferenceManager *_preferenceManager;
-}
+@interface RSServerConfigManager : NSObject
+
+@property (atomic, strong) RSServerConfigSource *serverConfig;
+@property NSString *writeKey;
+@property RSConfig *rudderConfig;
+@property RSPreferenceManager *preferenceManager;
 
 + (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
-- (BOOL) _isServerConfigOutDated;
-- (RSServerConfigSource* _Nullable) _retrieveConfig;
-- (void) _downloadConfig;
 - (RSServerConfigSource*) getConfig;
-- (RSServerConfigSource*) _parseConfig: (NSString*) configStr;
-- (NSString*) _networkRequest;
 
 @end
 

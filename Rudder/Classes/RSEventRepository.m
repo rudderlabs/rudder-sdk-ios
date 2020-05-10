@@ -98,7 +98,7 @@ static RSEventRepository* _instance;
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
                         [self __initiateFactories: serverConfig.destinations];
                     } else {
-                        [RSLogger logDebug:@"EventRepository: no device more present"];
+                        [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];

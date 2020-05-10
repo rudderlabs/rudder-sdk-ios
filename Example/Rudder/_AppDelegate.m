@@ -9,8 +9,8 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://e9bf35cd.ngrok.io";
-static NSString *CONTROL_PLANE_URL = @"https://986733ed.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://98a1db41.ngrok.io";
+static NSString *CONTROL_PLANE_URL = @"https://98a1db41.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 //static WKWebView *webView;
 
@@ -21,6 +21,7 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
+    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
