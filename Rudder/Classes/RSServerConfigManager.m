@@ -24,18 +24,18 @@ static RSServerConfigManager *_instance;
     return _instance;
 }
 
-- (instancetype)init: (NSString*) _writeKey rudderConfig:(RSConfig*) rudderConfig
+- (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig
 {
     self = [super init];
     if (self) {
-        self->_preferenceManager = [RSPreferenceManager getInstance];
-        if (_writeKey == nil || [_writeKey isEqualToString:@""]) {
+        _preferenceManager = [RSPreferenceManager getInstance];
+        if (writeKey == nil || [writeKey isEqualToString:@""]) {
             [RSLogger logError:@"writeKey can not be null or empty"];
         } else {
-            self->_writeKey = _writeKey;
-            self->_rudderConfig = rudderConfig;
-            self->_serverConfig = [self _retrieveConfig];
-            if (self->_serverConfig == nil) {
+            _writeKey = writeKey;
+            _rudderConfig = rudderConfig;
+            _serverConfig = [self _retrieveConfig];
+            if (_serverConfig == nil) {
                 [RSLogger logDebug:@"Server config is not present in preference storage. downloading config"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
                     [self _downloadConfig];
@@ -59,7 +59,7 @@ static RSServerConfigManager *_instance;
     long currentTime = [RSUtils getTimeStampLong];
     long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
-    return (currentTime - lastUpdatedTime) > (self->_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
+    return (currentTime - lastUpdatedTime) > (_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
 - (RSServerConfigSource* _Nullable) _retrieveConfig {
@@ -137,15 +137,13 @@ static RSServerConfigManager *_instance;
             [_preferenceManager saveConfigJson:configJson];
             [_preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
-            self->_serverConfig = [self _parseConfig:configJson];
-            
             [RSLogger logDebug:@"server config download successful"];
             
             isDone = YES;
         } else {
             retryCount += 1;
             [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
-            usleep(10000000 * retryCount);
+            usleep(10000000 * retryCount); 
         }
     }
 }
@@ -185,11 +183,11 @@ static RSServerConfigManager *_instance;
     return responseStr;
 }
 
-- (RSServerConfigSource *)getConfig {
-    if (self->_serverConfig == nil) {
-        self->_serverConfig = [self _retrieveConfig];
+- (RSServerConfigSource *) getConfig {
+    if (_serverConfig == nil) {
+        _serverConfig = [self _retrieveConfig];
     }
-    return self->_serverConfig;
+    return _serverConfig;
 }
 
 @end
