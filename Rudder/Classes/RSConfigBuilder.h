@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) withEndPointUrl : (NSString*) endPointUrl __attribute((deprecated("Use withDataPlaneUrl instead.")));
 - (instancetype) withDataPlaneUrl: (NSString*) dataPlaneUrl;
+- (instancetype) withDataPlaneURL: (NSURL*) dataPlaneURL;
 - (instancetype) withFlushQueueSize: (int) flushQueueSize;
 - (instancetype) withDebug: (BOOL) debug;
 - (instancetype) withLoglevel: (int) logLevel;
@@ -30,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
 - (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
 - (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
+- (instancetype) withControlPlaneURL: (NSURL*) controlPlaneURL;
 - (instancetype) withFactory: (id <RSIntegrationFactory> _Nonnull) factory;
 - (RSConfig*) build;
 

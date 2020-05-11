@@ -16,7 +16,8 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.dataPlaneUrl = endPointUrl;
+    NSURL *url = [[NSURL alloc] initWithString:endPointUrl];
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     return self;
 }
 
@@ -24,7 +25,17 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.dataPlaneUrl = dataPlaneUrl;
+    
+    NSURL *url = [[NSURL alloc] initWithString:dataPlaneUrl];
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+    return self;
+}
+
+- (instancetype)withDataPlaneURL:(NSURL *) dataPlaneURL {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [dataPlaneURL scheme], [dataPlaneURL host]];
     return self;
 }
 
@@ -102,19 +113,29 @@
     return self;
 }
 
--(instancetype)withConfigPlaneUrl:(NSString *)configPlaneUrl {
+-(instancetype)withConfigPlaneUrl:(NSString *) configPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.controlPlaneUrl = configPlaneUrl;
+    NSURL *url = [[NSURL alloc] initWithString:configPlaneUrl];
+    config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     return self;
 }
 
-- (instancetype)withControlPlaneUrl:(NSString *)controlPlaneUrl {
+- (instancetype)withControlPlaneUrl:(NSString *) controlPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.controlPlaneUrl = controlPlaneUrl;
+    NSURL *url = [[NSURL alloc] initWithString:controlPlaneUrl];
+    config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+    return self;
+}
+
+- (instancetype)withControlPlaneURL:(NSURL *) controlPlaneURL {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [controlPlaneURL scheme], [controlPlaneURL host]];
     return self;
 }
 
