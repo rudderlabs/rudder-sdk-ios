@@ -34,8 +34,8 @@ static RSServerConfigManager *_instance;
         } else {
             _writeKey = writeKey;
             _rudderConfig = rudderConfig;
-            _serverConfig = [self _retrieveConfig];
-            if (_serverConfig == nil) {
+            RSServerConfigSource *serverConfig = [self _retrieveConfig];
+            if (serverConfig == nil) {
                 [RSLogger logDebug:@"Server config is not present in preference storage. downloading config"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
                     [self _downloadConfig];
@@ -184,10 +184,7 @@ static RSServerConfigManager *_instance;
 }
 
 - (RSServerConfigSource *) getConfig {
-    if (_serverConfig == nil) {
-        _serverConfig = [self _retrieveConfig];
-    }
-    return _serverConfig;
+    return [self _retrieveConfig];
 }
 
 @end
