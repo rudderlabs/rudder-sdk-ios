@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSServerConfigManager : NSObject
 
-@property (atomic, strong) RSServerConfigSource *serverConfig;
 @property NSString *writeKey;
 @property RSConfig *rudderConfig;
 @property RSPreferenceManager *preferenceManager;

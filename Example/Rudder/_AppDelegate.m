@@ -9,7 +9,7 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
-static NSString *DATA_PLANE_URL = @"https://a354a115.ngrok.io/";
+static NSString *DATA_PLANE_URL = @"http://a354a115.ngrok.io/";
 static NSString *CONTROL_PLANE_URL = @"https://98a1db41.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 //static WKWebView *webView;
