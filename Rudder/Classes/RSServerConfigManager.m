@@ -152,7 +152,7 @@ static RSServerConfigManager *_instance;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *controlPlaneEndPoint = [NSString stringWithFormat:@"%@/sourceConfig", _rudderConfig.controlPlaneUrl];
+    NSString *controlPlaneEndPoint = [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:controlPlaneEndPoint]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];

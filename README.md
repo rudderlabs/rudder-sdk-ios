@@ -12,7 +12,7 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 Rudder is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'Rudder', '1.0.3-beta.6'
+pod 'Rudder', '1.0.3'
 ```
 Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
 ```xcode

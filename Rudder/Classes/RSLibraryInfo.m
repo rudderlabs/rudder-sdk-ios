@@ -7,6 +7,7 @@
 //
 
 #import "RSLibraryInfo.h"
+#import "RSConstants.h"
 
 @implementation RSLibraryInfo
 - (instancetype)init
@@ -14,7 +15,7 @@
     self = [super init];
     if (self) {
         _name = @"rudder-ios-library";
-        _version = @"1.0.3-beta.6";
+        _version = RS_VERSION;
     }
     return self;
 }
