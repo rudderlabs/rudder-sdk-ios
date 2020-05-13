@@ -12,46 +12,65 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 Rudder is available through [CocoaPods](https://cocoapods.org). 
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'Rudder', '1.0.2'
+pod 'Rudder', '1.0.3'
 ```
 Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
 ```xcode
-#import "Rudder.h"
+#import <Rudder/Rudder.h>
 ```
 
 ## Initialize Client
-Now initialize ```RudderClient```
-Put this code in your ```AppDelegate.m``` file under the method ```didFinishLaunchingWithOptions```
+Now initialize `RSClient`
+Put this code in your `AppDelegate.m` file under the method `didFinishLaunchingWithOptions`
 
 ```xcode
-RudderConfigBuilder *builder = [[RudderConfigBuilder alloc] init];
-[builder withDataPlaneUrl:<YOUR_DATA_PLANE_URL>];
-[RudderClient getInstance:<YOUR_WRITE_KEY> config:[builder build]];
+RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
+[builder withDataPlaneUrl:<DATA_PLANE_URL>];
+[RSClient getInstance:<WRITE_KEY> config:[builder build]];
 ```
-A shared instance of ```RudderClient``` is accesible after the initialization by ```[RudderClient sharedInstance]```
+A shared instance of `RSClient` is accesible after the initialization by `[RSClient sharedInstance]`
 ## Sending Events
-Track events by creating a ```RudderMessage``` using ```RudderMessageBuilder```
+
+### Track
 ```xcode
-// create properties for the event you want to track
-NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
-[property setValue:@"test_value_1" forKey:@"test_key_1"];
-[property setValue:@"test_value_2" forKey:@"test_key_2"];
-
-// create builder
-RudderMessageBuilder *builder = [[RudderMessageBuilder alloc] init];
-[builder setEventName:@"test_event_name"];
-[builder setPropertyDict:property];
-[builder setUserId:userId];
-
-// track event
-[[RudderClient sharedInstance] trackMessage:[builder build]];
+[[RSClient sharedInstance] track:@"simple_track_event"];
+[[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+    @"key_1" : @"value_1",
+    @"key_2" : @"value_2"
+}];
 ```
-OR
-Send events in Segment compatible way
-```xcode
-[[RudderClient sharedInstance] track:@"test_event_only_name"];
 
-[[RudderClient sharedInstance] track:@"test_event_name_prop" properties:property]; // same property dict from above is referred again
+### Screen
+```xcode
+[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
+```
+
+### Identify
+```xcode
+[[RSClient sharedInstance] identify:@"test_user_id"
+                             traits:@{@"foo": @"bar",
+                                      @"foo1": @"bar1",
+                                      @"email": @"test@gmail.com"}
+];
+```
+
+### Group
+```xcode
+[[RSClient sharedInstance] group:@"sample_group_id"
+                          traits:@{@"foo": @"bar",
+                                   @"foo1": @"bar1",
+                                   @"email": @"test@gmail.com"}
+];
+```
+
+### Alias
+```xcode
+[[RSClient sharedInstance] alias:@"new_user_id"];
+```
+
+### Reset
+```xcode
+[[RSClient sharedInstance] reset];
 ```
 
 For more detailed documentation check [our documentation page](https://docs.rudderlabs.com/sdk-integration-guide/getting-started-with-ios-sdk)
