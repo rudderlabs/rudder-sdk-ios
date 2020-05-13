@@ -29,6 +29,9 @@ extern NSString *const RSControlPlaneUrl;
 extern bool const RSTrackLifeCycleEvents;
 // whether we should record screen views automatically
 extern bool const RSRecordScreenViews;
+// SDK Version
+extern NSString *const RS_VERSION;
+
 @end
 
 NS_ASSUME_NONNULL_END
