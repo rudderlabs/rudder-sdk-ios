@@ -70,11 +70,21 @@ static RSEventRepository *_repository = nil;
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
-- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
+- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(NSMutableDictionary *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    [builder setEventName:eventName];
-    [builder setPropertyDict:properties];
-    [builder setRSOption:options];
+    
+    
+    if(options!=nil){
+        
+        [builder setEventName:eventName];
+        [builder setPropertyDict:properties];
+        [builder setRSOption:[RSOption integrations]];
+        [builder setRScontextOption:[RSOption context]];
+    }
+    else{
+        [builder setEventName:eventName];
+        [builder setPropertyDict:properties];
+    }
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
@@ -104,9 +114,18 @@ static RSEventRepository *_repository = nil;
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    [builder setEventName:screenName];
-    [builder setPropertyDict:properties];
-    [builder setRSOption:options];
+    
+    if(options!=nil){
+        
+        [builder setEventName:screenName];
+        [builder setPropertyDict:properties];
+        [builder setRSOption:[RSOption integrations]];
+        [builder setRScontextOption:[RSOption context]];
+    }
+    else{
+        [builder setEventName:screenName];
+        [builder setPropertyDict:properties];
+    }
     [self dumpInternal:[builder build] type:RSScreen];
 }
 
@@ -125,9 +144,18 @@ static RSEventRepository *_repository = nil;
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    [builder setGroupId:groupId];
-    [builder setGroupTraits:traits];
-    [builder setRSOption:options];
+    
+    if(options!=nil){
+        
+        [builder setGroupId:groupId];
+        [builder setGroupTraits:traits];
+        [builder setRSOption:[RSOption integrations]];
+        [builder setRScontextOption:[RSOption context]];
+    }
+    else{
+        [builder setGroupId:groupId];
+        [builder setGroupTraits:traits];
+    }
     [self dumpInternal:[builder build] type:RSGroup];
 }
 
@@ -137,12 +165,20 @@ static RSEventRepository *_repository = nil;
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
     RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
-    [builder setUserId:newId];
-    [builder setRSOption:options];
+    
+    if(options!=nil){
+        
+        [builder setUserId:newId];
+        [builder setRSOption:[RSOption integrations]];
+        [builder setRScontextOption:[RSOption context]];
+    }
+    else{
+        [builder setUserId:newId];
+    }
     
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
-
+    
     NSObject *prevId = [traits objectForKey:@"userId"];
     if(prevId == nil) {
         prevId =[traits objectForKey:@"id"];
@@ -192,6 +228,7 @@ static RSEventRepository *_repository = nil;
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
+    
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 
@@ -199,11 +236,20 @@ static RSEventRepository *_repository = nil;
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    [builder setEventName:RSIdentify];
-    [builder setUserId:userId];
-    [builder setTraits:traitsObj];
-    RSOption *optionsObj = [[RSOption alloc] initWithDict:options];
-    [builder setRSOption:optionsObj];
+    if(options!=nil){
+        
+        [builder setEventName:RSIdentify];
+        [builder setUserId:userId];
+        [builder setTraits:traitsObj];
+        [builder setRSOption:[RSOption integrations]];
+        [builder setRScontextOption:[RSOption context]];
+    }
+    else{
+        [builder setEventName:RSIdentify];
+        [builder setUserId:userId];
+        [builder setTraits:traitsObj];
+    }
+    
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 

@@ -25,15 +25,23 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSString* groupId;
 @property (atomic, readwrite) NSDictionary* traits;
 @property (atomic, readwrite) NSString* event;
+@property (atomic, readwrite) NSMutableDictionary* option;
+@property (atomic, readwrite) NSMutableDictionary* contextOption;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* properties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* userProperties;
-@property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* integrations;
+@property (atomic, readwrite) NSMutableDictionary* integrations;
 @property (atomic, readwrite) NSString* destinationProps;
+
 
 - (NSDictionary<NSString*, NSObject*>*) dict;
 - (void) updateContext: (RSContext*) context;
 - (void) updateTraits: (RSTraits*) traits;
 - (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
+- (void) setIntegrations:(NSMutableDictionary*)integrations;
+- (NSMutableDictionary *) getIntegrations;
+-(NSMutableDictionary *) getRuddercontextOption;
+
+- (NSMutableDictionary *) getRudderOption;
 
 @end
 

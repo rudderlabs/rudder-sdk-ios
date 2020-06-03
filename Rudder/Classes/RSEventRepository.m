@@ -288,7 +288,8 @@ static RSEventRepository* _instance;
     if (message == nil) return;
     if (!self->isSDKEnabled) return;
     
-    message.integrations = @{@"All": @YES};
+    
+    
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -307,12 +308,43 @@ static RSEventRepository* _instance;
 - (void) makeFactoryDump:(RSMessage *)message {
     if (self->isFactoryInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
+        [message setIntegrations:[message getRudderOption]];
+        [message setIntegrations:[message getRuddercontextOption]];
+        
+        if([[message getIntegrations] objectForKey:@"All"] && [[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"false"]){
+            
+        }else{
+            NSMutableDictionary *allDict = @{
+                @"All":@"true"
+            };
+            [message setIntegrations:allDict];
+        }
+        
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
-            if (integration != nil) {
-                [integration dump:message];
+            for(NSString *keyIntegrate in [[message getIntegrations] allKeys]){
+                if([[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"true"]){
+                    if([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"false"] && [keyIntegrate isEqualToString:key]){
+                        
+                    }else{
+                        
+                        id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                        if (integration != nil) {
+                            [integration dump:message];
+                        }
+                    }
+                }
+                else{
+                    
+                    if([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"true"] && [keyIntegrate isEqualToString:key]){
+                        id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                        if (integration != nil) {
+                            [integration dump:message];
+                        }
+                    }
+                }
             }
+            
         }
     } else {
         [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
@@ -352,7 +384,7 @@ static RSEventRepository* _instance;
 - (RSConfig *)getConfig {
     return self->config;
 }
-    
+
 - (void) __checkApplicationUpdateStatus {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
@@ -371,7 +403,7 @@ static RSEventRepository* _instance;
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
-      [self _applicationDidEnterBackground];
+        [self _applicationDidEnterBackground];
     }
 }
 
@@ -380,9 +412,9 @@ static RSEventRepository* _instance;
         return;
     }
     NSString *previousVersion = [preferenceManager getBuildVersionCode];
-
+    
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-
+    
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
@@ -400,7 +432,7 @@ static RSEventRepository* _instance;
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
     }];
-
+    
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
 

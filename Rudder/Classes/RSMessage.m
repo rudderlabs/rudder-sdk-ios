@@ -24,6 +24,9 @@
         _groupId = nil;
         _traits = nil;
         _userProperties = nil;
+        _option = nil;
+        _contextOption = nil;
+        _integrations = [[NSMutableDictionary alloc] init];
         _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
@@ -42,6 +45,7 @@
     [tempDict setValue:_type forKey:@"type"];
     [tempDict setValue:_action forKey:@"action"];
     [tempDict setValue:_originalTimestamp forKey:@"originalTimestamp"];
+    
     if (_previousId != nil) {
         [tempDict setValue:_previousId forKey:@"previousId"];
     }
@@ -79,5 +83,22 @@
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
     [_context updateTraitsDict:traits];
+}
+
+- (void) setIntegrations:(NSMutableDictionary *)integrations {
+    for(NSString* key in integrations.allKeys){
+        [self.integrations setValue:[integrations objectForKey:key] forKey:key];
+    }
+}
+
+-(NSMutableDictionary *) getIntegrations {
+    return self.integrations;
+}
+
+-(NSMutableDictionary *) getRuddercontextOption {
+    return self.contextOption;
+}
+-(NSMutableDictionary *) getRudderOption {
+    return self.option;
 }
 @end

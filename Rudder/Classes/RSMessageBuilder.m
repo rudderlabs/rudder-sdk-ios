@@ -74,11 +74,20 @@
     return self;
 }
 
-- (instancetype) setRSOption:(RSOption *)option {
+- (instancetype) setRSOption:(NSMutableDictionary *)option {
+    if (message == nil) {
+        message = [[RSMessage alloc] init];
+    }
+    message.option = option;
+    return self;
+}
+
+- (instancetype) setRScontextOption:(NSMutableDictionary *)contextOption {
     if (message == nil) {
         message = [[RSMessage alloc] init];
     }
     
+    message.contextOption = contextOption;
     return self;
 }
 

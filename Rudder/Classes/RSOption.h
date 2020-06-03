@@ -12,7 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSOption : NSObject
 
-- (instancetype) initWithDict:(NSDictionary*) options;
+- (instancetype) init;
+
++ (NSMutableDictionary *) integrations;
++ (NSMutableDictionary *) context;
+
+
++ (RSOption *) setIntegration:(NSString *) integrationKey enabled: (BOOL) enabled;
++ (RSOption *) setIntegrationOptions: (NSString *) integrationKey options : (NSDictionary *) options;
++ (RSOption *) putContext: (NSString *) key value: (NSObject *) value;
 
 @end
 
