@@ -14,6 +14,7 @@ let package = Package(
         .target(
             name: "Rudder",
             path: "Rudder",
+            publicHeadersPath: "Classes",
             cSettings: [
                 .headerSearchPath("Classes/**")
             ]
