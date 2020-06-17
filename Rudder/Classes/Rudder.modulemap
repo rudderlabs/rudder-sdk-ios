@@ -1,0 +1,6 @@
+framework module Rudder {
+  umbrella header "Rudder.h"
+
+  export *
+  module * { export * }
+}
