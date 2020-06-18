@@ -8,14 +8,18 @@ let package = Package(
         .iOS(.v8)
     ],
     products: [
-        .library(name: "Rudder", targets: ["Rudder"])
+        .library(
+            name: "Rudder",
+            type: .dynamic,
+            targets: ["Rudder"]
+        )
     ],
     targets: [
         .target(
             name: "Rudder",
             path: "Rudder",
             sources: ["Classes"],
-            publicHeadersPath: "Classes",
+            publicHeadersPath: "Classes/**",
             cSettings: [
                 .headerSearchPath("Classes/**")
             ]
