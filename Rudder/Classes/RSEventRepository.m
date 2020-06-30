@@ -319,45 +319,59 @@ static RSEventRepository* _instance;
                 [message setIntegrations:[message getRuddercontextOption]];
             }
         
-        [message setIntegrations:[message getRudderOption]];
-        [message setIntegrations:[message getRuddercontextOption]];
-        
-        if([[message getIntegrations] objectForKey:@"All"] && [[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"false"]){
-            
-        }else{
-            NSMutableDictionary *allDict = @{
-                @"All":@"true"
-            };
-            [message setIntegrations:allDict];
-        }
-        
-        for (NSString *key in [self->integrationOperationMap allKeys]) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-            for(NSString *keyIntegrate in [[message getIntegrations] allKeys]){
-                if([[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"true"]){
-                    if([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"false"] && [keyIntegrate isEqualToString:key]){
-                        
-                    }else{
-                        
-                        id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
-                        if (integration != nil) {
-                            [integration dump:message];
+        Boolean check = false;
+            if([message getIntegrations] != nil){
+            if(!([[message getIntegrations] objectForKey:@"All"] && [[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"false"])){
+                NSMutableDictionary *allDict = @{
+                    @"All":@"true"
+                };
+                [message setIntegrations:allDict];
+            }
+            }
+        NSLog(@"HELLO");
+        NSLog(@"%@",integrationOperationMap);
+            for (NSString *key in [self->integrationOperationMap allKeys]) {
+                if([message getRudderOption] == nil){
+                for(NSString *keyIntegrate in [[message getIntegrations] allKeys]){
+                    if([[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"true"]){
+                        if(!([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"false"] && [keyIntegrate isEqualToString:key])){
+                            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                                                   if (integration != nil) {
+                                                       check = true;
+                                                   }
+                        }else{
+                            check = false;
                         }
                     }
-                }
-                else{
-                    
-                    if([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"true"] && [keyIntegrate isEqualToString:key]){
-                        id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
-                        if (integration != nil) {
-                            [integration dump:message];
+                    else{
+                        if([[[message getIntegrations] objectForKey:keyIntegrate] isEqualToString:@"true"] && [keyIntegrate isEqualToString:key]){
+                            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                            if (integration != nil) {
+                                check= true;
+                            }
+                        }else{
+                            check = false;
                         }
                     }
                 }
             }
+                else{
+                    id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                    if (integration != nil) {
+                        check = true;
+                    }
+                }
+                if(check == true){
+                              [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                              id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                              if (integration != nil) {
+                                  [integration dump:message];
+                              }
+                          }
+            }
             
         }
-    } else {
+     else {
         [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
         if (self->eventReplayMessage == nil) {
             self->eventReplayMessage = [[NSMutableArray alloc] init];
