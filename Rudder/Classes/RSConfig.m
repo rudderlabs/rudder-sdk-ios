@@ -24,6 +24,7 @@
         _trackLifecycleEvents = RSTrackLifeCycleEvents;
         _recordScreenViews = RSRecordScreenViews;
         _controlPlaneUrl = RSControlPlaneUrl;
+        _defaultOptions = [[NSMutableDictionary alloc] init];
         _factories = [[NSMutableArray alloc] init];
     }
     return self;
@@ -38,6 +39,7 @@ configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 recordScreenViews: (BOOL) recordScreenViews
       controlPlaneUrl: (NSString *) controlPlaneUrl
+defaultOptions: (NSMutableDictionary *) defaultOptions
 {
     self = [super init];
     if (self) {
@@ -50,6 +52,7 @@ recordScreenViews: (BOOL) recordScreenViews
         _trackLifecycleEvents = trackLifecycleEvents;
         _recordScreenViews = recordScreenViews;
         _controlPlaneUrl = controlPlaneUrl;
+        _defaultOptions = [[NSMutableDictionary alloc] init];
         _factories = [[NSMutableArray alloc] init];
     }
     return self;

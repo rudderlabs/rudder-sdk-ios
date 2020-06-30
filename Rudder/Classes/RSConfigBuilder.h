@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
 - (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
 - (instancetype) withControlPlaneURL: (NSURL*) controlPlaneURL;
+- (instancetype) withDefaultOptions: (NSMutableDictionary*) defaultOptions;
 - (instancetype) withFactory: (id <RSIntegrationFactory> _Nonnull) factory;
 - (RSConfig*) build;
 

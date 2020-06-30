@@ -18,6 +18,9 @@ static NSString *WRITE_KEY = @"1bt0vcThjsXCUngMjgTFB62xAyg";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSMutableDictionary *allDict = @{
+                      @"GA":@"true"
+                  };
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
@@ -26,6 +29,7 @@ static NSString *WRITE_KEY = @"1bt0vcThjsXCUngMjgTFB62xAyg";
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
+    [builder withDefaultOptions:allDict];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
     [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];

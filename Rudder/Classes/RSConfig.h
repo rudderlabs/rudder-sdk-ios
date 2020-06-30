@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool trackLifecycleEvents;
 @property (nonatomic) bool recordScreenViews;
 @property (nonatomic, nonnull) NSString *controlPlaneUrl;
+@property (nonatomic) NSMutableDictionary* defaultOptions;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 
 @end

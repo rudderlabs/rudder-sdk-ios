@@ -139,6 +139,18 @@
     return self;
 }
 
+- (instancetype) withDefaultOptions: (NSMutableDictionary *) defaultOptions {
+    if(defaultOptions == nil){
+
+     }
+    if(config == nil){
+        config = [[RSConfig alloc] init];
+    }
+    config.defaultOptions = defaultOptions;
+    return self;
+}
+
+
 - (RSConfig*) build {
     if (config == nil) {
         config = [[RSConfig alloc] init];

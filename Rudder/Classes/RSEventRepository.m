@@ -308,6 +308,17 @@ static RSEventRepository* _instance;
 - (void) makeFactoryDump:(RSMessage *)message {
     if (self->isFactoryInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
+        if([message getRudderOption] == nil){
+            [message setIntegrations:config.defaultOptions];
+             }else{
+                 [message setIntegrations:[message getRudderOption]];
+                 }
+        if([message getRuddercontextOption] == nil){
+            [message setIntegrations:config.defaultOptions];
+            }else{
+                [message setIntegrations:[message getRuddercontextOption]];
+            }
+        
         [message setIntegrations:[message getRudderOption]];
         [message setIntegrations:[message getRuddercontextOption]];
         
