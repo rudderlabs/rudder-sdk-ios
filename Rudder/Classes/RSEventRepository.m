@@ -318,7 +318,6 @@ static RSEventRepository* _instance;
             }else{
                 [message setIntegrations:[message getRuddercontextOption]];
             }
-        
         Boolean check = false;
             if([message getIntegrations] != nil){
             if(!([[message getIntegrations] objectForKey:@"All"] && [[[message getIntegrations] objectForKey:@"All"] isEqualToString:@"false"])){
@@ -328,8 +327,7 @@ static RSEventRepository* _instance;
                 [message setIntegrations:allDict];
             }
             }
-        NSLog(@"HELLO");
-        NSLog(@"%@",integrationOperationMap);
+    
             for (NSString *key in [self->integrationOperationMap allKeys]) {
                 if([message getRudderOption] == nil){
                 for(NSString *keyIntegrate in [[message getIntegrations] allKeys]){

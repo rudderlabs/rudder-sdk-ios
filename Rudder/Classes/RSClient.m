@@ -70,21 +70,13 @@ static RSEventRepository *_repository = nil;
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
-- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(NSMutableDictionary *)options {
+- (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    
-    
-    if(options!=nil){
         
         [builder setEventName:eventName];
         [builder setPropertyDict:properties];
-        [builder setRSOption:[RSOption integrations]];
-        [builder setRScontextOption:[RSOption context]];
-    }
-    else{
-        [builder setEventName:eventName];
-        [builder setPropertyDict:properties];
-    }
+        [builder setRSOption:options];
+    
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
@@ -115,17 +107,10 @@ static RSEventRepository *_repository = nil;
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     
-    if(options!=nil){
+        [builder setEventName:screenName];
+        [builder setPropertyDict:properties];
+        [builder setRSOption:options];
         
-        [builder setEventName:screenName];
-        [builder setPropertyDict:properties];
-        [builder setRSOption:[RSOption integrations]];
-        [builder setRScontextOption:[RSOption context]];
-    }
-    else{
-        [builder setEventName:screenName];
-        [builder setPropertyDict:properties];
-    }
     [self dumpInternal:[builder build] type:RSScreen];
 }
 
@@ -145,17 +130,10 @@ static RSEventRepository *_repository = nil;
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     
-    if(options!=nil){
-        
         [builder setGroupId:groupId];
         [builder setGroupTraits:traits];
-        [builder setRSOption:[RSOption integrations]];
-        [builder setRScontextOption:[RSOption context]];
-    }
-    else{
-        [builder setGroupId:groupId];
-        [builder setGroupTraits:traits];
-    }
+        [builder setRSOption:options];
+  
     [self dumpInternal:[builder build] type:RSGroup];
 }
 
@@ -165,17 +143,12 @@ static RSEventRepository *_repository = nil;
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
     RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
-    
-    if(options!=nil){
-        
+ 
         [builder setUserId:newId];
-        [builder setRSOption:[RSOption integrations]];
-        [builder setRScontextOption:[RSOption context]];
-    }
-    else{
+        [builder setRSOption:options];
+   
         [builder setUserId:newId];
-    }
-    
+
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
     
@@ -232,24 +205,17 @@ static RSEventRepository *_repository = nil;
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 
-- (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(NSDictionary *)options {
+- (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(RSOption *)options {
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
-    if(options!=nil){
-        
+   
         [builder setEventName:RSIdentify];
         [builder setUserId:userId];
         [builder setTraits:traitsObj];
-        [builder setRSOption:[RSOption integrations]];
-        [builder setRScontextOption:[RSOption context]];
-    }
-    else{
-        [builder setEventName:RSIdentify];
-        [builder setUserId:userId];
-        [builder setTraits:traitsObj];
-    }
-    
+        [builder setRSOption:options];
+      
+
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 

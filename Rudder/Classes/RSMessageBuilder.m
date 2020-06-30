@@ -74,22 +74,17 @@
     return self;
 }
 
-- (instancetype) setRSOption:(NSMutableDictionary *)option {
+- (instancetype) setRSOption:(RSOption *)option {
     if (message == nil) {
         message = [[RSMessage alloc] init];
     }
-    message.option = option;
+    if(option!=nil){
+    message.option = [RSOption integrations];
+        message.contextOption = [RSOption context];
+    }
     return self;
 }
 
-- (instancetype) setRScontextOption:(NSMutableDictionary *)contextOption {
-    if (message == nil) {
-        message = [[RSMessage alloc] init];
-    }
-    
-    message.contextOption = contextOption;
-    return self;
-}
 
 - (instancetype)setTraits:(RSTraits *)traits {
     [RSElementCache updateTraits: traits];

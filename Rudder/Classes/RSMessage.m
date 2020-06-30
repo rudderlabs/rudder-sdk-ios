@@ -26,7 +26,7 @@
         _userProperties = nil;
         _option = nil;
         _contextOption = nil;
-        _integrations = [[NSMutableDictionary alloc] init];
+        _integrations = nil;
         _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
@@ -86,9 +86,13 @@
 }
 
 - (void) setIntegrations:(NSMutableDictionary *)integrations {
-    for(NSString* key in integrations.allKeys){
+   for(NSString* key in integrations.allKeys){
+        if(_integrations == nil){
+            _integrations = [[NSMutableDictionary alloc] init];
+        }
         [self.integrations setValue:[integrations objectForKey:key] forKey:key];
     }
+    
 }
 
 -(NSMutableDictionary *) getIntegrations {
