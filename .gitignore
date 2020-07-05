@@ -1,5 +1,7 @@
 **/.DS_Store
-/Example/Rudder.xcworkspace/xcuserdata
+/Example/Rudder.xcworkspace/xcuserdata/
 Example/Rudder.xcodeproj/xcshareddata/
+Example/Rudder.xcodeproj/xcuserdata/
 ExampleSwift/ExampleSwift.xcodeproj/xcshareddata/
 ExampleSwift/ExampleSwift.xcodeproj/xcuserdata/
+/Rudder.xcodeproj/xcuserdata/
