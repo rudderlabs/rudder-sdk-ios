@@ -145,7 +145,7 @@ static RSEventRepository *_repository = nil;
 
     NSObject *prevId = [traits objectForKey:@"userId"];
     if(prevId == nil) {
-        prevId =[traits objectForKey:@"id"];
+        prevId =[traits objectForKey:@"anonymousId"];
     }
     
     if (prevId != nil) {
