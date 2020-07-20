@@ -16,6 +16,8 @@ NSString *const RSServerConfigKey = @"rl_server_config";
 NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
 NSString *const RSTraitsKey = @"rl_traits";
 NSString *const RSApplicationInfoKey = @"rl_application_info_key";
+NSString *const RSAnonymousId = @"rl_anonymous_id";
+NSString *const RSUserId = @"rl_user_id";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -64,5 +66,24 @@ NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 - (NSString *)getBuildVersionCode {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
 }
+
+- (void) saveAnonymousId:(NSString *)anonymousId {
+    [[NSUserDefaults standardUserDefaults] setValue:anonymousId forKey:RSAnonymousId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *) getAnonymousId {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousId];
+}
+
+- (NSString *) getUserId {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSUserId];
+}
+
+- (void) setUserId:(NSString *)userId {
+    [[NSUserDefaults standardUserDefaults] setValue:userId forKey:RSUserId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 @end

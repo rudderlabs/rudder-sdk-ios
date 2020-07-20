@@ -55,6 +55,7 @@ static RSEventRepository* _instance;
         NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
         anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousId: %@",[RSElementCache getAnonymousId]]];
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];

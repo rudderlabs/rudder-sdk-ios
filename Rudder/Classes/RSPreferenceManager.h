@@ -16,6 +16,8 @@ extern NSString *const RSServerConfigKey;
 extern NSString *const RSServerLastUpdatedKey;
 extern NSString *const RSTraitsKey;
 extern NSString *const RSApplicationInfoKey;
+extern NSString *const RSAnonymousId;
+extern NSString *const RSUserId;
 
 + (instancetype) getInstance;
 
@@ -30,6 +32,12 @@ extern NSString *const RSApplicationInfoKey;
 
 - (NSString* __nullable) getBuildVersionCode;
 - (void) saveBuildVersionCode: (NSString* __nonnull) versionCode;
+
+- (void) saveAnonymousId: (NSString* __nonnull) anonymousId;
+- (NSString* __nonnull) getAnonymousId;
+
+- (void) setUserId: (NSString* __nonnull) userId;
+- (NSString* __nonnull) getUserId;
 
 @end
 

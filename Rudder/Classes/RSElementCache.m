@@ -9,12 +9,17 @@
 #import "RSElementCache.h"
 
 static RSContext* cachedContext;
+static RSPreferenceManager *preferenceManager;
 
 @implementation RSElementCache
 
 + (void)initiate {
     if (cachedContext == nil) {
         cachedContext = [[RSContext alloc] init];
+        if (cachedContext.getAnonymousId != nil){
+           preferenceManager = [RSPreferenceManager getInstance];
+            [preferenceManager saveAnonymousId:(@"abc")];
+        }
     }
 }
 
@@ -40,7 +45,7 @@ static RSContext* cachedContext;
 }
 
 + (NSString *)getAnonymousId {
-    return cachedContext.device.identifier;
+    return cachedContext.getAnonymousId;
 }
 
 

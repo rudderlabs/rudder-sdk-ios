@@ -34,12 +34,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) RSDeviceInfo* device;
 @property (nonatomic, readwrite) RSNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
+@property (nonatomic, readwrite) NSString* anonymousId;
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
 - (void) updateTraits: (RSTraits* _Nullable) traits;
 - (void) persistTraits;
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 - (void) putDeviceToken: (NSString*) deviceToken;
+- (NSString *) getAnonymousId;
 
 @end
 

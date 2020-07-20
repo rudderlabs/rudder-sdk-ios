@@ -44,6 +44,8 @@ static RSEventRepository *_repository = nil;
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
     if (_repository != nil && message != nil) {
         if (type == RSIdentify) {
+             RSPreferenceManager *preferenceManager = [[RSPreferenceManager alloc] init];
+            [preferenceManager setUserId:message.userId];
             [RSElementCache updateTraitsDict:message.context.traits];
             [RSElementCache persistTraits];
         }
@@ -137,15 +139,19 @@ static RSEventRepository *_repository = nil;
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
     RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
+    RSPreferenceManager *preferenceManager = [[RSPreferenceManager alloc] init];
     [builder setUserId:newId];
     [builder setRSOption:options];
     
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
-
-    NSObject *prevId = [traits objectForKey:@"userId"];
-    if(prevId == nil) {
-        prevId =[traits objectForKey:@"anonymousId"];
+    NSString *prevId;
+    if([preferenceManager getUserId] != nil){
+        prevId = [preferenceManager getUserId];
+    }
+    else
+    {
+        prevId =[preferenceManager getAnonymousId];
     }
     
     if (prevId != nil) {
@@ -176,31 +182,37 @@ static RSEventRepository *_repository = nil;
 }
 
 - (void)identify:(NSString*)userId {
+    RSPreferenceManager *preferenceManager = [[RSPreferenceManager alloc] init];
     RSTraits* traitsCopy = [[RSTraits alloc] init];
     [traitsCopy setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
+    [preferenceManager setUserId:userId];
     [builder setTraits:traitsCopy];
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits {
+    RSPreferenceManager *preferenceManager = [[RSPreferenceManager alloc] init];
     RSTraits* traitsObj = [[RSTraits alloc] initWithDict: traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
+    [preferenceManager setUserId:userId];
     [builder setTraits:traitsObj];
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(NSDictionary *)options {
+    RSPreferenceManager *preferenceManager = [[RSPreferenceManager alloc] init];
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
+    [preferenceManager setUserId:userId];
     [builder setTraits:traitsObj];
     RSOption *optionsObj = [[RSOption alloc] initWithDict:options];
     [builder setRSOption:optionsObj];
