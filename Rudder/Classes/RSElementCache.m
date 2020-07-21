@@ -18,7 +18,7 @@ static RSPreferenceManager *preferenceManager;
         cachedContext = [[RSContext alloc] init];
         if (cachedContext.getAnonymousId != nil){
            preferenceManager = [RSPreferenceManager getInstance];
-            [preferenceManager saveAnonymousId:(@"abc")];
+            [preferenceManager getAnonymousId];
         }
     }
 }
@@ -36,6 +36,8 @@ static RSPreferenceManager *preferenceManager;
 }
 
 + (void) reset {
+    preferenceManager = [RSPreferenceManager getInstance];
+    [preferenceManager resetAnonymousId];
     [cachedContext updateTraits:nil];
     [cachedContext persistTraits];
 }

@@ -67,13 +67,20 @@ NSString *const RSUserId = @"rl_user_id";
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
 }
 
-- (void) saveAnonymousId:(NSString *)anonymousId {
-    [[NSUserDefaults standardUserDefaults] setValue:anonymousId forKey:RSAnonymousId];
+- (void) resetAnonymousId {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousId];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *) getAnonymousId {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousId];
+    NSString* anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousId];
+    if(anonymousId == nil){
+        NSString *uuid = [[NSUUID UUID] UUIDString];
+        [[NSUserDefaults standardUserDefaults] setValue:uuid forKey:RSAnonymousId];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousId];
+    }
+    return anonymousId;
 }
 
 - (NSString *) getUserId {

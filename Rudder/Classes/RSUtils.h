@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getDateString: (NSDate*) date;
 + (unsigned int) getUTF8Length: (NSString*) message;
 + (NSDictionary<NSString*, id>*) serializeDict: (NSDictionary<NSString*, id>* _Nullable) dict;
++ (NSString *) getUserIdFromTraitsMap:(NSDictionary<NSString* ,NSObject*>*) traitsMap;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

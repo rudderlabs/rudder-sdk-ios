@@ -33,7 +33,7 @@ extern NSString *const RSUserId;
 - (NSString* __nullable) getBuildVersionCode;
 - (void) saveBuildVersionCode: (NSString* __nonnull) versionCode;
 
-- (void) saveAnonymousId: (NSString* __nonnull) anonymousId;
+- (void) resetAnonymousId;
 - (NSString* __nonnull) getAnonymousId;
 
 - (void) setUserId: (NSString* __nonnull) userId;

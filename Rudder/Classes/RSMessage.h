@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) updateTraits: (RSTraits*) traits;
 - (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
 
+
 @end
 
 NS_ASSUME_NONNULL_END

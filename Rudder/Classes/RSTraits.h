@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) putTitle: (NSString*) title;
 - (void) putUserName: (NSString*) userName;
 - (void) put: (NSString*) key value: (NSObject*) value;
+- (void) putAnonymousId: (NSString*) anonymousId;
 
 - (NSDictionary<NSString*, NSObject*>*) dict;
 - (instancetype)initWithDict:(NSDictionary*) dict;

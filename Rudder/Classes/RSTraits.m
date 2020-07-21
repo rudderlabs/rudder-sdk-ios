@@ -15,11 +15,11 @@
 - (instancetype) initWithDict: (NSDictionary*) dict {
     self = [super init];
     if(self) {
+        RSPreferenceManager* preferenceManager = [RSPreferenceManager getInstance];
         // if anonymousId is not present in supplied dict
         NSString *anonymousId = [dict objectForKey:@"anonymousId"];
         if (anonymousId == nil) {
-            RSContext *context = [RSElementCache getContext];
-            _anonymousId = context.device.identifier;
+            _anonymousId = [preferenceManager getAnonymousId];
         }
         __extras = [[NSMutableDictionary alloc] init];
         [__extras setValuesForKeysWithDictionary:dict];
@@ -35,6 +35,9 @@
     return self;
 }
 
+-(void) putAnonymousId:(NSString *) anonymousId{
+    self.anonymousId = anonymousId;
+}
 - (NSString *)getId {
     return self.userId;
 }

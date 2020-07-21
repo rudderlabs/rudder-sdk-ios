@@ -102,6 +102,14 @@
     }
     return dict;
 }
++ (NSString *)getUserIdFromTraitsMap:(NSDictionary<NSString* ,NSObject*>*)traitsMap {
+    if([traitsMap objectForKey:@"userId"]){
+       return [NSString stringWithFormat:@"%@", traitsMap[@"userId"]];
+    }else if([traitsMap objectForKey:@"id"]){
+        return [NSString stringWithFormat:@"%@", traitsMap[@"id"]];
+    }
+    return nil;
+}
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB

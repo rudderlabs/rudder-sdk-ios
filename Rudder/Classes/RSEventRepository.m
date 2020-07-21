@@ -51,11 +51,14 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: initiating element cache"];
         [RSElementCache initiate];
+        [RSPreferenceManager getInstance];
+       [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
+        self->preferenceManager = [RSPreferenceManager getInstance];
         
-        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [preferenceManager getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
         anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousId: %@",[RSElementCache getAnonymousId]]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousId: %@",[preferenceManager getAnonymousId]]];
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
@@ -63,8 +66,7 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: initiating server config manager"];
         configManager = [RSServerConfigManager getInstance:writeKey rudderConfig:config];
         
-        [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
-        self->preferenceManager = [RSPreferenceManager getInstance];
+        
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];

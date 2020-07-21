@@ -25,10 +25,6 @@ static WKWebView *webView;
         _library = [[RSLibraryInfo alloc] init];
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
-        
-        [preferenceManager saveAnonymousId:[preferenceManager getAnonymousId]];
-         _anonymousId = [preferenceManager getAnonymousId];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             webView = [[WKWebView alloc] initWithFrame:CGRectZero];
             [webView loadHTMLString:@"<html></html>" baseURL:nil];
@@ -70,7 +66,6 @@ static WKWebView *webView;
 - (void)updateTraits:(RSTraits *)traits {
     if(traits == nil) {
         traits = [[RSTraits alloc] init];
-        traits.anonymousId = _device.identifier;
     }
     
 //    _traits = [[traits dict] mutableCopy];

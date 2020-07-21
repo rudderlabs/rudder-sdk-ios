@@ -52,8 +52,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) identifyWithMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use identify method instead.")));
 - (void) identifyWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use identify method instead.")));
 - (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits options:(RSOption *_Nullable) options;
-- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits;
+- (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*_Nullable)traits;
 - (void) identify:(NSString *_Nullable)userId;
+
+- (void)resetIdentify:(RSPreferenceManager* )preferenceManager builder:(RSMessageBuilder* )builder traitsObj:(RSTraits* ) traitsObj userId:(NSString *)userId;
 
 - (void)reset;
 

@@ -19,6 +19,14 @@
     return self;
 }
 
+- (instancetype) setAnonymousId:(NSString *)anonymousId {
+    if(message == nil) {
+        message = [[RSMessage alloc] init];
+    }
+    message.anonymousId = anonymousId;
+    return self;
+}
+
 -(instancetype) setGroupId:(NSString *)groupId {
     if(message == nil) {
         message = [[RSMessage alloc] init];

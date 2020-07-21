@@ -15,7 +15,9 @@
 - (instancetype)init
 {
     self = [super init];
+    RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
     if (self) {
+    
         _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [RSUtils getTimeStampLong], [RSUtils getUniqueId]];
         _channel = @"mobile";
         _context = [RSElementCache getContext];
@@ -24,11 +26,9 @@
         _groupId = nil;
         _traits = nil;
         _userProperties = nil;
-        _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
-        NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
-        if (userIdObj != nil) {
-            _userId = [[NSString alloc] initWithFormat:@"%@", userIdObj];
-        }
+        _anonymousId = [preferenceManager getAnonymousId];
+        _userId = [preferenceManager getUserId];
+        
     }
     return self;
 }
@@ -80,4 +80,5 @@
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
     [_context updateTraitsDict:traits];
 }
+
 @end
