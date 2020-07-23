@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0651F10C24C9C46400A43CAC /* iAd.framework */; };
 		0CA8D57619E72CA4A6A9365E /* Pods_Rudder_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DD328D69249022A435D2E9 /* Pods_Rudder_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0651F10C24C9C46400A43CAC /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		067146E391B1A8F65C70373A /* Pods_Rudder_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A017A2CB2F5C9192E0AB5B5 /* Pods-Rudder_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder_Tests.release.xcconfig"; path = "Target Support Files/Pods-Rudder_Tests/Pods-Rudder_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1D00FB446EEE140D413D60BA /* Pods-Rudder_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder_Example.release.xcconfig"; path = "Target Support Files/Pods-Rudder_Example/Pods-Rudder_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
+				0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				0CA8D57619E72CA4A6A9365E /* Pods_Rudder_Example.framework in Frameworks */,
@@ -119,6 +122,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0651F10C24C9C46400A43CAC /* iAd.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
