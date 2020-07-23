@@ -35,6 +35,10 @@
     if (_token != nil) {
         [tempDict setValue:_token forKey:@"token"];
     }
+    if (_advertisingId != nil) {
+        [tempDict setValue:_advertisingId forKey:@"advertisingId"];
+        [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
+    }
     
     return [tempDict copy];
 }

@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) persistTraits;
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 - (void) putDeviceToken: (NSString*) deviceToken;
+- (void) putAdvertisementId: (NSString*) idfa;
 
 @end
 
