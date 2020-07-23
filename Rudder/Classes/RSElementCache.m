@@ -42,5 +42,4 @@ static RSContext* cachedContext;
 + (NSString *)getAnonymousId {
     return cachedContext.device.identifier;
 }
-
 @end
