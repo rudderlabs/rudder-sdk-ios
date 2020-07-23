@@ -43,5 +43,4 @@ static RSContext* cachedContext;
     return cachedContext.device.identifier;
 }
 
-
 @end

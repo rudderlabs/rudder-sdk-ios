@@ -97,6 +97,18 @@ static WKWebView *webView;
     _device.token = deviceToken;
 }
 
+- (void)putAdvertisementId:(NSString *)idfa {
+    // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
+    // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
+    BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
+    _device.adTrackingEnabled = adTrackingEnabled;
+    
+    if (adTrackingEnabled) {
+        _device.advertisingId = idfa;
+    }
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
