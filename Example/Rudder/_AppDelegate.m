@@ -8,8 +8,9 @@
 
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
+#import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"http://a354a115.ngrok.io/";
+static NSString *DATA_PLANE_URL = @"https://7203f5894e2f.ngrok.io";
 static NSString *CONTROL_PLANE_URL = @"https://98a1db41.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 //static WKWebView *webView;
@@ -21,16 +22,19 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
-//    [builder withDataPlaneUrl:DATA_PLANE_URL];
-//    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
     [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     
     return YES;
+}
+
+- (NSString*) getIDFA {
+    return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
 }
 
 - (NSString*) getDeviceToken {
