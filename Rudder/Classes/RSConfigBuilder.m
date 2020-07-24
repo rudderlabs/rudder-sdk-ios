@@ -17,7 +17,7 @@
         config = [[RSConfig alloc] init];
     }
     NSURL *url = [[NSURL alloc] initWithString:endPointUrl];
-    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
     return self;
 }
 
@@ -27,7 +27,7 @@
     }
     
     NSURL *url = [[NSURL alloc] initWithString:dataPlaneUrl];
-    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
     return self;
 }
 
@@ -35,7 +35,7 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [dataPlaneURL scheme], [dataPlaneURL host]];
+    config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [dataPlaneURL scheme], [dataPlaneURL host] ,[dataPlaneURL port]];
     return self;
 }
 
