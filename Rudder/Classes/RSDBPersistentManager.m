@@ -47,7 +47,7 @@
 }
 
 - (void)saveEvent:(NSString *)message {
-    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO events (message, updated) VALUES ('%@', %ld);", message, [RSUtils getTimeStampLong]];
+    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO events (message, updated) VALUES ('%@', %ld);", [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"saveEventSQL: %@", insertSQLString]];
     const char* insertSQL = [insertSQLString UTF8String];
     sqlite3_stmt *insertStmt = nil;
