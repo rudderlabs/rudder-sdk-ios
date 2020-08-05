@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Rudder'
-  s.version          = "1.0.3-patch.2"
+  s.version          = "1.0.3-patch.3"
   s.summary          = "Privacy and Security focused Segment-alternative. iOS SDK"
   s.description      = <<-DESC
   Rudder is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
