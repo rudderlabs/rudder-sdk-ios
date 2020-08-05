@@ -17,5 +17,5 @@ int const RSSleepTimeout = 10;
 NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com";
 bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
-NSString *const RS_VERSION = @"1.0.3-patch.2";
+NSString *const RS_VERSION = @"1.0.3-patch.3";
 @end
