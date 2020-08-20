@@ -15,6 +15,11 @@
 static RSEventRepository* _instance;
 
 @implementation RSEventRepository
+typedef enum {
+    NETWORKERROR =1,
+    NETWORKSUCCESS =0,
+    WRONGWRITEKEY =2
+} NETWORKSTATE;
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
@@ -160,7 +165,7 @@ static RSEventRepository* _instance;
 - (void) __initiateProcessor {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [RSLogger logDebug:@"processor started"];
-        
+        int errResp = 0;
         int sleepCount = 0;
         
         while (YES) {
@@ -180,18 +185,25 @@ static RSEventRepository* _instance;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
-                    NSString* response = [self __flushEventsToServer:payload];
-                    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
-                    if (response != nil && [response isEqual: @"OK"]) {
+                    int response = [self __flushEventsToServer:payload];
+                    if (response == 0) {
                         [RSLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
+                    }
+                    else if(response == 1){
+                        errResp = 1;
                     }
                 }
             }
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
+            if (errResp == 1){
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d", sleepCount*1000000]];
+                usleep(sleepCount*1000000);
+            }else{
             usleep(1000000);
+            }
         }
     });
 }
@@ -237,7 +249,7 @@ static RSEventRepository* _instance;
     return [json copy];
 }
 
-- (NSString* _Nullable) __flushEventsToServer: (NSString*) payload {
+- (int) __flushEventsToServer: (NSString*) payload {
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
         return nil;
@@ -245,7 +257,7 @@ static RSEventRepository* _instance;
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    __block NSString *responseStr = nil;
+    int __block responseStr = NETWORKSUCCESS;
     NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
@@ -265,10 +277,14 @@ static RSEventRepository* _instance;
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
-                responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                if([response isEqual:@"OK"]){
+                responseStr = NETWORKSUCCESS;
+                }
             }
         } else {
             NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            responseStr = NETWORKERROR;
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         

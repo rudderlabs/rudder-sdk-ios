@@ -12,7 +12,7 @@
 
 static NSString *DATA_PLANE_URL = @"https://7203f5894e2f.ngrok.io";
 static NSString *CONTROL_PLANE_URL = @"https://98a1db41.ngrok.io";
-static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
+static NSString *WRITE_KEY = @"1fG4PQTMJpujRfSmAhgv3IcN9Cb";
 //static WKWebView *webView;
 
 @implementation _AppDelegate
@@ -21,7 +21,7 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 {
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
+  //  [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
