@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype) getInstance: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
 - (RSServerConfigSource*) getConfig;
+- (int) getError;
 
 @end
 

@@ -91,6 +91,7 @@ typedef enum {
         int retryCount = 0;
         while (self->isSDKInitialized == NO && retryCount <= 5) {
             RSServerConfigSource *serverConfig = [self->configManager getConfig];
+            int receivedError =[self->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
                 self->isSDKEnabled = serverConfig.isSourceEnabled;
@@ -110,10 +111,13 @@ typedef enum {
                     [self->dbpersistenceManager flushEventsFromDB];
                 }
                 self->isSDKInitialized = YES;
-            } else {
+            } else if(receivedError==2){
+                retryCount= 6;
+                [RSLogger logError:@"WRONG WRITE KEY"];
+            }else {
                 retryCount += 1;
                 [RSLogger logDebug:@"server config is null. retrying in 10s."];
-                usleep(10000000);
+                usleep(10000000*retryCount);
             }
         }
     });
@@ -202,7 +206,7 @@ typedef enum {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d", sleepCount*1000000]];
                 usleep(sleepCount*1000000);
             }else{
-            usleep(1000000);
+                usleep(1000000);
             }
         }
     });
@@ -252,7 +256,7 @@ typedef enum {
 - (int) __flushEventsToServer: (NSString*) payload {
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
-        return nil;
+        return WRONGWRITEKEY;
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -279,7 +283,7 @@ typedef enum {
             if (data != nil) {
                 NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 if([response isEqual:@"OK"]){
-                responseStr = NETWORKSUCCESS;
+                    responseStr = NETWORKSUCCESS;
                 }
             }
         } else {
@@ -368,7 +372,7 @@ typedef enum {
 - (RSConfig *)getConfig {
     return self->config;
 }
-    
+
 - (void) __checkApplicationUpdateStatus {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
@@ -387,7 +391,7 @@ typedef enum {
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
-      [self _applicationDidEnterBackground];
+        [self _applicationDidEnterBackground];
     }
 }
 
@@ -396,9 +400,9 @@ typedef enum {
         return;
     }
     NSString *previousVersion = [preferenceManager getBuildVersionCode];
-
+    
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-
+    
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
@@ -416,7 +420,7 @@ typedef enum {
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
     }];
-
+    
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
 

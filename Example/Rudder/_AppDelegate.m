@@ -21,7 +21,7 @@ static NSString *WRITE_KEY = @"1fG4PQTMJpujRfSmAhgv3IcN9Cb";
 {
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-  //  [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
+    //  [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
