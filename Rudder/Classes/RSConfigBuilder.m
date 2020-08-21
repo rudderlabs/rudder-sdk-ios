@@ -22,6 +22,9 @@
     } else {
       config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     }
+    if (![[url path] isEqualToString:@"/"]) {
+      config.dataPlaneUrl = [config.dataPlaneUrl stringByAppendingString: [url path]];
+    }
     return self;
 }
 
@@ -36,6 +39,9 @@
     } else {
       config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     }
+    if (![[url path] isEqualToString:@"/"]) {
+      config.dataPlaneUrl = [config.dataPlaneUrl stringByAppendingString: [url path]];
+    }
     return self;
 }
 
@@ -47,6 +53,9 @@
       config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [dataPlaneURL scheme], [dataPlaneURL host] ,[dataPlaneURL port]];
     } else {
       config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [dataPlaneURL scheme], [dataPlaneURL host]];
+    }
+    if (![[dataPlaneURL path] isEqualToString:@"/"]) {
+      config.dataPlaneUrl = [config.dataPlaneUrl stringByAppendingString: [dataPlaneURL path]];
     }
     return self;
 }
