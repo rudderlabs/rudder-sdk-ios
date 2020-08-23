@@ -189,23 +189,23 @@ typedef enum {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
-                    int response = [self __flushEventsToServer:payload];
-                    if (response == 0) {
+                    errResp = [self __flushEventsToServer:payload];
+                    if (errResp == 0) {
                         [RSLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
-                    }
-                    else if(response == 1){
-                        errResp = 1;
                     }
                 }
             }
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
-            if (errResp == 1){
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d", sleepCount*1000000]];
-                usleep(sleepCount*1000000);
-            }else{
+            if (errResp == WRONGWRITEKEY) {
+                [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
+                break;
+            } else if (errResp == NETWORKERROR) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - self->config.sleepTimeout)]];
+                usleep(abs(sleepCount - self->config.sleepTimeout) * 1000000);
+            } else {
                 usleep(1000000);
             }
         }
@@ -261,7 +261,7 @@ typedef enum {
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    int __block responseStr = NETWORKSUCCESS;
+    int __block respStatus = NETWORKSUCCESS;
     NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
@@ -283,12 +283,19 @@ typedef enum {
             if (data != nil) {
                 NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 if([response isEqual:@"OK"]){
-                    responseStr = NETWORKSUCCESS;
+                    respStatus = NETWORKSUCCESS;
                 }
             }
         } else {
             NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            responseStr = NETWORKERROR;
+            if (
+                ![errorResponse isEqualToString:@""] && // non-empty response
+                [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location == NSNotFound
+                ) {
+                respStatus = WRONGWRITEKEY;
+            } else {
+                respStatus = NETWORKERROR;
+            }
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
@@ -301,7 +308,7 @@ typedef enum {
     dispatch_release(semaphore);
 #endif
     
-    return responseStr;
+    return respStatus;
 }
 
 - (void) dump:(RSMessage *)message {
