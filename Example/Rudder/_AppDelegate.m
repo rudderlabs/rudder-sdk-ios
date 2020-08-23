@@ -10,10 +10,8 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://7203f5894e2f.ngrok.io";
-static NSString *CONTROL_PLANE_URL = @"https://98a1db41.ngrok.io";
-static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
-//static WKWebView *webView;
+static NSString *DATA_PLANE_URL = @"https://hosted.rudderlabs.com";
+static NSString *WRITE_KEY = @"1celWezYSkGPQzL0foc9dnvFfsD";
 
 @implementation _AppDelegate
 
@@ -27,8 +25,8 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
     [builder withRecordScreenViews:YES];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
-    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
+//    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
+//    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     
     return YES;
 }
