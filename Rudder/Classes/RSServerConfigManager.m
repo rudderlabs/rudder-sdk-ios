@@ -13,8 +13,16 @@
 #import "RSConstants.h"
 
 static RSServerConfigManager *_instance;
+typedef enum {
+    NETWORKERROR =1,
+    NETWORKSUCCESS =0,
+    WRONGWRITEKEY =2
+} NETWORKSTATE;
+
+int receivedError = NETWORKSUCCESS;
 
 @implementation RSServerConfigManager
+
 
 + (instancetype)getInstance:(NSString *)writeKey rudderConfig:(RSConfig *)rudderConfig {
     if (_instance == nil) {
@@ -31,6 +39,7 @@ static RSServerConfigManager *_instance;
         _preferenceManager = [RSPreferenceManager getInstance];
         if (writeKey == nil || [writeKey isEqualToString:@""]) {
             [RSLogger logError:@"writeKey can not be null or empty"];
+            receivedError = WRONGWRITEKEY;
         } else {
             _writeKey = writeKey;
             _rudderConfig = rudderConfig;
@@ -84,7 +93,7 @@ static RSServerConfigManager *_instance;
         NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];
         BOOL isSourceEnabled = NO;
         if (sourceEnabled != nil) {
-           isSourceEnabled = [sourceEnabled boolValue];
+            isSourceEnabled = [sourceEnabled boolValue];
         }
         NSString *updatedAt = [sourceDict objectForKey:@"updatedAt"];
         source = [[RSServerConfigSource alloc] init];
@@ -141,9 +150,14 @@ static RSServerConfigManager *_instance;
             
             isDone = YES;
         } else {
-            retryCount += 1;
-            [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
-            usleep(10000000 * retryCount); 
+            if(receivedError == 2){
+                [RSLogger logInfo:@"Wrong write key"];
+                retryCount = 4;
+            }else{
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
+                retryCount += 1;
+                usleep(10000000 * retryCount);
+            }
         }
     }
 }
@@ -163,12 +177,18 @@ static RSServerConfigManager *_instance;
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"response status code: %ld", (long)httpResponse.statusCode]];
+        NSString *dataError = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
                 responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                receivedError = NETWORKSUCCESS;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", responseStr]];
             }
+        }else if([dataError isEqual:@"{\"message\":\"Invalid write key\"}"]){
+            receivedError = WRONGWRITEKEY;
+        }else{
+            receivedError = NETWORKERROR;
         }
         
         dispatch_semaphore_signal(semaphore);
@@ -185,6 +205,10 @@ static RSServerConfigManager *_instance;
 
 - (RSServerConfigSource *) getConfig {
     return [self _retrieveConfig];
+}
+
+- (int) getError {
+    return  receivedError;
 }
 
 @end

@@ -15,6 +15,11 @@
 static RSEventRepository* _instance;
 
 @implementation RSEventRepository
+typedef enum {
+    NETWORKERROR =1,
+    NETWORKSUCCESS =0,
+    WRONGWRITEKEY =2
+} NETWORKSTATE;
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
@@ -86,6 +91,7 @@ static RSEventRepository* _instance;
         int retryCount = 0;
         while (self->isSDKInitialized == NO && retryCount <= 5) {
             RSServerConfigSource *serverConfig = [self->configManager getConfig];
+            int receivedError =[self->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
                 self->isSDKEnabled = serverConfig.isSourceEnabled;
@@ -105,10 +111,13 @@ static RSEventRepository* _instance;
                     [self->dbpersistenceManager flushEventsFromDB];
                 }
                 self->isSDKInitialized = YES;
-            } else {
+            } else if(receivedError==2){
+                retryCount= 6;
+                [RSLogger logError:@"WRONG WRITE KEY"];
+            }else {
                 retryCount += 1;
                 [RSLogger logDebug:@"server config is null. retrying in 10s."];
-                usleep(10000000);
+                usleep(10000000*retryCount);
             }
         }
     });
@@ -160,7 +169,7 @@ static RSEventRepository* _instance;
 - (void) __initiateProcessor {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [RSLogger logDebug:@"processor started"];
-        
+        int errResp = 0;
         int sleepCount = 0;
         
         while (YES) {
@@ -180,9 +189,8 @@ static RSEventRepository* _instance;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
-                    NSString* response = [self __flushEventsToServer:payload];
-                    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Response: %@", response]];
-                    if (response != nil && [response isEqual: @"OK"]) {
+                    errResp = [self __flushEventsToServer:payload];
+                    if (errResp == 0) {
                         [RSLogger logDebug:@"clearing events from DB"];
                         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
@@ -191,7 +199,15 @@ static RSEventRepository* _instance;
             }
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
-            usleep(1000000);
+            if (errResp == WRONGWRITEKEY) {
+                [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
+                break;
+            } else if (errResp == NETWORKERROR) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - self->config.sleepTimeout)]];
+                usleep(abs(sleepCount - self->config.sleepTimeout) * 1000000);
+            } else {
+                usleep(1000000);
+            }
         }
     });
 }
@@ -237,15 +253,15 @@ static RSEventRepository* _instance;
     return [json copy];
 }
 
-- (NSString* _Nullable) __flushEventsToServer: (NSString*) payload {
+- (int) __flushEventsToServer: (NSString*) payload {
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
-        return nil;
+        return WRONGWRITEKEY;
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    __block NSString *responseStr = nil;
+    int __block respStatus = NETWORKSUCCESS;
     NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
@@ -265,10 +281,21 @@ static RSEventRepository* _instance;
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
-                responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                if([response isEqual:@"OK"]){
+                    respStatus = NETWORKSUCCESS;
+                }
             }
         } else {
             NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if (
+                ![errorResponse isEqualToString:@""] && // non-empty response
+                [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location == NSNotFound
+                ) {
+                respStatus = WRONGWRITEKEY;
+            } else {
+                respStatus = NETWORKERROR;
+            }
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
@@ -281,7 +308,7 @@ static RSEventRepository* _instance;
     dispatch_release(semaphore);
 #endif
     
-    return responseStr;
+    return respStatus;
 }
 
 - (void) dump:(RSMessage *)message {
@@ -352,7 +379,7 @@ static RSEventRepository* _instance;
 - (RSConfig *)getConfig {
     return self->config;
 }
-    
+
 - (void) __checkApplicationUpdateStatus {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
@@ -371,7 +398,7 @@ static RSEventRepository* _instance;
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
-      [self _applicationDidEnterBackground];
+        [self _applicationDidEnterBackground];
     }
 }
 
@@ -380,9 +407,9 @@ static RSEventRepository* _instance;
         return;
     }
     NSString *previousVersion = [preferenceManager getBuildVersionCode];
-
+    
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-
+    
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
@@ -400,7 +427,7 @@ static RSEventRepository* _instance;
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
     }];
-
+    
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
 
