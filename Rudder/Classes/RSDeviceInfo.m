@@ -19,14 +19,14 @@
         _manufacturer = @"Apple";
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
-        _type = @"ios";
+        _type = @"iOS";
     }
     return self;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
-    
+
     [tempDict setValue:_identifier forKey:@"id"];
     [tempDict setValue:_manufacturer forKey:@"manufacturer"];
     [tempDict setValue:_model forKey:@"model"];
@@ -39,7 +39,7 @@
         [tempDict setValue:_advertisingId forKey:@"advertisingId"];
         [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
     }
-    
+
     return [tempDict copy];
 }
 
