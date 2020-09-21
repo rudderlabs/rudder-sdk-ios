@@ -65,12 +65,14 @@
             [array addObject:[self serializeValue:i]];
         }
         return [array copy];
-    } else if ([val isKindOfClass:[NSDictionary class]]) {
+    } else if ([val isKindOfClass:[NSDictionary class]] ||
+               [val isKindOfClass:[NSMutableDictionary class]] 
+               ) {
         // handle dictionary
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         NSArray *keys = [val allKeys];
         for (NSString *key in keys) {
-            id value = [dict objectForKey:key];
+            id value = [val objectForKey:key];
             if (![key isKindOfClass:[NSString class]]) {
                 [RSLogger logDebug:@"key should be string. changing it to its description"];
             }
@@ -101,6 +103,17 @@
         return [returnDict copy];
     }
     return dict;
+}
+
++ (NSArray*) serializeArray:(NSArray*) array {
+    if (array) {
+        NSMutableArray *returnArray = [[NSMutableArray alloc] init];
+        for (id i in array) {
+            [returnArray addObject:[self serializeValue:i]];
+        }
+        return [returnArray copy];
+    }
+    return array;
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

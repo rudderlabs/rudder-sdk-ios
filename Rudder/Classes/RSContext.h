@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) RSDeviceInfo* device;
 @property (nonatomic, readwrite) RSNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
+@property (nonatomic, readwrite) NSMutableArray* externalIds;
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
 - (void) updateTraits: (RSTraits* _Nullable) traits;
@@ -41,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 - (void) putDeviceToken: (NSString*) deviceToken;
 - (void) putAdvertisementId: (NSString*) idfa;
+- (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
 
 @end
 
