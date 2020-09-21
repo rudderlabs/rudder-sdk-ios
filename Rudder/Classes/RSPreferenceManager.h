@@ -16,6 +16,7 @@ extern NSString *const RSServerConfigKey;
 extern NSString *const RSServerLastUpdatedKey;
 extern NSString *const RSTraitsKey;
 extern NSString *const RSApplicationInfoKey;
+extern NSString *const RSExternalIdKey;
 
 + (instancetype) getInstance;
 
@@ -30,6 +31,10 @@ extern NSString *const RSApplicationInfoKey;
 
 - (NSString* __nullable) getBuildVersionCode;
 - (void) saveBuildVersionCode: (NSString* __nonnull) versionCode;
+
+- (NSString* __nullable) getExternalIds;
+- (void) saveExternalIds: (NSString* __nonnull) externalIdsJson;
+- (void) clearExternalIds;
 
 @end
 

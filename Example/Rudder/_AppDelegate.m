@@ -10,7 +10,7 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://hosted.rudderlabs.com";
+static NSString *DATA_PLANE_URL = @"https://7f79d5a74811.ngrok.io";
 static NSString *WRITE_KEY = @"1celWezYSkGPQzL0foc9dnvFfsD";
 
 @implementation _AppDelegate
@@ -21,8 +21,8 @@ static NSString *WRITE_KEY = @"1celWezYSkGPQzL0foc9dnvFfsD";
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
-    [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:YES];
+    [builder withTrackLifecycleEvens:NO];
+    [builder withRecordScreenViews:NO];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
 //    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
