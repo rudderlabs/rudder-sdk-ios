@@ -46,8 +46,16 @@ static RSEventRepository *_repository = nil;
         if (type == RSIdentify) {
             [RSElementCache updateTraitsDict:message.context.traits];
             [RSElementCache persistTraits];
+            
+            //  handle external Ids
+            RSOption *option = message.option;
+            if (option != nil) {
+                NSMutableArray *externalIds = option.externalIds;
+                if (externalIds != nil) {
+                    [RSElementCache updateExternalIds:externalIds];
+                }
+            }
         }
-        
         message.type = type;
         [_repository dump:message];
     }
@@ -195,15 +203,14 @@ static RSEventRepository *_repository = nil;
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 
-- (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(NSDictionary *)options {
+- (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(RSOption *)options {
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
-    RSOption *optionsObj = [[RSOption alloc] initWithDict:options];
-    [builder setRSOption:optionsObj];
+    [builder setRSOption:options];
     [self dumpInternal:[builder build] type:RSIdentify];
 }
 

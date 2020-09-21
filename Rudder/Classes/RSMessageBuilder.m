@@ -79,6 +79,8 @@
         message = [[RSMessage alloc] init];
     }
     
+    [message setRudderOption:option];
+    
     return self;
 }
 

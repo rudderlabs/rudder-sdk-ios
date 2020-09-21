@@ -80,4 +80,8 @@
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
     [_context updateTraitsDict:traits];
 }
+
+- (void)setRudderOption:(RSOption *)option {
+    _option = option;
+}
 @end

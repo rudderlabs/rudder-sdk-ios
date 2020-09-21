@@ -37,6 +37,7 @@ static WKWebView *webView;
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
+        _externalIds = nil;
         
         NSString *traitsJson = [preferenceManager getTraits];
         if (traitsJson == nil) {
@@ -50,6 +51,16 @@ static WKWebView *webView;
             } else {
                 // persisted traits persing error. initiate blank
                 [self createAndPersistTraits];
+            }
+        }
+        
+        // get saved external Ids from prefs
+        NSString *externalIdJson = [preferenceManager getExternalIds];
+        if (externalIdJson != nil) {
+            NSError *error;
+            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _externalIds = [externalIdDict mutableCopy];
             }
         }
     }
@@ -69,8 +80,6 @@ static WKWebView *webView;
         traits = [[RSTraits alloc] init];
         traits.anonymousId = _device.identifier;
     }
-    
-//    _traits = [[traits dict] mutableCopy];
     
     [_traits setValuesForKeysWithDictionary:[traits dict]];
 }
@@ -109,6 +118,22 @@ static WKWebView *webView;
     }
 }
 
+- (void)updateExternalIds:(NSMutableArray *)externalIds {
+    // update local variable
+    _externalIds = externalIds;
+    
+    if (externalIds != nil) {
+        // update persistence storage
+        NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[externalIds copy]] options:0 error:nil];
+        NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
+        
+        [preferenceManager saveExternalIds:externalIdJson];
+    } else {
+        // clear persistence storage : RESET call
+        [preferenceManager clearExternalIds];
+    }
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     [tempDict setObject:[_app dict] forKey:@"app"];
@@ -121,6 +146,9 @@ static WKWebView *webView;
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
     [tempDict setObject:_timezone forKey:@"timezone"];
+    if (_externalIds != nil) {
+        [tempDict setObject:_externalIds forKey:@"externalId"];
+    }
     
     return [tempDict copy];
 }

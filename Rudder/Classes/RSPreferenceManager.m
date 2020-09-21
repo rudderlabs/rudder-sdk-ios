@@ -16,6 +16,7 @@ NSString *const RSServerConfigKey = @"rl_server_config";
 NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
 NSString *const RSTraitsKey = @"rl_traits";
 NSString *const RSApplicationInfoKey = @"rl_application_info_key";
+NSString *const RSExternalIdKey =  @"rl_external_id";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -63,6 +64,20 @@ NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 
 - (NSString *)getBuildVersionCode {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
+}
+
+- (NSString *)getExternalIds {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSExternalIdKey];
+}
+
+- (void)saveExternalIds:(NSString *)externalIdsJson {
+    [[NSUserDefaults standardUserDefaults] setValue:externalIdsJson forKey:RSExternalIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)clearExternalIds {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSExternalIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
