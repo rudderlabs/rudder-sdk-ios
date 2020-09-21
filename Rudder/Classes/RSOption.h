@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSOption : NSObject
 
-- (instancetype) initWithDict:(NSDictionary*) options;
+@property (nonatomic, strong) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
+
+- (instancetype) putExternalId: (NSString*) type withId: (NSString*) idValue;
 
 @end
 

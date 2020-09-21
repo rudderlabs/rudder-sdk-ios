@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RSContext.h"
+#import "RSOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,11 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* userProperties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* integrations;
 @property (atomic, readwrite) NSString* destinationProps;
+@property (atomic, readwrite) RSOption* option;
 
 - (NSDictionary<NSString*, NSObject*>*) dict;
 - (void) updateContext: (RSContext*) context;
 - (void) updateTraits: (RSTraits*) traits;
 - (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
+- (void) setRudderOption: (RSOption*) option;
 
 @end
 

@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*> *) traitsDict;
 
++ (void) updateExternalIds: (NSMutableArray*) externalId;
+
 @end
 
 NS_ASSUME_NONNULL_END

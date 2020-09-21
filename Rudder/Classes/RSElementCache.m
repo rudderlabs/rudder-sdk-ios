@@ -33,6 +33,7 @@ static RSContext* cachedContext;
 + (void) reset {
     [cachedContext updateTraits:nil];
     [cachedContext persistTraits];
+    [cachedContext updateExternalIds:nil];
 }
 
 + (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
@@ -41,5 +42,9 @@ static RSContext* cachedContext;
 
 + (NSString *)getAnonymousId {
     return cachedContext.device.identifier;
+}
+
++ (void) updateExternalIds:(NSMutableArray *)externalId {
+    [cachedContext updateExternalIds:externalId];
 }
 @end
