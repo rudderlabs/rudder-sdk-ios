@@ -86,10 +86,6 @@
 
 - (instancetype)setTraits:(RSTraits *)traits {
     [RSElementCache updateTraits: traits];
-    if (message == nil) {
-        message = [[RSMessage alloc] init];
-    }
-    [message updateTraits:traits];
     return self;
 }
 

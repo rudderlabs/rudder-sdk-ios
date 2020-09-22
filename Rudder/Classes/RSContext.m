@@ -153,4 +153,22 @@ static WKWebView *webView;
     return [tempDict copy];
 }
 
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+    RSContext *copy = [[[self class] allocWithZone:zone] init];
+    
+    copy.app = self.app;
+    copy.traits = [self.traits copy];
+    copy.library = self.library;
+    copy.os = self.os;
+    copy.screen = self.screen;
+    copy.userAgent = self.userAgent;
+    copy.locale = self.locale;
+    copy.device = self.device;
+    copy.network = self.network;
+    copy.timezone = self.timezone;
+    copy.externalIds = [self.externalIds copy];
+    
+    return copy;
+}
+
 @end

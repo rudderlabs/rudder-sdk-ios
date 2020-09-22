@@ -19,7 +19,7 @@ static RSContext* cachedContext;
 }
 
 + (RSContext *)getContext {
-    return cachedContext;
+    return [cachedContext copy];
 }
 
 + (void)updateTraits:(RSTraits *)traits {
