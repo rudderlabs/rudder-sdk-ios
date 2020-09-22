@@ -18,8 +18,7 @@
         // if anonymousId is not present in supplied dict
         NSString *anonymousId = [dict objectForKey:@"anonymousId"];
         if (anonymousId == nil) {
-            RSContext *context = [RSElementCache getContext];
-            _anonymousId = context.device.identifier;
+            _anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
         }
         __extras = [[NSMutableDictionary alloc] init];
         [__extras setValuesForKeysWithDictionary:dict];

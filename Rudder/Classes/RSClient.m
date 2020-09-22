@@ -44,7 +44,6 @@ static RSEventRepository *_repository = nil;
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
     if (_repository != nil && message != nil) {
         if (type == RSIdentify) {
-            [RSElementCache updateTraitsDict:message.context.traits];
             [RSElementCache persistTraits];
             
             //  handle external Ids
@@ -55,6 +54,8 @@ static RSEventRepository *_repository = nil;
                     [RSElementCache updateExternalIds:externalIds];
                 }
             }
+            
+            [message updateContext:[RSElementCache getContext]];
         }
         message.type = type;
         [_repository dump:message];

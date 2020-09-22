@@ -312,8 +312,9 @@ typedef enum {
 }
 
 - (void) dump:(RSMessage *)message {
-    if (message == nil) return;
-    if (!self->isSDKEnabled) return;
+    if (message == nil || !self->isSDKEnabled) {
+        return;
+    }
     
     message.integrations = @{@"All": @YES};
     [self makeFactoryDump: message];
