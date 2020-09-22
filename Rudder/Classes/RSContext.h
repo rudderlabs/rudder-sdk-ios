@@ -20,7 +20,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSContext : NSObject {
+@interface RSContext : NSObject <NSCopying> {
     RSPreferenceManager *preferenceManager;
 }
 
