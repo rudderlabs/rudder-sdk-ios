@@ -277,7 +277,7 @@ typedef enum {
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        [RSLogger logError:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
         
         if (httpResponse.statusCode == 200) {
             if (data != nil) {
