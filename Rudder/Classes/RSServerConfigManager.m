@@ -68,7 +68,7 @@ int receivedError = NETWORKSUCCESS;
     long currentTime = [RSUtils getTimeStampLong];
     long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
-    return (currentTime - lastUpdatedTime) > (_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
+    return (currentTime - lastUpdatedTime) > (_rudderConfig.configRefreshInterval * 60 * 60);
 }
 
 - (RSServerConfigSource* _Nullable) _retrieveConfig {
