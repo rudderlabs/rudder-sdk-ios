@@ -150,7 +150,7 @@ static RSEventRepository *_repository = nil;
     [builder setRSOption:options];
     
     RSContext *rc = [RSElementCache getContext];
-    NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+    NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
 
     NSObject *prevId = [traits objectForKey:@"userId"];
     if(prevId == nil) {
