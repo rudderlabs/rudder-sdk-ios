@@ -10,8 +10,8 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://7f79d5a74811.ngrok.io";
-static NSString *WRITE_KEY = @"1celWezYSkGPQzL0foc9dnvFfsD";
+static NSString *DATA_PLANE_URL = @"https://751647472ddb.ngrok.io";
+static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 
 @implementation _AppDelegate
 
