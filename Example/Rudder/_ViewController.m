@@ -20,18 +20,33 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    [[RSClient sharedInstance] reset];
-    [[RSClient sharedInstance] track:@"Test Event 2"];
-//    [[RSClient sharedInstance] track:@"Test Event 2"];
-//    [[RSClient sharedInstance] track:@"Test Event 3"];
-//    [[RSClient sharedInstance] track:@"Test Event 4"];
+    [[RSClient sharedInstance] identify:@"test_user_id" traits:@{
+        @"firstName": @"Test",
+        @"lastName": @"Name",
+        @"email": @"test_1@gmail.com",
+        @"phone": @"+91-986543210",
+        @"company": @{
+                @"id": @"test_company_id",
+                @"name": @"Test Company",
+                @"industry": @"Test Industry",
+                @"address": @"Test Location"
+        }
+    }];
     
-//    RSOption *identifyOptions = [[RSOption alloc] init];
-//    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
-//    [identifyOptions putExternalId:@"braze_id" withId:@"some_braze_id_2"];
-//    [[RSClient sharedInstance] identify:@"testUserId"
-//                                 traits:@{@"firstname": @"First Name"}
-//                                options:identifyOptions];
+    [[RSClient sharedInstance] alias:@"some_other_id"];
+    
+    [[RSClient sharedInstance] track:@"test_event_2" properties:@{
+        @"string_key_1": @"string_value",
+        @"string_key_2": @"string_value",
+        @"string_key_3": @"string_value",
+        @"string_key_4": @"string_value",
+        @"bool_key": @YES,
+        @"num_key": @1.2,
+        @"dict_key": @{
+                @"c_key_1": @"value_1",
+                @"c_key_2": @"value_2"
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
