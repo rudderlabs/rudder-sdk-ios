@@ -106,15 +106,29 @@ static RSEventRepository *_repository = nil;
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
+    NSMutableDictionary *property;
+    if (properties == nil) {
+        property = [[NSMutableDictionary alloc] init];
+    } else {
+        property = [properties mutableCopy];
+    }
+    [property setValue:screenName forKey:@"name"];
     [builder setEventName:screenName];
-    [builder setPropertyDict:properties];
+    [builder setPropertyDict:property];
     [self dumpInternal:[builder build] type:RSScreen];
 }
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
+    NSMutableDictionary *property;
+    if (properties == nil) {
+        property = [[NSMutableDictionary alloc] init];
+    } else {
+        property = [properties mutableCopy];
+    }
+    [property setValue:screenName forKey:@"name"];
     [builder setEventName:screenName];
-    [builder setPropertyDict:properties];
+    [builder setPropertyDict:property];
     [builder setRSOption:options];
     [self dumpInternal:[builder build] type:RSScreen];
 }
@@ -150,7 +164,7 @@ static RSEventRepository *_repository = nil;
     [builder setRSOption:options];
     
     RSContext *rc = [RSElementCache getContext];
-    NSMutableDictionary<NSString*,NSObject*>* traits = rc.traits;
+    NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
 
     NSObject *prevId = [traits objectForKey:@"userId"];
     if(prevId == nil) {
