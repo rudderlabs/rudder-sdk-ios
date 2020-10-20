@@ -63,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype _Nullable) sharedInstance;
 
+- (void)trackLifecycleEvents:(NSDictionary *)launchOptions;
+
 - (RSContext *) getContext;
 
 @end
