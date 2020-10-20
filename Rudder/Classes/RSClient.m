@@ -252,6 +252,10 @@ static RSEventRepository *_repository = nil;
     return [_repository getConfig];
 }
 
+- (void)trackLifecycleEvents:(NSDictionary *)launchOptions {
+    [_repository _applicationDidFinishLaunchingWithOptions:launchOptions];
+}
+
 + (instancetype)sharedInstance {
     return _instance;
 }
