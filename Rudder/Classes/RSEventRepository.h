@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (RSConfig* _Nullable) getConfig;
+- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
 @end
 
