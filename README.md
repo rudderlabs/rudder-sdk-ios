@@ -1,3 +1,5 @@
+[![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
+
 # What is Rudder?
 
 **Short answer:**
