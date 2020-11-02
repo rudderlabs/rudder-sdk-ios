@@ -11,8 +11,11 @@
 #import "RSLogger.h"
 #import "RSServerDestination.h"
 #import "RSConstants.h"
+#import <pthread.h>
 
 static RSServerConfigManager *_instance;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static RSServerConfigSource *serverConfig;
 typedef enum {
     NETWORKERROR =1,
     NETWORKSUCCESS =0,
@@ -23,42 +26,23 @@ int receivedError = NETWORKSUCCESS;
 
 @implementation RSServerConfigManager
 
-
-+ (instancetype)getInstance:(NSString *)writeKey rudderConfig:(RSConfig *)rudderConfig {
-    if (_instance == nil) {
-        [RSLogger logDebug:@"Creating RSServerConfigManager instance"];
-        _instance = [[RSServerConfigManager alloc] init:writeKey rudderConfig:rudderConfig];
-    }
-    return _instance;
-}
-
 - (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig
 {
     self = [super init];
     if (self) {
         _preferenceManager = [RSPreferenceManager getInstance];
+        // TODO : is this required?
+        // pthread_mutex_init(&mutex, NULL);
         if (writeKey == nil || [writeKey isEqualToString:@""]) {
             [RSLogger logError:@"writeKey can not be null or empty"];
             receivedError = WRONGWRITEKEY;
         } else {
             _writeKey = writeKey;
             _rudderConfig = rudderConfig;
-            RSServerConfigSource *serverConfig = [self _retrieveConfig];
-            if (serverConfig == nil) {
-                [RSLogger logDebug:@"Server config is not present in preference storage. downloading config"];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-                    [self _downloadConfig];
-                });
-            } else {
-                if([self _isServerConfigOutDated]) {
-                    [RSLogger logDebug:@"Server config is outdated. downloading config again"];
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-                        [self _downloadConfig];
-                    });
-                } else {
-                    [RSLogger logDebug:@"Server config found. Using existing config"];
-                }
-            }
+            // fetchConfig and populate serverConfig
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
+                [self _fetchConfig];
+            });
         }
     }
     return self;
@@ -136,6 +120,20 @@ int receivedError = NETWORKSUCCESS;
     return source;
 }
 
+- (void)_fetchConfig {
+    // download and store config to storage
+    [self _downloadConfig];
+    
+    // retrieve config from storage
+    pthread_mutex_lock(&mutex);
+    serverConfig = [self _retrieveConfig];
+    if (serverConfig == nil) {
+        [RSLogger logDebug:@"Server config retrieval failed.No config found in storage"];
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch server config for writeKey: %@", _writeKey]];
+    }
+    pthread_mutex_unlock(&mutex);
+}
+
 - (void)_downloadConfig {
     BOOL isDone = NO;
     int retryCount = 0;
@@ -154,11 +152,14 @@ int receivedError = NETWORKSUCCESS;
                 [RSLogger logInfo:@"Wrong write key"];
                 retryCount = 4;
             }else{
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", (10 * retryCount)]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", retryCount]];
                 retryCount += 1;
-                usleep(10000000 * retryCount);
+                usleep(1000000 * retryCount);
             }
         }
+    }
+    if (!isDone) {
+        [RSLogger logError:@"Server config download failed.Using last stored config from storage"];
     }
 }
 
@@ -204,7 +205,10 @@ int receivedError = NETWORKSUCCESS;
 }
 
 - (RSServerConfigSource *) getConfig {
-    return [self _retrieveConfig];
+    pthread_mutex_lock(&mutex);
+    RSServerConfigSource *config = serverConfig;
+    pthread_mutex_unlock(&mutex);
+    return config;
 }
 
 - (int) getError {
