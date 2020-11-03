@@ -116,8 +116,8 @@ typedef enum {
                 [RSLogger logError:@"WRONG WRITE KEY"];
             }else {
                 retryCount += 1;
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", retryCount]];
-                usleep(1000000*retryCount);
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", 2 * retryCount]];
+                usleep(1000000 * 2 * retryCount);
             }
         }
     });
