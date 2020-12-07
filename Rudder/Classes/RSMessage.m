@@ -24,7 +24,7 @@
         _groupId = nil;
         _traits = nil;
         _userProperties = nil;
-        _anonymousId = [[NSString alloc] initWithFormat:@"%@", [_context.traits objectForKey:@"anonymousId"]];
+        _anonymousId = [[RSPreferenceManager getInstance] getAnonymousId];
         NSObject *userIdObj = [_context.traits objectForKey:@"userId"];
         if (userIdObj != nil) {
             _userId = [[NSString alloc] initWithFormat:@"%@", userIdObj];

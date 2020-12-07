@@ -41,7 +41,7 @@ static RSContext* cachedContext;
 }
 
 + (NSString *)getAnonymousId {
-    return cachedContext.device.identifier;
+    return [[RSPreferenceManager getInstance] getAnonymousId];
 }
 
 + (void) updateExternalIds:(NSMutableArray *)externalId {
