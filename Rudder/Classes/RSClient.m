@@ -260,4 +260,9 @@ static RSEventRepository *_repository = nil;
     return _instance;
 }
 
++ (void)setAnonymousId:(NSString *)anonymousId {
+    RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+    [preferenceManager saveAnonymousId:anonymousId];
+}
+
 @end
