@@ -65,7 +65,7 @@ typedef enum {
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
         
         [RSLogger logDebug:@"EventRepository: initiating server config manager"];
-        configManager = [RSServerConfigManager getInstance:writeKey rudderConfig:config];
+        configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
         
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
@@ -116,8 +116,8 @@ typedef enum {
                 [RSLogger logError:@"WRONG WRITE KEY"];
             }else {
                 retryCount += 1;
-                [RSLogger logDebug:@"server config is null. retrying in 10s."];
-                usleep(10000000*retryCount);
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", 2 * retryCount]];
+                usleep(1000000 * 2 * retryCount);
             }
         }
     });
