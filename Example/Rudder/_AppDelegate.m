@@ -10,13 +10,15 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://751647472ddb.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://a4f291d1e130.ngrok.io";
 static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
+    
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
