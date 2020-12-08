@@ -16,10 +16,7 @@
     self = [super init];
     if(self) {
         // if anonymousId is not present in supplied dict
-        NSString *anonymousId = [dict objectForKey:@"anonymousId"];
-        if (anonymousId == nil) {
-            _anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
-        }
+        NSString *anonymousId = [[RSPreferenceManager getInstance] getAnonymousId];
         __extras = [[NSMutableDictionary alloc] init];
         [__extras setValuesForKeysWithDictionary:dict];
     }

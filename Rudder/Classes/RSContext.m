@@ -69,7 +69,7 @@ static WKWebView *webView;
 
 - (void) createAndPersistTraits {
     RSTraits* traits = [[RSTraits alloc] init];
-    traits.anonymousId = _device.identifier;
+    traits.anonymousId = [preferenceManager getAnonymousId];
     _traits = [[traits dict]  mutableCopy];
     
     [self persistTraits];
@@ -78,7 +78,7 @@ static WKWebView *webView;
 - (void)updateTraits:(RSTraits *)traits {
     if(traits == nil) {
         traits = [[RSTraits alloc] init];
-        traits.anonymousId = _device.identifier;
+        traits.anonymousId = [preferenceManager getAnonymousId];
     }
     
     [_traits setValuesForKeysWithDictionary:[traits dict]];
@@ -95,7 +95,7 @@ static WKWebView *webView;
     if (traitsDict == nil) {
         traitsDict = [[NSMutableDictionary alloc] init];
     }
-    NSObject *anonymousId = [traitsDict objectForKey:@"anonymousId"];
+    NSObject *anonymousId = [preferenceManager getAnonymousId];
     if (anonymousId == nil) {
         [traitsDict setObject:_device.identifier forKey:@"anonymousId"];
     }

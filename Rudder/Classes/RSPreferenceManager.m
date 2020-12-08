@@ -17,6 +17,7 @@ NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
 NSString *const RSTraitsKey = @"rl_traits";
 NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 NSString *const RSExternalIdKey =  @"rl_external_id";
+NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -77,6 +78,23 @@ NSString *const RSExternalIdKey =  @"rl_external_id";
 
 - (void)clearExternalIds {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSExternalIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)getAnonymousId {
+    NSString *anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
+    
+    if (anonymousId == nil) {
+        anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
+    }
+    
+    [self saveAnonymousId:anonymousId];
+    
+    return anonymousId;
+}
+
+- (void)saveAnonymousId:(NSString *)anonymousId {
+    [[NSUserDefaults standardUserDefaults] setValue:anonymousId forKey:RSAnonymousIdKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
