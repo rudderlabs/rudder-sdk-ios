@@ -79,6 +79,7 @@ static WKWebView *webView;
     if(traits == nil) {
         traits = [[RSTraits alloc] init];
         traits.anonymousId = [preferenceManager getAnonymousId];
+        [_traits removeAllObjects];
     }
     
     [_traits setValuesForKeysWithDictionary:[traits dict]];
