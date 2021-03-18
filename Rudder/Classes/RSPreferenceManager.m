@@ -6,6 +6,7 @@
 //
 
 #import "RSPreferenceManager.h"
+#import <UIKit/UIKit.h>
 
 static RSPreferenceManager *instance;
 
