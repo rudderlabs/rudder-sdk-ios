@@ -7,6 +7,7 @@
 //
 
 #import "RSOption.h"
+#import "RSConfig.h"
 
 @implementation RSOption
 
@@ -67,13 +68,13 @@
     return self;
 }
 
-//- (instancetype) putIntegrationWithFactory:(id<RSIntegrationFactory>)factory isEnabled:(BOOL)enabled {
-//    if (_integrations == nil) {
-//        _integrations = [[NSMutableDictionary alloc] init];
-//    }
-//    //[_integrations setValue:[NSNumber numberWithBool:enabled] forKey: factory.key];
-//    return self;
-//}
+- (instancetype) putIntegrationWithFactory:(id<RSIntegrationFactory>)factory isEnabled:(BOOL)enabled {
+   if (_integrations == nil) {
+       _integrations = [[NSMutableDictionary alloc] init];
+   }
+   [_integrations setValue:[NSNumber numberWithBool:enabled] forKey: factory.key];
+   return self;
+}
 
 
 @end
