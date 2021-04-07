@@ -10,22 +10,32 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://a4f291d1e130.ngrok.io";
-static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
+static NSString *DATA_PLANE_URL = @"https://22ca4837f6ce.ngrok.io";
+static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
+    //[RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
     
     // Override point for customization after application launch.
+    RSOption *defaultOption = [[RSOption alloc]init];
+    [defaultOption putIntegration:@"Default" isEnabled:@YES];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:NO];
     [builder withRecordScreenViews:NO];
-    [RSClient getInstance:WRITE_KEY config:[builder build]];
+    [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
+    RSOption *option = [[RSOption alloc]init];
+    [option putIntegration:@"Amplitude" isEnabled:@YES];
+    [option putIntegration:@"MixPanel" isEnabled:@NO];
+    [[RSClient sharedInstance] track:@"simple_track_event"];
+    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    } options:option];
     
 //    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
 //    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];

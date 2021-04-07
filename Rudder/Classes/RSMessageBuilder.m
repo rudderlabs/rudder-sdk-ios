@@ -80,7 +80,16 @@
     }
     
     [message setRudderOption:option];
+    [self setIntegrations:option.integrations];
     
+    return self;
+}
+
+- (instancetype) setIntegrations:(NSDictionary<NSString *, NSObject *>*) integrations {
+    if (message == nil) {
+        message = [[RSMessage alloc] init];
+    }
+    message.integrations = integrations;
     return self;
 }
 
