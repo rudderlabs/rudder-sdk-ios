@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         _externalIds = nil;
+        _integrations = nil;
     }
     return self;
 }
@@ -57,5 +58,22 @@
     // return for builder pattern
     return self;
 }
+
+- (instancetype) putIntegration: (NSString*) type isEnabled: (BOOL) enabled {
+    if (_integrations == nil) {
+        _integrations = [[NSMutableDictionary alloc] init];
+    }
+    [_integrations setValue:[NSNumber numberWithBool:enabled] forKey:type];
+    return self;
+}
+
+//- (instancetype) putIntegrationWithFactory:(id<RSIntegrationFactory>)factory isEnabled:(BOOL)enabled {
+//    if (_integrations == nil) {
+//        _integrations = [[NSMutableDictionary alloc] init];
+//    }
+//    //[_integrations setValue:[NSNumber numberWithBool:enabled] forKey: factory.key];
+//    return self;
+//}
+
 
 @end

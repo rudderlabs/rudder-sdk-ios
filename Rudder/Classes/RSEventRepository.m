@@ -315,8 +315,16 @@ typedef enum {
     if (message == nil || !self->isSDKEnabled) {
         return;
     }
-    
-    message.integrations = @{@"All": @YES};
+    if([message.integrations count]==0){
+        if(RSClient.getDefaultOptions!=nil &&
+           RSClient.getDefaultOptions.integrations!=nil &&
+           [RSClient.getDefaultOptions.integrations count]!=0){
+            message.integrations = RSClient.getDefaultOptions.integrations;
+        }
+        else{
+            message.integrations = @{@"All": @YES};
+        }
+    }
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

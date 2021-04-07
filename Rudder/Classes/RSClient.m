@@ -15,6 +15,7 @@
 
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
+static RSOption* _defaultOptions = nil;
 
 @implementation RSClient
 
@@ -24,6 +25,11 @@ static RSEventRepository *_repository = nil;
 
 + (instancetype) getInstance:(NSString *)writeKey {
     return [RSClient getInstance:writeKey config:[[RSConfig alloc] init]];
+}
+
++ (instancetype) getInstance:(NSString *)writeKey config: (RSConfig*) config options: (RSOption*) options {
+    _defaultOptions = options;
+    return [RSClient getInstance:writeKey config:config];
 }
 
 + (instancetype) getInstance: (NSString *) writeKey config: (RSConfig*) config {
@@ -258,6 +264,10 @@ static RSEventRepository *_repository = nil;
 
 + (instancetype)sharedInstance {
     return _instance;
+}
+
++ (RSOption*) getDefaultOptions {
+    return _defaultOptions;
 }
 
 + (void)setAnonymousId:(NSString *)anonymousId {

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) getInstance;
 + (instancetype) getInstance:(NSString*) writeKey;
 + (instancetype) getInstance:(NSString*) writeKey config:(RSConfig*) config;
++ (instancetype) getInstance:(NSString *)writeKey config: (RSConfig*) config options: (RSOption*) options;
 
 - (void) trackMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) trackWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use track method instead.")));
@@ -62,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (RSConfig* _Nullable)configuration;
 
 + (instancetype _Nullable) sharedInstance;
+
++ (RSOption*) getDefaultOptions;
 
 - (void)trackLifecycleEvents:(NSDictionary *)launchOptions;
 
