@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Rudder/**/*'
+  s.source_files = 'Rudder/**/*.{h,m}'
 end
