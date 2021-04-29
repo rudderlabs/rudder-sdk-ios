@@ -343,11 +343,32 @@ typedef enum {
 - (void) makeFactoryDump:(RSMessage *)message {
     if (self->isFactoryInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
+        NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
+        // If All is set to true we will dump to all the integrations which are not set to false
+        if([(NSNumber*)integrationOptions[@"All"] boolValue])
+        {
+            for (NSString *key in [self->integrationOperationMap allKeys]) {
+                id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+                if (integration != nil)
+                {
+                    if(integrationOptions[key]==nil ||[(NSNumber*)integrationOptions[key] boolValue])
+                    {
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                        [integration dump:message];
+                    }
+                }
+            }
+            return;
+        }
+        // Since All is not set to true we will dump to all the integrations which are set to true 
         for (NSString *key in [self->integrationOperationMap allKeys]) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
             id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
             if (integration != nil) {
-                [integration dump:message];
+                if([(NSNumber*)integrationOptions[key] boolValue])
+                {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                    [integration dump:message];
+                }
             }
         }
     } else {
