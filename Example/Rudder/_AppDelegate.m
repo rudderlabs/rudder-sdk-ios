@@ -22,9 +22,11 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     // Override point for customization after application launch.
     RSOption *defaultOption = [[RSOption alloc]init];
     // adding an integration into integrations object directly by specifying its name
-    [defaultOption putIntegration:@"MoEngage" isEnabled:@YES];
+    [defaultOption putIntegration:@"Amplitude" isEnabled:YES];
+    [defaultOption putIntegration:@"MoEngage" isEnabled:YES];
+    [defaultOption putIntegration:@"All" isEnabled:NO];
     // adding an integration into integrations object using its Factory object
-    // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:@YES];
+    //[defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
@@ -33,8 +35,8 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
     RSOption *option = [[RSOption alloc]init];
-    [option putIntegration:@"Amplitude" isEnabled:@YES];
-    [option putIntegration:@"MixPanel" isEnabled:@NO];
+    [option putIntegration:@"Amplitude" isEnabled:YES];
+    [option putIntegration:@"MixPanel" isEnabled:NO];
     [[RSClient sharedInstance] track:@"simple_track_event"];
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",

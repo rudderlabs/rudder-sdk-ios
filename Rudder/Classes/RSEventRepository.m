@@ -325,6 +325,14 @@ typedef enum {
             message.integrations = @{@"All": @YES};
         }
     }
+    // If `All` is absent in the integrations object we will set it to true for making All is true by default
+    if(message.integrations[@"All"]==nil)
+    {
+        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
+        [mutableIntegrations setObject:@YES forKey:@"All"];
+        message.integrations = mutableIntegrations;
+        
+    }
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
