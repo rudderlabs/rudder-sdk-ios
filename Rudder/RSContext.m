@@ -31,7 +31,10 @@ static WKWebView *webView;
             [webView loadHTMLString:@"<html></html>" baseURL:nil];
 
             [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
-                self->_userAgent = userAgent;
+                if (userAgent != NULL) {
+                    NSLog(@"Retrieved userAgent: %@", userAgent);
+                    self->_userAgent = userAgent;
+                }
             }];
         });
         _locale = [RSUtils getLocale];
@@ -142,7 +145,10 @@ static WKWebView *webView;
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
-    [tempDict setObject:_userAgent ?: @"unknown" forKey:@"userAgent"];
+    if (_userAgent) {
+        [tempDict setObject:_userAgent forKey:@"userAgent"];
+    }
+    
     [tempDict setObject:_locale forKey:@"locale"];
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
