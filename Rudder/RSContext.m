@@ -19,26 +19,28 @@ static WKWebView *webView;
     self = [super init];
     if (self) {
         self->preferenceManager = [RSPreferenceManager getInstance];
-        
+
         _app = [[RSApp alloc] init];
         _device = [[RSDeviceInfo alloc] init];
         _library = [[RSLibraryInfo alloc] init];
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             webView = [[WKWebView alloc] initWithFrame:CGRectZero];
             [webView loadHTMLString:@"<html></html>" baseURL:nil];
 
             [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
-                self->_userAgent = userAgent;
+                if (userAgent != NULL) {
+                    self->_userAgent = userAgent;
+                }
             }];
         });
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
         _externalIds = nil;
-        
+
         NSString *traitsJson = [preferenceManager getTraits];
         if (traitsJson == nil) {
             // no persisted traits, create new and persist
@@ -53,7 +55,7 @@ static WKWebView *webView;
                 [self createAndPersistTraits];
             }
         }
-        
+
         // get saved external Ids from prefs
         NSString *externalIdJson = [preferenceManager getExternalIds];
         if (externalIdJson != nil) {
@@ -71,7 +73,7 @@ static WKWebView *webView;
     RSTraits* traits = [[RSTraits alloc] init];
     traits.anonymousId = [preferenceManager getAnonymousId];
     _traits = [[traits dict]  mutableCopy];
-    
+
     [self persistTraits];
 }
 
@@ -81,14 +83,14 @@ static WKWebView *webView;
         traits.anonymousId = [preferenceManager getAnonymousId];
         [_traits removeAllObjects];
     }
-    
+
     [_traits setValuesForKeysWithDictionary:[traits dict]];
 }
 
 -(void) persistTraits {
     NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
     NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
-    
+
     [preferenceManager saveTraits:traitsString];
 }
 
@@ -113,7 +115,7 @@ static WKWebView *webView;
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
     BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
     _device.adTrackingEnabled = adTrackingEnabled;
-    
+
     if (adTrackingEnabled) {
         _device.advertisingId = idfa;
     }
@@ -122,12 +124,12 @@ static WKWebView *webView;
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
     // update local variable
     _externalIds = externalIds;
-    
+
     if (externalIds != nil) {
         // update persistence storage
         NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[externalIds copy]] options:0 error:nil];
         NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
-        
+
         [preferenceManager saveExternalIds:externalIdJson];
     } else {
         // clear persistence storage : RESET call
@@ -142,7 +144,10 @@ static WKWebView *webView;
     [tempDict setObject:[_library dict] forKey:@"library"];
     [tempDict setObject:[_os dict] forKey:@"os"];
     [tempDict setObject:[_screen dict] forKey:@"screen"];
-    [tempDict setObject:_userAgent ?: @"unknown" forKey:@"userAgent"];
+    if (_userAgent) {
+        [tempDict setObject:_userAgent forKey:@"userAgent"];
+    }
+
     [tempDict setObject:_locale forKey:@"locale"];
     [tempDict setObject:[_device dict] forKey:@"device"];
     [tempDict setObject:[_network dict] forKey:@"network"];
@@ -150,13 +155,13 @@ static WKWebView *webView;
     if (_externalIds != nil) {
         [tempDict setObject:_externalIds forKey:@"externalId"];
     }
-    
+
     return [tempDict copy];
 }
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
     RSContext *copy = [[[self class] allocWithZone:zone] init];
-    
+
     copy.app = self.app;
     copy.traits = [self.traits copy];
     copy.library = self.library;
@@ -168,7 +173,7 @@ static WKWebView *webView;
     copy.network = self.network;
     copy.timezone = self.timezone;
     copy.externalIds = [self.externalIds copy];
-    
+
     return copy;
 }
 
