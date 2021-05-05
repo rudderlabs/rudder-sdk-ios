@@ -27,6 +27,8 @@ static NSString *WRITE_KEY = @"1ZTkZgCMnZyXeWsFbcjGsOx4jnv";
     [builder withRecordScreenViews:NO];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
+    
+    
 //    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
 //    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     
