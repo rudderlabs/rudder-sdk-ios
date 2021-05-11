@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) setUserProperty: (NSDictionary<NSString*, NSObject*>*) userProperty;
 - (instancetype) setRSOption: (RSOption*) option;
 - (instancetype) setTraits: (RSTraits*) traits;
+- (instancetype) setIntegrations:(NSDictionary<NSString *, NSObject *>*) integrations;
 
 - (RSMessage*) build;
 
