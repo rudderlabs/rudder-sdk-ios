@@ -18,9 +18,9 @@
     }
     NSURL *url = [[NSURL alloc] initWithString:endPointUrl];
     if ([url port]) {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
     } else {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     }
     return self;
 }
@@ -29,12 +29,12 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-
+    
     NSURL *url = [[NSURL alloc] initWithString:dataPlaneUrl];
     if ([url port]) {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [url scheme], [url host], [url port]];
     } else {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     }
     return self;
 }
@@ -44,9 +44,9 @@
         config = [[RSConfig alloc] init];
     }
     if ([dataPlaneURL port]) {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [dataPlaneURL scheme], [dataPlaneURL host] ,[dataPlaneURL port]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@:%@", [dataPlaneURL scheme], [dataPlaneURL host] ,[dataPlaneURL port]];
     } else {
-      config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [dataPlaneURL scheme], [dataPlaneURL host]];
+        config.dataPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [dataPlaneURL scheme], [dataPlaneURL host]];
     }
     return self;
 }
@@ -130,6 +130,10 @@
         config = [[RSConfig alloc] init];
     }
     NSURL *url = [[NSURL alloc] initWithString:configPlaneUrl];
+    if([url path]){
+        config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@%@", [url scheme], [url host], [url path]];
+        return self;
+    }
     config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     return self;
 }
@@ -139,6 +143,10 @@
         config = [[RSConfig alloc] init];
     }
     NSURL *url = [[NSURL alloc] initWithString:controlPlaneUrl];
+    if([url path]){
+        config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@%@", [url scheme], [url host], [url path]];
+        return self;
+    }
     config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [url scheme], [url host]];
     return self;
 }
@@ -146,6 +154,10 @@
 - (instancetype)withControlPlaneURL:(NSURL *) controlPlaneURL {
     if (config == nil) {
         config = [[RSConfig alloc] init];
+    }
+    if([controlPlaneURL path]){
+        config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@%@", [controlPlaneURL scheme], [controlPlaneURL host], [controlPlaneURL path]];
+        return self;
     }
     config.controlPlaneUrl = [[NSString alloc] initWithFormat:@"%@://%@", [controlPlaneURL scheme], [controlPlaneURL host]];
     return self;
