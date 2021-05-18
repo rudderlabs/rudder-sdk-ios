@@ -167,7 +167,14 @@ int receivedError = NETWORKSUCCESS;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
-    NSString *controlPlaneEndPoint = [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
+    NSString *controlPlaneEndPoint = nil;
+    if([_rudderConfig.controlPlaneUrl hasSuffix:@"/"])
+    {
+       controlPlaneEndPoint= [NSString stringWithFormat:@"%@sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
+    }
+    else{
+        controlPlaneEndPoint= [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
+    }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:controlPlaneEndPoint]];
     NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
