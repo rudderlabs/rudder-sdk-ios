@@ -168,11 +168,9 @@ int receivedError = NETWORKSUCCESS;
     
     __block NSString *responseStr = nil;
     NSString *controlPlaneEndPoint = nil;
-    if([_rudderConfig.controlPlaneUrl hasSuffix:@"/"])
-    {
+    if([_rudderConfig.controlPlaneUrl hasSuffix:@"/"]) {
        controlPlaneEndPoint= [NSString stringWithFormat:@"%@sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
-    }
-    else{
+    } else {
         controlPlaneEndPoint= [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
     }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
