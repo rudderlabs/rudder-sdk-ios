@@ -18,10 +18,10 @@ let package = Package(
         .target(
             name: "Rudder",
             path: "Rudder",
-            sources: ["Classes"],
-            publicHeadersPath: "Classes/**",
+            sources: ["Rudder"],
+            publicHeadersPath: "Rudder/**",
             cSettings: [
-                .headerSearchPath("Classes/**")
+                .headerSearchPath("Rudder/**")
             ]
         )
     ]
