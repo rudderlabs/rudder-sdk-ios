@@ -10,7 +10,7 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://22ca4837f6ce.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://7eddd110f484.ngrok.io";
 static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
 
 @implementation _AppDelegate
@@ -34,6 +34,12 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     [builder withRecordScreenViews:NO];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
+    
+    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
+    [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
+    
+    
     RSOption *option = [[RSOption alloc]init];
     [option putIntegration:@"Amplitude" isEnabled:YES];
     [option putIntegration:@"MixPanel" isEnabled:NO];
@@ -42,9 +48,6 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
         @"key_1" : @"value_1",
         @"key_2" : @"value_2"
     } options:option];
-    
-    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     
     return YES;
 }
