@@ -24,6 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
     RSPreferenceManager *preferenceManager;
 }
 
+extern int const RSATTNotDetermined;
+extern int const RSATTRestricted;
+extern int const RSATTDenied;
+extern int const RSATTAuthorize;
+
 @property (nonatomic, readwrite) RSApp* app;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString*, NSObject*>* traits;
 @property (nonatomic, readwrite) RSLibraryInfo* library;
@@ -42,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 - (void) putDeviceToken: (NSString*) deviceToken;
 - (void) putAdvertisementId: (NSString*) idfa;
+- (void) putAppTrackingConsent: (int) att;
 - (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
 
 @end
