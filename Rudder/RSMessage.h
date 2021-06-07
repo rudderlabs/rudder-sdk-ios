@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* properties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* userProperties;
 @property (atomic, readwrite) NSDictionary<NSString *, NSObject *>* integrations;
+@property (atomic, readwrite) NSDictionary<NSString*, NSDictionary<NSString*, id>*>* customContexts;
 @property (atomic, readwrite) NSString* destinationProps;
 @property (atomic, readwrite) RSOption* option;
 

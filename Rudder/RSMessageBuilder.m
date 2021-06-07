@@ -81,6 +81,7 @@
     
     [message setRudderOption:option];
     [self setIntegrations:option.integrations];
+    [self setCustomContexts: option.customContexts];
     
     return self;
 }
@@ -90,6 +91,14 @@
         message = [[RSMessage alloc] init];
     }
     message.integrations = integrations;
+    return self;
+}
+
+- (instancetype) setCustomContexts:(NSMutableDictionary<NSString*, NSDictionary<NSString*, id>*>*) customContexts {
+    if (message == nil) {
+        message = [[RSMessage alloc] init];
+    }
+    message.customContexts = customContexts;
     return self;
 }
 
