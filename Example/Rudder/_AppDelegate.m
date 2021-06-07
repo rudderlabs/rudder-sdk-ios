@@ -10,7 +10,7 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-static NSString *DATA_PLANE_URL = @"https://22ca4837f6ce.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://318cdb63dba1.ngrok.io";
 static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
 
 @implementation _AppDelegate
@@ -37,6 +37,10 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     RSOption *option = [[RSOption alloc]init];
     [option putIntegration:@"Amplitude" isEnabled:YES];
     [option putIntegration:@"MixPanel" isEnabled:NO];
+    [option putCustomContext: @{
+        @"language": @"objective-c",
+        @"version": @"1.0.0"
+    } withKey: @"customContext"];
     [[RSClient sharedInstance] track:@"simple_track_event"];
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",
