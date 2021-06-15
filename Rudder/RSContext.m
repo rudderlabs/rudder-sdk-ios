@@ -14,6 +14,11 @@ static WKWebView *webView;
 
 @implementation RSContext
 
+int const RSATTNotDetermined = 0;
+int const RSATTRestricted = 1;
+int const RSATTDenied = 2;
+int const RSATTAuthorize = 3;
+
 - (instancetype)init
 {
     self = [super init];
@@ -134,6 +139,16 @@ static WKWebView *webView;
     } else {
         // clear persistence storage : RESET call
         [preferenceManager clearExternalIds];
+    }
+}
+
+- (void)putAppTrackingConsent:(int)att {
+    if (att < RSATTNotDetermined) {
+        _device.attTrackingStatus = RSATTNotDetermined;
+    } else if (att > RSATTAuthorize) {
+        _device.attTrackingStatus = RSATTAuthorize;
+    } else {
+        _device.attTrackingStatus = att;
     }
 }
 

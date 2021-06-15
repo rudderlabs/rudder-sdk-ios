@@ -7,6 +7,7 @@
 //
 
 #import "RSDeviceInfo.h"
+#import "RSContext.h"
 #import <UIKit/UIKit.h>
 
 @implementation RSDeviceInfo
@@ -20,6 +21,7 @@
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
         _type = @"iOS";
+        _attTrackingStatus = RSATTNotDetermined;
     }
     return self;
 }
@@ -39,6 +41,8 @@
         [tempDict setValue:_advertisingId forKey:@"advertisingId"];
         [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
     }
+    
+    [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
 
     return [tempDict copy];
 }
