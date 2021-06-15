@@ -16,6 +16,7 @@
     self = [super init];
     if (self) {
         _externalIds = nil;
+        _customContexts = nil;
         _integrations = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -61,13 +62,24 @@
 }
 
 - (instancetype) putIntegration: (NSString*) type isEnabled: (BOOL) enabled {
-   [_integrations setValue:[NSNumber numberWithBool:enabled] forKey:type];
+    [_integrations setValue:[NSNumber numberWithBool:enabled] forKey:type];
     return self;
 }
 
 - (instancetype) putIntegrationWithFactory:(id<RSIntegrationFactory>)factory isEnabled:(BOOL)enabled {
-   [_integrations setValue:[NSNumber numberWithBool:enabled] forKey: factory.key];
-   return self;
+    [_integrations setValue:[NSNumber numberWithBool:enabled] forKey: factory.key];
+    return self;
+}
+
+- (instancetype) putCustomContext:(NSDictionary<NSString*, id>*) context withKey:(NSString *) key {
+    if (_customContexts == nil) {
+        _customContexts = [[NSMutableDictionary alloc] init];
+    }
+    if(key != nil && context != nil)
+    {
+        [_customContexts setValue:context forKey:key];
+    }
+    return self;
 }
 
 
