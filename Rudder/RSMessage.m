@@ -38,7 +38,15 @@
     
     [tempDict setValue:_messageId forKey:@"messageId"];
     [tempDict setValue:_channel forKey:@"channel"];
-    [tempDict setValue:[_context dict] forKey:@"context"];
+    NSMutableDictionary<NSString *,NSObject *> * contextDict = [[_context dict] mutableCopy];
+    if(_customContexts != nil)
+    {
+        for(NSString* key in _customContexts)
+        {
+            [contextDict setValue:[_customContexts objectForKey:key] forKey:key];
+        }
+    }
+    [tempDict setValue:contextDict forKey:@"context"];
     [tempDict setValue:_type forKey:@"type"];
     [tempDict setValue:_action forKey:@"action"];
     [tempDict setValue:_originalTimestamp forKey:@"originalTimestamp"];
