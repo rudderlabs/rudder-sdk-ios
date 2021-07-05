@@ -89,6 +89,14 @@ int const RSATTAuthorize = 3;
         [_traits removeAllObjects];
     }
 
+    NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
+    NSString* userId = (NSString*) traits.userId;
+    
+    if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
+    {
+        _traits = [[traits dict]mutableCopy];
+        return;
+    }
     [_traits setValuesForKeysWithDictionary:[traits dict]];
 }
 
