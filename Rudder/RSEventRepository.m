@@ -289,7 +289,7 @@ typedef enum {
             NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             if (
                 ![errorResponse isEqualToString:@""] && // non-empty response
-                [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location == NSNotFound
+                [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
                 respStatus = WRONGWRITEKEY;
             } else if (httpResponse.statusCode == 500){
