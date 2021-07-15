@@ -18,8 +18,7 @@ static RSEventRepository* _instance;
 typedef enum {
     NETWORKERROR =1,
     NETWORKSUCCESS =0,
-    WRONGWRITEKEY =2,
-    ERROR500 =3
+    WRONGWRITEKEY =2
 } NETWORKSTATE;
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
@@ -206,9 +205,6 @@ typedef enum {
             } else if (errResp == NETWORKERROR) {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - self->config.sleepTimeout)]];
                 usleep(abs(sleepCount - self->config.sleepTimeout) * 1000000);
-            } else if (errResp == ERROR500) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"500 Error in fetching from server.Retrying for: %d time", sleepCount]];
-                usleep((arc4random_uniform(1000000)+1) * sleepCount);
             } else {
                 usleep(1000000);
             }
@@ -292,8 +288,6 @@ typedef enum {
                 [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
                 respStatus = WRONGWRITEKEY;
-            } else if (httpResponse.statusCode == 500){
-                respStatus = ERROR500;
             } else {
                 respStatus = NETWORKERROR;
             }
