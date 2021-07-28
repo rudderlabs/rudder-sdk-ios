@@ -16,7 +16,7 @@ RudderStack is available through [CocoaPods](https://cocoapods.org) and [Carthag
 ### CocoaPods
 To install it, simply add the following line to your Podfile:
 ```xcode
-pod 'Rudder', '1.0.20'
+pod 'Rudder', '1.0.21-beta.1'
 ```
 
 ### Carthage
