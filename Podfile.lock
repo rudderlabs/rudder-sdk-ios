@@ -1,0 +1,27 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - Rudder (1.0.20)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - Rudder (from `Rudder/`)
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  Rudder:
+    :path: Rudder/
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  Rudder: 3eae52018e1a401d3610b3f16f6210026eb327c8
+
+PODFILE CHECKSUM: 40aa79eea7ba813fa4bf19d33a114c4f4c13aca8
+
+COCOAPODS: 1.10.1
