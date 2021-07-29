@@ -58,6 +58,9 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating element cache"];
         [RSElementCache initiate];
         
+        [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
+        self->eventReplayMessage = [[NSMutableArray alloc] init];
+        
         NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
         anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
@@ -381,11 +384,10 @@ typedef enum {
             }
         }
     } else {
-        [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
-        if (self->eventReplayMessage == nil) {
-            self->eventReplayMessage = [[NSMutableArray alloc] init];
+        @synchronized (self->eventReplayMessage) {
+            [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
+            [self->eventReplayMessage addObject:message];
         }
-        [self->eventReplayMessage addObject:message];
     }
 }
 
