@@ -11,6 +11,7 @@ import Foundation
 @objc open class RSClient: NSObject {
     private static let shared = RSClient()
     private var _defaultOptions: RSOption?
+    private let serviceManager = ServiceManager()
     
     @objc public static func getInstance() -> RSClient {
         return shared
