@@ -4,7 +4,7 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Rudder (1.0.20)
+  - Rudder (1.0.21)
 
 DEPENDENCIES:
   - FBSnapshotTestCase
@@ -20,8 +20,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Rudder: 3eae52018e1a401d3610b3f16f6210026eb327c8
+  Rudder: d36b9036fed53764fabe33d93372d9daa01192f2
 
-PODFILE CHECKSUM: 40aa79eea7ba813fa4bf19d33a114c4f4c13aca8
+PODFILE CHECKSUM: f59c6f90894ea36fc9065328a1b42a0e63df40c3
 
 COCOAPODS: 1.10.1

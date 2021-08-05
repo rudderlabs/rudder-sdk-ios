@@ -48,11 +48,11 @@
 //        }
 //    }];
     
-    RSOption *options = [[RSOption alloc] init];
-    [options putExternalId:@"test" withId:@"test"];
-    [[RSClient sharedInstance] screen:@"ViewController"];
-    [[RSClient sharedInstance] screen:@"Main screen name" properties:@{@"prop_key" : @"prop_value"}];
-    [[RSClient sharedInstance] screen:@"test screen" properties:@{@"prop_key" : @"prop_value"} options:options];
+//    RSOption *options = [[RSOption alloc] init];
+//    [options putExternalId:@"test" withId:@"test"];
+//    [[RSClient sharedInstance] screen:@"ViewController"];
+//    [[RSClient sharedInstance] screen:@"Main screen name" properties:@{@"prop_key" : @"prop_value"}];
+//    [[RSClient sharedInstance] screen:@"test screen" properties:@{@"prop_key" : @"prop_value"} options:options];
 }
 
 - (void)didReceiveMemoryWarning
