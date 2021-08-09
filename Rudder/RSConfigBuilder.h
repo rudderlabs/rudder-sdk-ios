@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
 - (instancetype) withControlPlaneURL: (NSURL*) controlPlaneURL;
 - (instancetype) withFactory: (id <RSIntegrationFactory> _Nonnull) factory;
+- (instancetype) withCustomFactory: (id <RSIntegrationFactory> _Nonnull) customFactory;
 - (RSConfig*) build;
 
 @end

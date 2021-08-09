@@ -45,7 +45,7 @@ typedef enum {
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
-        self->isFactoryInitialized = NO;
+        self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         
         writeKey = _writeKey;
@@ -103,6 +103,11 @@ typedef enum {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [self __initiateProcessor];
                     
+                    // initialize integrationOperationMap
+                    if (self->integrationOperationMap == nil) {
+                        self->integrationOperationMap = [[NSMutableDictionary alloc] init];
+                    }
+                    
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
@@ -110,6 +115,12 @@ typedef enum {
                     } else {
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
+                    
+                    // initiate custom factories
+                    [self __initiateCustomFactories];
+                    self->areFactoriesInitialized = YES;
+                    [self __replayMessageQueue];
+                    
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
                     [self->dbpersistenceManager flushEventsFromDB];
@@ -130,7 +141,6 @@ typedef enum {
 - (void) __initiateFactories : (NSArray*) destinations {
     if (self->config == nil || config.factories == nil || config.factories.count == 0) {
         [RSLogger logInfo:@"EventRepository: No native SDK is found in the config"];
-        self->isFactoryInitialized = YES;
         return;
     } else {
         if (destinations.count == 0) {
@@ -140,7 +150,6 @@ typedef enum {
             for (RSServerDestination *destination in destinations) {
                 [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
             }
-            NSMutableDictionary<NSString*, id<RSIntegration>> *tempIntegrationOpDict = [[NSMutableDictionary alloc] init];
             for (id<RSIntegrationFactory> factory in self->config.factories) {
                 RSServerDestination *destination = [destinationDict objectForKey:factory.key];
                 if (destination != nil && destination.isDestinationEnabled == YES) {
@@ -148,25 +157,40 @@ typedef enum {
                     if (destinationConfig != nil) {
                         id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:[RSClient sharedInstance] rudderConfig:self->config];
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
-                        [tempIntegrationOpDict setValue:nativeOp forKey:factory.key];
+                        [integrationOperationMap setValue:nativeOp forKey:factory.key];
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
                         // put native sdk initialization callback
                     }
                 }
             }
-            self->integrationOperationMap = tempIntegrationOpDict;
         }
-        self->isFactoryInitialized = YES;
-        @synchronized (self->eventReplayMessage) {
-            [RSLogger logDebug:@"replaying old messages with factory"];
-            NSArray *tempMessages = [self->eventReplayMessage copy];
-            if (tempMessages.count > 0) {
-                for (RSMessage *msg in tempMessages) {
-                    [self makeFactoryDump:msg];
-                }
+    }
+}
+
+- (void) __initiateCustomFactories {
+    if (self->config == nil || config.customFactories == nil || config.customFactories.count == 0) {
+        [RSLogger logInfo:@"EventRepository: initiateCustomFactories: No custom factory found"];
+        return;
+    }
+    for (id<RSIntegrationFactory> factory in self->config.customFactories) {
+        id<RSIntegration> nativeOp = [factory initiate:nil client:[RSClient sharedInstance] rudderConfig:self->config];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating custom factory %@", factory.key]];
+        [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated custom SDK factory %@", factory.key]];
+        // put custom sdk initalization callback
+    }
+}
+
+- (void) __replayMessageQueue {
+    @synchronized (self->eventReplayMessage) {
+        [RSLogger logDebug:@"replaying old messages with factory"];
+        NSArray *tempMessages = [self->eventReplayMessage copy];
+        if (tempMessages.count > 0) {
+            for (RSMessage *msg in tempMessages) {
+                [self makeFactoryDump:msg];
             }
-            [self->eventReplayMessage removeAllObjects];
         }
+        [self->eventReplayMessage removeAllObjects];
     }
 }
 
@@ -353,7 +377,7 @@ typedef enum {
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {
-    if (self->isFactoryInitialized) {
+    if (self->areFactoriesInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
         // If All is set to true we will dump to all the integrations which are not set to false
@@ -392,7 +416,7 @@ typedef enum {
 }
 
 -(void) reset {
-    if (self->isFactoryInitialized) {
+    if (self->areFactoriesInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
             id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
