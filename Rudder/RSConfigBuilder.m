@@ -101,6 +101,14 @@
     return self;
 }
 
+- (instancetype) withCustomFactory: (id <RSIntegrationFactory>) customFactory {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    [config.customFactories addObject:customFactory];
+    return self;
+}
+
 - (instancetype)withConfigRefreshInteval:(int)configRefreshInterval {
     if (config == nil) {
         config = [[RSConfig alloc] init];
