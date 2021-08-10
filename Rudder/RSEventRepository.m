@@ -173,7 +173,7 @@ typedef enum {
         return;
     }
     for (id<RSIntegrationFactory> factory in self->config.customFactories) {
-        id<RSIntegration> nativeOp = [factory initiate:nil client:[RSClient sharedInstance] rudderConfig:self->config];
+        id<RSIntegration> nativeOp = [factory initiate:@{} client:[RSClient sharedInstance] rudderConfig:self->config];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating custom factory %@", factory.key]];
         [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated custom SDK factory %@", factory.key]];
