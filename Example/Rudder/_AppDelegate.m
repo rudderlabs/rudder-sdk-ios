@@ -9,7 +9,7 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
-#import "_CustomFactory.h"
+#import "CustomFactory.h"
 
 
 static NSString *DATA_PLANE_URL = @"https://rudder-dev.dev.rudderlabs.com";
@@ -36,7 +36,7 @@ static NSString *WRITE_KEY = @"1wTjqsrUibYS7kHjcrQKDWsrlBY";
     [builder withTrackLifecycleEvens:NO];
     [builder withRecordScreenViews:NO];
     // creating Custom factory
-    [builder withCustomFactory:[_CustomFactory instance]];
+    [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
     

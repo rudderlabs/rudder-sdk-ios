@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Rudder/Rudder.h>
-#import "_CustomIntegration.h"
+#import "CustomIntegration.h"
 
-@implementation _CustomIntegration
+@implementation CustomIntegration
 
 - (instancetype) initWithConfig:(NSDictionary *)config withAnalytics:(RSClient *)client {
     if (self == [super init]) {

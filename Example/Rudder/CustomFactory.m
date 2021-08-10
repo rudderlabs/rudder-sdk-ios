@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <Rudder/Rudder.h>
-#import "_CustomFactory.h"
-#import "_CustomIntegration.h"
+#import "CustomFactory.h"
+#import "CustomIntegration.h"
 
 
-@implementation _CustomFactory
+@implementation CustomFactory
 
 + (instancetype)instance {
-    static _CustomFactory *sharedInstance;
+    static CustomFactory *sharedInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
@@ -34,7 +34,7 @@
 }
 
 - (nonnull id<RSIntegration>)initiate:(NSDictionary *)config client:(nonnull RSClient *)client rudderConfig:(nonnull RSConfig *)rudderConfig {
-    return [[_CustomIntegration alloc] initWithConfig:config withAnalytics:client];
+    return [[CustomIntegration alloc] initWithConfig:config withAnalytics:client];
 }
 
 

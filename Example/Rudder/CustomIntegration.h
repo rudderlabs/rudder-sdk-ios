@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface _CustomIntegration : NSObject<RSIntegration>
+@interface CustomIntegration : NSObject<RSIntegration>
 
 @property (nonatomic, strong) NSDictionary *config;
 @property (nonatomic, strong) RSClient *client;
