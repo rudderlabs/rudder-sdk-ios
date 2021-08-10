@@ -104,9 +104,7 @@ typedef enum {
                     [self __initiateProcessor];
                     
                     // initialize integrationOperationMap
-                    if (self->integrationOperationMap == nil) {
-                        self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-                    }
+                    self->integrationOperationMap = [[NSMutableDictionary alloc] init];
                     
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
