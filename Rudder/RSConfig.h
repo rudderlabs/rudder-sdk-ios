@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool recordScreenViews;
 @property (nonatomic, nonnull) NSString *controlPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
+@property (nonatomic, readwrite) NSMutableArray* customFactories;
 
 @end
 

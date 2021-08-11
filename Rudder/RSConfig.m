@@ -25,6 +25,7 @@
         _recordScreenViews = RSRecordScreenViews;
         _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
+        _customFactories = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -51,6 +52,7 @@ recordScreenViews: (BOOL) recordScreenViews
         _recordScreenViews = recordScreenViews;
         _controlPlaneUrl = controlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
+        _customFactories = [[NSMutableArray alloc] init];
     }
     return self;
 }
