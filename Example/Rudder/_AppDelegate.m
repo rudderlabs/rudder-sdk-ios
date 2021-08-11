@@ -9,15 +9,17 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
+#import "CustomFactory.h"
 
 
-static NSString *DATA_PLANE_URL = @"https://7eddd110f484.ngrok.io";
-static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
+static NSString *DATA_PLANE_URL = @"https://rudder-dev.dev.rudderlabs.com";
+static NSString *WRITE_KEY = @"1wTjqsrUibYS7kHjcrQKDWsrlBY";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
     
     // Override point for customization after application launch.
@@ -27,12 +29,14 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     [defaultOption putIntegration:@"MoEngage" isEnabled:YES];
     [defaultOption putIntegration:@"All" isEnabled:NO];
     // adding an integration into integrations object using its Factory object
-    //[defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
+    // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:NO];
     [builder withRecordScreenViews:NO];
+    // creating Custom factory
+    [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
     
