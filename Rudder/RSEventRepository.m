@@ -182,9 +182,8 @@ typedef enum {
 - (void) __replayMessageQueue {
     @synchronized (self->eventReplayMessage) {
         [RSLogger logDebug:@"replaying old messages with factory"];
-        NSArray *tempMessages = [self->eventReplayMessage copy];
-        if (tempMessages.count > 0) {
-            for (RSMessage *msg in tempMessages) {
+        if (self->eventReplayMessage.count > 0) {
+            for (RSMessage *msg in self->eventReplayMessage) {
                 [self makeFactoryDump:msg];
             }
         }
