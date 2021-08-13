@@ -28,6 +28,16 @@
 		EDADFAD726BBBF790084F617 /* API+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDADFAD626BBBF790084F617 /* API+Path.swift */; };
 		EDADFAD926BBC2740084F617 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDADFAD826BBC2740084F617 /* ServiceManager.swift */; };
 		EDADFADB26BBC2EC0084F617 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDADFADA26BBC2EC0084F617 /* ServiceType.swift */; };
+		F60C05DF26C3F8C300DB218D /* RSMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60C05DE26C3F8C300DB218D /* RSMessageType.swift */; };
+		F647BACB26BD212F00C1EDB2 /* RSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BACA26BD212F00C1EDB2 /* RSUtils.swift */; };
+		F647BB8626BD430D00C1EDB2 /* RSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8526BD430D00C1EDB2 /* RSApp.swift */; };
+		F647BB8826BD432400C1EDB2 /* RSLibraryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8726BD432400C1EDB2 /* RSLibraryInfo.swift */; };
+		F647BB8A26BD433600C1EDB2 /* RSOSInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8926BD433600C1EDB2 /* RSOSInfo.swift */; };
+		F647BB8C26BD434400C1EDB2 /* RSScreenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8B26BD434400C1EDB2 /* RSScreenInfo.swift */; };
+		F647BB8E26BD435600C1EDB2 /* RSDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8D26BD435600C1EDB2 /* RSDeviceInfo.swift */; };
+		F647BB9026BD436500C1EDB2 /* RSNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F647BB8F26BD436500C1EDB2 /* RSNetwork.swift */; };
+		F66207F026C4E0B200BAB6AA /* RSPreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66207EF26C4E0B200BAB6AA /* RSPreferenceManager.swift */; };
+		F66207F426C5238100BAB6AA /* RSTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66207F326C5238100BAB6AA /* RSTraits.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +52,7 @@
 		EDADFA9926BA62BF0084F617 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EDADFAA226BA63F60084F617 /* Rudder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rudder.h; sourceTree = "<group>"; };
 		EDADFAA326BA63F60084F617 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EDADFABB26BA73960084F617 /* Rudder.podspec */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rudder.podspec; sourceTree = SOURCE_ROOT; };
+		EDADFABB26BA73960084F617 /* Rudder.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rudder.podspec; sourceTree = SOURCE_ROOT; };
 		EDADFABF26BA75BB0084F617 /* RSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSConfig.swift; sourceTree = "<group>"; };
 		EDADFAC126BA75ED0084F617 /* RSOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSOption.swift; sourceTree = "<group>"; };
 		EDADFAC526BA7A380084F617 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -55,6 +65,16 @@
 		EDADFAD626BBBF790084F617 /* API+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Path.swift"; sourceTree = "<group>"; };
 		EDADFAD826BBC2740084F617 /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		EDADFADA26BBC2EC0084F617 /* ServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceType.swift; sourceTree = "<group>"; };
+		F60C05DE26C3F8C300DB218D /* RSMessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMessageType.swift; sourceTree = "<group>"; };
+		F647BACA26BD212F00C1EDB2 /* RSUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSUtils.swift; sourceTree = "<group>"; };
+		F647BB8526BD430D00C1EDB2 /* RSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSApp.swift; sourceTree = "<group>"; };
+		F647BB8726BD432400C1EDB2 /* RSLibraryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLibraryInfo.swift; sourceTree = "<group>"; };
+		F647BB8926BD433600C1EDB2 /* RSOSInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSOSInfo.swift; sourceTree = "<group>"; };
+		F647BB8B26BD434400C1EDB2 /* RSScreenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSScreenInfo.swift; sourceTree = "<group>"; };
+		F647BB8D26BD435600C1EDB2 /* RSDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDeviceInfo.swift; sourceTree = "<group>"; };
+		F647BB8F26BD436500C1EDB2 /* RSNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSNetwork.swift; sourceTree = "<group>"; };
+		F66207EF26C4E0B200BAB6AA /* RSPreferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPreferenceManager.swift; sourceTree = "<group>"; };
+		F66207F326C5238100BAB6AA /* RSTraits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTraits.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				EDADFA9426BA5FDB0084F617 /* RSClient.swift */,
+				F66207EF26C4E0B200BAB6AA /* RSPreferenceManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -148,6 +169,15 @@
 				EDADFAC126BA75ED0084F617 /* RSOption.swift */,
 				EDADFACA26BBA0530084F617 /* RSMessage.swift */,
 				EDADFACC26BBA0C70084F617 /* RSContext.swift */,
+				F647BACA26BD212F00C1EDB2 /* RSUtils.swift */,
+				F647BB8526BD430D00C1EDB2 /* RSApp.swift */,
+				F647BB8726BD432400C1EDB2 /* RSLibraryInfo.swift */,
+				F647BB8926BD433600C1EDB2 /* RSOSInfo.swift */,
+				F647BB8B26BD434400C1EDB2 /* RSScreenInfo.swift */,
+				F647BB8D26BD435600C1EDB2 /* RSDeviceInfo.swift */,
+				F647BB8F26BD436500C1EDB2 /* RSNetwork.swift */,
+				F60C05DE26C3F8C300DB218D /* RSMessageType.swift */,
+				F66207F326C5238100BAB6AA /* RSTraits.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -290,19 +320,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F647BB8626BD430D00C1EDB2 /* RSApp.swift in Sources */,
+				F647BB8E26BD435600C1EDB2 /* RSDeviceInfo.swift in Sources */,
 				EDADFACB26BBA0530084F617 /* RSMessage.swift in Sources */,
 				EDADFAD926BBC2740084F617 /* ServiceManager.swift in Sources */,
 				EDADFAC226BA75ED0084F617 /* RSOption.swift in Sources */,
+				F647BB9026BD436500C1EDB2 /* RSNetwork.swift in Sources */,
+				F647BB8826BD432400C1EDB2 /* RSLibraryInfo.swift in Sources */,
 				EDADFAC026BA75BB0084F617 /* RSConfig.swift in Sources */,
+				F647BACB26BD212F00C1EDB2 /* RSUtils.swift in Sources */,
+				F66207F026C4E0B200BAB6AA /* RSPreferenceManager.swift in Sources */,
 				EDADFAD526BBBEA70084F617 /* API+Method.swift in Sources */,
 				EDADFADB26BBC2EC0084F617 /* ServiceType.swift in Sources */,
 				EDADFAC926BA86610084F617 /* RSIntegrationFactory.swift in Sources */,
 				EDADFA9526BA5FDB0084F617 /* RSClient.swift in Sources */,
+				F60C05DF26C3F8C300DB218D /* RSMessageType.swift in Sources */,
 				EDADFAC626BA7A380084F617 /* Constants.swift in Sources */,
+				F647BB8A26BD433600C1EDB2 /* RSOSInfo.swift in Sources */,
 				EDADFAD326BBBE4F0084F617 /* API+Headers.swift in Sources */,
 				EDADFAD026BBB40F0084F617 /* API.swift in Sources */,
 				EDADFAD726BBBF790084F617 /* API+Path.swift in Sources */,
+				F647BB8C26BD434400C1EDB2 /* RSScreenInfo.swift in Sources */,
 				EDADFACD26BBA0C70084F617 /* RSContext.swift in Sources */,
+				F66207F426C5238100BAB6AA /* RSTraits.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
