@@ -1,99 +1,154 @@
 //
-//  _AppDelegate.m
-//  Rudder
+//  AppDelegate.m
+//  PodTesting
 //
-//  Created by arnabp92 on 02/26/2020.
-//  Copyright (c) 2020 arnabp92. All rights reserved.
+//  Created by Desu Sai Venkat on 28/07/21.
 //
 
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
-#import <AdSupport/ASIdentifierManager.h>
-#import "CustomFactory.h"
 
+@interface _AppDelegate ()
 
-static NSString *DATA_PLANE_URL = @"https://rudder-dev.dev.rudderlabs.com";
-static NSString *WRITE_KEY = @"1wTjqsrUibYS7kHjcrQKDWsrlBY";
+@end
 
 @implementation _AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    
-    [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
-    
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    RSOption *defaultOption = [[RSOption alloc]init];
-    // adding an integration into integrations object directly by specifying its name
-    [defaultOption putIntegration:@"Amplitude" isEnabled:YES];
-    [defaultOption putIntegration:@"MoEngage" isEnabled:YES];
-    [defaultOption putIntegration:@"All" isEnabled:NO];
-    // adding an integration into integrations object using its Factory object
-    // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
-    [builder withLoglevel:RSLogLevelDebug];
-    [builder withTrackLifecycleEvens:NO];
-    [builder withRecordScreenViews:NO];
-    // creating Custom factory
-    [builder withCustomFactory:[CustomFactory instance]];
-    // creating the client object by passing the options object
-    [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
-    
-    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
-    [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
+    [builder withDataPlaneUrl:@"https://7b346d91ee24.ngrok.io"];
+    [RSClient getInstance:@"1pcZviVxgjd3rTUUmaTUBinGH0A" config:[builder build]];
     
     
-    RSOption *option = [[RSOption alloc]init];
-    [option putIntegration:@"Amplitude" isEnabled:YES];
-    [option putIntegration:@"MixPanel" isEnabled:NO];
-    [option putCustomContext: @{
-        @"language": @"objective-c",
-        @"version": @"1.0.0"
-    } withKey: @"customContext"];
-    [[RSClient sharedInstance] track:@"simple_track_event"];
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    } options:option];
+//            [[RSClient sharedInstance] identify:@"test_user_id"
+//                                         traits:@{@"foo": @"bar",
+//                                                  @"foo1": @"bar1",
+//                                                  @"email": @"test@gmail.com",
+//                                                  @"key_1" : @"value_1",
+//                                                  @"key_2" : @"value_2"
+//                                         }
+//            ];
+
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for(int i=0;i<100000;i++)
+        {
+            NSLog(@"Thread 1 and identify call %d",i);
+        [[RSClient sharedInstance] identify:@"test_user_id"
+                                     traits:@{@"foo": @"bar",
+                                              @"foo1": @"bar1",
+                                              @"email": @"test@gmail.com",
+                                              @"key_1" : @"value_1",
+                                              @"key_2" : @"value_2"
+                                     }
+        ];
+        }
+    });
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for(int i=0;i<100000;i++)
+        {
+            NSLog(@"Thread 2 and identify call %d",i);
+        [[RSClient sharedInstance] identify:@"test_user_id"
+                                     traits:@{@"foo": @"bar",
+                                              @"foo1": @"bar1",
+                                              @"email": @"test@gmail.com",
+                                              @"key_1" : @"value_1",
+                                              @"key_2" : @"value_2"
+                                     }
+        ];
+        }
+    });
+    for(int i=0;i<100000;i++)
+    {
+        NSLog(@"Main Thread and identify call %d",i);
+    [[RSClient sharedInstance] identify:@"test_user_id"
+                                 traits:@{@"foo": @"bar",
+                                          @"foo1": @"bar1",
+                                          @"email": @"test@gmail.com",
+                                          @"key_1" : @"value_1",
+                                          @"key_2" : @"value_2"
+                                 }
+    ];
+    }
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for(int i=0;i<100000;i++)
+//        {
+//            NSLog(@"Thread 3 and identify call %d",i);
+//        [[RSClient sharedInstance] identify:@"test_user_id"
+//                                     traits:@{@"foo": @"bar",
+//                                              @"foo1": @"bar1",
+//                                              @"email": @"test@gmail.com",
+//                                              @"key_1" : @"value_1",
+//                                              @"key_2" : @"value_2"
+//                                     }
+//        ];
+//        }
+//    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for(int i=0;i<100000;i++)
+//        {
+//            NSLog(@"Thread 4 and identify call %d",i);
+//        [[RSClient sharedInstance] identify:@"test_user_id"
+//                                     traits:@{@"foo": @"bar",
+//                                              @"foo1": @"bar1",
+//                                              @"email": @"test@gmail.com",
+//                                              @"key_1" : @"value_1",
+//                                              @"key_2" : @"value_2"
+//                                     }
+//        ];
+//        }
+//    }); dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for(int i=0;i<100000;i++)
+//        {
+//            NSLog(@"Thread 5 and identify call %d",i);
+//        [[RSClient sharedInstance] identify:@"test_user_id"
+//                                     traits:@{@"foo": @"bar",
+//                                              @"foo1": @"bar1",
+//                                              @"email": @"test@gmail.com",
+//                                              @"key_1" : @"value_1",
+//                                              @"key_2" : @"value_2"
+//                                     }
+//        ];
+//        }
+//    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for(int i=0;i<100000;i++)
+//        {
+//            NSLog(@"Thread 6 and identify call %d",i);
+//        [[RSClient sharedInstance] identify:@"test_user_id"
+//                                     traits:@{@"foo": @"bar",
+//                                              @"foo1": @"bar1",
+//                                              @"email": @"test@gmail.com",
+//                                              @"key_1" : @"value_1",
+//                                              @"key_2" : @"value_2"
+//                                     }
+//        ];
+//        }
+//    });
+    
+    NSLog(@"Main Thread");
     
     return YES;
 }
 
-- (NSString*) getIDFA {
-    return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+
+#pragma mark - UISceneSession lifecycle
+
+
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
+    // Called when a new scene session is being created.
+    // Use this method to select a configuration to create the new scene with.
+    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
 }
 
-- (NSString*) getDeviceToken {
-    return @"example_device_token";
+
+- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {
+    // Called when the user discards a scene session.
+    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
 
 @end
