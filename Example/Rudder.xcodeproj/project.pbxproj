@@ -25,6 +25,8 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		F3874DF974719E0D84699140 /* Pods_Rudder_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067146E391B1A8F65C70373A /* Pods_Rudder_Tests.framework */; };
+		F608AE1226CF966000193736 /* CustomFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = F608AE0E26CF966000193736 /* CustomFactory.m */; };
+		F608AE1326CF966000193736 /* CustomIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = F608AE0F26CF966000193736 /* CustomIntegration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,10 @@
 		C9DD328D69249022A435D2E9 /* Pods_Rudder_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA624BE63D50D44B09DC0AAA /* Pods-Rudder_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Rudder_Tests/Pods-Rudder_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F00BCA7CE1647EF16B265CC2 /* Pods-Rudder_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder_Example.debug.xcconfig"; path = "Target Support Files/Pods-Rudder_Example/Pods-Rudder_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		F608AE0E26CF966000193736 /* CustomFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomFactory.m; sourceTree = "<group>"; };
+		F608AE0F26CF966000193736 /* CustomIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIntegration.m; sourceTree = "<group>"; };
+		F608AE1026CF966000193736 /* CustomFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFactory.h; sourceTree = "<group>"; };
+		F608AE1126CF966000193736 /* CustomIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIntegration.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +142,10 @@
 		6003F593195388D20070C39A /* Example for Rudder */ = {
 			isa = PBXGroup;
 			children = (
+				F608AE1026CF966000193736 /* CustomFactory.h */,
+				F608AE0E26CF966000193736 /* CustomFactory.m */,
+				F608AE1126CF966000193736 /* CustomIntegration.h */,
+				F608AE0F26CF966000193736 /* CustomIntegration.m */,
 				6003F59C195388D20070C39A /* _AppDelegate.h */,
 				6003F59D195388D20070C39A /* _AppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -391,6 +401,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* _AppDelegate.m in Sources */,
+				F608AE1226CF966000193736 /* CustomFactory.m in Sources */,
+				F608AE1326CF966000193736 /* CustomIntegration.m in Sources */,
 				6003F5A7195388D20070C39A /* _ViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
