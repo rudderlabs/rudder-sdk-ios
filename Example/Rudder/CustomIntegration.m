@@ -36,6 +36,11 @@
 }
 
 - (void) reset {
+    NSLog(@"Reset is received");
+}
+
+- (void) flush {
+    NSLog(@"flush is received");
 }
 
 @end

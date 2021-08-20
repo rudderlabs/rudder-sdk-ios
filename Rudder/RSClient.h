@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) identify:(NSString *_Nullable)userId;
 
 - (void)reset;
+- (void)flush;
 
 - (NSString* _Nullable)getAnonymousId;
 
