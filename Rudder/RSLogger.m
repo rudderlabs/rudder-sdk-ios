@@ -9,7 +9,8 @@
 #import "RSLogger.h"
 
 static NSString *TAG = @"RSStack";
-static int logLevel;
+// Defaulting logLevel to 3 i.e RSLogLevelInfo
+static int logLevel = 3;
 
 @implementation RSLogger
 
