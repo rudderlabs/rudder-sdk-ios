@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) dump: (RSMessage*) message;
 - (void) reset;
+- (void) flush;
 
 @end
 

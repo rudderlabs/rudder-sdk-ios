@@ -387,7 +387,7 @@ typedef enum {
             }
             return;
         }
-        // Since All is not set to true we will dump to all the integrations which are set to true 
+        // Since All is not set to true we will dump to all the integrations which are set to true
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
             if (integration != nil) {
@@ -416,7 +416,21 @@ typedef enum {
             }
         }
     } else {
-        [RSLogger logDebug:@"factories are not initialized. ignored"];
+        [RSLogger logDebug:@"factories are not initialized. ignoring reset call"];
+    }
+}
+
+-(void) flush {
+    if (self->areFactoriesInitialized) {
+        for (NSString *key in [self->integrationOperationMap allKeys]) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"flushing native SDK for %@", key]];
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            if (integration != nil) {
+                [integration flush];
+            }
+        }
+    } else {
+        [RSLogger logDebug:@"factories are not initialized. ignoring flush call"];
     }
 }
 

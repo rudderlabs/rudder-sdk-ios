@@ -242,6 +242,12 @@ static RSOption* _defaultOptions = nil;
     }
 }
 
+- (void)flush {
+    if (_repository != nil) {
+        [_repository flush];
+    }
+}
+
 - (NSString*)getAnonymousId {
     // returns anonymousId
     return [RSElementCache getContext].device.identifier;
