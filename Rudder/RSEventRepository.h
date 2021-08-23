@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
+- (void) flush;
 - (RSConfig* _Nullable) getConfig;
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
