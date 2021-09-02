@@ -29,12 +29,17 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL areFactoriesInitialized;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
+    BOOL isOptedOut;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;
+
+- (BOOL) getOptStatus;
+- (void) saveOptStatus: (BOOL) optStatus;
+
 - (RSConfig* _Nullable) getConfig;
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 

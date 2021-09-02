@@ -16,6 +16,7 @@
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
 static RSOption* _defaultOptions = nil;
+BOOL _isOptedOut;
 
 @implementation RSClient
 
@@ -38,6 +39,7 @@ static RSOption* _defaultOptions = nil;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:config];
+            _isOptedOut = [_repository getOptStatus];
         });
     }
     return _instance;
@@ -48,6 +50,11 @@ static RSOption* _defaultOptions = nil;
 }
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
+    if(_isOptedOut)
+    {
+        [RSLogger logInfo:@"User Opted out for tracking his activity, hence dropping the events"];
+        return;
+    }
     if (_repository != nil && message != nil) {
         if (type == RSIdentify) {
             [RSElementCache persistTraits];
@@ -171,7 +178,7 @@ static RSOption* _defaultOptions = nil;
     
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
-
+    
     NSObject *prevId = [traits objectForKey:@"userId"];
     if(prevId == nil) {
         prevId =[traits objectForKey:@"id"];
@@ -245,6 +252,13 @@ static RSOption* _defaultOptions = nil;
 - (void)flush {
     if (_repository != nil) {
         [_repository flush];
+    }
+}
+
+- (void) optOut: (BOOL) optOut {
+    if (_repository != nil) {
+        _isOptedOut = optOut;
+        [_repository saveOptStatus:optOut];
     }
 }
 
