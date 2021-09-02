@@ -72,6 +72,7 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
+        self->isOptedOut = [preferenceManager getOptStatus];
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
@@ -448,6 +449,14 @@ typedef enum {
 
 - (RSConfig *)getConfig {
     return self->config;
+}
+
+- (BOOL) getOptStatus {
+    return self -> isOptedOut;
+}
+
+- (void) saveOptStatus: (BOOL) optStatus {
+    [preferenceManager saveOptStatus:optStatus];
 }
 
 - (void) __checkApplicationUpdateStatus {
