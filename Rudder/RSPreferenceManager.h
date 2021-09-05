@@ -39,6 +39,7 @@ extern NSString *const RSExternalIdKey;
 
 - (NSString* __nullable) getAnonymousId;
 - (void) saveAnonymousId: (NSString* __nullable) anonymousId;
+- (void) clearAnonymousId;
 
 @end
 
