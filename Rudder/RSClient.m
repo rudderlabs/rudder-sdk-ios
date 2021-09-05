@@ -240,6 +240,8 @@ static RSOption* _defaultOptions = nil;
     if (_repository != nil) {
         [_repository reset];
     }
+    
+    [[RSPreferenceManager getInstance] clearAnonymousId];
 }
 
 - (void)flush {
