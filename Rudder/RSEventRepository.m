@@ -502,6 +502,9 @@ typedef enum {
             @"version": currentVersion
         }];
     } else if (![currentVersion isEqualToString:previousVersion]) {
+        if ([self getOptStatus]) {
+            return;
+        }
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
@@ -519,6 +522,9 @@ typedef enum {
 }
 
 - (void)_applicationWillEnterForeground {
+    if ([self getOptStatus]) {
+        return;
+    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
@@ -529,6 +535,9 @@ typedef enum {
 }
 
 - (void)_applicationDidEnterBackground {
+    if ([self getOptStatus]) {
+        return;
+    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
