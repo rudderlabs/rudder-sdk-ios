@@ -326,6 +326,7 @@ static RSOption* _defaultOptions = nil;
 - (void)optOut:(BOOL) optOut {
     if (_repository != nil) {
         [_repository saveOptStatus:optOut];
+        [RSLogger logInfo:[NSString stringWithFormat:@"optOut() flag is set to %@", optOut ? @"true" : @"false"]];
     }
     else {
         [RSLogger logError:@"SDK is not initialised. Hence aborting optOut API call"];
