@@ -72,7 +72,6 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
-        self->isOptedOut = [preferenceManager getOptStatus];
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
@@ -452,11 +451,20 @@ typedef enum {
 }
 
 - (BOOL) getOptStatus {
-    return self -> isOptedOut;
+    return [preferenceManager getOptStatus];
 }
 
 - (void) saveOptStatus: (BOOL) optStatus {
     [preferenceManager saveOptStatus:optStatus];
+    [self updateOptStatusTime:optStatus];
+}
+
+- (void) updateOptStatusTime: (BOOL) optStatus {
+    if (optStatus) {
+        [preferenceManager updateOptOutTime:[RSUtils getTimeStampLong]];
+    } else {
+        [preferenceManager updateOptInTime:[RSUtils getTimeStampLong]];
+    }
 }
 
 - (void) __checkApplicationUpdateStatus {
@@ -494,6 +502,9 @@ typedef enum {
             @"version": currentVersion
         }];
     } else if (![currentVersion isEqualToString:previousVersion]) {
+        if ([self getOptStatus]) {
+            return;
+        }
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
@@ -511,6 +522,9 @@ typedef enum {
 }
 
 - (void)_applicationWillEnterForeground {
+    if ([self getOptStatus]) {
+        return;
+    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
@@ -521,6 +535,9 @@ typedef enum {
 }
 
 - (void)_applicationDidEnterBackground {
+    if ([self getOptStatus]) {
+        return;
+    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }

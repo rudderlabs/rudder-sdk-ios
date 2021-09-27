@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL areFactoriesInitialized;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
-    BOOL isOptedOut;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;

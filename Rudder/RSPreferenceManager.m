@@ -19,6 +19,8 @@ NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 NSString *const RSExternalIdKey =  @"rl_external_id";
 NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
 NSString *const RSOptStatus = @"rl_opt_status";
+NSString *const RSOptInTimeKey = @"rl_opt_in_time";
+NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -106,6 +108,34 @@ NSString *const RSOptStatus = @"rl_opt_status";
 - (void)saveOptStatus:(BOOL) optStatus {
     [[NSUserDefaults standardUserDefaults] setBool:optStatus forKey:RSOptStatus];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)updateOptInTime:(long)updatedTime {
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptInTimeKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (long)getOptInTime {
+    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSOptInTimeKey];
+    if(updatedTime == nil) {
+        return -1;
+    } else {
+        return [updatedTime longValue];
+    }
+}
+
+- (void)updateOptOutTime:(long)updatedTime {
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptOutTimeKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (long)getOptOutTime {
+    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSOptOutTimeKey];
+    if(updatedTime == nil) {
+        return -1;
+    } else {
+        return [updatedTime longValue];
+    }
 }
 
 @end

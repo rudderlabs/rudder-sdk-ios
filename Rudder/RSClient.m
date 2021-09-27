@@ -16,7 +16,6 @@
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
 static RSOption* _defaultOptions = nil;
-BOOL _isOptedOut;
 
 @implementation RSClient
 
@@ -39,22 +38,19 @@ BOOL _isOptedOut;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:config];
-            _isOptedOut = [_repository getOptStatus];
         });
     }
     return _instance;
 }
 
 - (void) trackMessage:(RSMessage *)message {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self dumpInternal:message type:RSTrack];
 }
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
-    if(_isOptedOut)
-    {
-        [RSLogger logInfo:@"User Opted out for tracking his activity, hence dropping the events"];
-        return;
-    }
     if (_repository != nil && message != nil) {
         if (type == RSIdentify) {
             [RSElementCache persistTraits];
@@ -76,16 +72,25 @@ BOOL _isOptedOut;
 }
 
 - (void)trackWithBuilder:(RSMessageBuilder *)builder{
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
 - (void)track:(NSString *)eventName {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
     [self dumpInternal:[builder build] type:RSTrack];
 }
 
 - (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
     [builder setPropertyDict:properties];
@@ -93,6 +98,9 @@ BOOL _isOptedOut;
 }
 
 - (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setEventName:eventName];
     [builder setPropertyDict:properties];
@@ -101,14 +109,23 @@ BOOL _isOptedOut;
 }
 
 - (void) screenWithMessage:(RSMessage *)message {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self dumpInternal:message type:RSScreen];
 }
 
 - (void)screenWithBuilder:(RSMessageBuilder *)builder {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self dumpInternal:[builder build] type:RSScreen];
 }
 
 - (void)screen:(NSString *)screenName {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     NSMutableDictionary *property = [[NSMutableDictionary alloc] init];
     [property setValue:screenName forKey:@"name"];
@@ -118,6 +135,9 @@ BOOL _isOptedOut;
 }
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     NSMutableDictionary *property;
     if (properties == nil) {
@@ -132,6 +152,9 @@ BOOL _isOptedOut;
 }
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     NSMutableDictionary *property;
     if (properties == nil) {
@@ -147,12 +170,18 @@ BOOL _isOptedOut;
 }
 
 - (void)group:(NSString *)groupId{
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
     [self dumpInternal:[builder build] type:RSGroup];
 }
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
     [builder setGroupTraits:traits];
@@ -160,6 +189,9 @@ BOOL _isOptedOut;
 }
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RSOption *)options {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
     [builder setGroupId:groupId];
     [builder setGroupTraits:traits];
@@ -168,10 +200,16 @@ BOOL _isOptedOut;
 }
 
 - (void)alias:(NSString *)newId {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self alias:newId options:nil];
 }
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
     [builder setUserId:newId];
     [builder setRSOption:options];
@@ -204,14 +242,23 @@ BOOL _isOptedOut;
 }
 
 - (void) identifyWithMessage:(RSMessage *)message {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self dumpInternal:message type:RSIdentify];
 }
 
 - (void)identifyWithBuilder:(RSMessageBuilder *)builder {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [self identifyWithMessage:[builder build]];
 }
 
 - (void)identify:(NSString*)userId {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSTraits* traitsCopy = [[RSTraits alloc] init];
     [traitsCopy setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -222,6 +269,9 @@ BOOL _isOptedOut;
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSTraits* traitsObj = [[RSTraits alloc] initWithDict: traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -232,6 +282,9 @@ BOOL _isOptedOut;
 }
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(RSOption *)options {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -250,24 +303,52 @@ BOOL _isOptedOut;
 }
 
 - (void)flush {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     if (_repository != nil) {
         [_repository flush];
     }
 }
 
-- (void) optOut: (BOOL) optOut {
++ (BOOL)getOptStatus {
+    if (_repository == nil) {
+        [RSLogger logError:@"SDK is not initialised. Hence dropping the event"];
+        return true;
+    }
+    if ([_repository getOptStatus]) {
+        [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
+        return true;
+    }
+    return false;
+}
+
+- (void)optOut:(BOOL) optOut {
     if (_repository != nil) {
-        _isOptedOut = optOut;
         [_repository saveOptStatus:optOut];
+        [RSLogger logInfo:[NSString stringWithFormat:@"optOut() flag is set to %@", optOut ? @"true" : @"false"]];
+    }
+    else {
+        [RSLogger logError:@"SDK is not initialised. Hence aborting optOut API call"];
     }
 }
 
+- (void)shutdown {
+    // TODO: decide shutdown behavior
+}
+
 - (NSString*)getAnonymousId {
+    if ([RSClient getOptStatus]) {
+        return nil;
+    }
     // returns anonymousId
     return [RSElementCache getContext].device.identifier;
 }
 
 - (RSContext*) getContext {
+    if ([RSClient getOptStatus]) {
+        return nil;
+    }
     return [RSElementCache getContext];
 }
 
@@ -275,10 +356,16 @@ BOOL _isOptedOut;
     if (_repository == nil) {
         return nil;
     }
+    if ([RSClient getOptStatus]) {
+        return nil;
+    }
     return [_repository getConfig];
 }
 
 - (void)trackLifecycleEvents:(NSDictionary *)launchOptions {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
     [_repository _applicationDidFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -292,6 +379,10 @@ BOOL _isOptedOut;
 
 + (void)setAnonymousId:(NSString *)anonymousId {
     RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+    if ([preferenceManager getOptStatus]) {
+        [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
+        return;
+    }
     [preferenceManager saveAnonymousId:anonymousId];
 }
 
