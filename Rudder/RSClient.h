@@ -61,6 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) optOut: (BOOL) optOut;
 
+- (void) shutdown;
+
 - (NSString* _Nullable)getAnonymousId;
 
 - (RSConfig* _Nullable)configuration;

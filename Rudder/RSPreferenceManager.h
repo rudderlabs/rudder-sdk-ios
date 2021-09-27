@@ -19,6 +19,8 @@ extern NSString *const RSTraitsKey;
 extern NSString *const RSApplicationInfoKey;
 extern NSString *const RSExternalIdKey;
 extern NSString *const RSOptStatus;
+extern NSString *const RSOptInTimeKey;
+extern NSString *const RSOptOutTimeKey;
 
 + (instancetype) getInstance;
 
@@ -43,6 +45,10 @@ extern NSString *const RSOptStatus;
 
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
+- (void) updateOptInTime: (long) updatedTime;
+- (long) getOptInTime;
+- (void) updateOptOutTime: (long) updatedTime;
+- (long) getOptOutTime;
 
 @end
 
