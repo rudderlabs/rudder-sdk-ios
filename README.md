@@ -1,38 +1,40 @@
 [![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
 
-# What is RudderStack?
+# RudderStack iOS SDK
 
-[RudderStack](https://rudderstack.com/) is a **customer data pipeline** tool for collecting, routing and processing data from your websites, apps, cloud tools, and data warehouse.
+RudderStack's iOS SDK lets you track event data from your iOS applications. After integrating the SDK, you will be able to send the event data to your preferred destination/s such as Google Analytics, Amplitude, and more.
 
-More information on RudderStack can be found [here](https://github.com/rudderlabs/rudder-server).
+For detailed documentation on the iOS SDK, click [**here**](https://docs.rudderstack.com/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
 
-## RudderStack iOS SDK
+## Installing the iOS SDK
 
-The RudderStack iOS SDK allows you to integrate RudderStack to your iOS application in order to track event data from your app. After integrating this SDK, you will also be able to send this data to your preferred analytics destination/s such as Google Analytics, Amplitude, and more, via RudderStack.
-
-## Installation
-RudderStack is available through [CocoaPods](https://cocoapods.org) and [Carthage](https://github.com/Carthage/Carthage).
+The iOS SDK is available through [**CocoaPods**](https://cocoapods.org) and [**Carthage**](https://github.com/Carthage/Carthage).
 
 ### CocoaPods
-To install it, simply add the following line to your Podfile:
+
+To install the SDK, simply add the following line to your Podfile:
+
 ```xcode
 pod 'Rudder', '1.0.22'
 ```
 
 ### Carthage
-And for Carthage support add the following line to your `Cartfile`
+
+For Carthage support, add the following line to your `Cartfile`:
+
 ```xcode
 github "rudderlabs/rudder-sdk-ios" "v1.0.22"
 ```
 
-Remember to include the following code in all `.m` and `.h` files where you want to refer to or use Rudder SDK classes
+> Remember to include the following code in all `.m` and `.h` files where you want to refer to or use the RudderStack SDK classes, as shown:
+
 ```xcode
 #import <Rudder/Rudder.h>
 ```
 
-## Initialize Client
+## Initializing the RudderStack client
 
-To the initialize `RSClient`, put the following code in your `AppDelegate.m` file under the method `didFinishLaunchingWithOptions`:
+To the initialize `RSClient`, place the following code in your `AppDelegate.m` file under the method `didFinishLaunchingWithOptions`:
 
 ```xcode
 RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
@@ -91,8 +93,8 @@ A shared instance of `RSClient` is accesible after the initialization by `[RSCli
 [[RSClient sharedInstance] reset];
 ```
 
-For detailed documentation, check [our documentation page](https://docs.rudderstack.com/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+For detailed documentation, click [**here**](https://docs.rudderstack.com/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
 
-## Contact Us
+## Contact us
 
-If you come across any issues while configuring or using the RudderStack iOS SDK, please feel free to [contact us](https://rudderstack.com/contact/) or start a conversation on our [Slack](https://resources.rudderstack.com/join-rudderstack-slack) channel. We will be happy to help you.
+For more information on using the RudderStack iOS SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.
