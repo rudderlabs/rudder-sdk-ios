@@ -15,7 +15,7 @@ The iOS SDK is available through [**CocoaPods**](https://cocoapods.org) and [**C
 To install the SDK, simply add the following line to your Podfile:
 
 ```xcode
-pod 'Rudder', '1.0.22'
+pod 'Rudder', '1.0.24'
 ```
 
 ### Carthage
@@ -23,7 +23,7 @@ pod 'Rudder', '1.0.22'
 For Carthage support, add the following line to your `Cartfile`:
 
 ```xcode
-github "rudderlabs/rudder-sdk-ios" "v1.0.22"
+github "rudderlabs/rudder-sdk-ios" "v1.0.24"
 ```
 
 > Remember to include the following code in all `.m` and `.h` files where you want to refer to or use the RudderStack SDK classes, as shown:
