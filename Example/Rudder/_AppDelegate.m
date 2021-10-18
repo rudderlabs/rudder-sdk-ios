@@ -13,7 +13,7 @@
 
 
 static NSString *DATA_PLANE_URL = @"https://rudder-dev.dev.rudderlabs.com";
-static NSString *WRITE_KEY = @"1wTjqsrUibYS7kHjcrQKDWsrlBY";
+static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
 
 @implementation _AppDelegate
 
