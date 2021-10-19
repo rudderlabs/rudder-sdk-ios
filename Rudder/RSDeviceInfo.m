@@ -16,10 +16,12 @@
 {
     self = [super init];
     if (self) {
+        #if !TARGET_OS_WATCH
         _identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
         _manufacturer = @"Apple";
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
+        #endif
         _type = @"iOS";
         _attTrackingStatus = RSATTNotDetermined;
     }

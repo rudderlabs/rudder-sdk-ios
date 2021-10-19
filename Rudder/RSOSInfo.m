@@ -14,9 +14,11 @@
 {
     self = [super init];
     if (self) {
+        #if !TARGET_OS_WATCH
         UIDevice *device = [UIDevice currentDevice];
         _name = [device systemName];
         _version = [device systemVersion];
+        #endif
     }
     return self;
 }

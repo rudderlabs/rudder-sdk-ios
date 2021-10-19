@@ -10,7 +10,9 @@
 #import "RSUtils.h"
 #import "RSLogger.h"
 
+#if !TARGET_OS_WATCH
 static WKWebView *webView;
+#endif
 
 @implementation RSContext
 
@@ -31,6 +33,7 @@ int const RSATTAuthorize = 3;
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
 
+#if !TARGET_OS_WATCH
         dispatch_async(dispatch_get_main_queue(), ^{
             webView = [[WKWebView alloc] initWithFrame:CGRectZero];
             [webView loadHTMLString:@"<html></html>" baseURL:nil];
@@ -41,6 +44,7 @@ int const RSATTAuthorize = 3;
                 }
             }];
         });
+#endif
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];

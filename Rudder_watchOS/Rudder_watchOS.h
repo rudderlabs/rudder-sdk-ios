@@ -1,9 +1,11 @@
 //
-//  RS.h
+//  Rudder_watchOS.h
+//  Rudder_watchOS
 //
-//  Created by Arnab Pal on 17/10/19.
-//  Copyright © 2019 RSlabs. All rights reserved.
+//  Created by Desu Sai Venkat on 19/10/21.
 //
+
+#import <Foundation/Foundation.h>
 
 #import "RSClient.h"
 
@@ -54,12 +56,12 @@
 #import "RSCartSharedEvent.h"
 #import "RSProductReviewedEvent.h"
 
-//! Project version number for RS.
-FOUNDATION_EXPORT double RSVersionNumber;
+//! Project version number for Rudder_watchOS.
+FOUNDATION_EXPORT double Rudder_watchOSVersionNumber;
 
-//! Project version string for RS.
-FOUNDATION_EXPORT const unsigned char RSVersionString[];
+//! Project version string for Rudder_watchOS.
+FOUNDATION_EXPORT const unsigned char Rudder_watchOSVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <RS/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <Rudder_watchOS/PublicHeader.h>
 
 

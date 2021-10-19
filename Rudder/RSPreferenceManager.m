@@ -87,9 +87,17 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 - (NSString *)getAnonymousId {
     NSString *anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
     
+    #if !TARGET_OS_WATCH
     if (anonymousId == nil) {
         anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
     }
+    #endif
+
+    #if TARGET_OS_WATCH
+    anonymousId = @"sampleAnonId";
+    #endif
+
+    
     
     [self saveAnonymousId:anonymousId];
     

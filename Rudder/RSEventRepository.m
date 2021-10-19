@@ -10,7 +10,9 @@
 #import "RSElementCache.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
+#if !TARGET_OS_WATCH
 #import "UIViewController+RSScreen.h"
+#endif
 
 static RSEventRepository* _instance;
 
@@ -469,6 +471,7 @@ typedef enum {
 
 - (void) __checkApplicationUpdateStatus {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+#if !TARGET_OS_WATCH
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
                               UIApplicationDidFinishLaunchingNotification,
                               UIApplicationWillEnterForegroundNotification,
@@ -477,9 +480,11 @@ typedef enum {
                               UIApplicationDidBecomeActiveNotification ]) {
         [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
     }
+#endif
 }
 
 - (void) handleAppStateNotification: (NSNotification*) notification {
+#if !TARGET_OS_WATCH
     if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
@@ -487,6 +492,7 @@ typedef enum {
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
     }
+#endif
 }
 
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -514,8 +520,10 @@ typedef enum {
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @NO,
         @"version" : currentVersion ?: @"",
+#if !TARGET_OS_WATCH
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
+#endif
     }];
     
     [preferenceManager saveBuildVersionCode:currentVersion];
@@ -545,7 +553,9 @@ typedef enum {
 }
 
 - (void) __prepareScreenRecorder {
+#if !TARGET_OS_WATCH
     [UIViewController rudder_swizzleView];
+#endif
 }
 
 
