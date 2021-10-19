@@ -10,8 +10,6 @@
 #import "RSUtils.h"
 #import "RSLogger.h"
 
-static WKWebView *webView;
-
 @implementation RSContext
 
 int const RSATTNotDetermined = 0;
@@ -31,16 +29,6 @@ int const RSATTAuthorize = 3;
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            webView = [[WKWebView alloc] initWithFrame:CGRectZero];
-            [webView loadHTMLString:@"<html></html>" baseURL:nil];
-
-            [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
-                if (userAgent != NULL) {
-                    self->_userAgent = userAgent;
-                }
-            }];
-        });
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
