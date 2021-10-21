@@ -52,20 +52,6 @@ static RSOption* _defaultOptions = nil;
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
     if (_repository != nil && message != nil) {
-        if (type == RSIdentify) {
-            [RSElementCache persistTraits];
-            
-            //  handle external Ids
-            RSOption *option = message.option;
-            if (option != nil) {
-                NSMutableArray *externalIds = option.externalIds;
-                if (externalIds != nil) {
-                    [RSElementCache updateExternalIds:externalIds];
-                }
-            }
-            
-            [message updateContext:[RSElementCache getContext]];
-        }
         message.type = type;
         [_repository dump:message];
     }
@@ -210,10 +196,6 @@ static RSOption* _defaultOptions = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
-    RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
-    [builder setUserId:newId];
-    [builder setRSOption:options];
-    
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
     
@@ -222,14 +204,17 @@ static RSOption* _defaultOptions = nil;
         prevId =[traits objectForKey:@"id"];
     }
     
-    if (prevId != nil) {
-        [builder setPreviousId:[NSString stringWithFormat:@"%@", prevId]];
-    }
     traits[@"id"] = newId;
     traits[@"userId"] = newId;
     
-    [RSElementCache updateTraitsDict:traits];
-    [RSElementCache persistTraits];
+    RSMessageBuilder *builder =[[RSMessageBuilder alloc] init];
+    [builder setUserId:newId];
+    [builder setRSOption:options];
+    
+    if (prevId != nil) {
+        [builder setPreviousId:[NSString stringWithFormat:@"%@", prevId]];
+    }
+    
     
     RSMessage *message = [builder build];
     [message updateTraitsDict:traits];
@@ -291,6 +276,7 @@ static RSOption* _defaultOptions = nil;
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
+    [builder setExternalIds:options];
     [builder setRSOption:options];
     [self dumpInternal:[builder build] type:RSIdentify];
 }
