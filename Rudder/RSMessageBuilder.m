@@ -103,8 +103,22 @@
 }
 
 - (instancetype)setTraits:(RSTraits *)traits {
+    if (message == nil) {
+        message = [[RSMessage alloc] init];
+    }
     [RSElementCache updateTraits: traits];
+    [message updateContext:[RSElementCache getContext]];
     return self;
+}
+
+- (void) setExternalIds:(RSOption *) option {
+    if (option != nil) {
+        NSMutableArray *externalIds = option.externalIds;
+        if (externalIds != nil) {
+            [RSElementCache updateExternalIds:externalIds];
+            [message updateContext:[RSElementCache getContext]];
+        }
+    }
 }
 
 - (RSMessage*) build {

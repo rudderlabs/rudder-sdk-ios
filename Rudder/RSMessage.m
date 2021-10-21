@@ -86,7 +86,8 @@
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
-    [_context updateTraitsDict:traits];
+    [RSElementCache updateTraitsDict:traits];
+    [self updateContext:[RSElementCache getContext]];
 }
 
 - (void)setRudderOption:(RSOption *)option {

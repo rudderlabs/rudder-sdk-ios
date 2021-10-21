@@ -42,6 +42,7 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) NSMutableArray* externalIds;
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
+- (void) resetTraits;
 - (void) updateTraits: (RSTraits* _Nullable) traits;
 - (void) persistTraits;
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
@@ -49,6 +50,8 @@ extern int const RSATTAuthorize;
 - (void) putAdvertisementId: (NSString*) idfa;
 - (void) putAppTrackingConsent: (int) att;
 - (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
+- (void)resetExternalIds;
+- (void)persistExternalIds;
 
 @end
 
