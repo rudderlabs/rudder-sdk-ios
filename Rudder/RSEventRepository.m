@@ -514,10 +514,8 @@ typedef enum {
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
     }];
-    
-    if (![self getOptStatus]) {
-        [preferenceManager saveBuildVersionCode:currentVersion];
-    }
+            
+    [preferenceManager saveBuildVersionCode:currentVersion];
 }
 
 - (void)_applicationWillEnterForeground {
