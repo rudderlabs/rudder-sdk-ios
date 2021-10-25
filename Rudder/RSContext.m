@@ -130,8 +130,12 @@ int const RSATTAuthorize = 3;
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
+    if(_externalIds == nil)
+    {
+        _externalIds = [[NSMutableArray alloc] init];
+    }
     // update local variable
-    _externalIds = externalIds;
+    [_externalIds addObjectsFromArray: externalIds];
 }
 
 - (void)persistExternalIds {
