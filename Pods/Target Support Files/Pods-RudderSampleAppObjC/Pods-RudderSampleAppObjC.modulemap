@@ -1,0 +1,6 @@
+framework module Pods_RudderSampleAppObjC {
+  umbrella header "Pods-RudderSampleAppObjC-umbrella.h"
+
+  export *
+  module * { export * }
+}

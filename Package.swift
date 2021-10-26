@@ -5,12 +5,11 @@ import PackageDescription
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS(.v8)
+        .iOS(.v9)
     ],
     products: [
         .library(
             name: "Rudder",
-            type: .dynamic,
             targets: ["Rudder"]
         )
     ],
@@ -19,9 +18,9 @@ let package = Package(
             name: "Rudder",
             path: "Rudder",
             sources: ["Rudder"],
-            publicHeadersPath: "Rudder/**",
+            publicHeadersPath: "Rudder/Rudder/**",
             cSettings: [
-                .headerSearchPath("Rudder/**")
+                .headerSearchPath("Rudder/Rudder/**")
             ]
         )
     ]

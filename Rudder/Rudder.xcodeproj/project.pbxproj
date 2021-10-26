@@ -1,0 +1,1066 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0623DED826693A300002F42F /* RSECommerceCartBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7726693A300002F42F /* RSECommerceCartBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DED926693A300002F42F /* RSECommerceWishListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE7826693A300002F42F /* RSECommerceWishListBuilder.m */; };
+		0623DEDA26693A300002F42F /* RSECommerceProductBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7926693A300002F42F /* RSECommerceProductBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEDB26693A300002F42F /* RSECommerceEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7A26693A300002F42F /* RSECommerceEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEDC26693A300002F42F /* RSECommerceProduct.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7B26693A300002F42F /* RSECommerceProduct.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEDD26693A300002F42F /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE7C26693A300002F42F /* RSECommerceCheckoutBuilder.m */; };
+		0623DEDE26693A300002F42F /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE7D26693A300002F42F /* RSECommerceCouponBuilder.m */; };
+		0623DEDF26693A300002F42F /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7E26693A300002F42F /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE026693A300002F42F /* RSECommerceCoupon.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE7F26693A300002F42F /* RSECommerceCoupon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE126693A300002F42F /* RSECommerceCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8026693A300002F42F /* RSECommerceCart.m */; };
+		0623DEE226693A300002F42F /* RSECommercePromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8126693A300002F42F /* RSECommercePromotion.m */; };
+		0623DEE326693A300002F42F /* RSECommerceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8226693A300002F42F /* RSECommerceFilter.m */; };
+		0623DEE426693A300002F42F /* RSECommerceParamNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8326693A300002F42F /* RSECommerceParamNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE526693A300002F42F /* RSECommerceSortBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8426693A300002F42F /* RSECommerceSortBuilder.m */; };
+		0623DEE626693A300002F42F /* RSECommerceCheckout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8526693A300002F42F /* RSECommerceCheckout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE726693A300002F42F /* RSECommerceFilterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8626693A300002F42F /* RSECommerceFilterBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE826693A300002F42F /* RSECommerceWishList.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8726693A300002F42F /* RSECommerceWishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEE926693A300002F42F /* RSECommerceSort.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8826693A300002F42F /* RSECommerceSort.m */; };
+		0623DEEA26693A300002F42F /* RSECommercePromotionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8926693A300002F42F /* RSECommercePromotionBuilder.m */; };
+		0623DEEB26693A300002F42F /* RSECommerceOrderBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8A26693A300002F42F /* RSECommerceOrderBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEEC26693A300002F42F /* RSECommerceProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8B26693A300002F42F /* RSECommerceProduct.m */; };
+		0623DEED26693A300002F42F /* RSECommerceEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8C26693A300002F42F /* RSECommerceEvents.m */; };
+		0623DEEE26693A300002F42F /* RSECommerceProductBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8D26693A300002F42F /* RSECommerceProductBuilder.m */; };
+		0623DEEF26693A300002F42F /* RSECommerceWishListBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE8E26693A300002F42F /* RSECommerceWishListBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF026693A300002F42F /* RSECommerceCartBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE8F26693A300002F42F /* RSECommerceCartBuilder.m */; };
+		0623DEF126693A300002F42F /* RSECommerceParamNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9026693A300002F42F /* RSECommerceParamNames.m */; };
+		0623DEF226693A300002F42F /* RSECommerceSortBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9126693A300002F42F /* RSECommerceSortBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF326693A300002F42F /* RSECommercePromotion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9226693A300002F42F /* RSECommercePromotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF426693A300002F42F /* RSECommerceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9326693A300002F42F /* RSECommerceFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF526693A300002F42F /* RSECommerceCart.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9426693A300002F42F /* RSECommerceCart.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF626693A300002F42F /* RSECommerceCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9526693A300002F42F /* RSECommerceCoupon.m */; };
+		0623DEF726693A300002F42F /* RSECommerceOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9626693A300002F42F /* RSECommerceOrder.m */; };
+		0623DEF826693A300002F42F /* RSECommerceCouponBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9726693A300002F42F /* RSECommerceCouponBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEF926693A300002F42F /* RSECommerceCheckoutBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9826693A300002F42F /* RSECommerceCheckoutBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEFA26693A300002F42F /* RSECommerceFilterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9926693A300002F42F /* RSECommerceFilterBuilder.m */; };
+		0623DEFB26693A300002F42F /* RSProductListFilteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DE9B26693A300002F42F /* RSProductListFilteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DEFC26693A300002F42F /* RSPromotionClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9C26693A300002F42F /* RSPromotionClickedEvent.m */; };
+		0623DEFD26693A300002F42F /* RSCouponRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9D26693A300002F42F /* RSCouponRemovedEvent.m */; };
+		0623DEFE26693A300002F42F /* RSCartSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9E26693A300002F42F /* RSCartSharedEvent.m */; };
+		0623DEFF26693A300002F42F /* RSProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DE9F26693A300002F42F /* RSProductAddedToCartEvent.m */; };
+		0623DF0026693A300002F42F /* RSProductAddedToWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA026693A300002F42F /* RSProductAddedToWishListEvent.m */; };
+		0623DF0126693A300002F42F /* RSProductSearchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA126693A300002F42F /* RSProductSearchedEvent.m */; };
+		0623DF0226693A300002F42F /* RSOrderUpdatedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA226693A300002F42F /* RSOrderUpdatedEvent.m */; };
+		0623DF0326693A300002F42F /* RSCheckoutStartedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA326693A300002F42F /* RSCheckoutStartedEvent.m */; };
+		0623DF0426693A300002F42F /* RSPromotionViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA426693A300002F42F /* RSPromotionViewedEvent.m */; };
+		0623DF0526693A300002F42F /* RSCouponEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEA526693A300002F42F /* RSCouponEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0626693A300002F42F /* RSProductRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEA626693A300002F42F /* RSProductRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0726693A300002F42F /* RSCheckoutStepViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEA726693A300002F42F /* RSCheckoutStepViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0826693A300002F42F /* RSProductViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEA826693A300002F42F /* RSProductViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0926693A300002F42F /* RSCouponAppliedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEA926693A300002F42F /* RSCouponAppliedEvent.m */; };
+		0623DF0A26693A300002F42F /* RSOrderCancelledEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEAA26693A300002F42F /* RSOrderCancelledEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0B26693A300002F42F /* RSCouponDeniedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEAB26693A300002F42F /* RSCouponDeniedEvent.m */; };
+		0623DF0C26693A300002F42F /* RSOrderRefundedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEAC26693A300002F42F /* RSOrderRefundedEvent.m */; };
+		0623DF0D26693A300002F42F /* RSPaymentInfoEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEAD26693A300002F42F /* RSPaymentInfoEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF0E26693A310002F42F /* RSProductRemovedFromWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEAE26693A300002F42F /* RSProductRemovedFromWishListEvent.m */; };
+		0623DF0F26693A310002F42F /* RSCheckoutStepCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEAF26693A300002F42F /* RSCheckoutStepCompletedEvent.m */; };
+		0623DF1026693A310002F42F /* RSOrderCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB026693A300002F42F /* RSOrderCompletedEvent.m */; };
+		0623DF1126693A310002F42F /* RSWishListProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB126693A300002F42F /* RSWishListProductAddedToCartEvent.m */; };
+		0623DF1226693A310002F42F /* RSProductSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB226693A300002F42F /* RSProductSharedEvent.m */; };
+		0623DF1326693A310002F42F /* RSProductListViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB326693A300002F42F /* RSProductListViewedEvent.m */; };
+		0623DF1426693A310002F42F /* RSProductReviewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB426693A300002F42F /* RSProductReviewedEvent.m */; };
+		0623DF1526693A310002F42F /* RSCartViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEB526693A300002F42F /* RSCartViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1626693A310002F42F /* RSProductClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB626693A300002F42F /* RSProductClickedEvent.m */; };
+		0623DF1726693A310002F42F /* RSProductRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB726693A300002F42F /* RSProductRemovedEvent.m */; };
+		0623DF1826693A310002F42F /* RSCouponEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEB826693A300002F42F /* RSCouponEnteredEvent.m */; };
+		0623DF1926693A310002F42F /* RSPromotionViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEB926693A300002F42F /* RSPromotionViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1A26693A310002F42F /* RSCheckoutStartedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBA26693A300002F42F /* RSCheckoutStartedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1B26693A310002F42F /* RSOrderUpdatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBB26693A300002F42F /* RSOrderUpdatedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1C26693A310002F42F /* RSProductSearchedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBC26693A300002F42F /* RSProductSearchedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1D26693A310002F42F /* RSProductAddedToWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBD26693A300002F42F /* RSProductAddedToWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1E26693A310002F42F /* RSProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBE26693A300002F42F /* RSProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF1F26693A310002F42F /* RSCouponRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEBF26693A300002F42F /* RSCouponRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2026693A310002F42F /* RSCartSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC026693A300002F42F /* RSCartSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2126693A310002F42F /* RSProductListFilteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEC126693A300002F42F /* RSProductListFilteredEvent.m */; };
+		0623DF2226693A310002F42F /* RSPromotionClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC226693A300002F42F /* RSPromotionClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2326693A310002F42F /* RSCouponDeniedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC326693A300002F42F /* RSCouponDeniedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2426693A310002F42F /* RSOrderCancelledEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEC426693A300002F42F /* RSOrderCancelledEvent.m */; };
+		0623DF2526693A310002F42F /* RSCouponAppliedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC526693A300002F42F /* RSCouponAppliedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2626693A310002F42F /* RSCheckoutStepViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEC626693A300002F42F /* RSCheckoutStepViewedEvent.m */; };
+		0623DF2726693A310002F42F /* RSProductViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DEC726693A300002F42F /* RSProductViewedEvent.m */; };
+		0623DF2826693A310002F42F /* RSProductSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC826693A300002F42F /* RSProductSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2926693A310002F42F /* RSOrderCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DEC926693A300002F42F /* RSOrderCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2A26693A310002F42F /* RSWishListProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DECA26693A300002F42F /* RSWishListProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2B26693A310002F42F /* RSCheckoutStepCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DECB26693A300002F42F /* RSCheckoutStepCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2C26693A310002F42F /* RSPaymentInfoEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DECC26693A300002F42F /* RSPaymentInfoEnteredEvent.m */; };
+		0623DF2D26693A310002F42F /* RSProductRemovedFromWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DECD26693A300002F42F /* RSProductRemovedFromWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2E26693A310002F42F /* RSOrderRefundedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DECE26693A300002F42F /* RSOrderRefundedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF2F26693A310002F42F /* RSProductClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DECF26693A300002F42F /* RSProductClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF3026693A310002F42F /* RSCartViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DED026693A300002F42F /* RSCartViewedEvent.m */; };
+		0623DF3126693A310002F42F /* RSProductReviewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DED126693A300002F42F /* RSProductReviewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF3226693A310002F42F /* RSProductListViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DED226693A300002F42F /* RSProductListViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF3326693A310002F42F /* RSECommerceCheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DED326693A300002F42F /* RSECommerceCheckout.m */; };
+		0623DF3426693A310002F42F /* RSECommerceOrderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DED426693A300002F42F /* RSECommerceOrderBuilder.m */; };
+		0623DF3526693A310002F42F /* RSECommercePromotionBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DED526693A300002F42F /* RSECommercePromotionBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF3626693A310002F42F /* RSECommerceSort.h in Headers */ = {isa = PBXBuildFile; fileRef = 0623DED626693A300002F42F /* RSECommerceSort.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0623DF3726693A310002F42F /* RSECommerceWishList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0623DED726693A300002F42F /* RSECommerceWishList.m */; };
+		06CABB952630C3CA0097BEFF /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABB872630C3CA0097BEFF /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBE72630C63B0097BEFF /* UIViewController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBA22630C6390097BEFF /* UIViewController+RSScreen.m */; };
+		06CABBE82630C63B0097BEFF /* RSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBA32630C6390097BEFF /* RSMessage.m */; };
+		06CABBE92630C63B0097BEFF /* RSOption.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBA42630C6390097BEFF /* RSOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBEA2630C63B0097BEFF /* RSTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBA52630C6390097BEFF /* RSTraits.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBEB2630C63B0097BEFF /* RSServerConfigSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBA62630C63A0097BEFF /* RSServerConfigSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBEC2630C63B0097BEFF /* RSServerConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBA72630C63A0097BEFF /* RSServerConfigManager.m */; };
+		06CABBED2630C63B0097BEFF /* RSNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBA82630C63A0097BEFF /* RSNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBEE2630C63B0097BEFF /* RSPagePropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBA92630C63A0097BEFF /* RSPagePropertyBuilder.m */; };
+		06CABBEF2630C63B0097BEFF /* RSMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBAA2630C63A0097BEFF /* RSMessageBuilder.m */; };
+		06CABBF02630C63B0097BEFF /* RSServerConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBAB2630C63A0097BEFF /* RSServerConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBF12630C63B0097BEFF /* RSApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBAC2630C63A0097BEFF /* RSApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBF22630C63B0097BEFF /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBAD2630C63A0097BEFF /* RSTraits.m */; };
+		06CABBF32630C63B0097BEFF /* RSTraitsBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBAE2630C63A0097BEFF /* RSTraitsBuilder.m */; };
+		06CABBF42630C63B0097BEFF /* RSElementCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBAF2630C63A0097BEFF /* RSElementCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBF52630C63B0097BEFF /* RSMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBB02630C63A0097BEFF /* RSMessageType.m */; };
+		06CABBF62630C63B0097BEFF /* RSEventRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBB12630C63A0097BEFF /* RSEventRepository.m */; };
+		06CABBF72630C63B0097BEFF /* RSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBB22630C63A0097BEFF /* RSConfig.m */; };
+		06CABBF82630C63B0097BEFF /* RSServerDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB32630C63A0097BEFF /* RSServerDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBF92630C63B0097BEFF /* RSTrackPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB42630C63A0097BEFF /* RSTrackPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBFA2630C63B0097BEFF /* RSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB52630C63A0097BEFF /* RSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBFB2630C63B0097BEFF /* RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBB62630C63A0097BEFF /* RSUtils.m */; };
+		06CABBFC2630C63B0097BEFF /* RSDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB72630C63A0097BEFF /* RSDeviceInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBFD2630C63B0097BEFF /* RSEventRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB82630C63A0097BEFF /* RSEventRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBFE2630C63B0097BEFF /* RSIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBB92630C63A0097BEFF /* RSIntegrationFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABBFF2630C63B0097BEFF /* RSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBBA2630C63A0097BEFF /* RSConstants.m */; };
+		06CABC002630C63B0097BEFF /* RSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBBB2630C63A0097BEFF /* RSConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC012630C63B0097BEFF /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBBC2630C63A0097BEFF /* RSScreenPropertyBuilder.m */; };
+		06CABC022630C63B0097BEFF /* RSDBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBBD2630C63A0097BEFF /* RSDBMessage.m */; };
+		06CABC032630C63B0097BEFF /* RSDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBBE2630C63A0097BEFF /* RSDeviceInfo.m */; };
+		06CABC042630C63B0097BEFF /* RSLibraryInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBBF2630C63A0097BEFF /* RSLibraryInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC052630C63B0097BEFF /* RSMessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBC02630C63A0097BEFF /* RSMessageBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC062630C63B0097BEFF /* RSServerDestinationDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBC12630C63A0097BEFF /* RSServerDestinationDefinition.m */; };
+		06CABC072630C63B0097BEFF /* RSDBPersistentManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBC22630C63A0097BEFF /* RSDBPersistentManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC082630C63B0097BEFF /* RSTraitsBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBC32630C63A0097BEFF /* RSTraitsBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC092630C63B0097BEFF /* RSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBC42630C63A0097BEFF /* RSNetwork.m */; };
+		06CABC0A2630C63C0097BEFF /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBC52630C63A0097BEFF /* RSApp.m */; };
+		06CABC0B2630C63C0097BEFF /* RSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBC62630C63A0097BEFF /* RSConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC0C2630C63C0097BEFF /* RSMessageType.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBC72630C63A0097BEFF /* RSMessageType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC0D2630C63C0097BEFF /* RSDBPersistentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBC82630C63A0097BEFF /* RSDBPersistentManager.m */; };
+		06CABC0E2630C63C0097BEFF /* RSOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBC92630C63A0097BEFF /* RSOption.m */; };
+		06CABC0F2630C63C0097BEFF /* RSConfigBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBCA2630C63B0097BEFF /* RSConfigBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC102630C63C0097BEFF /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBCB2630C63B0097BEFF /* RSServerConfigSource.m */; };
+		06CABC112630C63C0097BEFF /* RSScreenPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBCC2630C63B0097BEFF /* RSScreenPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC122630C63C0097BEFF /* RSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBCD2630C63B0097BEFF /* RSContext.m */; };
+		06CABC132630C63C0097BEFF /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBCE2630C63B0097BEFF /* RSLogger.m */; };
+		06CABC142630C63C0097BEFF /* RSConfigBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBCF2630C63B0097BEFF /* RSConfigBuilder.m */; };
+		06CABC162630C63C0097BEFF /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD12630C63B0097BEFF /* RSUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC172630C63C0097BEFF /* RSPreferenceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD22630C63B0097BEFF /* RSPreferenceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC182630C63C0097BEFF /* RSServerDestinationDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD32630C63B0097BEFF /* RSServerDestinationDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC192630C63C0097BEFF /* RSScreenInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD42630C63B0097BEFF /* RSScreenInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC1A2630C63C0097BEFF /* RSPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBD52630C63B0097BEFF /* RSPreferenceManager.m */; };
+		06CABC1B2630C63C0097BEFF /* RSScreenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBD62630C63B0097BEFF /* RSScreenInfo.m */; };
+		06CABC1C2630C63C0097BEFF /* UIViewController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD72630C63B0097BEFF /* UIViewController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC1D2630C63C0097BEFF /* RSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD82630C63B0097BEFF /* RSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC1E2630C63C0097BEFF /* RSPagePropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBD92630C63B0097BEFF /* RSPagePropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC1F2630C63C0097BEFF /* RSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBDA2630C63B0097BEFF /* RSProperty.m */; };
+		06CABC202630C63C0097BEFF /* RSIntegration.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBDB2630C63B0097BEFF /* RSIntegration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC212630C63C0097BEFF /* RSServerDestination.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBDC2630C63B0097BEFF /* RSServerDestination.m */; };
+		06CABC222630C63C0097BEFF /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBDD2630C63B0097BEFF /* RSLibraryInfo.m */; };
+		06CABC232630C63C0097BEFF /* RSProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBDE2630C63B0097BEFF /* RSProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC242630C63C0097BEFF /* RSMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBDF2630C63B0097BEFF /* RSMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC252630C63C0097BEFF /* RSDBMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBE02630C63B0097BEFF /* RSDBMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC262630C63C0097BEFF /* RSTrackPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBE12630C63B0097BEFF /* RSTrackPropertyBuilder.m */; };
+		06CABC272630C63C0097BEFF /* RSOSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBE22630C63B0097BEFF /* RSOSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC282630C63C0097BEFF /* RSOSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBE32630C63B0097BEFF /* RSOSInfo.m */; };
+		06CABC292630C63C0097BEFF /* RSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CABBE42630C63B0097BEFF /* RSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06CABC2A2630C63C0097BEFF /* RSElementCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBE52630C63B0097BEFF /* RSElementCache.m */; };
+		06CABC2B2630C63C0097BEFF /* RSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CABBE62630C63B0097BEFF /* RSClient.m */; };
+		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
+		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
+		9F62FE438E0DE9B9283A9DCA /* Pods_Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB9A5042B21ED2CB1C3BB2 /* Pods_Rudder.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0623DE7726693A300002F42F /* RSECommerceCartBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCartBuilder.h; sourceTree = "<group>"; };
+		0623DE7826693A300002F42F /* RSECommerceWishListBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceWishListBuilder.m; sourceTree = "<group>"; };
+		0623DE7926693A300002F42F /* RSECommerceProductBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceProductBuilder.h; sourceTree = "<group>"; };
+		0623DE7A26693A300002F42F /* RSECommerceEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceEvents.h; sourceTree = "<group>"; };
+		0623DE7B26693A300002F42F /* RSECommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceProduct.h; sourceTree = "<group>"; };
+		0623DE7C26693A300002F42F /* RSECommerceCheckoutBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCheckoutBuilder.m; sourceTree = "<group>"; };
+		0623DE7D26693A300002F42F /* RSECommerceCouponBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCouponBuilder.m; sourceTree = "<group>"; };
+		0623DE7E26693A300002F42F /* RSECommerceOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceOrder.h; sourceTree = "<group>"; };
+		0623DE7F26693A300002F42F /* RSECommerceCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCoupon.h; sourceTree = "<group>"; };
+		0623DE8026693A300002F42F /* RSECommerceCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCart.m; sourceTree = "<group>"; };
+		0623DE8126693A300002F42F /* RSECommercePromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommercePromotion.m; sourceTree = "<group>"; };
+		0623DE8226693A300002F42F /* RSECommerceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceFilter.m; sourceTree = "<group>"; };
+		0623DE8326693A300002F42F /* RSECommerceParamNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceParamNames.h; sourceTree = "<group>"; };
+		0623DE8426693A300002F42F /* RSECommerceSortBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceSortBuilder.m; sourceTree = "<group>"; };
+		0623DE8526693A300002F42F /* RSECommerceCheckout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCheckout.h; sourceTree = "<group>"; };
+		0623DE8626693A300002F42F /* RSECommerceFilterBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceFilterBuilder.h; sourceTree = "<group>"; };
+		0623DE8726693A300002F42F /* RSECommerceWishList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceWishList.h; sourceTree = "<group>"; };
+		0623DE8826693A300002F42F /* RSECommerceSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceSort.m; sourceTree = "<group>"; };
+		0623DE8926693A300002F42F /* RSECommercePromotionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommercePromotionBuilder.m; sourceTree = "<group>"; };
+		0623DE8A26693A300002F42F /* RSECommerceOrderBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceOrderBuilder.h; sourceTree = "<group>"; };
+		0623DE8B26693A300002F42F /* RSECommerceProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceProduct.m; sourceTree = "<group>"; };
+		0623DE8C26693A300002F42F /* RSECommerceEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceEvents.m; sourceTree = "<group>"; };
+		0623DE8D26693A300002F42F /* RSECommerceProductBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceProductBuilder.m; sourceTree = "<group>"; };
+		0623DE8E26693A300002F42F /* RSECommerceWishListBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceWishListBuilder.h; sourceTree = "<group>"; };
+		0623DE8F26693A300002F42F /* RSECommerceCartBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCartBuilder.m; sourceTree = "<group>"; };
+		0623DE9026693A300002F42F /* RSECommerceParamNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceParamNames.m; sourceTree = "<group>"; };
+		0623DE9126693A300002F42F /* RSECommerceSortBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceSortBuilder.h; sourceTree = "<group>"; };
+		0623DE9226693A300002F42F /* RSECommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommercePromotion.h; sourceTree = "<group>"; };
+		0623DE9326693A300002F42F /* RSECommerceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceFilter.h; sourceTree = "<group>"; };
+		0623DE9426693A300002F42F /* RSECommerceCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCart.h; sourceTree = "<group>"; };
+		0623DE9526693A300002F42F /* RSECommerceCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCoupon.m; sourceTree = "<group>"; };
+		0623DE9626693A300002F42F /* RSECommerceOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceOrder.m; sourceTree = "<group>"; };
+		0623DE9726693A300002F42F /* RSECommerceCouponBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCouponBuilder.h; sourceTree = "<group>"; };
+		0623DE9826693A300002F42F /* RSECommerceCheckoutBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceCheckoutBuilder.h; sourceTree = "<group>"; };
+		0623DE9926693A300002F42F /* RSECommerceFilterBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceFilterBuilder.m; sourceTree = "<group>"; };
+		0623DE9B26693A300002F42F /* RSProductListFilteredEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductListFilteredEvent.h; sourceTree = "<group>"; };
+		0623DE9C26693A300002F42F /* RSPromotionClickedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPromotionClickedEvent.m; sourceTree = "<group>"; };
+		0623DE9D26693A300002F42F /* RSCouponRemovedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCouponRemovedEvent.m; sourceTree = "<group>"; };
+		0623DE9E26693A300002F42F /* RSCartSharedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCartSharedEvent.m; sourceTree = "<group>"; };
+		0623DE9F26693A300002F42F /* RSProductAddedToCartEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductAddedToCartEvent.m; sourceTree = "<group>"; };
+		0623DEA026693A300002F42F /* RSProductAddedToWishListEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductAddedToWishListEvent.m; sourceTree = "<group>"; };
+		0623DEA126693A300002F42F /* RSProductSearchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductSearchedEvent.m; sourceTree = "<group>"; };
+		0623DEA226693A300002F42F /* RSOrderUpdatedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOrderUpdatedEvent.m; sourceTree = "<group>"; };
+		0623DEA326693A300002F42F /* RSCheckoutStartedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStartedEvent.m; sourceTree = "<group>"; };
+		0623DEA426693A300002F42F /* RSPromotionViewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPromotionViewedEvent.m; sourceTree = "<group>"; };
+		0623DEA526693A300002F42F /* RSCouponEnteredEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCouponEnteredEvent.h; sourceTree = "<group>"; };
+		0623DEA626693A300002F42F /* RSProductRemovedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductRemovedEvent.h; sourceTree = "<group>"; };
+		0623DEA726693A300002F42F /* RSCheckoutStepViewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCheckoutStepViewedEvent.h; sourceTree = "<group>"; };
+		0623DEA826693A300002F42F /* RSProductViewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductViewedEvent.h; sourceTree = "<group>"; };
+		0623DEA926693A300002F42F /* RSCouponAppliedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCouponAppliedEvent.m; sourceTree = "<group>"; };
+		0623DEAA26693A300002F42F /* RSOrderCancelledEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOrderCancelledEvent.h; sourceTree = "<group>"; };
+		0623DEAB26693A300002F42F /* RSCouponDeniedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCouponDeniedEvent.m; sourceTree = "<group>"; };
+		0623DEAC26693A300002F42F /* RSOrderRefundedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOrderRefundedEvent.m; sourceTree = "<group>"; };
+		0623DEAD26693A300002F42F /* RSPaymentInfoEnteredEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPaymentInfoEnteredEvent.h; sourceTree = "<group>"; };
+		0623DEAE26693A300002F42F /* RSProductRemovedFromWishListEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductRemovedFromWishListEvent.m; sourceTree = "<group>"; };
+		0623DEAF26693A300002F42F /* RSCheckoutStepCompletedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStepCompletedEvent.m; sourceTree = "<group>"; };
+		0623DEB026693A300002F42F /* RSOrderCompletedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOrderCompletedEvent.m; sourceTree = "<group>"; };
+		0623DEB126693A300002F42F /* RSWishListProductAddedToCartEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSWishListProductAddedToCartEvent.m; sourceTree = "<group>"; };
+		0623DEB226693A300002F42F /* RSProductSharedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductSharedEvent.m; sourceTree = "<group>"; };
+		0623DEB326693A300002F42F /* RSProductListViewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductListViewedEvent.m; sourceTree = "<group>"; };
+		0623DEB426693A300002F42F /* RSProductReviewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductReviewedEvent.m; sourceTree = "<group>"; };
+		0623DEB526693A300002F42F /* RSCartViewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCartViewedEvent.h; sourceTree = "<group>"; };
+		0623DEB626693A300002F42F /* RSProductClickedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductClickedEvent.m; sourceTree = "<group>"; };
+		0623DEB726693A300002F42F /* RSProductRemovedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductRemovedEvent.m; sourceTree = "<group>"; };
+		0623DEB826693A300002F42F /* RSCouponEnteredEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCouponEnteredEvent.m; sourceTree = "<group>"; };
+		0623DEB926693A300002F42F /* RSPromotionViewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPromotionViewedEvent.h; sourceTree = "<group>"; };
+		0623DEBA26693A300002F42F /* RSCheckoutStartedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCheckoutStartedEvent.h; sourceTree = "<group>"; };
+		0623DEBB26693A300002F42F /* RSOrderUpdatedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOrderUpdatedEvent.h; sourceTree = "<group>"; };
+		0623DEBC26693A300002F42F /* RSProductSearchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductSearchedEvent.h; sourceTree = "<group>"; };
+		0623DEBD26693A300002F42F /* RSProductAddedToWishListEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductAddedToWishListEvent.h; sourceTree = "<group>"; };
+		0623DEBE26693A300002F42F /* RSProductAddedToCartEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductAddedToCartEvent.h; sourceTree = "<group>"; };
+		0623DEBF26693A300002F42F /* RSCouponRemovedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCouponRemovedEvent.h; sourceTree = "<group>"; };
+		0623DEC026693A300002F42F /* RSCartSharedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCartSharedEvent.h; sourceTree = "<group>"; };
+		0623DEC126693A300002F42F /* RSProductListFilteredEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductListFilteredEvent.m; sourceTree = "<group>"; };
+		0623DEC226693A300002F42F /* RSPromotionClickedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPromotionClickedEvent.h; sourceTree = "<group>"; };
+		0623DEC326693A300002F42F /* RSCouponDeniedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCouponDeniedEvent.h; sourceTree = "<group>"; };
+		0623DEC426693A300002F42F /* RSOrderCancelledEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOrderCancelledEvent.m; sourceTree = "<group>"; };
+		0623DEC526693A300002F42F /* RSCouponAppliedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCouponAppliedEvent.h; sourceTree = "<group>"; };
+		0623DEC626693A300002F42F /* RSCheckoutStepViewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStepViewedEvent.m; sourceTree = "<group>"; };
+		0623DEC726693A300002F42F /* RSProductViewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProductViewedEvent.m; sourceTree = "<group>"; };
+		0623DEC826693A300002F42F /* RSProductSharedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductSharedEvent.h; sourceTree = "<group>"; };
+		0623DEC926693A300002F42F /* RSOrderCompletedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOrderCompletedEvent.h; sourceTree = "<group>"; };
+		0623DECA26693A300002F42F /* RSWishListProductAddedToCartEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSWishListProductAddedToCartEvent.h; sourceTree = "<group>"; };
+		0623DECB26693A300002F42F /* RSCheckoutStepCompletedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCheckoutStepCompletedEvent.h; sourceTree = "<group>"; };
+		0623DECC26693A300002F42F /* RSPaymentInfoEnteredEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPaymentInfoEnteredEvent.m; sourceTree = "<group>"; };
+		0623DECD26693A300002F42F /* RSProductRemovedFromWishListEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductRemovedFromWishListEvent.h; sourceTree = "<group>"; };
+		0623DECE26693A300002F42F /* RSOrderRefundedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOrderRefundedEvent.h; sourceTree = "<group>"; };
+		0623DECF26693A300002F42F /* RSProductClickedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductClickedEvent.h; sourceTree = "<group>"; };
+		0623DED026693A300002F42F /* RSCartViewedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCartViewedEvent.m; sourceTree = "<group>"; };
+		0623DED126693A300002F42F /* RSProductReviewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductReviewedEvent.h; sourceTree = "<group>"; };
+		0623DED226693A300002F42F /* RSProductListViewedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProductListViewedEvent.h; sourceTree = "<group>"; };
+		0623DED326693A300002F42F /* RSECommerceCheckout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCheckout.m; sourceTree = "<group>"; };
+		0623DED426693A300002F42F /* RSECommerceOrderBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceOrderBuilder.m; sourceTree = "<group>"; };
+		0623DED526693A300002F42F /* RSECommercePromotionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommercePromotionBuilder.h; sourceTree = "<group>"; };
+		0623DED626693A300002F42F /* RSECommerceSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSECommerceSort.h; sourceTree = "<group>"; };
+		0623DED726693A300002F42F /* RSECommerceWishList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSECommerceWishList.m; sourceTree = "<group>"; };
+		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		06CABB872630C3CA0097BEFF /* Rudder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rudder.h; sourceTree = "<group>"; };
+		06CABB882630C3CA0097BEFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06CABBA22630C6390097BEFF /* UIViewController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RSScreen.m"; sourceTree = "<group>"; };
+		06CABBA32630C6390097BEFF /* RSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMessage.m; sourceTree = "<group>"; };
+		06CABBA42630C6390097BEFF /* RSOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOption.h; sourceTree = "<group>"; };
+		06CABBA52630C6390097BEFF /* RSTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTraits.h; sourceTree = "<group>"; };
+		06CABBA62630C63A0097BEFF /* RSServerConfigSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSServerConfigSource.h; sourceTree = "<group>"; };
+		06CABBA72630C63A0097BEFF /* RSServerConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigManager.m; sourceTree = "<group>"; };
+		06CABBA82630C63A0097BEFF /* RSNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNetwork.h; sourceTree = "<group>"; };
+		06CABBA92630C63A0097BEFF /* RSPagePropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPagePropertyBuilder.m; sourceTree = "<group>"; };
+		06CABBAA2630C63A0097BEFF /* RSMessageBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMessageBuilder.m; sourceTree = "<group>"; };
+		06CABBAB2630C63A0097BEFF /* RSServerConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSServerConfigManager.h; sourceTree = "<group>"; };
+		06CABBAC2630C63A0097BEFF /* RSApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApp.h; sourceTree = "<group>"; };
+		06CABBAD2630C63A0097BEFF /* RSTraits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraits.m; sourceTree = "<group>"; };
+		06CABBAE2630C63A0097BEFF /* RSTraitsBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraitsBuilder.m; sourceTree = "<group>"; };
+		06CABBAF2630C63A0097BEFF /* RSElementCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSElementCache.h; sourceTree = "<group>"; };
+		06CABBB02630C63A0097BEFF /* RSMessageType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMessageType.m; sourceTree = "<group>"; };
+		06CABBB12630C63A0097BEFF /* RSEventRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventRepository.m; sourceTree = "<group>"; };
+		06CABBB22630C63A0097BEFF /* RSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConfig.m; sourceTree = "<group>"; };
+		06CABBB32630C63A0097BEFF /* RSServerDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSServerDestination.h; sourceTree = "<group>"; };
+		06CABBB42630C63A0097BEFF /* RSTrackPropertyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTrackPropertyBuilder.h; sourceTree = "<group>"; };
+		06CABBB52630C63A0097BEFF /* RSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLogger.h; sourceTree = "<group>"; };
+		06CABBB62630C63A0097BEFF /* RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSUtils.m; sourceTree = "<group>"; };
+		06CABBB72630C63A0097BEFF /* RSDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceInfo.h; sourceTree = "<group>"; };
+		06CABBB82630C63A0097BEFF /* RSEventRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventRepository.h; sourceTree = "<group>"; };
+		06CABBB92630C63A0097BEFF /* RSIntegrationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIntegrationFactory.h; sourceTree = "<group>"; };
+		06CABBBA2630C63A0097BEFF /* RSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConstants.m; sourceTree = "<group>"; };
+		06CABBBB2630C63A0097BEFF /* RSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConfig.h; sourceTree = "<group>"; };
+		06CABBBC2630C63A0097BEFF /* RSScreenPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSScreenPropertyBuilder.m; sourceTree = "<group>"; };
+		06CABBBD2630C63A0097BEFF /* RSDBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDBMessage.m; sourceTree = "<group>"; };
+		06CABBBE2630C63A0097BEFF /* RSDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDeviceInfo.m; sourceTree = "<group>"; };
+		06CABBBF2630C63A0097BEFF /* RSLibraryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLibraryInfo.h; sourceTree = "<group>"; };
+		06CABBC02630C63A0097BEFF /* RSMessageBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMessageBuilder.h; sourceTree = "<group>"; };
+		06CABBC12630C63A0097BEFF /* RSServerDestinationDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerDestinationDefinition.m; sourceTree = "<group>"; };
+		06CABBC22630C63A0097BEFF /* RSDBPersistentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDBPersistentManager.h; sourceTree = "<group>"; };
+		06CABBC32630C63A0097BEFF /* RSTraitsBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTraitsBuilder.h; sourceTree = "<group>"; };
+		06CABBC42630C63A0097BEFF /* RSNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNetwork.m; sourceTree = "<group>"; };
+		06CABBC52630C63A0097BEFF /* RSApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApp.m; sourceTree = "<group>"; };
+		06CABBC62630C63A0097BEFF /* RSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConstants.h; sourceTree = "<group>"; };
+		06CABBC72630C63A0097BEFF /* RSMessageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMessageType.h; sourceTree = "<group>"; };
+		06CABBC82630C63A0097BEFF /* RSDBPersistentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDBPersistentManager.m; sourceTree = "<group>"; };
+		06CABBC92630C63A0097BEFF /* RSOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOption.m; sourceTree = "<group>"; };
+		06CABBCA2630C63B0097BEFF /* RSConfigBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConfigBuilder.h; sourceTree = "<group>"; };
+		06CABBCB2630C63B0097BEFF /* RSServerConfigSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigSource.m; sourceTree = "<group>"; };
+		06CABBCC2630C63B0097BEFF /* RSScreenPropertyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSScreenPropertyBuilder.h; sourceTree = "<group>"; };
+		06CABBCD2630C63B0097BEFF /* RSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSContext.m; sourceTree = "<group>"; };
+		06CABBCE2630C63B0097BEFF /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
+		06CABBCF2630C63B0097BEFF /* RSConfigBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConfigBuilder.m; sourceTree = "<group>"; };
+		06CABBD12630C63B0097BEFF /* RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUtils.h; sourceTree = "<group>"; };
+		06CABBD22630C63B0097BEFF /* RSPreferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPreferenceManager.h; sourceTree = "<group>"; };
+		06CABBD32630C63B0097BEFF /* RSServerDestinationDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSServerDestinationDefinition.h; sourceTree = "<group>"; };
+		06CABBD42630C63B0097BEFF /* RSScreenInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSScreenInfo.h; sourceTree = "<group>"; };
+		06CABBD52630C63B0097BEFF /* RSPreferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPreferenceManager.m; sourceTree = "<group>"; };
+		06CABBD62630C63B0097BEFF /* RSScreenInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSScreenInfo.m; sourceTree = "<group>"; };
+		06CABBD72630C63B0097BEFF /* UIViewController+RSScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RSScreen.h"; sourceTree = "<group>"; };
+		06CABBD82630C63B0097BEFF /* RSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSClient.h; sourceTree = "<group>"; };
+		06CABBD92630C63B0097BEFF /* RSPagePropertyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPagePropertyBuilder.h; sourceTree = "<group>"; };
+		06CABBDA2630C63B0097BEFF /* RSProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSProperty.m; sourceTree = "<group>"; };
+		06CABBDB2630C63B0097BEFF /* RSIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIntegration.h; sourceTree = "<group>"; };
+		06CABBDC2630C63B0097BEFF /* RSServerDestination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerDestination.m; sourceTree = "<group>"; };
+		06CABBDD2630C63B0097BEFF /* RSLibraryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLibraryInfo.m; sourceTree = "<group>"; };
+		06CABBDE2630C63B0097BEFF /* RSProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSProperty.h; sourceTree = "<group>"; };
+		06CABBDF2630C63B0097BEFF /* RSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMessage.h; sourceTree = "<group>"; };
+		06CABBE02630C63B0097BEFF /* RSDBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDBMessage.h; sourceTree = "<group>"; };
+		06CABBE12630C63B0097BEFF /* RSTrackPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTrackPropertyBuilder.m; sourceTree = "<group>"; };
+		06CABBE22630C63B0097BEFF /* RSOSInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOSInfo.h; sourceTree = "<group>"; };
+		06CABBE32630C63B0097BEFF /* RSOSInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOSInfo.m; sourceTree = "<group>"; };
+		06CABBE42630C63B0097BEFF /* RSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSContext.h; sourceTree = "<group>"; };
+		06CABBE52630C63B0097BEFF /* RSElementCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSElementCache.m; sourceTree = "<group>"; };
+		06CABBE62630C63B0097BEFF /* RSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSClient.m; sourceTree = "<group>"; };
+		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		627CFECC2868A1994AE09E42 /* Pods-Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.release.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.release.xcconfig"; sourceTree = "<group>"; };
+		D5DB9A5042B21ED2CB1C3BB2 /* Pods_Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE764E7AF4A68D9FD2ECDDD9 /* Pods-Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.debug.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		06CABB812630C3CA0097BEFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */,
+				06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */,
+				9F62FE438E0DE9B9283A9DCA /* Pods_Rudder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0623DE7626693A300002F42F /* Ecomm */ = {
+			isa = PBXGroup;
+			children = (
+				0623DE7726693A300002F42F /* RSECommerceCartBuilder.h */,
+				0623DE7826693A300002F42F /* RSECommerceWishListBuilder.m */,
+				0623DE7926693A300002F42F /* RSECommerceProductBuilder.h */,
+				0623DE7A26693A300002F42F /* RSECommerceEvents.h */,
+				0623DE7B26693A300002F42F /* RSECommerceProduct.h */,
+				0623DE7C26693A300002F42F /* RSECommerceCheckoutBuilder.m */,
+				0623DE7D26693A300002F42F /* RSECommerceCouponBuilder.m */,
+				0623DE7E26693A300002F42F /* RSECommerceOrder.h */,
+				0623DE7F26693A300002F42F /* RSECommerceCoupon.h */,
+				0623DE8026693A300002F42F /* RSECommerceCart.m */,
+				0623DE8126693A300002F42F /* RSECommercePromotion.m */,
+				0623DE8226693A300002F42F /* RSECommerceFilter.m */,
+				0623DE8326693A300002F42F /* RSECommerceParamNames.h */,
+				0623DE8426693A300002F42F /* RSECommerceSortBuilder.m */,
+				0623DE8526693A300002F42F /* RSECommerceCheckout.h */,
+				0623DE8626693A300002F42F /* RSECommerceFilterBuilder.h */,
+				0623DE8726693A300002F42F /* RSECommerceWishList.h */,
+				0623DE8826693A300002F42F /* RSECommerceSort.m */,
+				0623DE8926693A300002F42F /* RSECommercePromotionBuilder.m */,
+				0623DE8A26693A300002F42F /* RSECommerceOrderBuilder.h */,
+				0623DE8B26693A300002F42F /* RSECommerceProduct.m */,
+				0623DE8C26693A300002F42F /* RSECommerceEvents.m */,
+				0623DE8D26693A300002F42F /* RSECommerceProductBuilder.m */,
+				0623DE8E26693A300002F42F /* RSECommerceWishListBuilder.h */,
+				0623DE8F26693A300002F42F /* RSECommerceCartBuilder.m */,
+				0623DE9026693A300002F42F /* RSECommerceParamNames.m */,
+				0623DE9126693A300002F42F /* RSECommerceSortBuilder.h */,
+				0623DE9226693A300002F42F /* RSECommercePromotion.h */,
+				0623DE9326693A300002F42F /* RSECommerceFilter.h */,
+				0623DE9426693A300002F42F /* RSECommerceCart.h */,
+				0623DE9526693A300002F42F /* RSECommerceCoupon.m */,
+				0623DE9626693A300002F42F /* RSECommerceOrder.m */,
+				0623DE9726693A300002F42F /* RSECommerceCouponBuilder.h */,
+				0623DE9826693A300002F42F /* RSECommerceCheckoutBuilder.h */,
+				0623DE9926693A300002F42F /* RSECommerceFilterBuilder.m */,
+				0623DE9A26693A300002F42F /* Events */,
+				0623DED326693A300002F42F /* RSECommerceCheckout.m */,
+				0623DED426693A300002F42F /* RSECommerceOrderBuilder.m */,
+				0623DED526693A300002F42F /* RSECommercePromotionBuilder.h */,
+				0623DED626693A300002F42F /* RSECommerceSort.h */,
+				0623DED726693A300002F42F /* RSECommerceWishList.m */,
+			);
+			path = Ecomm;
+			sourceTree = "<group>";
+		};
+		0623DE9A26693A300002F42F /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				0623DE9B26693A300002F42F /* RSProductListFilteredEvent.h */,
+				0623DE9C26693A300002F42F /* RSPromotionClickedEvent.m */,
+				0623DE9D26693A300002F42F /* RSCouponRemovedEvent.m */,
+				0623DE9E26693A300002F42F /* RSCartSharedEvent.m */,
+				0623DE9F26693A300002F42F /* RSProductAddedToCartEvent.m */,
+				0623DEA026693A300002F42F /* RSProductAddedToWishListEvent.m */,
+				0623DEA126693A300002F42F /* RSProductSearchedEvent.m */,
+				0623DEA226693A300002F42F /* RSOrderUpdatedEvent.m */,
+				0623DEA326693A300002F42F /* RSCheckoutStartedEvent.m */,
+				0623DEA426693A300002F42F /* RSPromotionViewedEvent.m */,
+				0623DEA526693A300002F42F /* RSCouponEnteredEvent.h */,
+				0623DEA626693A300002F42F /* RSProductRemovedEvent.h */,
+				0623DEA726693A300002F42F /* RSCheckoutStepViewedEvent.h */,
+				0623DEA826693A300002F42F /* RSProductViewedEvent.h */,
+				0623DEA926693A300002F42F /* RSCouponAppliedEvent.m */,
+				0623DEAA26693A300002F42F /* RSOrderCancelledEvent.h */,
+				0623DEAB26693A300002F42F /* RSCouponDeniedEvent.m */,
+				0623DEAC26693A300002F42F /* RSOrderRefundedEvent.m */,
+				0623DEAD26693A300002F42F /* RSPaymentInfoEnteredEvent.h */,
+				0623DEAE26693A300002F42F /* RSProductRemovedFromWishListEvent.m */,
+				0623DEAF26693A300002F42F /* RSCheckoutStepCompletedEvent.m */,
+				0623DEB026693A300002F42F /* RSOrderCompletedEvent.m */,
+				0623DEB126693A300002F42F /* RSWishListProductAddedToCartEvent.m */,
+				0623DEB226693A300002F42F /* RSProductSharedEvent.m */,
+				0623DEB326693A300002F42F /* RSProductListViewedEvent.m */,
+				0623DEB426693A300002F42F /* RSProductReviewedEvent.m */,
+				0623DEB526693A300002F42F /* RSCartViewedEvent.h */,
+				0623DEB626693A300002F42F /* RSProductClickedEvent.m */,
+				0623DEB726693A300002F42F /* RSProductRemovedEvent.m */,
+				0623DEB826693A300002F42F /* RSCouponEnteredEvent.m */,
+				0623DEB926693A300002F42F /* RSPromotionViewedEvent.h */,
+				0623DEBA26693A300002F42F /* RSCheckoutStartedEvent.h */,
+				0623DEBB26693A300002F42F /* RSOrderUpdatedEvent.h */,
+				0623DEBC26693A300002F42F /* RSProductSearchedEvent.h */,
+				0623DEBD26693A300002F42F /* RSProductAddedToWishListEvent.h */,
+				0623DEBE26693A300002F42F /* RSProductAddedToCartEvent.h */,
+				0623DEBF26693A300002F42F /* RSCouponRemovedEvent.h */,
+				0623DEC026693A300002F42F /* RSCartSharedEvent.h */,
+				0623DEC126693A300002F42F /* RSProductListFilteredEvent.m */,
+				0623DEC226693A300002F42F /* RSPromotionClickedEvent.h */,
+				0623DEC326693A300002F42F /* RSCouponDeniedEvent.h */,
+				0623DEC426693A300002F42F /* RSOrderCancelledEvent.m */,
+				0623DEC526693A300002F42F /* RSCouponAppliedEvent.h */,
+				0623DEC626693A300002F42F /* RSCheckoutStepViewedEvent.m */,
+				0623DEC726693A300002F42F /* RSProductViewedEvent.m */,
+				0623DEC826693A300002F42F /* RSProductSharedEvent.h */,
+				0623DEC926693A300002F42F /* RSOrderCompletedEvent.h */,
+				0623DECA26693A300002F42F /* RSWishListProductAddedToCartEvent.h */,
+				0623DECB26693A300002F42F /* RSCheckoutStepCompletedEvent.h */,
+				0623DECC26693A300002F42F /* RSPaymentInfoEnteredEvent.m */,
+				0623DECD26693A300002F42F /* RSProductRemovedFromWishListEvent.h */,
+				0623DECE26693A300002F42F /* RSOrderRefundedEvent.h */,
+				0623DECF26693A300002F42F /* RSProductClickedEvent.h */,
+				0623DED026693A300002F42F /* RSCartViewedEvent.m */,
+				0623DED126693A300002F42F /* RSProductReviewedEvent.h */,
+				0623DED226693A300002F42F /* RSProductListViewedEvent.h */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		06CABB7A2630C3CA0097BEFF = {
+			isa = PBXGroup;
+			children = (
+				06CABB862630C3CA0097BEFF /* Rudder */,
+				06CABB852630C3CA0097BEFF /* Products */,
+				06CABC2D2630C6660097BEFF /* Frameworks */,
+				7F43D5F6F7E44B2D7E3CFD56 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		06CABB852630C3CA0097BEFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06CABB842630C3CA0097BEFF /* Rudder.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06CABB862630C3CA0097BEFF /* Rudder */ = {
+			isa = PBXGroup;
+			children = (
+				0623DE7626693A300002F42F /* Ecomm */,
+				06CABBAC2630C63A0097BEFF /* RSApp.h */,
+				06CABBC52630C63A0097BEFF /* RSApp.m */,
+				06CABBD82630C63B0097BEFF /* RSClient.h */,
+				06CABBE62630C63B0097BEFF /* RSClient.m */,
+				06CABBBB2630C63A0097BEFF /* RSConfig.h */,
+				06CABBB22630C63A0097BEFF /* RSConfig.m */,
+				06CABBCA2630C63B0097BEFF /* RSConfigBuilder.h */,
+				06CABBCF2630C63B0097BEFF /* RSConfigBuilder.m */,
+				06CABBC62630C63A0097BEFF /* RSConstants.h */,
+				06CABBBA2630C63A0097BEFF /* RSConstants.m */,
+				06CABBE42630C63B0097BEFF /* RSContext.h */,
+				06CABBCD2630C63B0097BEFF /* RSContext.m */,
+				06CABBE02630C63B0097BEFF /* RSDBMessage.h */,
+				06CABBBD2630C63A0097BEFF /* RSDBMessage.m */,
+				06CABBC22630C63A0097BEFF /* RSDBPersistentManager.h */,
+				06CABBC82630C63A0097BEFF /* RSDBPersistentManager.m */,
+				06CABBB72630C63A0097BEFF /* RSDeviceInfo.h */,
+				06CABBBE2630C63A0097BEFF /* RSDeviceInfo.m */,
+				06CABBAF2630C63A0097BEFF /* RSElementCache.h */,
+				06CABBE52630C63B0097BEFF /* RSElementCache.m */,
+				06CABBB82630C63A0097BEFF /* RSEventRepository.h */,
+				06CABBB12630C63A0097BEFF /* RSEventRepository.m */,
+				06CABBDB2630C63B0097BEFF /* RSIntegration.h */,
+				06CABBB92630C63A0097BEFF /* RSIntegrationFactory.h */,
+				06CABBBF2630C63A0097BEFF /* RSLibraryInfo.h */,
+				06CABBDD2630C63B0097BEFF /* RSLibraryInfo.m */,
+				06CABBB52630C63A0097BEFF /* RSLogger.h */,
+				06CABBCE2630C63B0097BEFF /* RSLogger.m */,
+				06CABBDF2630C63B0097BEFF /* RSMessage.h */,
+				06CABBA32630C6390097BEFF /* RSMessage.m */,
+				06CABBC02630C63A0097BEFF /* RSMessageBuilder.h */,
+				06CABBAA2630C63A0097BEFF /* RSMessageBuilder.m */,
+				06CABBC72630C63A0097BEFF /* RSMessageType.h */,
+				06CABBB02630C63A0097BEFF /* RSMessageType.m */,
+				06CABBA82630C63A0097BEFF /* RSNetwork.h */,
+				06CABBC42630C63A0097BEFF /* RSNetwork.m */,
+				06CABBA42630C6390097BEFF /* RSOption.h */,
+				06CABBC92630C63A0097BEFF /* RSOption.m */,
+				06CABBE22630C63B0097BEFF /* RSOSInfo.h */,
+				06CABBE32630C63B0097BEFF /* RSOSInfo.m */,
+				06CABBD92630C63B0097BEFF /* RSPagePropertyBuilder.h */,
+				06CABBA92630C63A0097BEFF /* RSPagePropertyBuilder.m */,
+				06CABBD22630C63B0097BEFF /* RSPreferenceManager.h */,
+				06CABBD52630C63B0097BEFF /* RSPreferenceManager.m */,
+				06CABBDE2630C63B0097BEFF /* RSProperty.h */,
+				06CABBDA2630C63B0097BEFF /* RSProperty.m */,
+				06CABBD42630C63B0097BEFF /* RSScreenInfo.h */,
+				06CABBD62630C63B0097BEFF /* RSScreenInfo.m */,
+				06CABBCC2630C63B0097BEFF /* RSScreenPropertyBuilder.h */,
+				06CABBBC2630C63A0097BEFF /* RSScreenPropertyBuilder.m */,
+				06CABBAB2630C63A0097BEFF /* RSServerConfigManager.h */,
+				06CABBA72630C63A0097BEFF /* RSServerConfigManager.m */,
+				06CABBA62630C63A0097BEFF /* RSServerConfigSource.h */,
+				06CABBCB2630C63B0097BEFF /* RSServerConfigSource.m */,
+				06CABBB32630C63A0097BEFF /* RSServerDestination.h */,
+				06CABBDC2630C63B0097BEFF /* RSServerDestination.m */,
+				06CABBD32630C63B0097BEFF /* RSServerDestinationDefinition.h */,
+				06CABBC12630C63A0097BEFF /* RSServerDestinationDefinition.m */,
+				06CABBB42630C63A0097BEFF /* RSTrackPropertyBuilder.h */,
+				06CABBE12630C63B0097BEFF /* RSTrackPropertyBuilder.m */,
+				06CABBA52630C6390097BEFF /* RSTraits.h */,
+				06CABBAD2630C63A0097BEFF /* RSTraits.m */,
+				06CABBC32630C63A0097BEFF /* RSTraitsBuilder.h */,
+				06CABBAE2630C63A0097BEFF /* RSTraitsBuilder.m */,
+				06CABBD12630C63B0097BEFF /* RSUtils.h */,
+				06CABBB62630C63A0097BEFF /* RSUtils.m */,
+				06CABBD72630C63B0097BEFF /* UIViewController+RSScreen.h */,
+				06CABBA22630C6390097BEFF /* UIViewController+RSScreen.m */,
+				06CABB872630C3CA0097BEFF /* Rudder.h */,
+				06CABB882630C3CA0097BEFF /* Info.plist */,
+			);
+			path = Rudder;
+			sourceTree = "<group>";
+		};
+		06CABC2D2630C6660097BEFF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06CABC322630C6B00097BEFF /* Foundation.framework */,
+				06CABC2E2630C6660097BEFF /* UIKit.framework */,
+				D5DB9A5042B21ED2CB1C3BB2 /* Pods_Rudder.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F43D5F6F7E44B2D7E3CFD56 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EE764E7AF4A68D9FD2ECDDD9 /* Pods-Rudder.debug.xcconfig */,
+				627CFECC2868A1994AE09E42 /* Pods-Rudder.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		06CABB7F2630C3CA0097BEFF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06CABBE92630C63B0097BEFF /* RSOption.h in Headers */,
+				06CABBF42630C63B0097BEFF /* RSElementCache.h in Headers */,
+				06CABBEA2630C63B0097BEFF /* RSTraits.h in Headers */,
+				06CABB952630C3CA0097BEFF /* Rudder.h in Headers */,
+				06CABBFA2630C63B0097BEFF /* RSLogger.h in Headers */,
+				06CABC162630C63C0097BEFF /* RSUtils.h in Headers */,
+				06CABC0B2630C63C0097BEFF /* RSConstants.h in Headers */,
+				06CABC292630C63C0097BEFF /* RSContext.h in Headers */,
+				06CABC052630C63B0097BEFF /* RSMessageBuilder.h in Headers */,
+				06CABC0F2630C63C0097BEFF /* RSConfigBuilder.h in Headers */,
+				06CABC272630C63C0097BEFF /* RSOSInfo.h in Headers */,
+				06CABBFE2630C63B0097BEFF /* RSIntegrationFactory.h in Headers */,
+				0623DEE026693A300002F42F /* RSECommerceCoupon.h in Headers */,
+				0623DF0626693A300002F42F /* RSProductRemovedEvent.h in Headers */,
+				0623DEDA26693A300002F42F /* RSECommerceProductBuilder.h in Headers */,
+				0623DED826693A300002F42F /* RSECommerceCartBuilder.h in Headers */,
+				0623DF1B26693A310002F42F /* RSOrderUpdatedEvent.h in Headers */,
+				0623DF0826693A300002F42F /* RSProductViewedEvent.h in Headers */,
+				0623DEF426693A300002F42F /* RSECommerceFilter.h in Headers */,
+				0623DF0526693A300002F42F /* RSCouponEnteredEvent.h in Headers */,
+				0623DF3526693A310002F42F /* RSECommercePromotionBuilder.h in Headers */,
+				0623DEF826693A300002F42F /* RSECommerceCouponBuilder.h in Headers */,
+				0623DEF326693A300002F42F /* RSECommercePromotion.h in Headers */,
+				0623DEDB26693A300002F42F /* RSECommerceEvents.h in Headers */,
+				0623DEDC26693A300002F42F /* RSECommerceProduct.h in Headers */,
+				0623DF1D26693A310002F42F /* RSProductAddedToWishListEvent.h in Headers */,
+				0623DEF226693A300002F42F /* RSECommerceSortBuilder.h in Headers */,
+				0623DF2F26693A310002F42F /* RSProductClickedEvent.h in Headers */,
+				0623DEFB26693A300002F42F /* RSProductListFilteredEvent.h in Headers */,
+				0623DF3626693A310002F42F /* RSECommerceSort.h in Headers */,
+				0623DF3126693A310002F42F /* RSProductReviewedEvent.h in Headers */,
+				0623DF1526693A310002F42F /* RSCartViewedEvent.h in Headers */,
+				0623DF1E26693A310002F42F /* RSProductAddedToCartEvent.h in Headers */,
+				0623DEE826693A300002F42F /* RSECommerceWishList.h in Headers */,
+				0623DF2E26693A310002F42F /* RSOrderRefundedEvent.h in Headers */,
+				0623DF2826693A310002F42F /* RSProductSharedEvent.h in Headers */,
+				0623DF2A26693A310002F42F /* RSWishListProductAddedToCartEvent.h in Headers */,
+				0623DEE426693A300002F42F /* RSECommerceParamNames.h in Headers */,
+				0623DEF926693A300002F42F /* RSECommerceCheckoutBuilder.h in Headers */,
+				0623DEEF26693A300002F42F /* RSECommerceWishListBuilder.h in Headers */,
+				0623DF2926693A310002F42F /* RSOrderCompletedEvent.h in Headers */,
+				0623DF0726693A300002F42F /* RSCheckoutStepViewedEvent.h in Headers */,
+				0623DF1A26693A310002F42F /* RSCheckoutStartedEvent.h in Headers */,
+				0623DF2526693A310002F42F /* RSCouponAppliedEvent.h in Headers */,
+				0623DF0A26693A300002F42F /* RSOrderCancelledEvent.h in Headers */,
+				0623DF2026693A310002F42F /* RSCartSharedEvent.h in Headers */,
+				0623DEEB26693A300002F42F /* RSECommerceOrderBuilder.h in Headers */,
+				0623DF3226693A310002F42F /* RSProductListViewedEvent.h in Headers */,
+				0623DEE726693A300002F42F /* RSECommerceFilterBuilder.h in Headers */,
+				0623DF0D26693A300002F42F /* RSPaymentInfoEnteredEvent.h in Headers */,
+				0623DEF526693A300002F42F /* RSECommerceCart.h in Headers */,
+				0623DF2D26693A310002F42F /* RSProductRemovedFromWishListEvent.h in Headers */,
+				0623DF2226693A310002F42F /* RSPromotionClickedEvent.h in Headers */,
+				0623DF1926693A310002F42F /* RSPromotionViewedEvent.h in Headers */,
+				0623DF1C26693A310002F42F /* RSProductSearchedEvent.h in Headers */,
+				0623DF1F26693A310002F42F /* RSCouponRemovedEvent.h in Headers */,
+				0623DF2326693A310002F42F /* RSCouponDeniedEvent.h in Headers */,
+				0623DEE626693A300002F42F /* RSECommerceCheckout.h in Headers */,
+				0623DF2B26693A310002F42F /* RSCheckoutStepCompletedEvent.h in Headers */,
+				0623DEDF26693A300002F42F /* RSECommerceOrder.h in Headers */,
+				06CABBF82630C63B0097BEFF /* RSServerDestination.h in Headers */,
+				06CABC242630C63C0097BEFF /* RSMessage.h in Headers */,
+				06CABBEB2630C63B0097BEFF /* RSServerConfigSource.h in Headers */,
+				06CABC232630C63C0097BEFF /* RSProperty.h in Headers */,
+				06CABC192630C63C0097BEFF /* RSScreenInfo.h in Headers */,
+				06CABBF02630C63B0097BEFF /* RSServerConfigManager.h in Headers */,
+				06CABBF12630C63B0097BEFF /* RSApp.h in Headers */,
+				06CABC002630C63B0097BEFF /* RSConfig.h in Headers */,
+				06CABC042630C63B0097BEFF /* RSLibraryInfo.h in Headers */,
+				06CABBFC2630C63B0097BEFF /* RSDeviceInfo.h in Headers */,
+				06CABC1C2630C63C0097BEFF /* UIViewController+RSScreen.h in Headers */,
+				06CABC1D2630C63C0097BEFF /* RSClient.h in Headers */,
+				06CABC0C2630C63C0097BEFF /* RSMessageType.h in Headers */,
+				06CABC172630C63C0097BEFF /* RSPreferenceManager.h in Headers */,
+				06CABC112630C63C0097BEFF /* RSScreenPropertyBuilder.h in Headers */,
+				06CABC1E2630C63C0097BEFF /* RSPagePropertyBuilder.h in Headers */,
+				06CABC202630C63C0097BEFF /* RSIntegration.h in Headers */,
+				06CABBF92630C63B0097BEFF /* RSTrackPropertyBuilder.h in Headers */,
+				06CABBFD2630C63B0097BEFF /* RSEventRepository.h in Headers */,
+				06CABC252630C63C0097BEFF /* RSDBMessage.h in Headers */,
+				06CABC182630C63C0097BEFF /* RSServerDestinationDefinition.h in Headers */,
+				06CABC072630C63B0097BEFF /* RSDBPersistentManager.h in Headers */,
+				06CABC082630C63B0097BEFF /* RSTraitsBuilder.h in Headers */,
+				06CABBED2630C63B0097BEFF /* RSNetwork.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		06CABB832630C3CA0097BEFF /* Rudder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */;
+			buildPhases = (
+				BD1557F4FA78DBE1311485A7 /* [CP] Check Pods Manifest.lock */,
+				06CABB7F2630C3CA0097BEFF /* Headers */,
+				06CABB802630C3CA0097BEFF /* Sources */,
+				06CABB812630C3CA0097BEFF /* Frameworks */,
+				06CABB822630C3CA0097BEFF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Rudder;
+			productName = Rudder;
+			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		06CABB7B2630C3CA0097BEFF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					06CABB832630C3CA0097BEFF = {
+						CreatedOnToolsVersion = 12.3;
+					};
+				};
+			};
+			buildConfigurationList = 06CABB7E2630C3CA0097BEFF /* Build configuration list for PBXProject "Rudder" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 06CABB7A2630C3CA0097BEFF;
+			productRefGroup = 06CABB852630C3CA0097BEFF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				06CABB832630C3CA0097BEFF /* Rudder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		06CABB822630C3CA0097BEFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BD1557F4FA78DBE1311485A7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06CABB802630C3CA0097BEFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0623DF1426693A310002F42F /* RSProductReviewedEvent.m in Sources */,
+				06CABBF72630C63B0097BEFF /* RSConfig.m in Sources */,
+				0623DF0326693A300002F42F /* RSCheckoutStartedEvent.m in Sources */,
+				06CABC062630C63B0097BEFF /* RSServerDestinationDefinition.m in Sources */,
+				0623DF0926693A300002F42F /* RSCouponAppliedEvent.m in Sources */,
+				06CABC092630C63B0097BEFF /* RSNetwork.m in Sources */,
+				0623DEEE26693A300002F42F /* RSECommerceProductBuilder.m in Sources */,
+				0623DEEA26693A300002F42F /* RSECommercePromotionBuilder.m in Sources */,
+				0623DEDD26693A300002F42F /* RSECommerceCheckoutBuilder.m in Sources */,
+				06CABC282630C63C0097BEFF /* RSOSInfo.m in Sources */,
+				0623DEDE26693A300002F42F /* RSECommerceCouponBuilder.m in Sources */,
+				0623DF1826693A310002F42F /* RSCouponEnteredEvent.m in Sources */,
+				06CABC262630C63C0097BEFF /* RSTrackPropertyBuilder.m in Sources */,
+				0623DEE526693A300002F42F /* RSECommerceSortBuilder.m in Sources */,
+				0623DF0126693A300002F42F /* RSProductSearchedEvent.m in Sources */,
+				0623DF0B26693A300002F42F /* RSCouponDeniedEvent.m in Sources */,
+				0623DEFD26693A300002F42F /* RSCouponRemovedEvent.m in Sources */,
+				0623DF0F26693A310002F42F /* RSCheckoutStepCompletedEvent.m in Sources */,
+				06CABBFB2630C63B0097BEFF /* RSUtils.m in Sources */,
+				0623DEF026693A300002F42F /* RSECommerceCartBuilder.m in Sources */,
+				0623DF3326693A310002F42F /* RSECommerceCheckout.m in Sources */,
+				06CABC222630C63C0097BEFF /* RSLibraryInfo.m in Sources */,
+				06CABBFF2630C63B0097BEFF /* RSConstants.m in Sources */,
+				06CABBEE2630C63B0097BEFF /* RSPagePropertyBuilder.m in Sources */,
+				0623DF3026693A310002F42F /* RSCartViewedEvent.m in Sources */,
+				06CABC212630C63C0097BEFF /* RSServerDestination.m in Sources */,
+				06CABC142630C63C0097BEFF /* RSConfigBuilder.m in Sources */,
+				06CABC2B2630C63C0097BEFF /* RSClient.m in Sources */,
+				0623DF1626693A310002F42F /* RSProductClickedEvent.m in Sources */,
+				06CABC022630C63B0097BEFF /* RSDBMessage.m in Sources */,
+				06CABC1A2630C63C0097BEFF /* RSPreferenceManager.m in Sources */,
+				06CABBE82630C63B0097BEFF /* RSMessage.m in Sources */,
+				06CABC2A2630C63C0097BEFF /* RSElementCache.m in Sources */,
+				06CABBF62630C63B0097BEFF /* RSEventRepository.m in Sources */,
+				0623DF2C26693A310002F42F /* RSPaymentInfoEnteredEvent.m in Sources */,
+				06CABC032630C63B0097BEFF /* RSDeviceInfo.m in Sources */,
+				0623DF2726693A310002F42F /* RSProductViewedEvent.m in Sources */,
+				0623DF1126693A310002F42F /* RSWishListProductAddedToCartEvent.m in Sources */,
+				06CABC012630C63B0097BEFF /* RSScreenPropertyBuilder.m in Sources */,
+				0623DEE126693A300002F42F /* RSECommerceCart.m in Sources */,
+				0623DF1326693A310002F42F /* RSProductListViewedEvent.m in Sources */,
+				0623DEED26693A300002F42F /* RSECommerceEvents.m in Sources */,
+				06CABBEC2630C63B0097BEFF /* RSServerConfigManager.m in Sources */,
+				06CABC0A2630C63C0097BEFF /* RSApp.m in Sources */,
+				0623DF3426693A310002F42F /* RSECommerceOrderBuilder.m in Sources */,
+				06CABBE72630C63B0097BEFF /* UIViewController+RSScreen.m in Sources */,
+				0623DF0226693A300002F42F /* RSOrderUpdatedEvent.m in Sources */,
+				0623DF2126693A310002F42F /* RSProductListFilteredEvent.m in Sources */,
+				0623DEE226693A300002F42F /* RSECommercePromotion.m in Sources */,
+				0623DF1726693A310002F42F /* RSProductRemovedEvent.m in Sources */,
+				0623DED926693A300002F42F /* RSECommerceWishListBuilder.m in Sources */,
+				0623DF0026693A300002F42F /* RSProductAddedToWishListEvent.m in Sources */,
+				06CABBEF2630C63B0097BEFF /* RSMessageBuilder.m in Sources */,
+				0623DF0E26693A310002F42F /* RSProductRemovedFromWishListEvent.m in Sources */,
+				0623DEFE26693A300002F42F /* RSCartSharedEvent.m in Sources */,
+				06CABBF22630C63B0097BEFF /* RSTraits.m in Sources */,
+				06CABC122630C63C0097BEFF /* RSContext.m in Sources */,
+				0623DEE926693A300002F42F /* RSECommerceSort.m in Sources */,
+				0623DEF126693A300002F42F /* RSECommerceParamNames.m in Sources */,
+				0623DEEC26693A300002F42F /* RSECommerceProduct.m in Sources */,
+				06CABC102630C63C0097BEFF /* RSServerConfigSource.m in Sources */,
+				0623DEF626693A300002F42F /* RSECommerceCoupon.m in Sources */,
+				06CABC1B2630C63C0097BEFF /* RSScreenInfo.m in Sources */,
+				06CABC132630C63C0097BEFF /* RSLogger.m in Sources */,
+				06CABBF52630C63B0097BEFF /* RSMessageType.m in Sources */,
+				0623DEF726693A300002F42F /* RSECommerceOrder.m in Sources */,
+				0623DF1226693A310002F42F /* RSProductSharedEvent.m in Sources */,
+				06CABC0D2630C63C0097BEFF /* RSDBPersistentManager.m in Sources */,
+				06CABBF32630C63B0097BEFF /* RSTraitsBuilder.m in Sources */,
+				0623DF2426693A310002F42F /* RSOrderCancelledEvent.m in Sources */,
+				0623DF1026693A310002F42F /* RSOrderCompletedEvent.m in Sources */,
+				0623DEE326693A300002F42F /* RSECommerceFilter.m in Sources */,
+				0623DF3726693A310002F42F /* RSECommerceWishList.m in Sources */,
+				0623DEFF26693A300002F42F /* RSProductAddedToCartEvent.m in Sources */,
+				06CABC1F2630C63C0097BEFF /* RSProperty.m in Sources */,
+				0623DEFC26693A300002F42F /* RSPromotionClickedEvent.m in Sources */,
+				0623DF0426693A300002F42F /* RSPromotionViewedEvent.m in Sources */,
+				0623DF2626693A310002F42F /* RSCheckoutStepViewedEvent.m in Sources */,
+				0623DF0C26693A300002F42F /* RSOrderRefundedEvent.m in Sources */,
+				06CABC0E2630C63C0097BEFF /* RSOption.m in Sources */,
+				0623DEFA26693A300002F42F /* RSECommerceFilterBuilder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		06CABB962630C3CA0097BEFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		06CABB972630C3CA0097BEFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		06CABB992630C3CA0097BEFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE764E7AF4A68D9FD2ECDDD9 /* Pods-Rudder.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Rudder/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		06CABB9A2630C3CA0097BEFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 627CFECC2868A1994AE09E42 /* Pods-Rudder.release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Rudder/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		06CABB7E2630C3CA0097BEFF /* Build configuration list for PBXProject "Rudder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06CABB962630C3CA0097BEFF /* Debug */,
+				06CABB972630C3CA0097BEFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06CABB992630C3CA0097BEFF /* Debug */,
+				06CABB9A2630C3CA0097BEFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 06CABB7B2630C3CA0097BEFF /* Project object */;
+}
