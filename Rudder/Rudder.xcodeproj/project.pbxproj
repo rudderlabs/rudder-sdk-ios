@@ -352,7 +352,7 @@
 		ED761A0E27292E9C00B086F4 /* release.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = release.sh; path = ../release.sh; sourceTree = "<group>"; };
 		ED761A0F27292E9C00B086F4 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		ED761A1027292E9C00B086F4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
-		ED761A1727292ED400B086F4 /* Rudder.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rudder.podspec; sourceTree = "<group>"; };
+		ED761A1727292ED400B086F4 /* Rudder.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rudder.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
