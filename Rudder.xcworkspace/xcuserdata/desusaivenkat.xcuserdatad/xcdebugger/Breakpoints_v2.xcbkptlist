@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "9381B5EE-24CF-473F-AE26-7A3AB36417B3"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "805475F4-0491-401E-83D3-98EC90F9985F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-rudder_viewDidAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8ACF3796-1582-49DB-8DE2-B9FBBC8431C5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "-rudder_viewDidAppear:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8ACF3796-1582-49DB-8DE2-B9FBBC8431C5 - d071fd1f40aec831"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "142">
+               </Location>
+               <Location
+                  uuid = "8ACF3796-1582-49DB-8DE2-B9FBBC8431C5 - d071fd1f40aec831"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "150">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CEE324E5-04CC-4FEF-9227-C9DA411DCF36"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "-rudder_viewDidAppear:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CEE324E5-04CC-4FEF-9227-C9DA411DCF36 - d071fd1f40aec8d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "181">
+               </Location>
+               <Location
+                  uuid = "CEE324E5-04CC-4FEF-9227-C9DA411DCF36 - d071fd1f40aec8d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "189">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0ABBD719-E51B-41B0-8931-74D050604583"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "+rudder_swizzleView"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0ABBD719-E51B-41B0-8931-74D050604583 - 146cb019938765f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48+[UIViewController(RSScreen) rudder_swizzleView]_block_invoke"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "0ABBD719-E51B-41B0-8931-74D050604583 - 146cb019938765f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48+[UIViewController(RSScreen) rudder_swizzleView]_block_invoke"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E0884E3-8FCA-47D2-A4E9-7D2816285CD8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "+rudder_swizzleView"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7E0884E3-8FCA-47D2-A4E9-7D2816285CD8 - 146cb01993876590"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48+[UIViewController(RSScreen) rudder_swizzleView]_block_invoke"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "7E0884E3-8FCA-47D2-A4E9-7D2816285CD8 - 146cb01993876590"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__48+[UIViewController(RSScreen) rudder_swizzleView]_block_invoke"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "51">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E925C58B-04E3-49D9-98A4-10626AA8A47D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/UIViewController+RSScreen.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "-rudder_viewDidAppear:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E925C58B-04E3-49D9-98A4-10626AA8A47D - d071fd1f40aec84c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "E925C58B-04E3-49D9-98A4-10626AA8A47D - d071fd1f40aec84c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UIViewController(RSScreen) rudder_viewDidAppear:]"
+                  moduleName = "Rudder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/desusaivenkat/randomTemp/rudder-sdk-ios/Rudder/Rudder/UIViewController+RSScreen.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EAAAD300-7D5D-496A-9B2C-6088D67F06F9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rudder/Rudder/RSEventRepository.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-init:config:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
