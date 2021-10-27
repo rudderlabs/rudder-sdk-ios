@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		044D5950F98533E342B5E6FE40A363D4 /* Pods-RudderSampleAppObjC-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE5C9866996C09B7C16E2F8279E4040 /* Pods-RudderSampleAppObjC-dummy.m */; };
+		044D5950F98533E342B5E6FE40A363D4 /* Pods-RudderSampleAppObjC-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE11D62E8FFFD890FEEEFB8F0D48AB /* Pods-RudderSampleAppObjC-dummy.m */; };
 		0795790EE6CCE88491E6D5686912B6FF /* RSECommerceCheckoutBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A06E69878A20C2761A74CD5D6F450E6F /* RSECommerceCheckoutBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0858F58E32DE944BC8B2DCC4EA245A06 /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 37269575E6088D6324EED05AF9CC2E65 /* RSLibraryInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		0867F8124CA62D30BE4EDAD5D034C1A7 /* RSPromotionViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 08660471A0CB893024C7E36869DB1457 /* RSPromotionViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BE4AB399C48E2B1338F6C54E70FD55D /* RSECommerceSort.h in Headers */ = {isa = PBXBuildFile; fileRef = FB2A2ADFFE91C1D07F7AA806BB201863 /* RSECommerceSort.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D90140228C780BECD89462C56204D05 /* RSProductReviewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4933D1EA62167CB184759627881BE2 /* RSProductReviewedEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		106F5C81C43701AE1BE87B60726C2ADA /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = F698E9A42FA2984446F3C7A2C01BE362 /* RSUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1107AB36AA79EBAA4D70F032E9E7EA14 /* Pods-RudderSampleAppSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D84FD3DB5E386AA6E2AAF15C6E6B057E /* Pods-RudderSampleAppSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1107AB36AA79EBAA4D70F032E9E7EA14 /* Pods-RudderSampleAppSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 58B2B8480DC8D5BA40050D2D8BCC339F /* Pods-RudderSampleAppSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		116A39C3F338E53AB007A7F948FA119B /* RSECommerceWishList.h in Headers */ = {isa = PBXBuildFile; fileRef = CCC44631483E32E0C9907AD446ECEFD7 /* RSECommerceWishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1613282D924FE1F37D1FE3C7596F40D6 /* RSECommerceOrderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DDA3838CFE1DE099AB71D97D36F27B /* RSECommerceOrderBuilder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		16F9C3ED11376E3ACAAFAE4776D18592 /* RSECommerceCartBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 6037D6424958D0F499C27DDF6443F8E2 /* RSECommerceCartBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -41,12 +41,12 @@
 		3AAEF9D98F2530C8E7376FA4C654022A /* RSOrderCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6B0356C260A4CADF99C9E5FBF50701 /* RSOrderCompletedEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3ABF625632BC39EBF18E1D22B97BA354 /* RSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A78E80CBC52E72E5A60F25006A78B7D /* RSConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3BB4B5B32632983ACDFB784C4C50CD5B /* RSCheckoutStartedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 02C56B2C5B43D57F01EC9926D2BF4FCA /* RSCheckoutStartedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CBB3C24DB79C71C2529C64179CD3234 /* Pods-Rudder-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DFA896873B413AA316770444EAFE7D /* Pods-Rudder-dummy.m */; };
+		3CBB3C24DB79C71C2529C64179CD3234 /* Pods-Rudder-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E6156BDE33C2924D98C96419C070E490 /* Pods-Rudder-dummy.m */; };
 		3DC5E1AE8CD3A5DAE4816E600E506B60 /* RSTrackPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 061960C4E118E6BF0FE4C9EB73CFD264 /* RSTrackPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3DD3C00C365DA14B220D65D9159A68E7 /* RSPaymentInfoEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 318D8D8E770E042C024DA230C1C81CA0 /* RSPaymentInfoEnteredEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3EF79B37AD4F12B1314F997C3E83A3B6 /* RSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 80137EE7737889BF201F4BB1F61666B2 /* RSNetwork.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3FC33509B14C0BEF80277428AD0703F2 /* RSCheckoutStepViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C9996C787EA923453ADF0A15A40E2A4 /* RSCheckoutStepViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3FD1A1E07B16C2EAB1ACDDF959A0A0A4 /* Pods-RudderSampleAppObjC-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 041A47E481C10E24A54DEE5DDDEA9987 /* Pods-RudderSampleAppObjC-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3FD1A1E07B16C2EAB1ACDDF959A0A0A4 /* Pods-RudderSampleAppObjC-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C123C59B7C203885606374E819EC3246 /* Pods-RudderSampleAppObjC-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4512185A62EF3D0EAEC98BDB4ED01958 /* RSECommerceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5426E164A1734B9ED386F5240FAA9B /* RSECommerceFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4542D844032CA56D5996CA3EB5F40B5D /* RSCouponRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2570D6EE3B7483AC21D3C811A7123E67 /* RSCouponRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46B84173A82A0FB9BA51E02621F74AF2 /* RSApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0848B6E3F5336821E60A078748C7A7 /* RSApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -75,6 +75,7 @@
 		6165D06DF5E66A50E0A6140C243F90E7 /* RSECommerceEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 7324D703B14D4AC5951D5445B3021493 /* RSECommerceEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61B37F5129DDECFF368B377BFE48ECA6 /* RSOrderCancelledEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CFEEAE661866F274FB73330C67EABE5 /* RSOrderCancelledEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61F3CBB0418382174E73AEDDE7A45726 /* RSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 89D130F5A9C9A78F3C0B5614A7286ADC /* RSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63C989FA2293C43F58CF4B31BE4DE69C /* Pods-RudderSampleApptvOSObjc-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3968F24AAF61FDB9936A59E6B50266 /* Pods-RudderSampleApptvOSObjc-dummy.m */; };
 		63E0E2FCB1FFB9D3D1D5A9B4EB4EE1B8 /* RSECommerceOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48201E7E8424AF6CDC8B19B4F2FE2BD4 /* RSECommerceOrder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		64DA90BB94DF9CB68D05AA434317AE46 /* RSCheckoutStepCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABB65325442761408C41C39818FFAB2 /* RSCheckoutStepCompletedEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		65691B1E3DB7827AAE91050CC89B48F5 /* Rudder-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB88F3E55C7C6247658522D04BF993F2 /* Rudder-dummy.m */; };
@@ -118,8 +119,9 @@
 		AB96809B5EB6E7C684B576ADE786DED7 /* RSPagePropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 734C2A190B417B19EA6AA1DE8ABE59EF /* RSPagePropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B0CBF79F4158871EE99E8D31B9F67C8B /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = DB15F3CAB1601A83E2CECA6A435421BF /* RSScreenPropertyBuilder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		B1B1A9B610537862A8A0561F5EDC4A6A /* RSEventRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = 658484BB67D9641F134CF485B3F48AFE /* RSEventRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2A651D68263A23D64F37BCE2147EA72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		B389767DA3CBF0E46BA202F0EC36ABFC /* RSCouponAppliedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4220525BDB7DE5502AF0FA85FA9FB3 /* RSCouponAppliedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B3C83983D9C85B216C3D41312FFE901E /* Pods-Rudder-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0C2CD2362CA2F88D8FC34298884EE4 /* Pods-Rudder-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B3C83983D9C85B216C3D41312FFE901E /* Pods-Rudder-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CBEF0BCC56A4B6C29509C9B7320AF834 /* Pods-Rudder-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B51BD05D3C79BCCCC9510594259EC87C /* RSOSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 28D81805B82C7508CE2EC35B18EDD854 /* RSOSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B58A71C3B806E65710DEB034878511C0 /* RSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F172C20A15A95569958C9FBF61ED45 /* RSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5DA4B879F7825BACDD62BC3A6694DE0 /* RSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE89E371BA72A87088257334C3B77D8 /* RSClient.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -166,6 +168,7 @@
 		E7587A15EA6A14258A93DB71B1BD7024 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		E75B6D77A32DB0DC1E499C52EE34CE35 /* RSECommerceFilterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3109A99BD3C18E577FD53DD14CDD8DAF /* RSECommerceFilterBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E77BA42BF669E1B74A7A694269285459 /* RSPagePropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0844BCF9FEE1F83AFEF2AF30FE8DE1F8 /* RSPagePropertyBuilder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		EA19FD516E62D71588943B69BE66ED85 /* Pods-RudderSampleApptvOSObjc-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6765FCB0C0BAF7A52EF2424B03755845 /* Pods-RudderSampleApptvOSObjc-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA956BC40E9C3C9017DF51F4ECD144B5 /* RSECommerceCart.h in Headers */ = {isa = PBXBuildFile; fileRef = 92363ECFEE18C6209D3CFEAE0BA997BE /* RSECommerceCart.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ECAEE7896053895F23013EB449919616 /* RSDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5471620690D74D9FB16D2D4ECFE661C4 /* RSDeviceInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		ECB1236DD4924CFD07ADC97C05CBB770 /* RSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4368CD024EEE09867A9DFC88C469 /* RSMessage.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -176,7 +179,7 @@
 		F4C7330EE225833DC16F832555CAF52B /* RSECommerceParamNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 181BD5B7C1C2EB9CDFBB1148DD26A674 /* RSECommerceParamNames.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F4FAF7A07ADD27F87C7D0E41BEEA6E6B /* RSCheckoutStartedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E84721385FB04BE437FED69969134983 /* RSCheckoutStartedEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F50E0BF7ADDA94CFD7432DBF329A8971 /* RSServerDestinationDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F2BE82869703D3F1C4A4AF44E8FA160 /* RSServerDestinationDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F626DAA4916836AFC1DA2936BF1326AD /* Pods-RudderSampleAppSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ABD5481C2DE1000E1C2FD23D330944 /* Pods-RudderSampleAppSwift-dummy.m */; };
+		F626DAA4916836AFC1DA2936BF1326AD /* Pods-RudderSampleAppSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B052D76CE69FEA6BAA82FAF59666BA0 /* Pods-RudderSampleAppSwift-dummy.m */; };
 		F8020E883F99510B2A4C6DFB71117E53 /* RSServerConfigSource.h in Headers */ = {isa = PBXBuildFile; fileRef = FBA38899F73EC5483EC27049BD6A5FB9 /* RSServerConfigSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F81A795A11483F1F3536849B8A22FBE0 /* RSECommerceSortBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D173DD4422139E83E595EAF249EA9F /* RSECommerceSortBuilder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F821744EA57999BE1D4480FB9909C822 /* RSScreenPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = CD809B617E797A951EDD58EDF8D65F53 /* RSScreenPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -201,6 +204,13 @@
 			remoteGlobalIDString = F5C6323F415EBC1C6BAD0C1E271A0C4D;
 			remoteInfo = Rudder;
 		};
+		F418D9BD4CE4595A8ACF02C56409AF0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5C6323F415EBC1C6BAD0C1E271A0C4D;
+			remoteInfo = Rudder;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -209,28 +219,32 @@
 		02635E17D9F1DD238DCC83150631CFFA /* RSLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSLogger.m; path = Rudder/RSLogger.m; sourceTree = "<group>"; };
 		02C56B2C5B43D57F01EC9926D2BF4FCA /* RSCheckoutStartedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCheckoutStartedEvent.h; sourceTree = "<group>"; };
 		032322AD142B07D610289E6764AFA8C8 /* RSECommerceProductBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceProductBuilder.h; sourceTree = "<group>"; };
-		041A47E481C10E24A54DEE5DDDEA9987 /* Pods-RudderSampleAppObjC-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RudderSampleAppObjC-umbrella.h"; sourceTree = "<group>"; };
 		04437A1A2214253E5BD4E91F30A9CAED /* RSIntegration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSIntegration.h; path = Rudder/RSIntegration.h; sourceTree = "<group>"; };
+		04691068738B2F43FFE5F07FD261E6E1 /* Pods-RudderSampleApptvOSObjc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleApptvOSObjc.debug.xcconfig"; sourceTree = "<group>"; };
 		061960C4E118E6BF0FE4C9EB73CFD264 /* RSTrackPropertyBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTrackPropertyBuilder.h; path = Rudder/RSTrackPropertyBuilder.h; sourceTree = "<group>"; };
 		0716A6F9D6BAC88EF12E2E43BAFD7F0D /* RSContext.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSContext.m; path = Rudder/RSContext.m; sourceTree = "<group>"; };
 		0844BCF9FEE1F83AFEF2AF30FE8DE1F8 /* RSPagePropertyBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSPagePropertyBuilder.m; path = Rudder/RSPagePropertyBuilder.m; sourceTree = "<group>"; };
+		0857345D1FF612383F341DE3C80583AA /* Pods-RudderSampleApptvOSObjc-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RudderSampleApptvOSObjc-frameworks.sh"; sourceTree = "<group>"; };
 		08660471A0CB893024C7E36869DB1457 /* RSPromotionViewedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSPromotionViewedEvent.h; sourceTree = "<group>"; };
+		0CA07393E9E5C3DD1C2BA38A05F135AB /* Pods-RudderSampleApptvOSObjc-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleApptvOSObjc-Info.plist"; sourceTree = "<group>"; };
 		0CF5909232D7E41B78868B2D5E1670D2 /* RSMessageBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSMessageBuilder.h; path = Rudder/RSMessageBuilder.h; sourceTree = "<group>"; };
 		0EBB432EA825E0B031D4B798B0A53B0C /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1069F9AF205DB204069EE507FCBC1B38 /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1084A96D15BA9CC7A95DD9F25BFB29F7 /* Pods-RudderSampleAppObjC-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppObjC-acknowledgements.plist"; sourceTree = "<group>"; };
 		112FBA6428477505E8F96BF6E61DBEEB /* RSTrackPropertyBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSTrackPropertyBuilder.m; path = Rudder/RSTrackPropertyBuilder.m; sourceTree = "<group>"; };
 		12263AE66AA63B368775EAE94DDB3A9E /* RSNetwork.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSNetwork.h; path = Rudder/RSNetwork.h; sourceTree = "<group>"; };
-		1369FBBF9FE1F58938689F5425822E80 /* Pods-RudderSampleAppSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		15E79C08CD7803563F2D7FFE5DEF7D2A /* Pods_Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1672CD4E459ABD54A67A6C388D8C65F9 /* Rudder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Rudder.modulemap; sourceTree = "<group>"; };
 		181BD5B7C1C2EB9CDFBB1148DD26A674 /* RSECommerceParamNames.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceParamNames.m; sourceTree = "<group>"; };
-		1E22E10E74669B376DD78E5B1AB2597A /* Pods-Rudder-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Rudder-acknowledgements.markdown"; sourceTree = "<group>"; };
+		1A4691C0D124DCB85BA9D76D3DB1DA4E /* Pods-RudderSampleAppSwift-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RudderSampleAppSwift-frameworks.sh"; sourceTree = "<group>"; };
+		1ACDDE80D4F12346E78F70DE50DD53E2 /* Pods-RudderSampleAppObjC-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppObjC-acknowledgements.plist"; sourceTree = "<group>"; };
 		1EFC0D97EC32426F9C386406B252DDEB /* RSCouponDeniedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCouponDeniedEvent.h; sourceTree = "<group>"; };
 		1F20021A3EAEAB1E1287813DBF84C5CA /* RSECommerceCouponBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCouponBuilder.h; sourceTree = "<group>"; };
 		1F2BE82869703D3F1C4A4AF44E8FA160 /* RSServerDestinationDefinition.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSServerDestinationDefinition.h; path = Rudder/RSServerDestinationDefinition.h; sourceTree = "<group>"; };
+		2037574F6F1E277CB4E4D4F1856ADF75 /* Pods-Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rudder.debug.xcconfig"; sourceTree = "<group>"; };
 		234C4368CD024EEE09867A9DFC88C469 /* RSMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSMessage.m; path = Rudder/RSMessage.m; sourceTree = "<group>"; };
+		239CBACDA816016C35E3A0A99C39383D /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		23FE85E68620B9CEB955260FC409590F /* RSOrderRefundedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSOrderRefundedEvent.m; sourceTree = "<group>"; };
+		246F127BDFD155F5BF8E05E45F1A7EAB /* Pods-RudderSampleApptvOSObjc-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleApptvOSObjc-acknowledgements.plist"; sourceTree = "<group>"; };
 		2570D6EE3B7483AC21D3C811A7123E67 /* RSCouponRemovedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCouponRemovedEvent.h; sourceTree = "<group>"; };
 		25FFDE15ADF93B054A8ABAC5000245F8 /* RSConfigBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSConfigBuilder.m; path = Rudder/RSConfigBuilder.m; sourceTree = "<group>"; };
 		26331698D0C3FC87CF3AF04AB540649C /* Rudder-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Rudder-prefix.pch"; sourceTree = "<group>"; };
@@ -238,10 +252,13 @@
 		28D81805B82C7508CE2EC35B18EDD854 /* RSOSInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSOSInfo.h; path = Rudder/RSOSInfo.h; sourceTree = "<group>"; };
 		2AE89E371BA72A87088257334C3B77D8 /* RSClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSClient.m; path = Rudder/RSClient.m; sourceTree = "<group>"; };
 		2AEB8E51AAFC2DFE69C4C876858C5EDF /* RSPaymentInfoEnteredEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSPaymentInfoEnteredEvent.h; sourceTree = "<group>"; };
+		2B052D76CE69FEA6BAA82FAF59666BA0 /* Pods-RudderSampleAppSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RudderSampleAppSwift-dummy.m"; sourceTree = "<group>"; };
+		2C6EBB7ED973928F2C3A80AE95E1801D /* Pods-Rudder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Rudder-Info.plist"; sourceTree = "<group>"; };
 		2DD0397BCE11A6C8988AC5059D64733C /* RSECommerceCheckout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCheckout.h; sourceTree = "<group>"; };
 		3109A99BD3C18E577FD53DD14CDD8DAF /* RSECommerceFilterBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceFilterBuilder.h; sourceTree = "<group>"; };
 		318D8D8E770E042C024DA230C1C81CA0 /* RSPaymentInfoEnteredEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSPaymentInfoEnteredEvent.m; sourceTree = "<group>"; };
 		327DA74AD1EB9BC72D5C6B828CC0F689 /* RSECommerceCart.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCart.m; sourceTree = "<group>"; };
+		33934D11E00C0D590330B7AE77DFCB98 /* Pods-RudderSampleAppObjC.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RudderSampleAppObjC.modulemap"; sourceTree = "<group>"; };
 		3461C15C149C20F61397F8263584D0F2 /* RSEventRepository.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSEventRepository.m; path = Rudder/RSEventRepository.m; sourceTree = "<group>"; };
 		365F894B443505F47C2E993CFC0AE821 /* RSProductAddedToCartEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductAddedToCartEvent.h; sourceTree = "<group>"; };
 		36C0D5D8FFB25BA8529871879618636F /* RSDeviceInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSDeviceInfo.h; path = Rudder/RSDeviceInfo.h; sourceTree = "<group>"; };
@@ -255,41 +272,42 @@
 		3D0848B6E3F5336821E60A078748C7A7 /* RSApp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSApp.h; path = Rudder/RSApp.h; sourceTree = "<group>"; };
 		3D19C0799C114794BE17E2E6786479CA /* RSECommerceEvents.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceEvents.m; sourceTree = "<group>"; };
 		3DBD7BAA439FF0A1810F13190CE8CD88 /* RSECommerceFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceFilter.m; sourceTree = "<group>"; };
-		3EC17A150A09C04E1A9D415D0A3A4DCA /* Pods-RudderSampleAppSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppSwift-Info.plist"; sourceTree = "<group>"; };
 		3ED2909060B7D3EF09B19EE04C60DEDE /* RSCheckoutStepViewedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStepViewedEvent.m; sourceTree = "<group>"; };
 		419E62B3252A339A3717D40B2F3467E6 /* RSProductClickedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductClickedEvent.h; sourceTree = "<group>"; };
 		438ECB3CBF9EB2E493957BB6DCEAE847 /* Rudder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Rudder.h; path = Rudder/Rudder.h; sourceTree = "<group>"; };
 		455875FAB5A25BBD259CA1A4D3E88ECC /* RSCartSharedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCartSharedEvent.m; sourceTree = "<group>"; };
 		45EB78B85BA564D077DDBBADFC937202 /* Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Rudder.release.xcconfig; sourceTree = "<group>"; };
 		464FB4CD6569AA51B09F25B432C571EE /* RSProductSharedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductSharedEvent.h; sourceTree = "<group>"; };
-		469B2137B61179FCC4488495C00196C1 /* Pods-RudderSampleAppObjC.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RudderSampleAppObjC.modulemap"; sourceTree = "<group>"; };
 		48201E7E8424AF6CDC8B19B4F2FE2BD4 /* RSECommerceOrder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceOrder.m; sourceTree = "<group>"; };
 		497216C02BF0C8212CCD6ADEAE40ABCC /* RSProductAddedToCartEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductAddedToCartEvent.m; sourceTree = "<group>"; };
 		4991553E5D70CE2D4F3C3AF14ED5E469 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		4A4933D1EA62167CB184759627881BE2 /* RSProductReviewedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductReviewedEvent.m; sourceTree = "<group>"; };
 		4B59B6A6B0582F1AAA33BA1C83670B75 /* RSCouponEnteredEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCouponEnteredEvent.h; sourceTree = "<group>"; };
-		4CFA65B789AE9DD39CAD5874A8E84180 /* Pods-Rudder-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Rudder-acknowledgements.plist"; sourceTree = "<group>"; };
+		4CFFFCC7C00489EDAAE216A2AA460BAC /* Pods-RudderSampleAppObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppObjC.release.xcconfig"; sourceTree = "<group>"; };
 		4D980E55BB2CC3A1AFC783AF820A59DF /* RSMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSMessage.h; path = Rudder/RSMessage.h; sourceTree = "<group>"; };
 		4DB3C7B7B853D3B0CCBC11F74E13FB47 /* RSElementCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSElementCache.m; path = Rudder/RSElementCache.m; sourceTree = "<group>"; };
-		4DCDEC0847ED86E72825C558159A9B74 /* Pods-RudderSampleAppObjC-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RudderSampleAppObjC-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4FFE3B6FF876DAFF8A189B14524ED724 /* RSProductReviewedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductReviewedEvent.h; sourceTree = "<group>"; };
+		5082116A4C5F20AAE1B95EA5C719DCCE /* Pods-Rudder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Rudder.modulemap"; sourceTree = "<group>"; };
 		53CD2AC0C8DEA19A2BFB8FB0F05732CE /* RSProductListFilteredEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductListFilteredEvent.h; sourceTree = "<group>"; };
 		5471620690D74D9FB16D2D4ECFE661C4 /* RSDeviceInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSDeviceInfo.m; path = Rudder/RSDeviceInfo.m; sourceTree = "<group>"; };
 		55F424FF74FAF99D44B7272B33AA59BB /* RSProductViewedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductViewedEvent.h; sourceTree = "<group>"; };
 		56CD462F6F090FB6B3E4B4B2E397B8C1 /* RSConfigBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSConfigBuilder.h; path = Rudder/RSConfigBuilder.h; sourceTree = "<group>"; };
 		57794D81184B489B815EB46E9A4A335D /* RSECommerceProductBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceProductBuilder.m; sourceTree = "<group>"; };
+		58B2B8480DC8D5BA40050D2D8BCC339F /* Pods-RudderSampleAppSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RudderSampleAppSwift-umbrella.h"; sourceTree = "<group>"; };
+		5AA2821168902B4244D33AA4438AB9EE /* Pods-Rudder-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Rudder-acknowledgements.plist"; sourceTree = "<group>"; };
+		5BDE11D62E8FFFD890FEEEFB8F0D48AB /* Pods-RudderSampleAppObjC-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RudderSampleAppObjC-dummy.m"; sourceTree = "<group>"; };
 		5E311850FEFECDC54F4145F13637ABAD /* RSPreferenceManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSPreferenceManager.h; path = Rudder/RSPreferenceManager.h; sourceTree = "<group>"; };
 		6037D6424958D0F499C27DDF6443F8E2 /* RSECommerceCartBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCartBuilder.h; sourceTree = "<group>"; };
 		6063F19DB5D51B7EE27792092B9F4655 /* RSECommerceCheckout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCheckout.m; sourceTree = "<group>"; };
-		60DFA896873B413AA316770444EAFE7D /* Pods-Rudder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Rudder-dummy.m"; sourceTree = "<group>"; };
 		613DD3306C6530732686055C06A8652A /* RSApp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSApp.m; path = Rudder/RSApp.m; sourceTree = "<group>"; };
 		62AE466383E2EFCCF9C8D0DDB11BF85C /* RSMessageType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSMessageType.h; path = Rudder/RSMessageType.h; sourceTree = "<group>"; };
-		62BF9243E97A4BB39D73947534F20D81 /* Pods-Rudder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Rudder-Info.plist"; sourceTree = "<group>"; };
 		62F5A38979DE7C8BA3DB1EC11030ACCB /* RSOption.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSOption.h; path = Rudder/RSOption.h; sourceTree = "<group>"; };
 		63E8B496E6D7FE4A355ADD1CBB5574C9 /* RSServerDestination.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSServerDestination.m; path = Rudder/RSServerDestination.m; sourceTree = "<group>"; };
 		63EB995A07A80CF1937E444FC33439F3 /* RSDBPersistentManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSDBPersistentManager.h; path = Rudder/RSDBPersistentManager.h; sourceTree = "<group>"; };
+		64F92675E6657F21B3D7B21D91DAD8A1 /* Pods-RudderSampleAppSwift-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RudderSampleAppSwift-acknowledgements.markdown"; sourceTree = "<group>"; };
 		658484BB67D9641F134CF485B3F48AFE /* RSEventRepository.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSEventRepository.h; path = Rudder/RSEventRepository.h; sourceTree = "<group>"; };
 		66F172C20A15A95569958C9FBF61ED45 /* RSContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSContext.h; path = Rudder/RSContext.h; sourceTree = "<group>"; };
+		6765FCB0C0BAF7A52EF2424B03755845 /* Pods-RudderSampleApptvOSObjc-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RudderSampleApptvOSObjc-umbrella.h"; sourceTree = "<group>"; };
 		681B9C501E619BCB1B2DBEF2727271A6 /* RSProductSearchedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductSearchedEvent.m; sourceTree = "<group>"; };
 		6AD038012BAD0840636CB5CF9FFD2AF8 /* RSConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSConstants.h; path = Rudder/RSConstants.h; sourceTree = "<group>"; };
 		6B7235DF4FCFFAB6B66090D801D3114F /* Rudder.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Rudder.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -298,7 +316,6 @@
 		6CFB78A8C21C7DD430D954DF312A2D78 /* RSDBMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSDBMessage.m; path = Rudder/RSDBMessage.m; sourceTree = "<group>"; };
 		6DC139C482C707C0A89F4B8D7D019C77 /* RSCartViewedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCartViewedEvent.h; sourceTree = "<group>"; };
 		6E3E898615282DBB6D38A7B7885846C5 /* RSECommerceProduct.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceProduct.m; sourceTree = "<group>"; };
-		6EB603A2CFFB003D283827E8971D9857 /* Pods-Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rudder.release.xcconfig"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7324D703B14D4AC5951D5445B3021493 /* RSECommerceEvents.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceEvents.h; sourceTree = "<group>"; };
 		734C2A190B417B19EA6AA1DE8ABE59EF /* RSPagePropertyBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSPagePropertyBuilder.h; path = Rudder/RSPagePropertyBuilder.h; sourceTree = "<group>"; };
@@ -306,26 +323,25 @@
 		749377842F73835EFF96F07480119B3E /* RSCartSharedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCartSharedEvent.h; sourceTree = "<group>"; };
 		75B48878C5F9FDE6C8DA6B7EAB79E054 /* RSProductListViewedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductListViewedEvent.m; sourceTree = "<group>"; };
 		7852C452BE91CF7FE5AF03090393313D /* RSConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSConstants.m; path = Rudder/RSConstants.m; sourceTree = "<group>"; };
-		7923EB81559BC10D1B104239C64D79C7 /* Pods-Rudder.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Rudder.modulemap"; sourceTree = "<group>"; };
 		7997D3EE51443D1EE9E985F252D2250A /* RSECommerceSort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceSort.m; sourceTree = "<group>"; };
 		7ABB65325442761408C41C39818FFAB2 /* RSCheckoutStepCompletedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStepCompletedEvent.m; sourceTree = "<group>"; };
 		7ACAD4EDCADEA2F7EEF42BEC13E8EF14 /* RSProductAddedToWishListEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductAddedToWishListEvent.h; sourceTree = "<group>"; };
-		7EE0C5B947C0BE96A461E8B8FD9AD81B /* Pods-RudderSampleAppSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RudderSampleAppSwift.modulemap"; sourceTree = "<group>"; };
 		7F35492A9857621CB18BBDCD3DED5966 /* RSECommerceWishListBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceWishListBuilder.m; sourceTree = "<group>"; };
 		80137EE7737889BF201F4BB1F61666B2 /* RSNetwork.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSNetwork.m; path = Rudder/RSNetwork.m; sourceTree = "<group>"; };
 		8087E98F93816AAA7A49F65E7E5F4722 /* RSProductRemovedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductRemovedEvent.h; sourceTree = "<group>"; };
 		8186265C94FCF7719C64BE4CD47B2B14 /* Pods_RudderSampleAppSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		822024628F320BFC44BDEA2836037EF3 /* RSOrderUpdatedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSOrderUpdatedEvent.h; sourceTree = "<group>"; };
 		864FAF7464B3D8899F04F26FB1F8D579 /* RSOrderUpdatedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSOrderUpdatedEvent.m; sourceTree = "<group>"; };
-		86ABD5481C2DE1000E1C2FD23D330944 /* Pods-RudderSampleAppSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RudderSampleAppSwift-dummy.m"; sourceTree = "<group>"; };
 		888A5D34309A15EB8BA14754F96BAC15 /* RSECommercePromotionBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommercePromotionBuilder.h; sourceTree = "<group>"; };
 		89D130F5A9C9A78F3C0B5614A7286ADC /* RSLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSLogger.h; path = Rudder/RSLogger.h; sourceTree = "<group>"; };
 		8C0917C22700DE9D48C77577C22CB33C /* RSECommerceCoupon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCoupon.m; sourceTree = "<group>"; };
 		8C149F6CB3BB754D40E2B43C0D212D6F /* RSUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSUtils.m; path = Rudder/RSUtils.m; sourceTree = "<group>"; };
 		8D5426E164A1734B9ED386F5240FAA9B /* RSECommerceFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceFilter.h; sourceTree = "<group>"; };
+		9141F0DA70A6CAA0988DDEB2ED3864E8 /* Pods-RudderSampleAppObjC-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RudderSampleAppObjC-frameworks.sh"; sourceTree = "<group>"; };
 		914EB1D68532B881FB5257C48F7761A1 /* RSProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSProperty.h; path = Rudder/RSProperty.h; sourceTree = "<group>"; };
 		92363ECFEE18C6209D3CFEAE0BA997BE /* RSECommerceCart.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCart.h; sourceTree = "<group>"; };
 		92467E0CF5D74C7DAA04E9C71D94D5B5 /* RSOption.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSOption.m; path = Rudder/RSOption.m; sourceTree = "<group>"; };
+		929DCAB06885679D674F32A379DDF738 /* Pods-RudderSampleAppSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppSwift.release.xcconfig"; sourceTree = "<group>"; };
 		95E36418543EDDDD75FD37D26D0E0072 /* RSProductClickedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductClickedEvent.m; sourceTree = "<group>"; };
 		97DDA3838CFE1DE099AB71D97D36F27B /* RSECommerceOrderBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceOrderBuilder.m; sourceTree = "<group>"; };
 		990914F42DAE549C0E8892DDEEDD314B /* RSProductAddedToWishListEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductAddedToWishListEvent.m; sourceTree = "<group>"; };
@@ -339,27 +355,31 @@
 		9F6B0356C260A4CADF99C9E5FBF50701 /* RSOrderCompletedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSOrderCompletedEvent.m; sourceTree = "<group>"; };
 		A06E69878A20C2761A74CD5D6F450E6F /* RSECommerceCheckoutBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCheckoutBuilder.h; sourceTree = "<group>"; };
 		A506638B37F3F2331E0428E33255A1E1 /* RSCartViewedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCartViewedEvent.m; sourceTree = "<group>"; };
+		A5DB156491E8A31ECA2E505E004C7A57 /* Pods-RudderSampleAppSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppSwift-Info.plist"; sourceTree = "<group>"; };
 		A6074227BE7675AB6AEDF44EE3A5D27F /* RSCouponEnteredEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCouponEnteredEvent.m; sourceTree = "<group>"; };
 		A6FA5D9993F9EB155E75D8D37376BF17 /* RSIntegrationFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSIntegrationFactory.h; path = Rudder/RSIntegrationFactory.h; sourceTree = "<group>"; };
-		A74A7525EA9613A2E0DBF3604989AF43 /* Pods-RudderSampleAppObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppObjC.release.xcconfig"; sourceTree = "<group>"; };
 		A93CB87E6E52A432020039FFDC8A2B97 /* RSServerConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSServerConfigManager.m; path = Rudder/RSServerConfigManager.m; sourceTree = "<group>"; };
 		A96F4783DFCB863E06D499C49246F83D /* Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Rudder.debug.xcconfig; sourceTree = "<group>"; };
+		AAD80FC08F8929D164DD77A6F8B0DDED /* Pods-RudderSampleApptvOSObjc.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RudderSampleApptvOSObjc.modulemap"; sourceTree = "<group>"; };
 		B0C22EDA8D9032085768262D063D8A77 /* RSECommerceOrder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceOrder.h; sourceTree = "<group>"; };
 		B12CCDCB833BBEDD3CB5C3C15F56679A /* RSProductListViewedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductListViewedEvent.h; sourceTree = "<group>"; };
 		B1D173DD4422139E83E595EAF249EA9F /* RSECommerceSortBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceSortBuilder.m; sourceTree = "<group>"; };
+		B2CB746930927D220E324AF6583F606E /* Pods-RudderSampleAppSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		B42D9BF15906832C877F20A20802394E /* Pods-RudderSampleAppObjC-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppObjC-Info.plist"; sourceTree = "<group>"; };
 		B56A5E3FBB45C16871902F0EBE7DB646 /* RSProductSharedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductSharedEvent.m; sourceTree = "<group>"; };
 		B6EAFF28696DB671A50CE2EFDB6AC76A /* RSCouponDeniedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCouponDeniedEvent.m; sourceTree = "<group>"; };
-		B9F368F02D0D6BA21CBCEADC8601305E /* Pods-RudderSampleAppSwift-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RudderSampleAppSwift-frameworks.sh"; sourceTree = "<group>"; };
 		BA2F347F6D82EA9AF9D4A96D298008BE /* RSECommerceCouponBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceCouponBuilder.m; sourceTree = "<group>"; };
 		BA85AD7EA29F895B330F9844C1258A92 /* RSProductSearchedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductSearchedEvent.h; sourceTree = "<group>"; };
-		BBE5C9866996C09B7C16E2F8279E4040 /* Pods-RudderSampleAppObjC-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RudderSampleAppObjC-dummy.m"; sourceTree = "<group>"; };
-		BCF41A5AE21E12406FE7EA43F0F79E31 /* Pods-Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rudder.debug.xcconfig"; sourceTree = "<group>"; };
+		BC3968F24AAF61FDB9936A59E6B50266 /* Pods-RudderSampleApptvOSObjc-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RudderSampleApptvOSObjc-dummy.m"; sourceTree = "<group>"; };
 		BD439EF27A398604BEECEEC996ABF67D /* RSOrderRefundedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSOrderRefundedEvent.h; sourceTree = "<group>"; };
+		C123C59B7C203885606374E819EC3246 /* Pods-RudderSampleAppObjC-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RudderSampleAppObjC-umbrella.h"; sourceTree = "<group>"; };
 		C2F8AD52DFC888582DCA356CDA45B4E3 /* UIViewController+RSScreen.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RSScreen.m"; path = "Rudder/UIViewController+RSScreen.m"; sourceTree = "<group>"; };
-		C3EB51230E5366A826AD92459FD9F374 /* Pods-RudderSampleAppSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C657639B67C3BFDACE83114E2A348AA2 /* RSElementCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSElementCache.h; path = Rudder/RSElementCache.h; sourceTree = "<group>"; };
 		C83DC5C007D701E3026498F5D3DCC70C /* RSTraitsBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSTraitsBuilder.m; path = Rudder/RSTraitsBuilder.m; sourceTree = "<group>"; };
+		C8FD458B9DF2FDC4A3BFF98CB458D02D /* Pods-RudderSampleApptvOSObjc-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RudderSampleApptvOSObjc-acknowledgements.markdown"; sourceTree = "<group>"; };
+		CBEF0BCC56A4B6C29509C9B7320AF834 /* Pods-Rudder-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Rudder-umbrella.h"; sourceTree = "<group>"; };
 		CCC44631483E32E0C9907AD446ECEFD7 /* RSECommerceWishList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceWishList.h; sourceTree = "<group>"; };
+		CCDB537467FC88E1CCB22F5AE6F2D260 /* Pods-RudderSampleAppObjC-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RudderSampleAppObjC-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CD1D1430705357CDBB1020048925ADCF /* RSECommerceWishListBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceWishListBuilder.h; sourceTree = "<group>"; };
 		CD809B617E797A951EDD58EDF8D65F53 /* RSScreenPropertyBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSScreenPropertyBuilder.h; path = Rudder/RSScreenPropertyBuilder.h; sourceTree = "<group>"; };
 		CF197D45048DE69F7389C8C6F45414F3 /* RSECommercePromotion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommercePromotion.h; sourceTree = "<group>"; };
@@ -367,19 +387,15 @@
 		D2F73BAFF9188BD8E4392C3E252A8E35 /* RSServerDestinationDefinition.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSServerDestinationDefinition.m; path = Rudder/RSServerDestinationDefinition.m; sourceTree = "<group>"; };
 		D3439B9BC54D73ECBEC28950CE43A4A8 /* RSECommerceCoupon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSECommerceCoupon.h; sourceTree = "<group>"; };
 		D35EC8C91F4887C2A99C7B651783E725 /* RSPreferenceManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSPreferenceManager.m; path = Rudder/RSPreferenceManager.m; sourceTree = "<group>"; };
-		D4601211A61D9AD01EAED0B811A4C3F7 /* Pods-RudderSampleAppSwift-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppSwift-acknowledgements.plist"; sourceTree = "<group>"; };
 		D6A8C1E79044007316667E4964ED103F /* RSOSInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSOSInfo.m; path = Rudder/RSOSInfo.m; sourceTree = "<group>"; };
-		D84FD3DB5E386AA6E2AAF15C6E6B057E /* Pods-RudderSampleAppSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RudderSampleAppSwift-umbrella.h"; sourceTree = "<group>"; };
 		D86836395C719B22BD530A747779C26F /* RSProductListFilteredEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductListFilteredEvent.m; sourceTree = "<group>"; };
 		D89BD2A96AE43D778BA81804B65217A3 /* RSCheckoutStepCompletedEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSCheckoutStepCompletedEvent.h; sourceTree = "<group>"; };
 		DA3E23422E48D4911779CE642FF1D88E /* RSECommerceWishList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceWishList.m; sourceTree = "<group>"; };
 		DAD699B0FC893E048A5F1C2933E0CA18 /* RSClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSClient.h; path = Rudder/RSClient.h; sourceTree = "<group>"; };
 		DB15F3CAB1601A83E2CECA6A435421BF /* RSScreenPropertyBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSScreenPropertyBuilder.m; path = Rudder/RSScreenPropertyBuilder.m; sourceTree = "<group>"; };
 		DC76546F14FFE0F4600BE101F934EF4D /* RSServerConfigSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSServerConfigSource.m; path = Rudder/RSServerConfigSource.m; sourceTree = "<group>"; };
-		DD0C2CD2362CA2F88D8FC34298884EE4 /* Pods-Rudder-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Rudder-umbrella.h"; sourceTree = "<group>"; };
 		DE372F12393D4B40B36422E6576EE149 /* RSDBMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSDBMessage.h; path = Rudder/RSDBMessage.h; sourceTree = "<group>"; };
 		DE6E2B0397D3FBE6B0DAF7EDB9825CEB /* RSWishListProductAddedToCartEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSWishListProductAddedToCartEvent.m; sourceTree = "<group>"; };
-		DE9CDB4FE3FF36D2530A8396F9268420 /* Pods-RudderSampleAppSwift-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RudderSampleAppSwift-acknowledgements.markdown"; sourceTree = "<group>"; };
 		DF0C1AD4150AEC8F9422B93005699B34 /* RSTraits.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSTraits.h; path = Rudder/RSTraits.h; sourceTree = "<group>"; };
 		DF264726037498253ED6FDD0D8450A89 /* RSServerDestination.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSServerDestination.h; path = Rudder/RSServerDestination.h; sourceTree = "<group>"; };
 		DF50AF419040A7E6BB9B2E7E405423B7 /* Rudder-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Rudder-Info.plist"; sourceTree = "<group>"; };
@@ -389,16 +405,20 @@
 		E0E5ED09F25BC9C7160C30561FF70891 /* RSMessageBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSMessageBuilder.m; path = Rudder/RSMessageBuilder.m; sourceTree = "<group>"; };
 		E3D18355705791277378856850ADAA91 /* RSProductRemovedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductRemovedEvent.m; sourceTree = "<group>"; };
 		E3E659B1B1DE4D2710B3037ED77D0581 /* RSWishListProductAddedToCartEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSWishListProductAddedToCartEvent.h; sourceTree = "<group>"; };
+		E4F151ECA3C63817D6F5C159998C9D6C /* Pods-RudderSampleApptvOSObjc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleApptvOSObjc.release.xcconfig"; sourceTree = "<group>"; };
+		E6156BDE33C2924D98C96419C070E490 /* Pods-Rudder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Rudder-dummy.m"; sourceTree = "<group>"; };
 		E767063B12CA461C4D80484B76B30852 /* RSScreenInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSScreenInfo.m; path = Rudder/RSScreenInfo.m; sourceTree = "<group>"; };
 		E7A37D2CFC346161E6AAB8CC49F81FEB /* RSECommercePromotionBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommercePromotionBuilder.m; sourceTree = "<group>"; };
 		E84721385FB04BE437FED69969134983 /* RSCheckoutStartedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSCheckoutStartedEvent.m; sourceTree = "<group>"; };
-		E9AEC7C80965551339C432C5A8321BA7 /* Pods-RudderSampleAppObjC-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppObjC-Info.plist"; sourceTree = "<group>"; };
+		E9E4C90466AC95358B9E2F1B5063FC6E /* Pods-Rudder-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Rudder-acknowledgements.markdown"; sourceTree = "<group>"; };
 		EB2554382C78E0A6FD54DB9BF69411AF /* RSProductRemovedFromWishListEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RSProductRemovedFromWishListEvent.h; sourceTree = "<group>"; };
-		EB783B35849EE6FE549EBAF95FB31DF8 /* Pods-RudderSampleAppObjC-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RudderSampleAppObjC-frameworks.sh"; sourceTree = "<group>"; };
 		EB88F3E55C7C6247658522D04BF993F2 /* Rudder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Rudder-dummy.m"; sourceTree = "<group>"; };
+		ECEDF9E3FDCEFEF21603347ED9746815 /* Pods-RudderSampleAppSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RudderSampleAppSwift.modulemap"; sourceTree = "<group>"; };
 		ED3B7267989E608A818427767ACD3289 /* RSProductViewedEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSProductViewedEvent.m; sourceTree = "<group>"; };
-		EDC595BABA4701F96CAC5DFC39A85E8B /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
+		ED53AB623EF898F6CEB0293E37BDF6E1 /* Pods-Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rudder.release.xcconfig"; sourceTree = "<group>"; };
+		EDFD39B98E5EEBCD6305D37CD2C6E1F4 /* Pods_RudderSampleApptvOSObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleApptvOSObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE9349BD05F95C258E22ECFB30C64DBE /* RSECommerceFilterBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RSECommerceFilterBuilder.m; sourceTree = "<group>"; };
+		F30848004A26D493B92BEB2028A1D816 /* Pods-RudderSampleAppSwift-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RudderSampleAppSwift-acknowledgements.plist"; sourceTree = "<group>"; };
 		F36E6464CF6EFEADFE532DD5DE2A7BFE /* RSScreenInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSScreenInfo.h; path = Rudder/RSScreenInfo.h; sourceTree = "<group>"; };
 		F698E9A42FA2984446F3C7A2C01BE362 /* RSUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSUtils.h; path = Rudder/RSUtils.h; sourceTree = "<group>"; };
 		F78F793EB3194ADF00ADBE6379DE6263 /* RSServerConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSServerConfigManager.h; path = Rudder/RSServerConfigManager.h; sourceTree = "<group>"; };
@@ -426,6 +446,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFE2C7ABFE8B026C0BD99B57FCB0167B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0837DBD9D8F84DE0B079A01D66FDC71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2A651D68263A23D64F37BCE2147EA72 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +485,33 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
+		22C687B66EE4AE7B6D2F16AE9EEA08E9 /* Pods-Rudder */ = {
+			isa = PBXGroup;
+			children = (
+				5082116A4C5F20AAE1B95EA5C719DCCE /* Pods-Rudder.modulemap */,
+				E9E4C90466AC95358B9E2F1B5063FC6E /* Pods-Rudder-acknowledgements.markdown */,
+				5AA2821168902B4244D33AA4438AB9EE /* Pods-Rudder-acknowledgements.plist */,
+				E6156BDE33C2924D98C96419C070E490 /* Pods-Rudder-dummy.m */,
+				2C6EBB7ED973928F2C3A80AE95E1801D /* Pods-Rudder-Info.plist */,
+				CBEF0BCC56A4B6C29509C9B7320AF834 /* Pods-Rudder-umbrella.h */,
+				2037574F6F1E277CB4E4D4F1856ADF75 /* Pods-Rudder.debug.xcconfig */,
+				ED53AB623EF898F6CEB0293E37BDF6E1 /* Pods-Rudder.release.xcconfig */,
+			);
+			name = "Pods-Rudder";
+			path = "Target Support Files/Pods-Rudder";
+			sourceTree = "<group>";
+		};
+		2A8108E9C41960DA4378FCFD432CB653 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				22C687B66EE4AE7B6D2F16AE9EEA08E9 /* Pods-Rudder */,
+				FC602E94163EC57402E2314E6862D4FC /* Pods-RudderSampleAppObjC */,
+				79A11C0AD144365DBEE25A2EBECEA1DF /* Pods-RudderSampleAppSwift */,
+				4C64EF18F86D752B0F724959811A5E84 /* Pods-RudderSampleApptvOSObjc */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 		2FA1297FFED8FA08B2F25DF008AF9ABF /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,6 +525,23 @@
 			);
 			name = "Support Files";
 			path = "../Pods/Target Support Files/Rudder";
+			sourceTree = "<group>";
+		};
+		4C64EF18F86D752B0F724959811A5E84 /* Pods-RudderSampleApptvOSObjc */ = {
+			isa = PBXGroup;
+			children = (
+				AAD80FC08F8929D164DD77A6F8B0DDED /* Pods-RudderSampleApptvOSObjc.modulemap */,
+				C8FD458B9DF2FDC4A3BFF98CB458D02D /* Pods-RudderSampleApptvOSObjc-acknowledgements.markdown */,
+				246F127BDFD155F5BF8E05E45F1A7EAB /* Pods-RudderSampleApptvOSObjc-acknowledgements.plist */,
+				BC3968F24AAF61FDB9936A59E6B50266 /* Pods-RudderSampleApptvOSObjc-dummy.m */,
+				0857345D1FF612383F341DE3C80583AA /* Pods-RudderSampleApptvOSObjc-frameworks.sh */,
+				0CA07393E9E5C3DD1C2BA38A05F135AB /* Pods-RudderSampleApptvOSObjc-Info.plist */,
+				6765FCB0C0BAF7A52EF2424B03755845 /* Pods-RudderSampleApptvOSObjc-umbrella.h */,
+				04691068738B2F43FFE5F07FD261E6E1 /* Pods-RudderSampleApptvOSObjc.debug.xcconfig */,
+				E4F151ECA3C63817D6F5C159998C9D6C /* Pods-RudderSampleApptvOSObjc.release.xcconfig */,
+			);
+			name = "Pods-RudderSampleApptvOSObjc";
+			path = "Target Support Files/Pods-RudderSampleApptvOSObjc";
 			sourceTree = "<group>";
 		};
 		4D487B572FEEE333028FBFF638CC8A73 /* Rudder */ = {
@@ -552,17 +624,6 @@
 			path = ../Rudder;
 			sourceTree = "<group>";
 		};
-		4DD91CC8129D15C265FF5F9C28320F7C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				15E79C08CD7803563F2D7FFE5DEF7D2A /* Pods_Rudder.framework */,
-				1069F9AF205DB204069EE507FCBC1B38 /* Pods_RudderSampleAppObjC.framework */,
-				8186265C94FCF7719C64BE4CD47B2B14 /* Pods_RudderSampleAppSwift.framework */,
-				0EBB432EA825E0B031D4B798B0A53B0C /* Rudder.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		50F19500674CE0AE19DA4650FF28C5BF /* Events */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,64 +695,33 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		617A1E0C71D126E06C21673855D11E0E /* Targets Support Files */ = {
+		79A11C0AD144365DBEE25A2EBECEA1DF /* Pods-RudderSampleAppSwift */ = {
 			isa = PBXGroup;
 			children = (
-				A87195898E61B47D339FCB425776A946 /* Pods-Rudder */,
-				BCDC7C3B097DD7678C21686B7A49A0F9 /* Pods-RudderSampleAppObjC */,
-				7880DC1F1C642402CBC295E3677461DC /* Pods-RudderSampleAppSwift */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		7880DC1F1C642402CBC295E3677461DC /* Pods-RudderSampleAppSwift */ = {
-			isa = PBXGroup;
-			children = (
-				7EE0C5B947C0BE96A461E8B8FD9AD81B /* Pods-RudderSampleAppSwift.modulemap */,
-				DE9CDB4FE3FF36D2530A8396F9268420 /* Pods-RudderSampleAppSwift-acknowledgements.markdown */,
-				D4601211A61D9AD01EAED0B811A4C3F7 /* Pods-RudderSampleAppSwift-acknowledgements.plist */,
-				86ABD5481C2DE1000E1C2FD23D330944 /* Pods-RudderSampleAppSwift-dummy.m */,
-				B9F368F02D0D6BA21CBCEADC8601305E /* Pods-RudderSampleAppSwift-frameworks.sh */,
-				3EC17A150A09C04E1A9D415D0A3A4DCA /* Pods-RudderSampleAppSwift-Info.plist */,
-				D84FD3DB5E386AA6E2AAF15C6E6B057E /* Pods-RudderSampleAppSwift-umbrella.h */,
-				1369FBBF9FE1F58938689F5425822E80 /* Pods-RudderSampleAppSwift.debug.xcconfig */,
-				C3EB51230E5366A826AD92459FD9F374 /* Pods-RudderSampleAppSwift.release.xcconfig */,
+				ECEDF9E3FDCEFEF21603347ED9746815 /* Pods-RudderSampleAppSwift.modulemap */,
+				64F92675E6657F21B3D7B21D91DAD8A1 /* Pods-RudderSampleAppSwift-acknowledgements.markdown */,
+				F30848004A26D493B92BEB2028A1D816 /* Pods-RudderSampleAppSwift-acknowledgements.plist */,
+				2B052D76CE69FEA6BAA82FAF59666BA0 /* Pods-RudderSampleAppSwift-dummy.m */,
+				1A4691C0D124DCB85BA9D76D3DB1DA4E /* Pods-RudderSampleAppSwift-frameworks.sh */,
+				A5DB156491E8A31ECA2E505E004C7A57 /* Pods-RudderSampleAppSwift-Info.plist */,
+				58B2B8480DC8D5BA40050D2D8BCC339F /* Pods-RudderSampleAppSwift-umbrella.h */,
+				B2CB746930927D220E324AF6583F606E /* Pods-RudderSampleAppSwift.debug.xcconfig */,
+				929DCAB06885679D674F32A379DDF738 /* Pods-RudderSampleAppSwift.release.xcconfig */,
 			);
 			name = "Pods-RudderSampleAppSwift";
 			path = "Target Support Files/Pods-RudderSampleAppSwift";
 			sourceTree = "<group>";
 		};
-		A87195898E61B47D339FCB425776A946 /* Pods-Rudder */ = {
+		9110F2FC96ADED6F3068CE5986CB5502 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7923EB81559BC10D1B104239C64D79C7 /* Pods-Rudder.modulemap */,
-				1E22E10E74669B376DD78E5B1AB2597A /* Pods-Rudder-acknowledgements.markdown */,
-				4CFA65B789AE9DD39CAD5874A8E84180 /* Pods-Rudder-acknowledgements.plist */,
-				60DFA896873B413AA316770444EAFE7D /* Pods-Rudder-dummy.m */,
-				62BF9243E97A4BB39D73947534F20D81 /* Pods-Rudder-Info.plist */,
-				DD0C2CD2362CA2F88D8FC34298884EE4 /* Pods-Rudder-umbrella.h */,
-				BCF41A5AE21E12406FE7EA43F0F79E31 /* Pods-Rudder.debug.xcconfig */,
-				6EB603A2CFFB003D283827E8971D9857 /* Pods-Rudder.release.xcconfig */,
+				15E79C08CD7803563F2D7FFE5DEF7D2A /* Pods_Rudder.framework */,
+				1069F9AF205DB204069EE507FCBC1B38 /* Pods_RudderSampleAppObjC.framework */,
+				8186265C94FCF7719C64BE4CD47B2B14 /* Pods_RudderSampleAppSwift.framework */,
+				EDFD39B98E5EEBCD6305D37CD2C6E1F4 /* Pods_RudderSampleApptvOSObjc.framework */,
+				0EBB432EA825E0B031D4B798B0A53B0C /* Rudder.framework */,
 			);
-			name = "Pods-Rudder";
-			path = "Target Support Files/Pods-Rudder";
-			sourceTree = "<group>";
-		};
-		BCDC7C3B097DD7678C21686B7A49A0F9 /* Pods-RudderSampleAppObjC */ = {
-			isa = PBXGroup;
-			children = (
-				469B2137B61179FCC4488495C00196C1 /* Pods-RudderSampleAppObjC.modulemap */,
-				4DCDEC0847ED86E72825C558159A9B74 /* Pods-RudderSampleAppObjC-acknowledgements.markdown */,
-				1084A96D15BA9CC7A95DD9F25BFB29F7 /* Pods-RudderSampleAppObjC-acknowledgements.plist */,
-				BBE5C9866996C09B7C16E2F8279E4040 /* Pods-RudderSampleAppObjC-dummy.m */,
-				EB783B35849EE6FE549EBAF95FB31DF8 /* Pods-RudderSampleAppObjC-frameworks.sh */,
-				E9AEC7C80965551339C432C5A8321BA7 /* Pods-RudderSampleAppObjC-Info.plist */,
-				041A47E481C10E24A54DEE5DDDEA9987 /* Pods-RudderSampleAppObjC-umbrella.h */,
-				EDC595BABA4701F96CAC5DFC39A85E8B /* Pods-RudderSampleAppObjC.debug.xcconfig */,
-				A74A7525EA9613A2E0DBF3604989AF43 /* Pods-RudderSampleAppObjC.release.xcconfig */,
-			);
-			name = "Pods-RudderSampleAppObjC";
-			path = "Target Support Files/Pods-RudderSampleAppObjC";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -700,8 +730,8 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				E1F8777B22FE44C8976FB50FEDA0939B /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				4DD91CC8129D15C265FF5F9C28320F7C /* Products */,
-				617A1E0C71D126E06C21673855D11E0E /* Targets Support Files */,
+				9110F2FC96ADED6F3068CE5986CB5502 /* Products */,
+				2A8108E9C41960DA4378FCFD432CB653 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -770,6 +800,23 @@
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
+		FC602E94163EC57402E2314E6862D4FC /* Pods-RudderSampleAppObjC */ = {
+			isa = PBXGroup;
+			children = (
+				33934D11E00C0D590330B7AE77DFCB98 /* Pods-RudderSampleAppObjC.modulemap */,
+				CCDB537467FC88E1CCB22F5AE6F2D260 /* Pods-RudderSampleAppObjC-acknowledgements.markdown */,
+				1ACDDE80D4F12346E78F70DE50DD53E2 /* Pods-RudderSampleAppObjC-acknowledgements.plist */,
+				5BDE11D62E8FFFD890FEEEFB8F0D48AB /* Pods-RudderSampleAppObjC-dummy.m */,
+				9141F0DA70A6CAA0988DDEB2ED3864E8 /* Pods-RudderSampleAppObjC-frameworks.sh */,
+				B42D9BF15906832C877F20A20802394E /* Pods-RudderSampleAppObjC-Info.plist */,
+				C123C59B7C203885606374E819EC3246 /* Pods-RudderSampleAppObjC-umbrella.h */,
+				239CBACDA816016C35E3A0A99C39383D /* Pods-RudderSampleAppObjC.debug.xcconfig */,
+				4CFFFCC7C00489EDAAE216A2AA460BAC /* Pods-RudderSampleAppObjC.release.xcconfig */,
+			);
+			name = "Pods-RudderSampleAppObjC";
+			path = "Target Support Files/Pods-RudderSampleAppObjC";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -786,6 +833,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3C83983D9C85B216C3D41312FFE901E /* Pods-Rudder-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3735AD3010C622C2B104062184FF36CE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA19FD516E62D71588943B69BE66ED85 /* Pods-RudderSampleApptvOSObjc-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +1003,25 @@
 			productReference = 1069F9AF205DB204069EE507FCBC1B38 /* Pods_RudderSampleAppObjC.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		ED1442875122F890EF040AE071DA7152 /* Pods-RudderSampleApptvOSObjc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF1239BFB3CCF1810B6BA74145E79E9C /* Build configuration list for PBXNativeTarget "Pods-RudderSampleApptvOSObjc" */;
+			buildPhases = (
+				3735AD3010C622C2B104062184FF36CE /* Headers */,
+				435F33098F8DBC16C806D132DCD3F2A5 /* Sources */,
+				D0837DBD9D8F84DE0B079A01D66FDC71 /* Frameworks */,
+				DBDF2C32AB3ADEDD48EF497CCD529E91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00EDD31EB1C64DBA04B51B22688547F /* PBXTargetDependency */,
+			);
+			name = "Pods-RudderSampleApptvOSObjc";
+			productName = Pods_RudderSampleApptvOSObjc;
+			productReference = EDFD39B98E5EEBCD6305D37CD2C6E1F4 /* Pods_RudderSampleApptvOSObjc.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		F5C6323F415EBC1C6BAD0C1E271A0C4D /* Rudder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D07DE8E11B1A5CDA859AADEFFD9ABA7 /* Build configuration list for PBXNativeTarget "Rudder" */;
@@ -984,13 +1058,14 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 4DD91CC8129D15C265FF5F9C28320F7C /* Products */;
+			productRefGroup = 9110F2FC96ADED6F3068CE5986CB5502 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				9B63EB2B21774550FF5D96E93B350C18 /* Pods-Rudder */,
 				A4CFCC9C7144B5A9E7AB722CFC99CA48 /* Pods-RudderSampleAppObjC */,
 				252F608333A89F625DEE8CB4E23F6F6C /* Pods-RudderSampleAppSwift */,
+				ED1442875122F890EF040AE071DA7152 /* Pods-RudderSampleApptvOSObjc */,
 				F5C6323F415EBC1C6BAD0C1E271A0C4D /* Rudder */,
 			);
 		};
@@ -1018,6 +1093,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DBDF2C32AB3ADEDD48EF497CCD529E91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EC7644A3699E4CF3F5DF340AE0C2DF55 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1028,6 +1110,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		435F33098F8DBC16C806D132DCD3F2A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63C989FA2293C43F58CF4B31BE4DE69C /* Pods-RudderSampleApptvOSObjc-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4786CDF7038583A166CF73DCF188DC45 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1156,12 +1246,51 @@
 			target = F5C6323F415EBC1C6BAD0C1E271A0C4D /* Rudder */;
 			targetProxy = EEDE28BC80D53CED8B035007EB67ADED /* PBXContainerItemProxy */;
 		};
+		A00EDD31EB1C64DBA04B51B22688547F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Rudder;
+			target = F5C6323F415EBC1C6BAD0C1E271A0C4D /* Rudder */;
+			targetProxy = F418D9BD4CE4595A8ACF02C56409AF0E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		04E0B937E9C105F0935E41CDD04E1B35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4F151ECA3C63817D6F5C159998C9D6C /* Pods-RudderSampleApptvOSObjc.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RudderSampleApptvOSObjc/Pods-RudderSampleApptvOSObjc-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RudderSampleApptvOSObjc/Pods-RudderSampleApptvOSObjc.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		17014090AFDBAA3AC9EAD0A5F0F1ED30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDC595BABA4701F96CAC5DFC39A85E8B /* Pods-RudderSampleAppObjC.debug.xcconfig */;
+			baseConfigurationReference = 239CBACDA816016C35E3A0A99C39383D /* Pods-RudderSampleAppObjC.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1259,7 +1388,7 @@
 		};
 		435E453A3D0B535438879A5F4C71D9C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCF41A5AE21E12406FE7EA43F0F79E31 /* Pods-Rudder.debug.xcconfig */;
+			baseConfigurationReference = 2037574F6F1E277CB4E4D4F1856ADF75 /* Pods-Rudder.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1289,40 +1418,7 @@
 			};
 			name = Debug;
 		};
-		6E1B5AD795A4566EB2EDE7E6164C70B0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3EB51230E5366A826AD92459FD9F374 /* Pods-RudderSampleAppSwift.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		8E90DAC78D72A7A3623A5B5EE9E6F124 /* Release */ = {
+		5973CBF639AB142C12686EF942EF5ED7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 45EB78B85BA564D077DDBBADFC937202 /* Rudder.release.xcconfig */;
 			buildSettings = {
@@ -1353,7 +1449,40 @@
 			};
 			name = Release;
 		};
-		B121812E7B4612784DDE5D8BE20FC220 /* Debug */ = {
+		6E1B5AD795A4566EB2EDE7E6164C70B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 929DCAB06885679D674F32A379DDF738 /* Pods-RudderSampleAppSwift.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		91341549736C0586ACDD5BA03167A0FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A96F4783DFCB863E06D499C49246F83D /* Rudder.debug.xcconfig */;
 			buildSettings = {
@@ -1377,6 +1506,38 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		92DFE0610E9989CD0063EA83C81BD95D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04691068738B2F43FFE5F07FD261E6E1 /* Pods-RudderSampleApptvOSObjc.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RudderSampleApptvOSObjc/Pods-RudderSampleApptvOSObjc-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RudderSampleApptvOSObjc/Pods-RudderSampleApptvOSObjc.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1446,7 +1607,7 @@
 		};
 		CB7B75934054914F8711B33E886B6054 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EB603A2CFFB003D283827E8971D9857 /* Pods-Rudder.release.xcconfig */;
+			baseConfigurationReference = ED53AB623EF898F6CEB0293E37BDF6E1 /* Pods-Rudder.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1479,7 +1640,7 @@
 		};
 		FDCB2A9973B9E5FBA797CA5C27464357 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1369FBBF9FE1F58938689F5425822E80 /* Pods-RudderSampleAppSwift.debug.xcconfig */;
+			baseConfigurationReference = B2CB746930927D220E324AF6583F606E /* Pods-RudderSampleAppSwift.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1511,7 +1672,7 @@
 		};
 		FF92939F8208E08E79E9AC609721ECD4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A74A7525EA9613A2E0DBF3604989AF43 /* Pods-RudderSampleAppObjC.release.xcconfig */;
+			baseConfigurationReference = 4CFFFCC7C00489EDAAE216A2AA460BAC /* Pods-RudderSampleAppObjC.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1566,8 +1727,8 @@
 		5D07DE8E11B1A5CDA859AADEFFD9ABA7 /* Build configuration list for PBXNativeTarget "Rudder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B121812E7B4612784DDE5D8BE20FC220 /* Debug */,
-				8E90DAC78D72A7A3623A5B5EE9E6F124 /* Release */,
+				91341549736C0586ACDD5BA03167A0FB /* Debug */,
+				5973CBF639AB142C12686EF942EF5ED7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1586,6 +1747,15 @@
 			buildConfigurations = (
 				17014090AFDBAA3AC9EAD0A5F0F1ED30 /* Debug */,
 				FF92939F8208E08E79E9AC609721ECD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF1239BFB3CCF1810B6BA74145E79E9C /* Build configuration list for PBXNativeTarget "Pods-RudderSampleApptvOSObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92DFE0610E9989CD0063EA83C81BD95D /* Debug */,
+				04E0B937E9C105F0935E41CDD04E1B35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
