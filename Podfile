@@ -1,5 +1,4 @@
 workspace 'Rudder.xcworkspace'
-platform :ios, '9.0'
 use_frameworks!
 inhibit_all_warnings!
 
@@ -9,24 +8,23 @@ end
 
 project 'RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
 project 'RudderSammpleAppSwift/RudderSammpleAppSwift.xcodeproj'
-project 'RudderSampleApptvOSObjc/RudderSampleApptvOSObjc.xcodeproj'
+project 'RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
 project 'Rudder/Rudder.xcodeproj'
-
-target 'Rudder' do
-    
-end
 
 target 'RudderSampleAppObjC' do
     project 'RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
+    platform :ios, '9.0'
     shared_pods
 end
 
 target 'RudderSampleAppSwift' do
     project 'RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
+    platform :ios, '9.0'
     shared_pods
 end
 
-target 'RudderSampleApptvOSObjc' do
-    project 'RudderSampleApptvOSObjc/RudderSampleApptvOSObjc.xcodeproj'
+target 'RudderSampleApptvOSObjC' do
+    project 'RudderSampleApptvOSObjc/RudderSampleApptvOSObjC.xcodeproj'
+    platform :tvos, '9.0'
     shared_pods
 end

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1300"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "252F608333A89F625DEE8CB4E23F6F6C"
-               BuildableName = "Pods_RudderSampleAppSwift.framework"
-               BlueprintName = "Pods-RudderSampleAppSwift"
+               BlueprintIdentifier = "8C24B67D326D0492037910C9C573B769"
+               BuildableName = "Rudder.framework"
+               BlueprintName = "Rudder-tvOS"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

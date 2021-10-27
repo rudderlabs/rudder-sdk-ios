@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A4CFCC9C7144B5A9E7AB722CFC99CA48"
-               BuildableName = "Pods_RudderSampleAppObjC.framework"
-               BlueprintName = "Pods-RudderSampleAppObjC"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "F636323D27291C0D0086D05A"
+               BuildableName = "RudderSampleApptvOSObjC.app"
+               BlueprintName = "RudderSampleApptvOSObjC"
+               ReferencedContainer = "container:RudderSampleApptvOSObjC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,6 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F636323D27291C0D0086D05A"
+            BuildableName = "RudderSampleApptvOSObjC.app"
+            BlueprintName = "RudderSampleApptvOSObjC"
+            ReferencedContainer = "container:RudderSampleApptvOSObjC.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,6 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F636323D27291C0D0086D05A"
+            BuildableName = "RudderSampleApptvOSObjC.app"
+            BlueprintName = "RudderSampleApptvOSObjC"
+            ReferencedContainer = "container:RudderSampleApptvOSObjC.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
