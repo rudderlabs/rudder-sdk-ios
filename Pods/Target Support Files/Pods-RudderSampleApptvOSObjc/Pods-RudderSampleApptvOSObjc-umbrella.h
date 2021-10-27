@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_RudderSampleApptvOSObjcVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_RudderSampleApptvOSObjcVersionString[];
+FOUNDATION_EXPORT double Pods_RudderSampleApptvOSObjCVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_RudderSampleApptvOSObjCVersionString[];
 

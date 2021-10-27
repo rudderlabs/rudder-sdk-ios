@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03B1844090D8DC7A4F5C2439 /* Pods_RudderSampleAppObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2837B90AEDC1096A928B3C /* Pods_RudderSampleAppObjC.framework */; };
 		0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0651F10C24C9C46400A43CAC /* iAd.framework */; };
+		2C4850F300A613106183A88A /* Pods_RudderSampleAppObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF20F0D95B7DAE37E16207F /* Pods_RudderSampleAppObjC.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -25,14 +25,14 @@
 
 /* Begin PBXFileReference section */
 		0651F10C24C9C46400A43CAC /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
-		0EF8CE481E1611AF984B1E64 /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
-		12E87A4AF074A5E203FAEE34 /* Pods-RudderSampleAppObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.release.xcconfig"; sourceTree = "<group>"; };
-		1F2837B90AEDC1096A928B3C /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C3A0DF0B4207DFEB3D35566 /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* RudderSampleAppObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RudderSampleAppObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		8FCCDD77C85093051AF0F95F /* Pods-RudderSampleAppObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.release.xcconfig"; sourceTree = "<group>"; };
+		AFF20F0D95B7DAE37E16207F /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7619EC2727E28700B086F4 /* RudderSampleAppObjC-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RudderSampleAppObjC-Info.plist"; sourceTree = "<group>"; };
 		ED7619EE2727E28700B086F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ED7619EF2727E28700B086F4 /* CustomIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIntegration.m; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 				0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				03B1844090D8DC7A4F5C2439 /* Pods_RudderSampleAppObjC.framework in Frameworks */,
+				2C4850F300A613106183A88A /* Pods_RudderSampleAppObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +72,7 @@
 				ED7619EB2727E28700B086F4 /* RudderSampleAppObjC */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				FA41C06EF96770ABA748718B /* Pods */,
+				9D8FA0C712CEAA6C517C99A0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,9 +92,19 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				1F2837B90AEDC1096A928B3C /* Pods_RudderSampleAppObjC.framework */,
+				AFF20F0D95B7DAE37E16207F /* Pods_RudderSampleAppObjC.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9D8FA0C712CEAA6C517C99A0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C3A0DF0B4207DFEB3D35566 /* Pods-RudderSampleAppObjC.debug.xcconfig */,
+				8FCCDD77C85093051AF0F95F /* Pods-RudderSampleAppObjC.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
 			sourceTree = "<group>";
 		};
 		ED7619EB2727E28700B086F4 /* RudderSampleAppObjC */ = {
@@ -119,16 +129,6 @@
 			path = RudderSampleAppObjC;
 			sourceTree = "<group>";
 		};
-		FA41C06EF96770ABA748718B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0EF8CE481E1611AF984B1E64 /* Pods-RudderSampleAppObjC.debug.xcconfig */,
-				12E87A4AF074A5E203FAEE34 /* Pods-RudderSampleAppObjC.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -136,11 +136,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "RudderSampleAppObjC" */;
 			buildPhases = (
-				67BA2DBBC7232791945A0F18 /* [CP] Check Pods Manifest.lock */,
+				972F429D7252D4606A5D43B3 /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				0B22FB54DA17270E347C7858 /* [CP] Embed Pods Frameworks */,
+				B456CAA503A14A2BA7BD41FE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,25 +199,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B22FB54DA17270E347C7858 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Rudder/Rudder.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		67BA2DBBC7232791945A0F18 /* [CP] Check Pods Manifest.lock */ = {
+		972F429D7252D4606A5D43B3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -237,6 +219,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B456CAA503A14A2BA7BD41FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -389,7 +389,7 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0EF8CE481E1611AF984B1E64 /* Pods-RudderSampleAppObjC.debug.xcconfig */;
+			baseConfigurationReference = 5C3A0DF0B4207DFEB3D35566 /* Pods-RudderSampleAppObjC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -407,7 +407,7 @@
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12E87A4AF074A5E203FAEE34 /* Pods-RudderSampleAppObjC.release.xcconfig */;
+			baseConfigurationReference = 8FCCDD77C85093051AF0F95F /* Pods-RudderSampleAppObjC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
