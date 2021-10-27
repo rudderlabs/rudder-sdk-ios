@@ -7,7 +7,10 @@
 //
 
 #import "RSNetwork.h"
+
+#if !TARGET_OS_TV
 #import <CoreTelephony/CTCarrier.h>
+#endif
 
 @implementation RSNetwork
 
@@ -15,11 +18,14 @@
 {
     self = [super init];
     if (self) {
+
+        #if !TARGET_OS_TV
         NSString *carrierName = [[[CTCarrier alloc] init] carrierName];
         if (carrierName == nil) {
             carrierName = @"unavailable";
         }
         _carrier = carrierName;
+        #endif
         _wifi = YES;
         _bluetooth = NO;
         _cellular = NO;

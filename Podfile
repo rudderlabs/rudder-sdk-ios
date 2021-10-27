@@ -9,6 +9,7 @@ end
 
 project 'RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
 project 'RudderSammpleAppSwift/RudderSammpleAppSwift.xcodeproj'
+project 'RudderSampleApptvOSObjc/RudderSampleApptvOSObjc.xcodeproj'
 project 'Rudder/Rudder.xcodeproj'
 
 target 'Rudder' do
@@ -22,5 +23,10 @@ end
 
 target 'RudderSampleAppSwift' do
     project 'RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
+    shared_pods
+end
+
+target 'RudderSampleApptvOSObjc' do
+    project 'RudderSampleApptvOSObjc/RudderSampleApptvOSObjc.xcodeproj'
     shared_pods
 end
