@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) setRSOption: (RSOption*) option;
 - (instancetype) setTraits: (RSTraits*) traits;
 - (instancetype) setIntegrations:(NSDictionary<NSString *, NSObject *>*) integrations;
+- (void) setExternalIds:(RSOption *) option;
 
 - (RSMessage*) build;
 
