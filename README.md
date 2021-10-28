@@ -93,7 +93,7 @@ A shared instance of `RSClient` is accesible after the initialization by `[RSCli
 [[RSClient sharedInstance] reset];
 ```
 
-For detailed documentation, click [**here**](https://docs.rudderstack.com/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+For detailed documentation, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
 
 ## Contact us
 
