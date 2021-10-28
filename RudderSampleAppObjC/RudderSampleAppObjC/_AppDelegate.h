@@ -7,8 +7,11 @@
 //
 
 @import UIKit;
+@import UserNotifications;
+@import Firebase;
+@import FirebaseMessaging;
 
-@interface _AppDelegate : UIResponder <UIApplicationDelegate>
+@interface _AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

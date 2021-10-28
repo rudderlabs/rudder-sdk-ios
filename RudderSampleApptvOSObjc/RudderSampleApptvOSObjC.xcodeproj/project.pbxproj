@@ -83,18 +83,18 @@
 		F636324027291C0D0086D05A /* RudderSampleApptvOSObjC */ = {
 			isa = PBXGroup;
 			children = (
+				F636324127291C0D0086D05A /* AppDelegate.h */,
+				F636324227291C0D0086D05A /* AppDelegate.m */,
+				F636324A27291C0F0086D05A /* Assets.xcassets */,
 				F6FDD63E27296E910024E78F /* CustomFactory.h */,
 				F6FDD63C27296E910024E78F /* CustomFactory.m */,
 				F6FDD63D27296E910024E78F /* CustomIntegration.h */,
 				F6FDD63B27296E910024E78F /* CustomIntegration.m */,
-				F636324127291C0D0086D05A /* AppDelegate.h */,
-				F636324227291C0D0086D05A /* AppDelegate.m */,
-				F636324427291C0D0086D05A /* ViewController.h */,
-				F636324527291C0D0086D05A /* ViewController.m */,
-				F636324727291C0D0086D05A /* Main.storyboard */,
-				F636324A27291C0F0086D05A /* Assets.xcassets */,
 				F636324C27291C0F0086D05A /* LaunchScreen.storyboard */,
 				F636324F27291C0F0086D05A /* main.m */,
+				F636324727291C0D0086D05A /* Main.storyboard */,
+				F636324427291C0D0086D05A /* ViewController.h */,
+				F636324527291C0D0086D05A /* ViewController.m */,
 			);
 			path = RudderSampleApptvOSObjC;
 			sourceTree = "<group>";

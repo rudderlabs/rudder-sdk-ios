@@ -15,6 +15,8 @@ target 'RudderSampleAppObjC' do
     project 'RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
     platform :ios, '9.0'
     shared_pods
+    pod 'Firebase/Analytics'
+    pod 'Firebase/Messaging'
 end
 
 target 'RudderSampleAppSwift' do
