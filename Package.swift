@@ -16,13 +16,13 @@ let package = Package(
     targets: [
         .target(
             name: "Rudder",
-            path: "Rudder",
-            sources: ["Rudder/"],
-            publicHeadersPath: "Rudder/Rudder/",
-            cxxSettings: [
-                .headerSearchPath("Rudder"),
-                .headerSearchPath("Rudder/Ecomm"),
-                .headerSearchPath("Rudder/Ecomm/Events")
+            path: "Sources",
+            sources: ["Classes/"],
+            publicHeadersPath: "Classes/Public/",
+            cSettings: [
+                .headerSearchPath("Classes/"),
+                .headerSearchPath("Classes/Ecomm"),
+                .headerSearchPath("Classes/Ecomm/Events")
             ]
         )
     ]
