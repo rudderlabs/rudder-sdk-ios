@@ -23,9 +23,6 @@ let package = Package(
                 .headerSearchPath("Classes/"),
                 .headerSearchPath("Classes/Ecomm"),
                 .headerSearchPath("Classes/Ecomm/Events")
-            ],
-            linkerSettings: [
-                .linkedLibrary("z")
             ]
         )
     ]
