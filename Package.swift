@@ -19,7 +19,7 @@ let package = Package(
             path: "Rudder",
             sources: ["Rudder/"],
             publicHeadersPath: "Rudder/Rudder/",
-            cxxSettings: [
+            cSettings: [
                 .headerSearchPath("Rudder"),
                 .headerSearchPath("Rudder/Ecomm"),
                 .headerSearchPath("Rudder/Ecomm/Events")
