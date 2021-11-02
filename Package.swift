@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "Rudder",
+            type: .dynamic,
             targets: ["Rudder"]
         )
     ],
@@ -20,9 +21,7 @@ let package = Package(
             sources: ["Rudder/"],
             publicHeadersPath: "Rudder/Rudder/",
             cSettings: [
-                .headerSearchPath("Rudder"),
-                .headerSearchPath("Rudder/Ecomm"),
-                .headerSearchPath("Rudder/Ecomm/Events")
+                .headerSearchPath("Rudder/**")
             ]
         )
     ]
