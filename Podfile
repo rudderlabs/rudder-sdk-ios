@@ -25,7 +25,7 @@ target 'RudderSampleAppSwift' do
 end
 
 target 'RudderSampleApptvOSObjC' do
-    project 'Examples/RudderSampleApptvOSObjc/RudderSampleApptvOSObjC.xcodeproj'
+    project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
     platform :tvos, '9.0'
     shared_pods
 end
