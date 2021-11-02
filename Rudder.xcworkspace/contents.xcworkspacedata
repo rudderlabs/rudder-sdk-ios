@@ -2,21 +2,21 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Rudder/Rudder.xcodeproj">
+      location = "group:Rudder.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj">
+      location = "group:Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj">
+      location = "group:Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:RudderSampleApptvOSObjc/RudderSampleApptvOSObjC.xcodeproj">
+      location = "group:Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/RudderSampleApptvOSObjc/RudderSampleApptvOSObjC.xcodeproj">
    </FileRef>
 </Workspace>

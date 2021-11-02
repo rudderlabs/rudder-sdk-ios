@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                        DESC
 
   s.homepage         = "https://github.com/rudderlabs/rudder-sdk-ios"
-  s.license          = { :type => "Apache", :file => "../LICENSE" }
+  s.license          = { :type => "Apache", :file => "LICENSE" }
   s.author           = { "Rudderstack" => "arnab@rudderlabs.com" }
   s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :tag => "v1.1.0" }
 
