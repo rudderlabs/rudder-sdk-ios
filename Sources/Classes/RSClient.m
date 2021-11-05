@@ -257,6 +257,7 @@ static RSOption* _defaultOptions = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
+    traits = [traits mutableCopy];
     RSTraits* traitsObj = [[RSTraits alloc] initWithDict: traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -270,6 +271,7 @@ static RSOption* _defaultOptions = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
+    traits = [traits mutableCopy];
     RSTraits *traitsObj = [[RSTraits alloc] initWithDict:traits];
     [traitsObj setUserId:userId];
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];

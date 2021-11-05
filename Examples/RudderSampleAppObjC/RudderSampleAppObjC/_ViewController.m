@@ -48,11 +48,35 @@
 //        }
 //    }];
     
-    RSOption *options = [[RSOption alloc] init];
-    [options putExternalId:@"test" withId:@"test"];
-    [[RSClient sharedInstance] screen:@"ViewController"];
-    [[RSClient sharedInstance] screen:@"Main screen name" properties:@{@"prop_key" : @"prop_value"}];
-    [[RSClient sharedInstance] screen:@"test screen" properties:@{@"prop_key" : @"prop_value"} options:options];
+//    RSOption *options = [[RSOption alloc] init];
+//    [options putExternalId:@"test" withId:@"test"];
+//    [[RSClient sharedInstance] screen:@"ViewController"];
+//    [[RSClient sharedInstance] screen:@"Main screen name" properties:@{@"prop_key" : @"prop_value"}];
+//    [[RSClient sharedInstance] screen:@"test screen" properties:@{@"prop_key" : @"prop_value"} options:options];
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+    NSMutableDictionary *traits = [[NSMutableDictionary alloc] initWithDictionary:@{
+        @"firstName": @"Test",
+        @"lastName": @"Name",
+        @"email": @"test_1@gmail.com",
+        @"phone": @"+91-986543210",
+        @"company": @{
+            @"id": @"test_company_id",
+            @"name": @"Test Company",
+            @"industry": @"Test Industry",
+            @"address": @"Test Location"
+        },
+        @"user_id": [NSNull null]
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    [[RSClient sharedInstance] identify:@"test_user_id" traits:@{}];
+    });
+        
+    [traits removeAllObjects];
+//    [traits setValue:@"Kolkata" forKey:@"address"];
+//    });
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

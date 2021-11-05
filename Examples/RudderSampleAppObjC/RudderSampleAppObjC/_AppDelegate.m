@@ -54,11 +54,11 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         @"language": @"objective-c",
         @"version": @"1.0.0"
     } withKey: @"customContext"];
-    [[RSClient sharedInstance] track:@"simple_track_event"];
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    } options:option];
+//    [[RSClient sharedInstance] track:@"simple_track_event"];
+//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+//        @"key_1" : @"value_1",
+//        @"key_2" : @"value_2"
+//    } options:option];
     
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
