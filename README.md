@@ -18,7 +18,7 @@
     ·
     <a href="https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/">Documentation</a>
     ·
-    <a href="https://rudderstack.com/join-rudderstack-slack-community">Slack</a>
+    <a href="https://rudderstack.com/join-rudderstack-slack-community">Community Slack</a>
   </b>
 </p>
 
@@ -65,11 +65,19 @@ You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of t
 
 #### Xcode
 
-* Go to **File** - **Swift Packages** - **Add Package Dependency...**, as shown:
+* Go to **File** - **Add Package**, as shown:
 
-* Enter the package repository (git@github.com:rudderlabs/rudder-sdk-ios.git) in the search bar, as shown:
+![Adding a package](https://user-images.githubusercontent.com/59817155/140903027-286a1d64-f5d5-4041-9827-47b6cef76a46.png)
 
-* In **Choose Package Options**, go to **Rules**. Select the **Version** as **Up to Next Major** and enter as the value, as shown:
+* Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
+
+* In **Dependency Rule**, select **Up to Next Major Version** and enter `1.1.4` as the value, as shown:
+
+![Setting dependency](https://user-images.githubusercontent.com/59817155/140903050-842b2418-5e47-4b8f-a43a-6eb4ad1a71c9.png)
+
+* Select the project to which you want to add the package.
+
+* Finally, click on **Add Package**.
 
 #### Swift
 
@@ -83,18 +91,16 @@ let package = Package(
     dependencies: [
         // Add a package containing Analytics as the name along with the git url
         .package(
-            name: " ",
+            name: "",
             url: ""
         )
     ],
     targets: [
         name: "MyiOSApplication",
-        dependencies: [" "] // Add the SDK as a dependency
+        dependencies: [""] // Add the SDK as a dependency
     ]
 )
 ```
-
-> **We highly recommend using Xcode to add your package.** 
 
 ## Initializing the RudderStack client
 
