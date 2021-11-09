@@ -84,20 +84,34 @@ You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of t
 To leverage package.swift, use the following snippet in your project:
 
 ```swift
+// swift-tools-version:5.5
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
-    name: "RudderApp",
+    name: "RudderStack",
+    products: [
+        // Products define the executables and libraries a package produces, and make them visible to other packages.
+        .library(
+            name: "RudderStack",
+            targets: ["RudderStack"]),
+    ],
     dependencies: [
-        // Add a package containing Analytics as the name along with the git url
-        .package(
-            name: "",
-            url: ""
-        )
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.1.4")
     ],
     targets: [
-        name: "MyiOSApplication",
-        dependencies: [""] // Add the SDK as a dependency
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "RudderStack",
+            dependencies: [
+                .product(name: "Rudder", package: "rudder-sdk-ios")
+            ]),
+        .testTarget(
+            name: "RudderStackTests",
+            dependencies: ["RudderStack"]),
     ]
 )
 ```
