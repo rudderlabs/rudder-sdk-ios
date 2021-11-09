@@ -1,8 +1,32 @@
-[![Version](https://img.shields.io/cocoapods/v/Rudder.svg?style=flat)](https://cocoapods.org/pods/Rudder)
+<p align="center">
+  <a href="https://rudderstack.com/">
+    <img src="https://user-images.githubusercontent.com/59817155/121357083-1c571300-c94f-11eb-8cc7-ce6df13855c9.png">
+  </a>
+</p>
+
+<p align="center"><b>The Customer Data Platform for Developers</b></p>
+
+<p align="center">
+  <a href="https://cocoapods.org/pods/Rudder">
+    <img src="https://img.shields.io/cocoapods/v/Rudder.svg?style=flat">
+    </a>
+</p>
+
+<p align="center">
+  <b>
+    <a href="https://rudderstack.com">Website</a>
+    ·
+    <a href="https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/">Documentation</a>
+    ·
+    <a href="https://rudderstack.com/join-rudderstack-slack-community">Slack</a>
+  </b>
+</p>
+
+---
 
 # RudderStack iOS SDK
 
-RudderStack's iOS SDK lets you track event data from your iOS applications. After integrating the SDK, you will be able to send the event data to your preferred destination/s such as Google Analytics, Amplitude, and more.
+RudderStack's iOS SDK lets you track event data from your iOS applications. After integrating the SDK, you will be able to send the event data to your preferred destinations such as Google Analytics, Amplitude, and more.
 
 For detailed documentation on the iOS SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
 
@@ -93,7 +117,17 @@ A shared instance of `RSClient` is accesible after the initialization by `[RSCli
 [[RSClient sharedInstance] reset];
 ```
 
-For detailed documentation, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+For detailed documentation on the iOS SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+
+## Contribute
+
+We would love to see you contribute to this project. Get more information on how to contribute [**here**](./CONTRIBUTING.md).
+
+## About RudderStack
+
+[**RudderStack**](https://rudderstack.com/) is a **customer data platform for developers**. Our tooling makes it easy to deploy pipelines that collect customer data from every app, website and SaaS platform, then activate it in your warehouse and business tools.
+
+More information on RudderStack can be found [**here**](https://github.com/rudderlabs/rudder-server).
 
 ## Contact us
 
