@@ -32,7 +32,7 @@ For detailed documentation on the iOS SDK, click [**here**](https://rudderstack.
 
 ## Installing the iOS SDK
 
-The iOS SDK is available through [**CocoaPods**](https://cocoapods.org) and [**Carthage**](https://github.com/Carthage/Carthage).
+The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Carthage**](https://github.com/Carthage/Carthage), and [**Swift Package Manager (SPM)**](https://www.swift.org/package-manager/).
 
 ### CocoaPods
 
@@ -55,6 +55,46 @@ github "rudderlabs/rudder-sdk-ios" "v1.1.4"
 ```xcode
 #import <Rudder/Rudder.h>
 ```
+
+### Swift Package Manager (SPM)
+
+You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of the following two ways:
+
+* [Xcode](#xcode)
+* [Swift](#swift)
+
+#### Xcode
+
+* Go to **File** - **Swift Packages** - **Add Package Dependency...**, as shown:
+
+* Enter the package repository (git@github.com:rudderlabs/rudder-sdk-ios.git) in the search bar, as shown:
+
+* In **Choose Package Options**, go to **Rules**. Select the **Version** as **Up to Next Major** and enter as the value, as shown:
+
+#### Swift
+
+To leverage package.swift, use the following snippet in your project:
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "RudderApp",
+    dependencies: [
+        // Add a package containing Analytics as the name along with the git url
+        .package(
+            name: " ",
+            url: ""
+        )
+    ],
+    targets: [
+        name: "MyiOSApplication",
+        dependencies: [" "] // Add the SDK as a dependency
+    ]
+)
+```
+
+> **We highly recommend using Xcode to add your package.** 
 
 ## Initializing the RudderStack client
 
