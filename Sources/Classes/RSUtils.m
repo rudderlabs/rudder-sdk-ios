@@ -15,11 +15,12 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.timeZone = [[NSTimeZone alloc] initWithName:@"UTC"];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     return [dateFormatter stringFromDate:date];
 }
 
 + (NSString *)getTimestamp {
-    return [RSUtils getDateString:[[NSDate alloc] init]];
+    return [self getDateString:[[NSDate alloc] init]];
 }
 
 + (const char *)getDBPath {
