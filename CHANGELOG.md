@@ -14,3 +14,6 @@ All notable changes to this project will be documented in this file.
 - Pod name from `RudderSDKCore` to `Rudder` and main header file from `RudderSDKCore.h` to `Rudder.h`. Please follow the doumentation page for more information.
 - New field `userId` is supported to make it more compliant under `context->traits` for `identify` and all successive calls. Old filed for developer identification i.e. `id` is still supported.
 - Removed User agent
+## Version - 1.1.5 - 2021-11-18
+### Changed
+- Bugfix - timestamp as Gregorian Calender.
