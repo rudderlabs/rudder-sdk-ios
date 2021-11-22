@@ -12,8 +12,8 @@
 #import "CustomFactory.h"
 
 
-static NSString *DATA_PLANE_URL = @"https://rudder-dev.dev.rudderlabs.com";
-static NSString *WRITE_KEY = @"1wTjqsrUibYS7kHjcrQKDWsrlBY";
+static NSString *DATA_PLANE_URL = @"https://6139-175-101-36-4.ngrok.io";
+static NSString *WRITE_KEY = @"1n0JdVPZTRUIkLXYccrWzZwdGSx";
 
 @implementation _AppDelegate
 
@@ -23,6 +23,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 {
     
     [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
+    [RSClient putDeviceToken:@"DEVTOKEN1"];
     
     // Override point for customization after application launch.
     RSOption *defaultOption = [[RSOption alloc]init];
@@ -41,8 +42,6 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
-    
-    [[[RSClient sharedInstance] getContext] putDeviceToken:[self getDeviceToken]];
     [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
     
@@ -54,11 +53,12 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         @"language": @"objective-c",
         @"version": @"1.0.0"
     } withKey: @"customContext"];
-//    [[RSClient sharedInstance] track:@"simple_track_event"];
-//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-//        @"key_1" : @"value_1",
-//        @"key_2" : @"value_2"
-//    } options:option];
+    [[RSClient sharedInstance] track:@"simple_track_event"];
+    [RSClient putDeviceToken:@"DEVTOKEN2"];
+    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    } options:option];
     
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
