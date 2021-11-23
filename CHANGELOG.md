@@ -18,6 +18,6 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Bugfix - timestamp as Gregorian Calender.
 
-## Version - 1.2.5 - 2021-11-22
+## Version - 1.2.0 - 2021-11-22
 ### Changed
 - Added Support for Setting device token before SDK initialization as well.
