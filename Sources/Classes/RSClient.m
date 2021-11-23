@@ -380,10 +380,8 @@ static NSString* _deviceToken = nil;
 }
 
 + (void)putDeviceToken:(NSString *)deviceToken {
-    if(deviceToken != nil && [deviceToken length] != 0)
-    {
-        if(_instance == nil)
-        {
+    if(deviceToken != nil && [deviceToken length] != 0) {
+        if(_instance == nil) {
             _deviceToken = deviceToken;
             return;
         }
