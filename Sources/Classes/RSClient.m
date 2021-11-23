@@ -370,13 +370,15 @@ static NSString* _deviceToken = nil;
     return _defaultOptions;
 }
 
-+ (void)setAnonymousId:(NSString *)anonymousId {
-    RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
-    if ([preferenceManager getOptStatus]) {
-        [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
-        return;
++ (void)putAnonymousId:(NSString *)anonymousId {
+    if(anonymousId != nil && [anonymousId length] != 0) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if ([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
+            return;
+        }
+        [preferenceManager saveAnonymousId:anonymousId];
     }
-    [preferenceManager saveAnonymousId:anonymousId];
 }
 
 + (void)putDeviceToken:(NSString *)deviceToken {

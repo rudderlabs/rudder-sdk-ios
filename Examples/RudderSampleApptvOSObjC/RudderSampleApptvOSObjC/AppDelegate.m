@@ -29,7 +29,7 @@ static NSString *WRITE_KEY = @"1pcZviVxgjd3rTUUmaTUBinGH0A";
     [builder withRecordScreenViews:NO];
     [builder withCustomFactory:[CustomFactory instance]];
     
-    [RSClient setAnonymousId:@"ANONYMOUS_ID"];
+    [RSClient putAnonymousId:@"ANONYMOUS_ID"];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     

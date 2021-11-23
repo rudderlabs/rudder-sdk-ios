@@ -22,7 +22,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [RSClient setAnonymousId:@"6a276137-2fe4-4682-a8f7-77f701f63ea0"];
+    [RSClient putAnonymousId:@""];
     [RSClient putDeviceToken:@"DEVTOKEN1"];
     
     // Override point for customization after application launch.
