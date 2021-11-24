@@ -12,7 +12,7 @@
 #import "CustomFactory.h"
 
 
-static NSString *DATA_PLANE_URL = @"https://a86b-2409-4070-2c11-8b9f-903f-e344-da4f-136b.ngrok.io";
+static NSString *DATA_PLANE_URL = @"https://a477-61-95-158-116.ngrok.io";
 static NSString *WRITE_KEY = @"1n0JdVPZTRUIkLXYccrWzZwdGSx";
 
 @implementation _AppDelegate
@@ -22,8 +22,10 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [RSClient putAnonymousId:@""];
-    [RSClient putDeviceToken:@"DEVTOKEN1"];
+    [RSClient putAnonymousId:@"AnonymousId1"];
+    [RSClient putDeviceToken:@"DeviceToken1"];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId1"];
+
     
     // Override point for customization after application launch.
     RSOption *defaultOption = [[RSOption alloc]init];
@@ -42,7 +44,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
     [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
+//    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
     [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
     
     
@@ -53,13 +55,31 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         @"language": @"objective-c",
         @"version": @"1.0.0"
     } withKey: @"customContext"];
-    [[RSClient sharedInstance] track:@"simple_track_event"];
-    [RSClient putDeviceToken:@"DEVTOKEN2"];
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    } options:option];
+    [[RSClient sharedInstance] track:@"simple_track_event1"];
     
+    [[RSClient sharedInstance] optOut:YES];
+    [RSClient putAnonymousId:@"AnonymousId2"];
+    [RSClient putDeviceToken:@"DeviceToken2"];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId2"];
+    [[RSClient sharedInstance] track:@"simple_track_event2"];
+    [[RSClient sharedInstance] track:@"simple_track_event3"];
+    [[RSClient sharedInstance] track:@"simple_track_event4"];
+
+    [[RSClient sharedInstance] optOut:NO];
+    [RSClient putAnonymousId:@"AnonymousId3"];
+    [RSClient putDeviceToken:@"DeviceToken3"];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId3"];
+    [[RSClient sharedInstance] track:@"simple_track_event4"];
+    [[RSClient sharedInstance] track:@"simple_track_event5"];
+    [[RSClient sharedInstance] track:@"simple_track_event6"];
+
+    
+//    [RSClient putDeviceToken:@"DEVTOKEN2"];
+//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+//        @"key_1" : @"value_1",
+//        @"key_2" : @"value_2"
+//    } options:option];
+//
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     

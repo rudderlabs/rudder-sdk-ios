@@ -374,7 +374,7 @@ static NSString* _deviceToken = nil;
     if(anonymousId != nil && [anonymousId length] != 0) {
         RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
         if ([preferenceManager getOptStatus]) {
-            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the anonymousId"];
             return;
         }
         [preferenceManager saveAnonymousId:anonymousId];
@@ -383,6 +383,11 @@ static NSString* _deviceToken = nil;
 
 + (void)putDeviceToken:(NSString *_Nonnull)deviceToken {
     if(deviceToken != nil && [deviceToken length] != 0) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if ([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the device token"];
+            return;
+        }
         if(_instance == nil) {
             _deviceToken = deviceToken;
             return;
