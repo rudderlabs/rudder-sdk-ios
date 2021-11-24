@@ -16,6 +16,7 @@
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
 static RSOption* _defaultOptions = nil;
+static NSString* _deviceToken = nil;
 
 @implementation RSClient
 
@@ -38,6 +39,10 @@ static RSOption* _defaultOptions = nil;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:config];
+            if(_deviceToken != nil && [_deviceToken length] != 0)
+            {
+                [[_instance getContext] putDeviceToken:_deviceToken];
+            }
         });
     }
     return _instance;
@@ -365,13 +370,30 @@ static RSOption* _defaultOptions = nil;
     return _defaultOptions;
 }
 
-+ (void)setAnonymousId:(NSString *)anonymousId {
-    RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
-    if ([preferenceManager getOptStatus]) {
-        [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the event"];
-        return;
++ (void)putAnonymousId:(NSString *_Nonnull)anonymousId {
+    if(anonymousId != nil && [anonymousId length] != 0) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if ([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the anonymousId"];
+            return;
+        }
+        [preferenceManager saveAnonymousId:anonymousId];
     }
-    [preferenceManager saveAnonymousId:anonymousId];
+}
+
++ (void)putDeviceToken:(NSString *_Nonnull)deviceToken {
+    if(deviceToken != nil && [deviceToken length] != 0) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if ([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the device token"];
+            return;
+        }
+        if(_instance == nil) {
+            _deviceToken = deviceToken;
+            return;
+        }
+        [[_instance getContext] putDeviceToken:deviceToken];
+    }
 }
 
 @end

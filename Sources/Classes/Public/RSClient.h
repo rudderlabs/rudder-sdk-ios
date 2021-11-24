@@ -75,7 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (RSContext *) getContext;
 
-+ (void) setAnonymousId: (NSString *__nullable) anonymousId;
++ (void) putAnonymousId: (NSString *_Nonnull) anonymousId;
++ (void) putDeviceToken: (NSString *_Nonnull) deviceToken;
 
 @end
 
