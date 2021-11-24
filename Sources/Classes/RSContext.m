@@ -105,7 +105,7 @@ int const RSATTAuthorize = 3;
     _device.token = deviceToken;
 }
 
-- (void)putAdvertisementId:(NSString *)idfa {
+- (void)putAdvertisementId:(NSString *_Nonnull)idfa {
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
     if( idfa != nil && [idfa length] != 0) {

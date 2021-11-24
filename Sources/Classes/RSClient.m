@@ -370,7 +370,7 @@ static NSString* _deviceToken = nil;
     return _defaultOptions;
 }
 
-+ (void)putAnonymousId:(NSString *)anonymousId {
++ (void)putAnonymousId:(NSString *_Nonnull)anonymousId {
     if(anonymousId != nil && [anonymousId length] != 0) {
         RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
         if ([preferenceManager getOptStatus]) {
@@ -381,7 +381,7 @@ static NSString* _deviceToken = nil;
     }
 }
 
-+ (void)putDeviceToken:(NSString *)deviceToken {
++ (void)putDeviceToken:(NSString *_Nonnull)deviceToken {
     if(deviceToken != nil && [deviceToken length] != 0) {
         if(_instance == nil) {
             _deviceToken = deviceToken;
