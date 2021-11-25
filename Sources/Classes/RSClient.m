@@ -370,6 +370,10 @@ static NSString* _deviceToken = nil;
     return _defaultOptions;
 }
 
++ (void)setAnonymousId: (NSString *__nullable) anonymousId {
+    [self putAnonymousId:anonymousId];
+}
+
 + (void)putAnonymousId:(NSString *_Nonnull)anonymousId {
     if(anonymousId != nil && [anonymousId length] != 0) {
         RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
