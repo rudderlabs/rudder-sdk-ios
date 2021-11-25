@@ -66,7 +66,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [[RSClient sharedInstance] track:@"simple_track_event4"];
 
     [[RSClient sharedInstance] optOut:NO];
-    [RSClient putAnonymousId:@"AnonymousId3"];
+    [RSClient setAnonymousId:@"AnonymousId3"];
     [RSClient putDeviceToken:@"DeviceToken3"];
     [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId3"];
     [[RSClient sharedInstance] track:@"simple_track_event4"];
