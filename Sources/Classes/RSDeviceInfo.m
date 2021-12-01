@@ -15,15 +15,30 @@
 - (instancetype)init
 {
     self = [super init];
+
     if (self) {
+#if !TARGET_OS_WATCH
         _identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
         _manufacturer = @"Apple";
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
-        _type = @"iOS";
         _attTrackingStatus = RSATTNotDetermined;
+#endif
+        _type = [self getDeviceType];
     }
+
     return self;
+}
+
+- (NSString *) getDeviceType {
+#if TARGET_OS_WATCH
+    return @"watchOS";
+#elif TARGET_OS_IPHONE
+    return @"iOS";
+#else
+    return @"tvOS":
+#endif
+    
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {

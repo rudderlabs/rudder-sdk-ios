@@ -13,11 +13,13 @@
 - (instancetype)init
 {
     self = [super init];
+#if !TARGET_OS_WATCH
     if (self) {
         UIDevice *device = [UIDevice currentDevice];
         _name = [device systemName];
         _version = [device systemVersion];
     }
+#endif
     return self;
 }
 - (NSDictionary<NSString *,NSObject *> *)dict {

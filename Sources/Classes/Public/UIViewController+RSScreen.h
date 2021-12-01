@@ -4,6 +4,7 @@
 //
 //  Created by Arnab Pal on 13/02/20.
 //
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 
 #import <UIKit/UIKit.h>
 
@@ -12,3 +13,5 @@
 + (void) rudder_swizzleView;
 
 @end
+
+#endif

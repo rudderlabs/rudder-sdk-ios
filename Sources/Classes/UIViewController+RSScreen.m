@@ -5,6 +5,8 @@
 //  Created by Arnab Pal on 13/02/20.
 //
 
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
+
 #import "UIViewController+RSScreen.h"
 #import "RSLogger.h"
 #import "RSClient.h"
@@ -53,3 +55,5 @@
 }
 
 @end
+
+#endif

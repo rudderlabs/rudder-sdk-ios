@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSDeviceInfo : NSObject
 
+- (NSString *) getDeviceType;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
 @property (nonatomic, readwrite) NSString* identifier;

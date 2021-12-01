@@ -13,12 +13,14 @@
 - (instancetype)init
 {
     self = [super init];
+#if !TARGET_OS_WATCH
     if (self) {
         CGRect bounds = [[UIScreen mainScreen] bounds];
         _density = [[UIScreen mainScreen] scale];
         _height = bounds.size.width;
         _width = bounds.size.height;
     }
+#endif
     return self;
 }
 
