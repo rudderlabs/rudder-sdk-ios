@@ -511,12 +511,20 @@ typedef enum {
         }];
     }
     
-    [[RSClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @NO,
-        @"version" : currentVersion ?: @"",
-        @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
-        @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
-    }];
+    NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];
+    [applicationOpenedProperties setObject:@NO forKey:@"from_background"];
+    if (currentVersion != nil) {
+        [applicationOpenedProperties setObject:currentVersion forKey:@"version"];
+    }
+    NSString *referring_application = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""];
+    if ([referring_application length]) {
+        [applicationOpenedProperties setObject:referring_application forKey:@"referring_application"];
+    }
+    NSString *url = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""];
+    if ([url length]) {
+        [applicationOpenedProperties setObject:url forKey:@"url"];
+    }
+    [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
     
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
