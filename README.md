@@ -39,7 +39,7 @@ The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Cart
 To install the SDK, simply add the following line to your Podfile:
 
 ```xcode
-pod 'Rudder', '1.2.1'
+pod 'Rudder', '1.2.2'
 ```
 
 ### Carthage
@@ -47,7 +47,7 @@ pod 'Rudder', '1.2.1'
 For Carthage support, add the following line to your `Cartfile`:
 
 ```xcode
-github "rudderlabs/rudder-sdk-ios" "v1.2.1"
+github "rudderlabs/rudder-sdk-ios" "v1.2.2"
 ```
 
 > Remember to include the following code in all `.m` and `.h` files where you want to refer to or use the RudderStack SDK classes, as shown:
@@ -99,7 +99,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.2.1")
+        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.2.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
