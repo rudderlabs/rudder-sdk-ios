@@ -73,7 +73,7 @@ You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of t
 
 * In **Dependency Rule**, select **Up to Next Major Version** and enter `1.2.2` as the value, as shown:
 
-![Setting dependency](https://user-images.githubusercontent.com/59817155/140903050-842b2418-5e47-4b8f-a43a-6eb4ad1a71c9.png)
+![Setting dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
 
 * Select the project to which you want to add the package.
 
