@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
+- (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;
