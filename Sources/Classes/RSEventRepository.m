@@ -60,9 +60,7 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
         self->eventReplayMessage = [[NSMutableArray alloc] init];
         
-        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
-        anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
+        [self setAnonymousIdToken];
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
@@ -87,6 +85,12 @@ typedef enum {
         }
     }
     return self;
+}
+
+- (void) setAnonymousIdToken {
+    NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+    self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
 }
 
 - (void) __initiateSDK {

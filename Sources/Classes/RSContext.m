@@ -101,6 +101,10 @@ int const RSATTAuthorize = 3;
     _traits = traitsDict;
 }
 
+- (void)updateTraitsAnonymousId {
+    _traits[@"anonymousId"] = [preferenceManager getAnonymousId];
+}
+
 - (void)putDeviceToken:(NSString *)deviceToken {
     _device.token = deviceToken;
 }
