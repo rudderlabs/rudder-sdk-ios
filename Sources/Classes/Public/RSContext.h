@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#if !TARGET_OS_TV && !TARGET_OS_WATCH
-#import <WebKit/WebKit.h>
-#endif
 #import "RSApp.h"
 #import "RSLibraryInfo.h"
 #import "RSOSInfo.h"

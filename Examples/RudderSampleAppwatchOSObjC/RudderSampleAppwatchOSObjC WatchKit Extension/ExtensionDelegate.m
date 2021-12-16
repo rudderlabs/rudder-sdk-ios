@@ -13,18 +13,17 @@
 - (void)applicationDidFinishLaunching {
     // Perform any final initialization of your application.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneUrl:@"https://14dd-14-97-100-194.ngrok.io"];
+    [builder withRecordScreenViews:YES];
+//    [builder withDataPlaneUrl:@"https://b0f3-14-97-100-194.ngrok.io"];
     [builder withLoglevel:RSLogLevelVerbose];
-    [RSClient getInstance:@"1n0JdVPZTRUIkLXYccrWzZwdGSx" config:[builder build]];
-    [[[RSClient sharedInstance] identify:@"test_user_id"
+    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
+    [[RSClient sharedInstance] identify:@"test_user_id"
                                      traits: @{
                @"foo": @"bar",
                 @"foo1": @"bar1",
                 @"email": @"test@gmail.com",
                 @"key_1" : @"value_1",
-                @"key_2" : @"value_2"
-                                              
-                                            }
+                @"key_2" : @"value_2" }
         ];
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",

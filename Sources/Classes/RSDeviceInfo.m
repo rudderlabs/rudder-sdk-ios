@@ -9,6 +9,10 @@
 #import "RSDeviceInfo.h"
 #import "RSContext.h"
 #import <UIKit/UIKit.h>
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
+
 
 @implementation RSDeviceInfo
 
@@ -19,11 +23,15 @@
     if (self) {
 #if !TARGET_OS_WATCH
         _identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
-        _manufacturer = @"Apple";
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
-        _attTrackingStatus = RSATTNotDetermined;
+#else
+        _identifier = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
+        _model = [[WKInterfaceDevice currentDevice]model];
+        _name = [[WKInterfaceDevice currentDevice]name];
 #endif
+        _manufacturer = @"Apple";
+        _attTrackingStatus = RSATTNotDetermined;
         _type = [self getDeviceType];
     }
 

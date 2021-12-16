@@ -6,6 +6,9 @@
 //
 
 #import "RSPreferenceManager.h"
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
 
 static RSPreferenceManager *instance;
 
@@ -86,13 +89,14 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 
 - (NSString *)getAnonymousId {
     NSString *anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
-    anonymousId = @"somerandomAnonId";
-    
-#if !TARGET_OS_WATCH
     if (anonymousId == nil) {
+#if !TARGET_OS_WATCH
         anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
-    }
+#else
+        anonymousId = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
 #endif
+    }
+
     
     [self saveAnonymousId:anonymousId];
     

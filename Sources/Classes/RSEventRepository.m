@@ -13,6 +13,8 @@
 
 #if !TARGET_OS_WATCH
 #import "UIViewController+RSScreen.h"
+#else
+#import "WKInterfaceController+RSScreen.h"
 #endif
 
 static RSEventRepository* _instance;
@@ -314,10 +316,10 @@ typedef enum {
                 ![errorResponse isEqualToString:@""] && // non-empty response
                 [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
-                respStatus = WRONGWRITEKEY;
-            } else {
-                respStatus = NETWORKERROR;
-            }
+                    respStatus = WRONGWRITEKEY;
+                } else {
+                    respStatus = NETWORKERROR;
+                }
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
@@ -471,8 +473,8 @@ typedef enum {
 }
 
 - (void) __checkApplicationUpdateStatus {
-#if !TARGET_OS_WATCH
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+#if !TARGET_OS_WATCH
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
                               UIApplicationDidFinishLaunchingNotification,
                               UIApplicationWillEnterForegroundNotification,
@@ -480,6 +482,14 @@ typedef enum {
                               UIApplicationWillResignActiveNotification,
                               UIApplicationDidBecomeActiveNotification ]) {
         [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
+    }
+#else
+    for (NSString *name in @[ WKApplicationDidEnterBackgroundNotification,
+                              WKApplicationDidFinishLaunchingNotification,
+                              WKApplicationWillEnterForegroundNotification,
+                              WKApplicationWillResignActiveNotification,
+                              WKApplicationDidBecomeActiveNotification ]) {
+        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:nil];
     }
 #endif
 }
@@ -491,6 +501,14 @@ typedef enum {
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
+        [self _applicationDidEnterBackground];
+    }
+#else
+    if ([notification.name isEqualToString:WKApplicationDidFinishLaunchingNotification]) {
+        [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
+    } else if ([notification.name isEqualToString:WKApplicationWillEnterForegroundNotification]) {
+        [self _applicationWillEnterForeground];
+    } else if ([notification.name isEqualToString: WKApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
     }
 #endif
@@ -517,16 +535,16 @@ typedef enum {
             @"version": currentVersion
         }];
     }
-    
+
+#if !TARGET_OS_WATCH
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @NO,
         @"version" : currentVersion ?: @"",
-#if !TARGET_OS_WATCH
         @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
-
+        
         @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
-#endif
     }];
+#endif
     
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
@@ -557,6 +575,8 @@ typedef enum {
 - (void) __prepareScreenRecorder {
 #if !TARGET_OS_WATCH
     [UIViewController rudder_swizzleView];
+#else
+    [WKInterfaceController rudder_swizzleView];
 #endif
 }
 

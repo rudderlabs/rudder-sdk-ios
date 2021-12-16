@@ -7,20 +7,27 @@
 //
 
 #import "RSScreenInfo.h"
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
+
 
 @implementation RSScreenInfo
 
 - (instancetype)init
 {
     self = [super init];
-#if !TARGET_OS_WATCH
     if (self) {
+#if !TARGET_OS_WATCH
         CGRect bounds = [[UIScreen mainScreen] bounds];
         _density = [[UIScreen mainScreen] scale];
+#else
+        CGRect bounds = [[WKInterfaceDevice currentDevice] screenBounds];
+        _density = [[WKInterfaceDevice currentDevice] screenScale];
+#endif
         _height = bounds.size.width;
         _width = bounds.size.height;
     }
-#endif
     return self;
 }
 
