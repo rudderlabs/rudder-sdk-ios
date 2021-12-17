@@ -5,7 +5,7 @@
 //  Created by Desu Sai Venkat on 15/12/21.
 //
 
-#if TARGET_OS_WATCH
+
 
 #import "WKInterfaceController+RSScreen.h"
 #import "RSLogger.h"
@@ -14,13 +14,13 @@
 
 @implementation WKInterfaceController (RSScreen)
 
-+ (void)rudder_swizzleView {
++ (void)rudder_swizzleView  {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
 
-        SEL originalSelector = @selector(viewDidAppear:);
-        SEL swizzledSelector = @selector(rudder_viewDidAppear:);
+        SEL originalSelector = @selector(didAppear);
+        SEL swizzledSelector = @selector(rudder_didAppear);
 
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
@@ -42,18 +42,17 @@
     });
 }
 
-- (void) rudder_viewDidAppear: (BOOL) animated {
+- (void) rudder_didAppear {
     NSString *name = [[self class] description];
     if (name == nil) {
         [RSLogger logWarn:@"Couldn't get the screen name"];
         name = @"Unknown";
     }
-    name = [name stringByReplacingOccurrencesOfString:@"ViewController" withString:@""];
+    name = [name stringByReplacingOccurrencesOfString:@"InterfaceController" withString:@""];
     [[RSClient sharedInstance] screen:name properties:@{@"automatic": [[NSNumber alloc] initWithBool:YES], @"name": name}];
 
-    [self rudder_viewDidAppear:animated];
+    [self rudder_didAppear];
 }
 
 @end
 
-#endif
