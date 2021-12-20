@@ -13,7 +13,6 @@
 
 @end
 
-static NSString *DATA_PLANE_URL = @"https://eb78-61-95-158-116.ngrok.io";
 static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
 
 
@@ -23,7 +22,6 @@ static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-//    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];

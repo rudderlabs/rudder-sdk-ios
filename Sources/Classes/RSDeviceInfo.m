@@ -25,28 +25,18 @@
         _identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
+        _type = [[UIDevice currentDevice] systemName];
 #else
         _identifier = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
         _model = [[WKInterfaceDevice currentDevice]model];
         _name = [[WKInterfaceDevice currentDevice]name];
+        _type = [[WKInterfaceDevice currentDevice]systemName];
 #endif
         _manufacturer = @"Apple";
         _attTrackingStatus = RSATTNotDetermined;
-        _type = [self getDeviceType];
     }
 
     return self;
-}
-
-- (NSString *) getDeviceType {
-#if TARGET_OS_WATCH
-    return @"watchOS";
-#elif TARGET_OS_IPHONE
-    return @"iOS";
-#else
-    return @"tvOS":
-#endif
-    
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {

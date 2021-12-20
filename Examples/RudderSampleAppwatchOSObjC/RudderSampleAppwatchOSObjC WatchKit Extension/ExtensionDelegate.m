@@ -14,7 +14,6 @@
     // Perform any final initialization of your application.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withRecordScreenViews:YES];
-//    [builder withDataPlaneUrl:@"https://b0f3-14-97-100-194.ngrok.io"];
     [builder withLoglevel:RSLogLevelNone];
     [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
     [[RSClient sharedInstance] identify:@"test_user_id"
