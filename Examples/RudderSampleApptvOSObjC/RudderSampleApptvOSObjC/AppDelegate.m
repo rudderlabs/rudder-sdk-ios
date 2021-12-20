@@ -26,7 +26,7 @@ static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
 //    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:NO];
+    [builder withRecordScreenViews:YES];
     [builder withCustomFactory:[CustomFactory instance]];
     
     [RSClient putAnonymousId:@"ANONYMOUS_ID"];

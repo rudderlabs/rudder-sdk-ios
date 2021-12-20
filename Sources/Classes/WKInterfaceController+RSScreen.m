@@ -8,10 +8,12 @@
 
 
 #import "WKInterfaceController+RSScreen.h"
+#include <TargetConditionals.h>
 #import "RSLogger.h"
 #import "RSClient.h"
 #import <objc/runtime.h>
 
+#if TARGET_OS_WATCH
 @implementation WKInterfaceController (RSScreen)
 
 + (void)rudder_swizzleView  {
@@ -55,4 +57,5 @@
 }
 
 @end
+#endif
 

@@ -11,11 +11,8 @@
 #import "RSUtils.h"
 #import "RSLogger.h"
 
-#if !TARGET_OS_WATCH
-#import "UIViewController+RSScreen.h"
-#else
 #import "WKInterfaceController+RSScreen.h"
-#endif
+#import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
 
@@ -573,10 +570,10 @@ typedef enum {
 }
 
 - (void) __prepareScreenRecorder {
-#if !TARGET_OS_WATCH
-    [UIViewController rudder_swizzleView];
-#else
+#if TARGET_OS_WATCH
     [WKInterfaceController rudder_swizzleView];
+#else
+    [UIViewController rudder_swizzleView];
 #endif
 }
 

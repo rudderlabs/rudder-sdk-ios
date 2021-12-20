@@ -39,7 +39,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
     [builder withLoglevel:RSLogLevelDebug];
     [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:NO];
+    [builder withRecordScreenViews:YES];
     // creating Custom factory
     [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
