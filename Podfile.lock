@@ -79,7 +79,8 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
   - Protobuf (3.19.1)
-  - Rudder (1.2.1)
+  - Rudder (1.2.2)
+
 
 DEPENDENCIES:
   - Firebase/Analytics

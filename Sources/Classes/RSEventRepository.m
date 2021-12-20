@@ -62,9 +62,7 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
         self->eventReplayMessage = [[NSMutableArray alloc] init];
         
-        NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
-        anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", anonymousIdToken]];
+        [self setAnonymousIdToken];
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
@@ -89,6 +87,12 @@ typedef enum {
         }
     }
     return self;
+}
+
+- (void) setAnonymousIdToken {
+    NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+    self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
 }
 
 - (void) __initiateSDK {
@@ -534,15 +538,22 @@ typedef enum {
     }
 
 #if !TARGET_OS_WATCH
-    [[RSClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @NO,
-        @"version" : currentVersion ?: @"",
-        @"referring_application" : [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""],
-        
-        @"url" :  [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""] ,
-    }];
+    NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];
+    [applicationOpenedProperties setObject:@NO forKey:@"from_background"];
+    if (currentVersion != nil) {
+        [applicationOpenedProperties setObject:currentVersion forKey:@"version"];
+    }
+    NSString *referring_application = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""];
+    if ([referring_application length]) {
+        [applicationOpenedProperties setObject:referring_application forKey:@"referring_application"];
+    }
+    NSString *url = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsURLKey] ?: @""];
+    if ([url length]) {
+        [applicationOpenedProperties setObject:url forKey:@"url"];
+    }
+    [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
 #endif
-    
+
     [preferenceManager saveBuildVersionCode:currentVersion];
 }
 

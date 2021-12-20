@@ -21,3 +21,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.2.1 - 2021-11-22
 ### Changed
 - Added Support for Setting device token before SDK initialization as well.
+
+##Version - 1.2.2 - 2021-12-06
+### Changed
+- Added logic to filter out the property which are not set for Application Opened event. 

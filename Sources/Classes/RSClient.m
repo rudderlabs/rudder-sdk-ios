@@ -335,7 +335,7 @@ static NSString* _deviceToken = nil;
         return nil;
     }
     // returns anonymousId
-    return [RSElementCache getContext].device.identifier;
+    return [RSElementCache getAnonymousId];
 }
 
 - (RSContext*) getContext {
@@ -382,6 +382,12 @@ static NSString* _deviceToken = nil;
             return;
         }
         [preferenceManager saveAnonymousId:anonymousId];
+        // If SDK is already initialized then we need to update the anonymousId in the cached context traits and anonymousId token
+        if(_repository != nil)
+        {
+            [RSElementCache updateTraitsAnonymousId];
+            [_repository setAnonymousIdToken];
+        }
     }
 }
 

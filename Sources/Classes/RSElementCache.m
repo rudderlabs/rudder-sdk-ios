@@ -55,6 +55,13 @@ static dispatch_queue_t queue;
     });
 }
 
++(void) updateTraitsAnonymousId {
+    dispatch_async(queue, ^{
+        [cachedContext updateTraitsAnonymousId];
+        [self persistTraits];
+    });
+}
+
 + (NSString *)getAnonymousId {
     return [[RSPreferenceManager getInstance] getAnonymousId];
 }
