@@ -507,7 +507,7 @@ typedef enum {
 #else
     if ([notification.name isEqualToString:WKApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
-    } else if ([notification.name isEqualToString:WKApplicationWillEnterForegroundNotification]) {
+    } else if ([notification.name isEqualToString:WKApplicationDidBecomeActiveNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: WKApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
