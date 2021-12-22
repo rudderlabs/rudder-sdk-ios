@@ -15,6 +15,7 @@
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
+static BOOL fromBackGround = NO;
 
 @implementation RSEventRepository
 typedef enum {
@@ -499,7 +500,7 @@ typedef enum {
 #if !TARGET_OS_WATCH
     if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
-    } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
+    } else if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
@@ -566,11 +567,12 @@ typedef enum {
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @YES,
+        @"from_background" : fromBackGround ? @YES : @NO
     }];
 }
 
 - (void)_applicationDidEnterBackground {
+    fromBackGround = YES;
     if ([self getOptStatus]) {
         return;
     }
