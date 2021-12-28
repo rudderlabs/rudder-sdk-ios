@@ -23,6 +23,7 @@
         _configRefreshInterval = RSConfigRefreshInterval;
         _trackLifecycleEvents = RSTrackLifeCycleEvents;
         _recordScreenViews = RSRecordScreenViews;
+        _enableBackGroundRunTime = RSEnableBackGroundRunTime;
         _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];

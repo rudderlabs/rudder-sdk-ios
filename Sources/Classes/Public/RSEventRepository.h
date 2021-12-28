@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString* authToken;
     NSString* anonymousIdToken;
     RSConfig* config;
+    UIBackgroundTaskIdentifier backgroundTask;
     RSDBPersistentManager* dbpersistenceManager;
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;

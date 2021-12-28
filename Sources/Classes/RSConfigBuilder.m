@@ -133,6 +133,14 @@
     return self;
 }
 
+- (instancetype) withBackGroundRunTime:(BOOL)enableBackGroundRunTime {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.enableBackGroundRunTime = enableBackGroundRunTime;
+    return self;
+}
+
 -(instancetype)withConfigPlaneUrl:(NSString *) configPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];

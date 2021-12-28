@@ -49,6 +49,12 @@ typedef enum {
         
         writeKey = _writeKey;
         config = _config;
+        if(config.enableBackGroundRunTime)
+        {
+            [RSLogger logDebug:@"EventRepository: Enabling Background run time"];
+            backgroundTask = UIBackgroundTaskInvalid;
+            [self registerBackGroundTask];
+        }
         
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
@@ -541,12 +547,18 @@ typedef enum {
         return;
     }
     
+    if(config.enableBackGroundRunTime)
+    {
+    [self reInstateBackGroundTask];
+    }
+    
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @YES,
     }];
 }
 
 - (void)_applicationDidEnterBackground {
+    
     if ([self getOptStatus]) {
         return;
     }
@@ -560,5 +572,24 @@ typedef enum {
     [UIViewController rudder_swizzleView];
 }
 
+- (void) registerBackGroundTask {
+    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background run time"];
+    backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackGroundTask];
+    }];
+}
+
+- (void) endBackGroundTask {
+    [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
+    backgroundTask = UIBackgroundTaskInvalid;
+}
+
+- (void) reInstateBackGroundTask {
+    if(backgroundTask != UIBackgroundTaskInvalid)
+    {
+        [self endBackGroundTask];
+    }
+    [self registerBackGroundTask];
+}
 
 @end
