@@ -13,6 +13,8 @@
 - (void)applicationDidFinishLaunching {
     // Perform any final initialization of your application.
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
+    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
+    [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withLoglevel:RSLogLevelNone];
     [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];

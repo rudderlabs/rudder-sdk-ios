@@ -15,7 +15,7 @@
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
-static BOOL fromBackGround = NO;
+static BOOL firstForeGround = YES;
 
 @implementation RSEventRepository
 typedef enum {
@@ -500,7 +500,7 @@ typedef enum {
 #if !TARGET_OS_WATCH
     if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
-    } else if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
+    } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
         [self _applicationWillEnterForeground];
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
@@ -508,9 +508,9 @@ typedef enum {
 #else
     if ([notification.name isEqualToString:WKApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
-    } else if ([notification.name isEqualToString:WKApplicationDidBecomeActiveNotification]) {
+    } else if ([notification.name isEqualToString: WKApplicationDidBecomeActiveNotification]) {
         [self _applicationWillEnterForeground];
-    } else if ([notification.name isEqualToString: WKApplicationDidEnterBackgroundNotification]) {
+    } else if ([notification.name isEqualToString: WKApplicationWillResignActiveNotification]) {
         [self _applicationDidEnterBackground];
     }
 #endif
@@ -521,13 +521,13 @@ typedef enum {
         return;
     }
     NSString *previousVersion = [preferenceManager getBuildVersionCode];
-    
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
     
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
         }];
+        [preferenceManager saveBuildVersionCode:currentVersion];
     } else if (![currentVersion isEqualToString:previousVersion]) {
         if ([self getOptStatus]) {
             return;
@@ -536,14 +536,15 @@ typedef enum {
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
         }];
+        [preferenceManager saveBuildVersionCode:currentVersion];
     }
-
-#if !TARGET_OS_WATCH
+    
     NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];
     [applicationOpenedProperties setObject:@NO forKey:@"from_background"];
     if (currentVersion != nil) {
         [applicationOpenedProperties setObject:currentVersion forKey:@"version"];
     }
+#if !TARGET_OS_WATCH
     NSString *referring_application = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""];
     if ([referring_application length]) {
         [applicationOpenedProperties setObject:referring_application forKey:@"referring_application"];
@@ -552,13 +553,18 @@ typedef enum {
     if ([url length]) {
         [applicationOpenedProperties setObject:url forKey:@"url"];
     }
-    [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
 #endif
+    [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
 
-    [preferenceManager saveBuildVersionCode:currentVersion];
 }
 
 - (void)_applicationWillEnterForeground {
+#if TARGET_OS_WATCH
+    if(firstForeGround) {
+        firstForeGround = NO;
+        return;
+    }
+#endif
     if ([self getOptStatus]) {
         return;
     }
@@ -567,12 +573,11 @@ typedef enum {
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : fromBackGround ? @YES : @NO
+        @"from_background" : @YES
     }];
 }
 
 - (void)_applicationDidEnterBackground {
-    fromBackGround = YES;
     if ([self getOptStatus]) {
         return;
     }
