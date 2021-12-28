@@ -25,3 +25,9 @@ All notable changes to this project will be documented in this file.
 ##Version - 1.2.2 - 2021-12-06
 ### Changed
 - Added logic to filter out the property which are not set for Application Opened event. 
+
+##Version - 1.3.0 - 2021-12-28
+### Changed
+- Added support for additional background run time through configuration.
+
+

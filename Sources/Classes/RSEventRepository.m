@@ -321,10 +321,10 @@ typedef enum {
                 ![errorResponse isEqualToString:@""] && // non-empty response
                 [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
-                respStatus = WRONGWRITEKEY;
-            } else {
-                respStatus = NETWORKERROR;
-            }
+                    respStatus = WRONGWRITEKEY;
+                } else {
+                    respStatus = NETWORKERROR;
+                }
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
@@ -547,9 +547,8 @@ typedef enum {
         return;
     }
     
-    if(config.enableBackGroundRunTime)
-    {
-    [self reInstateBackGroundTask];
+    if(config.enableBackGroundRunTime) {
+        [self reInstateBackGroundTask];
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{

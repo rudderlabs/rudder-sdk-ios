@@ -38,8 +38,8 @@
             logLevel: (int) logLevel
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
-recordScreenViews: (BOOL) recordScreenViews
-      controlPlaneUrl: (NSString *) controlPlaneUrl
+   recordScreenViews: (BOOL) recordScreenViews
+     controlPlaneUrl: (NSString *) controlPlaneUrl
 {
     self = [super init];
     if (self) {
