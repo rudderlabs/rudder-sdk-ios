@@ -572,14 +572,13 @@ typedef enum {
 }
 
 - (void) registerBackGroundTask {
-    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"];
     if(backgroundTask != UIBackgroundTaskInvalid) {
         [self endBackGroundTask];
-    } else {
-        backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-            [self endBackGroundTask];
-        }];
     }
+    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"]; 
+    backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackGroundTask];
+    }];   
 }
 
 - (void) endBackGroundTask {
