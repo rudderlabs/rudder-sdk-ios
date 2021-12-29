@@ -174,6 +174,8 @@
 		ED83FFFD27310B44006F27B3 /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5627310B44006F27B3 /* RSECommerceCheckoutBuilder.m */; };
 		ED83FFFE27310B44006F27B3 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5727310B44006F27B3 /* RSECommerceCouponBuilder.m */; };
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -353,6 +355,8 @@
 		ED83FFB427310B44006F27B3 /* RSEventRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventRepository.m; sourceTree = "<group>"; };
 		ED83FFB527310B44006F27B3 /* RSScreenPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSScreenPropertyBuilder.m; sourceTree = "<group>"; };
 		ED83FFB627310B44006F27B3 /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
+		F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
+		F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +459,7 @@
 				ED83FF1027310B44006F27B3 /* RSTraits.m */,
 				ED83FF1927310B44006F27B3 /* RSTraitsBuilder.m */,
 				ED83FF1A27310B44006F27B3 /* RSUtils.m */,
+				F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */,
 				ED83FF1D27310B44006F27B3 /* UIViewController+RSScreen.m */,
 			);
 			path = Classes;
@@ -547,6 +552,7 @@
 				ED83FFA427310B44006F27B3 /* RSWishListProductAddedToCartEvent.h */,
 				ED83FF2927310B44006F27B3 /* Rudder.h */,
 				ED83FF4427310B44006F27B3 /* UIViewController+RSScreen.h */,
+				F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -699,6 +705,7 @@
 				ED83004227310B45006F27B3 /* RSPromotionClickedEvent.h in Headers */,
 				ED83003927310B45006F27B3 /* RSPromotionViewedEvent.h in Headers */,
 				ED83003C27310B45006F27B3 /* RSProductSearchedEvent.h in Headers */,
+				F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */,
 				ED83003F27310B45006F27B3 /* RSCouponRemovedEvent.h in Headers */,
 				ED83004327310B45006F27B3 /* RSCouponDeniedEvent.h in Headers */,
 				ED83000627310B44006F27B3 /* RSECommerceCheckout.h in Headers */,
@@ -842,6 +849,7 @@
 				ED83000A27310B44006F27B3 /* RSECommercePromotionBuilder.m in Sources */,
 				ED83FFC427310B44006F27B3 /* RSTrackPropertyBuilder.m in Sources */,
 				ED83003427310B45006F27B3 /* RSProductReviewedEvent.m in Sources */,
+				F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */,
 				ED83FFBF27310B44006F27B3 /* RSServerDestination.m in Sources */,
 				ED83004627310B45006F27B3 /* RSCheckoutStepViewedEvent.m in Sources */,
 				ED83FFF727310B44006F27B3 /* RSContext.m in Sources */,
@@ -897,7 +905,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -915,11 +923,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,3,4";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -959,7 +968,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -971,10 +980,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,3,4";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

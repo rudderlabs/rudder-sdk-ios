@@ -5,10 +5,14 @@
 //  Created by Arnab Pal on 13/02/20.
 //
 
+
+
 #import "UIViewController+RSScreen.h"
 #import "RSLogger.h"
 #import "RSClient.h"
 #import <objc/runtime.h>
+
+#if TARGET_OS_IOS || TARGET_OS_TV
 
 @implementation UIViewController (RSScreen)
 
@@ -53,3 +57,5 @@
 }
 
 @end
+
+#endif

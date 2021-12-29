@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
+    BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
