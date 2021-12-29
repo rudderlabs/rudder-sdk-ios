@@ -15,7 +15,6 @@
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
-static BOOL firstForeGround = YES;
 
 @implementation RSEventRepository
 typedef enum {
@@ -47,6 +46,7 @@ typedef enum {
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
+        self->firstForeGround = YES;
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         
@@ -560,8 +560,8 @@ typedef enum {
 
 - (void)_applicationWillEnterForeground {
 #if TARGET_OS_WATCH
-    if(firstForeGround) {
-        firstForeGround = NO;
+    if(self->firstForeGround) {
+        self->firstForeGround = NO;
         return;
     }
 #endif
