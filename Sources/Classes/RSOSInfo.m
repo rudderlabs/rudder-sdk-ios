@@ -7,16 +7,25 @@
 //
 
 #import "RSOSInfo.h"
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
+
 
 @implementation RSOSInfo
 
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
+   if (self) {
+#if !TARGET_OS_WATCH
         UIDevice *device = [UIDevice currentDevice];
         _name = [device systemName];
         _version = [device systemVersion];
+#else
+       _name = [[WKInterfaceDevice currentDevice]systemName];
+       _version = [[WKInterfaceDevice currentDevice]systemVersion];
+#endif
     }
     return self;
 }

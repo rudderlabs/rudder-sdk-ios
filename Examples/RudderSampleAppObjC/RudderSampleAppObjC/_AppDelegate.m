@@ -12,8 +12,7 @@
 #import "CustomFactory.h"
 
 
-static NSString *DATA_PLANE_URL = @"https://a477-61-95-158-116.ngrok.io";
-static NSString *WRITE_KEY = @"1n0JdVPZTRUIkLXYccrWzZwdGSx";
+static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
 
 @implementation _AppDelegate
 
@@ -36,10 +35,9 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     // adding an integration into integrations object using its Factory object
     // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
-    [builder withLoglevel:RSLogLevelDebug];
+    [builder withLoglevel:RSLogLevelNone];
     [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:NO];
+    [builder withRecordScreenViews:YES];
     // creating Custom factory
     [builder withCustomFactory:[CustomFactory instance]];
     // creating the client object by passing the options object
