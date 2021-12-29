@@ -7,6 +7,7 @@
 //
 
 #import "_ViewController.h"
+#import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 
 @interface _ViewController ()
@@ -77,6 +78,9 @@
 //    });
     
     
+}
+- (IBAction)track:(id)sender {
+    [_AppDelegate track];
 }
 
 - (void)didReceiveMemoryWarning

@@ -49,9 +49,9 @@ typedef enum {
         
         writeKey = _writeKey;
         config = _config;
-        if(config.enableBackGroundRunTime)
+        if(config.enableBackgroundMode)
         {
-            [RSLogger logDebug:@"EventRepository: Enabling Background run time"];
+            [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
             backgroundTask = UIBackgroundTaskInvalid;
             [self registerBackGroundTask];
         }
@@ -547,8 +547,8 @@ typedef enum {
         return;
     }
     
-    if(config.enableBackGroundRunTime) {
-        [self reInstateBackGroundTask];
+    if(config.enableBackgroundMode) {
+        [self registerBackGroundTask];
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
@@ -572,23 +572,19 @@ typedef enum {
 }
 
 - (void) registerBackGroundTask {
-    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background run time"];
-    backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"];
+    if(backgroundTask != UIBackgroundTaskInvalid) {
         [self endBackGroundTask];
-    }];
+    } else {
+        backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            [self endBackGroundTask];
+        }];
+    }
 }
 
 - (void) endBackGroundTask {
     [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
     backgroundTask = UIBackgroundTaskInvalid;
-}
-
-- (void) reInstateBackGroundTask {
-    if(backgroundTask != UIBackgroundTaskInvalid)
-    {
-        [self endBackGroundTask];
-    }
-    [self registerBackGroundTask];
 }
 
 @end

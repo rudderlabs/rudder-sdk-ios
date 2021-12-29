@@ -23,7 +23,7 @@
         _configRefreshInterval = RSConfigRefreshInterval;
         _trackLifecycleEvents = RSTrackLifeCycleEvents;
         _recordScreenViews = RSRecordScreenViews;
-        _enableBackGroundRunTime = RSEnableBackGroundRunTime;
+        _enableBackgroundMode = RSEnableBackgroundMode;
         _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];
@@ -38,6 +38,7 @@
             logLevel: (int) logLevel
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
+enableBackgroundMode: (BOOL) enableBackgroundMode
    recordScreenViews: (BOOL) recordScreenViews
      controlPlaneUrl: (NSString *) controlPlaneUrl
 {
@@ -52,6 +53,7 @@ trackLifecycleEvents: (BOOL) trackLifecycleEvents
         _trackLifecycleEvents = trackLifecycleEvents;
         _recordScreenViews = recordScreenViews;
         _controlPlaneUrl = controlPlaneUrl;
+        _enableBackgroundMode = enableBackgroundMode;
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];
     }

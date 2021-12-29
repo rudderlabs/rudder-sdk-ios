@@ -11,75 +11,52 @@
 #import <AdSupport/ASIdentifierManager.h>
 #import "CustomFactory.h"
 
-
-static NSString *DATA_PLANE_URL = @"https://a477-61-95-158-116.ngrok.io";
-static NSString *WRITE_KEY = @"1n0JdVPZTRUIkLXYccrWzZwdGSx";
-
+static int count = 0;
 @implementation _AppDelegate
 
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [RSClient putDeviceToken:@"your_device_token"];
+    [RSClient putAnonymousId:@"anonymous_id"];
     
-    [RSClient putAnonymousId:@"AnonymousId1"];
-    [RSClient putDeviceToken:@"DeviceToken1"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId1"];
-
     
-    // Override point for customization after application launch.
-    RSOption *defaultOption = [[RSOption alloc]init];
-    // adding an integration into integrations object directly by specifying its name
-    [defaultOption putIntegration:@"Amplitude" isEnabled:YES];
-    [defaultOption putIntegration:@"MoEngage" isEnabled:YES];
-    [defaultOption putIntegration:@"All" isEnabled:NO];
-    // adding an integration into integrations object using its Factory object
-    // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneURL:[[NSURL alloc] initWithString:DATA_PLANE_URL]];
-    [builder withLoglevel:RSLogLevelDebug];
+    [builder withDataPlaneUrl:@"https://d4f7-61-95-158-116.ngrok.io"];
+    [builder withLoglevel:RSLogLevelNone];
+    [builder withBackGroundRunTime:YES];
     [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:NO];
-    // creating Custom factory
-    [builder withCustomFactory:[CustomFactory instance]];
-    // creating the client object by passing the options object
-    [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
-//    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
-    [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
+    [builder withRecordScreenViews:YES];
     
-    
-    RSOption *option = [[RSOption alloc]init];
-    [option putIntegration:@"Amplitude" isEnabled:YES];
-    [option putIntegration:@"MixPanel" isEnabled:NO];
-    [option putCustomContext: @{
-        @"language": @"objective-c",
-        @"version": @"1.0.0"
-    } withKey: @"customContext"];
-    [[RSClient sharedInstance] track:@"simple_track_event1"];
-    
-    [[RSClient sharedInstance] optOut:YES];
-    [RSClient putAnonymousId:@"AnonymousId2"];
-    [RSClient putDeviceToken:@"DeviceToken2"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId2"];
-    [[RSClient sharedInstance] track:@"simple_track_event2"];
-    [[RSClient sharedInstance] track:@"simple_track_event3"];
-    [[RSClient sharedInstance] track:@"simple_track_event4"];
+    RSConfig* config = [builder build];
 
-    [[RSClient sharedInstance] optOut:NO];
-    [RSClient setAnonymousId:@"AnonymousId3"];
-    [RSClient putDeviceToken:@"DeviceToken3"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId3"];
-    [[RSClient sharedInstance] track:@"simple_track_event4"];
-    [[RSClient sharedInstance] track:@"simple_track_event5"];
-    [[RSClient sharedInstance] track:@"simple_track_event6"];
-
+    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:config];
     
-//    [RSClient putDeviceToken:@"DEVTOKEN2"];
-//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-//        @"key_1" : @"value_1",
-//        @"key_2" : @"value_2"
-//    } options:option];
-//
+    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    }];
+    
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
+    
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [[RSClient sharedInstance] identify:@"testUserId"
+                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
+    
+    [[RSClient sharedInstance] screen:@"ViewController"];
+    
+    [[RSClient sharedInstance] group:@"sample_group_id"
+      traits:@{@"foo": @"bar",
+                @"foo1": @"bar1",
+                @"email": @"ruchira@gmail.com"}
+    ];
+    
+    [[RSClient sharedInstance] alias:@"new_user_id"];
+    
+    
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     
@@ -94,6 +71,13 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     [application registerForRemoteNotifications];
     return YES;
+}
+
++ (void) track {
+    count += 1;
+    NSString* eventName = [[NSString alloc] initWithFormat:@"Track from Button Click %d", count];
+    NSLog(@"%@", eventName);
+    [[RSClient sharedInstance] track:eventName];
 }
 
 - (NSString*) getIDFA {

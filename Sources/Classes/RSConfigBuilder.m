@@ -133,11 +133,11 @@
     return self;
 }
 
-- (instancetype) withBackGroundRunTime:(BOOL)enableBackGroundRunTime {
+- (instancetype) withEnableBackgroundMode:(BOOL)enableBackgroundMode {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    config.enableBackGroundRunTime = enableBackGroundRunTime;
+    config.enableBackgroundMode = enableBackgroundMode;
     return self;
 }
 
