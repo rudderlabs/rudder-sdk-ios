@@ -1,28 +1,28 @@
 //
-//  UIViewController+RSScreen.m
+//  WKInterfaceController+RSScreen.m
 //  RSSDKCore
 //
-//  Created by Arnab Pal on 13/02/20.
+//  Created by Desu Sai Venkat on 15/12/21.
 //
 
 
 
-#import "UIViewController+RSScreen.h"
+#import "WKInterfaceController+RSScreen.h"
+#include <TargetConditionals.h>
 #import "RSLogger.h"
 #import "RSClient.h"
 #import <objc/runtime.h>
 
-#if TARGET_OS_IOS || TARGET_OS_TV
+#if TARGET_OS_WATCH
+@implementation WKInterfaceController (RSScreen)
 
-@implementation UIViewController (RSScreen)
-
-+ (void)rudder_swizzleView {
++ (void)rudder_swizzleView  {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
 
-        SEL originalSelector = @selector(viewDidAppear:);
-        SEL swizzledSelector = @selector(rudder_viewDidAppear:);
+        SEL originalSelector = @selector(didAppear);
+        SEL swizzledSelector = @selector(rudder_didAppear);
 
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
@@ -44,18 +44,18 @@
     });
 }
 
-- (void) rudder_viewDidAppear: (BOOL) animated {
+- (void) rudder_didAppear {
     NSString *name = [[self class] description];
     if (name == nil) {
         [RSLogger logWarn:@"Couldn't get the screen name"];
         name = @"Unknown";
     }
-    name = [name stringByReplacingOccurrencesOfString:@"ViewController" withString:@""];
+    name = [name stringByReplacingOccurrencesOfString:@"InterfaceController" withString:@""];
     [[RSClient sharedInstance] screen:name properties:@{@"automatic": [[NSNumber alloc] initWithBool:YES], @"name": name}];
 
-    [self rudder_viewDidAppear:animated];
+    [self rudder_didAppear];
 }
 
 @end
-
 #endif
+
