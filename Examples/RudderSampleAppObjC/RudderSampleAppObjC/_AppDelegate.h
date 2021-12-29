@@ -13,7 +13,6 @@
 
 @interface _AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>
 
-+ (void) track;
 @property (strong, nonatomic) UIWindow *window;
 
 @end
