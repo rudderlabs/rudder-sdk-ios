@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString* authToken;
     NSString* anonymousIdToken;
     RSConfig* config;
+#if !TARGET_OS_WATCH
     UIBackgroundTaskIdentifier backgroundTask;
+#endif
     RSDBPersistentManager* dbpersistenceManager;
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
