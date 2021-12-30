@@ -535,9 +535,6 @@ typedef enum {
         }];
         [preferenceManager saveBuildVersionCode:currentVersion];
     } else if (![currentVersion isEqualToString:previousVersion]) {
-        if ([self getOptStatus]) {
-            return;
-        }
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
@@ -571,15 +568,12 @@ typedef enum {
         return;
     }
 #endif
-    if ([self getOptStatus]) {
-        return;
-    }
-    if (!self->config.trackLifecycleEvents) {
-        return;
-    }
-    
     if(config.enableBackgroundMode) {
         [self registerBackGroundTask];
+    }
+    
+    if (!self->config.trackLifecycleEvents) {
+        return;
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
@@ -588,10 +582,6 @@ typedef enum {
 }
 
 - (void)_applicationDidEnterBackground {
-    
-    if ([self getOptStatus]) {
-        return;
-    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
