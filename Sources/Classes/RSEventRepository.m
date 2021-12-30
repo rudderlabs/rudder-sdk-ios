@@ -562,9 +562,6 @@ typedef enum {
         return;
     }
 #endif
-    if ([self getOptStatus]) {
-        return;
-    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
