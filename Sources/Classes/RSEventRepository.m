@@ -10,6 +10,8 @@
 #import "RSElementCache.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
+
+#import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
@@ -44,11 +46,20 @@ typedef enum {
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
+        self->firstForeGround = YES;
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         
         writeKey = _writeKey;
         config = _config;
+#if !TARGET_OS_WATCH
+        if(config.enableBackgroundMode)
+        {
+            [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
+            backgroundTask = UIBackgroundTaskInvalid;
+            [self registerBackGroundTask];
+        }
+#endif
         
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
@@ -315,10 +326,10 @@ typedef enum {
                 ![errorResponse isEqualToString:@""] && // non-empty response
                 [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
-                respStatus = WRONGWRITEKEY;
-            } else {
-                respStatus = NETWORKERROR;
-            }
+                    respStatus = WRONGWRITEKEY;
+                } else {
+                    respStatus = NETWORKERROR;
+                }
             [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
         }
         
@@ -473,6 +484,7 @@ typedef enum {
 
 - (void) __checkApplicationUpdateStatus {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+#if !TARGET_OS_WATCH
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
                               UIApplicationDidFinishLaunchingNotification,
                               UIApplicationWillEnterForegroundNotification,
@@ -481,9 +493,19 @@ typedef enum {
                               UIApplicationDidBecomeActiveNotification ]) {
         [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
     }
+#else
+    for (NSString *name in @[ WKApplicationDidEnterBackgroundNotification,
+                              WKApplicationDidFinishLaunchingNotification,
+                              WKApplicationWillEnterForegroundNotification,
+                              WKApplicationWillResignActiveNotification,
+                              WKApplicationDidBecomeActiveNotification ]) {
+        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:nil];
+    }
+#endif
 }
 
 - (void) handleAppStateNotification: (NSNotification*) notification {
+#if !TARGET_OS_WATCH
     if ([notification.name isEqualToString:UIApplicationDidFinishLaunchingNotification]) {
         [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
     } else if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
@@ -491,6 +513,15 @@ typedef enum {
     } else if ([notification.name isEqualToString: UIApplicationDidEnterBackgroundNotification]) {
         [self _applicationDidEnterBackground];
     }
+#else
+    if ([notification.name isEqualToString:WKApplicationDidFinishLaunchingNotification]) {
+        [self _applicationDidFinishLaunchingWithOptions:notification.userInfo];
+    } else if ([notification.name isEqualToString: WKApplicationDidBecomeActiveNotification]) {
+        [self _applicationWillEnterForeground];
+    } else if ([notification.name isEqualToString: WKApplicationWillResignActiveNotification]) {
+        [self _applicationDidEnterBackground];
+    }
+#endif
 }
 
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -498,21 +529,19 @@ typedef enum {
         return;
     }
     NSString *previousVersion = [preferenceManager getBuildVersionCode];
-    
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
     
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
         }];
+        [preferenceManager saveBuildVersionCode:currentVersion];
     } else if (![currentVersion isEqualToString:previousVersion]) {
-        if ([self getOptStatus]) {
-            return;
-        }
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
         }];
+        [preferenceManager saveBuildVersionCode:currentVersion];
     }
     
     NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];
@@ -520,6 +549,7 @@ typedef enum {
     if (currentVersion != nil) {
         [applicationOpenedProperties setObject:currentVersion forKey:@"version"];
     }
+#if !TARGET_OS_WATCH
     NSString *referring_application = [[NSString alloc] initWithFormat:@"%@", launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] ?: @""];
     if ([referring_application length]) {
         [applicationOpenedProperties setObject:referring_application forKey:@"referring_application"];
@@ -528,28 +558,34 @@ typedef enum {
     if ([url length]) {
         [applicationOpenedProperties setObject:url forKey:@"url"];
     }
+#endif
     [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
-    
-    [preferenceManager saveBuildVersionCode:currentVersion];
+
 }
 
 - (void)_applicationWillEnterForeground {
-    if ([self getOptStatus]) {
+#if TARGET_OS_WATCH
+    if(self->firstForeGround) {
+        self->firstForeGround = NO;
         return;
     }
+#endif
+#if !TARGET_OS_WATCH
+    if(config.enableBackgroundMode) {
+        [self registerBackGroundTask];
+    }
+#endif
+    
     if (!self->config.trackLifecycleEvents) {
         return;
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
-        @"from_background" : @YES,
+        @"from_background" : @YES
     }];
 }
 
 - (void)_applicationDidEnterBackground {
-    if ([self getOptStatus]) {
-        return;
-    }
     if (!self->config.trackLifecycleEvents) {
         return;
     }
@@ -557,8 +593,29 @@ typedef enum {
 }
 
 - (void) __prepareScreenRecorder {
+#if TARGET_OS_WATCH
+    [WKInterfaceController rudder_swizzleView];
+#else
     [UIViewController rudder_swizzleView];
+#endif
 }
 
+#if !TARGET_OS_WATCH
+- (void) registerBackGroundTask {
+    if(backgroundTask != UIBackgroundTaskInvalid) {
+        [self endBackGroundTask];
+    }
+    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"]; 
+    backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackGroundTask];
+    }];   
+}
+
+- (void) endBackGroundTask {
+    [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
+    backgroundTask = UIBackgroundTaskInvalid;
+}
+
+#endif
 
 @end

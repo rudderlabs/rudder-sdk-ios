@@ -8,7 +8,7 @@
 
 #import "RSNetwork.h"
 
-#if !TARGET_OS_TV
+#if !TARGET_OS_TV && !TARGET_OS_WATCH
 #import <CoreTelephony/CTCarrier.h>
 #endif
 
@@ -19,7 +19,7 @@
     self = [super init];
     if (self) {
 
-        #if !TARGET_OS_TV
+        #if !TARGET_OS_TV && !TARGET_OS_WATCH
         NSString *carrierName = [[[CTCarrier alloc] init] carrierName];
         if (carrierName == nil) {
             carrierName = @"unavailable";

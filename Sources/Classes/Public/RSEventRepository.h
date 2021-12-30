@@ -20,12 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
     NSString* authToken;
     NSString* anonymousIdToken;
     RSConfig* config;
+#if !TARGET_OS_WATCH
+    UIBackgroundTaskIdentifier backgroundTask;
+#endif
     RSDBPersistentManager* dbpersistenceManager;
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
+    BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
