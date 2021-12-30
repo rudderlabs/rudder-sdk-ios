@@ -52,12 +52,14 @@ typedef enum {
         
         writeKey = _writeKey;
         config = _config;
+#if !TARGET_OS_WATCH
         if(config.enableBackgroundMode)
         {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
             backgroundTask = UIBackgroundTaskInvalid;
             [self registerBackGroundTask];
         }
+#endif
         
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
@@ -568,9 +570,11 @@ typedef enum {
         return;
     }
 #endif
+#if !TARGET_OS_WATCH
     if(config.enableBackgroundMode) {
         [self registerBackGroundTask];
     }
+#endif
     
     if (!self->config.trackLifecycleEvents) {
         return;
@@ -596,6 +600,7 @@ typedef enum {
 #endif
 }
 
+#if !TARGET_OS_WATCH
 - (void) registerBackGroundTask {
     if(backgroundTask != UIBackgroundTaskInvalid) {
         [self endBackGroundTask];
@@ -610,5 +615,7 @@ typedef enum {
     [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
     backgroundTask = UIBackgroundTaskInvalid;
 }
+
+#endif
 
 @end

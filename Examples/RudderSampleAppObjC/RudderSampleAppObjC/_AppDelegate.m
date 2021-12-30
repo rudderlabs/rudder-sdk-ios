@@ -21,63 +21,40 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [RSClient putAnonymousId:@"AnonymousId1"];
-    [RSClient putDeviceToken:@"DeviceToken1"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId1"];
-
+    [RSClient putDeviceToken:@"your_device_token"];
+    [RSClient putAnonymousId:@"anonymous_id"];
     
-    // Override point for customization after application launch.
-    RSOption *defaultOption = [[RSOption alloc]init];
-    // adding an integration into integrations object directly by specifying its name
-    [defaultOption putIntegration:@"Amplitude" isEnabled:YES];
-    [defaultOption putIntegration:@"MoEngage" isEnabled:YES];
-    [defaultOption putIntegration:@"All" isEnabled:NO];
-    // adding an integration into integrations object using its Factory object
-    // [defaultOption putIntegrationWithFactory:[RudderMoengageFactory instance] isEnabled:NO];
+    
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withLoglevel:RSLogLevelNone];
+    [builder withLoglevel:RSLogLevelVerbose];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
-    // creating Custom factory
-    [builder withCustomFactory:[CustomFactory instance]];
-    // creating the client object by passing the options object
-    [RSClient getInstance:WRITE_KEY config:[builder build] options:defaultOption];
-//    [[[RSClient sharedInstance] getContext] putAdvertisementId:[self getIDFA]];
-    [[[RSClient sharedInstance] getContext] putAppTrackingConsent:RSATTAuthorize];
+    [builder withEnableBackgroundMode:YES];
+    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
+    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
     
+    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    }];
     
-    RSOption *option = [[RSOption alloc]init];
-    [option putIntegration:@"Amplitude" isEnabled:YES];
-    [option putIntegration:@"MixPanel" isEnabled:NO];
-    [option putCustomContext: @{
-        @"language": @"objective-c",
-        @"version": @"1.0.0"
-    } withKey: @"customContext"];
-    [[RSClient sharedInstance] track:@"simple_track_event1"];
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
     
-    [[RSClient sharedInstance] optOut:YES];
-    [RSClient putAnonymousId:@"AnonymousId2"];
-    [RSClient putDeviceToken:@"DeviceToken2"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId2"];
-    [[RSClient sharedInstance] track:@"simple_track_event2"];
-    [[RSClient sharedInstance] track:@"simple_track_event3"];
-    [[RSClient sharedInstance] track:@"simple_track_event4"];
-
-    [[RSClient sharedInstance] optOut:NO];
-    [RSClient setAnonymousId:@"AnonymousId3"];
-    [RSClient putDeviceToken:@"DeviceToken3"];
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"AdvertisementId3"];
-    [[RSClient sharedInstance] track:@"simple_track_event4"];
-    [[RSClient sharedInstance] track:@"simple_track_event5"];
-    [[RSClient sharedInstance] track:@"simple_track_event6"];
-
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [[RSClient sharedInstance] identify:@"testUserId"
+                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
     
-//    [RSClient putDeviceToken:@"DEVTOKEN2"];
-//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-//        @"key_1" : @"value_1",
-//        @"key_2" : @"value_2"
-//    } options:option];
-//
+    [[RSClient sharedInstance] screen:@"ViewController"];
+    
+    [[RSClient sharedInstance] group:@"sample_group_id"
+                              traits:@{@"foo": @"bar",
+                                       @"foo1": @"bar1",
+                                       @"email": @"ruchira@gmail.com"}
+    ];
+    
+    [[RSClient sharedInstance] alias:@"new_user_id"];
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     

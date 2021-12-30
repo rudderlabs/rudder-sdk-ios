@@ -12,24 +12,40 @@
 
 - (void)applicationDidFinishLaunching {
     // Perform any final initialization of your application.
+    [RSClient putDeviceToken:@"your_device_token"];
+    [RSClient putAnonymousId:@"anonymous_id"];
+    
+    
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
+    [builder withLoglevel:RSLogLevelVerbose];
     [builder withTrackLifecycleEvens:YES];
+//        [builder withEnableBackgroundMode:YES];
     [builder withRecordScreenViews:YES];
-    [builder withLoglevel:RSLogLevelNone];
+    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
     [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
-    [[RSClient sharedInstance] identify:@"test_user_id"
-                                     traits: @{
-               @"foo": @"bar",
-                @"foo1": @"bar1",
-                @"email": @"test@gmail.com",
-                @"key_1" : @"value_1",
-                @"key_2" : @"value_2" }
-        ];
+    
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",
         @"key_2" : @"value_2"
     }];
+    
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
+    
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [[RSClient sharedInstance] identify:@"testUserId"
+                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
+    
+    [[RSClient sharedInstance] screen:@"ViewController"];
+    
+    [[RSClient sharedInstance] group:@"sample_group_id"
+                              traits:@{@"foo": @"bar",
+                                       @"foo1": @"bar1",
+                                       @"email": @"ruchira@gmail.com"}
+    ];
+    
+    [[RSClient sharedInstance] alias:@"new_user_id"];
 }
 
 - (void)applicationDidBecomeActive {
