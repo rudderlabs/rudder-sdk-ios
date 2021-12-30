@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Rudder.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>

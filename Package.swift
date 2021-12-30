@@ -5,23 +5,24 @@ import PackageDescription
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS(.v8)
+        .iOS(.v9), .tvOS(.v9)
     ],
     products: [
         .library(
             name: "Rudder",
-            type: .dynamic,
             targets: ["Rudder"]
         )
     ],
     targets: [
         .target(
             name: "Rudder",
-            path: "Rudder",
-            sources: ["Rudder"],
-            publicHeadersPath: "Rudder/**",
+            path: "Sources",
+            sources: ["Classes/"],
+            publicHeadersPath: "Classes/Public/",
             cSettings: [
-                .headerSearchPath("Rudder/**")
+                .headerSearchPath("Classes/"),
+                .headerSearchPath("Classes/Ecomm"),
+                .headerSearchPath("Classes/Ecomm/Events")
             ]
         )
     ]
