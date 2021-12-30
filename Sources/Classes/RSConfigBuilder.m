@@ -133,6 +133,14 @@
     return self;
 }
 
+- (instancetype) withEnableBackgroundMode:(BOOL)enableBackgroundMode {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.enableBackgroundMode = enableBackgroundMode;
+    return self;
+}
+
 -(instancetype)withConfigPlaneUrl:(NSString *) configPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];
