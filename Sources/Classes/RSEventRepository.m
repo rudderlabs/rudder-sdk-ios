@@ -52,15 +52,16 @@ typedef enum {
         
         writeKey = _writeKey;
         config = _config;
-#if !TARGET_OS_WATCH
-        if(config.enableBackgroundMode)
-        {
+
+        if(config.enableBackgroundMode) {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
+#if !TARGET_OS_WATCH
             backgroundTask = UIBackgroundTaskInvalid;
             [self registerBackGroundTask];
-        }
+#else
+            [self askForAssertionWithSemaphore];
 #endif
-        
+        }
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
@@ -570,11 +571,14 @@ typedef enum {
         return;
     }
 #endif
-#if !TARGET_OS_WATCH
+
     if(config.enableBackgroundMode) {
+#if !TARGET_OS_WATCH
         [self registerBackGroundTask];
-    }
+#else
+        [self askForAssertionWithSemaphore];
 #endif
+    }
     
     if (!self->config.trackLifecycleEvents) {
         return;
@@ -605,15 +609,42 @@ typedef enum {
     if(backgroundTask != UIBackgroundTaskInvalid) {
         [self endBackGroundTask];
     }
-    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"]; 
+    [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"];
     backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [self endBackGroundTask];
-    }];   
+    }];
 }
 
 - (void) endBackGroundTask {
     [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
     backgroundTask = UIBackgroundTaskInvalid;
+}
+
+#else
+
+- (void) askForAssertionWithSemaphore {
+    if(self->semaphore == nil) {
+        self->semaphore = dispatch_semaphore_create(0);
+    } else if (!self->isSemaphoreReleased) {
+        [self releaseAssertionWithSemaphore];
+    }
+    
+    NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+    [processInfo performExpiringActivityWithReason:@"backgroundRunTime" usingBlock:^(BOOL expired) {
+        if (expired) {
+            [self releaseAssertionWithSemaphore];
+            self->isSemaphoreReleased = YES;
+        } else {
+            [RSLogger logDebug:@"EventRepository: askForAssertionWithSemaphore: Asking Semaphore for Assertion to wait forever for backgroundMode"];
+            self->isSemaphoreReleased = NO;
+            dispatch_semaphore_wait(self->semaphore, DISPATCH_TIME_FOREVER);
+        }
+    }];
+}
+
+- (void) releaseAssertionWithSemaphore {
+    [RSLogger logDebug:@"EventRepository: releaseAssertionWithSemaphore: Releasing Assertion on Semaphore for backgroundMode"];
+    dispatch_semaphore_signal(self->semaphore);
 }
 
 #endif

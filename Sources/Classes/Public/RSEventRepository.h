@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
     RSConfig* config;
 #if !TARGET_OS_WATCH
     UIBackgroundTaskIdentifier backgroundTask;
+#else
+    dispatch_semaphore_t semaphore;
 #endif
     RSDBPersistentManager* dbpersistenceManager;
     RSServerConfigManager* configManager;
@@ -31,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSPreferenceManager *preferenceManager;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
+    BOOL isSemaphoreReleased;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
 }
