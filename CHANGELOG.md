@@ -38,3 +38,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.4.0 - 2021-12-29
 ### Additions
 - Added support for additional background run time through configuration on watchOS as well along with iOS, tvOS.
+
+## Version - 1.4.1 - 2022-01-11
+### Fix
+- Fixed building issue via Carthage for watchOS & tvOS.
