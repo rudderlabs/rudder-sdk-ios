@@ -22,16 +22,23 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Added Support for Setting device token before SDK initialization as well.
 
-##Version - 1.2.2 - 2021-12-06
+## Version - 1.2.2 - 2021-12-06
 ### Changed
 - Added logic to filter out the property which are not set for Application Opened event. 
 
 ## Version - 1.3.0 - 2021-12-29
 ### Additions
-- Added support for additional background run time through configuration.
+- Added support for additional background run time through configuration on iOS, tvOS.
 - Added watchOS as a supported platform.
 
 ## Version - 1.3.1 - 2021-12-30
 ### Changed
 - Optimized the GDPR by removing the un-necessary checks in the life cycle events tracking code.
 
+## Version - 1.4.0 - 2021-12-29
+### Additions
+- Added support for additional background run time through configuration on watchOS as well along with iOS, tvOS.
+
+## Version - 1.4.1 - 2022-01-11
+### Fix
+- Fixed building issue via Carthage for watchOS & tvOS.
