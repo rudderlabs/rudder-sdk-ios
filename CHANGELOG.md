@@ -42,3 +42,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.4.1 - 2022-01-11
 ### Fix
 - Fixed building issue via Carthage for watchOS & tvOS.
+
+## Version - 1.4.2 - 2022-01-12
+### Fix
+- Fixed Memory leak issue while replaying events to the device mode factories once they are initialized.
