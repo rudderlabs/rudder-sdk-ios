@@ -49,6 +49,7 @@ typedef enum {
         self->firstForeGround = YES;
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
+        self->isSDKInitialized = NO;
         
         writeKey = _writeKey;
         config = _config;
@@ -106,39 +107,41 @@ typedef enum {
 }
 
 - (void) __initiateSDK {
+    __weak RSEventRepository *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        RSEventRepository *strongSelf = weakSelf;
         int retryCount = 0;
-        while (self->isSDKInitialized == NO && retryCount <= 5) {
-            RSServerConfigSource *serverConfig = [self->configManager getConfig];
-            int receivedError =[self->configManager getError];
+        while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
+            RSServerConfigSource *serverConfig = [strongSelf->configManager getConfig];
+            int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                self->isSDKEnabled = serverConfig.isSourceEnabled;
-                if  (self->isSDKEnabled) {
+                strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
+                if  (strongSelf->isSDKEnabled) {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
-                    [self __initiateProcessor];
+                    [strongSelf __initiateProcessor];
                     
                     // initialize integrationOperationMap
-                    self->integrationOperationMap = [[NSMutableDictionary alloc] init];
+                    strongSelf->integrationOperationMap = [[NSMutableDictionary alloc] init];
                     
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
-                        [self __initiateFactories: serverConfig.destinations];
+                        [strongSelf __initiateFactories: serverConfig.destinations];
                     } else {
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                     
                     // initiate custom factories
-                    [self __initiateCustomFactories];
-                    self->areFactoriesInitialized = YES;
-                    [self __replayMessageQueue];
+                    [strongSelf __initiateCustomFactories];
+                    strongSelf->areFactoriesInitialized = YES;
+                    [strongSelf __replayMessageQueue];
                     
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
-                    [self->dbpersistenceManager flushEventsFromDB];
+                    [strongSelf->dbpersistenceManager flushEventsFromDB];
                 }
-                self->isSDKInitialized = YES;
+                strongSelf->isSDKInitialized = YES;
             } else if(receivedError==2){
                 retryCount= 6;
                 [RSLogger logError:@"WRONG WRITE KEY"];

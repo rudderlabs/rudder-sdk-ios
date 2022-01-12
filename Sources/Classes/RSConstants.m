@@ -18,5 +18,5 @@ NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com";
 bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
 bool const RSEnableBackgroundMode = NO;
-NSString *const RS_VERSION = @"1.4.1";
+NSString *const RS_VERSION = @"1.4.2";
 @end
