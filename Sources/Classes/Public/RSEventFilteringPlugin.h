@@ -11,6 +11,7 @@
 #import "RSServerDestination.h"
 #import "RSMessageType.h"
 #import "RSLogger.h"
+#import "RSConstants.h"
 
 @interface RSEventFilteringPlugin : NSObject {
     NSMutableDictionary<NSString*, NSString*>* eventFilteringOption;

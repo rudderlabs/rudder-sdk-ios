@@ -19,4 +19,9 @@ bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
 bool const RSEnableBackgroundMode = NO;
 NSString *const RS_VERSION = @"1.5.0";
+NSString* const DISABLE = @"disable";
+NSString* const WHITELISTED_EVENTS = @"whitelistedEvents";
+NSString* const BLACKLISTED_EVENTS = @"blacklistedEvents";
+NSString* const EVENT_FILTERING_OPTION = @"eventFilteringOption";
+NSString* const EVENT_NAME = @"eventName";
 @end

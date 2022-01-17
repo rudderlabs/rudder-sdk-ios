@@ -8,12 +8,6 @@
 
 #import "RSEventFilteringPlugin.h"
 
-NSString* const DISABLE = @"disable";
-NSString* const WHITELISTED_EVENTS = @"whitelistedEvents";
-NSString* const BLACKLISTED_EVENTS = @"blacklistedEvents";
-NSString* const EVENT_FILTERING_OPTION = @"eventFilteringOption";
-NSString* const EVENT_NAME = @"eventName";
-
 @implementation RSEventFilteringPlugin
 
 
