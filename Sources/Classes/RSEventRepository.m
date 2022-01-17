@@ -53,7 +53,7 @@ typedef enum {
         
         writeKey = _writeKey;
         config = _config;
-
+        
         if(config.enableBackgroundMode) {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
 #if !TARGET_OS_WATCH
@@ -128,6 +128,9 @@ typedef enum {
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
                         [strongSelf __initiateFactories: serverConfig.destinations];
+                        [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
+                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
+                        
                     } else {
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
@@ -399,8 +402,11 @@ typedef enum {
                 {
                     if(integrationOptions[key]==nil ||[(NSNumber*)integrationOptions[key] boolValue])
                     {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-                        [integration dump:message];
+                        if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
+                        {
+                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                            [integration dump:message];
+                        }
                     }
                 }
             }
@@ -412,8 +418,11 @@ typedef enum {
             if (integration != nil) {
                 if([(NSNumber*)integrationOptions[key] boolValue])
                 {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-                    [integration dump:message];
+                    if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
+                    {
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                        [integration dump:message];
+                    }
                 }
             }
         }
@@ -564,7 +573,7 @@ typedef enum {
     }
 #endif
     [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
-
+    
 }
 
 - (void)_applicationWillEnterForeground {
@@ -574,7 +583,7 @@ typedef enum {
         return;
     }
 #endif
-
+    
     if(config.enableBackgroundMode) {
 #if !TARGET_OS_WATCH
         [self registerBackGroundTask];
