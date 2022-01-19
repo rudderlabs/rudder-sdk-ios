@@ -12,6 +12,7 @@
 #import "RSDBPersistentManager.h"
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
+#import "RSEventFilteringPlugin.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
+    RSEventFilteringPlugin *eventFilteringPlugin;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;
