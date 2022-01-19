@@ -33,6 +33,16 @@ extern bool const RSRecordScreenViews;
 extern bool const RSEnableBackgroundMode;
 // SDK Version
 extern NSString *const RS_VERSION;
+// constant used to check if event filtering is disabled
+extern NSString* const DISABLE;
+// constant used to check if event filtering use white listed events
+extern NSString* const WHITELISTED_EVENTS;
+// constant used to check if event filtering use black listed events
+extern NSString* const BLACKLISTED_EVENTS;
+// constant used to check the event filtering option set for a destination in the destination config
+extern NSString* const EVENT_FILTERING_OPTION;
+// constant used in retrieving event name form the white/black list events from the destination config
+extern NSString* const EVENT_NAME;
 
 @end
 

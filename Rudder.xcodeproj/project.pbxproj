@@ -174,6 +174,8 @@
 		ED83FFFD27310B44006F27B3 /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5627310B44006F27B3 /* RSECommerceCheckoutBuilder.m */; };
 		ED83FFFE27310B44006F27B3 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5727310B44006F27B3 /* RSECommerceCouponBuilder.m */; };
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */; };
+		F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */; };
 		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
@@ -355,6 +357,8 @@
 		ED83FFB427310B44006F27B3 /* RSEventRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventRepository.m; sourceTree = "<group>"; };
 		ED83FFB527310B44006F27B3 /* RSScreenPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSScreenPropertyBuilder.m; sourceTree = "<group>"; };
 		ED83FFB627310B44006F27B3 /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
+		F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventFilteringPlugin.m; sourceTree = "<group>"; };
+		F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventFilteringPlugin.h; sourceTree = "<group>"; };
 		F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
 		F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -442,6 +446,7 @@
 				ED83FFB627310B44006F27B3 /* RSLogger.m */,
 				ED83FFB327310B44006F27B3 /* RSMessage.m */,
 				ED83FF4927310B44006F27B3 /* RSMessageBuilder.m */,
+				F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */,
 				ED83FF2027310B44006F27B3 /* RSMessageType.m */,
 				ED83FF1427310B44006F27B3 /* RSNetwork.m */,
 				ED83FF4827310B44006F27B3 /* RSOption.m */,
@@ -478,6 +483,7 @@
 				ED83FF3727310B44006F27B3 /* RSConfig.h */,
 				ED83FF2B27310B44006F27B3 /* RSConfigBuilder.h */,
 				ED83FF2727310B44006F27B3 /* RSConstants.h */,
+				F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */,
 				ED83FF2A27310B44006F27B3 /* RSContext.h */,
 				ED83FF9F27310B44006F27B3 /* RSCouponAppliedEvent.h */,
 				ED83FF9D27310B44006F27B3 /* RSCouponDeniedEvent.h */,
@@ -697,6 +703,7 @@
 				ED83002A27310B45006F27B3 /* RSOrderCancelledEvent.h in Headers */,
 				ED83004027310B45006F27B3 /* RSCartSharedEvent.h in Headers */,
 				ED83000B27310B44006F27B3 /* RSECommerceOrderBuilder.h in Headers */,
+				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
 				ED83005227310B45006F27B3 /* RSProductListViewedEvent.h in Headers */,
 				ED83000727310B44006F27B3 /* RSECommerceFilterBuilder.h in Headers */,
 				ED83002D27310B45006F27B3 /* RSPaymentInfoEnteredEvent.h in Headers */,
@@ -832,6 +839,7 @@
 				ED83002C27310B45006F27B3 /* RSOrderRefundedEvent.m in Sources */,
 				ED83FFF327310B44006F27B3 /* RSServerDestinationDefinition.m in Sources */,
 				ED83FFEE27310B44006F27B3 /* RSServerConfigManager.m in Sources */,
+				F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */,
 				ED83FFFE27310B44006F27B3 /* RSECommerceCouponBuilder.m in Sources */,
 				ED83004127310B45006F27B3 /* RSProductListFilteredEvent.m in Sources */,
 				ED83002F27310B45006F27B3 /* RSCheckoutStepCompletedEvent.m in Sources */,
