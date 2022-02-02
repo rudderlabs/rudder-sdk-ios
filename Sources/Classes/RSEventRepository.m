@@ -108,7 +108,9 @@ typedef enum {
 
 - (void) __initiateSDK {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_queue_attr_t qos = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, -1);
+    dispatch_queue_t initializeQueue = dispatch_queue_create("initializeQueue", qos);
+    dispatch_sync(initializeQueue, ^{
         RSEventRepository *strongSelf = weakSelf;
         int retryCount = 0;
         while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
@@ -213,7 +215,9 @@ typedef enum {
 }
 
 - (void) __initiateProcessor {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_queue_attr_t qos = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, -1);
+    dispatch_queue_t initializeProcessorQueue = dispatch_queue_create("initializeProcessorQueue", qos);
+    dispatch_sync(initializeProcessorQueue, ^{
         [RSLogger logDebug:@"processor started"];
         int errResp = 0;
         int sleepCount = 0;
