@@ -10,6 +10,7 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 #import "CustomFactory.h"
+#import "RudderAmplitudeFactory.h"
 
 
 static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
@@ -26,49 +27,92 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withLoglevel:RSLogLevelVerbose];
-    [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:YES];
+//    [builder withLoglevel:RSLogLevelVerbose];
+    [builder withLoglevel:RSLogLevelNone];
+    [builder withTrackLifecycleEvens:NO];
+    [builder withRecordScreenViews:NO];
     [builder withEnableBackgroundMode:YES];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
-    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
+    [builder withFactory:[RudderAmplitudeFactory instance]];
+    [builder withControlPlaneURL:[NSURL URLWithString:@"https://c9b4-2405-201-8000-6061-1d32-d996-5af-a2b2.ngrok.io"]];
+    [builder withDataPlaneURL:[NSURL URLWithString:@"https://b474-2405-201-8000-6061-1d32-d996-5af-a2b2.ngrok.io"]];
+    [RSClient getInstance:@"24BjDDJa7PF4GtNCWcHTvbNtYUm" config:[builder build]];
+//    [builder withDataPlaneUrl:@"https://rudderstacbumvdrexzj.dataplane.rudderstack.com"];
+//    [RSClient getInstance:@"24al1ujFmoFVUvaxd01Br4aEclr" config:[builder build]];
     
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+//    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+//        @"key_1" : @"value_1",
+//        @"key_2" : @"value_2"
+//    }];
+//    [self makeEvents];
+    
+    for (int i = 0; i<200; i++) {
+        [self makeEvents:i];
+        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+    }
+    
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<300; i++) {
+            [self makeEvents:i];
+//            [NSLog(@"%@", [@"Background Thread- 1 Event - " stringByAppendingString:[NSString stringWithFormat:@"%i" i]])] ;
+//            NS[[NSString alloc] initWithFormat:@"Background Thread- 1 Event -  %d", i];
+            
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+            
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 300; i<400; i++) {
+            [self makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
+        }
+    });
+    
+    
+    
+    
+//
+//    [[RSClient sharedInstance] alias:@"new_user_id"];
+//    [FIRApp configure];
+//    [FIRMessaging messaging].delegate = self;
+//
+//    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+//    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
+//    UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+//    [[UNUserNotificationCenter currentNotificationCenter]
+//     requestAuthorizationWithOptions:authOptions
+//     completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//        // ...
+//    }];
+//
+//    [application registerForRemoteNotifications];
+    return YES;
+}
+
+- (void) makeEvents:(int) i {
+    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
         @"key_1" : @"value_1",
         @"key_2" : @"value_2"
     }];
-    
+
     [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
-    
+
     RSOption *identifyOptions = [[RSOption alloc] init];
     [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
     [[RSClient sharedInstance] identify:@"testUserId"
                                  traits:@{@"firstname": @"First Name"}
                                 options:identifyOptions];
-    
+////
     [[RSClient sharedInstance] screen:@"ViewController"];
-    
+////
     [[RSClient sharedInstance] group:@"sample_group_id"
                               traits:@{@"foo": @"bar",
                                        @"foo1": @"bar1",
                                        @"email": @"ruchira@gmail.com"}
     ];
     
-    [[RSClient sharedInstance] alias:@"new_user_id"];
-    [FIRApp configure];
-    [FIRMessaging messaging].delegate = self;
-    
-    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
-    UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
-    [[UNUserNotificationCenter currentNotificationCenter]
-     requestAuthorizationWithOptions:authOptions
-     completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        // ...
-    }];
-    
-    [application registerForRemoteNotifications];
-    return YES;
+
 }
 
 - (NSString*) getIDFA {

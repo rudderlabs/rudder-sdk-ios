@@ -84,5 +84,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)track:(id)sender {
+    [[RSClient sharedInstance] track:@"Track"];
+}
+
+
 
 @end
