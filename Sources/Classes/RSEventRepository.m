@@ -60,7 +60,7 @@ typedef enum {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
 #if !TARGET_OS_WATCH
             backgroundTask = UIBackgroundTaskInvalid;
-            [self registerBackGroundTask];
+//            [self registerBackGroundTask];
 #else
             [self askForAssertionWithSemaphore];
 #endif
@@ -626,8 +626,10 @@ typedef enum {
         [self endBackGroundTask];
     }
     [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"];
+    __weak RSEventRepository *weakSelf = self;
     backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [self endBackGroundTask];
+        RSEventRepository *strongSelf = weakSelf;
+        [strongSelf endBackGroundTask];
     }];
 }
 
