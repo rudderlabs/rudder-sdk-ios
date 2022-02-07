@@ -103,10 +103,12 @@ static dispatch_queue_t queue;
 }
 
 -(void) persistTraits {
+    dispatch_async([RSContext getQueue], ^{
     NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
     NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
     
     [preferenceManager saveTraits:traitsString];
+    });
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {

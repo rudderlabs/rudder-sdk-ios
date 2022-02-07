@@ -27,7 +27,7 @@ static dispatch_queue_t queue;
 }
 
 + (void)updateTraits:(RSTraits *)traits {
-    dispatch_async(queue, ^{
+    dispatch_sync([RSContext getQueue], ^{
         [cachedContext updateTraits:traits];
         [self persistTraits];
     });
