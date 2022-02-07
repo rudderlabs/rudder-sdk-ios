@@ -143,8 +143,22 @@ static dispatch_queue_t queue;
     {
         _externalIds = [[NSMutableArray alloc] init];
     }
+        
+        
+            for (int index = 0; index < externalIds.count; index += 1) {
+                if ([_externalIds containsObject:externalIds[index]]) {
+                    [externalIds removeObjectAtIndex:index];
+                }
+            }
+            
+            
+            if ([externalIds count]) {
+                [_externalIds addObjectsFromArray: externalIds];
+            }
+        
+        
     // update local variable
-    [_externalIds addObjectsFromArray: externalIds];
+//    [_externalIds addObjectsFromArray: externalIds];
     });
 }
 
@@ -200,7 +214,7 @@ static dispatch_queue_t queue;
     RSContext *copy = [[[self class] allocWithZone:zone] init];
     
     copy.app = self.app;
-    copy.traits = [self.traits copy];
+    
     copy.library = self.library;
     copy.os = self.os;
     copy.screen = self.screen;
@@ -209,8 +223,9 @@ static dispatch_queue_t queue;
     copy.device = self.device;
     copy.network = self.network;
     copy.timezone = self.timezone;
-    dispatch_async(queue, ^{
-    copy.externalIds = [self.externalIds copy];
+    dispatch_sync(queue, ^{
+        copy.traits = [self.traits copy];
+        copy.externalIds = [self.externalIds copy];
     });
     
     return copy;

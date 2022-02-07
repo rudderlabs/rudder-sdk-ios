@@ -283,7 +283,7 @@ static NSString* _deviceToken = nil;
     [builder setEventName:RSIdentify];
     [builder setUserId:userId];
     [builder setTraits:traitsObj];
-    [builder setExternalIds:options];
+//    [builder setExternalIds:options];
     [builder setRSOption:options];
     RSMessage *message = [builder build];
     [self dumpInternal: message type:RSIdentify];

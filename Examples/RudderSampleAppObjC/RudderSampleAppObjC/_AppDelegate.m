@@ -45,72 +45,54 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //    }];
 //    [self makeEvents];
     
-    for (int i = 0; i<200; i++) {
-        [self makeEvents:i];
-        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
-    }
+//    [self manageThread];
+    return YES;
+}
+
++(void) manageThread {
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<300; i++) {
-            [self makeEvents:i];
-//            [NSLog(@"%@", [@"Background Thread- 1 Event - " stringByAppendingString:[NSString stringWithFormat:@"%i" i]])] ;
-//            NS[[NSString alloc] initWithFormat:@"Background Thread- 1 Event -  %d", i];
-            
+        for (int i = 200; i<500; i++) {
+            [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
-            
         }
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 300; i<400; i++) {
-            [self makeEvents:i];
+        for (int i = 300; i<600; i++) {
+            [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
         }
     });
     
-    
-    
-    
-//
-//    [[RSClient sharedInstance] alias:@"new_user_id"];
-//    [FIRApp configure];
-//    [FIRMessaging messaging].delegate = self;
-//
-//    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-//    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
-//    UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
-//    [[UNUserNotificationCenter currentNotificationCenter]
-//     requestAuthorizationWithOptions:authOptions
-//     completionHandler:^(BOOL granted, NSError * _Nullable error) {
-//        // ...
-//    }];
-//
-//    [application registerForRemoteNotifications];
-    return YES;
+    for (int i = 0; i<500; i++) {
+        [_AppDelegate makeEvents:i];
+        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+    }
 }
 
-- (void) makeEvents:(int) i {
-    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    }];
-
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
++ (void) makeEvents:(int) i {
+//    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
+//        @"key_1" : @"value_1",
+//        @"key_2" : @"value_2"
+//    }];
+//
+//    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
 
     RSOption *identifyOptions = [[RSOption alloc] init];
     [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
     [[RSClient sharedInstance] identify:@"testUserId"
                                  traits:@{@"firstname": @"First Name"}
                                 options:identifyOptions];
-////
-    [[RSClient sharedInstance] screen:@"ViewController"];
-////
-    [[RSClient sharedInstance] group:@"sample_group_id"
-                              traits:@{@"foo": @"bar",
-                                       @"foo1": @"bar1",
-                                       @"email": @"ruchira@gmail.com"}
-    ];
+
+//    [[RSClient sharedInstance] screen:@"ViewController"];
+//
+//    [[RSClient sharedInstance] group:@"sample_group_id"
+//                              traits:@{@"foo": @"bar",
+//                                       @"foo1": @"bar1",
+//                                       @"email": @"ruchira@gmail.com"}
+//    ];
     
 
 }

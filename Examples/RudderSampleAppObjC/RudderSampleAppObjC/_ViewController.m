@@ -8,6 +8,7 @@
 
 #import "_ViewController.h"
 #import <Rudder/Rudder.h>
+#import "_AppDelegate.h"
 
 @interface _ViewController ()
 
@@ -85,9 +86,18 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)track:(id)sender {
-    [[RSClient sharedInstance] track:@"Track"];
+//    [[RSClient sharedInstance] track:@"Track"];
+    
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [[RSClient sharedInstance] identify:@"testUserId"
+                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
 }
 
+- (IBAction)manageThreads:(id)sender {
+    [_AppDelegate manageThread];
+}
 
 
 @end
