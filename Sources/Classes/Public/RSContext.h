@@ -40,6 +40,8 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) NSString* timezone;
 @property (nonatomic, readwrite) NSMutableArray* externalIds;
 
+
++ (dispatch_queue_t) getQueue;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 - (void) resetTraits;
 - (void) updateTraits: (RSTraits* _Nullable) traits;

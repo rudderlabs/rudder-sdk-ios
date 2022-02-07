@@ -67,7 +67,7 @@ static dispatch_queue_t queue;
 }
 
 + (void) updateExternalIds:(NSMutableArray *)externalIds {
-    dispatch_async(queue, ^{
+   dispatch_async(queue, ^{
         [cachedContext updateExternalIds:externalIds];
         [cachedContext persistExternalIds];
     });

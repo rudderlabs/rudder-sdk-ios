@@ -40,6 +40,9 @@
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
+    
+   dispatch_async([RSContext getQueue], ^{
+    
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
 
     [tempDict setValue:_identifier forKey:@"id"];
@@ -53,11 +56,11 @@
     if (_advertisingId != nil) {
         [tempDict setValue:_advertisingId forKey:@"advertisingId"];
         [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
+        [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
     }
-    
-    [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
-
-    return [tempDict copy];
+//    return [tempDict copy];
+    });
+    return [[NSMutableDictionary alloc] init];
 }
 
 @end

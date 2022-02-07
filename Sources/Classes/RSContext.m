@@ -17,10 +17,18 @@ int const RSATTRestricted = 1;
 int const RSATTDenied = 2;
 int const RSATTAuthorize = 3;
 
+
+static dispatch_queue_t queue;
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        
+        if (queue == nil) {
+            queue = dispatch_queue_create("com.rudder.RSContext", NULL);
+        }
+        
         self->preferenceManager = [RSPreferenceManager getInstance];
         
         _app = [[RSApp alloc] init];
@@ -60,6 +68,10 @@ int const RSATTAuthorize = 3;
         }
     }
     return self;
+}
+
++ (dispatch_queue_t) getQueue {
+    return queue;
 }
 
 - (void) createAndPersistTraits {
@@ -112,6 +124,7 @@ int const RSATTAuthorize = 3;
 - (void)putAdvertisementId:(NSString *_Nonnull)idfa {
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
+    dispatch_async(queue, ^{
     if( idfa != nil && [idfa length] != 0) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
         BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
@@ -121,25 +134,29 @@ int const RSATTAuthorize = 3;
             _device.advertisingId = idfa;
         }
     }
+    });
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
+    dispatch_async(queue, ^{
     if(_externalIds == nil)
     {
         _externalIds = [[NSMutableArray alloc] init];
     }
     // update local variable
     [_externalIds addObjectsFromArray: externalIds];
+    });
 }
 
 - (void)persistExternalIds {
+    dispatch_async(queue, ^{
     if (_externalIds != nil) {
         // update persistence storage
         NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[_externalIds copy]] options:0 error:nil];
         NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
-        
         [preferenceManager saveExternalIds:externalIdJson];
     }
+    });
 }
 
 - (void)resetExternalIds {
@@ -192,7 +209,9 @@ int const RSATTAuthorize = 3;
     copy.device = self.device;
     copy.network = self.network;
     copy.timezone = self.timezone;
+    dispatch_async(queue, ^{
     copy.externalIds = [self.externalIds copy];
+    });
     
     return copy;
 }
