@@ -82,5 +82,24 @@
     return self;
 }
 
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+    RSOption *copy = [[[self class] allocWithZone:zone] init];
+    
+    copy.externalIds = [self.externalIds mutableCopy];
+    copy.customContexts = self.customContexts;
+    copy.integrations = self.integrations;
+    
+    return copy;
+}
+
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
+    RSOption *copy = [[[self class] allocWithZone:zone] init];
+    
+    copy.externalIds = [self.externalIds mutableCopy];
+    copy.customContexts = self.customContexts;
+    copy.integrations = self.integrations;
+    
+    return copy;
+}
 
 @end

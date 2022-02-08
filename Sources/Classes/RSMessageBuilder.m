@@ -106,8 +106,8 @@
     if (message == nil) {
         message = [[RSMessage alloc] init];
     }
-    [RSElementCache updateTraits: traits];
-    [message updateContext:[RSElementCache getContext]];
+    [[RSElementCache sharedInstance] updateTraits: traits];
+    [message updateContext:[[RSElementCache sharedInstance] getContext]];
     return self;
 }
 
@@ -115,8 +115,8 @@
     if (option != nil) {
         NSMutableArray *externalIds = option.externalIds;
         if (externalIds != nil) {
-            [RSElementCache updateExternalIds:externalIds];
-            [message updateContext:[RSElementCache getContext]];
+            [[RSElementCache sharedInstance] updateExternalIds:externalIds];
+            [message updateContext:[[RSElementCache sharedInstance] getContext]];
         }
     }
 }

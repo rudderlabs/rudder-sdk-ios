@@ -18,7 +18,7 @@
     if (self) {
         _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [RSUtils getTimeStampLong], [RSUtils getUniqueId]];
         _channel = @"mobile";
-        _context = [RSElementCache getContext];
+        _context = [[RSElementCache sharedInstance] getContext];
         _originalTimestamp = [RSUtils getTimestamp];
         _previousId = nil;
         _groupId = nil;
@@ -86,8 +86,8 @@
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {
-    [RSElementCache updateTraitsDict:traits];
-    [self updateContext:[RSElementCache getContext]];
+    [[RSElementCache sharedInstance] updateTraitsDict:traits];
+    [self updateContext:[[RSElementCache sharedInstance] getContext]];
 }
 
 - (void)setRudderOption:(RSOption *)option {

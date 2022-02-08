@@ -30,10 +30,10 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withEnableBackgroundMode:YES];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
-    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
+    [builder withDataPlaneUrl:@"https://rudderstacz.dataplane.rudderstack.com"];
+    [RSClient getInstance:@"1wvsoF3Kx2SczQNlx1dvcqW9ODW" config:[builder build]];
     
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+    /*[[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",
         @"key_2" : @"value_2"
     }];
@@ -54,7 +54,22 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
                                        @"email": @"ruchira@gmail.com"}
     ];
     
-    [[RSClient sharedInstance] alias:@"new_user_id"];
+    [[RSClient sharedInstance] alias:@"new_user_id"];*/
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<300; i++) {
+            [self makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 300; i<400; i++) {
+            [self makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
+        }
+    });
+    
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     
@@ -69,6 +84,27 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     [application registerForRemoteNotifications];
     return YES;
+}
+
+- (void) makeEvents:(int) i {
+    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    }];
+
+    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
+
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [[RSClient sharedInstance] identify:@"testUserId"
+                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
+    [[RSClient sharedInstance] screen:@"ViewController"];
+    [[RSClient sharedInstance] group:@"sample_group_id"
+                              traits:@{@"foo": @"bar",
+                                       @"foo1": @"bar1",
+                                       @"email": @"ruchira@gmail.com"}
+    ];
 }
 
 - (NSString*) getIDFA {

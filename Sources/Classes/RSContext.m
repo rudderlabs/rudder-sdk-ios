@@ -32,7 +32,7 @@ int const RSATTAuthorize = 3;
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
-        _externalIds = nil;
+        _externalIds = [[NSMutableArray alloc] init];
         
         NSString *traitsJson = [preferenceManager getTraits];
         if (traitsJson == nil) {
@@ -55,7 +55,7 @@ int const RSATTAuthorize = 3;
             NSError *error;
             NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
             if (error == nil) {
-                _externalIds = [externalIdDict mutableCopy];
+                [_externalIds addObject:[externalIdDict mutableCopy]];
             }
         }
     }
@@ -74,7 +74,7 @@ int const RSATTAuthorize = 3;
     RSTraits* traits = [[RSTraits alloc] init];
     traits.anonymousId = [preferenceManager getAnonymousId];
     [_traits removeAllObjects];
-    [_traits setValuesForKeysWithDictionary:[traits dict]];
+    _traits = [[NSDictionary alloc] initWithDictionary:[traits dict]];
 }
 
 - (void)updateTraits:(RSTraits *)traits {
@@ -124,11 +124,8 @@ int const RSATTAuthorize = 3;
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
-    if(_externalIds == nil)
-    {
-        _externalIds = [[NSMutableArray alloc] init];
-    }
     // update local variable
+    [_externalIds removeAllObjects];
     [_externalIds addObjectsFromArray: externalIds];
 }
 
@@ -183,7 +180,7 @@ int const RSATTAuthorize = 3;
     RSContext *copy = [[[self class] allocWithZone:zone] init];
     
     copy.app = self.app;
-    copy.traits = [self.traits copy];
+    copy.traits = [self.traits mutableCopy];
     copy.library = self.library;
     copy.os = self.os;
     copy.screen = self.screen;
@@ -192,7 +189,25 @@ int const RSATTAuthorize = 3;
     copy.device = self.device;
     copy.network = self.network;
     copy.timezone = self.timezone;
-    copy.externalIds = [self.externalIds copy];
+    copy.externalIds = [self.externalIds mutableCopy];
+    
+    return copy;
+}
+
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
+    RSContext *copy = [[[self class] allocWithZone:zone] init];
+    
+    copy.app = self.app;
+    copy.traits = [self.traits mutableCopy];
+    copy.library = self.library;
+    copy.os = self.os;
+    copy.screen = self.screen;
+    copy.userAgent = self.userAgent;
+    copy.locale = self.locale;
+    copy.device = self.device;
+    copy.network = self.network;
+    copy.timezone = self.timezone;
+    copy.externalIds = [self.externalIds mutableCopy];
     
     return copy;
 }

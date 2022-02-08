@@ -14,7 +14,7 @@
 #import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
 
-static RSEventRepository* _instance;
+//static RSEventRepository* _instance;
 
 @implementation RSEventRepository
 typedef enum {
@@ -23,7 +23,7 @@ typedef enum {
     WRONGWRITEKEY =2
 } NETWORKSTATE;
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
+/*+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -31,7 +31,7 @@ typedef enum {
         });
     }
     return _instance;
-}
+}*/
 
 /*
  * constructor to be called from RSClient internally.
@@ -43,7 +43,7 @@ typedef enum {
  * 5. start processor thread
  * 6. initiate factories
  * */
-- (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
@@ -53,6 +53,10 @@ typedef enum {
         self->isSDKEnabled = YES;
         self->isSDKInitialized = NO;
         
+        if (queue == nil) {
+            queue = dispatch_queue_create("com.rudder.RSEventRepository", NULL);
+        }
+
         writeKey = _writeKey;
         config = _config;
         
@@ -60,7 +64,7 @@ typedef enum {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
 #if !TARGET_OS_WATCH
             backgroundTask = UIBackgroundTaskInvalid;
-//            [self registerBackGroundTask];
+            [self registerBackGroundTask];
 #else
             [self askForAssertionWithSemaphore];
 #endif
@@ -69,8 +73,8 @@ typedef enum {
         authToken = [authData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
         
-        [RSLogger logDebug:@"EventRepository: initiating element cache"];
-        [RSElementCache initiate];
+//        [RSLogger logDebug:@"EventRepository: initiating element cache"];
+//        [RSElementCache initiate];
         
         [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
         self->eventReplayMessage = [[NSMutableArray alloc] init];
@@ -103,14 +107,16 @@ typedef enum {
 }
 
 - (void) setAnonymousIdToken {
-    NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [[RSElementCache sharedInstance] getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
     self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
 }
 
 - (void) __initiateSDK {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+    dispatch_async(queue, ^{
         RSEventRepository *strongSelf = weakSelf;
         int retryCount = 0;
         while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
@@ -216,7 +222,8 @@ typedef enum {
 
 - (void) __initiateProcessor {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(queue, ^{
         RSEventRepository *strongSelf = weakSelf;
         [RSLogger logDebug:@"processor started"];
         int errResp = 0;
@@ -389,8 +396,11 @@ typedef enum {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         return;
     }
-    
-    [self->dbpersistenceManager saveEvent:jsonString];
+    __weak RSEventRepository *weakSelf = self;
+    dispatch_async(queue, ^{
+        RSEventRepository *strongSelf = weakSelf;
+        [strongSelf->dbpersistenceManager saveEvent:jsonString];
+    });
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {

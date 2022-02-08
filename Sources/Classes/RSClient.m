@@ -38,7 +38,7 @@ static NSString* _deviceToken = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
-            _repository = [RSEventRepository initiate:writeKey config:config];
+            _repository = [[RSEventRepository alloc] init:writeKey config: config];
             if(_deviceToken != nil && [_deviceToken length] != 0)
             {
                 [[_instance getContext] putDeviceToken:_deviceToken];
@@ -201,7 +201,7 @@ static NSString* _deviceToken = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
-    RSContext *rc = [RSElementCache getContext];
+    RSContext *rc = [[RSElementCache sharedInstance] getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
     
     NSObject *prevId = [traits objectForKey:@"userId"];
@@ -289,7 +289,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void)reset {
-    [RSElementCache reset];
+    [[RSElementCache sharedInstance] reset];
     if (_repository != nil) {
         [_repository reset];
     }
@@ -335,14 +335,14 @@ static NSString* _deviceToken = nil;
         return nil;
     }
     // returns anonymousId
-    return [RSElementCache getAnonymousId];
+    return [[RSElementCache sharedInstance] getAnonymousId];
 }
 
 - (RSContext*) getContext {
     if ([RSClient getOptStatus]) {
         return nil;
     }
-    return [RSElementCache getContext];
+    return [[RSElementCache sharedInstance] getContext];
 }
 
 - (RSConfig*)configuration {
@@ -385,7 +385,7 @@ static NSString* _deviceToken = nil;
         // If SDK is already initialized then we need to update the anonymousId in the cached context traits and anonymousId token
         if(_repository != nil)
         {
-            [RSElementCache updateTraitsAnonymousId];
+            [[RSElementCache sharedInstance] updateTraitsAnonymousId];
             [_repository setAnonymousIdToken];
         }
     }

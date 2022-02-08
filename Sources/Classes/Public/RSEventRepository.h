@@ -38,9 +38,11 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL isSemaphoreReleased;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
+    dispatch_queue_t queue;
 }
 
-+ (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config;
+//+ (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;

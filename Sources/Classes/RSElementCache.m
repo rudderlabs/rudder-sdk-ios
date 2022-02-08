@@ -8,68 +8,77 @@
 
 #import "RSElementCache.h"
 
-static RSContext* cachedContext;
-static dispatch_queue_t queue;
+//static RSContext* cachedContext;
+//static dispatch_queue_t queue;
 
 @implementation RSElementCache
 
-+ (void)initiate {
-    if (cachedContext == nil) {
-        cachedContext = [[RSContext alloc] init];
+static RSElementCache *singletonObject = nil;
+
++ (id)sharedInstance {
+    if (!singletonObject) {
+        singletonObject = [[RSElementCache alloc] init];
     }
-    if (queue == nil) {
-        queue = dispatch_queue_create("com.rudder.MyQueue", NULL);
-    }
+    return singletonObject;
 }
 
-+ (RSContext *)getContext {
+- (id)init {
+    if (!singletonObject) {
+        singletonObject = [super init];
+        cachedContext = [[RSContext alloc] init];
+        queue = dispatch_queue_create("com.rudder.RSElementCache", NULL);
+    }
+    return singletonObject;
+}
+
+- (RSContext *)getContext {
     return [cachedContext copy];
 }
 
-+ (void)updateTraits:(RSTraits *)traits {
-    dispatch_async(queue, ^{
+- (void)updateTraits:(RSTraits *)traits {
+//    dispatch_async(queue, ^{
         [cachedContext updateTraits:traits];
         [self persistTraits];
-    });
+//    });
     
 }
 
-+ (void)persistTraits {
-    dispatch_async(queue, ^{
+- (void)persistTraits {
+//    dispatch_async(queue, ^{
         [cachedContext persistTraits];
-    });
+//    });
 }
 
-+ (void) reset {
-    dispatch_async(queue, ^{
+- (void) reset {
+//    dispatch_async(queue, ^{
         [cachedContext resetTraits];
         [cachedContext persistTraits];
         [cachedContext resetExternalIds];
-    });
+//    });
 }
 
-+ (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
-    dispatch_async(queue, ^{
+- (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
+//    dispatch_async(queue, ^{
         [cachedContext updateTraitsDict: traitsDict];
         [self persistTraits];
-    });
+//    });
 }
 
-+(void) updateTraitsAnonymousId {
-    dispatch_async(queue, ^{
+- (void) updateTraitsAnonymousId {
+//    dispatch_async(queue, ^{
         [cachedContext updateTraitsAnonymousId];
         [self persistTraits];
-    });
+//    });
 }
 
-+ (NSString *)getAnonymousId {
+- (NSString *)getAnonymousId {
     return [[RSPreferenceManager getInstance] getAnonymousId];
 }
 
-+ (void) updateExternalIds:(NSMutableArray *)externalIds {
-    dispatch_async(queue, ^{
+- (void) updateExternalIds:(NSMutableArray *)externalIds {
+//    dispatch_async(queue, ^{
         [cachedContext updateExternalIds:externalIds];
         [cachedContext persistExternalIds];
-    });
+//    });
 }
 @end

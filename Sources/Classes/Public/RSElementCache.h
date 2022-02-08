@@ -11,25 +11,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSElementCache : NSObject
+@interface RSElementCache : NSObject {
+    RSContext* cachedContext;
+    dispatch_queue_t queue;
+}
++ (id)sharedInstance;
+//+ (void) initiate;
 
-+ (void) initiate;
+- (RSContext*) getContext;
 
-+ (RSContext*) getContext;
+- (NSString*) getAnonymousId;
 
-+ (NSString*) getAnonymousId;
+- (void) updateTraits : (RSTraits*) traits;
 
-+ (void) updateTraits : (RSTraits*) traits;
+- (void) persistTraits;
 
-+ (void) persistTraits;
+- (void) reset;
 
-+ (void) reset;
+- (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*> *) traitsDict;
 
-+ (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*> *) traitsDict;
+- (void) updateTraitsAnonymousId;
 
-+ (void) updateTraitsAnonymousId;
-
-+ (void) updateExternalIds: (NSMutableArray*) externalIds;
+- (void) updateExternalIds: (NSMutableArray*) externalIds;
 
 @end
 
