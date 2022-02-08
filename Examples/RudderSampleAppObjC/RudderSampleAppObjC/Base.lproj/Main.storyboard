@@ -28,8 +28,17 @@
                                     <action selector="manageThreads:" destination="whP-gf-Uak" eventType="touchUpInside" id="Jb7-6A-fE3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kfr-Nc-oPb">
+                                <rect key="frame" x="136" y="79" width="149" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Different externalId"/>
+                                <connections>
+                                    <action selector="identifyDifferentExternalId:" destination="whP-gf-Uak" eventType="touchUpInside" id="0gj-Lo-wgf"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0o-4Q-7aM">
-                                <rect key="frame" x="35" y="128" width="125" height="101"/>
+                                <rect key="frame" x="33" y="167" width="125" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Track"/>

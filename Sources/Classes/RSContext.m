@@ -58,14 +58,16 @@ static dispatch_queue_t queue;
         }
         
         // get saved external Ids from prefs
-        NSString *externalIdJson = [preferenceManager getExternalIds];
-        if (externalIdJson != nil) {
-            NSError *error;
-            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
-                _externalIds = [externalIdDict mutableCopy];
+        dispatch_sync(queue, ^{
+            NSString *externalIdJson = [preferenceManager getExternalIds];
+            if (externalIdJson != nil) {
+                NSError *error;
+                NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+                if (error == nil) {
+                    _externalIds = [externalIdDict mutableCopy];
+                }
             }
-        }
+        });
     }
     return self;
 }
@@ -142,27 +144,28 @@ static dispatch_queue_t queue;
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
-    dispatch_async(queue, ^{
-    if(_externalIds == nil)
-    {
-        _externalIds = [[NSMutableArray alloc] init];
-    }
+    dispatch_sync(queue, ^{
+        if(_externalIds == nil)
+        {
+            _externalIds = [[NSMutableArray alloc] init];
+        }
         
-        
+        if (_externalIds.count > 0) {
             for (int index = 0; index < externalIds.count; index += 1) {
-                if ([_externalIds containsObject:externalIds[index]]) {
-                    [externalIds removeObjectAtIndex:index];
+                for (int index2 = 0; index2 < _externalIds.count; index2 +=1) {
+                    if ([_externalIds[index2][@"type"] isEqualToString:externalIds[index][@"type"]]){
+                        _externalIds[index2][@"id"] = externalIds[index][@"id"];
+                        [externalIds removeObjectAtIndex:index];
+                        index--;
+                        break;
+                    }
                 }
             }
-            
-            
-            if ([externalIds count]) {
-                [_externalIds addObjectsFromArray: externalIds];
-            }
-        
-        
-    // update local variable
-//    [_externalIds addObjectsFromArray: externalIds];
+        }
+
+        if ([externalIds count]) {
+            [_externalIds addObjectsFromArray: externalIds];
+        }
     });
 }
 

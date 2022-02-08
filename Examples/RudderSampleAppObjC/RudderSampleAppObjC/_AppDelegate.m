@@ -50,47 +50,38 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 +(void) manageThread {
-    for (int i = 0; i<500; i++) {
-        [_AppDelegate makeEvents:i];
-        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
-    }
+    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<500; i++) {
+        for (int i = 200; i<400; i++) {
             [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+
+//            [RSClient putAnonymousId:@"anonymous_id"];
         }
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 300; i<600; i++) {
+        for (int i = 300; i<500; i++) {
             [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
+
+//            [RSClient putAnonymousId:@"anonymous_id"];
         }
     });
+
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for (int i = 200; i<500; i++) {
+//            [_AppDelegate makeEvents:i];
+//            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 3 Event - %d", i]);
+//        }
+//    });
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<500; i++) {
-            [_AppDelegate makeEvents:i];
-            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
-        }
-    });
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<500; i++) {
-            [_AppDelegate makeEvents:i];
-            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
-        }
-    });
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<500; i++) {
-            [_AppDelegate makeEvents:i];
-            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
-        }
-    });
-    
-    
+    for (int i = 0; i<200; i++) {
+        [_AppDelegate makeEvents:i];
+        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+        
+    }
 }
 
 + (void) makeEvents:(int) i {
@@ -102,7 +93,11 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
 
     RSOption *identifyOptions = [[RSOption alloc] init];
-    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+    [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_1"];
+    
+    [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_2"];
+    [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
+    [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
     [[RSClient sharedInstance] identify:@"testUserId"
                                  traits:@{@"firstname": @"First Name"}
                                 options:identifyOptions];
