@@ -90,6 +90,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)updateTraits:(RSTraits *)traits {
+    dispatch_sync([RSContext getQueue], ^{
     NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
     NSString* userId = (NSString*) traits.userId;
     
@@ -100,15 +101,16 @@ static dispatch_queue_t queue;
         return;
     }
     [_traits setValuesForKeysWithDictionary:[traits dict]];
+    });
 }
 
 -(void) persistTraits {
-    dispatch_async([RSContext getQueue], ^{
+//    dispatch_async([RSContext getQueue], ^{
     NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
     NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
     
     [preferenceManager saveTraits:traitsString];
-    });
+//    });
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {

@@ -50,26 +50,47 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 +(void) manageThread {
-    
+    for (int i = 0; i<500; i++) {
+        [_AppDelegate makeEvents:i];
+        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (int i = 200; i<500; i++) {
             [_AppDelegate makeEvents:i];
-//            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
         }
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (int i = 300; i<600; i++) {
             [_AppDelegate makeEvents:i];
-//            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
         }
     });
     
-    for (int i = 0; i<500; i++) {
-        [_AppDelegate makeEvents:i];
-//        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<500; i++) {
+            [_AppDelegate makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<500; i++) {
+            [_AppDelegate makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<500; i++) {
+            [_AppDelegate makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+        }
+    });
+    
+    
 }
 
 + (void) makeEvents:(int) i {
