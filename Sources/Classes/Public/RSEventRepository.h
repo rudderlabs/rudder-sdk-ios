@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL isSemaphoreReleased;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
+    BOOL isFlushing;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
