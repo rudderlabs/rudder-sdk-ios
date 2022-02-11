@@ -108,9 +108,7 @@ typedef enum {
 
 - (void) __initiateSDK {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_queue_attr_t qos = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, -1);
-    dispatch_queue_t initializeQueue = dispatch_queue_create("initializeQueue", qos);
-    dispatch_sync(initializeQueue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         RSEventRepository *strongSelf = weakSelf;
         int retryCount = 0;
         while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
@@ -215,34 +213,34 @@ typedef enum {
 }
 
 - (void) __initiateProcessor {
-    dispatch_queue_attr_t qos = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, -1);
-    dispatch_queue_t initializeProcessorQueue = dispatch_queue_create("initializeProcessorQueue", qos);
-    dispatch_sync(initializeProcessorQueue, ^{
+    __weak RSEventRepository *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        RSEventRepository *strongSelf = weakSelf;
         [RSLogger logDebug:@"processor started"];
         int errResp = 0;
         int sleepCount = 0;
         
         while (YES) {
-            int recordCount = [self->dbpersistenceManager getDBRecordCount];
+            int recordCount = [strongSelf->dbpersistenceManager getDBRecordCount];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
             
-            if (recordCount > self->config.dbCountThreshold) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - self->config.dbCountThreshold)]];
-                RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold)];
-                [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
+            if (recordCount > strongSelf->config.dbCountThreshold) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - strongSelf->config.dbCountThreshold)]];
+                RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(recordCount - strongSelf->config.dbCountThreshold)];
+                [strongSelf->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
             }
             
             [RSLogger logDebug:@"Fetching events to flush to sever"];
-            RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
-            if (dbMessage.messages.count > 0 && (sleepCount >= self->config.sleepTimeout)) {
-                NSString* payload = [self __getPayloadFromMessages:dbMessage];
+            RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
+            if (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
+                NSString* payload = [strongSelf __getPayloadFromMessages:dbMessage];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
-                    errResp = [self __flushEventsToServer:payload];
+                    errResp = [strongSelf __flushEventsToServer:payload];
                     if (errResp == 0) {
                         [RSLogger logDebug:@"clearing events from DB"];
-                        [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
+                        [strongSelf->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
                         sleepCount = 0;
                     }
                 }
@@ -253,8 +251,8 @@ typedef enum {
                 [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
                 break;
             } else if (errResp == NETWORKERROR) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - self->config.sleepTimeout)]];
-                usleep(abs(sleepCount - self->config.sleepTimeout) * 1000000);
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+                usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
             } else {
                 usleep(1000000);
             }
