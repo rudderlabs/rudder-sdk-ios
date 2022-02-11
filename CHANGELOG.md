@@ -48,7 +48,11 @@ All notable changes to this project will be documented in this file.
 - Fixed Memory leak issue while replaying events to the device mode factories once they are initialized.
 
 ## Version - 1.5.0 - 2022-01-20
-
 ### Feature
 
 - Added Support for Client Side Event Filtering for Device Mode Destinations
+
+## Version - 1.5.1 - 2022-02-11
+### Fix
+
+- Removed warnings
