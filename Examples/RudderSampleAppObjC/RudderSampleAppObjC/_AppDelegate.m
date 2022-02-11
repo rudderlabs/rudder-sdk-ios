@@ -33,9 +33,9 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withRecordScreenViews:NO];
     [builder withEnableBackgroundMode:YES];
     [builder withFactory:[RudderAmplitudeFactory instance]];
-    [builder withControlPlaneURL:[NSURL URLWithString:@"https://c9b4-2405-201-8000-6061-1d32-d996-5af-a2b2.ngrok.io"]];
-    [builder withDataPlaneURL:[NSURL URLWithString:@"https://b474-2405-201-8000-6061-1d32-d996-5af-a2b2.ngrok.io"]];
-    [RSClient getInstance:@"24BjDDJa7PF4GtNCWcHTvbNtYUm" config:[builder build]];
+//    [builder withControlPlaneURL:[NSURL URLWithString:@"https://c9b4-2405-201-8000-6061-1d32-d996-5af-a2b2.ngrok.io"]];
+    [builder withDataPlaneURL:[NSURL URLWithString:@"https://rudderstacbumvdrexzj.dataplane.rudderstack.com"]];
+    [RSClient getInstance:@"24xQZYbEKg7Sj4bL6pbsuzFrBDz" config:[builder build]];
 //    [builder withDataPlaneUrl:@"https://rudderstacbumvdrexzj.dataplane.rudderstack.com"];
 //    [RSClient getInstance:@"24al1ujFmoFVUvaxd01Br4aEclr" config:[builder build]];
     
@@ -51,37 +51,50 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 +(void) manageThread {
     
+    for (int i = 0; i<400; i++) {
+        [_AppDelegate makeEvents:i];
+        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+        [RSClient putAnonymousId:@"anonymous_id123"];
+        [RSClient putDeviceToken:@"your_device_token"];
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 200; i<400; i++) {
+        for (int i = 200; i<600; i++) {
             [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
 
-//            [RSClient putAnonymousId:@"anonymous_id"];
+            [RSClient putAnonymousId:@"anonymous_id"];
+            [RSClient putDeviceToken:@"your_device_token"];
         }
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i = 300; i<500; i++) {
+        for (int i = 300; i<700; i++) {
             [_AppDelegate makeEvents:i];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 2 Event - %d", i]);
 
-//            [RSClient putAnonymousId:@"anonymous_id"];
+            [RSClient putAnonymousId:@"anonymous_id34"];
+            [RSClient putDeviceToken:@"your_device_token"];
         }
     });
-
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        for (int i = 200; i<500; i++) {
-//            [_AppDelegate makeEvents:i];
-//            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 3 Event - %d", i]);
-//        }
-//    });
     
-    for (int i = 0; i<200; i++) {
+    for (int i = 0; i<400; i++) {
         [_AppDelegate makeEvents:i];
         NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
-        
+        [RSClient putAnonymousId:@"anonymous_id44"];
+        [RSClient putDeviceToken:@"your_device_token"];
     }
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<500; i++) {
+            [_AppDelegate makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 3 Event - %d", i]);
+            [RSClient putAnonymousId:@"anonymous_id55"];
+            [RSClient putDeviceToken:@"your_device_token"];
+        }
+    });
+    
+    
 }
 
 + (void) makeEvents:(int) i {
@@ -89,15 +102,22 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //        @"key_1" : @"value_1",
 //        @"key_2" : @"value_2"
 //    }];
-//
-//    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
-
+    
     RSOption *identifyOptions = [[RSOption alloc] init];
     [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_1"];
     
     [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_2"];
     [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
     [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
+    
+    
+    [identifyOptions putIntegration:@"Apple" isEnabled:YES];
+    
+    [identifyOptions putCustomContext:@{
+        @"CustomKey-1": @"CustomValue-1"
+    }
+                              withKey:@"CustomContext_1"];
+    
     [[RSClient sharedInstance] identify:@"testUserId"
                                  traits:@{@"firstname": @"First Name"}
                                 options:identifyOptions];

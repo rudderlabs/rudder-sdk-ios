@@ -104,8 +104,10 @@ typedef enum {
 
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
+    dispatch_sync([RSContext getQueue], ^{
     self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
+    });
 }
 
 - (void) __initiateSDK {
@@ -139,7 +141,9 @@ typedef enum {
                     
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
+                    dispatch_sync([RSContext getQueue], ^{
                     strongSelf->areFactoriesInitialized = YES;
+                    });
                     [strongSelf __replayMessageQueue];
                     
                 } else {
@@ -319,7 +323,9 @@ typedef enum {
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
-    [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
+    dispatch_sync([RSContext getQueue], ^{
+        [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
+    });
     NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:httpBody];
     
@@ -378,6 +384,7 @@ typedef enum {
         message.integrations = mutableIntegrations;
         
     }
+
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -394,6 +401,7 @@ typedef enum {
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {
+    dispatch_sync([RSContext getQueue], ^{
     if (self->areFactoriesInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
@@ -436,6 +444,7 @@ typedef enum {
             [self->eventReplayMessage addObject:message];
         }
     }
+    });
 }
 
 -(void) reset {

@@ -93,26 +93,26 @@ static dispatch_queue_t queue;
 
 - (void)updateTraits:(RSTraits *)traits {
     dispatch_sync([RSContext getQueue], ^{
-    NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
-    NSString* userId = (NSString*) traits.userId;
-    
-    if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
-    {
-        _traits = [[traits dict]mutableCopy];
-        [self resetExternalIds];
-        return;
-    }
-    [_traits setValuesForKeysWithDictionary:[traits dict]];
+        NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
+        NSString* userId = (NSString*) traits.userId;
+        
+        if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
+        {
+            _traits = [[traits dict]mutableCopy];
+            [self resetExternalIds];
+            return;
+        }
+        [_traits setValuesForKeysWithDictionary:[traits dict]];
     });
 }
 
 -(void) persistTraits {
-//    dispatch_async([RSContext getQueue], ^{
-    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
-    NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
-    
-    [preferenceManager saveTraits:traitsString];
-//    });
+    dispatch_async([RSContext getQueue], ^{
+        NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
+        NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
+        
+        [preferenceManager saveTraits:traitsString];
+    });
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
@@ -196,25 +196,28 @@ static dispatch_queue_t queue;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
-    [tempDict setObject:[_app dict] forKey:@"app"];
-    [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
-    [tempDict setObject:[_library dict] forKey:@"library"];
-    [tempDict setObject:[_os dict] forKey:@"os"];
-    [tempDict setObject:[_screen dict] forKey:@"screen"];
-    if (_userAgent) {
-        [tempDict setObject:_userAgent forKey:@"userAgent"];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
+        [tempDict setObject:[_app dict] forKey:@"app"];
+        [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
+        [tempDict setObject:[_library dict] forKey:@"library"];
+        [tempDict setObject:[_os dict] forKey:@"os"];
+        [tempDict setObject:[_screen dict] forKey:@"screen"];
+        if (_userAgent) {
+            [tempDict setObject:_userAgent forKey:@"userAgent"];
+        }
+        
+        [tempDict setObject:_locale forKey:@"locale"];
+        [tempDict setObject:[_device dict] forKey:@"device"];
+        [tempDict setObject:[_network dict] forKey:@"network"];
+        [tempDict setObject:_timezone forKey:@"timezone"];
+        if (_externalIds != nil) {
+            [tempDict setObject:_externalIds forKey:@"externalId"];
+        }
+        
+        return [tempDict copy];
     }
-    
-    [tempDict setObject:_locale forKey:@"locale"];
-    [tempDict setObject:[_device dict] forKey:@"device"];
-    [tempDict setObject:[_network dict] forKey:@"network"];
-    [tempDict setObject:_timezone forKey:@"timezone"];
-    if (_externalIds != nil) {
-        [tempDict setObject:_externalIds forKey:@"externalId"];
-    }
-    
-    return [tempDict copy];
 }
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {

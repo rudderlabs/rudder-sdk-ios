@@ -30,11 +30,14 @@
     return self;
 }
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
     
-    [tempDict setValue:_name forKey:@"name"];
-    [tempDict setValue:_version forKey:@"version"];
-    
-    return [tempDict copy];
+        [tempDict setValue:_name forKey:@"name"];
+        [tempDict setValue:_version forKey:@"version"];
+        
+        return [tempDict copy];
+    }
 }
 @end

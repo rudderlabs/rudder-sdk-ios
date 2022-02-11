@@ -40,27 +40,25 @@
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    
-   dispatch_async([RSContext getQueue], ^{
-    
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict){
+        tempDict = [[NSMutableDictionary alloc] init];
 
-    [tempDict setValue:_identifier forKey:@"id"];
-    [tempDict setValue:_manufacturer forKey:@"manufacturer"];
-    [tempDict setValue:_model forKey:@"model"];
-    [tempDict setValue:_name forKey:@"name"];
-    [tempDict setValue:_type forKey:@"type"];
-    if (_token != nil) {
-        [tempDict setValue:_token forKey:@"token"];
+        [tempDict setValue:_identifier forKey:@"id"];
+        [tempDict setValue:_manufacturer forKey:@"manufacturer"];
+        [tempDict setValue:_model forKey:@"model"];
+        [tempDict setValue:_name forKey:@"name"];
+        [tempDict setValue:_type forKey:@"type"];
+        if (_token != nil) {
+            [tempDict setValue:_token forKey:@"token"];
+        }
+        if (_advertisingId != nil) {
+            [tempDict setValue:_advertisingId forKey:@"advertisingId"];
+            [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
+            [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
+        }
+        return [tempDict copy];
     }
-    if (_advertisingId != nil) {
-        [tempDict setValue:_advertisingId forKey:@"advertisingId"];
-        [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
-        [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
-    }
-//    return [tempDict copy];
-    });
-    return [[NSMutableDictionary alloc] init];
 }
 
 @end

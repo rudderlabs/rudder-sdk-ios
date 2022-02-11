@@ -24,7 +24,7 @@
 
 - (instancetype)putExternalId:(NSString *)type withId:(NSString *)idValue {
     
-    dispatch_sync([RSContext getQueue], ^{
+//    dispatch_sync([RSContext getQueue], ^{
         if (_externalIds == nil) {
             _externalIds = [[NSMutableArray alloc] init];
         }
@@ -45,7 +45,7 @@
         if (externalIdDict == nil) {
             externalIdDict = [[NSMutableDictionary alloc] initWithDictionary:@{
                 @"type": type
-            }]; 
+            }];
         }
         
         
@@ -58,7 +58,7 @@
         } else {
             _externalIds[dictIndex][@"id"] = idValue;
         }
-    });
+//    });
     // return for builder pattern
     return self;
     
