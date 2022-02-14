@@ -42,23 +42,23 @@ static dispatch_queue_t queue;
         _timezone = [[NSTimeZone localTimeZone] name];
         _externalIds = nil;
         
-        NSString *traitsJson = [preferenceManager getTraits];
-        if (traitsJson == nil) {
-            // no persisted traits, create new and persist
-            [self createAndPersistTraits];
-        } else {
-            NSError *error;
-            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
-                _traits = [traitsDict mutableCopy];
-            } else {
-                // persisted traits persing error. initiate blank
-                [self createAndPersistTraits];
-            }
-        }
-        
-        // get saved external Ids from prefs
         dispatch_sync(queue, ^{
+            NSString *traitsJson = [preferenceManager getTraits];
+            if (traitsJson == nil) {
+                // no persisted traits, create new and persist
+                [self createAndPersistTraits];
+            } else {
+                NSError *error;
+                NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+                if (error == nil) {
+                    _traits = [traitsDict mutableCopy];
+                } else {
+                    // persisted traits persing error. initiate blank
+                    [self createAndPersistTraits];
+                }
+            }
+        
+            // get saved external Ids from prefs
             NSString *externalIdJson = [preferenceManager getExternalIds];
             if (externalIdJson != nil) {
                 NSError *error;
@@ -92,7 +92,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)updateTraits:(RSTraits *)traits {
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(queue, ^{
         NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
         NSString* userId = (NSString*) traits.userId;
         
@@ -107,7 +107,7 @@ static dispatch_queue_t queue;
 }
 
 -(void) persistTraits {
-    dispatch_async([RSContext getQueue], ^{
+    dispatch_async(queue, ^{
         NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
         NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
         
@@ -124,7 +124,9 @@ static dispatch_queue_t queue;
 }
 
 - (void)putDeviceToken:(NSString *)deviceToken {
-    _device.token = deviceToken;
+    @synchronized (deviceToken) {
+        _device.token = deviceToken;
+    }
 }
 
 - (void)putAdvertisementId:(NSString *_Nonnull)idfa {

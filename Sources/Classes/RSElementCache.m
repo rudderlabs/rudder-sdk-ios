@@ -31,18 +31,16 @@ static dispatch_queue_t queue;
         [cachedContext updateTraits:traits];
         [self persistTraits];
     });
-    
 }
 
 + (void)persistTraits {
-//    dispatch_async(queue, ^{
     dispatch_async([RSContext getQueue], ^{
         [cachedContext persistTraits];
     });
 }
 
 + (void) reset {
-    dispatch_async(queue, ^{
+    dispatch_async([RSContext getQueue], ^{
         [cachedContext resetTraits];
         [cachedContext persistTraits];
         [cachedContext resetExternalIds];
@@ -50,7 +48,6 @@ static dispatch_queue_t queue;
 }
 
 + (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
-//    dispatch_async(queue, ^{
     dispatch_async([RSContext getQueue], ^{
         [cachedContext updateTraitsDict: traitsDict];
         [self persistTraits];
@@ -58,7 +55,6 @@ static dispatch_queue_t queue;
 }
 
 +(void) updateTraitsAnonymousId {
-//    dispatch_async(queue, ^{
     dispatch_async([RSContext getQueue], ^{
         [cachedContext updateTraitsAnonymousId];
         [self persistTraits];

@@ -46,6 +46,11 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //    [self makeEvents];
     
 //    [self manageThread];
+    
+    
+    
+    //Check
+//    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
     return YES;
 }
 
@@ -98,10 +103,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 + (void) makeEvents:(int) i {
-//    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
-//        @"key_1" : @"value_1",
-//        @"key_2" : @"value_2"
-//    }];
+    
     
     RSOption *identifyOptions = [[RSOption alloc] init];
     [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_1"];
@@ -122,6 +124,14 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
                                  traits:@{@"firstname": @"First Name"}
                                 options:identifyOptions];
 
+    
+//    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
+//        @"key_1" : @"value_1",
+//        @"key_2" : @"value_2"
+//    } options:identifyOptions
+//    ];
+    
+    
 //    [[RSClient sharedInstance] screen:@"ViewController"];
 //
 //    [[RSClient sharedInstance] group:@"sample_group_id"

@@ -117,6 +117,9 @@
                                 options:identifyOptions];
     
 }
+- (IBAction)reset:(id)sender {
+    [[RSClient sharedInstance] reset];
+}
 
 - (IBAction)manageThreads:(id)sender {
     [_AppDelegate manageThread];
