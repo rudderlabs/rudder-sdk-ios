@@ -106,15 +106,15 @@
     
     [_AppDelegate makeEvents:0];
     
-    RSOption *identifyOptions = [[RSOption alloc] init];
-    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   10"];
+//    RSOption *identifyOptions = [[RSOption alloc] init];
+//    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   10"];
     
-    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   11"];
+//    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   11"];
 //    [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
 //    [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
-    [[RSClient sharedInstance] identify:@"testUserId"
-                                 traits:@{@"firstname": @"First Name"}
-                                options:identifyOptions];
+//    [[RSClient sharedInstance] identify:@"testUserId"
+//                                 traits:@{@"firstname": @"First Name"}
+//                                options:identifyOptions];
     
 }
 - (IBAction)reset:(id)sender {

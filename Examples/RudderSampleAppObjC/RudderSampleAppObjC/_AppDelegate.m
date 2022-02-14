@@ -55,17 +55,36 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 +(void) manageThread {
+//
+//    for (int i = 0; i<400; i++) {
+//        [_AppDelegate makeEvents:i];
+//        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
+//        [RSClient putAnonymousId:@"anonymous_id123"];
+//        [RSClient putDeviceToken:@"your_device_token"];
+//    }
     
-    for (int i = 0; i<400; i++) {
-        [_AppDelegate makeEvents:i];
-        NSLog(@"%@",[[NSString alloc] initWithFormat:@"Main Thread  Event - %d", i]);
-        [RSClient putAnonymousId:@"anonymous_id123"];
-        [RSClient putDeviceToken:@"your_device_token"];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 200; i<2000; i++) {
+            [[RSClient sharedInstance] reset];
+//            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 3 Event - %d", i]);
+            [RSClient putAnonymousId:@"anonymous_id55"];
+            [RSClient putDeviceToken:@"your_device_token"];
+        }
+    });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (int i = 200; i<600; i++) {
             [_AppDelegate makeEvents:i];
+            NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
+
+            [RSClient putAnonymousId:@"anonymous_id"];
+            [RSClient putDeviceToken:@"your_device_token"];
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 0; i<600; i++) {
+            [_AppDelegate makeEvents2];
             NSLog(@"%@",[[NSString alloc] initWithFormat:@"Background Thread- 1 Event - %d", i]);
 
             [RSClient putAnonymousId:@"anonymous_id"];
@@ -100,6 +119,8 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     });
     
     
+    
+    
 }
 
 + (void) makeEvents:(int) i {
@@ -125,6 +146,51 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
                                 options:identifyOptions];
 
     
+    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    } options:identifyOptions
+    ];
+    
+    
+    [[RSClient sharedInstance] screen: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
+        @"key_1" : @"value_1",
+        @"key_2" : @"value_2"
+    } options:identifyOptions
+    ];
+
+    [[RSClient sharedInstance] group:@"sample_group_id"
+                              traits:@{@"foo": @"bar",
+                                       @"foo1": @"bar1",
+                                       @"email": @"ruchira@gmail.com"}
+                             options:identifyOptions
+    ];
+    
+
+}
+
++ (void) makeEvents2 {
+    
+    
+    RSOption *identifyOptions = [[RSOption alloc] init];
+    [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_1"];
+    
+    [identifyOptions putExternalId:@"brazeExternalId-1" withId:@"some_external_id_2"];
+    [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
+    [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
+    
+    
+    [identifyOptions putIntegration:@"Apple" isEnabled:YES];
+    
+    [identifyOptions putCustomContext:@{@"CustomKey-1": @"CustomValue-1"} withKey:@"CustomContext_1"];
+    
+
+    
+    [[RSClient sharedInstance] alias:@"testUserId"
+//                                 traits:@{@"firstname": @"First Name"}
+                                options:identifyOptions];
+    
+    
 //    [[RSClient sharedInstance] track: [@"simple_track_with_props " stringByAppendingString:[NSString stringWithFormat:@"%i", i]] properties:@{
 //        @"key_1" : @"value_1",
 //        @"key_2" : @"value_2"
@@ -142,7 +208,6 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
 
 }
-
 - (NSString*) getIDFA {
     return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
 }

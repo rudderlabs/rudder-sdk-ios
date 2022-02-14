@@ -9,16 +9,12 @@
 #import "RSElementCache.h"
 
 static RSContext* cachedContext;
-static dispatch_queue_t queue;
 
 @implementation RSElementCache
 
 + (void)initiate {
     if (cachedContext == nil) {
         cachedContext = [[RSContext alloc] init];
-    }
-    if (queue == nil) {
-        queue = dispatch_queue_create("com.rudder.MyQueue", NULL);
     }
 }
 
@@ -27,16 +23,14 @@ static dispatch_queue_t queue;
 }
 
 + (void)updateTraits:(RSTraits *)traits {
-    dispatch_async(queue, ^{
+    dispatch_async([RSContext getQueue], ^{
         [cachedContext updateTraits:traits];
         [self persistTraits];
     });
 }
 
 + (void)persistTraits {
-    dispatch_async([RSContext getQueue], ^{
-        [cachedContext persistTraits];
-    });
+    [cachedContext persistTraits];
 }
 
 + (void) reset {
@@ -66,7 +60,7 @@ static dispatch_queue_t queue;
 }
 
 + (void) updateExternalIds:(NSMutableArray *)externalIds {
-   dispatch_async(queue, ^{
+   dispatch_async([RSContext getQueue], ^{
         [cachedContext updateExternalIds:externalIds];
         [cachedContext persistExternalIds];
     });
