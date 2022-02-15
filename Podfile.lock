@@ -1,5 +1,4 @@
 PODS:
-  - Amplitude (7.2.2)
   - Firebase/Analytics (6.34.0):
     - Firebase/Core
   - Firebase/Core (6.34.0):
@@ -81,20 +80,14 @@ PODS:
   - PromisesObjC (1.2.12)
   - Protobuf (3.19.1)
   - Rudder (1.5.0)
-  - Rudder-Amplitude (1.0.2):
-    - Amplitude (~> 7.2.0)
-    - Rudder
 
 DEPENDENCIES:
-  - Amplitude (~> 7.2.0)
   - Firebase/Analytics
   - Firebase/Messaging
   - Rudder (from `.`)
-  - Rudder-Amplitude
 
 SPEC REPOS:
   trunk:
-    - Amplitude
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -108,14 +101,12 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
-    - Rudder-Amplitude
 
 EXTERNAL SOURCES:
   Rudder:
     :path: "."
 
 SPEC CHECKSUMS:
-  Amplitude: 517cdc7c485bda64b685174426ecbf17746eb16a
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseAnalytics: 3bb096873ee0d7fa4b6c70f5e9166b6da413cc7f
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -130,8 +121,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   Rudder: 95d023a3a4ec1e8d6bd15963e84f78707b13d9c3
-  Rudder-Amplitude: f845cc125a1a58d4de6155391a2b0392815ae898
 
-PODFILE CHECKSUM: ccb65849a062b811f846a0aa360b12c02770f78b
+PODFILE CHECKSUM: 33b0e9f1b94a028aa8a3b4aecf718a44c9b6265e
 
 COCOAPODS: 1.11.2

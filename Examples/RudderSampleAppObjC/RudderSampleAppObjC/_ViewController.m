@@ -8,7 +8,6 @@
 
 #import "_ViewController.h"
 #import <Rudder/Rudder.h>
-#import "_AppDelegate.h"
 
 @interface _ViewController ()
 
@@ -19,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     
 //    [[RSClient sharedInstance] identify:@"test_user_id" traits:@{
 //        @"firstName": @"Test",
@@ -85,45 +84,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)identifyDifferentExternalId:(id)sender {
-    
-    RSOption *identifyOptions = [[RSOption alloc] init];
-    [identifyOptions putExternalId:@"brazeExternalId-6" withId:@"some_external_id   20"];
-    
-    [identifyOptions putExternalId:@"brazeExternalId-6" withId:@"some_external_id   22"];
-//    [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
-//    [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
-    [[RSClient sharedInstance] identify:@"testUserId"
-                                 traits:@{@"firstname": @"First Name"}
-                                options:identifyOptions];
-    
-    
-}
-
-
-- (IBAction)track:(id)sender {
-//    [[RSClient sharedInstance] track:@"Track"];
-    
-    [_AppDelegate makeEvents:0];
-    
-//    RSOption *identifyOptions = [[RSOption alloc] init];
-//    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   10"];
-    
-//    [identifyOptions putExternalId:@"brazeExternalId-5" withId:@"some_external_id   11"];
-//    [identifyOptions putExternalId:@"brazeExternalId-3" withId:@"some_external_id_2"];
-//    [identifyOptions putExternalId:@"brazeExternalId-4" withId:@"some_external_id_3"];
-//    [[RSClient sharedInstance] identify:@"testUserId"
-//                                 traits:@{@"firstname": @"First Name"}
-//                                options:identifyOptions];
-    
-}
-- (IBAction)reset:(id)sender {
-    [[RSClient sharedInstance] reset];
-}
-
-- (IBAction)manageThreads:(id)sender {
-    [_AppDelegate manageThread];
-}
-
 
 @end

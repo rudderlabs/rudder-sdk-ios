@@ -417,7 +417,7 @@ typedef enum {
                         if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
                         {
                             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-//                            [integration dump:message];
+                            [integration dump:message];
                         }
                     }
                 }

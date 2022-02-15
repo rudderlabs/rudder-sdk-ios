@@ -14,6 +14,4 @@
 @interface _AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-+(void) manageThread;
-+ (void) makeEvents:(int) i;
 @end
