@@ -118,23 +118,27 @@ static dispatch_queue_t queue;
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
-    _traits = traitsDict;
+    dispatch_async(queue, ^{
+        _traits = traitsDict;
+    });
 }
 
 - (void)updateTraitsAnonymousId {
-    _traits[@"anonymousId"] = [preferenceManager getAnonymousId];
+    dispatch_async(queue, ^{
+        _traits[@"anonymousId"] = [preferenceManager getAnonymousId];
+    });
 }
 
 - (void)putDeviceToken:(NSString *)deviceToken {
-    @synchronized (deviceToken) {
+    dispatch_async(queue, ^{
         _device.token = deviceToken;
-    }
+    });
 }
 
 - (void)putAdvertisementId:(NSString *_Nonnull)idfa {
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
-    dispatch_sync(queue, ^{
+    dispatch_async(queue, ^{
         if( idfa != nil && [idfa length] != 0) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
             BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
@@ -192,7 +196,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)putAppTrackingConsent:(int)att {
-    dispatch_sync(queue, ^{
+    dispatch_async(queue, ^{
         if (att < RSATTNotDetermined) {
             _device.attTrackingStatus = RSATTNotDetermined;
         } else if (att > RSATTAuthorize) {
@@ -207,23 +211,24 @@ static dispatch_queue_t queue;
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
-        [tempDict setObject:[_app dict] forKey:@"app"];
-        [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
-        [tempDict setObject:[_library dict] forKey:@"library"];
-        [tempDict setObject:[_os dict] forKey:@"os"];
-        [tempDict setObject:[_screen dict] forKey:@"screen"];
-        if (_userAgent) {
-            [tempDict setObject:_userAgent forKey:@"userAgent"];
-        }
-        
-        [tempDict setObject:_locale forKey:@"locale"];
-        [tempDict setObject:[_device dict] forKey:@"device"];
-        [tempDict setObject:[_network dict] forKey:@"network"];
-        [tempDict setObject:_timezone forKey:@"timezone"];
-        if (_externalIds != nil) {
-            [tempDict setObject:_externalIds forKey:@"externalId"];
-        }
-        
+        dispatch_sync(queue, ^{
+            [tempDict setObject:[_app dict] forKey:@"app"];
+            [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
+            [tempDict setObject:[_library dict] forKey:@"library"];
+            [tempDict setObject:[_os dict] forKey:@"os"];
+            [tempDict setObject:[_screen dict] forKey:@"screen"];
+            if (_userAgent) {
+                [tempDict setObject:_userAgent forKey:@"userAgent"];
+            }
+            
+            [tempDict setObject:_locale forKey:@"locale"];
+            [tempDict setObject:[_device dict] forKey:@"device"];
+            [tempDict setObject:[_network dict] forKey:@"network"];
+            [tempDict setObject:_timezone forKey:@"timezone"];
+            if (_externalIds != nil) {
+                [tempDict setObject:_externalIds forKey:@"externalId"];
+            }
+        });
         return [tempDict copy];
     }
 }
