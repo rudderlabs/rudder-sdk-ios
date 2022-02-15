@@ -141,9 +141,7 @@ typedef enum {
                     
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
-                    dispatch_sync([RSContext getQueue], ^{
-                        strongSelf->areFactoriesInitialized = YES;
-                    });
+                    strongSelf->areFactoriesInitialized = YES;
                     [strongSelf __replayMessageQueue];
                     
                 } else {
@@ -401,7 +399,6 @@ typedef enum {
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {
-    dispatch_sync([RSContext getQueue], ^{
     if (self->areFactoriesInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
@@ -417,7 +414,7 @@ typedef enum {
                         if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
                         {
                             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-                            [integration dump:message];
+//                            [integration dump:message];
                         }
                     }
                 }
@@ -444,7 +441,6 @@ typedef enum {
             [self->eventReplayMessage addObject:message];
         }
     }
-    });
 }
 
 -(void) reset {

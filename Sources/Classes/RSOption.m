@@ -56,6 +56,7 @@
     } else {
         _externalIds[dictIndex][@"id"] = idValue;
     }
+    
     // return for builder pattern
     return self;
 }
