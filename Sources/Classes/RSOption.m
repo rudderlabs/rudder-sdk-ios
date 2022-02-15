@@ -47,7 +47,6 @@
         }];
     }
     
-    
     // assign new id or update existing id
     [externalIdDict setValue:idValue forKey:@"id"];
     
@@ -59,7 +58,6 @@
     }
     // return for builder pattern
     return self;
-    
 }
 
 - (instancetype) putIntegration: (NSString*) type isEnabled: (BOOL) enabled {
