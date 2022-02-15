@@ -158,23 +158,21 @@ static dispatch_queue_t queue;
             _externalIds = [[NSMutableArray alloc] init];
         }
         
-        NSMutableArray *newExternalIds = [externalIds mutableCopy];
         if (_externalIds.count > 0) {
-            NSMutableArray *repeatingExternalIds = [[NSMutableArray alloc] init];
-            for (NSMutableDictionary *newExternalId in newExternalIds) {
-                for (NSMutableDictionary *externalId in _externalIds) {
-                    if ([externalId[@"type"] isEqualToString:newExternalId[@"type"]]){
-                        externalId[@"id"] = newExternalId[@"id"];
-                        [repeatingExternalIds addObject:newExternalId];
+            for (int index = 0; index < externalIds.count; index += 1) {
+                for (int index2 = 0; index2 < _externalIds.count; index2 +=1) {
+                    if ([_externalIds[index2][@"type"] isEqualToString:externalIds[index][@"type"]]){
+                        _externalIds[index2][@"id"] = externalIds[index][@"id"];
+                        [externalIds removeObjectAtIndex:index];
+                        index--;
                         break;
                     }
                 }
             }
-            [newExternalIds removeObjectsInArray:repeatingExternalIds];
         }
 
-        if ([newExternalIds count]) {
-            [_externalIds addObjectsFromArray: newExternalIds];
+        if ([externalIds count]) {
+            [_externalIds addObjectsFromArray: externalIds];
         }
     });
 }
