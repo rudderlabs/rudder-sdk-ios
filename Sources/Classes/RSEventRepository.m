@@ -60,7 +60,7 @@ typedef enum {
             [RSLogger logDebug:@"EventRepository: Enabling Background Mode"];
 #if !TARGET_OS_WATCH
             backgroundTask = UIBackgroundTaskInvalid;
-//            [self registerBackGroundTask];
+            [self registerBackGroundTask];
 #else
             [self askForAssertionWithSemaphore];
 #endif
@@ -105,8 +105,8 @@ typedef enum {
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
     dispatch_sync([RSContext getQueue], ^{
-    self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
+        self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
 }
 
@@ -142,7 +142,7 @@ typedef enum {
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
                     dispatch_sync([RSContext getQueue], ^{
-                    strongSelf->areFactoriesInitialized = YES;
+                        strongSelf->areFactoriesInitialized = YES;
                     });
                     [strongSelf __replayMessageQueue];
                     

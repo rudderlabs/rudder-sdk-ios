@@ -14,4 +14,5 @@
 @interface _AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
 @end
