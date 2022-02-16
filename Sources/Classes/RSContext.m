@@ -209,28 +209,26 @@ static dispatch_queue_t queue;
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict;
-    @synchronized (tempDict) {
-        tempDict = [[NSMutableDictionary alloc] init];
-        dispatch_sync(queue, ^{
-            [tempDict setObject:[_app dict] forKey:@"app"];
-            [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
-            [tempDict setObject:[_library dict] forKey:@"library"];
-            [tempDict setObject:[_os dict] forKey:@"os"];
-            [tempDict setObject:[_screen dict] forKey:@"screen"];
-            if (_userAgent) {
-                [tempDict setObject:_userAgent forKey:@"userAgent"];
-            }
-            
-            [tempDict setObject:_locale forKey:@"locale"];
-            [tempDict setObject:[_device dict] forKey:@"device"];
-            [tempDict setObject:[_network dict] forKey:@"network"];
-            [tempDict setObject:_timezone forKey:@"timezone"];
-            if (_externalIds != nil) {
-                [tempDict setObject:_externalIds forKey:@"externalId"];
-            }
-        });
-        return [tempDict copy];
-    }
+    tempDict = [[NSMutableDictionary alloc] init];
+    dispatch_sync(queue, ^{
+        [tempDict setObject:[_app dict] forKey:@"app"];
+        [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
+        [tempDict setObject:[_library dict] forKey:@"library"];
+        [tempDict setObject:[_os dict] forKey:@"os"];
+        [tempDict setObject:[_screen dict] forKey:@"screen"];
+        if (_userAgent) {
+            [tempDict setObject:_userAgent forKey:@"userAgent"];
+        }
+        
+        [tempDict setObject:_locale forKey:@"locale"];
+        [tempDict setObject:[_device dict] forKey:@"device"];
+        [tempDict setObject:[_network dict] forKey:@"network"];
+        [tempDict setObject:_timezone forKey:@"timezone"];
+        if (_externalIds != nil) {
+            [tempDict setObject:_externalIds forKey:@"externalId"];
+        }
+    });
+    return [tempDict copy];
 }
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
