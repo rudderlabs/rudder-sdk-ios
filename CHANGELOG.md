@@ -56,3 +56,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.5.1 - 2022-02-11
 ### Fix
 - Removed warnings
+
+## Version - 1.5.2 - 2022-02-16
+### Fix
+- Thread issue
