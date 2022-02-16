@@ -285,7 +285,8 @@ static NSString* _deviceToken = nil;
     [builder setTraits:traitsObj];
     [builder setExternalIds:options];
     [builder setRSOption:options];
-    [self dumpInternal:[builder build] type:RSIdentify];
+    RSMessage *message = [builder build];
+    [self dumpInternal: message type:RSIdentify];
 }
 
 - (void)reset {

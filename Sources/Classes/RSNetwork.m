@@ -34,14 +34,17 @@
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
     
-    [tempDict setValue:_carrier forKey:@"carrier"];
-    [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
-    [tempDict setValue:[NSNumber numberWithBool:_bluetooth] forKey:@"bluetooth"];
-    [tempDict setValue:[NSNumber numberWithBool:_cellular] forKey:@"cellular"];
-    
-    return [tempDict copy];
+        [tempDict setValue:_carrier forKey:@"carrier"];
+        [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
+        [tempDict setValue:[NSNumber numberWithBool:_bluetooth] forKey:@"bluetooth"];
+        [tempDict setValue:[NSNumber numberWithBool:_cellular] forKey:@"cellular"];
+        
+        return [tempDict copy];
+    }
 }
 
 @end
