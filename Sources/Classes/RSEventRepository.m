@@ -120,7 +120,9 @@ typedef enum {
             int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
+                dispatch_sync([RSContext getQueue], ^{
+                    strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
+                });
                 if  (strongSelf->isSDKEnabled) {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
@@ -361,9 +363,11 @@ typedef enum {
 }
 
 - (void) dump:(RSMessage *)message {
-    if (message == nil || !self->isSDKEnabled) {
-        return;
-    }
+    dispatch_sync([RSContext getQueue], ^{
+        if (message == nil || !self->isSDKEnabled) {
+            return;
+        }
+    });
     if([message.integrations count]==0){
         if(RSClient.getDefaultOptions!=nil &&
            RSClient.getDefaultOptions.integrations!=nil &&

@@ -38,7 +38,7 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) RSDeviceInfo* device;
 @property (nonatomic, readwrite) RSNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
-@property (nonatomic, readwrite) NSMutableArray* externalIds;
+@property (nonatomic, readwrite) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
 
 
 + (dispatch_queue_t) getQueue;
