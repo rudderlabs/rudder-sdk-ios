@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6003F589195388D20070C39A"
-               BuildableName = "RudderSampleAppObjC.app"
-               BlueprintName = "RudderSampleAppObjC"
-               ReferencedContainer = "container:RudderSampleAppObjC.xcodeproj">
+               BlueprintIdentifier = "06EABC8124665E470043D720"
+               BuildableName = "RudderSampleAppSwift.app"
+               BlueprintName = "RudderSampleAppSwift"
+               ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,7 +34,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      enableASanStackUseAfterReturn = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "RudderSampleAppObjC.app"
-            BlueprintName = "RudderSampleAppObjC"
-            ReferencedContainer = "container:RudderSampleAppObjC.xcodeproj">
+            BlueprintIdentifier = "06EABC8124665E470043D720"
+            BuildableName = "RudderSampleAppSwift.app"
+            BlueprintName = "RudderSampleAppSwift"
+            ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "RudderSampleAppObjC.app"
-            BlueprintName = "RudderSampleAppObjC"
-            ReferencedContainer = "container:RudderSampleAppObjC.xcodeproj">
+            BlueprintIdentifier = "06EABC8124665E470043D720"
+            BuildableName = "RudderSampleAppSwift.app"
+            BlueprintName = "RudderSampleAppSwift"
+            ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
