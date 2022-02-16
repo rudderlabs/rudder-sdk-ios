@@ -18,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     
 //    [[RSClient sharedInstance] identify:@"test_user_id" traits:@{
 //        @"firstName": @"Test",

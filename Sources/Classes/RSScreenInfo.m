@@ -32,13 +32,16 @@
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
     
-    [tempDict setValue:[NSNumber numberWithInt:_density] forKey:@"density"];
-    [tempDict setValue:[NSNumber numberWithInt:_height] forKey:@"height"];
-    [tempDict setValue:[NSNumber numberWithInt:_width] forKey:@"width"];
-    
-    return [tempDict copy];
+        [tempDict setValue:[NSNumber numberWithInt:_density] forKey:@"density"];
+        [tempDict setValue:[NSNumber numberWithInt:_height] forKey:@"height"];
+        [tempDict setValue:[NSNumber numberWithInt:_width] forKey:@"width"];
+        
+        return [tempDict copy];
+    }
 }
 
 @end

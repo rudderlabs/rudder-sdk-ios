@@ -24,13 +24,16 @@
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict;
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
 
-    [tempDict setValue:_build forKey:@"build"];
-    [tempDict setValue:_name forKey:@"name"];
-    [tempDict setValue:_nameSpace forKey:@"namespace"];
-    [tempDict setValue:_version forKey:@"version"];
+        [tempDict setValue:_build forKey:@"build"];
+        [tempDict setValue:_name forKey:@"name"];
+        [tempDict setValue:_nameSpace forKey:@"namespace"];
+        [tempDict setValue:_version forKey:@"version"];
 
-    return [tempDict copy];
+        return [tempDict copy];
+    }
 }
 @end

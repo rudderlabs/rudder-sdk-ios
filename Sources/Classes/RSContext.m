@@ -17,10 +17,18 @@ int const RSATTRestricted = 1;
 int const RSATTDenied = 2;
 int const RSATTAuthorize = 3;
 
+
+static dispatch_queue_t queue;
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        
+        if (queue == nil) {
+            queue = dispatch_queue_create("com.rudder.RSContext", NULL);
+        }
+        
         self->preferenceManager = [RSPreferenceManager getInstance];
         
         _app = [[RSApp alloc] init];
@@ -34,32 +42,38 @@ int const RSATTAuthorize = 3;
         _timezone = [[NSTimeZone localTimeZone] name];
         _externalIds = nil;
         
-        NSString *traitsJson = [preferenceManager getTraits];
-        if (traitsJson == nil) {
-            // no persisted traits, create new and persist
-            [self createAndPersistTraits];
-        } else {
-            NSError *error;
-            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
-                _traits = [traitsDict mutableCopy];
-            } else {
-                // persisted traits persing error. initiate blank
+        dispatch_sync(queue, ^{
+            NSString *traitsJson = [preferenceManager getTraits];
+            if (traitsJson == nil) {
+                // no persisted traits, create new and persist
                 [self createAndPersistTraits];
+            } else {
+                NSError *error;
+                NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+                if (error == nil) {
+                    _traits = [traitsDict mutableCopy];
+                } else {
+                    // persisted traits persing error. initiate blank
+                    [self createAndPersistTraits];
+                }
             }
-        }
         
-        // get saved external Ids from prefs
-        NSString *externalIdJson = [preferenceManager getExternalIds];
-        if (externalIdJson != nil) {
-            NSError *error;
-            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
-                _externalIds = [externalIdDict mutableCopy];
+            // get saved external Ids from prefs
+            NSString *externalIdJson = [preferenceManager getExternalIds];
+            if (externalIdJson != nil) {
+                NSError *error;
+                NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+                if (error == nil) {
+                    _externalIds = [externalIdDict mutableCopy];
+                }
             }
-        }
+        });
     }
     return self;
+}
+
++ (dispatch_queue_t) getQueue {
+    return queue;
 }
 
 - (void) createAndPersistTraits {
@@ -71,111 +85,150 @@ int const RSATTAuthorize = 3;
 }
 
 - (void) resetTraits {
-    RSTraits* traits = [[RSTraits alloc] init];
-    traits.anonymousId = [preferenceManager getAnonymousId];
-    [_traits removeAllObjects];
-    [_traits setValuesForKeysWithDictionary:[traits dict]];
+    dispatch_async(queue, ^{
+        RSTraits* traits = [[RSTraits alloc] init];
+        traits.anonymousId = [preferenceManager getAnonymousId];
+        [_traits removeAllObjects];
+        [_traits setValuesForKeysWithDictionary:[traits dict]];
+    });
 }
 
 - (void)updateTraits:(RSTraits *)traits {
-    NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
-    NSString* userId = (NSString*) traits.userId;
-    
-    if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
-    {
-        _traits = [[traits dict]mutableCopy];
-        [self resetExternalIds];
-        return;
-    }
-    [_traits setValuesForKeysWithDictionary:[traits dict]];
-}
+    dispatch_async(queue, ^{
+        NSString* existingId = (NSString*)[_traits objectForKey:@"userId"];
+        NSString* userId = (NSString*) traits.userId;
+        
+        if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
+        {
+            _traits = [[traits dict]mutableCopy];
+            [self resetExternalIds];
+            return;
+        }
+        [_traits setValuesForKeysWithDictionary:[traits dict]];
+    });
+} 
 
 -(void) persistTraits {
-    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
-    NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
-    
-    [preferenceManager saveTraits:traitsString];
+    dispatch_async(queue, ^{
+        NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:_traits] options:0 error:nil];
+        NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
+        
+        [preferenceManager saveTraits:traitsString];
+    });
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
-    _traits = traitsDict;
+    dispatch_async(queue, ^{
+        _traits = traitsDict;
+    });
 }
 
 - (void)updateTraitsAnonymousId {
-    _traits[@"anonymousId"] = [preferenceManager getAnonymousId];
+    dispatch_async(queue, ^{
+        _traits[@"anonymousId"] = [preferenceManager getAnonymousId];
+    });
 }
 
 - (void)putDeviceToken:(NSString *)deviceToken {
-    _device.token = deviceToken;
+    dispatch_async(queue, ^{
+        _device.token = deviceToken;
+    });
 }
 
 - (void)putAdvertisementId:(NSString *_Nonnull)idfa {
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
-    if( idfa != nil && [idfa length] != 0) {
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
-        BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
-        _device.adTrackingEnabled = adTrackingEnabled;
-        
-        if (adTrackingEnabled) {
-            _device.advertisingId = idfa;
+    dispatch_async(queue, ^{
+        if( idfa != nil && [idfa length] != 0) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
+            BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
+            _device.adTrackingEnabled = adTrackingEnabled;
+            
+            if (adTrackingEnabled) {
+                _device.advertisingId = idfa;
+            }
         }
-    }
+    });
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
-    if(_externalIds == nil)
-    {
-        _externalIds = [[NSMutableArray alloc] init];
-    }
-    // update local variable
-    [_externalIds addObjectsFromArray: externalIds];
+    dispatch_async(queue, ^{
+        if(_externalIds == nil)
+        {
+            _externalIds = [[NSMutableArray alloc] init];
+        }
+        
+        NSMutableArray *newExternalIds = [externalIds mutableCopy];
+        if (_externalIds.count > 0) {
+            NSMutableArray *repeatingExternalIds = [[NSMutableArray alloc] init];
+            for (NSMutableDictionary *newExternalId in newExternalIds) {
+                for (NSMutableDictionary *externalId in _externalIds) {
+                    if ([externalId[@"type"] isEqualToString:newExternalId[@"type"]]){
+                        externalId[@"id"] = newExternalId[@"id"];
+                        [repeatingExternalIds addObject:newExternalId];
+                        break;
+                    }
+                }
+            }
+            [newExternalIds removeObjectsInArray:repeatingExternalIds];
+        }
+
+        if ([newExternalIds count]) {
+            [_externalIds addObjectsFromArray: newExternalIds];
+        }
+    });
 }
 
 - (void)persistExternalIds {
-    if (_externalIds != nil) {
-        // update persistence storage
-        NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[_externalIds copy]] options:0 error:nil];
-        NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
-        
-        [preferenceManager saveExternalIds:externalIdJson];
-    }
+    dispatch_async(queue, ^{
+        if (_externalIds != nil) {
+            // update persistence storage
+            NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[_externalIds copy]] options:0 error:nil];
+            NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
+            [preferenceManager saveExternalIds:externalIdJson];
+        }
+    });
 }
 
 - (void)resetExternalIds {
-    _externalIds = nil;
-    [preferenceManager clearExternalIds];
+    dispatch_async(queue, ^{
+        _externalIds = nil;
+        [preferenceManager clearExternalIds];
+    });
 }
 
 - (void)putAppTrackingConsent:(int)att {
-    if (att < RSATTNotDetermined) {
-        _device.attTrackingStatus = RSATTNotDetermined;
-    } else if (att > RSATTAuthorize) {
-        _device.attTrackingStatus = RSATTAuthorize;
-    } else {
-        _device.attTrackingStatus = att;
-    }
+    dispatch_async(queue, ^{
+        if (att < RSATTNotDetermined) {
+            _device.attTrackingStatus = RSATTNotDetermined;
+        } else if (att > RSATTAuthorize) {
+            _device.attTrackingStatus = RSATTAuthorize;
+        } else {
+            _device.attTrackingStatus = att;
+        }
+    });
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
-    [tempDict setObject:[_app dict] forKey:@"app"];
-    [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
-    [tempDict setObject:[_library dict] forKey:@"library"];
-    [tempDict setObject:[_os dict] forKey:@"os"];
-    [tempDict setObject:[_screen dict] forKey:@"screen"];
-    if (_userAgent) {
-        [tempDict setObject:_userAgent forKey:@"userAgent"];
-    }
-    
-    [tempDict setObject:_locale forKey:@"locale"];
-    [tempDict setObject:[_device dict] forKey:@"device"];
-    [tempDict setObject:[_network dict] forKey:@"network"];
-    [tempDict setObject:_timezone forKey:@"timezone"];
-    if (_externalIds != nil) {
-        [tempDict setObject:_externalIds forKey:@"externalId"];
-    }
-    
+    dispatch_sync(queue, ^{
+        [tempDict setObject:[_app dict] forKey:@"app"];
+        [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
+        [tempDict setObject:[_library dict] forKey:@"library"];
+        [tempDict setObject:[_os dict] forKey:@"os"];
+        [tempDict setObject:[_screen dict] forKey:@"screen"];
+        if (_userAgent) {
+            [tempDict setObject:_userAgent forKey:@"userAgent"];
+        }
+        
+        [tempDict setObject:_locale forKey:@"locale"];
+        [tempDict setObject:[_device dict] forKey:@"device"];
+        [tempDict setObject:[_network dict] forKey:@"network"];
+        [tempDict setObject:_timezone forKey:@"timezone"];
+        if (_externalIds != nil) {
+            [tempDict setObject:_externalIds forKey:@"externalId"];
+        }
+    });
     return [tempDict copy];
 }
 
@@ -183,7 +236,7 @@ int const RSATTAuthorize = 3;
     RSContext *copy = [[[self class] allocWithZone:zone] init];
     
     copy.app = self.app;
-    copy.traits = [self.traits copy];
+    
     copy.library = self.library;
     copy.os = self.os;
     copy.screen = self.screen;
@@ -192,7 +245,10 @@ int const RSATTAuthorize = 3;
     copy.device = self.device;
     copy.network = self.network;
     copy.timezone = self.timezone;
-    copy.externalIds = [self.externalIds copy];
+    dispatch_sync(queue, ^{
+        copy.traits = [self.traits copy];
+        copy.externalIds = [self.externalIds copy];
+    });
     
     return copy;
 }
