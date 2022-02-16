@@ -239,11 +239,11 @@ typedef enum {
             [RSLogger logDebug:@"Fetching events to flush to sever"];
             RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
             if (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
-                NSString* payload = [weakSelf __getPayloadFromMessages:dbMessage];
+                NSString* payload = [strongSelf __getPayloadFromMessages:dbMessage];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 if (payload != nil) {
-                    errResp = [weakSelf __flushEventsToServer:payload];
+                    errResp = [strongSelf __flushEventsToServer:payload];
                     if (errResp == 0) {
                         [RSLogger logDebug:@"clearing events from DB"];
                         [strongSelf->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
