@@ -208,8 +208,7 @@ static dispatch_queue_t queue;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary *tempDict;
-    tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     dispatch_sync(queue, ^{
         [tempDict setObject:[_app dict] forKey:@"app"];
         [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
