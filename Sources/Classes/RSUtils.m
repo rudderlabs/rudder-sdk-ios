@@ -13,7 +13,7 @@
 
 + (NSString*) getDateString:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.timeZone = [[NSTimeZone alloc] initWithName:@"UTC"];
+    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
