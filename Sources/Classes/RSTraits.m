@@ -108,61 +108,65 @@
     }
 }
 - (NSDictionary<NSString *,NSObject *> *)dict {
-    NSMutableDictionary<NSString*, NSObject*> *tempDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary<NSString*, NSObject*> *tempDict;
     
-    if (_anonymousId != nil) {
-        [tempDict setValue:_anonymousId forKey:@"anonymousId"];
-    }
-    if (_adderess != nil) {
-        [tempDict setValue:_adderess forKey:@"address"];
-    }
-    if (_age != nil) {
-        [tempDict setValue:_age forKey:@"age"];
-    }
-    if (_birthday != nil) {
-        [tempDict setValue:_birthday forKey:@"birthday"];
-    }
-    if (_company != nil) {
-        [tempDict setValue:_company forKey:@"company"];
-    }
-    if (_createdAt != nil) {
-        [tempDict setValue:_createdAt forKey:@"createdAt"];
-    }
-    if (_traitsDescription != nil) {
-        [tempDict setValue:_traitsDescription forKey:@"description"];
-    }
-    if (_email != nil) {
-        [tempDict setValue:_email forKey:@"email"];
-    }
-    if (_firstName != nil) {
-        [tempDict setValue:_firstName forKey:@"firstname"];
-    }
-    if (_gender != nil) {
-        [tempDict setValue:_gender forKey:@"gender"];
-    }
-    if (_userId != nil) {
-        [tempDict setValue:_userId forKey:@"userId"];
-    }
-    if (_lastName != nil) {
-        [tempDict setValue:_lastName forKey:@"lastname"];
-    }
-    if (_name != nil) {
-        [tempDict setValue:_name forKey:@"name"];
-    }
-    if (_phone != nil) {
-        [tempDict setValue:_phone forKey:@"phone"];
-    }
-    if (_title != nil) {
-        [tempDict setValue:_title forKey:@"title"];
-    }
-    if (_userName != nil) {
-        [tempDict setValue:_userName forKey:@"userName"];
-    }
-    if (__extras != nil) {
-        [tempDict setValuesForKeysWithDictionary:__extras];
-    }
+    @synchronized (tempDict) {
+        tempDict = [[NSMutableDictionary alloc] init];
     
-    return [tempDict copy];
+        if (_anonymousId != nil) {
+            [tempDict setValue:_anonymousId forKey:@"anonymousId"];
+        }
+        if (_adderess != nil) {
+            [tempDict setValue:_adderess forKey:@"address"];
+        }
+        if (_age != nil) {
+            [tempDict setValue:_age forKey:@"age"];
+        }
+        if (_birthday != nil) {
+            [tempDict setValue:_birthday forKey:@"birthday"];
+        }
+        if (_company != nil) {
+            [tempDict setValue:_company forKey:@"company"];
+        }
+        if (_createdAt != nil) {
+            [tempDict setValue:_createdAt forKey:@"createdAt"];
+        }
+        if (_traitsDescription != nil) {
+            [tempDict setValue:_traitsDescription forKey:@"description"];
+        }
+        if (_email != nil) {
+            [tempDict setValue:_email forKey:@"email"];
+        }
+        if (_firstName != nil) {
+            [tempDict setValue:_firstName forKey:@"firstname"];
+        }
+        if (_gender != nil) {
+            [tempDict setValue:_gender forKey:@"gender"];
+        }
+        if (_userId != nil) {
+            [tempDict setValue:_userId forKey:@"userId"];
+        }
+        if (_lastName != nil) {
+            [tempDict setValue:_lastName forKey:@"lastname"];
+        }
+        if (_name != nil) {
+            [tempDict setValue:_name forKey:@"name"];
+        }
+        if (_phone != nil) {
+            [tempDict setValue:_phone forKey:@"phone"];
+        }
+        if (_title != nil) {
+            [tempDict setValue:_title forKey:@"title"];
+        }
+        if (_userName != nil) {
+            [tempDict setValue:_userName forKey:@"userName"];
+        }
+        if (__extras != nil) {
+            [tempDict setValuesForKeysWithDictionary:__extras];
+        }
+        
+        return [tempDict copy];
+    }
 }
 
 @end

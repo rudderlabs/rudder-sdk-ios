@@ -25,9 +25,11 @@ typedef enum {
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
-        _instance = [[self alloc] init:writeKey config:config];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _instance = [[self alloc] init:writeKey config:config];
+        });
     }
-    
     return _instance;
 }
 
@@ -103,14 +105,15 @@ typedef enum {
 
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
-    self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
+    dispatch_sync([RSContext getQueue], ^{
+        self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
+    });
 }
 
 - (void) __initiateSDK {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_queue_t initializeQueue = dispatch_queue_create("com.rudder.initiateSDK", NULL);
-    dispatch_sync(initializeQueue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         RSEventRepository *strongSelf = weakSelf;
         int retryCount = 0;
         while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
@@ -118,7 +121,9 @@ typedef enum {
             int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
+                dispatch_sync([RSContext getQueue], ^{
+                    strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
+                });
                 if  (strongSelf->isSDKEnabled) {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
@@ -216,8 +221,7 @@ typedef enum {
 
 - (void) __initiateProcessor {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_queue_t initializeProcessorQueue = dispatch_queue_create("com.rudder.initiateProcessor", NULL);
-    dispatch_sync(initializeProcessorQueue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         RSEventRepository *strongSelf = weakSelf;
         [RSLogger logDebug:@"processor started"];
         int errResp = 0;
@@ -344,7 +348,9 @@ typedef enum {
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
-    [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
+    dispatch_sync([RSContext getQueue], ^{
+        [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
+    });
     NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:httpBody];
     
@@ -382,9 +388,11 @@ typedef enum {
 }
 
 - (void) dump:(RSMessage *)message {
-    if (message == nil || !self->isSDKEnabled) {
-        return;
-    }
+    dispatch_sync([RSContext getQueue], ^{
+        if (message == nil || !self->isSDKEnabled) {
+            return;
+        }
+    });
     if([message.integrations count]==0){
         if(RSClient.getDefaultOptions!=nil &&
            RSClient.getDefaultOptions.integrations!=nil &&
@@ -403,6 +411,7 @@ typedef enum {
         message.integrations = mutableIntegrations;
         
     }
+
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -657,8 +666,10 @@ typedef enum {
         [self endBackGroundTask];
     }
     [RSLogger logDebug:@"EventRepository: registerBackGroundTask: Registering for Background Mode"];
+    __weak RSEventRepository *weakSelf = self;
     backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [self endBackGroundTask];
+        RSEventRepository *strongSelf = weakSelf;
+        [strongSelf endBackGroundTask];
     }];
 }
 

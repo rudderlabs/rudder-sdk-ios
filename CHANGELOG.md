@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Pod name from `RudderSDKCore` to `Rudder` and main header file from `RudderSDKCore.h` to `Rudder.h`. Please follow the doumentation page for more information.
 - New field `userId` is supported to make it more compliant under `context->traits` for `identify` and all successive calls. Old filed for developer identification i.e. `id` is still supported.
 - Removed User agent
+
 ## Version - 1.1.5 - 2021-11-18
 ### Changed
 - Bugfix - timestamp as Gregorian Calender.
@@ -48,7 +49,18 @@ All notable changes to this project will be documented in this file.
 - Fixed Memory leak issue while replaying events to the device mode factories once they are initialized.
 
 ## Version - 1.5.0 - 2022-01-20
-
 ### Feature
 
 - Added Support for Client Side Event Filtering for Device Mode Destinations
+
+## Version - 1.5.1 - 2022-02-11
+### Fix
+- Removed warnings
+
+## Version - 1.5.2 - 2022-02-16
+### Fix
+- Thread issue
+
+## Version - 1.5.3 - 2022-03-07
+### Fix
+- Improper timestamp issue

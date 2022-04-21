@@ -175,7 +175,7 @@
 		ED83FFFE27310B44006F27B3 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5727310B44006F27B3 /* RSECommerceCouponBuilder.m */; };
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */; };
-		F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */; };
+		F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
@@ -703,7 +703,6 @@
 				ED83002A27310B45006F27B3 /* RSOrderCancelledEvent.h in Headers */,
 				ED83004027310B45006F27B3 /* RSCartSharedEvent.h in Headers */,
 				ED83000B27310B44006F27B3 /* RSECommerceOrderBuilder.h in Headers */,
-				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
 				ED83005227310B45006F27B3 /* RSProductListViewedEvent.h in Headers */,
 				ED83000727310B44006F27B3 /* RSECommerceFilterBuilder.h in Headers */,
 				ED83002D27310B45006F27B3 /* RSPaymentInfoEnteredEvent.h in Headers */,
@@ -717,6 +716,7 @@
 				ED83004327310B45006F27B3 /* RSCouponDeniedEvent.h in Headers */,
 				ED83000627310B44006F27B3 /* RSECommerceCheckout.h in Headers */,
 				ED83004B27310B45006F27B3 /* RSCheckoutStepCompletedEvent.h in Headers */,
+				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
 				ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */,
 				ED83FFD627310B44006F27B3 /* RSServerDestinationDefinition.h in Headers */,
 			);
@@ -931,7 +931,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -988,7 +988,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1015,13 +1015,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1049,13 +1049,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
