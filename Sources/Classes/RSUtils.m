@@ -8,6 +8,7 @@
 
 #import "RSUtils.h"
 #import "RSLogger.h"
+#import "RSDBMessage.h"
 
 @implementation RSUtils
 
@@ -68,7 +69,7 @@
         }
         return [array copy];
     } else if ([val isKindOfClass:[NSDictionary class]] ||
-               [val isKindOfClass:[NSMutableDictionary class]] 
+               [val isKindOfClass:[NSMutableDictionary class]]
                ) {
         // handle dictionary
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -116,6 +117,22 @@
         return [returnArray copy];
     }
     return array;
+}
+
++ (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
+    int messageCount = dbMessage.messageIds.count;
+    if (messageCount % queueSize == 0) {
+        return messageCount / queueSize;
+    } else {
+        return (messageCount / queueSize) + 1;
+    }
+}
+
++ (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize {
+    if(messageDetails.count<=queueSize) {
+        return messageDetails;
+    }
+    return [messageDetails subarrayWithRange:NSMakeRange(0, queueSize)];
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

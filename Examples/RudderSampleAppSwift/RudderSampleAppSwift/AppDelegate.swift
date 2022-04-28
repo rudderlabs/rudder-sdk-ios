@@ -8,6 +8,8 @@
 
 import UIKit
 import Rudder
+import Rudder_Firebase
+import Rudder_Appsflyer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,10 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
-            .withDataPlaneUrl("https://117d05c4.ngrok.io")
+            .withDataPlaneUrl("https://9c98-175-101-36-93.ngrok.io")
             .withTrackLifecycleEvens(true)
             .withRecordScreenViews(true)
-        RSClient.getInstance("1ZTkZgCMnZyXeWsFbcjGsOx4jnv", config: builder.build())
+            .withFactory(RudderFirebaseFactory.instance())
+            .withFactory(RudderAppsflyerFactory.instance())
+        RSClient.getInstance("1pAKRv50y15Ti6UWpYroGJaO0Dj", config: builder.build())
+        
+        RSClient.sharedInstance()?.track("test_event_1");
+        RSClient.sharedInstance()?.track("test_event_2");
+        
         
         return true
     }

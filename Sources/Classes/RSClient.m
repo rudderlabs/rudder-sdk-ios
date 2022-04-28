@@ -17,6 +17,7 @@ static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
+static dispatch_queue_t queue = nil;
 
 @implementation RSClient
 
@@ -44,6 +45,7 @@ static NSString* _deviceToken = nil;
                 [[_instance getContext] putDeviceToken:_deviceToken];
             }
         });
+        queue = dispatch_queue_create("com.rudder.RSClient", NULL);
     }
     return _instance;
 }
@@ -300,9 +302,11 @@ static NSString* _deviceToken = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
-    if (_repository != nil) {
-        [_repository flush];
-    }
+    dispatch_async(queue, ^{
+        if (_repository != nil) {
+            [_repository flush];
+        }
+    });
 }
 
 + (BOOL)getOptStatus {

@@ -30,8 +30,8 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withEnableBackgroundMode:YES];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
-    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
+    [builder withDataPlaneUrl:@"https://9c98-175-101-36-93.ngrok.io"];
+    [RSClient getInstance:@"1rC6xZFSesTnCG8UT1s6AOQmOvD" config:[builder build]];
     
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",
@@ -55,6 +55,12 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     ];
     
     [[RSClient sharedInstance] alias:@"new_user_id"];
+    
+    for(int i=1; i<=100; i++) {
+        NSString* eventName = [[NSString alloc] initWithFormat:@"Event name %d", i];
+        [[RSClient sharedInstance] track:eventName];
+    }
+    [[RSClient sharedInstance] flush];
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     

@@ -21,8 +21,10 @@ end
 
 target 'RudderSampleAppSwift' do
     project 'Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
-    platform :ios, '9.0'
+    platform :ios, '10.0'
     shared_pods
+    pod 'Rudder-Firebase'
+    pod 'Rudder-Appsflyer', '1.1.0'
 end
 
 target 'RudderSampleApptvOSObjC' do

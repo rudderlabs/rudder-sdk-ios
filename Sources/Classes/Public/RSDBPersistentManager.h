@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) clearEventFromDB: (int) messageId;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
 -(RSDBMessage*) fetchEventsFromDB:(int) count;
+-(RSDBMessage*) fetchAllEventsFromDB;
 -(int) getDBRecordCount;
 -(void) flushEventsFromDB;
 

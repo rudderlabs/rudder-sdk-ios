@@ -126,7 +126,7 @@ typedef enum {
                 });
                 if  (strongSelf->isSDKEnabled) {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
-                    [strongSelf __initiateProcessor];
+//                    [strongSelf __initiateProcessor];
                     
                     // initialize integrationOperationMap
                     strongSelf->integrationOperationMap = [[NSMutableDictionary alloc] init];
@@ -229,6 +229,7 @@ typedef enum {
         
         while (YES) {
             [strongSelf clearOldEvents];
+            // due to this implementation, most of the flushes, might get cancelled.
             strongSelf->isFlushing = YES;
             [RSLogger logDebug:@"Fetching events to flush to sever"];
             RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
@@ -267,19 +268,55 @@ typedef enum {
     }
 }
 
-- (void)immediateFlush {
+- (void)flushSync {
+    // this is something we are not doing in the android sdk, we need to decide on this.
+    // we wil comment this for now
     [self clearOldEvents];
     [RSLogger logDebug:@"Fetching events to flush to sever"];
-    RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(self->config.flushQueueSize)];
-    if (dbMessage.messages.count > 0) {
-        int errResp = [self flushEventsToServer:dbMessage];
-        if (errResp == 0) {
-            [RSLogger logDebug:@"clearing events from DB"];
-            [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
+    // we are fetching only a single batch and flushing it, instead we need to fetch all the events present in the db at the moment and send them as individual batches based on the config flush size
+    // with the support for sending multiple batches we get the concepts of retrying, intermediate batch failures, division into batches.
+    // an object of RSDBMessage can be used to synchronize the default flush by processor thread and the flush triggered manually by the flush api.
+    // but one thing we need to make sure is that once the manual flush is happening, the default flush by processor thread should not be happening, meaning they should be synchronized.
+    RSDBMessage *dbMessage = [self->dbpersistenceManager fetchAllEventsFromDB];
+    int numberOfBatches = [RSUtils getNumberOfBatches:dbMessage withFlushQueueSize:self->config.flushQueueSize];
+    int errResp = -1;
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: %d batches of events to be flushed", numberOfBatches]];
+    BOOL lastBatchFailed = NO;
+    for(int i=1; i<= numberOfBatches; i++) {
+        lastBatchFailed = YES;
+        int retries = 3;
+        while(retries-- > 0) {
+            NSMutableArray<NSString *>* messages = [RSUtils getBatch:dbMessage.messages withQueueSize:self->config.flushQueueSize];
+            NSMutableArray<NSString *>* messageIds = [RSUtils getBatch:dbMessage.messageIds withQueueSize:self->config.flushQueueSize];
+            RSDBMessage *batchDBMessage = [[RSDBMessage alloc] init];
+            batchDBMessage.messageIds = messageIds;
+            batchDBMessage.messages = messages;
+            errResp = [self flushEventsToServer:batchDBMessage];
+            if( errResp == 0){
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Successfully sent batch %d/%d", i, numberOfBatches]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Clearing events of batch %d from DB", i]];
+                [self -> dbpersistenceManager clearEventsFromDB: batchDBMessage.messageIds];
+                [dbMessage.messages removeObjectsInArray:messages];
+                [dbMessage.messageIds removeObjectsInArray:messages];
+                lastBatchFailed = NO;
+                break;
+            }
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d, retrying again, %d retries left", i, numberOfBatches, retries]];
+        }
+        if(lastBatchFailed) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
         }
     }
+//    if (dbMessage.messages.count > 0) {
+//        int errResp = [self flushEventsToServer:dbMessage];
+//        if (errResp == 0) {
+//            [RSLogger logDebug:@"clearing events from DB"];
+//            [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
+//        }
+//    }
 }
 
+// this method with the same name as flushEventsToServer, is not needed, can be avoided.
 - (int)flushEventsToServer:(RSDBMessage *)dbMessage {
     int errResp = -1;
     NSString* payload = [self __getPayloadFromMessages:dbMessage];
@@ -411,7 +448,7 @@ typedef enum {
         message.integrations = mutableIntegrations;
         
     }
-
+    
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -487,11 +524,17 @@ typedef enum {
 }
 
 -(void) flush {
-    if (!self->isFlushing) {
-        [self immediateFlush];
-    } else {
-        [RSLogger logDebug:@"flushing already. ignoring flush call"];
-    }
+    // instead of using this flag for flushing, we should use synchronized block like how we did in android sdk. may be have a static RSDBMessage object it holds the both messages and messageIds mutablearrays
+    //    if (!self->isFlushing) {
+    // neeed to batch the flush calls and execute them one after other, instead of dropping the new flush, while one is executing
+    // need to use a sequential queue and add flushes to it, so that they get executed one after the other.
+    // changing the name of this function to flushSync
+    [self flushSync];
+    //    }
+    // Instead of cancelling flush, if one is already executing (or) if the processor thread is flushing, we should batch them in a queue and execute them one by one.
+    //    else {
+    //        [RSLogger logDebug:@"flushing already. ignoring flush call"];
+    //    }
     if (self->areFactoriesInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"flushing native SDK for %@", key]];
@@ -500,7 +543,6 @@ typedef enum {
                 [integration flush];
             }
         }
-        
     } else {
         [RSLogger logDebug:@"factories are not initialized. ignoring flush call"];
     }
