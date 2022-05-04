@@ -108,7 +108,6 @@
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
    
-    // might need to have a lock here to prevent concurrent access to the db
     sqlite3_stmt *queryStmt = nil;
     if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
         [RSLogger logDebug:@"events fetched from DB"];

@@ -13,6 +13,9 @@
 
 
 static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
+NSLock* dLock;
+dispatch_source_t source;
+
 
 @implementation _AppDelegate
 
@@ -21,61 +24,88 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [RSClient putDeviceToken:@"your_device_token"];
-    [RSClient putAnonymousId:@"anonymous_id"];
-    
+//    dLock = [NSLock new];
+//
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self lock1];
+//    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self lock2];
+//    });
+//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self unLock1];
+//    });
+//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self unLock2];
+//    });
+//    NSLog(@"Everything  done");
     
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withLoglevel:RSLogLevelVerbose];
+    [builder withFlushQueueSize:30];
+    [builder withSleepTimeOut:180];
+    [builder withLoglevel:RSLogLevelNone];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
-    [builder withEnableBackgroundMode:YES];
-    [builder withDataPlaneUrl:@"https://9c98-175-101-36-93.ngrok.io"];
-    [RSClient getInstance:@"1rC6xZFSesTnCG8UT1s6AOQmOvD" config:[builder build]];
-    
+    [builder withDataPlaneUrl:@"https://70a1-175-101-36-93.ngrok.io"];
+    [RSClient getInstance:@"1pcZviVxgjd3rTUUmaTUBinGH0A" config:[builder build]];
+
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",
         @"key_2" : @"value_2"
     }];
+//
     
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
     
-    RSOption *identifyOptions = [[RSOption alloc] init];
-    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
-    [[RSClient sharedInstance] identify:@"testUserId"
-                                 traits:@{@"firstname": @"First Name"}
-                                options:identifyOptions];
+//    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_queue_create("com.rudder.RSClient", NULL));
+//        dispatch_source_set_event_handler(source, ^{
+//            NSLog(@"%@", [NSString stringWithFormat:@"So far %lu times the event has been triggered", dispatch_source_get_data(source)]);
+//            NSLog(@"Starting sleep");
+//            usleep(3000000);
+//            NSLog(@"Sleep Completed");
+//        });
+//        dispatch_resume(source);
+//        dispatch_source_merge_data(source, 1);
+
     
-    [[RSClient sharedInstance] screen:@"ViewController"];
+   
+//    [FIRApp configure];
+//    [FIRMessaging messaging].delegate = self;
     
-    [[RSClient sharedInstance] group:@"sample_group_id"
-                              traits:@{@"foo": @"bar",
-                                       @"foo1": @"bar1",
-                                       @"email": @"ruchira@gmail.com"}
-    ];
-    
-    [[RSClient sharedInstance] alias:@"new_user_id"];
-    
-    for(int i=1; i<=100; i++) {
-        NSString* eventName = [[NSString alloc] initWithFormat:@"Event name %d", i];
-        [[RSClient sharedInstance] track:eventName];
-    }
-    [[RSClient sharedInstance] flush];
-    [FIRApp configure];
-    [FIRMessaging messaging].delegate = self;
-    
-    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
-    UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
-    [[UNUserNotificationCenter currentNotificationCenter]
-     requestAuthorizationWithOptions:authOptions
-     completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        // ...
-    }];
-    
-    [application registerForRemoteNotifications];
-    return YES;
+//    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+//    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
+//    UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+//    [[UNUserNotificationCenter currentNotificationCenter]
+//     requestAuthorizationWithOptions:authOptions
+//     completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//        // ...
+//    }];
+//
+//    [application registerForRemoteNotifications];
+     return YES;
 }
+
++ (void) sendEvent {
+    NSLog(@"Button clicked and sending event");
+    dispatch_source_merge_data(source, 1);
+}
+//- (void) lock1 {    [dLock lock];
+//    NSLog(@"Lock 1");
+//}
+//
+//- (void) lock2 {
+//    [dLock lock];
+//    NSLog(@"Lock 2");
+//}
+//
+//- (void) unLock1{
+//    [dLock unlock];
+//    NSLog(@"UnLock 1");
+//}
+//
+//- (void) unLock2{
+//    [dLock unlock];
+//    NSLog(@"UnLock 2");
+//}
 
 - (NSString*) getIDFA {
     return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
