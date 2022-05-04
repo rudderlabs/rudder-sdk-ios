@@ -302,8 +302,7 @@ static NSString* _deviceToken = nil;
     }
     if (_repository != nil) {
         [_repository flush];
-    }
-    
+    } 
 }
 
 + (BOOL)getOptStatus {
