@@ -82,7 +82,7 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
   - Protobuf (3.20.1)
-  - Rudder (1.5.4)
+  - Rudder (1.6.0)
   - Rudder-Appsflyer (1.1.0):
     - AppsFlyerFramework (~> 6.4.3)
     - Rudder (~> 1.0)
