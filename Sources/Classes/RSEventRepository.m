@@ -329,6 +329,7 @@ typedef enum {
         }
         if(lastBatchFailed) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
+            break;
         }
     }
     [lock unlock];
