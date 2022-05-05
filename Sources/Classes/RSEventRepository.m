@@ -15,10 +15,6 @@
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
-RSDBMessage* _dbMessage;
-NSLock* lock;
-dispatch_source_t source;
-dispatch_queue_t queue;
 
 @implementation RSEventRepository
 typedef enum {
@@ -236,10 +232,8 @@ typedef enum {
         while (YES) {
             [lock lock];
             [strongSelf clearOldEvents];
-            [_dbMessage.messages removeAllObjects];
-            [_dbMessage.messageIds removeAllObjects];
             [RSLogger logDebug:@"Fetching events to flush to server in processor"];
-            _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
+            RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
             if (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
                 errResp = [strongSelf flushEventsToServer:_dbMessage];
                 if (errResp == 0) {
@@ -306,10 +300,8 @@ typedef enum {
 - (void)flushSync {
     [lock lock];
     [self clearOldEvents];
-    [_dbMessage.messages removeAllObjects];
-    [_dbMessage.messageIds removeAllObjects];
     [RSLogger logDebug:@"Fetching events to flush to server in flush"];
-    _dbMessage = [self->dbpersistenceManager fetchAllEventsFromDB];
+    RSDBMessage* _dbMessage = [self->dbpersistenceManager fetchAllEventsFromDB];
     int numberOfBatches = [RSUtils getNumberOfBatches:_dbMessage withFlushQueueSize:self->config.flushQueueSize];
     int errResp = -1;
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: %d batches of events to be flushed", numberOfBatches]];

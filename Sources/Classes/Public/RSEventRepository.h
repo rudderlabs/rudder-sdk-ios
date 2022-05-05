@@ -38,6 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL isSemaphoreReleased;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
+    NSLock* lock;
+    dispatch_source_t source;
+    dispatch_queue_t queue;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
