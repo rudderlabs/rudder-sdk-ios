@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .withLoglevel(RSLogLevelDebug)
             .withDataPlaneUrl("https://117d05c4.ngrok.io")
             .withTrackLifecycleEvens(true)
-            .withRecordScreenViews(true)
-        RSClient.getInstance("1ZTkZgCMnZyXeWsFbcjGsOx4jnv", config: builder.build())
+            .withRecordScreenViews(true)            
+        RSClient.getInstance("1pAKRv50y15Ti6UWpYroGJaO0Dj", config: builder.build())
         
         return true
     }

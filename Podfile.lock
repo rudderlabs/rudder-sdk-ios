@@ -1,4 +1,7 @@
 PODS:
+  - AppsFlyerFramework (6.4.4):
+    - AppsFlyerFramework/Main (= 6.4.4)
+  - AppsFlyerFramework/Main (6.4.4)
   - Firebase/Analytics (6.34.0):
     - Firebase/Core
   - Firebase/Core (6.34.0):
@@ -78,16 +81,26 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
-  - Protobuf (3.19.1)
-  - Rudder (1.5.3)
+  - Protobuf (3.20.1)
+  - Rudder (1.6.0)
+  - Rudder-Appsflyer (1.1.0):
+    - AppsFlyerFramework (~> 6.4.3)
+    - Rudder (~> 1.0)
+  - Rudder-Firebase (1.0.2):
+    - Firebase/Core
+    - FirebaseAnalytics
+    - Rudder
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - Rudder (from `.`)
+  - Rudder-Appsflyer (= 1.1.0)
+  - Rudder-Firebase
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -101,12 +114,15 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - Rudder-Appsflyer
+    - Rudder-Firebase
 
 EXTERNAL SOURCES:
   Rudder:
     :path: "."
 
 SPEC CHECKSUMS:
+  AppsFlyerFramework: 6ea252ecb04cf443550576922cddb95b35c958ed
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseAnalytics: 3bb096873ee0d7fa4b6c70f5e9166b6da413cc7f
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -119,9 +135,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
-  Rudder: 600311814a186067b0c3d996b83342bb0b2a43e7
+  Protobuf: b60ec2f51ad74765f44d0c09d2e0579d7de21745
+  Rudder: f2cb6780d8b2e261f830b47a44333e55be9ce68e
+  Rudder-Appsflyer: 7b1b9b66513f70ac9c305ee28febbc72ce37a746
+  Rudder-Firebase: 42b9a7d143cbe6d125f5bdf535cba73e24cba1c1
 
-PODFILE CHECKSUM: 33b0e9f1b94a028aa8a3b4aecf718a44c9b6265e
+PODFILE CHECKSUM: d5ddcdfc9129105310a8c03f048b4d0ec5e232d8
 
 COCOAPODS: 1.11.3

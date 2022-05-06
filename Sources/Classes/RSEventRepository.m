@@ -65,6 +65,9 @@ typedef enum {
             [self askForAssertionWithSemaphore];
 #endif
         }
+
+        [RSLogger logDebug:@"EventRepository: setting up flush"];
+        [self setUpFlush];
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
         authToken = [authData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
@@ -227,30 +230,19 @@ typedef enum {
         int sleepCount = 0;
         
         while (YES) {
-            int recordCount = [strongSelf->dbpersistenceManager getDBRecordCount];
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
-            
-            if (recordCount > strongSelf->config.dbCountThreshold) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - strongSelf->config.dbCountThreshold)]];
-                RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(recordCount - strongSelf->config.dbCountThreshold)];
-                [strongSelf->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
-            }
-            
-            [RSLogger logDebug:@"Fetching events to flush to sever"];
-            RSDBMessage *dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
-            if (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
-                NSString* payload = [strongSelf __getPayloadFromMessages:dbMessage];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                if (payload != nil) {
-                    errResp = [strongSelf __flushEventsToServer:payload];
-                    if (errResp == 0) {
-                        [RSLogger logDebug:@"clearing events from DB"];
-                        [strongSelf->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
-                        sleepCount = 0;
-                    }
+            [lock lock];
+            [strongSelf clearOldEvents];
+            [RSLogger logDebug:@"Fetching events to flush to server in processor"];
+            RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
+            if (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
+                errResp = [strongSelf flushEventsToServer:_dbMessage];
+                if (errResp == 0) {
+                    [RSLogger logDebug:@"clearing events from DB"];
+                    [strongSelf->dbpersistenceManager clearEventsFromDB:_dbMessage.messageIds];
+                    sleepCount = 0;
                 }
             }
+            [lock unlock];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
             if (errResp == WRONGWRITEKEY) {
@@ -264,6 +256,94 @@ typedef enum {
             }
         }
     });
+}
+
+- (void)clearOldEvents {
+    int recordCount = [self->dbpersistenceManager getDBRecordCount];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
+    
+    if (recordCount > self->config.dbCountThreshold) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - self->config.dbCountThreshold)]];
+        RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold)];
+        [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
+    }
+}
+
+- (void) setUpFlush {
+    lock = [NSLock new];
+    queue = dispatch_queue_create("com.rudder.flushQueue", NULL);
+    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, queue);
+    __weak RSEventRepository *weakSelf = self;
+    dispatch_source_set_event_handler(source, ^{
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(source)]];
+        RSEventRepository* strongSelf = weakSelf;
+        [strongSelf flushSync];
+    });
+    dispatch_resume(source);
+}
+
+-(void) flush {
+    if (self->areFactoriesInitialized) {
+        for (NSString *key in [self->integrationOperationMap allKeys]) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"flushing native SDK for %@", key]];
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
+            if (integration != nil) {
+                [integration flush];
+            }
+        }
+    } else {
+        [RSLogger logDebug:@"factories are not initialized. ignoring flush call"];
+    }
+    dispatch_source_merge_data(source, 1);
+}
+
+- (void)flushSync {
+    [lock lock];
+    [self clearOldEvents];
+    [RSLogger logDebug:@"Fetching events to flush to server in flush"];
+    RSDBMessage* _dbMessage = [self->dbpersistenceManager fetchAllEventsFromDB];
+    int numberOfBatches = [RSUtils getNumberOfBatches:_dbMessage withFlushQueueSize:self->config.flushQueueSize];
+    int errResp = -1;
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: %d batches of events to be flushed", numberOfBatches]];
+    BOOL lastBatchFailed = NO;
+    for(int i=1; i<= numberOfBatches; i++) {
+        lastBatchFailed = YES;
+        int retries = 3;
+        while(retries-- > 0) {
+            NSMutableArray<NSString *>* messages = [RSUtils getBatch:_dbMessage.messages withQueueSize:self->config.flushQueueSize];
+            NSMutableArray<NSString *>* messageIds = [RSUtils getBatch:_dbMessage.messageIds withQueueSize:self->config.flushQueueSize];
+            RSDBMessage *batchDBMessage = [[RSDBMessage alloc] init];
+            batchDBMessage.messageIds = messageIds;
+            batchDBMessage.messages = messages;
+            errResp = [self flushEventsToServer:batchDBMessage];
+            if( errResp == 0){
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Successfully sent batch %d/%d", i, numberOfBatches]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Clearing events of batch %d from DB", i]];
+                [self -> dbpersistenceManager clearEventsFromDB: batchDBMessage.messageIds];
+                [_dbMessage.messages removeObjectsInArray:messages];
+                [_dbMessage.messageIds removeObjectsInArray:messageIds];
+                lastBatchFailed = NO;
+                break;
+            }
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d, retrying again, %d retries left", i, numberOfBatches, retries]];
+        }
+        if(lastBatchFailed) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
+            break;
+        }
+    }
+    [lock unlock];
+}
+
+- (int)flushEventsToServer:(RSDBMessage *)dbMessage {
+    int errResp = -1;
+    NSString* payload = [self __getPayloadFromMessages:dbMessage];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
+    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+    if (payload != nil) {
+        errResp = [self __flushEventsToServer:payload];
+    }
+    return errResp;
 }
 
 - (NSString*) __getPayloadFromMessages: (RSDBMessage*)dbMessage{
@@ -386,7 +466,7 @@ typedef enum {
         message.integrations = mutableIntegrations;
         
     }
-
+    
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -461,19 +541,6 @@ typedef enum {
     }
 }
 
--(void) flush {
-    if (self->areFactoriesInitialized) {
-        for (NSString *key in [self->integrationOperationMap allKeys]) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"flushing native SDK for %@", key]];
-            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
-            if (integration != nil) {
-                [integration flush];
-            }
-        }
-    } else {
-        [RSLogger logDebug:@"factories are not initialized. ignoring flush call"];
-    }
-}
 
 - (void) __prepareIntegrations {
     RSServerConfigSource *serverConfig = [self->configManager getConfig];
