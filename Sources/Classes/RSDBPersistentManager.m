@@ -97,13 +97,17 @@
     sqlite3_finalize(deleteStmt);
 }
 
-- (RSDBMessage *)fetchEventsFromDB:(int)count {
-    NSString *querySQLStirng = [[NSString alloc] initWithFormat:@"SELECT * FROM events ORDER BY updated ASC LIMIT %d;", count];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"fetchEventSql: %@", querySQLStirng]];
-    const char* querySQL = [querySQLStirng UTF8String];
+- (RSDBMessage *) fetchAllEventsFromDB {
+    NSString *querySQLString = @"SELECT * FROM events ORDER BY updated ASC";
+    return [self getEventsFromDB:querySQLString];
+}
+
+- (RSDBMessage *) getEventsFromDB :(NSString*) querySQLString {
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"fetchEventSql: %@", querySQLString]];
+    const char* querySQL = [querySQLString UTF8String];
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
-    
+   
     sqlite3_stmt *queryStmt = nil;
     if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
         [RSLogger logDebug:@"events fetched from DB"];
@@ -124,6 +128,11 @@
     dbMessage.messages = messages;
     
     return dbMessage;
+}
+
+- (RSDBMessage *)fetchEventsFromDB:(int)count {
+    NSString *querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM events ORDER BY updated ASC LIMIT %d;", count];
+    return [self getEventsFromDB:querySQLString];
 }
 
 - (int)getDBRecordCount {

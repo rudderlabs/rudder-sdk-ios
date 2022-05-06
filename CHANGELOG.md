@@ -64,3 +64,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.5.3 - 2022-03-07
 ### Fix
 - Improper timestamp issue
+
+## Version - 1.6.0 - 2022-05-04
+### Feature
+- Flush API
