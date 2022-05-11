@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
-@property (nonatomic, readwrite) int density;
+@property (nonatomic, readwrite) float density;
 @property (nonatomic, readwrite) int width;
 @property (nonatomic, readwrite) int height;
 
