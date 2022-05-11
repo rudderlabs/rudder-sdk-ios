@@ -68,3 +68,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.6.0 - 2022-05-04
 ### Feature
 - Flush API
+
+## Version - 1.6.1 - 2022-11-04
+### Fix
+- Changed the data type of context.screen.density paramter from int to float.

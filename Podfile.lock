@@ -79,7 +79,7 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
   - Protobuf (3.20.1)
-  - Rudder (1.6.0)
+  - Rudder (1.6.1)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -120,7 +120,7 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: b60ec2f51ad74765f44d0c09d2e0579d7de21745
-  Rudder: 67c3dffe0b253236794e448d5d279a4d54819804
+  Rudder: 57717e83b632760b411636ee532e16008698520e
 
 PODFILE CHECKSUM: 33b0e9f1b94a028aa8a3b4aecf718a44c9b6265e
 
