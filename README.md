@@ -53,16 +53,16 @@ github "rudderlabs/rudder-sdk-ios" "v2.0.0"
 > Remember to include the following code where you want to refer to or use the RudderStack SDK classes, as shown:
 ##### Objective C
 ```objective-c
-@import RudderStack;
+@import Rudder;
 ```
 ##### Swift
 ```swift
-import RudderStack
+import Rudder
 ```
 
 ### Swift Package Manager (SPM)
 
-You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of the following two ways:
+You can also add the RudderStack SDK via Swift Package Mangaer, via one of the following two ways:
 
 * [Xcode](#xcode)
 * [Swift](#swift)
@@ -145,11 +145,11 @@ RSClient.sharedInstance().configure(with: config)
 ### Track
 ##### Objective C
 ```objective-c
-[[RSClient sharedInstance] track:@"sample_track_call" properties:NULL option:NULL];
+[[RSClient sharedInstance] track:@"sample_track_call"];
 [[RSClient sharedInstance] track:@"sample_track_call" properties:@{
     @"key_1" : @"value_1",
     @"key_2" : @"value_2"
-} option:NULL];
+}];
 ```
 #### Swift
 ```swift
@@ -162,7 +162,7 @@ RSClient.sharedInstance().track("sample_track_call", properties:[
 ### Screen
 ##### Objective C
 ```objective-c
-[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"} option:NULL];
+[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
 ```
 #### Swift
 ```swift
@@ -175,7 +175,7 @@ RSClient.sharedInstance().screen("Main", properties:["prop_key" : "prop_value"])
     @"foo": @"bar",
     @"foo1": @"bar1",
     @"email": @"test@gmail.com"
-} option:NULL];
+}];
 ```
 #### Swift
 ```swift
@@ -192,7 +192,7 @@ RSClient.sharedInstance().identify("test_user_id", traits:[
     @"foo": @"bar", 
     @"foo1": @"bar1", 
     @"email": @"test@gmail.com"
-} option:NULL];
+}];
 ```
 #### Swift
 ```swift
@@ -205,7 +205,7 @@ RSClient.sharedInstance().group("sample_group_id" traits:[
 ### Alias
 ##### Objective C
 ```objective-c
-[[RSClient sharedInstance] alias:@"new_user_id" option:NULL];
+[[RSClient sharedInstance] alias:@"new_user_id"];
 ```
 #### Swift
 ```swift
