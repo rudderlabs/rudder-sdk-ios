@@ -1,11 +1,11 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS(.v9), .tvOS(.v9)
+        .iOS("12.0"), .tvOS("11.0"), .macOS("10.13"), .watchOS("7.0")
     ],
     products: [
         .library(
@@ -17,13 +17,11 @@ let package = Package(
         .target(
             name: "Rudder",
             path: "Sources",
-            sources: ["Classes/"],
-            publicHeadersPath: "Classes/Public/",
-            cSettings: [
-                .headerSearchPath("Classes/"),
-                .headerSearchPath("Classes/Ecomm"),
-                .headerSearchPath("Classes/Ecomm/Events")
-            ]
+            sources: ["Classes/"]
+        ),
+        .testTarget(
+            name: "RudderTests",
+            dependencies: ["Rudder"]
         )
     ]
 )

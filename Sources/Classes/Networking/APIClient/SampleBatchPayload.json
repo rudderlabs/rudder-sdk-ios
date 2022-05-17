@@ -1,0 +1,510 @@
+{
+    "sentAt": "2022-01-31T11:38:08.731Z",
+    "batch": [{
+        "messageId": "1643629010-3615180d-edab-4f56-94a2-46ac2e68d39c",
+        "anonymousId": "anonymous_id",
+        "channel": "mobile",
+        "event": "simple_track_with_props",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "type": "iOS",
+                "token": "your_device_token",
+                "attTrackingStatus": 0,
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "anonymousId": "anonymous_id"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            }
+        },
+        "originalTimestamp": "2022-01-31T11:36:50.055Z",
+        "properties": {
+            "key_1": "value_1",
+            "key_2": "value_2"
+        },
+        "type": "track",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-81135a0d-f32e-4ce7-ae39-9fdab9d4762a",
+        "anonymousId": "anonymous_id",
+        "userId": "testUserId",
+        "channel": "mobile",
+        "event": "identify",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "anonymousId": "anonymous_id",
+                "firstname": "First Name",
+                "userId": "testUserId"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.333Z",
+        "type": "identify",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-b17bd2d8-8909-4d10-8d00-e22c91c542f4",
+        "anonymousId": "anonymous_id",
+        "userId": "testUserId",
+        "channel": "mobile",
+        "event": "ViewController",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "anonymousId": "anonymous_id",
+                "firstname": "First Name",
+                "userId": "testUserId"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.351Z",
+        "properties": {
+            "name": "ViewController"
+        },
+        "type": "screen",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-9626919b-e743-472d-8b40-1354086da2c5",
+        "traits": {
+            "foo": "bar",
+            "email": "ruchira@gmail.com",
+            "foo1": "bar1"
+        },
+        "channel": "mobile",
+        "anonymousId": "anonymous_id",
+        "userId": "testUserId",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "anonymousId": "anonymous_id",
+                "firstname": "First Name",
+                "userId": "testUserId"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.354Z",
+        "type": "group",
+        "groupId": "sample_group_id",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-8f36d0f7-7746-4816-81a2-98650a3d49e2",
+        "anonymousId": "anonymous_id",
+        "channel": "mobile",
+        "userId": "new_user_id",
+        "previousId": "testUserId",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "id": "new_user_id",
+                "anonymousId": "anonymous_id",
+                "userId": "new_user_id",
+                "firstname": "First Name"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.382Z",
+        "type": "alias",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-8ce81faf-7489-4508-b21b-659e81510991",
+        "anonymousId": "anonymous_id",
+        "userId": "new_user_id",
+        "channel": "mobile",
+        "event": "Application Installed",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "id": "new_user_id",
+                "anonymousId": "anonymous_id",
+                "userId": "new_user_id",
+                "firstname": "First Name"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.481Z",
+        "properties": {
+            "version": "1.0"
+        },
+        "type": "track",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-61777413-7cb2-412c-bd76-3725613f13d6",
+        "anonymousId": "anonymous_id",
+        "userId": "new_user_id",
+        "channel": "mobile",
+        "event": "Application Opened",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "id": "new_user_id",
+                "anonymousId": "anonymous_id",
+                "userId": "new_user_id",
+                "firstname": "First Name"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.487Z",
+        "properties": {
+            "version": "1.0",
+            "from_background": false
+        },
+        "type": "track",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }, {
+        "messageId": "1643629072-66c4b16a-3818-4a2b-a7d4-b73dabd1e0bf",
+        "anonymousId": "anonymous_id",
+        "userId": "new_user_id",
+        "channel": "mobile",
+        "event": "_",
+        "context": {
+            "screen": {
+                "density": 3,
+                "width": 844,
+                "height": 390
+            },
+            "os": {
+                "name": "iOS",
+                "version": "15.2"
+            },
+            "locale": "en-US",
+            "app": {
+                "version": "1.0",
+                "namespace": "com.rudderstack.ios.test.objc",
+                "name": "RudderSampleAppObjC",
+                "build": "1"
+            },
+            "device": {
+                "attTrackingStatus": 0,
+                "manufacturer": "Apple",
+                "id": "42f0686d-564d-4e2d-815c-a9380dd8b70f",
+                "model": "iPhone",
+                "adTrackingEnabled": true,
+                "type": "iOS",
+                "token": "your_device_token",
+                "advertisingId": "advertisement_Id",
+                "name": "iPhone 12"
+            },
+            "traits": {
+                "id": "new_user_id",
+                "anonymousId": "anonymous_id",
+                "userId": "new_user_id",
+                "firstname": "First Name"
+            },
+            "library": {
+                "name": "rudder-ios-library",
+                "version": "1.5.0"
+            },
+            "timezone": "Asia\/Kolkata",
+            "network": {
+                "bluetooth": false,
+                "wifi": true,
+                "carrier": "unavailable",
+                "cellular": false
+            },
+            "externalId": [{
+                "type": "brazeExternalId",
+                "id": "some_external_id_1"
+            }]
+        },
+        "originalTimestamp": "2022-01-31T11:37:52.502Z",
+        "properties": {
+            "name": "_",
+            "automatic": true
+        },
+        "type": "screen",
+        "integrations": {
+            "All": true
+        },
+        "sentAt": "2022-01-31T11:38:08.731Z"
+    }]
+}

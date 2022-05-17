@@ -5,16 +5,16 @@
       location = "group:Rudder.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj">
+      location = "group:Examples/SampleObjC-iOS/SampleObjC-iOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj">
+      location = "group:Examples/SampleSwift-iOS/SampleSwift-iOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj">
+      location = "group:Examples/SampleObjC-tvOS/SampleObjC-tvOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj">
+      location = "group:Examples/SampleObjC-watchOS/SampleObjC-watchOS.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

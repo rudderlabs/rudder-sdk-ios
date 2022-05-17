@@ -7,8 +7,8 @@
 <p align="center"><b>The Customer Data Platform for Developers</b></p>
 
 <p align="center">
-  <a href="https://cocoapods.org/pods/Rudder">
-    <img src="https://img.shields.io/cocoapods/v/Rudder.svg?style=flat">
+  <a href="https://cocoapods.org/pods/RudderStack">
+    <img src="https://img.shields.io/cocoapods/v/RudderStack.svg?style=flat">
     </a>
 </p>
 
@@ -16,7 +16,7 @@
   <b>
     <a href="https://rudderstack.com">Website</a>
     ·
-    <a href="https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/">Documentation</a>
+    <a href="https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk/">Documentation</a>
     ·
     <a href="https://rudderstack.com/join-rudderstack-slack-community">Community Slack</a>
   </b>
@@ -24,22 +24,22 @@
 
 ---
 
-# RudderStack iOS SDK
+# RudderStack Swift SDK
 
-RudderStack's iOS SDK lets you track event data from your **iOS** and **tvOS** applications. After integrating the SDK, you will also be able to send these events to your preferred destinations such as Google Analytics, Amplitude, and more.
+RudderStack's Swift SDK lets you track event data from your **iOS**, **tvOS**, **watchOS** and **macOS** applications. After integrating the SDK, you will also be able to send these events to your preferred destinations such as Google Analytics, Amplitude, and more.
 
-For detailed documentation on the iOS SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+For detailed documentation on the Swift SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk).
 
-## Installing the iOS SDK
+## Installing the SDK
 
-The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Carthage**](https://github.com/Carthage/Carthage), and [**Swift Package Manager (SPM)**](https://www.swift.org/package-manager/).
+The SDK is available through [**CocoaPods**](https://cocoapods.org), [**Carthage**](https://github.com/Carthage/Carthage), and [**Swift Package Manager (SPM)**](https://www.swift.org/package-manager/).
 
 ### CocoaPods
 
 To install the SDK, simply add the following line to your Podfile:
 
 ```xcode
-pod 'Rudder', '1.6.0'
+pod 'Rudder', '2.0.0'
 ```
 
 ### Carthage
@@ -47,13 +47,17 @@ pod 'Rudder', '1.6.0'
 For Carthage support, add the following line to your `Cartfile`:
 
 ```xcode
-github "rudderlabs/rudder-sdk-ios" "v1.6.0"
+github "rudderlabs/rudder-sdk-ios" "v2.0.0"
 ```
 
-> Remember to include the following code in all `.m` and `.h` files where you want to refer to or use the RudderStack SDK classes, as shown:
-
-```xcode
-#import <Rudder/Rudder.h>
+> Remember to include the following code where you want to refer to or use the RudderStack SDK classes, as shown:
+##### Objective C
+```objective-c
+@import RudderStack;
+```
+##### Swift
+```swift
+import RudderStack
 ```
 
 ### Swift Package Manager (SPM)
@@ -71,7 +75,7 @@ You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of t
 
 * Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
 
-* In **Dependency Rule**, select **Up to Next Major Version** and enter `1.6.0` as the value, as shown:
+* In **Dependency Rule**, select **Up to Next Major Version** and enter `2.0.0` as the value, as shown:
 
 ![Setting dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
 
@@ -99,7 +103,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.6.0")
+        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "2.0.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -118,66 +122,105 @@ let package = Package(
 
 ## Initializing the RudderStack client
 
-To the initialize `RSClient`, place the following code in your `AppDelegate.m` file under the method `didFinishLaunchingWithOptions`:
-
-```xcode
-RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-[builder withDataPlaneUrl:<DATA_PLANE_URL>];
-[RSClient getInstance:<WRITE_KEY> config:[builder build]];
+To the initialize `RSClient`, place the following code in your `AppDelegate` file under the method `didFinishLaunchingWithOptions`:
+#### Objective C
+```objective-c
+RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
+[config dataPlaneURL:DATA_PLANE_URL];
+[config recordScreenViews:YES];
+[[RSClient sharedInstance] configureWith:config];
 ```
-A shared instance of `RSClient` is accesible after the initialization by `[RSClient sharedInstance]`.
+#### Swift
+```swift
+let config: RSConfig = RSConfig(writeKey: WRITE_KEY)
+            .dataPlaneURL(DATA_PLANE_URL)
+            .loglevel(.debug)
+            .trackLifecycleEvents(true)
+            .recordScreenViews(true)
+RSClient.sharedInstance().configure(with: config)
+```
 
 ## Sending Events
 
 ### Track
-
-```xcode
-[[RSClient sharedInstance] track:@"simple_track_event"];
-[[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+##### Objective C
+```objective-c
+[[RSClient sharedInstance] track:@"sample_track_call" properties:NULL option:NULL];
+[[RSClient sharedInstance] track:@"sample_track_call" properties:@{
     @"key_1" : @"value_1",
     @"key_2" : @"value_2"
-}];
+} option:NULL];
 ```
-
+#### Swift
+```swift
+RSClient.sharedInstance().track("sample_track_call")
+RSClient.sharedInstance().track("sample_track_call", properties:[
+    "key_1" : "value_1",
+    "key_2" : "value_2"
+])
+```
 ### Screen
-
-```xcode
-[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
+##### Objective C
+```objective-c
+[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"} option:NULL];
 ```
-
+#### Swift
+```swift
+RSClient.sharedInstance().screen("Main", properties:["prop_key" : "prop_value"]);
+```
 ### Identify
-
-```xcode
-[[RSClient sharedInstance] identify:@"test_user_id"
-                             traits:@{@"foo": @"bar",
-                                      @"foo1": @"bar1",
-                                      @"email": @"test@gmail.com"}
-];
+##### Objective C
+```objective-c
+[[RSClient sharedInstance] identify:@"test_user_id" traits:@{
+    @"foo": @"bar",
+    @"foo1": @"bar1",
+    @"email": @"test@gmail.com"
+} option:NULL];
 ```
-
+#### Swift
+```swift
+RSClient.sharedInstance().identify("test_user_id", traits:[
+    "foo": "bar",
+    "foo1": "bar1",
+    "email": "test@email.com"
+])
+```
 ### Group
-
-```xcode
-[[RSClient sharedInstance] group:@"sample_group_id"
-                          traits:@{@"foo": @"bar",
-                                   @"foo1": @"bar1",
-                                   @"email": @"test@gmail.com"}
-];
+##### Objective C
+```objective-c
+[[RSClient sharedInstance] group:@"sample_group_id" traits:@{
+    @"foo": @"bar", 
+    @"foo1": @"bar1", 
+    @"email": @"test@gmail.com"
+} option:NULL];
 ```
-
+#### Swift
+```swift
+RSClient.sharedInstance().group("sample_group_id" traits:[
+    "foo": "bar", 
+    "foo1": "bar1", 
+    "email": "test@gmail.com"
+])
+```
 ### Alias
-
-```xcode
-[[RSClient sharedInstance] alias:@"new_user_id"];
+##### Objective C
+```objective-c
+[[RSClient sharedInstance] alias:@"new_user_id" option:NULL];
 ```
-
+#### Swift
+```swift
+RSClient.sharedInstance().alias("new_user_id")
+```
 ### Reset
-
-```xcode
+##### Objective C
+```objective-c
 [[RSClient sharedInstance] reset];
 ```
-
-For detailed documentation on the iOS SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk).
+#### Swift
+```swift
+RSClient.sharedInstance().reset()
+```
+For detailed documentation on the Swift SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk).
 
 ## Contribute
 
@@ -191,4 +234,4 @@ More information on RudderStack can be found [**here**](https://github.com/rudde
 
 ## Contact us
 
-For more information on using the RudderStack iOS SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.
+For more information on using the RudderStack Swift SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.

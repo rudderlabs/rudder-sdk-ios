@@ -6,33 +6,27 @@ def shared_pods
     pod 'Rudder', :path => '.'
 end
 
-project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
-project 'Examples/RudderSammpleAppSwift/RudderSammpleAppSwift.xcodeproj'
-project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
-project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj'
 
-target 'RudderSampleAppObjC' do
-    project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
-    platform :ios, '9.0'
-    shared_pods
-    pod 'Firebase/Analytics'
-    pod 'Firebase/Messaging'
-end
-
-target 'RudderSampleAppSwift' do
-    project 'Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
-    platform :ios, '9.0'
+target 'SampleObjC-iOS' do
+    project 'Examples/SampleObjC-iOS/SampleObjC-iOS.xcodeproj'
+    platform :ios, '13.0'
     shared_pods
 end
 
-target 'RudderSampleApptvOSObjC' do
-    project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
-    platform :tvos, '9.0'
+target 'SampleSwift-iOS' do
+    project 'Examples/SampleSwift-iOS/SampleSwift-iOS.xcodeproj'
+    platform :ios, '13.0'
     shared_pods
 end
 
-target 'RudderSampleAppwatchOSObjC WatchKit Extension' do
-  project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj'
-  platform :watchos, '8.0'
-  shared_pods
+target 'SampleObjC-tvOS' do
+    project 'Examples/SampleObjC-tvOS/SampleObjC-tvOS.xcodeproj'
+    platform :tvos, '11.0'
+    shared_pods
+end
+
+target 'SampleObjC-watchOS WatchKit Extension' do
+    project 'Examples/SampleObjC-watchOS/SampleObjC-watchOS.xcodeproj'
+    platform :watchos, '7.3'
+    shared_pods
 end
