@@ -16,7 +16,7 @@
   <b>
     <a href="https://rudderstack.com">Website</a>
     ·
-    <a href="https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk/">Documentation</a>
+    <a href="https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/">Documentation</a>
     ·
     <a href="https://rudderstack.com/join-rudderstack-slack-community">Community Slack</a>
   </b>
@@ -28,7 +28,7 @@
 
 RudderStack's Swift SDK lets you track event data from your **iOS**, **tvOS**, **watchOS** and **macOS** applications. After integrating the SDK, you will also be able to send these events to your preferred destinations such as Google Analytics, Amplitude, and more.
 
-For detailed documentation on the Swift SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk).
+For detailed documentation on the Swift SDK, click [**here**](https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/).
 
 ## Installing the SDK
 
@@ -220,7 +220,7 @@ RSClient.sharedInstance().alias("new_user_id")
 ```swift
 RSClient.sharedInstance().reset()
 ```
-For detailed documentation on the Swift SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk).
+For detailed documentation on the Swift SDK, click [**here**](https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/).
 
 ## Supported Device Mode Destinations
 | Integration | Package |
