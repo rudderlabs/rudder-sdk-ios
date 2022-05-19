@@ -222,6 +222,11 @@ RSClient.sharedInstance().reset()
 ```
 For detailed documentation on the Swift SDK, click [**here**](https://rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-swift-sdk).
 
+## Supported Device Mode Destinations
+| Integration | Package |
+| --- | --- |
+| Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
+
 ## Contribute
 
 We would love to see you contribute to this project. Get more information on how to contribute [**here**](./CONTRIBUTING.md).
