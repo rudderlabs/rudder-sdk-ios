@@ -35,7 +35,7 @@ The RudderStack iOS SDK lets you track event data from your **iOS**, **tvOS**, *
 
 The latest version of the iOS SDK (v2) includes the following features:
 
-- Support for tracking events in macOS applications
+- Support tracking events in the macOS applications
 - You can now track push notifications
 
 ## Installing the SDK
