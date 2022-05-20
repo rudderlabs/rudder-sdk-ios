@@ -130,5 +130,6 @@ public struct RSKeys {
         public static let shareMessage = "share_message"
         public static let recipient = "recipient"
         public static let interest = "interest"
+        public static let itemName = "item_name"
     }
 }
