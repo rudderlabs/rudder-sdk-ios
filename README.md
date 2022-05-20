@@ -24,15 +24,23 @@
 
 ---
 
-# RudderStack Swift SDK
+# RudderStack iOS SDK
 
-RudderStack's Swift SDK lets you track event data from your **iOS**, **tvOS**, **watchOS** and **macOS** applications. After integrating the SDK, you will also be able to send these events to your preferred destinations such as Google Analytics, Amplitude, and more.
+The RudderStack iOS SDK lets you track event data from your **iOS**, **tvOS**, **watchOS** and **macOS** applications. After integrating the SDK, you will also be able to send these events to your to your specified destinations via RudderStack.
 
-For detailed documentation on the Swift SDK, click [**here**](https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/).
+| For more information on the RudderStack iOS SDK, refer to the [**SDK documentation**](https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/). |
+| :--|
+
+## What's new in v2
+
+The latest version of the iOS SDK (v2) includes the following features:
+
+- Support for tracking events in macOS applications
+- You can now track push notifications
 
 ## Installing the SDK
 
-The SDK is available through [**CocoaPods**](https://cocoapods.org), [**Carthage**](https://github.com/Carthage/Carthage), and [**Swift Package Manager (SPM)**](https://www.swift.org/package-manager/).
+The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Carthage**](https://github.com/Carthage/Carthage), and [**Swift Package Manager (SPM)**](https://www.swift.org/package-manager/).
 
 ### CocoaPods
 
@@ -51,41 +59,43 @@ github "rudderlabs/rudder-sdk-ios" "v2.0.0"
 ```
 
 > Remember to include the following code where you want to refer to or use the RudderStack SDK classes, as shown:
-##### Objective C
+
+#### Objective C
+
 ```objective-c
 @import Rudder;
 ```
-##### Swift
+
+#### Swift
+
 ```swift
 import Rudder
 ```
 
-### Swift Package Manager (SPM)
+### Swift Package Manager(SPM)
 
-You can also add the RudderStack SDK via Swift Package Mangaer, via one of the following two ways:
+You can also add the RudderStack SDK using the Swift Package Mangaer in one of the following two ways:
 
 * [Xcode](#xcode)
 * [Swift](#swift)
 
 #### Xcode
 
-* Go to **File** - **Add Package**, as shown:
+1. Go to **File** > **Add Package**, as shown:
 
 ![Adding a package](https://user-images.githubusercontent.com/59817155/140903027-286a1d64-f5d5-4041-9827-47b6cef76a46.png)
 
-* Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
+2. Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
+3. In **Dependency Rule**, select **Up to Next Major Version**, and enter `2.0.0` as the value, as shown:
 
-* In **Dependency Rule**, select **Up to Next Major Version** and enter `2.0.0` as the value, as shown:
+![Setting the dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
 
-![Setting dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
-
-* Select the project to which you want to add the package.
-
-* Finally, click on **Add Package**.
+4. Select the project to which you want to add the package.
+5. Finally, click **Add Package**.
 
 #### Swift
 
-To leverage package.swift, use the following snippet in your project:
+To leverage `package.swift`, use the following snippet in your project:
 
 ```swift
 // swift-tools-version:5.5
@@ -123,7 +133,9 @@ let package = Package(
 ## Initializing the RudderStack client
 
 To the initialize `RSClient`, place the following code in your `AppDelegate` file under the method `didFinishLaunchingWithOptions`:
+
 #### Objective C
+
 ```objective-c
 RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
 [config dataPlaneURL:DATA_PLANE_URL];
@@ -131,6 +143,7 @@ RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
 [[RSClient sharedInstance] configureWith:config];
 ```
 #### Swift
+
 ```swift
 let config: RSConfig = RSConfig(writeKey: WRITE_KEY)
             .dataPlaneURL(DATA_PLANE_URL)
@@ -140,36 +153,16 @@ let config: RSConfig = RSConfig(writeKey: WRITE_KEY)
 RSClient.sharedInstance().configure(with: config)
 ```
 
-## Sending Events
+## Sending events
 
-### Track
-##### Objective C
-```objective-c
-[[RSClient sharedInstance] track:@"sample_track_call"];
-[[RSClient sharedInstance] track:@"sample_track_call" properties:@{
-    @"key_1" : @"value_1",
-    @"key_2" : @"value_2"
-}];
-```
-#### Swift
-```swift
-RSClient.sharedInstance().track("sample_track_call")
-RSClient.sharedInstance().track("sample_track_call", properties:[
-    "key_1" : "value_1",
-    "key_2" : "value_2"
-])
-```
-### Screen
-##### Objective C
-```objective-c
-[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
-```
-#### Swift
-```swift
-RSClient.sharedInstance().screen("Main", properties:["prop_key" : "prop_value"]);
-```
 ### Identify
-##### Objective C
+
+The `identify` call lets you identify a visiting user and associate them to their actions. It also lets you record the traits about them like their name, email address, etc.
+
+A sample `identify` call is shown in the following sections:
+
+#### Objective C
+
 ```objective-c
 [[RSClient sharedInstance] identify:@"test_user_id" traits:@{
     @"foo": @"bar",
@@ -178,6 +171,7 @@ RSClient.sharedInstance().screen("Main", properties:["prop_key" : "prop_value"])
 }];
 ```
 #### Swift
+
 ```swift
 RSClient.sharedInstance().identify("test_user_id", traits:[
     "foo": "bar",
@@ -185,8 +179,56 @@ RSClient.sharedInstance().identify("test_user_id", traits:[
     "email": "test@email.com"
 ])
 ```
+
+### Track
+
+The `track` call lets you record the user events along with any properties associated with them.
+
+A sample `track` call is shown in the following sections:
+
+#### Objective C
+
+```objective-c
+[[RSClient sharedInstance] track:@"sample_track_call"];
+[[RSClient sharedInstance] track:@"sample_track_call" properties:@{
+    @"key_1" : @"value_1",
+    @"key_2" : @"value_2"
+}];
+```
+#### Swift
+
+```swift
+RSClient.sharedInstance().track("sample_track_call")
+RSClient.sharedInstance().track("sample_track_call", properties:[
+    "key_1" : "value_1",
+    "key_2" : "value_2"
+])
+```
+### Screen
+
+The `screen` call lets you record whenever a user views their mobile screen, with any additional relevant information about the screen.
+
+A sample `screen` call is shown in the following sections:
+
+#### Objective C
+
+```objective-c
+[[RSClient sharedInstance] screen:@"Main" properties:@{@"prop_key" : @"prop_value"}];
+```
+#### Swift
+
+```swift
+RSClient.sharedInstance().screen("Main", properties:["prop_key" : "prop_value"]);
+```
+
 ### Group
-##### Objective C
+
+The `group` call lets you link an identified user with a group like a company, organization, or an account. It also lets you record any traits associated with that group, like the name of the company, number of employees, etc.
+
+A sample `group` call is shown in the following sections:
+
+#### Objective C
+
 ```objective-c
 [[RSClient sharedInstance] group:@"sample_group_id" traits:@{
     @"foo": @"bar", 
@@ -195,6 +237,7 @@ RSClient.sharedInstance().identify("test_user_id", traits:[
 }];
 ```
 #### Swift
+
 ```swift
 RSClient.sharedInstance().group("sample_group_id" traits:[
     "foo": "bar", 
@@ -203,26 +246,40 @@ RSClient.sharedInstance().group("sample_group_id" traits:[
 ])
 ```
 ### Alias
-##### Objective C
+
+The `alias` call associates the user with a new identification.
+
+A sample `alias` call is shown in the following sections:
+
+#### Objective C
+
 ```objective-c
 [[RSClient sharedInstance] alias:@"new_user_id"];
 ```
 #### Swift
+
 ```swift
 RSClient.sharedInstance().alias("new_user_id")
 ```
 ### Reset
-##### Objective C
+
+The `reset` call resets the user identification and clears any persisted user traits set in the `identify` call.
+
+A sample `reset` call is shown in the following sections:
+
+#### Objective C
+
 ```objective-c
 [[RSClient sharedInstance] reset];
 ```
 #### Swift
+
 ```swift
 RSClient.sharedInstance().reset()
 ```
-For detailed documentation on the Swift SDK, click [**here**](https://www.rudderstack.com/docs/stream-sources/rudderstack-sdk-integration-guides/rudderstack-ios-sdk/ios-v2/).
 
-## Supported Device Mode Destinations
+## Supported device mode destinations
+
 | Integration | Package |
 | --- | --- |
 | Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
@@ -239,4 +296,4 @@ More information on RudderStack can be found [**here**](https://github.com/rudde
 
 ## Contact us
 
-For more information on using the RudderStack Swift SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.
+For more information on using the RudderStack iOS SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.
