@@ -89,6 +89,8 @@ public struct RSKeys {
         public static let url = "url"
         public static let imageUrl = "image_url"
         public static let paymentMethod = "payment_method"
+        public static let promotionId = "promotion_id"
+        public static let creative = "creative"
     }
     
     public struct Identify {
@@ -127,5 +129,6 @@ public struct RSKeys {
         public static let shareVia = "share_via"
         public static let shareMessage = "share_message"
         public static let recipient = "recipient"
+        public static let interest = "interest"
     }
 }
