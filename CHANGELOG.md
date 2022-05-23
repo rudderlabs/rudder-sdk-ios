@@ -58,3 +58,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.0.0 - 2022-05-18
 ### Added
 - Releasing Rudder Version 2.
+
+## Version - 2.0.1 - 2022-05-20
+### Added
+- Added `promotionId`, `creative` and `interest` keys inside `RSEventsAndKeys.swift`.
