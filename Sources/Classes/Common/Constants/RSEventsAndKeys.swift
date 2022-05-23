@@ -94,7 +94,7 @@ public struct RSKeys {
     }
     
     public struct Identify {
-        public static let userId = "user_id"
+        public static let userId = "userId"
         public static let currencyCode = "currency_code"
         
         public struct Traits { // swiftlint:disable:this nesting
