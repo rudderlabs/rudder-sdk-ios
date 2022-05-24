@@ -283,6 +283,7 @@ RSClient.sharedInstance().reset()
 | Integration | Package |
 | --- | --- |
 | Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
+| Bugsnag | https://github.com/rudderlabs/rudder-integration-bugsnag-swift |
 
 ## Contribute
 
