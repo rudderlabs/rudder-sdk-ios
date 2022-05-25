@@ -62,3 +62,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.0.1 - 2022-05-20
 ### Added
 - Added `promotionId`, `creative` and `interest` keys inside `RSEventsAndKeys.swift`.
+
+## Version - 2.0.2 - 2022-05-25
+### Added
+- Added `Address.city` and `Address.country` keys inside `RSEventsAndKeys.swift`.
