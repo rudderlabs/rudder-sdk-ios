@@ -15,6 +15,7 @@ import UIKit
 class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
     let type = PluginType.before
     var client: RSClient?
+    var isItLaunchedFirstTime: Bool = true
     
     @RSAtomic private var didFinishLaunching = false
     
@@ -31,12 +32,12 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
-        if previousBuild != nil {
+        if previousVersion == nil {
             client?.track("Application Installed", properties: [
                 "version": currentVersion ?? "",
                 "build": currentBuild ?? ""
             ])
-        } else if currentBuild != previousBuild {
+        } else if currentVersion != previousVersion {
             client?.track("Application Updated", properties: [
                 "previous_version": previousVersion ?? "",
                 "previous_build": previousBuild ?? "",
@@ -59,6 +60,12 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
     
     func applicationWillEnterForeground(application: UIApplication?) {
         if client?.config?.trackLifecycleEvents == false {
+            return
+        }
+        
+        // If it is launched first time then we shouldn't be sending Application Opened event again.
+        if self.isItLaunchedFirstTime == true {
+            isItLaunchedFirstTime = false
             return
         }
         
