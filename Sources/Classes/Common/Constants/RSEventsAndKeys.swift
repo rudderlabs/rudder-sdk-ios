@@ -98,6 +98,11 @@ public struct RSKeys {
         public static let currencyCode = "currency_code"
         
         public struct Traits { // swiftlint:disable:this nesting
+            public struct Address { // swiftlint:disable:this nesting
+                public static let city = "city"
+                public static let country = "country"
+            }
+            
             public static let id = "id"
             public static let firstName = "firstName"
             public static let lastName = "lastName"
