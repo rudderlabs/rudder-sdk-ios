@@ -17,6 +17,9 @@
       location = "group:Examples/SampleObjC-watchOS/SampleObjC-watchOS.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Examples/SampleSwift-iOS-APNs/SampleSwift-iOS-APNs.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
