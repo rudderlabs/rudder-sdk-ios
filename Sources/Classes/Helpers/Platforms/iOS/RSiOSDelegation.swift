@@ -6,48 +6,90 @@
 //  Copyright © 2021 Rudder Labs India Pvt Ltd. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || targetEnvironment(macCatalyst)
 import UIKit
+import UserNotifications
 
 extension RSClient {
     @objc
-    public func registeredForRemoteNotifications(deviceToken: Data) {
+    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         setDeviceToken(deviceToken.hexString)
         
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.registeredForRemoteNotifications(deviceToken: deviceToken)
+                p.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
             }
         }
     }
     
     @objc
-    public func failedToRegisterForRemoteNotification(error: Error?) {
+    public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.failedToRegisterForRemoteNotification(error: error)
+                p.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
             }
         }
     }
     
     @objc
-    public func receivedRemoteNotification(userInfo: [AnyHashable: Any]) {
+    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.receivedRemoteNotification(userInfo: userInfo)
+                p.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
             }
         }
     }
     
     @objc
-    public func handleAction(identifier: String, userInfo: [String: Any]) {
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.handleAction(identifier: identifier, userInfo: userInfo)
+                p.userNotificationCenter(center, didReceive: response, withCompletionHandler: completionHandler)
             }
         }
     }
 }
+
+#endif
+
+#if os(tvOS)
+import UIKit
+import UserNotifications
+
+extension RSClient {
+    @objc
+    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        setDeviceToken(deviceToken.hexString)
+        
+        apply { plugin in
+            if let p = plugin as? RSPushNotifications {
+                p.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+            }
+        }
+    }
+    
+    @objc
+    public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        apply { plugin in
+            if let p = plugin as? RSPushNotifications {
+                p.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
+            }
+        }
+    }
+    
+    @objc
+    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        apply { plugin in
+            if let p = plugin as? RSPushNotifications {
+                p.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+            }
+        }
+    }
+}
+
+#endif
+
+#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
 
 // MARK: - User Activity
 

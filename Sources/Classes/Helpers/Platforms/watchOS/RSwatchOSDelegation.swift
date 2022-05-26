@@ -10,37 +10,45 @@
 
 import Foundation
 import WatchKit
+import UserNotifications
 
 extension RSClient {
     @objc
-    public func registeredForRemoteNotifications(deviceToken: Data) {
+    public func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         setDeviceToken(deviceToken.hexString)
         
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.registeredForRemoteNotifications(deviceToken: deviceToken)
+                p.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
             }
         }
     }
     
     @objc
-    public func failedToRegisterForRemoteNotification(error: Error?) {
+    public func didFailToRegisterForRemoteNotificationsWithError(_ error: Error) {
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.failedToRegisterForRemoteNotification(error: error)
+                p.didFailToRegisterForRemoteNotificationsWithError(error)
             }
         }
     }
     
     @objc
-    public func receivedRemoteNotification(userInfo: [AnyHashable: Any]) {
+    public func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
         apply { plugin in
             if let p = plugin as? RSPushNotifications {
-                p.receivedRemoteNotification(userInfo: userInfo)
+                p.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
             }
         }
     }
 
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        apply { plugin in
+            if let p = plugin as? RSPushNotifications {
+                p.userNotificationCenter(center, didReceive: response, withCompletionHandler: completionHandler)
+            }
+        }
+    }
 }
 
 #endif
