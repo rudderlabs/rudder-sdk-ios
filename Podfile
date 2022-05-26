@@ -19,6 +19,12 @@ target 'SampleSwift-iOS' do
     shared_pods
 end
 
+target 'SampleSwift-iOS-APNs' do
+    project 'Examples/SampleSwift-iOS-APNs/SampleSwift-iOS-APNs.xcodeproj'
+    platform :ios, '13.0'
+    shared_pods
+end
+
 target 'SampleObjC-tvOS' do
     project 'Examples/SampleObjC-tvOS/SampleObjC-tvOS.xcodeproj'
     platform :tvos, '11.0'
