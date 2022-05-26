@@ -8,22 +8,41 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || targetEnvironment(macCatalyst)
 
 import UIKit
+import UserNotifications
 
 public protocol RSPushNotifications: RSPlugin {
-    func registeredForRemoteNotifications(deviceToken: Data)
-    func failedToRegisterForRemoteNotification(error: Error?)
-    func receivedRemoteNotification(userInfo: [AnyHashable: Any])
-    func handleAction(identifier: String, userInfo: [String: Any])
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
 }
 
 public extension RSPushNotifications {
-    func registeredForRemoteNotifications(deviceToken: Data) {}
-    func failedToRegisterForRemoteNotification(error: Error?) {}
-    func receivedRemoteNotification(userInfo: [AnyHashable: Any]) {}
-    func handleAction(identifier: String, userInfo: [String: Any]) {}
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {}
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {}
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {}
+}
+#endif
+
+#if os(tvOS)
+
+import UIKit
+import UserNotifications
+
+public protocol RSPushNotifications: RSPlugin {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
+}
+
+public extension RSPushNotifications {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {}
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {}
 }
 #endif
 
@@ -31,16 +50,19 @@ public extension RSPushNotifications {
 
 import Foundation
 import WatchKit
+import UserNotifications
 
 public protocol RSPushNotifications: RSPlugin {
-    func registeredForRemoteNotifications(deviceToken: Data)
-    func failedToRegisterForRemoteNotification(error: Error?)
-    func receivedRemoteNotification(userInfo: [AnyHashable: Any])
+    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data)
+    func didFailToRegisterForRemoteNotificationsWithError(_ error: Error)
+    func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
 }
 
 public extension RSPushNotifications {
-    func registeredForRemoteNotifications(deviceToken: Data) {}
-    func failedToRegisterForRemoteNotification(error: Error?) {}
-    func receivedRemoteNotification(userInfo: [AnyHashable: Any]) {}
+    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {}
+    func didFailToRegisterForRemoteNotificationsWithError(_ error: Error) {}
+    func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {}
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {}
 }
 #endif
