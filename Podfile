@@ -31,6 +31,14 @@ target 'SampleObjC-tvOS' do
     shared_pods
 end
 
+target 'SampleSwift-iOS-DeviceModes' do
+    project 'Examples/SampleSwift-iOS-DeviceModes/SampleSwift-iOS-DeviceModes.xcodeproj'
+    platform :ios, '13.0'
+    shared_pods
+    pod 'RudderFirebase'
+    pod 'RudderBugsnag'
+end
+
 target 'SampleObjC-watchOS WatchKit Extension' do
     project 'Examples/SampleObjC-watchOS/SampleObjC-watchOS.xcodeproj'
     platform :watchos, '7.3'
