@@ -36,3 +36,9 @@ target 'SampleObjC-watchOS WatchKit Extension' do
     platform :watchos, '7.3'
     shared_pods
 end
+
+target 'SampleSwift-macOS' do
+    project 'Examples/SampleSwift-macOS/SampleSwift-macOS.xcodeproj'
+    platform :osx, '10.13'
+    shared_pods
+end
