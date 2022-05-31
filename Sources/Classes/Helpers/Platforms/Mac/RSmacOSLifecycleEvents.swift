@@ -28,25 +28,25 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
-        if previousBuild != nil {
-            client?.track("Application Installed", properties: [
-                "version": currentVersion ?? "",
-                "build": currentBuild ?? ""
-            ])
-        } else if currentBuild != previousBuild {
-            client?.track("Application Updated", properties: [
-                "previous_version": previousVersion ?? "",
-                "previous_build": previousBuild ?? "",
-                "version": currentVersion ?? "",
-                "build": currentBuild ?? ""
-            ])
+        if previousVersion == nil {
+            client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
+                currentVersion: currentVersion,
+                currentBuild: currentBuild
+            ))
+        } else if currentVersion != previousVersion {
+            client?.track("Application Updated", properties: RSUtils.getLifeCycleProperties(
+                previousVersion: previousVersion,
+                previousBuild: previousBuild,
+                currentVersion: currentVersion,
+                currentBuild: currentBuild
+            ))
         }
         
-        client?.track("Application Opened", properties: [
-            "from_background": false,
-            "version": currentVersion ?? "",
-            "build": currentBuild ?? ""
-        ])
+        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
+            currentVersion: currentVersion,
+            currentBuild: currentBuild,
+            fromBackground: false
+        ))
         
         RSUserDefaults.saveApplicationVersion(currentVersion)
         RSUserDefaults.saveApplicationBuild(currentBuild)
@@ -60,11 +60,11 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
-        client?.track("Application Unhidden", properties: [
-            "from_background": true,
-            "version": currentVersion ?? "",
-            "build": currentBuild ?? ""
-        ])
+        client?.track("Application Unhidden", properties: RSUtils.getLifeCycleProperties(
+            currentVersion: currentVersion,
+            currentBuild: currentBuild,
+            fromBackground: true
+        ))
     }
     
     func applicationDidHide() {

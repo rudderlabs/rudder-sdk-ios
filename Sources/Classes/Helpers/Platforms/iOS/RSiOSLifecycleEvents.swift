@@ -33,12 +33,12 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
         if previousVersion == nil {
-            client?.track("Application Installed", properties: getApplicationInstalledProps(
+            client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
                 currentVersion: currentVersion,
                 currentBuild: currentBuild
             ))
         } else if currentVersion != previousVersion {
-            client?.track("Application Updated", properties: getApplicationUpdatedProps(
+            client?.track("Application Updated", properties: RSUtils.getLifeCycleProperties(
                 previousVersion: previousVersion,
                 previousBuild: previousBuild,
                 currentVersion: currentVersion,
@@ -46,10 +46,11 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
             ))
         }
         
-        client?.track("Application Opened", properties: getApplicationOpenedProps(
+        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
             currentVersion: currentVersion,
             currentBuild: currentBuild,
-            referring_application: launchOptions?[UIApplication.LaunchOptionsKey.sourceApplication],
+            fromBackground: false,
+            referringApplication: launchOptions?[UIApplication.LaunchOptionsKey.sourceApplication],
             url: launchOptions?[UIApplication.LaunchOptionsKey.url]
         ))
         
@@ -61,19 +62,21 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         if client?.config?.trackLifecycleEvents == false {
             return
         }
-        
+        #if !os(tvOS)
         // If app is launched first time then the Application Opened event will not be sent again.
         if self.isFirstTimeLaunch == true {
             self.isFirstTimeLaunch = false
             return
         }
+        #endif
         
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
-        client?.track("Application Opened", properties: getApplicationOpenedProps(
+        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
             currentVersion: currentVersion,
-            currentBuild: currentBuild
+            currentBuild: currentBuild,
+            fromBackground: true
         ))
     }
     
@@ -95,65 +98,4 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         }
     }
 }
-
-extension RSiOSLifecycleEvents {
-    func getApplicationUpdatedProps(previousVersion: String?, previousBuild: String?, currentVersion: String?, currentBuild: String?) -> [String: Any] {
-        var properties = [String: Any]()
-        if let previousVersion = previousVersion, !previousVersion.isEmpty {
-            properties["previous_version"] = previousVersion
-        }
-        if let previousBuild = previousBuild, !previousBuild.isEmpty {
-            properties["previous_build"] = previousBuild
-        }
-        if let currentVersion = currentVersion, !currentVersion.isEmpty {
-            properties["version"] = currentVersion
-        }
-        if let currentBuild = currentBuild, !currentBuild.isEmpty {
-            properties["build"] = currentBuild
-        }
-        return properties
-    }
-    
-    func getApplicationInstalledProps(currentVersion: String?, currentBuild: String?) -> [String: Any]{
-        var properties = [String: Any]()
-        if let currentVersion = currentVersion, !currentVersion.isEmpty {
-            properties["version"] = currentVersion
-        }
-        if let currentBuild = currentBuild, !currentBuild.isEmpty {
-            properties["build"] = currentBuild
-        }
-        return properties
-    }
-    
-    func getApplicationOpenedProps(currentVersion: String?, currentBuild: String?, referring_application: Any?, url: Any?) -> [String: Any] {
-        var properties = [String: Any]()
-        properties["from_background"] = false
-        if let currentVersion = currentVersion, !currentVersion.isEmpty {
-            properties["version"] = currentVersion
-        }
-        if let currentBuild = currentBuild, !currentBuild.isEmpty {
-            properties["build"] = currentBuild
-        }
-        if let referring_application = referring_application {
-            properties["referring_application"] = referring_application
-        }
-        if let url = url {
-            properties["url"] = url
-        }
-        return properties
-    }
-    
-    func getApplicationOpenedProps(currentVersion: String?, currentBuild: String?) -> [String: Any] {
-        var properties = [String: Any]()
-        properties["from_background"] = true
-        if let currentVersion = currentVersion, !currentVersion.isEmpty {
-            properties["version"] = currentVersion
-        }
-        if let currentBuild = currentBuild, !currentBuild.isEmpty {
-            properties["build"] = currentBuild
-        }
-        return properties
-    }
-}
-
 #endif

@@ -73,4 +73,30 @@ struct RSUtils {
         jsonString += "]}"
         return jsonString
     }
+    
+    static func getLifeCycleProperties(previousVersion: String? = nil, previousBuild: String? = nil, currentVersion: String? = nil, currentBuild: String? = nil, fromBackground: Bool? = nil, referringApplication: Any? = nil, url: Any? = nil) -> [String: Any] {
+        var properties = [String: Any]()
+        if let previousVersion = previousVersion, previousVersion.isNotEmpty {
+            properties["previous_version"] = previousVersion
+        }
+        if let previousBuild = previousBuild, previousBuild.isNotEmpty {
+            properties["previous_build"] = previousBuild
+        }
+        if let currentVersion = currentVersion, currentVersion.isNotEmpty {
+            properties["version"] = currentVersion
+        }
+        if let currentBuild = currentBuild, currentBuild.isNotEmpty {
+            properties["build"] = currentBuild
+        }
+        if let fromBackground = fromBackground {
+            properties["from_background"] = fromBackground
+        }
+        if let referringApplication = referringApplication {
+            properties["referring_application"] = referringApplication
+        }
+        if let url = url {
+            properties["url"] = url
+        }
+        return properties
+    }
 }
