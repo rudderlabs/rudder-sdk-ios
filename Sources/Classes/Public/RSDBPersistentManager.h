@@ -18,7 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 -(void) createDB;
--(void) createSchema;
+-(void) createTables;
+-(void) createEventsTable;
+-(void) createEventsToTransformationMappingTable;
+-(void) createDestinationtoTransformationMappingTable;
+-(void) checkForMigrations;
+-(BOOL) checkIfStatusColumnExists;
+-(void) performMigration;
 -(void) saveEvent: (NSString*) message;
 -(void) clearEventFromDB: (int) messageId;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;

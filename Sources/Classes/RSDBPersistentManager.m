@@ -16,8 +16,7 @@
     self = [super init];
     if (self) {
         [self createDB];
-        [self createSchema];
-        [self checkForMigrations];
+        [self createTables];
     }
     return self;
 }
@@ -28,18 +27,57 @@
     }
 }
 
-- (void)createSchema {
-    NSString *createTableSQLString = @"CREATE TABLE IF NOT EXISTS events( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);";
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"CreateTableSchema: %@", createTableSQLString]];
+- (void)createTables {
+    [self createEventsTable];
+    [self createDestinationtoTransformationMappingTable];
+    [self createEventsToTransformationMappingTable];
+}
+
+-(void) createEventsTable {
+    NSString *createTableSQLString = @"CREATE TABLE IF NOT EXISTS events( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL, status INTEGER DEFAULT 0);";
+    //    NSString *createTableSQLString = @"CREATE TABLE IF NOT EXISTS events( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);";
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsTable: Schema: %@", createTableSQLString]];
     const char* createTableSQL = [createTableSQLString UTF8String];
     sqlite3_stmt *createTableStmt = nil;
     if (sqlite3_prepare_v2(self->_database, createTableSQL, -1, &createTableStmt, nil) == SQLITE_OK) {
         if (sqlite3_step(createTableStmt) == SQLITE_DONE) {
-            // table created
-            [RSLogger logDebug:@"DB Schema created"];
+            [RSLogger logDebug:@"DBPersistentManager: createEventsTable: successfully create the table"];
         } else {
-            // table creation error
-            [RSLogger logError:@"DB Schema creation error"];
+            [RSLogger logDebug:@"DBPersistentManager: createEventsTable: failed to create the table"];
+        }
+    } else {
+        // wrong statement
+    }
+    sqlite3_finalize(createTableStmt);
+}
+
+-(void) createEventsToTransformationMappingTable {
+    NSString *createTableSQLString = @"CREATE TABLE IF NOT EXISTS events_to_transformation( event_id INTEGER NOT NULL, transformation_id INTEGER NOT NULL);";
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsToTransformationMappingTable: Schema: %@", createTableSQLString]];
+    const char* createTableSQL = [createTableSQLString UTF8String];
+    sqlite3_stmt *createTableStmt = nil;
+    if (sqlite3_prepare_v2(self->_database, createTableSQL, -1, &createTableStmt, nil) == SQLITE_OK) {
+        if (sqlite3_step(createTableStmt) == SQLITE_DONE) {
+            [RSLogger logDebug:@"DBPersistentManager: createEventsToTransformationMappingTable: successfully create the table"];
+        } else {
+            [RSLogger logDebug:@"DBPersistentManager: createEventsToTransformationMappingTable: failed to create the table"];
+        }
+    } else {
+        // wrong statement
+    }
+    sqlite3_finalize(createTableStmt);
+}
+
+-(void) createDestinationtoTransformationMappingTable{
+    NSString *createTableSQLString = @"CREATE TABLE IF NOT EXISTS destination_to_transformation( destination_name TEXT PRIMARY KEY NOT NULL, transformation_id INTEGER NOT NULL);";
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsToTransformationMappingTable: Schema: %@", createTableSQLString]];
+    const char* createTableSQL = [createTableSQLString UTF8String];
+    sqlite3_stmt *createTableStmt = nil;
+    if (sqlite3_prepare_v2(self->_database, createTableSQL, -1, &createTableStmt, nil) == SQLITE_OK) {
+        if (sqlite3_step(createTableStmt) == SQLITE_DONE) {
+            [RSLogger logDebug:@"DBPersistentManager: createDestinationtoTransformationMappingTable: successfully create the table"];
+        } else {
+            [RSLogger logDebug:@"DBPersistentManager: createDestinationtoTransformationMappingTable: failed to create the table"];
         }
     } else {
         // wrong statement
@@ -52,7 +90,9 @@
     if(![self checkIfStatusColumnExists]) {
         [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: events table doesn't has the status column performing migration"];
         [self performMigration];
+        return;
     }
+    [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: event table has status column, no migration required"];
 }
 
 - (BOOL) checkIfStatusColumnExists {

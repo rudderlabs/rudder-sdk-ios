@@ -82,6 +82,7 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
+        [dbpersistenceManager checkForMigrations];
         
         [RSLogger logDebug:@"EventRepository: initiating server config manager"];
         configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
