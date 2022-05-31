@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 workspace 'Rudder.xcworkspace'
 use_frameworks!
 inhibit_all_warnings!
@@ -29,14 +30,6 @@ target 'SampleObjC-tvOS' do
     project 'Examples/SampleObjC-tvOS/SampleObjC-tvOS.xcodeproj'
     platform :tvos, '11.0'
     shared_pods
-end
-
-target 'SampleSwift-iOS-DeviceModes' do
-    project 'Examples/SampleSwift-iOS-DeviceModes/SampleSwift-iOS-DeviceModes.xcodeproj'
-    platform :ios, '13.0'
-    shared_pods
-    pod 'RudderFirebase'
-    pod 'RudderBugsnag'
 end
 
 target 'SampleObjC-watchOS WatchKit Extension' do
