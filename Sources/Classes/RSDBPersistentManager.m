@@ -17,6 +17,7 @@
     if (self) {
         [self createDB];
         [self createSchema];
+        [self checkForMigrations];
     }
     return self;
 }
@@ -44,6 +45,47 @@
         // wrong statement
     }
     sqlite3_finalize(createTableStmt);
+}
+
+- (void)checkForMigrations {
+    [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: checking if the event table has status column"];
+    if(![self checkIfStatusColumnExists]) {
+        [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: events table doesn't has the status column performing migration"];
+        [self performMigration];
+    }
+}
+
+- (BOOL) checkIfStatusColumnExists {
+    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(\"events\") where name=\'status\';"];
+    const char* statusCheckSQL = [checkIfStatusExistsSQLString UTF8String];
+    sqlite3_stmt *statusCheckStmt = nil;
+    BOOL statusColumnExists = NO;
+    if (sqlite3_prepare_v2(self->_database, statusCheckSQL, -1, &statusCheckStmt, nil) == SQLITE_OK) {
+        if(sqlite3_step(statusCheckStmt) == SQLITE_ROW) {
+            int count = sqlite3_column_int(statusCheckStmt, 0);
+            if(count > 0) {
+                statusColumnExists = YES;
+            }
+        }
+    }
+    sqlite3_finalize(statusCheckStmt);
+    return statusColumnExists;
+}
+
+- (void) performMigration {
+    NSString* alterTableSQLString = [[NSString alloc] initWithFormat:@"ALTER TABLE events ADD COLUMN status INTEGER DEFAULT 0;"];
+    const char* alterTableSQL = [alterTableSQLString UTF8String];
+    sqlite3_stmt *alterTableStmt = nil;
+    
+    if(sqlite3_prepare_v2(self->_database, alterTableSQL, -1, &alterTableStmt, nil) == SQLITE_OK) {
+        if(sqlite3_step(alterTableStmt) == SQLITE_DONE) {
+            [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migrated to add status column"];
+        }
+        else {
+            [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migration failed"];
+        }
+    }
+    sqlite3_finalize(alterTableStmt);
 }
 
 - (void)saveEvent:(NSString *)message {
