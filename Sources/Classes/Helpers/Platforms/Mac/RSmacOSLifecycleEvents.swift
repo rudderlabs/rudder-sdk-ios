@@ -51,7 +51,7 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         RSUserDefaults.saveApplicationVersion(currentVersion)
         RSUserDefaults.saveApplicationBuild(currentBuild)
     }
-    
+    /*
     func applicationDidUnhide() {
         if client?.config?.trackLifecycleEvents == false {
             return
@@ -81,6 +81,7 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         
         client?.track("Application Backgrounded")
     }
+     */
     
     func applicationDidBecomeActive() {
         if client?.config?.trackLifecycleEvents == false {
