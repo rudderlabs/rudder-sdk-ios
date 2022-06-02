@@ -286,6 +286,7 @@ RSClient.sharedInstance().reset()
 | Bugsnag | https://github.com/rudderlabs/rudder-integration-bugsnag-swift |
 | Singular | https://github.com/rudderlabs/rudder-integration-singular-swift |
 | Adjust | https://github.com/rudderlabs/rudder-integration-adjust-swift |
+| AppCenter | https://github.com/rudderlabs/rudder-integration-appcenter-swift |
 
 ## Contribute
 
