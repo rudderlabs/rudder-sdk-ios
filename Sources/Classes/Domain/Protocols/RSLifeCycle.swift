@@ -50,19 +50,19 @@ import Foundation
 import WatchKit
 
 public protocol RSwatchOSLifecycle {
-    func applicationDidFinishLaunching(watchExtension: WKExtension)
-    func applicationWillEnterForeground(watchExtension: WKExtension)
-    func applicationDidEnterBackground(watchExtension: WKExtension)
-    func applicationDidBecomeActive(watchExtension: WKExtension)
-    func applicationWillResignActive(watchExtension: WKExtension)
+    func applicationDidFinishLaunching(watchExtension: WKExtension?)
+    func applicationWillEnterForeground(watchExtension: WKExtension?)
+    func applicationDidEnterBackground(watchExtension: WKExtension?)
+    func applicationDidBecomeActive(watchExtension: WKExtension?)
+    func applicationWillResignActive(watchExtension: WKExtension?)
 }
 
 public extension RSwatchOSLifecycle {
-    func applicationDidFinishLaunching(watchExtension: WKExtension) { }
-    func applicationWillEnterForeground(watchExtension: WKExtension) { }
-    func applicationDidEnterBackground(watchExtension: WKExtension) { }
-    func applicationDidBecomeActive(watchExtension: WKExtension) { }
-    func applicationWillResignActive(watchExtension: WKExtension) { }
+    func applicationDidFinishLaunching(watchExtension: WKExtension?) { }
+    func applicationWillEnterForeground(watchExtension: WKExtension?) { }
+    func applicationDidEnterBackground(watchExtension: WKExtension?) { }
+    func applicationDidBecomeActive(watchExtension: WKExtension?) { }
+    func applicationWillResignActive(watchExtension: WKExtension?) { }
 }
 #endif
 

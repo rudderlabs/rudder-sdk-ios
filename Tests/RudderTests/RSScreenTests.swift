@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import RudderStack
+@testable import Rudder
 
 class RSScreenTests: XCTestCase {
 

@@ -85,6 +85,9 @@
 		EDD3AA4A27C8DAAA0048E61E /* RSLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */; };
 		EDD3AA4B27C8DAB90048E61E /* RSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227727A3F0C100EC8366 /* RSLogger.swift */; };
 		EDD3AA4C27C8DABD0048E61E /* RSConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227927A3F0C100EC8366 /* RSConsoleLogger.swift */; };
+		EDF3FF55284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */; };
+		EDF3FF5828489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */; };
+		EDF3FF5928489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +188,9 @@
 		EDD0C9662829199200470E88 /* RSDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDatabaseTests.swift; sourceTree = "<group>"; };
 		EDD3AA1227C64B430048E61E /* RSKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSKeyPath.swift; sourceTree = "<group>"; };
 		EDD3AA3527C659C80048E61E /* RSAtomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAtomic.swift; sourceTree = "<group>"; };
+		EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSiOSLifeCycleEventTests.swift; sourceTree = "<group>"; };
+		EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSwatchOSLifeCycleEventTests.swift; sourceTree = "<group>"; };
+		EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSmacOSLifeCycleEventTests.swift; sourceTree = "<group>"; };
 		EDF7B3F927A80320001C0688 /* SampleBatchPayload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleBatchPayload.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -413,9 +419,12 @@
 				EDD0C9662829199200470E88 /* RSDatabaseTests.swift */,
 				EDC132AB27D8D64E00AFD833 /* RSGroupTests.swift */,
 				EDC132A527D8D5F300AFD833 /* RSIdentifyTests.swift */,
+				EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */,
+				EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */,
 				EDC132A727D8D61700AFD833 /* RSScreenTests.swift */,
 				EDD0C96428225BFB00470E88 /* RSThreadTests.swift */,
 				EDC132A327D8D55600AFD833 /* RSTrackTests.swift */,
+				EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */,
 				EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */,
 			);
 			path = RudderTests;
@@ -710,10 +719,13 @@
 				EDC132AA27D8D63D00AFD833 /* RSAliasTests.swift in Sources */,
 				EDC132A427D8D55700AFD833 /* RSTrackTests.swift in Sources */,
 				EDC1327C27D614C400AFD833 /* RSClientTests.swift in Sources */,
+				EDF3FF5928489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift in Sources */,
 				EDC132A827D8D61700AFD833 /* RSScreenTests.swift in Sources */,
+				EDF3FF5828489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift in Sources */,
 				EDC132B027D9106500AFD833 /* RSWhiteListedEventsTests.swift in Sources */,
 				EDC132AC27D8D64E00AFD833 /* RSGroupTests.swift in Sources */,
 				EDD0C96528225BFB00470E88 /* RSThreadTests.swift in Sources */,
+				EDF3FF55284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift in Sources */,
 				EDC132AE27D9104700AFD833 /* RSBlackListedEventsTest.swift in Sources */,
 				EDC132A627D8D5F300AFD833 /* RSIdentifyTests.swift in Sources */,
 				EDD0C9672829199200470E88 /* RSDatabaseTests.swift in Sources */,
@@ -936,11 +948,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
 			};
 			name = Debug;
 		};
@@ -956,10 +969,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
 			};
 			name = Release;
 		};
