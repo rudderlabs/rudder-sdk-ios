@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import RudderStack
+@testable import Rudder
 
 // swiftlint:disable force_cast
 class RSDatabaseTests: XCTestCase {

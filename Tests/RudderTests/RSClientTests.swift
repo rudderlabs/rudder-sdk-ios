@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import RudderStack
+@testable import Rudder
 
 let WRITE_KEY = "1wvsoF3Kx2SczQNlx1dvcqW9ODW"
 let DATA_PLANE_URL = "https://rudderstacz.dataplane.rudderstack.com"
@@ -203,9 +203,13 @@ class ResultPlugin: RSPlugin {
     let type: PluginType = .after
     var client: RSClient?
     var lastMessage: RSMessage?
+    var trackList = [TrackMessage]()
             
     func execute<T>(message: T?) -> T? where T: RSMessage {
         lastMessage = message
+        if let message = message as? TrackMessage {
+            trackList.append(message)
+        }
         return message
     }
 }

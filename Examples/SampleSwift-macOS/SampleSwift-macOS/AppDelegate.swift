@@ -23,6 +23,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .recordScreenViews(false)
         
         RSClient.sharedInstance().configure(with: config)
+        
+        RSClient.sharedInstance().track("track_with_props", properties: [
+            "key_1": "value_1",
+            "key_2": "value_2",
+            "int_key": 3,
+            "float_key": 4.56,
+            "bool_key": true
+        ])
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
