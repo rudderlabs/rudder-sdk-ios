@@ -20,6 +20,9 @@
       location = "group:Examples/SampleSwift-iOS-APNs/SampleSwift-iOS-APNs.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Examples/SampleSwift-macOS/SampleSwift-macOS.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

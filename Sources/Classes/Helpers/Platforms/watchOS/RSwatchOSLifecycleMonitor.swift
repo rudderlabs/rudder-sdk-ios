@@ -106,11 +106,11 @@ class RSwatchOSLifecycleMonitor: RSPlatformPlugin {
 // MARK: - RudderStack Destination Extension
 
 extension RudderDestinationPlugin: RSwatchOSLifecycle {
-    public func applicationWillEnterForeground(watchExtension: WKExtension) {
+    public func applicationWillEnterForeground(watchExtension: WKExtension?) {
         enterForeground()
     }
     
-    public func applicationDidEnterBackground(watchExtension: WKExtension) {
+    public func applicationDidEnterBackground(watchExtension: WKExtension?) {
         enterBackground()
     }
 }

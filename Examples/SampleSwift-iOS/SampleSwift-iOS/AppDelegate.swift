@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
             .dataPlaneURL("https://rudderstacz.dataplane.rudderstack.com")
-            .loglevel(.debug)
-            .trackLifecycleEvents(false)
+            .loglevel(.none)
+            .trackLifecycleEvents(true)
             .recordScreenViews(false)
         
         client = RSClient.sharedInstance()
