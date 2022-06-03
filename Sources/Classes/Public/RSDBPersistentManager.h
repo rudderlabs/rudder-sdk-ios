@@ -11,6 +11,18 @@
 #import "RSDBMessage.h"
 #import "RSUtils.h"
 
+typedef enum {
+    NOTPROCESSED =0,
+    DEVICEMODEPROCESSINGDONE =1,
+    CLOUDMODEPROCESSINGDONE =2,
+    COMPLETEPROCESSINGDONE =3
+} EVENTPROCESSINGSTATUS;
+
+typedef enum {
+    CLOUDMODE =2,
+    DEVICEMODE =1
+} MODES;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSDBPersistentManager : NSObject {
@@ -19,17 +31,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void) createDB;
 -(void) createTables;
--(void) createEventsTable;
+-(void) createEventsTableWithVersion:(int) version;
 -(void) createEventsToTransformationMappingTable;
--(void) createDestinationtoTransformationMappingTable;
 -(void) checkForMigrations;
 -(BOOL) checkIfStatusColumnExists;
 -(void) performMigration;
--(void) saveEvent: (NSString*) message;
--(void) clearEventFromDB: (int) messageId;
+-(NSNumber*) saveEvent: (NSString*) message;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
--(RSDBMessage*) fetchEventsFromDB:(int) count;
--(RSDBMessage*) fetchAllEventsFromDB;
+-(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode;
+-(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
+-(void) updateEventsWithIds:(NSMutableArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status;
+-(void) clearProcessedEventsFromDB;
+-(void) saveEvent:(NSNumber*) rowId toTransformationId:(NSString*) transformationId;
+-(NSDictionary<NSNumber*, NSString*>*) getEventsToTransformationMapping;
 -(int) getDBRecordCount;
 -(void) flushEventsFromDB;
 

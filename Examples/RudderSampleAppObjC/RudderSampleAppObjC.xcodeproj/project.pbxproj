@@ -22,6 +22,7 @@
 		ED761A052727E28800B086F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED7619FA2727E28800B086F4 /* Images.xcassets */; };
 		ED761A062727E28800B086F4 /* CustomFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FC2727E28800B086F4 /* CustomFactory.m */; };
 		ED761A072727E28800B086F4 /* _AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FD2727E28800B086F4 /* _AppDelegate.m */; };
+		F63176FF28462A88009864D4 /* rudder.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = F63176FE28462A88009864D4 /* rudder.sqlite3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		ED7619FB2727E28800B086F4 /* CustomIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIntegration.h; sourceTree = "<group>"; };
 		ED7619FC2727E28800B086F4 /* CustomFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomFactory.m; sourceTree = "<group>"; };
 		ED7619FD2727E28800B086F4 /* _AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AppDelegate.m; sourceTree = "<group>"; };
+		F63176FE28462A88009864D4 /* rudder.sqlite3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rudder.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		ED7619EB2727E28700B086F4 /* RudderSampleAppObjC */ = {
 			isa = PBXGroup;
 			children = (
+				F63176FE28462A88009864D4 /* rudder.sqlite3 */,
 				ED3B022F272A67AB000893AA /* RudderSampleAppObjC.entitlements */,
 				ED7619F12727E28700B086F4 /* _AppDelegate.h */,
 				ED7619FD2727E28800B086F4 /* _AppDelegate.m */,
@@ -199,6 +202,7 @@
 				ED3B022E272A6588000893AA /* GoogleService-Info.plist in Resources */,
 				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
 				ED761A022727E28800B086F4 /* Main.storyboard in Resources */,
+				F63176FF28462A88009864D4 /* rudder.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,18 +216,22 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities-iOS9.0/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC-iOS9.0/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/Adjust/Adjust.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/Rudder-iOS9.0/Rudder.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb-iOS9.0/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
+				"${BUILT_PRODUCTS_DIR}/Rudder-Adjust/Rudder_Adjust.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Adjust.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder_Adjust.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,7 @@
 PODS:
-  - AppsFlyerFramework (6.4.4):
-    - AppsFlyerFramework/Main (= 6.4.4)
-  - AppsFlyerFramework/Main (6.4.4)
+  - Adjust (4.30.0):
+    - Adjust/Core (= 4.30.0)
+  - Adjust/Core (4.30.0)
   - Firebase/Analytics (6.34.0):
     - Firebase/Core
   - Firebase/Core (6.34.0):
@@ -83,9 +83,9 @@ PODS:
   - PromisesObjC (1.2.12)
   - Protobuf (3.20.1)
   - Rudder (1.6.0)
-  - Rudder-Appsflyer (1.1.0):
-    - AppsFlyerFramework (~> 6.4.3)
-    - Rudder (~> 1.0)
+  - Rudder-Adjust (1.0.0):
+    - Adjust
+    - Rudder
   - Rudder-Firebase (1.0.2):
     - Firebase/Core
     - FirebaseAnalytics
@@ -95,12 +95,12 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - Rudder (from `.`)
-  - Rudder-Appsflyer (= 1.1.0)
+  - Rudder-Adjust
   - Rudder-Firebase
 
 SPEC REPOS:
   trunk:
-    - AppsFlyerFramework
+    - Adjust
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -114,7 +114,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
-    - Rudder-Appsflyer
+    - Rudder-Adjust
     - Rudder-Firebase
 
 EXTERNAL SOURCES:
@@ -122,7 +122,7 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  AppsFlyerFramework: 6ea252ecb04cf443550576922cddb95b35c958ed
+  Adjust: 6ed5493e91e9a77f6515d94f640bb72506a06b9d
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseAnalytics: 3bb096873ee0d7fa4b6c70f5e9166b6da413cc7f
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -136,10 +136,10 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: b60ec2f51ad74765f44d0c09d2e0579d7de21745
-  Rudder: f2cb6780d8b2e261f830b47a44333e55be9ce68e
-  Rudder-Appsflyer: 7b1b9b66513f70ac9c305ee28febbc72ce37a746
+  Rudder: 67c3dffe0b253236794e448d5d279a4d54819804
+  Rudder-Adjust: 5f14011c8f7237d80a96a10655ac03ebf832bcc4
   Rudder-Firebase: 42b9a7d143cbe6d125f5bdf535cba73e24cba1c1
 
-PODFILE CHECKSUM: d5ddcdfc9129105310a8c03f048b4d0ec5e232d8
+PODFILE CHECKSUM: a7dee2b896d80070e755f59a139d5aec64540407
 
 COCOAPODS: 1.11.3

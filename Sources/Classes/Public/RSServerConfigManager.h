@@ -11,6 +11,12 @@
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
 
+typedef enum {
+    NETWORKERROR =1,
+    NETWORKSUCCESS =0,
+    WRONGWRITEKEY =2
+} NETWORKSTATE;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSServerConfigManager : NSObject
@@ -21,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
 - (RSServerConfigSource*) getConfig;
+- (NSDictionary<NSString*, NSString*>*) getDestinationToTransformationMapping;
 - (int) getError;
 
 @end

@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableArray *eventReplayMessage;
+    NSMutableArray<RSMessage*> *eventReplayMessage;
+    NSDictionary<NSString*, NSString*>* destinationToTransformationMapping;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
     BOOL firstForeGround;

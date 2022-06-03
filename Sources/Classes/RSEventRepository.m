@@ -10,18 +10,13 @@
 #import "RSElementCache.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
-
+#import "RSDBPersistentManager.h"
 #import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
 
 static RSEventRepository* _instance;
 
 @implementation RSEventRepository
-typedef enum {
-    NETWORKERROR =1,
-    NETWORKSUCCESS =0,
-    WRONGWRITEKEY =2
-} NETWORKSTATE;
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
@@ -65,7 +60,7 @@ typedef enum {
             [self askForAssertionWithSemaphore];
 #endif
         }
-
+        
         [RSLogger logDebug:@"EventRepository: setting up flush"];
         [self setUpFlush];
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
@@ -83,6 +78,7 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
         dbpersistenceManager = [[RSDBPersistentManager alloc] init];
         [dbpersistenceManager checkForMigrations];
+        [dbpersistenceManager createTables];
         
         [RSLogger logDebug:@"EventRepository: initiating server config manager"];
         configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
@@ -137,6 +133,7 @@ typedef enum {
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
+                        strongSelf->destinationToTransformationMapping = [strongSelf->configManager getDestinationToTransformationMapping];
                         [strongSelf __initiateFactories: serverConfig.destinations];
                         [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
                         strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
@@ -214,8 +211,8 @@ typedef enum {
     @synchronized (self->eventReplayMessage) {
         [RSLogger logDebug:@"replaying old messages with factory"];
         if (self->eventReplayMessage.count > 0) {
-            for (RSMessage *msg in self->eventReplayMessage) {
-                [self makeFactoryDump:msg];
+            for (int i=0; i<eventReplayMessage.count; i++) {
+                [self makeFactoryDump:eventReplayMessage[i] withRowId:[NSNumber numberWithInt:i+1]];
             }
         }
         [self->eventReplayMessage removeAllObjects];
@@ -231,19 +228,19 @@ typedef enum {
         int sleepCount = 0;
         
         while (YES) {
-            [lock lock];
+            [strongSelf->lock lock];
             [strongSelf clearOldEvents];
             [RSLogger logDebug:@"Fetching events to flush to server in processor"];
-            RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
+            RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
             if (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
                 errResp = [strongSelf flushEventsToServer:_dbMessage];
                 if (errResp == 0) {
                     [RSLogger logDebug:@"clearing events from DB"];
-                    [strongSelf->dbpersistenceManager clearEventsFromDB:_dbMessage.messageIds];
+                    [strongSelf->dbpersistenceManager updateEventsWithIds:_dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
                     sleepCount = 0;
                 }
             }
-            [lock unlock];
+            [strongSelf->lock unlock];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
             if (errResp == WRONGWRITEKEY) {
@@ -260,12 +257,13 @@ typedef enum {
 }
 
 - (void)clearOldEvents {
+    [self ->dbpersistenceManager clearProcessedEventsFromDB];
     int recordCount = [self->dbpersistenceManager getDBRecordCount];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
     
     if (recordCount > self->config.dbCountThreshold) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - self->config.dbCountThreshold)]];
-        RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold)];
+        RSDBMessage *dbMessage = [self->dbpersistenceManager fetchEventsFromDB:(recordCount - self->config.dbCountThreshold) ForMode: DEVICEMODE | CLOUDMODE];
         [self->dbpersistenceManager clearEventsFromDB:dbMessage.messageIds];
     }
 }
@@ -276,8 +274,8 @@ typedef enum {
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, queue);
     __weak RSEventRepository *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(source)]];
         RSEventRepository* strongSelf = weakSelf;
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(strongSelf->source)]];
         [strongSelf flushSync];
     });
     dispatch_resume(source);
@@ -302,7 +300,7 @@ typedef enum {
     [lock lock];
     [self clearOldEvents];
     [RSLogger logDebug:@"Fetching events to flush to server in flush"];
-    RSDBMessage* _dbMessage = [self->dbpersistenceManager fetchAllEventsFromDB];
+    RSDBMessage* _dbMessage = [self->dbpersistenceManager fetchAllEventsFromDBForMode:CLOUDMODE];
     int numberOfBatches = [RSUtils getNumberOfBatches:_dbMessage withFlushQueueSize:self->config.flushQueueSize];
     int errResp = -1;
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: %d batches of events to be flushed", numberOfBatches]];
@@ -468,7 +466,6 @@ typedef enum {
         
     }
     
-    [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
@@ -480,42 +477,33 @@ typedef enum {
         return;
     }
     
-    [self->dbpersistenceManager saveEvent:jsonString];
+    NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
+    [self makeFactoryDump: message withRowId: rowId];
+    
 }
 
-- (void) makeFactoryDump:(RSMessage *)message {
+- (void) makeFactoryDump:(RSMessage *)message withRowId:(NSNumber*) rowId {
     if (self->areFactoriesInitialized) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
         // If All is set to true we will dump to all the integrations which are not set to false
-        if([(NSNumber*)integrationOptions[@"All"] boolValue])
-        {
-            for (NSString *key in [self->integrationOperationMap allKeys]) {
+        for (NSString *key in [self->integrationOperationMap allKeys]) {
+            
+            if(([(NSNumber*)integrationOptions[@"All"] boolValue] && (integrationOptions[key]==nil ||[(NSNumber*)integrationOptions[key] boolValue])) || ([(NSNumber*)integrationOptions[key] boolValue]))
+            {
                 id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
                 if (integration != nil)
                 {
-                    if(integrationOptions[key]==nil ||[(NSNumber*)integrationOptions[key] boolValue])
-                    {
-                        if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
-                        {
-                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-                            [integration dump:message];
-                        }
-                    }
-                }
-            }
-            return;
-        }
-        // Since All is not set to true we will dump to all the integrations which are set to true
-        for (NSString *key in [self->integrationOperationMap allKeys]) {
-            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
-            if (integration != nil) {
-                if([(NSNumber*)integrationOptions[key] boolValue])
-                {
+                    if(destinationToTransformationMapping[key] == nil) {
                     if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
                     {
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
                         [integration dump:message];
+                    }
+                    }
+                    else {
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
+                        [dbpersistenceManager saveEvent:rowId toTransformationId:destinationToTransformationMapping[key]];
                     }
                 }
             }
@@ -523,7 +511,7 @@ typedef enum {
     } else {
         @synchronized (self->eventReplayMessage) {
             [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
-            [self->eventReplayMessage addObject:message];
+            [self->eventReplayMessage insertObject:message atIndex:[rowId integerValue]-1];
         }
     }
 }

@@ -13,14 +13,11 @@
 #import "RSConstants.h"
 #import <pthread.h>
 
+
 static RSServerConfigManager *_instance;
+static NSMutableDictionary<NSString*, NSString*>* destinationToTransformationMapping;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static RSServerConfigSource *serverConfig;
-typedef enum {
-    NETWORKERROR =1,
-    NETWORKSUCCESS =0,
-    WRONGWRITEKEY =2
-} NETWORKSTATE;
 
 int receivedError = NETWORKSUCCESS;
 
@@ -90,6 +87,7 @@ int receivedError = NETWORKSUCCESS;
         
         NSArray *destinationArr = [sourceDict objectForKey:@"destinations"];
         NSMutableArray *destinations = [[NSMutableArray alloc] init];
+        destinationToTransformationMapping = [[NSMutableDictionary alloc] init];
         for (NSDictionary* destinationDict in destinationArr) {
             // create destination object
             RSServerDestination *destination = [[RSServerDestination alloc] init];
@@ -102,12 +100,17 @@ int receivedError = NETWORKSUCCESS;
             }
             destination.isDestinationEnabled = isDestinationEnabled;
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
+            destination.transformationId = [destinationDict objectForKey:@"transformationId"];
+            
             
             RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
             NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];
             destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
             destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
             destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
+            if(destination.transformationId != nil) {
+                destinationToTransformationMapping[destinationDefinition.displayName] = destination.transformationId;
+            }
             
             destination.destinationDefinition = destinationDefinition;
             
@@ -133,6 +136,11 @@ int receivedError = NETWORKSUCCESS;
         [RSLogger logDebug:@"Server config retrieval failed.No config found in storage"];
         [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch server config for writeKey: %@", _writeKey]];
     }
+//    destinationToTransformationMapping = [self retrieveDestinationToTransformationMappingWithServerConfig:serverConfig];
+//    if(destinationToTransformationMapping == nil) {
+//        [RSLogger logDebug:@"Destinations to Transformation Mapping retrieval failed. No config found in storage"];
+//        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch destinations to transformation mapping for writeKey: %@", _writeKey]];
+//    }
     pthread_mutex_unlock(&mutex);
 }
 
@@ -165,13 +173,25 @@ int receivedError = NETWORKSUCCESS;
     }
 }
 
+//- (NSDictionary<NSString*, NSString*>*) retrieveDestinationToTransformationMappingWithServerConfig:(RSServerConfigSource*) serverConfig {
+//    NSMutableDictionary<NSString*, NSString*>* destinationToTransformationMapping = [[NSMutableDictionary alloc]init];
+//    if(serverConfig != nil && serverConfig.destinations != nil) {
+//        for(RSServerDestination* destination in serverConfig.destinations) {
+//            if(destination.destinationName != nil && destination.transformationId != nil) {
+//                destinationToTransformationMapping[destination.destinationName] = destination.transformationId;
+//            }
+//        }
+//    }
+//    return [destinationToTransformationMapping copy];
+//}
+
 - (NSString *)_networkRequest {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     __block NSString *responseStr = nil;
     NSString *controlPlaneEndPoint = nil;
     if([_rudderConfig.controlPlaneUrl hasSuffix:@"/"]) {
-       controlPlaneEndPoint= [NSString stringWithFormat:@"%@sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
+        controlPlaneEndPoint= [NSString stringWithFormat:@"%@sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
     } else {
         controlPlaneEndPoint= [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
     }
@@ -216,6 +236,13 @@ int receivedError = NETWORKSUCCESS;
     RSServerConfigSource *config = serverConfig;
     pthread_mutex_unlock(&mutex);
     return config;
+}
+
+- (NSDictionary<NSString*, NSString*>*) getDestinationToTransformationMapping {
+    pthread_mutex_lock(&mutex);
+    NSDictionary<NSString*, NSString*>* mapping = [destinationToTransformationMapping copy];
+    pthread_mutex_unlock(&mutex);
+    return mapping;
 }
 
 - (int) getError {
