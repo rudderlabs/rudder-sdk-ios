@@ -287,6 +287,7 @@ RSClient.sharedInstance().reset()
 | Singular | https://github.com/rudderlabs/rudder-integration-singular-swift |
 | Adjust | https://github.com/rudderlabs/rudder-integration-adjust-swift |
 | AppCenter | https://github.com/rudderlabs/rudder-integration-appcenter-swift |
+| MoEngage | https://github.com/rudderlabs/rudder-integration-moengage-swift |
 
 ## Contribute
 
