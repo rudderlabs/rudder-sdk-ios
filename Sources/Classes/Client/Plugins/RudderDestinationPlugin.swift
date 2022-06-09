@@ -51,6 +51,10 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         flush()
     }
     
+    internal func willTerminate() {
+        enterBackground()
+    }
+    
     private func queueEvent<T: RSMessage>(message: T) {
         guard let databaseManager = self.databaseManager else { return }
         databaseManager.write(message)

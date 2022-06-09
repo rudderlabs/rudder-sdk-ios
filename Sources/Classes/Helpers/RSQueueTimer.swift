@@ -42,6 +42,10 @@ internal class RSQueueTimer {
     }
     
     deinit {
+        cancel()
+    }
+    
+    func cancel() {
         timer.setEventHandler {
             // do nothing ...
         }
