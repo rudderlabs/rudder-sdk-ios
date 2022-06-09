@@ -58,3 +58,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.0.0 - 2022-05-26
 ### Added
 - Releasing Rudder Version 2.
+
+## Version - 2.0.1 - 2022-06-09
+### Fix
+- `flush` API enhancement & fix.
