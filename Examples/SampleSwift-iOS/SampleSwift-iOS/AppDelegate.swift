@@ -13,19 +13,16 @@ import AdSupport
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var client: RSClient!
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
             .dataPlaneURL("https://rudderstacz.dataplane.rudderstack.com")
-            .loglevel(.none)
-            .trackLifecycleEvents(true)
+            .loglevel(.verbose)
+            .trackLifecycleEvents(false)
             .recordScreenViews(false)
         
-        client = RSClient.sharedInstance()
-        client.configure(with: config)
+        RSClient.sharedInstance().configure(with: config)
                 
         /*client?.addDestination(CustomDestination())
         
@@ -66,14 +63,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getIDFA() -> String {
         return ASIdentifierManager.shared().advertisingIdentifier.uuidString
-    }
-}
-
-extension UIApplicationDelegate {
-    var client: RSClient? {
-        if let appDelegate = self as? AppDelegate {
-            return appDelegate.client
-        }
-        return nil
     }
 }
