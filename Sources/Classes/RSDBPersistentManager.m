@@ -11,6 +11,7 @@
 
 int const RS_DB_Version = 2;
 int const DEFAULT_STATUS_VALUE = 0;
+static id lockObj;
 NSString* _Nonnull const TABLE_EVENTS = @"events";
 NSString* _Nonnull const COL_ID = @"id";
 NSString* _Nonnull const COL_MESSAGE = @"message";
@@ -20,19 +21,14 @@ NSString* _Nonnull const TABLE_EVENTS_TO_TRANSFORMATION = @"events_to_transforma
 NSString* _Nonnull const COL_EVENT_ID = @"event_id";
 NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
 
-
-NSDictionary<NSNumber*, NSNumber*>* CLOUD_MODE_STATUS_UPDATE_MAPPING;
-NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
-
 @implementation RSDBPersistentManager
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        CLOUD_MODE_STATUS_UPDATE_MAPPING = @{@0:@2, @1:@3};
-        DEVICE_MODE_STATUS_UPDATE_MAPPING = @{@0:@1, @2:@3};
         [self createDB];
+        lockObj =  [[NSObject alloc] init];
     }
     return self;
 }
@@ -87,7 +83,7 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
 }
 
 - (BOOL) checkIfStatusColumnExists {
-    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(%@) where name=%@;", TABLE_EVENTS, COL_STATUS];
+    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(%@) where name=\"%@\";", TABLE_EVENTS, COL_STATUS];
     const char* statusCheckSQL = [checkIfStatusExistsSQLString UTF8String];
     sqlite3_stmt *statusCheckStmt = nil;
     BOOL statusColumnExists = NO;
@@ -129,10 +125,10 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
     if (sqlite3_prepare_v2(self->_database, insertSQL, -1, &insertStmt, nil) == SQLITE_OK) {
         if (sqlite3_step(insertStmt) == SQLITE_ROW) {
             // table created
-            [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Event inserted to table"];
+            [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
             rowId = sqlite3_column_int(insertStmt, 0);
         } else {
-            [RSLogger logError:@"RSDBPersistentManager: saveEvent: Event insertion error"];
+            [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
         }
     } else {
         [RSLogger logError:@"RSDBPersistentManager: saveEvent: SQLite Command Preparation Failed"];
@@ -142,15 +138,18 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
 }
 
 - (void)clearEventsFromDB:(NSMutableArray<NSString *> *)messageIds {
-    NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [self getMessageIdsCSV:messageIds]];
+    NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [RSUtils getCSVString:messageIds]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventSql: %@", deleteSqlString]];
+    @synchronized (lockObj) {
     if([self execSQL:deleteSqlString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Events deleted from DB"];
+        [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
         return;
     }
-    [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Events deletion error"];
+    [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];
+    }
 }
 
+// need to synchronize
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode {
     NSString* querySQLString = nil;
     switch(mode) {
@@ -188,20 +187,22 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
     NSMutableArray<NSNumber *>* statuses = [[NSMutableArray alloc] init];
     
-    sqlite3_stmt *queryStmt = nil;
-    if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
-        [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: events fetched from DB"];
-        while (sqlite3_step(queryStmt) == SQLITE_ROW) {
-            int messageId = sqlite3_column_int(queryStmt, 0);
-            const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
-            int status = sqlite3_column_int(queryStmt,3);
-            NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
-            [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
-            [messages addObject:message];
-            [statuses addObject:[NSNumber numberWithInt:status]];
+    @synchronized (lockObj) {
+        sqlite3_stmt *queryStmt = nil;
+        if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
+            [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: Successfully fetched events from DB"];
+            while (sqlite3_step(queryStmt) == SQLITE_ROW) {
+                int messageId = sqlite3_column_int(queryStmt, 0);
+                const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
+                int status = sqlite3_column_int(queryStmt,3);
+                NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
+                [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
+                [messages addObject:message];
+                [statuses addObject:[NSNumber numberWithInt:status]];
+            }
+        } else {
+            [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
         }
-    } else {
-        [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: event fetching error"];
     }
     
     RSDBMessage *dbMessage = [[RSDBMessage alloc] init];
@@ -212,68 +213,70 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
     return dbMessage;
 }
 
-- (int)getDBRecordCount {
-    NSString *countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@", TABLE_EVENTS];
+- (int) getDBRecordCountForMode:(MODES) mode {
+    NSString *countSQLString = nil;
+    switch(mode) {
+        case DEVICEMODE:
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE];
+            break;
+        case CLOUDMODE:
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE];
+            break;
+        default:
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@", TABLE_EVENTS];
+    }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getDBRecordCount: countSQLString: %@", countSQLString]];
     int count = 0;
     const char* countSQL = [countSQLString UTF8String];
+    @synchronized (lockObj) {
     sqlite3_stmt *countStmt = nil;
     if (sqlite3_prepare_v2(self->_database, countSQL, -1, &countStmt, nil) == SQLITE_OK) {
-        [RSLogger logDebug:@"RSDBPersistentManager: getDBRecordCount: count fetched from DB"];
+        [RSLogger logDebug:@"RSDBPersistentManager: getDBRecordCount: Successfully fetched events count from DB"];
         while (sqlite3_step(countStmt) == SQLITE_ROW) {
             count = sqlite3_column_int(countStmt, 0);
         }
     } else {
-        [RSLogger logError:@"RSDBPersistentManager: getDBRecordCount: count fetching error"];
+        [RSLogger logError:@"RSDBPersistentManager: getDBRecordCount: Failed to fetch events count from DB"];
+    }
     }
     return count;
 }
 
+// need to synchronize
 -(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status {
-    NSString *messageIdsCsv = [self getMessageIdsCSV:messageIds];
+    NSString *messageIdsCsv = [RSUtils getCSVString:messageIds];
     if(messageIdsCsv != nil) {
-        switch(status) {
-            case CLOUDMODEPROCESSINGDONE:
-                [self updateEventsStatus:messageIdsCsv using:CLOUD_MODE_STATUS_UPDATE_MAPPING];
-                break;
-            case DEVICEMODEPROCESSINGDONE:
-                [self updateEventsStatus:messageIdsCsv using:DEVICE_MODE_STATUS_UPDATE_MAPPING];
-                break;
-            default:
-                break;
-        }
-    }
-}
-
--(void) updateEventsStatus:(NSString*) messageIdsCSV using:(NSDictionary<NSNumber*, NSNumber*>*) rules {
-    for(NSNumber* fromStatus in rules){
-        NSNumber* toStatus = rules[fromStatus];
-        NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ IN (%@) AND %@ = %d;", TABLE_EVENTS, COL_STATUS,  toStatus.intValue, COL_ID, messageIdsCSV, COL_STATUS, fromStatus.intValue];
+        NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %@ | %d WHERE %@ IN (%@);", TABLE_EVENTS, COL_STATUS, COL_STATUS, status, COL_ID, messageIdsCsv];
+        @synchronized (lockObj) {
         if([self execSQL:updateEventStatusSQL]) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateEventsStatus: Successfully updated the event status from %d to %d", fromStatus.intValue, toStatus.intValue]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateEventsStatus: Successfully updated the event status for events %@", messageIdsCsv]];
             return;
         }
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateEventsStatus: Failed to update the event status from %d to %d", fromStatus.intValue, toStatus.intValue]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateEventsStatus: Failed to update the status for events %@", messageIdsCsv]];
+        }
     }
 }
 
+// need to synchronize
 -(void) clearProcessedEventsFromDB {
     NSString* clearProcessedEventsSQL = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", TABLE_EVENTS, COL_STATUS, COMPLETEPROCESSINGDONE];
+    @synchronized (lockObj) {
     if([self execSQL:clearProcessedEventsSQL]){
         [RSLogger logDebug:@"RSDBPersistentManager: clearProcessedEventsFromDB: Successfully cleared the processed events from the db"];
         return;
     }
     [RSLogger logError:@"RSDBPersistentManager: clearProcessedEventsFromDB: Failed to clear the processed events from the db"];
+    }
 }
 
 - (void)flushEventsFromDB {
     NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@", TABLE_EVENTS];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: flushEventsFromDB: deleteEventSql: %@", deleteSqlString]];
     if([self execSQL:deleteSqlString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: flushEventsFromDB: Events deleted from DB"];
+        [RSLogger logDebug:@"RSDBPersistentManager: flushEventsFromDB: Successfully deleted events from DB"];
         return;
     }
-    [RSLogger logError:@"RSDBPersistentManager: flushEventsFromDB: Event deletion error"];
+    [RSLogger logError:@"RSDBPersistentManager: flushEventsFromDB: Failed to delete the events from DB"];
 }
 
 - (void) saveEvent:(NSNumber*) rowId toTransformationId:(NSString*) transformationId {
@@ -285,19 +288,70 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
     [RSLogger logError:@"RSDBPersistentManager: saveEventToTransformationId: Failed to insert event to transformation mapping"];
 }
 
--(NSDictionary<NSNumber*, NSString*>*) getEventsToTransformationMapping {
-    NSMutableDictionary<NSNumber*, NSString*>* eventsToTransformationMapping = [[NSMutableDictionary alloc] init];
-    NSString *querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC", TABLE_EVENTS, COL_UPDATED];
+-(void) updateEvents {
+    
+}
+
+-(NSArray<NSString*>*) getEventIdsWithTransformationMapping:(NSArray*) eventIds {
+    NSString* eventIdsCSV = [RSUtils getCSVString:eventIds];
+    NSString* selectSQLString = [[NSString alloc] initWithFormat:@"SELECT %@, COUNT(*) as COUNT FROM %@ WHERE %@ in (%@) GROUP BY %@;", COL_EVENT_ID, TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, eventIdsCSV, COL_EVENT_ID];
+    const char* selectSQLChar = [selectSQLString UTF8String];
+    NSMutableArray<NSString*>* eventIdsWithTransformationMapping = [[NSMutableArray alloc] init];
+    sqlite3_stmt *selectStmt = nil;
+    @synchronized (lockObj) {
+    if (sqlite3_prepare_v2(self->_database, selectSQLChar, -1, &selectStmt, nil) == SQLITE_OK) {
+        [RSLogger logDebug:@"RSDBPersistentManager: getEventIdsWithTransformationMapping: Successfully fetched events with transformation mapping from DB"];
+        while (sqlite3_step(selectStmt) == SQLITE_ROW) {
+            int eventId = sqlite3_column_int(selectStmt, 0);
+            [eventIdsWithTransformationMapping addObject:@(eventId).stringValue];
+        }
+    } else {
+        [RSLogger logError:@"RSDBPersistentManager: getEventIdsWithTransformationMapping: Failed to fetch events with transformation mapping from DB"];
+    }
+    }
+    return [eventIdsWithTransformationMapping copy];
+}
+
+- (void) deleteEvents:(NSArray*) eventIds withTransformationId:(NSString*) transformationId {
+    NSString* eventIdsCSV = [RSUtils getCSVString:eventIds];
+    NSString* deleteSQLString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = \"%@\" and %@ IN (%@);", TABLE_EVENTS_TO_TRANSFORMATION, COL_TRANSFORMATION_ID, transformationId, COL_EVENT_ID, eventIdsCSV];
+    @synchronized (lockObj) {
+    if([self execSQL:deleteSQLString]) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithTransformationId: Successfully deleted events (%@) with transformation Id %@", eventIdsCSV, transformationId]];
+        return;
+    }
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithTransformationId: Failed to delete events (%@) with transformation Id %@", eventIdsCSV, transformationId]];
+    }
+}
+
+-(NSDictionary<NSString*, NSArray<NSString*>*>*) getEventsToTransformationMapping:(NSArray<NSString*>*) messageIds {
+    NSString* querySQLString = nil;
+    if(messageIds.count>0) {
+        NSString* messageIdsCSV = [RSUtils getCSVString:messageIds];
+        if(messageIdsCSV != nil && messageIdsCSV.length !=0){
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%@) ORDER BY %@ ASC", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, messageIdsCSV, COL_EVENT_ID];
+        }
+    }
+    if(querySQLString == nil) {
+        querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID];
+    }
+    NSMutableDictionary<NSString*, NSMutableArray<NSString*>*>* eventsToTransformationMapping = [[NSMutableDictionary alloc] init];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getEventsToTransformationMapping: %@", querySQLString]];
     const char* querySQL = [querySQLString UTF8String];
     sqlite3_stmt *queryStmt = nil;
     if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: getEventsToTransformationMapping: Successfully fetched events to transformation mapping from DB"];
         while (sqlite3_step(queryStmt) == SQLITE_ROW) {
-            NSNumber* eventId = [NSNumber numberWithInt:sqlite3_column_int(queryStmt, 0)];
+            NSString* eventId =  [[NSString alloc] initWithFormat:@"%d", sqlite3_column_int(queryStmt, 0)];
             const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
             NSString *transformationId = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
-            eventsToTransformationMapping[eventId] = transformationId;
+            if(eventsToTransformationMapping[eventId] == nil) {
+                NSMutableArray<NSString*>* transformationIdsArray = [[NSMutableArray alloc] init];
+                eventsToTransformationMapping[eventId] = transformationIdsArray;
+            }
+            NSMutableArray<NSString*>* transformationIdsArray = eventsToTransformationMapping[eventId];
+            [transformationIdsArray addObject:transformationId];
+            eventsToTransformationMapping[eventId] = transformationIdsArray;
         }
     } else {
         [RSLogger logError:@"RSDBPersistentManager: getEventsToTransformationMapping: Failed to fetch events to transformation mapping from DB"];
@@ -322,16 +376,4 @@ NSDictionary<NSNumber*, NSNumber*>* DEVICE_MODE_STATUS_UPDATE_MAPPING;
     sqlite3_finalize(SqlStatement);
     return executionStatus;
 }
-
--(NSString*) getMessageIdsCSV:(NSArray*) messageIds{
-    NSMutableString *messageIdsCsv = [[NSMutableString alloc] init];
-    for (int index = 0; index < messageIds.count; index++) {
-        [messageIdsCsv appendString:messageIds[index]];
-        if (index != messageIds.count -1) {
-            [messageIdsCsv appendString:@","];
-        }
-    }
-    return [messageIdsCsv copy];
-}
-
 @end

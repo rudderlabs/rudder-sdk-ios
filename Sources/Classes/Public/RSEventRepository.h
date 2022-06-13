@@ -16,6 +16,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum {
+    BATCH_ENDPOINT = 0,
+    TRANSFORM_ENDPOINT = 1
+} ENDPOINT;
+
 @interface RSEventRepository : NSObject {
     NSString* writeKey;
     NSString* authToken;
@@ -30,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableArray<RSMessage*> *eventReplayMessage;
+    NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
     NSDictionary<NSString*, NSString*>* destinationToTransformationMapping;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
@@ -45,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
++ (instancetype) getInstance;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
@@ -52,7 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
-
 - (RSConfig* _Nullable) getConfig;
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 

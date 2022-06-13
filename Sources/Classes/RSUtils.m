@@ -119,8 +119,31 @@
     return array;
 }
 
++(NSString*) getCSVString:(NSArray*) inputStrings {
+    NSMutableString *CSVString = [[NSMutableString alloc] init];
+    for (int index = 0; index < inputStrings.count; index++) {
+        [CSVString appendString:inputStrings[index]];
+        if (index != inputStrings.count -1) {
+            [CSVString appendString:@","];
+        }
+    }
+    return [CSVString copy];
+}
+
++(NSString*) getJSONCSVString:(NSArray*) inputStrings {
+    NSMutableString *JSONCSVString = [[NSMutableString alloc] init];
+    for (int index = 0; index < inputStrings.count; index++) {
+        [JSONCSVString appendFormat:@"\"%@\"", inputStrings[index]];
+        if (index != inputStrings.count -1) {
+            [JSONCSVString appendString:@","];
+        }
+    }
+    return [JSONCSVString copy];
+}
+
+
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
-    int messageCount = dbMessage.messageIds.count;
+    int messageCount = (int) dbMessage.messageIds.count;
     if (messageCount % queueSize == 0) {
         return messageCount / queueSize;
     } else {
@@ -128,11 +151,22 @@
     }
 }
 
-+ (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize {
++ (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
     }
     return [messageDetails subarrayWithRange:NSMakeRange(0, queueSize)];
+}
+
++ (id) deSerializeJSONString:(NSString*) jsonString {
+    NSError *error = nil;
+    NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if(error) {
+        NSLog(@"Error serializing the object back");
+        return nil;
+    }
+    return object;
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

@@ -14,6 +14,11 @@
 #import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
 
+
+NSString* const STATUS = @"STATUS";
+NSString* const RESPONSE = @"RESPONSE";
+int const DMT_BATCH_SIZE = 12;
+static id UPLOAD_LOCK;
 static RSEventRepository* _instance;
 
 @implementation RSEventRepository
@@ -21,10 +26,15 @@ static RSEventRepository* _instance;
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
+        UPLOAD_LOCK = [[NSObject alloc] init];
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init:writeKey config:config];
         });
     }
+    return _instance;
+}
+
++ (instancetype) getInstance {
     return _instance;
 }
 
@@ -71,17 +81,17 @@ static RSEventRepository* _instance;
         [RSElementCache initiate];
         
         [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
-        self->eventReplayMessage = [[NSMutableArray alloc] init];
+        self->eventReplayMessage = [[NSMutableDictionary alloc] init];
         
         [self setAnonymousIdToken];
         
         [RSLogger logDebug:@"EventRepository: initiating dbPersistentManager"];
-        dbpersistenceManager = [[RSDBPersistentManager alloc] init];
-        [dbpersistenceManager checkForMigrations];
-        [dbpersistenceManager createTables];
+        self->dbpersistenceManager = [[RSDBPersistentManager alloc] init];
+        [self->dbpersistenceManager createTables];
+        [self->dbpersistenceManager checkForMigrations];
         
         [RSLogger logDebug:@"EventRepository: initiating server config manager"];
-        configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
+        self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
         
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
@@ -134,6 +144,11 @@ static RSEventRepository* _instance;
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
                         strongSelf->destinationToTransformationMapping = [strongSelf->configManager getDestinationToTransformationMapping];
+                        if([strongSelf-> destinationToTransformationMapping count] > 0){
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                            [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(initiateTransformationProcessor) userInfo:nil repeats:YES];
+                            });
+                        }
                         [strongSelf __initiateFactories: serverConfig.destinations];
                         [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
                         strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
@@ -207,12 +222,77 @@ static RSEventRepository* _instance;
     }
 }
 
+int deviceModeSleepCount = 0;
+
+- (void) initiateTransformationProcessor {
+    __weak RSEventRepository *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        RSEventRepository *strongSelf = weakSelf;
+        [RSLogger logDebug:@" transformation processor started"];
+        [RSLogger logDebug:@"Fetching events to flush to transformations server"];
+        int deviceModeEventsCount = [strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE];
+        if (deviceModeEventsCount >= DMT_BATCH_SIZE || ((deviceModeSleepCount >= [strongSelf->config sleepTimeout]) && deviceModeEventsCount>=0)) {
+            do {
+                RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
+                NSDictionary<NSString*, NSString*>* response = [strongSelf flushEventsToTransformationServer:_dbMessage];
+                int errResp = [response[STATUS] intValue];
+                NSString* responsePayload = response[RESPONSE];
+                if (errResp == WRONGWRITEKEY) {
+                    [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
+                    break;
+                } else if (errResp == NETWORKERROR) {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
+                    deviceModeSleepCount -= strongSelf->config.sleepTimeout;
+                }
+                else {
+                    id object = [RSUtils deSerializeJSONString:responsePayload];
+                    if(object != nil && [object isKindOfClass:[NSArray class]]) {
+                        NSArray* responseArray = object;
+                        for(NSDictionary* responseObject in responseArray) {
+                            NSDictionary* transformationObject = responseObject[@"transformation"];
+                            NSString* transformationId = transformationObject[@"id"];
+                            NSString* status = transformationObject[@"status"];
+                            NSArray* destinations = [self->destinationToTransformationMapping allKeysForObject:transformationId];
+                            NSArray* transformedPayloads = [transformationObject[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+                                return [a[@"orderNo"] compare:b[@"orderNo"]];
+                            }];
+                            if([status isEqualToString:@"200"]) {
+                                [strongSelf dumpTransformedEvents:transformedPayloads ToFactories:destinations];
+                                [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withTransformationId:transformationId];
+                                NSArray<NSString*>* eventsWithTransformationMapping = [strongSelf->dbpersistenceManager getEventIdsWithTransformationMapping:_dbMessage.messageIds];
+                                NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
+                                [processedEvents removeObjectsInArray:eventsWithTransformationMapping];
+                                [strongSelf->dbpersistenceManager updateEventsWithIds:processedEvents withStatus:DEVICEMODEPROCESSINGDONE];
+                                [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
+                            }
+                            deviceModeSleepCount++;
+                            //                            We would be deleting the events from the events_to_transformation table only on 200 because we will not be getting any events in the case of 400/500
+                            //                            May be we will pick this up in v1
+                            //                            else {
+                            //                                NSMutableArray* successfullyTransformedEventIds = [[NSMutableArray alloc] init];
+                            //                                for(NSDictionary* transformedPayload in transformedPayloads) {
+                            //                                    [successfullyTransformedEventIds addObject:transformedPayload[@"orderNo"]];
+                            //                                }
+                            //                                [strongSelf->dbpersistenceManager deleteEvents:successfullyTransformedEventIds withTransformationId:transformationId];
+                            //                            }
+                        }
+                    }
+                }
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", deviceModeSleepCount]];
+                deviceModeSleepCount += 1;
+            }while([strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE] > 0);
+        }
+        
+    });
+}
+
 - (void) __replayMessageQueue {
     @synchronized (self->eventReplayMessage) {
         [RSLogger logDebug:@"replaying old messages with factory"];
         if (self->eventReplayMessage.count > 0) {
-            for (int i=0; i<eventReplayMessage.count; i++) {
-                [self makeFactoryDump:eventReplayMessage[i] withRowId:[NSNumber numberWithInt:i+1]];
+            NSArray* rowIds = [[self->eventReplayMessage allKeys] sortedArrayUsingSelector:@selector(compare:)];
+            for (NSNumber *rowId in rowIds) {
+                [self makeFactoryDump:eventReplayMessage[rowId] withRowId:rowId];
             }
         }
         [self->eventReplayMessage removeAllObjects];
@@ -237,6 +317,7 @@ static RSEventRepository* _instance;
                 if (errResp == 0) {
                     [RSLogger logDebug:@"clearing events from DB"];
                     [strongSelf->dbpersistenceManager updateEventsWithIds:_dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
+                    [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     sleepCount = 0;
                 }
             }
@@ -258,7 +339,7 @@ static RSEventRepository* _instance;
 
 - (void)clearOldEvents {
     [self ->dbpersistenceManager clearProcessedEventsFromDB];
-    int recordCount = [self->dbpersistenceManager getDBRecordCount];
+    int recordCount = [self->dbpersistenceManager getDBRecordCountForMode:CLOUDMODE|DEVICEMODE];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
     
     if (recordCount > self->config.dbCountThreshold) {
@@ -318,7 +399,8 @@ static RSEventRepository* _instance;
             if( errResp == 0){
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Successfully sent batch %d/%d", i, numberOfBatches]];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Clearing events of batch %d from DB", i]];
-                [self -> dbpersistenceManager clearEventsFromDB: batchDBMessage.messageIds];
+                [self -> dbpersistenceManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
+                [self->dbpersistenceManager clearProcessedEventsFromDB];
                 [_dbMessage.messages removeObjectsInArray:messages];
                 [_dbMessage.messageIds removeObjectsInArray:messageIds];
                 lastBatchFailed = NO;
@@ -340,7 +422,7 @@ static RSEventRepository* _instance;
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
     [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
     if (payload != nil) {
-        errResp = [self __flushEventsToServer:payload];
+        errResp = [[self __flushEvents:payload toEndpoint:BATCH_ENDPOINT][STATUS] intValue];
     }
     return errResp;
 }
@@ -359,8 +441,7 @@ static RSEventRepository* _instance;
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
     unsigned int totalBatchSize = [RSUtils getUTF8Length:json] + 2; // we add 2 characters at the end
-    int index;
-    for (index = 0; index < messages.count; index++) {
+    for (int index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
         long length = message.length;
         message = [[NSMutableString alloc] initWithString:[message substringWithRange:NSMakeRange(0, (length-1))]];
@@ -386,19 +467,29 @@ static RSEventRepository* _instance;
     return [json copy];
 }
 
-- (int) __flushEventsToServer: (NSString*) payload {
+-(NSDictionary<NSString*, NSString*>*) __flushEvents: (NSString*) payload toEndpoint:(ENDPOINT) endpoint {
+    NSMutableDictionary<NSString*, NSString*>* responseDict = [[NSMutableDictionary alloc] init];
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
-        return WRONGWRITEKEY;
+        responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", WRONGWRITEKEY];
+        return responseDict;
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     int __block respStatus = NETWORKSUCCESS;
-    NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
+    NSString *requestEndPoint = nil;
+    switch(endpoint) {
+        case TRANSFORM_ENDPOINT:
+            requestEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/transform"];
+            break;
+        default:
+            requestEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/batch"];
+    }
     
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:dataPlaneEndPoint]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", requestEndPoint]];
+    
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:requestEndPoint]];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
@@ -413,32 +504,93 @@ static RSEventRepository* _instance;
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
-        
+        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        responseDict[RESPONSE] = responseString;
         if (httpResponse.statusCode == 200) {
             respStatus = NETWORKSUCCESS;
+            responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", NETWORKSUCCESS];
         } else {
-            NSString *errorResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             if (
-                ![errorResponse isEqualToString:@""] && // non-empty response
-                [[errorResponse lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
+                ![responseString isEqualToString:@""] && // non-empty response
+                [[responseString lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
                 ) {
                     respStatus = WRONGWRITEKEY;
+                    responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", WRONGWRITEKEY];
                 } else {
                     respStatus = NETWORKERROR;
+                    responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", NETWORKERROR];
                 }
-            [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", errorResponse]];
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", responseString]];
         }
         
         dispatch_semaphore_signal(semaphore);
     }];
-    [dataTask resume];
+    @synchronized (UPLOAD_LOCK) {
+        [dataTask resume];
+    }
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
 #if !__has_feature(objc_arc)
     dispatch_release(semaphore);
 #endif
     
-    return respStatus;
+    return responseDict;
+}
+
+- (NSDictionary<NSString*, NSString*>*)flushEventsToTransformationServer:(RSDBMessage *)dbMessage {
+    NSDictionary<NSString*, NSString*>* response = nil;
+    NSDictionary<NSString*, NSArray<NSString*>*>* eventToTransformationMapping = [self->dbpersistenceManager getEventsToTransformationMapping:dbMessage.messageIds];
+    NSString* payload = [self __getPayloadForTransformation:dbMessage withEventToTransformationMapping:eventToTransformationMapping];
+    NSLog(@"%@", payload);
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
+    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+    if (payload != nil) {
+        response = [self __flushEvents:payload toEndpoint:TRANSFORM_ENDPOINT];
+    }
+    return response;
+}
+
+-(NSString*) __getPayloadForTransformation:(RSDBMessage *)dbMessage withEventToTransformationMapping:(NSDictionary<NSString*, NSArray<NSString*>*>*) eventToTransformationMapping {
+    NSMutableArray<NSString *>* messages = dbMessage.messages;
+    NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
+    NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
+    NSString* sentAt = [RSUtils getTimestamp];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
+    
+    NSMutableString* jsonPayload = [[NSMutableString alloc] init];
+    [jsonPayload appendString:@"["];
+    
+    //     Need to decide on the upper limit of the total batch size
+    //    unsigned int totalBatchSize = [RSUtils getUTF8Length:jsonPayload] + 2; // we add 2 characters at the end
+    for (int index = 0; index < messages.count; index++) {
+        NSMutableString* message = [[NSMutableString alloc] init];
+        [message appendString:@"{"];
+        [message appendFormat:@"\"orderNo\": %@,", messageIds[index]];
+        [message appendFormat:@"\"event\": %@,", messages[index]];
+        [message appendFormat:@"\"transformationIds\" : [%@]", [RSUtils getJSONCSVString: eventToTransformationMapping[messageIds[index]]]];
+        [message appendFormat:@"},"];
+        //         add message size to batch size
+        //        totalBatchSize += [RSUtils getUTF8Length:message];
+        //         check totalBatchSize
+        //        if(totalBatchSize > MAX_BATCH_SIZE) {
+        //            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+        //            break;
+        //        }
+        [jsonPayload appendString:message];
+        [batchMessageIds addObject:messageIds[index]];
+    }
+    int length = [jsonPayload length];
+    unichar charlen = [jsonPayload characterAtIndex:[jsonPayload length]-1];
+    if([jsonPayload characterAtIndex:[jsonPayload length]-1] == ',') {
+        // remove trailing ','
+        [jsonPayload deleteCharactersInRange:NSMakeRange([jsonPayload length]-1, 1)];
+    }
+    [jsonPayload appendString:@"]"];
+    // retain all events that are part of the current event
+    dbMessage.messageIds = batchMessageIds;
+    
+    return [jsonPayload copy];
 }
 
 - (void) dump:(RSMessage *)message {
@@ -494,27 +646,42 @@ static RSEventRepository* _instance;
                 id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
                 if (integration != nil)
                 {
+                    if([self->eventFilteringPlugin isEventAllowed:key withMessage:message]) {
                     if(destinationToTransformationMapping[key] == nil) {
-                    if([self->eventFilteringPlugin isEventAllowed:key withMessage:message])
-                    {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
-                        [integration dump:message];
-                    }
+                        
+                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
+                            [integration dump:message];
+                        
                     }
                     else {
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
                         [dbpersistenceManager saveEvent:rowId toTransformationId:destinationToTransformationMapping[key]];
                     }
+                 }
                 }
             }
         }
     } else {
         @synchronized (self->eventReplayMessage) {
             [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
-            [self->eventReplayMessage insertObject:message atIndex:[rowId integerValue]-1];
+            self->eventReplayMessage[rowId] = message;
         }
     }
 }
+
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToFactories:(NSArray*) destinations {
+    for (NSDictionary* transformedPayload in transformedPayloads) {
+        RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
+        for(NSString* destination in destinations) {
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destination];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping the transformed event %@ for %@", transformedMessage.event, destination]];
+            [integration dump:transformedMessage];
+        }
+    }
+}
+
+
+
 
 -(void) reset {
     if (self->areFactoriesInitialized) {

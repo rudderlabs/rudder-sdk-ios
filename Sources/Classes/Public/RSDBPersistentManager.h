@@ -42,9 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 -(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
 -(void) updateEventsWithIds:(NSMutableArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status;
 -(void) clearProcessedEventsFromDB;
+-(NSArray<NSString*>*) getEventIdsWithTransformationMapping:(NSArray*) eventIds;
 -(void) saveEvent:(NSNumber*) rowId toTransformationId:(NSString*) transformationId;
--(NSDictionary<NSNumber*, NSString*>*) getEventsToTransformationMapping;
--(int) getDBRecordCount;
+- (void) deleteEvents:(NSArray*) eventIds withTransformationId:(NSString*) transformationId;
+-(NSDictionary<NSString*, NSArray<NSString*>*>*) getEventsToTransformationMapping:(NSArray<NSString*>*) messageIds;
+- (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;
 
 @end
