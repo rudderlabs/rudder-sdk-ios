@@ -100,7 +100,11 @@ int receivedError = NETWORKSUCCESS;
             }
             destination.isDestinationEnabled = isDestinationEnabled;
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
-            destination.transformationId = [destinationDict objectForKey:@"transformationId"];
+            NSArray* transformationsList = [destinationDict objectForKey:@"transformationsList"];
+            if(transformationsList != nil && transformationsList.count >0){
+                NSDictionary* transformation = [transformationsList objectAtIndex:0];
+                destination.transformationId = transformation[@"id"];
+            }
             
             
             RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
@@ -108,6 +112,7 @@ int receivedError = NETWORKSUCCESS;
             destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
             destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
             destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
+            
             if(destination.transformationId != nil) {
                 destinationToTransformationMapping[destinationDefinition.displayName] = destination.transformationId;
             }
