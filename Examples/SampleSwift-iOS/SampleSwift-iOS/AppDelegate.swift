@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
-            .dataPlaneURL("https://rudderstacz.dataplane.rudderstack.com")
+            .dataPlaneURL("http://localhost:8080")
             .loglevel(.verbose)
             .trackLifecycleEvents(false)
             .recordScreenViews(false)
