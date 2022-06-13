@@ -159,8 +159,8 @@ static RSEventRepository* _instance;
                     
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
-                    strongSelf->areFactoriesInitialized = YES;
                     [strongSelf __replayMessageQueue];
+                    strongSelf->areFactoriesInitialized = YES;
                     
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
@@ -292,7 +292,7 @@ int deviceModeSleepCount = 0;
         if (self->eventReplayMessage.count > 0) {
             NSArray* rowIds = [[self->eventReplayMessage allKeys] sortedArrayUsingSelector:@selector(compare:)];
             for (NSNumber *rowId in rowIds) {
-                [self makeFactoryDump:eventReplayMessage[rowId] withRowId:rowId];
+                [self makeFactoryDump:eventReplayMessage[rowId] withRowId:rowId andFromHistory:YES];
             }
         }
         [self->eventReplayMessage removeAllObjects];
@@ -630,12 +630,12 @@ int deviceModeSleepCount = 0;
     }
     
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
-    [self makeFactoryDump: message withRowId: rowId];
+    [self makeFactoryDump: message withRowId: rowId andFromHistory:NO];
     
 }
 
-- (void) makeFactoryDump:(RSMessage *)message withRowId:(NSNumber*) rowId {
-    if (self->areFactoriesInitialized) {
+- (void) makeFactoryDump:(RSMessage *)message withRowId:(NSNumber*) rowId andFromHistory:(BOOL) fromHistory {
+    if (self->areFactoriesInitialized || fromHistory) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
         // If All is set to true we will dump to all the integrations which are not set to false
