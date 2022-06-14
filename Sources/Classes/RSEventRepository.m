@@ -146,7 +146,7 @@ static RSEventRepository* _instance;
                         strongSelf->destinationToTransformationMapping = [strongSelf->configManager getDestinationToTransformationMapping];
                         if([strongSelf-> destinationToTransformationMapping count] > 0){
                             dispatch_async(dispatch_get_main_queue(), ^{
-                            [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(initiateTransformationProcessor) userInfo:nil repeats:YES];
+                            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initiateTransformationProcessor) userInfo:nil repeats:YES];
                             });
                         }
                         [strongSelf __initiateFactories: serverConfig.destinations];
@@ -561,8 +561,7 @@ int deviceModeSleepCount = 0;
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
     [jsonPayload appendString:@"["];
     
-    //     Need to decide on the upper limit of the total batch size
-    //    unsigned int totalBatchSize = [RSUtils getUTF8Length:jsonPayload] + 2; // we add 2 characters at the end
+    unsigned int totalBatchSize = [RSUtils getUTF8Length:jsonPayload] + 1; // we add 1 characters at the end
     for (int index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] init];
         [message appendString:@"{"];
@@ -570,18 +569,16 @@ int deviceModeSleepCount = 0;
         [message appendFormat:@"\"event\": %@,", messages[index]];
         [message appendFormat:@"\"transformationIds\" : [%@]", [RSUtils getJSONCSVString: eventToTransformationMapping[messageIds[index]]]];
         [message appendFormat:@"},"];
-        //         add message size to batch size
-        //        totalBatchSize += [RSUtils getUTF8Length:message];
-        //         check totalBatchSize
-        //        if(totalBatchSize > MAX_BATCH_SIZE) {
-        //            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
-        //            break;
-        //        }
+        //  add message size to batch size
+        totalBatchSize += [RSUtils getUTF8Length:message];
+        // check totalBatchSize
+        if(totalBatchSize > MAX_BATCH_SIZE) {
+            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            break;
+        }
         [jsonPayload appendString:message];
         [batchMessageIds addObject:messageIds[index]];
     }
-    int length = [jsonPayload length];
-    unichar charlen = [jsonPayload characterAtIndex:[jsonPayload length]-1];
     if([jsonPayload characterAtIndex:[jsonPayload length]-1] == ',') {
         // remove trailing ','
         [jsonPayload deleteCharactersInRange:NSMakeRange([jsonPayload length]-1, 1)];
@@ -589,7 +586,6 @@ int deviceModeSleepCount = 0;
     [jsonPayload appendString:@"]"];
     // retain all events that are part of the current event
     dbMessage.messageIds = batchMessageIds;
-    
     return [jsonPayload copy];
 }
 
