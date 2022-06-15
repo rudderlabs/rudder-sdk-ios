@@ -9,21 +9,34 @@
 import UIKit
 import Rudder
 import AdSupport
+import Network
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
-        let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
-            .dataPlaneURL("http://localhost:8080")
-            .loglevel(.verbose)
-            .trackLifecycleEvents(false)
-            .recordScreenViews(false)
+        /// Create a `Configuration.json` file on root directory. The JSON should be look like:
+        /// {
+        ///    "WRITE_KEY": "WRITE_KEY_VALUE",
+        ///    "DATA_PLANE_URL": "DATA_PLANE_URL_VALUE",
+        ///    "CONTROL_PLANE_URL": "CONTROL_PLANE_URL_VALUE"
+        /// }
         
-        RSClient.sharedInstance().configure(with: config)
-                
+        let filePath = URL(fileURLWithPath: #file).pathComponents.dropLast().dropLast().dropLast().dropLast().joined(separator: "/").replacingOccurrences(of: "//", with: "/") + "/Configuration.json"
+        do {
+            let jsonString = try String(contentsOfFile: filePath, encoding: .utf8)
+            let jsonData = Data(jsonString.utf8)
+            let configuration = try JSONDecoder().decode(Configuration.self, from: jsonData)
+            
+            let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
+                .dataPlaneURL(configuration.DATA_PLANE_URL)
+                .loglevel(.verbose)
+                .trackLifecycleEvents(true)
+                .recordScreenViews(false)
+            
+            RSClient.sharedInstance().configure(with: config)
+        
         /*client?.addDestination(CustomDestination())
         
         client?.setAppTrackingConsent(.authorize)
@@ -43,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         messageOption.putIntegration("MoEngage", isEnabled: true)
         messageOption.putExternalId("", withId: "")
         client?.identify("Track 2", traits: ["email": "abc@def.com"], option: messageOption)*/
-        
+        } catch { }
         return true
     }
 
@@ -64,4 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getIDFA() -> String {
         return ASIdentifierManager.shared().advertisingIdentifier.uuidString
     }
+}
+
+struct Configuration: Codable {
+    let DATA_PLANE_URL: String
+    let CONTROL_PLANE_URL: String
+    let WRITE_KEY: String
 }
