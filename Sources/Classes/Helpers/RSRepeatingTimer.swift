@@ -1,5 +1,5 @@
 //
-//  QueueTimer.swift
+//  RSRepeatingTimer.swift
 //  RudderStack
 //
 //  Created by Pallab Maiti on 24/02/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class RSQueueTimer {
+internal class RSRepeatingTimer {
     enum State {
         case suspended
         case resumed
@@ -21,10 +21,10 @@ internal class RSQueueTimer {
     
     @RSAtomic var state: State = .suspended
     
-    static var timers = [RSQueueTimer]()
+    static var timers = [RSRepeatingTimer]()
     
     static func schedule(interval: TimeInterval, queue: DispatchQueue = .main, handler: @escaping () -> Void) {
-        let timer = RSQueueTimer(interval: interval, queue: queue, handler: handler)
+        let timer = RSRepeatingTimer(interval: interval, queue: queue, handler: handler)
         Self.timers.append(timer)
     }
 

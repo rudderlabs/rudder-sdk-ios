@@ -15,6 +15,7 @@ public let RSSleepTimeout: Int = 10
 public let RSControlPlaneUrl = "https://api.rudderlabs.com"
 public let RSTrackLifeCycleEvents = true
 public let RSRecordScreenViews = false
+let RETRY_FLUSH_COUNT = 3
 let TAG = "RudderStack"
 let RSServerConfigKey = "rs_server_config"
 let RSServerLastUpdatedKey = "rs_server_last_updated"

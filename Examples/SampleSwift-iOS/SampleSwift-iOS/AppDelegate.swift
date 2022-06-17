@@ -32,9 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
                 .dataPlaneURL(configuration.DATA_PLANE_URL)
                 .loglevel(.verbose)
-                .trackLifecycleEvents(true)
+                .trackLifecycleEvents(false)
                 .recordScreenViews(false)
-            
+                .flushQueueSize(8)
+//                .sleepTimeOut(1)
             RSClient.sharedInstance().configure(with: config)
         
         /*client?.addDestination(CustomDestination())

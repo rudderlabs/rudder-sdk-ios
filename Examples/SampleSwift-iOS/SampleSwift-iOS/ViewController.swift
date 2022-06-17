@@ -30,7 +30,6 @@ class ViewController: UIViewController {
                             Task(name: "Alias"),
                             Task(name: "Multiple Flush and Multiple Track")]
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,7 +64,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             RSClient.sharedInstance().track("single_track_call")
         case 2:
-            for i in 1...100 {
+            for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
             }
         case 3:
@@ -96,13 +95,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         case 6:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
-                    print("From Thread 1, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
-                }
-            }
-            
-            DispatchQueue.global(qos: .background).async {
-                for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
                     RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
@@ -110,7 +102,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
-                    print("From Thread 2, Flush No. \(i)")
+                    print("From Thread 1, Flush No. \(i)")
                     RSClient.sharedInstance().flush()
                 }
             }
@@ -124,7 +116,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
-                    print("From Thread 3, Flush No. \(i)")
+                    print("From Thread 2, Flush No. \(i)")
                     RSClient.sharedInstance().flush()
                 }
             }
@@ -133,6 +125,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 2001...3000 {
                     print("From Thread 3A, Track No. \(i)")
                     RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                }
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                for i in 1...1000 {
+                    print("From Thread 3, Flush No. \(i)")
+                    RSClient.sharedInstance().flush()
                 }
             }
         default:
