@@ -9,24 +9,35 @@
 import UIKit
 import Rudder
 import AdSupport
+import Network
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var client: RSClient!
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
-        let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
-            .dataPlaneURL("https://rudderstacz.dataplane.rudderstack.com")
-            .loglevel(.none)
-            .trackLifecycleEvents(true)
-            .recordScreenViews(false)
+        /// Create a `Configuration.json` file on root directory. The JSON should be look like:
+        /// {
+        ///    "WRITE_KEY": "WRITE_KEY_VALUE",
+        ///    "DATA_PLANE_URL": "DATA_PLANE_URL_VALUE",
+        ///    "CONTROL_PLANE_URL": "CONTROL_PLANE_URL_VALUE"
+        /// }
         
-        client = RSClient.sharedInstance()
-        client.configure(with: config)
-                
+        let filePath = URL(fileURLWithPath: #file).pathComponents.dropLast().dropLast().dropLast().dropLast().joined(separator: "/").replacingOccurrences(of: "//", with: "/") + "/Configuration.json"
+        do {
+            let jsonString = try String(contentsOfFile: filePath, encoding: .utf8)
+            let jsonData = Data(jsonString.utf8)
+            let configuration = try JSONDecoder().decode(Configuration.self, from: jsonData)
+            
+            let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
+                .dataPlaneURL(configuration.DATA_PLANE_URL)
+                .loglevel(.verbose)
+                .trackLifecycleEvents(false)
+                .recordScreenViews(false)
+                .flushQueueSize(8)
+//                .sleepTimeOut(1)
+            RSClient.sharedInstance().configure(with: config)
+        
         /*client?.addDestination(CustomDestination())
         
         client?.setAppTrackingConsent(.authorize)
@@ -46,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         messageOption.putIntegration("MoEngage", isEnabled: true)
         messageOption.putExternalId("", withId: "")
         client?.identify("Track 2", traits: ["email": "abc@def.com"], option: messageOption)*/
-        
+        } catch { }
         return true
     }
 
@@ -69,11 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension UIApplicationDelegate {
-    var client: RSClient? {
-        if let appDelegate = self as? AppDelegate {
-            return appDelegate.client
-        }
-        return nil
-    }
+struct Configuration: Codable {
+    let DATA_PLANE_URL: String
+    let CONTROL_PLANE_URL: String
+    let WRITE_KEY: String
 }

@@ -14,6 +14,7 @@ class RSDatabaseManager {
     private let database: OpaquePointer?
     private let client: RSClient
     private let syncQueue = DispatchQueue(label: "database.rudder.com")
+    private let lock = NSLock()
     
     init(client: RSClient) {
         self.client = client
@@ -139,6 +140,7 @@ class RSDatabaseManager {
 extension RSDatabaseManager {
     func write(_ message: RSMessage) {
         syncQueue.sync {
+            lock.lock()
             do {
                 let jsonObject = message.dictionaryValue
                 if JSONSerialization.isValidJSONObject(jsonObject) {
@@ -159,6 +161,7 @@ extension RSDatabaseManager {
             } catch {
                 client.log(message: "dump: \(error.localizedDescription)", logLevel: .error)
             }
+            lock.unlock()
         }
     }
     
