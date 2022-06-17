@@ -289,7 +289,7 @@ RSClient.sharedInstance().reset()
 | AppCenter | https://github.com/rudderlabs/rudder-integration-appcenter-swift |
 | MoEngage | https://github.com/rudderlabs/rudder-integration-moengage-swift |
 | Kochava | https://github.com/rudderlabs/rudder-integration-kochava-swift |
-| Brnach | https://github.com/rudderlabs/rudder-integration-branch-swift |
+| Branch | https://github.com/rudderlabs/rudder-integration-branch-swift |
 
 ## Contribute
 
