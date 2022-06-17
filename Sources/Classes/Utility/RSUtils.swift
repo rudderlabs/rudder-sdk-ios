@@ -74,6 +74,10 @@ struct RSUtils {
         return jsonString
     }
     
+    static func getNumberOfBatch(from totalEventsCount: Int, and flushQueueSize: Int) -> Int {
+        return (totalEventsCount % flushQueueSize == 0) ? (totalEventsCount / flushQueueSize) : ((totalEventsCount / flushQueueSize) + 1)
+    }
+    
     static func getLifeCycleProperties(previousVersion: String? = nil,
                                        previousBuild: String? = nil,
                                        currentVersion: String? = nil,

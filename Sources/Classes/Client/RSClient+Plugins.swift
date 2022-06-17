@@ -100,7 +100,7 @@ import Cocoa
 extension RSClient {
     internal func setupServerConfigCheck() {
         checkServerConfig()
-        RSQueueTimer.schedule(interval: .days(1), queue: .main) {
+        RSRepeatingTimer.schedule(interval: .days(1), queue: .main) {
             self.checkServerConfig()
         }
     }

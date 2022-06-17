@@ -31,11 +31,11 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
     [client configureWith:config];
     [client addDestination:[[CustomDestination alloc] init]];
     
-    [client identify:@"user_id" traits:@{@"email": @"abc@def.com"}];
-    [client track:@"track 1" properties:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
-    [client screen:@"ViewController" properties:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
-    [client group:@"sample_group_id" traits:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
-    [client alias:@"user_id"];
+//    [client identify:@"user_id" traits:@{@"email": @"abc@def.com"}];
+//    [client track:@"track 1" properties:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
+//    [client screen:@"ViewController" properties:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
+//    [client group:@"sample_group_id" traits:@{@"key_1": @"value_1", @"key_2": @"value_2"}];
+//    [client alias:@"user_id"];
     
     /*[client reset];
     [client setDeviceToken:@"example_device_token"];

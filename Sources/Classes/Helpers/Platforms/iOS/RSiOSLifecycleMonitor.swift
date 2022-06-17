@@ -24,7 +24,8 @@ class RSiOSLifecycleMonitor: RSPlatformPlugin {
                                                            UIApplication.didReceiveMemoryWarningNotification,
                                                            UIApplication.willTerminateNotification,
                                                            UIApplication.significantTimeChangeNotification,
-                                                           UIApplication.backgroundRefreshStatusDidChangeNotification]
+                                                           UIApplication.backgroundRefreshStatusDidChangeNotification,
+                                                           UIApplication.willTerminateNotification]
 
     required init() {
         setupListeners()
@@ -49,6 +50,8 @@ class RSiOSLifecycleMonitor: RSPlatformPlugin {
             self.significantTimeChange(notification: notification)
         case UIApplication.backgroundRefreshStatusDidChangeNotification:
             self.backgroundRefreshDidChange(notification: notification)
+        case UIApplication.willTerminateNotification:
+            self.willTerminate(notification: notification)
         default:
             
             break
@@ -148,6 +151,10 @@ extension RudderDestinationPlugin: RSiOSLifecycle {
     
     func applicationDidEnterBackground(application: UIApplication?) {
         enterBackground()
+    }
+    
+    func applicationWillTerminate(application: UIApplication?) {
+        willTerminate()
     }
 }
 
