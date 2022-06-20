@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://cocoapods.org/pods/Rudder">
-    <img src="https://img.shields.io/cocoapods/v/Rudder.svg?style=flat">
+    <img src="https://img.shields.io/static/v1?label=pod&message=v1.6.1&color=blue&style=flat">
     </a>
 </p>
 
