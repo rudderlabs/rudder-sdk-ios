@@ -621,20 +621,28 @@ typedef enum {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    NSString *previousVersion = [preferenceManager getBuildVersionCode];
+    NSString *previousVersion = [preferenceManager getVersionName];
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    
+    NSString* previousBuildNumber = [preferenceManager getBuildNumber];
+    NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
     
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
-            @"version": currentVersion
+            @"version": currentVersion,
+            @"build": currentBuildNumber
         }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
+        [preferenceManager saveVersionName:currentVersion];
+        [preferenceManager saveBuildNumber:currentBuildNumber];
     } else if (![currentVersion isEqualToString:previousVersion]) {
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
-            @"version": currentVersion
+            @"version": currentVersion,
+            @"previous_build": previousBuildNumber ?: @"",
+            @"build": currentBuildNumber
         }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
+        [preferenceManager saveVersionName:currentVersion];
+        [preferenceManager saveBuildNumber:currentBuildNumber];
     }
     
     NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];

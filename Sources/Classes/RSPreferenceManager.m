@@ -18,7 +18,8 @@ NSString *const RSPrefsKey = @"rl_prefs";
 NSString *const RSServerConfigKey = @"rl_server_config";
 NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
 NSString *const RSTraitsKey = @"rl_traits";
-NSString *const RSApplicationInfoKey = @"rl_application_info_key";
+NSString *const RSApplicationBuildKey = @"rl_application_build_key";
+NSString *const RSApplicationVersionKey = @"rl_application_version_key";
 NSString *const RSExternalIdKey =  @"rl_external_id";
 NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
 NSString *const RSOptStatus = @"rl_opt_status";
@@ -64,13 +65,22 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSTraitsKey];
 }
 
-- (void)saveBuildVersionCode:(NSString *)versionCode {
-    [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RSApplicationInfoKey];
+- (NSString* __nullable) getBuildNumber {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationBuildKey];
+}
+
+- (void) saveBuildNumber: (NSString* __nonnull) buildNumber {
+    [[NSUserDefaults standardUserDefaults] setValue:buildNumber forKey:RSApplicationBuildKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSString *)getBuildVersionCode {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
+- (NSString* __nullable) getVersionName {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationVersionKey];
+}
+
+- (void) saveVersionName: (NSString* __nonnull) versionName {
+    [[NSUserDefaults standardUserDefaults] setValue:versionName forKey:RSApplicationVersionKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)getExternalIds {
