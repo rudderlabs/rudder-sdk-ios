@@ -282,14 +282,15 @@ RSClient.sharedInstance().reset()
 
 | Integration | Package |
 | --- | --- |
-| Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
-| Bugsnag | https://github.com/rudderlabs/rudder-integration-bugsnag-swift |
-| Singular | https://github.com/rudderlabs/rudder-integration-singular-swift |
 | Adjust | https://github.com/rudderlabs/rudder-integration-adjust-swift |
 | AppCenter | https://github.com/rudderlabs/rudder-integration-appcenter-swift |
-| MoEngage | https://github.com/rudderlabs/rudder-integration-moengage-swift |
-| Kochava | https://github.com/rudderlabs/rudder-integration-kochava-swift |
+| AppsFlyer | https://github.com/rudderlabs/rudder-integration-appsflyer-swift |
 | Branch | https://github.com/rudderlabs/rudder-integration-branch-swift |
+| Bugsnag | https://github.com/rudderlabs/rudder-integration-bugsnag-swift |
+| Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
+| Kochava | https://github.com/rudderlabs/rudder-integration-kochava-swift |
+| MoEngage | https://github.com/rudderlabs/rudder-integration-moengage-swift |
+| Singular | https://github.com/rudderlabs/rudder-integration-singular-swift |
 
 ## Contribute
 
