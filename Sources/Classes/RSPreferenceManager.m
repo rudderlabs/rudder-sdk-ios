@@ -6,6 +6,7 @@
 //
 
 #import "RSPreferenceManager.h"
+#import "RSLogger.h"
 #if TARGET_OS_WATCH
 #import <WatchKit/WKInterfaceDevice.h>
 #endif
@@ -20,6 +21,7 @@ NSString *const RSServerLastUpdatedKey = @"rl_server_last_updated";
 NSString *const RSTraitsKey = @"rl_traits";
 NSString *const RSApplicationBuildKey = @"rl_application_build_key";
 NSString *const RSApplicationVersionKey = @"rl_application_version_key";
+NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 NSString *const RSExternalIdKey =  @"rl_external_id";
 NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
 NSString *const RSOptStatus = @"rl_opt_status";
@@ -67,6 +69,20 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 
 - (NSString* __nullable) getBuildNumber {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationBuildKey];
+}
+
+- (void)saveBuildVersionCode:(NSString *)versionCode {
+    [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RSApplicationInfoKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)getBuildVersionCode {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
+}
+
+- (void) deleteBuildVersionCode {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:RSApplicationInfoKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) saveBuildNumber: (NSString* __nonnull) buildNumber {
@@ -152,6 +168,15 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
         return -1;
     } else {
         return [updatedTime longValue];
+    }
+}
+
+- (void) performMigration {
+    NSString* buildNumber = [self getBuildVersionCode];
+    if(buildNumber != nil) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSPreferenceManager: performMigration: buildNumber stored in %@ key, migrating it to %@", RSApplicationInfoKey, RSApplicationBuildKey]];
+        [self deleteBuildVersionCode];
+        [self saveBuildNumber:buildNumber];
     }
 }
 
