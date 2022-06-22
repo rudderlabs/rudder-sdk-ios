@@ -88,6 +88,7 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
+        [self->preferenceManager performMigration];
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
@@ -621,20 +622,28 @@ typedef enum {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    NSString *previousVersion = [preferenceManager getBuildVersionCode];
+    NSString *previousVersion = [preferenceManager getVersionNumber];
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    
+    NSString* previousBuildNumber = [preferenceManager getBuildNumber];
+    NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
     
     if (!previousVersion) {
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
-            @"version": currentVersion
+            @"version": currentVersion,
+            @"build": currentBuildNumber
         }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
-    } else if (![currentVersion isEqualToString:previousVersion]) {
+        [preferenceManager saveVersionNumber:currentVersion];
+        [preferenceManager saveBuildNumber:currentBuildNumber];
+    } else if (![previousVersion isEqualToString:currentVersion]) {
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
-            @"version": currentVersion
+            @"version": currentVersion,
+            @"previous_build": previousBuildNumber ?: @"",
+            @"build": currentBuildNumber
         }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
+        [preferenceManager saveVersionNumber:currentVersion];
+        [preferenceManager saveBuildNumber:currentBuildNumber];
     }
     
     NSMutableDictionary *applicationOpenedProperties = [[NSMutableDictionary alloc] init];

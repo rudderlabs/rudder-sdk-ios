@@ -68,3 +68,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.6.0 - 2022-05-04
 ### Feature
 - Flush API
+
+## Version - 1.6.1 - 2022-06-20
+- Included Build Number as well in the life cycle events Application Installed & Application Updated.
+- Accepting path as well as part of the url for both control plane url and data plane url.

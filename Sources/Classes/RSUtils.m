@@ -135,6 +135,10 @@
     return [messageDetails subarrayWithRange:NSMakeRange(0, queueSize)];
 }
 
++ (BOOL) isValidURL:(NSURL*) url {
+    return url && [url scheme] && [url host];
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 

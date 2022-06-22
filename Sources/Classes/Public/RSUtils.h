@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray*) serializeArray: (NSArray*) array;
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize;
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
++ (BOOL) isValidURL:(NSURL*) url;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;
