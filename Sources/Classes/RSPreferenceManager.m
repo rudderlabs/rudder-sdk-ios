@@ -71,6 +71,7 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationBuildKey];
 }
 
+// saving the version number to the NSUserDefaults
 - (void)saveBuildVersionCode:(NSString *)versionCode {
     [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RSApplicationInfoKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -85,17 +86,19 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+// saving the build number  to the NSUserDefaults
 - (void) saveBuildNumber: (NSString* __nonnull) buildNumber {
     [[NSUserDefaults standardUserDefaults] setValue:buildNumber forKey:RSApplicationBuildKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSString* __nullable) getVersionName {
+// saving the version number to the NSUserDefaults
+- (NSString* __nullable) getVersionNumber {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationVersionKey];
 }
 
-- (void) saveVersionName: (NSString* __nonnull) versionName {
-    [[NSUserDefaults standardUserDefaults] setValue:versionName forKey:RSApplicationVersionKey];
+- (void) saveVersionNumber: (NSString* __nonnull) versionNumber {
+    [[NSUserDefaults standardUserDefaults] setValue:versionNumber forKey:RSApplicationVersionKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -172,11 +175,11 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 }
 
 - (void) performMigration {
-    NSString* buildNumber = [self getBuildVersionCode];
-    if(buildNumber != nil) {
+    NSString* versionNumber = [self getBuildVersionCode];
+    if(versionNumber != nil) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSPreferenceManager: performMigration: buildNumber stored in %@ key, migrating it to %@", RSApplicationInfoKey, RSApplicationBuildKey]];
         [self deleteBuildVersionCode];
-        [self saveBuildNumber:buildNumber];
+        [self saveVersionNumber:versionNumber];
     }
 }
 

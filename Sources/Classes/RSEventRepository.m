@@ -622,7 +622,7 @@ typedef enum {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    NSString *previousVersion = [preferenceManager getVersionName];
+    NSString *previousVersion = [preferenceManager getVersionNumber];
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
     
     NSString* previousBuildNumber = [preferenceManager getBuildNumber];
@@ -633,16 +633,16 @@ typedef enum {
             @"version": currentVersion,
             @"build": currentBuildNumber
         }];
-        [preferenceManager saveVersionName:currentVersion];
+        [preferenceManager saveVersionNumber:currentVersion];
         [preferenceManager saveBuildNumber:currentBuildNumber];
-    } else if (![currentVersion isEqualToString:previousVersion]) {
+    } else if (![previousVersion isEqualToString:currentVersion]) {
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion,
             @"previous_build": previousBuildNumber ?: @"",
             @"build": currentBuildNumber
         }];
-        [preferenceManager saveVersionName:currentVersion];
+        [preferenceManager saveVersionNumber:currentVersion];
         [preferenceManager saveBuildNumber:currentBuildNumber];
     }
     
