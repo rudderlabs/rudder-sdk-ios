@@ -17,9 +17,9 @@ NSString* _Nonnull const COL_ID = @"id";
 NSString* _Nonnull const COL_MESSAGE = @"message";
 NSString* _Nonnull const COL_UPDATED = @"updated";
 NSString* _Nonnull const COL_STATUS = @"status";
-NSString* _Nonnull const TABLE_EVENTS_TO_TRANSFORMATION = @"events_to_transformation";
+NSString* _Nonnull const TABLE_EVENTS_TO_DESTINATION = @"events_to_destination";
 NSString* _Nonnull const COL_EVENT_ID = @"event_id";
-NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
+NSString* _Nonnull const COL_DESTINATION_ID = @"destination_id";
 
 @implementation RSDBPersistentManager
 
@@ -39,39 +39,8 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     }
 }
 
-- (void)createTables {
-    [self createEventsTableWithVersion:RS_DB_Version];
-    [self createEventsToTransformationMappingTable];
-}
-
--(void) createEventsTableWithVersion:(int) version {
-    NSString *createTableSQLString;
-    switch(version) {
-        case 1:
-            createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED];
-            break;
-        default:
-            createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER DEFAULT %d);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED, COL_STATUS, DEFAULT_STATUS_VALUE];
-    }
-    
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsTableWithVersion: Schema: %@", createTableSQLString]];
-    if([self execSQL:createTableSQLString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: createEventsTableWithVersion: successfully created the table"];
-        return;
-    }
-    [RSLogger logError:@"RSDBPersistentManager: createEventsTableWithVersion: failed to create the table"];
-}
-
--(void) createEventsToTransformationMappingTable {
-    NSString *createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER NOT NULL, %@ TEXT NOT NULL);", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, COL_TRANSFORMATION_ID];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsToTransformationMappingTable: Schema: %@", createTableSQLString]];
-    if([self execSQL:createTableSQLString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: createEventsToTransformationMappingTable: successfully created the table"];
-        return;
-    }
-    [RSLogger logError:@"RSDBPersistentManager: createEventsToTransformationMappingTable: failed to create the table"];
-}
-
+// checks the events table for status column and would add the column, if missing.
+// Migration is needed when an application is updated to the latest version of SDK from a version which doesn't has the status column in its events table
 - (void)checkForMigrations {
     [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: checking if the event table has status column"];
     if(![self checkIfStatusColumnExists]) {
@@ -116,6 +85,42 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     [RSLogger logError:@"RSDBPersistentManager: performMigration: events table migration failed"];
 }
 
+- (void)createTables {
+    [self createEventsTableWithVersion:RS_DB_Version];
+    [self createEventsToDestinationIdMappingTable];
+}
+
+-(void) createEventsTableWithVersion:(int) version {
+    NSString *createTableSQLString;
+    switch(version) {
+        case 1:
+            createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED];
+            break;
+        default:
+            createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER DEFAULT %d);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED, COL_STATUS, DEFAULT_STATUS_VALUE];
+    }
+    
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsTableWithVersion: Schema: %@", createTableSQLString]];
+    if([self execSQL:createTableSQLString]) {
+        [RSLogger logDebug:@"RSDBPersistentManager: createEventsTableWithVersion: successfully created the table"];
+        return;
+    }
+    [RSLogger logError:@"RSDBPersistentManager: createEventsTableWithVersion: failed to create the table"];
+}
+
+// table to hold the events to destination mapping, Eg: If event e1 needs to be sent to destinations d1 & d2, both of which needs transformations, then we would insert entries e1->d1 & e1->d2 in the following table
+-(void) createEventsToDestinationIdMappingTable {
+    NSString *createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER NOT NULL, %@ TEXT NOT NULL);", TABLE_EVENTS_TO_DESTINATION, COL_EVENT_ID, COL_DESTINATION_ID];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: createEventsToDestinationIdMappingTable: Schema: %@", createTableSQLString]];
+    if([self execSQL:createTableSQLString]) {
+        [RSLogger logDebug:@"RSDBPersistentManager: createEventsToDestinationIdMappingTable: successfully created the table"];
+        return;
+    }
+    [RSLogger logError:@"RSDBPersistentManager: createEventsToDestinationIdMappingTable: failed to create the table"];
+}
+
+
+
 - (NSNumber*)saveEvent:(NSString *)message {
     NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld) RETURNING %@;", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong], COL_ID];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: saveEventSQL: %@", insertSQLString]];
@@ -149,7 +154,6 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     }
 }
 
-// need to synchronize
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode {
     NSString* querySQLString = nil;
     switch(mode) {
@@ -213,6 +217,7 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     return dbMessage;
 }
 
+// If mode is passed as DEVICEMODE, this function would return the total number of events which were waiting for the Device Mode Processing to be done
 - (int) getDBRecordCountForMode:(MODES) mode {
     NSString *countSQLString = nil;
     switch(mode) {
@@ -279,22 +284,22 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     [RSLogger logError:@"RSDBPersistentManager: flushEventsFromDB: Failed to delete the events from DB"];
 }
 
-- (void) saveEvent:(NSNumber*) rowId toTransformationId:(NSString*) transformationId {
-    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@(%@, %@) VALUES (%d, '%@');", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, COL_TRANSFORMATION_ID, rowId.intValue, transformationId];
+- (void) saveEvent:(NSNumber*) rowId toDestinationId:(NSString*) destinationId {
+    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@(%@, %@) VALUES (%d, '%@');", TABLE_EVENTS_TO_DESTINATION, COL_EVENT_ID, COL_DESTINATION_ID, rowId.intValue, destinationId];
     if([self execSQL:insertSQLString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: saveEventToTransformationId: Successfully inserted event to transformation mapping"];
+        [RSLogger logDebug:@"RSDBPersistentManager: saveEventToDestinationId: Successfully inserted event to destination mapping"];
         return;
     }
-    [RSLogger logError:@"RSDBPersistentManager: saveEventToTransformationId: Failed to insert event to transformation mapping"];
+    [RSLogger logError:@"RSDBPersistentManager: saveEventToDestinationId: Failed to insert event to destination mapping"];
 }
 
 -(void) updateEvents {
     
 }
 
--(NSArray<NSString*>*) getEventIdsWithTransformationMapping:(NSArray*) eventIds {
+-(NSArray<NSString*>*) getEventIdsWithDestinationMapping:(NSArray*) eventIds {
     NSString* eventIdsCSV = [RSUtils getCSVString:eventIds];
-    NSString* selectSQLString = [[NSString alloc] initWithFormat:@"SELECT %@, COUNT(*) as COUNT FROM %@ WHERE %@ in (%@) GROUP BY %@;", COL_EVENT_ID, TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, eventIdsCSV, COL_EVENT_ID];
+    NSString* selectSQLString = [[NSString alloc] initWithFormat:@"SELECT %@, COUNT(*) as COUNT FROM %@ WHERE %@ in (%@) GROUP BY %@;", COL_EVENT_ID, TABLE_EVENTS_TO_DESTINATION, COL_EVENT_ID, eventIdsCSV, COL_EVENT_ID];
     const char* selectSQLChar = [selectSQLString UTF8String];
     NSMutableArray<NSString*>* eventIdsWithTransformationMapping = [[NSMutableArray alloc] init];
     sqlite3_stmt *selectStmt = nil;
@@ -312,51 +317,52 @@ NSString* _Nonnull const COL_TRANSFORMATION_ID = @"transformation_id";
     return [eventIdsWithTransformationMapping copy];
 }
 
-- (void) deleteEvents:(NSArray*) eventIds withTransformationId:(NSString*) transformationId {
+- (void) deleteEvents:(NSArray*) eventIds withDestinationId:(NSString*) destinationId {
     NSString* eventIdsCSV = [RSUtils getCSVString:eventIds];
-    NSString* deleteSQLString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = \"%@\" and %@ IN (%@);", TABLE_EVENTS_TO_TRANSFORMATION, COL_TRANSFORMATION_ID, transformationId, COL_EVENT_ID, eventIdsCSV];
+    NSString* deleteSQLString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = \"%@\" and %@ IN (%@);", TABLE_EVENTS_TO_DESTINATION, COL_DESTINATION_ID, destinationId, COL_EVENT_ID, eventIdsCSV];
     @synchronized (lockObj) {
     if([self execSQL:deleteSQLString]) {
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithTransformationId: Successfully deleted events (%@) with transformation Id %@", eventIdsCSV, transformationId]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithDestinationId: Successfully deleted events (%@) with destination Id %@", eventIdsCSV, destinationId]];
         return;
     }
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithTransformationId: Failed to delete events (%@) with transformation Id %@", eventIdsCSV, transformationId]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventsWithDestinationId: Failed to delete events (%@) with destination Id %@", eventIdsCSV, destinationId]];
     }
 }
 
--(NSDictionary<NSString*, NSArray<NSString*>*>*) getEventsToTransformationMapping:(NSArray<NSString*>*) messageIds {
+// given list of event Id's this would return back list of destinationId's which require transformation for that event.
+-(NSDictionary<NSString*, NSArray<NSString*>*>*) getDestinationMappingofEvents:(NSArray<NSString*>*) eventIds {
     NSString* querySQLString = nil;
-    if(messageIds.count>0) {
-        NSString* messageIdsCSV = [RSUtils getCSVString:messageIds];
-        if(messageIdsCSV != nil && messageIdsCSV.length !=0){
-            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%@) ORDER BY %@ ASC", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID, messageIdsCSV, COL_EVENT_ID];
+    if(eventIds.count>0) {
+        NSString* eventIdsCSV = [RSUtils getCSVString:eventIds];
+        if(eventIdsCSV != nil && eventIdsCSV.length !=0){
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%@) ORDER BY %@ ASC", TABLE_EVENTS_TO_DESTINATION, COL_EVENT_ID, eventIdsCSV, COL_EVENT_ID];
         }
     }
     if(querySQLString == nil) {
-        querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC", TABLE_EVENTS_TO_TRANSFORMATION, COL_EVENT_ID];
+        querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC", TABLE_EVENTS_TO_DESTINATION, COL_EVENT_ID];
     }
-    NSMutableDictionary<NSString*, NSMutableArray<NSString*>*>* eventsToTransformationMapping = [[NSMutableDictionary alloc] init];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getEventsToTransformationMapping: %@", querySQLString]];
+    NSMutableDictionary<NSString*, NSMutableArray<NSString*>*>* eventsToDestinationsMapping = [[NSMutableDictionary alloc] init];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getDestinationMappingofEvents: %@", querySQLString]];
     const char* querySQL = [querySQLString UTF8String];
     sqlite3_stmt *queryStmt = nil;
     if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
-        [RSLogger logDebug:@"RSDBPersistentManager: getEventsToTransformationMapping: Successfully fetched events to transformation mapping from DB"];
+        [RSLogger logDebug:@"RSDBPersistentManager: getDestinationMappingofEvents: Successfully fetched destinations to events mapping from DB"];
         while (sqlite3_step(queryStmt) == SQLITE_ROW) {
             NSString* eventId =  [[NSString alloc] initWithFormat:@"%d", sqlite3_column_int(queryStmt, 0)];
             const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
-            NSString *transformationId = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
-            if(eventsToTransformationMapping[eventId] == nil) {
-                NSMutableArray<NSString*>* transformationIdsArray = [[NSMutableArray alloc] init];
-                eventsToTransformationMapping[eventId] = transformationIdsArray;
+            NSString *destinationId = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
+            if(eventsToDestinationsMapping[eventId] == nil) {
+                NSMutableArray<NSString*>* destinationIdsArray = [[NSMutableArray alloc] init];
+                eventsToDestinationsMapping[eventId] = destinationIdsArray;
             }
-            NSMutableArray<NSString*>* transformationIdsArray = eventsToTransformationMapping[eventId];
-            [transformationIdsArray addObject:transformationId];
-            eventsToTransformationMapping[eventId] = transformationIdsArray;
+            NSMutableArray<NSString*>* destinationIdsArray = eventsToDestinationsMapping[eventId];
+            [destinationIdsArray addObject:destinationId];
+            eventsToDestinationsMapping[eventId] = destinationIdsArray;
         }
     } else {
-        [RSLogger logError:@"RSDBPersistentManager: getEventsToTransformationMapping: Failed to fetch events to transformation mapping from DB"];
+        [RSLogger logError:@"RSDBPersistentManager: getDestinationMappingofEvents: Failed to fetch events to destination mapping from DB"];
     }
-    return [eventsToTransformationMapping copy];
+    return [eventsToDestinationsMapping copy];
 }
 
 -(BOOL) execSQL: (NSString*) sqlCommand {

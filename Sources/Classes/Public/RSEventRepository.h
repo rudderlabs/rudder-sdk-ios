@@ -36,7 +36,7 @@ typedef enum {
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
-    NSDictionary<NSString*, NSString*>* destinationToTransformationMapping;
+    NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
     BOOL firstForeGround;

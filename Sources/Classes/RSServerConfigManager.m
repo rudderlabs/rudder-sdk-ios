@@ -15,7 +15,7 @@
 
 
 static RSServerConfigManager *_instance;
-static NSMutableDictionary<NSString*, NSString*>* destinationToTransformationMapping;
+static NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static RSServerConfigSource *serverConfig;
 
@@ -87,7 +87,6 @@ int receivedError = NETWORKSUCCESS;
         
         NSArray *destinationArr = [sourceDict objectForKey:@"destinations"];
         NSMutableArray *destinations = [[NSMutableArray alloc] init];
-        destinationToTransformationMapping = [[NSMutableDictionary alloc] init];
         for (NSDictionary* destinationDict in destinationArr) {
             // create destination object
             RSServerDestination *destination = [[RSServerDestination alloc] init];
@@ -100,10 +99,12 @@ int receivedError = NETWORKSUCCESS;
             }
             destination.isDestinationEnabled = isDestinationEnabled;
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
-            NSArray* transformationsList = [destinationDict objectForKey:@"transformationsList"];
-            if(transformationsList != nil && transformationsList.count >0){
-                NSDictionary* transformation = [transformationsList objectAtIndex:0];
-                destination.transformationId = transformation[@"id"];
+            
+            // checking if transformations are connected for each device mode destination, and if connected storing their id's in an array
+            NSNumber *transformationsConnected = [destinationDict objectForKey:@"areTransformationsConnected"];
+            BOOL isTransformationConnected = NO;
+            if(transformationsConnected != nil) {
+                isTransformationConnected = [transformationsConnected boolValue];
             }
             
             
@@ -112,12 +113,14 @@ int receivedError = NETWORKSUCCESS;
             destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
             destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
             destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
-            
-            if(destination.transformationId != nil) {
-                destinationToTransformationMapping[destinationDefinition.displayName] = destination.transformationId;
-            }
-            
             destination.destinationDefinition = destinationDefinition;
+            
+            if(isTransformationConnected) {
+                if(destinationsWithTransformationsEnabled == nil) {
+                    destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
+                }
+                destinationsWithTransformationsEnabled[destinationDefinition.displayName] = destination.destinationId;
+            }
             
             destination.destinationConfig = [destinationDict objectForKey:@"config"];
             [destinations addObject:destination];
@@ -243,11 +246,11 @@ int receivedError = NETWORKSUCCESS;
     return config;
 }
 
-- (NSDictionary<NSString*, NSString*>*) getDestinationToTransformationMapping {
+- (NSDictionary<NSString*, NSString*>*) getDestinationsWithTransformationsEnabled {
     pthread_mutex_lock(&mutex);
-    NSDictionary<NSString*, NSString*>* mapping = [destinationToTransformationMapping copy];
+    NSDictionary<NSString*, NSString*>* transformationsEnabledDestinations = [destinationsWithTransformationsEnabled copy];
     pthread_mutex_unlock(&mutex);
-    return mapping;
+    return transformationsEnabledDestinations;
 }
 
 - (int) getError {

@@ -143,10 +143,11 @@ static RSEventRepository* _instance;
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
-                        strongSelf->destinationToTransformationMapping = [strongSelf->configManager getDestinationToTransformationMapping];
-                        if([strongSelf-> destinationToTransformationMapping count] > 0){
+                        strongSelf->destinationsWithTransformationsEnabled = [strongSelf->configManager getDestinationsWithTransformationsEnabled];
+                        // initaiting the transformation processor only if there are any device mode destinations with transformations enabled
+                        if([strongSelf-> destinationsWithTransformationsEnabled count] > 0){
                             dispatch_async(dispatch_get_main_queue(), ^{
-                            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initiateTransformationProcessor) userInfo:nil repeats:YES];
+                                [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initiateTransformationProcessor) userInfo:nil repeats:YES];
                             });
                         }
                         [strongSelf __initiateFactories: serverConfig.destinations];
@@ -231,6 +232,8 @@ int deviceModeSleepCount = 0;
         [RSLogger logDebug:@" transformation processor started"];
         [RSLogger logDebug:@"Fetching events to flush to transformations server"];
         int deviceModeEventsCount = [strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE];
+        
+        // the flow would get started only if the number of eligible events for device mode transformation is greater than DMT_BATCH_SIZE (OR) if the sleepCount is greater than the sleepTimeOut and number of eligible events for Device Mode is >0
         if (deviceModeEventsCount >= DMT_BATCH_SIZE || ((deviceModeSleepCount >= [strongSelf->config sleepTimeout]) && deviceModeEventsCount>=0)) {
             do {
                 RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
@@ -249,19 +252,18 @@ int deviceModeSleepCount = 0;
                     if(object != nil && [object isKindOfClass:[NSArray class]]) {
                         NSArray* responseArray = object;
                         for(NSDictionary* responseObject in responseArray) {
-                            NSDictionary* transformationObject = responseObject[@"transformation"];
-                            NSString* transformationId = transformationObject[@"id"];
-                            NSString* status = transformationObject[@"status"];
-                            NSArray* destinations = [self->destinationToTransformationMapping allKeysForObject:transformationId];
-                            NSArray* transformedPayloads = [transformationObject[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+                            NSDictionary* destinationObject = responseObject[@"destination"];
+                            NSString* destinationId = destinationObject[@"id"];
+                            NSString* status = destinationObject[@"status"];
+                            NSArray* transformedPayloads = [destinationObject[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
                                 return [a[@"orderNo"] compare:b[@"orderNo"]];
                             }];
                             if([status isEqualToString:@"200"]) {
-                                [strongSelf dumpTransformedEvents:transformedPayloads ToFactories:destinations];
-                                [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withTransformationId:transformationId];
-                                NSArray<NSString*>* eventsWithTransformationMapping = [strongSelf->dbpersistenceManager getEventIdsWithTransformationMapping:_dbMessage.messageIds];
+                                [strongSelf dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
+                                [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withDestinationId:destinationId];
+                                NSArray<NSString*>* eventsWithDestinationsMapping = [strongSelf->dbpersistenceManager getEventIdsWithDestinationMapping:_dbMessage.messageIds];
                                 NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
-                                [processedEvents removeObjectsInArray:eventsWithTransformationMapping];
+                                [processedEvents removeObjectsInArray:eventsWithDestinationsMapping];
                                 [strongSelf->dbpersistenceManager updateEventsWithIds:processedEvents withStatus:DEVICEMODEPROCESSINGDONE];
                                 [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                             }
@@ -276,6 +278,11 @@ int deviceModeSleepCount = 0;
                             //                                [strongSelf->dbpersistenceManager deleteEvents:successfullyTransformedEventIds withTransformationId:transformationId];
                             //                            }
                         }
+                        NSArray<NSString*>* eventsWithDestinationsMapping = [strongSelf->dbpersistenceManager getEventIdsWithDestinationMapping:_dbMessage.messageIds];
+                        NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
+                        [processedEvents removeObjectsInArray:eventsWithDestinationsMapping];
+                        [strongSelf->dbpersistenceManager updateEventsWithIds:processedEvents withStatus:DEVICEMODEPROCESSINGDONE];
+                        [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     }
                 }
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", deviceModeSleepCount]];
@@ -539,8 +546,8 @@ int deviceModeSleepCount = 0;
 
 - (NSDictionary<NSString*, NSString*>*)flushEventsToTransformationServer:(RSDBMessage *)dbMessage {
     NSDictionary<NSString*, NSString*>* response = nil;
-    NSDictionary<NSString*, NSArray<NSString*>*>* eventToTransformationMapping = [self->dbpersistenceManager getEventsToTransformationMapping:dbMessage.messageIds];
-    NSString* payload = [self __getPayloadForTransformation:dbMessage withEventToTransformationMapping:eventToTransformationMapping];
+    NSDictionary<NSString*, NSArray<NSString*>*>* eventToDestinationMapping = [self->dbpersistenceManager getDestinationMappingofEvents:dbMessage.messageIds];
+    NSString* payload = [self __getPayloadForTransformation:dbMessage withEventToTransformationMapping:eventToDestinationMapping];
     NSLog(@"%@", payload);
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
     [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
@@ -550,7 +557,7 @@ int deviceModeSleepCount = 0;
     return response;
 }
 
--(NSString*) __getPayloadForTransformation:(RSDBMessage *)dbMessage withEventToTransformationMapping:(NSDictionary<NSString*, NSArray<NSString*>*>*) eventToTransformationMapping {
+-(NSString*) __getPayloadForTransformation:(RSDBMessage *)dbMessage withEventToTransformationMapping:(NSDictionary<NSString*, NSArray<NSString*>*>*) eventsToDestinationsMapping {
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
@@ -567,7 +574,7 @@ int deviceModeSleepCount = 0;
         [message appendString:@"{"];
         [message appendFormat:@"\"orderNo\": %@,", messageIds[index]];
         [message appendFormat:@"\"event\": %@,", messages[index]];
-        [message appendFormat:@"\"transformationIds\" : [%@]", [RSUtils getJSONCSVString: eventToTransformationMapping[messageIds[index]]]];
+        [message appendFormat:@"\"destinationIds\" : [%@]", [RSUtils getJSONCSVString: eventsToDestinationsMapping[messageIds[index]]]];
         [message appendFormat:@"},"];
         //  add message size to batch size
         totalBatchSize += [RSUtils getUTF8Length:message];
@@ -643,17 +650,17 @@ int deviceModeSleepCount = 0;
                 if (integration != nil)
                 {
                     if([self->eventFilteringPlugin isEventAllowed:key withMessage:message]) {
-                    if(destinationToTransformationMapping[key] == nil) {
-                        
+                        if(destinationsWithTransformationsEnabled[key] == nil) {
+                            
                             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping for %@", key]];
                             [integration dump:message];
-                        
+                            
+                        }
+                        else {
+                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
+                            [dbpersistenceManager saveEvent:rowId toDestinationId:destinationsWithTransformationsEnabled[key]];
+                        }
                     }
-                    else {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
-                        [dbpersistenceManager saveEvent:rowId toTransformationId:destinationToTransformationMapping[key]];
-                    }
-                 }
                 }
             }
         }
@@ -665,12 +672,14 @@ int deviceModeSleepCount = 0;
     }
 }
 
--(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToFactories:(NSArray*) destinations {
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId {
     for (NSDictionary* transformedPayload in transformedPayloads) {
         RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
-        for(NSString* destination in destinations) {
-            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destination];
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping the transformed event %@ for %@", transformedMessage.event, destination]];
+        NSArray<NSString*>* destinationNames = [destinationsWithTransformationsEnabled allKeysForObject:destinationId];
+        if(destinationNames.count >0) {
+            NSString* destinationName = destinationNames[0];
+            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destinationName];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dumping the transformed event %@ for %@", transformedMessage.event, destinationName]];
             [integration dump:transformedMessage];
         }
     }
