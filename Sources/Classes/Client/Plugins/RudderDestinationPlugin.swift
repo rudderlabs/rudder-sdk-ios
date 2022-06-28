@@ -129,7 +129,7 @@ extension RudderDestinationPlugin {
     }
     
     func periodicFlush() {
-        uploadsQueue.sync { [weak self] in
+        uploadsQueue.async { [weak self] in
             guard let self = self else { return }
             self.prepareEventsToFlush()
         }
