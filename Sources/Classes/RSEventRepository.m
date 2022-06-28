@@ -397,7 +397,7 @@ typedef enum {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     int __block respStatus = NETWORKSUCCESS;
-    NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
+    NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"v1/batch"];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:dataPlaneEndPoint]];
