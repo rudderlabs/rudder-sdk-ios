@@ -19,7 +19,7 @@
     }
     NSURL *url = [[NSURL alloc] initWithString:endPointUrl];
     if([RSUtils isValidURL:url]) {
-        config.dataPlaneUrl = url.absoluteString;
+        config.dataPlaneUrl = [RSUtils appendSlashToUrl: url.absoluteString];
     }
     return self;
 }
@@ -31,7 +31,7 @@
     
     NSURL *url = [[NSURL alloc] initWithString:dataPlaneUrl];
     if([RSUtils isValidURL:url]) {
-        config.dataPlaneUrl = url.absoluteString;
+        config.dataPlaneUrl = [RSUtils appendSlashToUrl: url.absoluteString];
     }
     return self;
 }
@@ -41,7 +41,7 @@
         config = [[RSConfig alloc] init];
     }
     if([RSUtils isValidURL:dataPlaneURL]) {
-        config.dataPlaneUrl = dataPlaneURL.absoluteString;
+        config.dataPlaneUrl = [RSUtils appendSlashToUrl: dataPlaneURL.absoluteString];
     }
     return self;
 }
@@ -142,7 +142,7 @@
     }
     NSURL *url = [[NSURL alloc] initWithString:configPlaneUrl];
     if([RSUtils isValidURL:url]) {
-        config.controlPlaneUrl = url.absoluteString;
+        config.controlPlaneUrl = [RSUtils appendSlashToUrl: url.absoluteString];
     }
     return self;
 }
@@ -153,7 +153,7 @@
     }
     NSURL *url = [[NSURL alloc] initWithString:controlPlaneUrl];
     if([RSUtils isValidURL:url]) {
-        config.controlPlaneUrl = url.absoluteString;
+        config.controlPlaneUrl = [RSUtils appendSlashToUrl: url.absoluteString];
     }
     return self;
 }
@@ -163,7 +163,7 @@
         config = [[RSConfig alloc] init];
     }
     if([RSUtils isValidURL:controlPlaneURL]) {
-        config.controlPlaneUrl = controlPlaneURL.absoluteString;
+        config.controlPlaneUrl = [RSUtils appendSlashToUrl: controlPlaneURL.absoluteString];
     }
     return self;
 }
