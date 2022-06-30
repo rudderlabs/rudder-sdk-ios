@@ -20,13 +20,21 @@ NSString* const RESPONSE = @"RESPONSE";
 int const DMT_BATCH_SIZE = 12;
 static id UPLOAD_LOCK;
 static RSEventRepository* _instance;
+static dispatch_queue_t flush_processor_queue;
+static dispatch_queue_t transformation_processor_queue;
 
 @implementation RSEventRepository
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
     if (_instance == nil) {
-        static dispatch_once_t onceToken;
         UPLOAD_LOCK = [[NSObject alloc] init];
+        if (flush_processor_queue == nil) {
+            flush_processor_queue = dispatch_queue_create("com.rudder.FlushProcessorQueue", NULL);
+        }
+        if (transformation_processor_queue == nil) {
+            transformation_processor_queue = dispatch_queue_create("com.rudder.TransformationProcessorQueue", NULL);
+        }
+        static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init:writeKey config:config];
         });
@@ -227,10 +235,10 @@ int deviceModeSleepCount = 0;
 
 - (void) initiateTransformationProcessor {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_sync(transformation_processor_queue, ^{
         RSEventRepository *strongSelf = weakSelf;
-        [RSLogger logDebug:@" transformation processor started"];
-        [RSLogger logDebug:@"Fetching events to flush to transformations server"];
+        [RSLogger logDebug:@"RSEventRepository: initiateTransformationProcessor: Transformation processor started"];
+        [RSLogger logDebug:@"RSEventRepository: initiateTransformationProcessor: Fetching events to flush to transformations server"];
         int deviceModeEventsCount = [strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE];
         
         // the flow would get started only if the number of eligible events for device mode transformation is greater than DMT_BATCH_SIZE (OR) if the sleepCount is greater than the sleepTimeOut and number of eligible events for Device Mode is >0
@@ -241,18 +249,19 @@ int deviceModeSleepCount = 0;
                 int errResp = [response[STATUS] intValue];
                 NSString* responsePayload = response[RESPONSE];
                 if (errResp == WRONGWRITEKEY) {
-                    [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
+                    [RSLogger logDebug:@"RSEventRepository: initiateTransformationProcessor: Wrong WriteKey. Aborting."];
                     break;
                 } else if (errResp == NETWORKERROR) {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
-                    deviceModeSleepCount -= strongSelf->config.sleepTimeout;
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
+                    usleep(abs(deviceModeSleepCount - strongSelf->config.sleepTimeout) * 1000000);
                 }
                 else {
+                    deviceModeSleepCount = 0;
                     id object = [RSUtils deSerializeJSONString:responsePayload];
-                    if(object != nil && [object isKindOfClass:[NSArray class]]) {
-                        NSArray* responseArray = object;
-                        for(NSDictionary* responseObject in responseArray) {
-                            NSDictionary* destinationObject = responseObject[@"destination"];
+                    if(object != nil && [object isKindOfClass:[NSDictionary class]]) {
+                        NSArray* transformedBatches = object[@"transformedBatch"];
+                        for(NSDictionary* transformedBatch in transformedBatches) {
+                            NSDictionary* destinationObject = transformedBatch[@"destination"];
                             NSString* destinationId = destinationObject[@"id"];
                             NSString* status = destinationObject[@"status"];
                             NSArray* transformedPayloads = [destinationObject[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
@@ -261,13 +270,7 @@ int deviceModeSleepCount = 0;
                             if([status isEqualToString:@"200"]) {
                                 [strongSelf dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
                                 [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withDestinationId:destinationId];
-                                NSArray<NSString*>* eventsWithDestinationsMapping = [strongSelf->dbpersistenceManager getEventIdsWithDestinationMapping:_dbMessage.messageIds];
-                                NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
-                                [processedEvents removeObjectsInArray:eventsWithDestinationsMapping];
-                                [strongSelf->dbpersistenceManager updateEventsWithIds:processedEvents withStatus:DEVICEMODEPROCESSINGDONE];
-                                [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                             }
-                            deviceModeSleepCount++;
                             //                            We would be deleting the events from the events_to_transformation table only on 200 because we will not be getting any events in the case of 400/500
                             //                            May be we will pick this up in v1
                             //                            else {
@@ -285,7 +288,7 @@ int deviceModeSleepCount = 0;
                         [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     }
                 }
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", deviceModeSleepCount]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
                 deviceModeSleepCount += 1;
             }while([strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE] > 0);
         }
@@ -308,7 +311,7 @@ int deviceModeSleepCount = 0;
 
 - (void) __initiateProcessor {
     __weak RSEventRepository *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(flush_processor_queue, ^{
         RSEventRepository *strongSelf = weakSelf;
         [RSLogger logDebug:@"processor started"];
         int errResp = 0;
@@ -317,25 +320,25 @@ int deviceModeSleepCount = 0;
         while (YES) {
             [strongSelf->lock lock];
             [strongSelf clearOldEvents];
-            [RSLogger logDebug:@"Fetching events to flush to server in processor"];
+            [RSLogger logDebug:@"RSEventRepository: initiateProcessor: Fetching events to flush to server in processor"];
             RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
-            if (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout)) {
+            if ((_dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
                 errResp = [strongSelf flushEventsToServer:_dbMessage];
                 if (errResp == 0) {
-                    [RSLogger logDebug:@"clearing events from DB"];
+                    [RSLogger logDebug:@"RSEventRepository: initiateProcessor: clearing events from DB"];
                     [strongSelf->dbpersistenceManager updateEventsWithIds:_dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
                     [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     sleepCount = 0;
                 }
             }
             [strongSelf->lock unlock];
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: SleepCount: %d", sleepCount]];
             sleepCount += 1;
             if (errResp == WRONGWRITEKEY) {
-                [RSLogger logDebug:@"Wrong WriteKey. Aborting."];
+                [RSLogger logDebug:@"RSEventRepository: initiateProcessor: Wrong WriteKey. Aborting."];
                 break;
             } else if (errResp == NETWORKERROR) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
                 usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
             } else {
                 usleep(1000000);
@@ -548,7 +551,6 @@ int deviceModeSleepCount = 0;
     NSDictionary<NSString*, NSString*>* response = nil;
     NSDictionary<NSString*, NSArray<NSString*>*>* eventToDestinationMapping = [self->dbpersistenceManager getDestinationMappingofEvents:dbMessage.messageIds];
     NSString* payload = [self __getPayloadForTransformation:dbMessage withEventToTransformationMapping:eventToDestinationMapping];
-    NSLog(@"%@", payload);
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
     [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
     if (payload != nil) {
@@ -566,6 +568,8 @@ int deviceModeSleepCount = 0;
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
     
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
+    [jsonPayload appendString:@"{"];
+    [jsonPayload appendString:@"\"batch\":"];
     [jsonPayload appendString:@"["];
     
     unsigned int totalBatchSize = [RSUtils getUTF8Length:jsonPayload] + 1; // we add 1 characters at the end
@@ -591,6 +595,7 @@ int deviceModeSleepCount = 0;
         [jsonPayload deleteCharactersInRange:NSMakeRange([jsonPayload length]-1, 1)];
     }
     [jsonPayload appendString:@"]"];
+    [jsonPayload appendString:@"}"];
     // retain all events that are part of the current event
     dbMessage.messageIds = batchMessageIds;
     return [jsonPayload copy];

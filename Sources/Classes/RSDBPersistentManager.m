@@ -48,11 +48,11 @@ NSString* _Nonnull const COL_DESTINATION_ID = @"destination_id";
         [self performMigration];
         return;
     }
-    [RSLogger logError:@"RSDBPersistentManager: checkForMigrations: event table has status column, no migration required"];
+    [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: event table has status column, no migration required"];
 }
 
 - (BOOL) checkIfStatusColumnExists {
-    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(%@) where name=\"%@\";", TABLE_EVENTS, COL_STATUS];
+    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(\"%@\") where name=\"%@\";", TABLE_EVENTS, COL_STATUS];
     const char* statusCheckSQL = [checkIfStatusExistsSQLString UTF8String];
     sqlite3_stmt *statusCheckStmt = nil;
     BOOL statusColumnExists = NO;
@@ -64,11 +64,11 @@ NSString* _Nonnull const COL_DESTINATION_ID = @"destination_id";
             }
         }
         else {
-            [RSLogger logWarn:@"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Execution Failed"];
+            [RSLogger logWarn:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Execution Failed: %@", checkIfStatusExistsSQLString]];
         }
     }
     else {
-        [RSLogger logError:@"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Preparation Failed"];
+        [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Preparation Failed: %@", checkIfStatusExistsSQLString]];
     }
     sqlite3_finalize(statusCheckStmt);
     return statusColumnExists;
@@ -222,10 +222,10 @@ NSString* _Nonnull const COL_DESTINATION_ID = @"destination_id";
     NSString *countSQLString = nil;
     switch(mode) {
         case DEVICEMODE:
-            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE];
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE];
             break;
         case CLOUDMODE:
-            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE];
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE];
             break;
         default:
             countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@", TABLE_EVENTS];

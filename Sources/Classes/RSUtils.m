@@ -164,7 +164,7 @@
     NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if(error) {
-        NSLog(@"Error serializing the object back");
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to serialize the given string back to object %@", jsonString]];
         return nil;
     }
     return object;
