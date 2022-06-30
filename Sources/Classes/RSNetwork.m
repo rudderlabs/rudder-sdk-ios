@@ -33,6 +33,17 @@
     return self;
 }
 
+- (instancetype) initWithDict:(NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _carrier = dict[@"carrier"];
+        _wifi = dict[@"wifi"];
+        _bluetooth = dict[@"bluetooth"];
+        _cellular = dict[@"cellular"];
+    }
+    return self;
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {

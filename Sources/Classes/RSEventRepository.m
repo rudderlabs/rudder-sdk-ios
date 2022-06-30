@@ -289,10 +289,10 @@ int deviceModeSleepCount = 0;
                     }
                 }
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
-                deviceModeSleepCount += 1;
             }while([strongSelf->dbpersistenceManager getDBRecordCountForMode:DEVICEMODE] > 0);
         }
-        
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: deviceModeSleepCount: %d", deviceModeSleepCount]];
+        deviceModeSleepCount += 1;
     });
 }
 
@@ -325,7 +325,7 @@ int deviceModeSleepCount = 0;
             if ((_dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (_dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
                 errResp = [strongSelf flushEventsToServer:_dbMessage];
                 if (errResp == 0) {
-                    [RSLogger logDebug:@"RSEventRepository: initiateProcessor: clearing events from DB"];
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:_dbMessage.messageIds]]];
                     [strongSelf->dbpersistenceManager updateEventsWithIds:_dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
                     [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     sleepCount = 0;
@@ -662,7 +662,7 @@ int deviceModeSleepCount = 0;
                             
                         }
                         else {
-                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
+                            [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
                             [dbpersistenceManager saveEvent:rowId toDestinationId:destinationsWithTransformationsEnabled[key]];
                         }
                     }

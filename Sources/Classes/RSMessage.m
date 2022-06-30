@@ -38,7 +38,7 @@
     if(self) {
         _messageId = dict[@"messageId"];
         _channel = dict[@"channel"];
-        _context = dict[@"context"];
+        _context = [[RSContext alloc] initWithDict:dict[@"context"]];
         _type = dict[@"type"];
         _action = dict[@"action"];
         _originalTimestamp = dict[@"originalTimestamp"];

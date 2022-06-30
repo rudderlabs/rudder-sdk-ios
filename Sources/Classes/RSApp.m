@@ -23,6 +23,17 @@
     return self;
 }
 
+- (instancetype) initWithDict:(NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _build = dict[@"build"];
+        _name = dict[@"name"];
+        _nameSpace = dict[@"namespace"];
+        _version = dict[@"version"];
+    }
+    return self;
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {

@@ -31,6 +31,16 @@
     return self;
 }
 
+- (instancetype) initWithDict:(NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _density = dict[@"density"];
+        _height = dict[@"height"];
+        _width = dict[@"width"];
+    }
+    return self;
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
