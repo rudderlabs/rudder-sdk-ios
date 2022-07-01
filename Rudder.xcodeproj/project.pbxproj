@@ -174,6 +174,7 @@
 		EDA7EF632739119600E73142 /* RSDestinationDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDestinationDefinition.swift; sourceTree = "<group>"; };
 		EDA7EF642739119600E73142 /* RSDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDestination.swift; sourceTree = "<group>"; };
 		EDA7EF6B2739119600E73142 /* RSServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSServiceType.swift; sourceTree = "<group>"; };
+		EDAE4EC0286F0CFF00AACDB5 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		EDC1327B27D614C400AFD833 /* RSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSClientTests.swift; sourceTree = "<group>"; };
 		EDC132A127D7D61D00AFD833 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		EDC132A327D8D55600AFD833 /* RSTrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTrackTests.swift; sourceTree = "<group>"; };
@@ -216,6 +217,7 @@
 		06CABB7A2630C3CA0097BEFF = {
 			isa = PBXGroup;
 			children = (
+				EDAE4EC0286F0CFF00AACDB5 /* .travis.yml */,
 				ED910CE0273BA25100A3EDFF /* CHANGELOG.md */,
 				ED910CE2273BA25100A3EDFF /* LICENSE */,
 				ED910CDE273BA25100A3EDFF /* Package.swift */,
