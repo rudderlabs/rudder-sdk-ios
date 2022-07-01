@@ -102,14 +102,17 @@ class RSClientTests: XCTestCase {
         client.setDeviceToken("device_token")
         client.track("device token check")
         
-        let device = resultPlugin.lastMessage?.context
-        let token = device?[keyPath: "device.token"] as? String
+        let context = resultPlugin.lastMessage?.context
+        let token = context?[keyPath: "device.token"] as? String
         
         XCTAssertTrue(token != "")
         XCTAssertTrue(token == "device_token")
     }
     
     func testContextTraits() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
         waitUntilStarted(client: client)
         waitUntilServerConfigDownloaded(client: client)
         
