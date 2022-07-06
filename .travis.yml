@@ -5,7 +5,7 @@ jobs:
   include:
     - stage: "Tests"
       name: "Running Test Cases"
-      script: 'xcodebuild test -workspace Rudder.xcworkspace -scheme RudderTests -sdk iphonesimulator -destination "platform=iOS Simulator,OS=15.5,name=iPhone 13" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO -skip-testing:RudderTests/RSBlackListedEventsTest -skip-testing:RudderTests/RSWhiteListedEventsTests -skip-testing:RudderTests/RSClientTests -skip-testing:RudderTests/RSDatabaseTests -skip-testing:RudderTests/RSThreadTests | xcpretty'
+#      script: 'xcodebuild test -workspace Rudder.xcworkspace -scheme RudderTests -sdk iphonesimulator -destination "platform=iOS Simulator,OS=15.5,name=iPhone 13" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO -skip-testing:RudderTests/RSBlackListedEventsTest -skip-testing:RudderTests/RSWhiteListedEventsTests -skip-testing:RudderTests/RSClientTests -skip-testing:RudderTests/RSDatabaseTests -skip-testing:RudderTests/RSThreadTests | xcpretty'
     - stage: "Release"
       if: branch =~ ^v\d+\.\d+(\.\d+)?(-\S*)?$
       name: "Release to Cocoapods"
