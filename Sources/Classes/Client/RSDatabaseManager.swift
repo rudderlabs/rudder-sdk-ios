@@ -139,29 +139,30 @@ class RSDatabaseManager {
 
 extension RSDatabaseManager {
     func write(_ message: RSMessage) {
-        syncQueue.sync {
-            lock.lock()
+        syncQueue.async { [weak self] in
+            guard let self = self else { return }
+            self.lock.lock()
             do {
                 let jsonObject = message.dictionaryValue
                 if JSONSerialization.isValidJSONObject(jsonObject) {
                     let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
                     if let jsonString = String(data: jsonData, encoding: .utf8) {
-                        client.log(message: "dump: \(jsonString)", logLevel: .debug)
+                        self.client.log(message: "dump: \(jsonString)", logLevel: .debug)
                         if jsonString.getUTF8Length() > MAX_EVENT_SIZE {
-                            client.log(message: "dump: Event size exceeds the maximum permitted event size \(MAX_EVENT_SIZE)", logLevel: .error)
+                            self.client.log(message: "dump: Event size exceeds the maximum permitted event size \(MAX_EVENT_SIZE)", logLevel: .error)
                             return
                         }
                         self.saveEvent(jsonString)
                     } else {
-                        client.log(message: "dump: Can not convert to JSON", logLevel: .error)
+                        self.client.log(message: "dump: Can not convert to JSON", logLevel: .error)
                     }
                 } else {
-                    client.log(message: "dump: Not a valid JSON object", logLevel: .error)
+                    self.client.log(message: "dump: Not a valid JSON object", logLevel: .error)
                 }
             } catch {
-                client.log(message: "dump: \(error.localizedDescription)", logLevel: .error)
+                self.client.log(message: "dump: \(error.localizedDescription)", logLevel: .error)
             }
-            lock.unlock()
+            self.lock.unlock()
         }
     }
     

@@ -102,24 +102,40 @@ class RSClientTests: XCTestCase {
         client.setDeviceToken("device_token")
         client.track("device token check")
         
-        let device = resultPlugin.lastMessage?.context
-        let token = device?[keyPath: "device.token"] as? String
+        let context = resultPlugin.lastMessage?.context
+        let token = context?[keyPath: "device.token"] as? String
         
         XCTAssertTrue(token != "")
         XCTAssertTrue(token == "device_token")
     }
     
     func testContextTraits() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
         waitUntilStarted(client: client)
         waitUntilServerConfigDownloaded(client: client)
         
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
-        let traits = client.traits
+        let identifyEvent = resultPlugin.lastMessage as? IdentifyMessage
+        XCTAssertTrue(identifyEvent?.userId == "user_id")
+        let identifyTraits = identifyEvent?.traits
+        XCTAssertTrue(identifyTraits?["email"] as? String == "abc@def.com")
         
-        XCTAssertNotNil(traits)
-        XCTAssertTrue(traits?["email"] == "abc@def.com")
-        XCTAssertTrue(traits?["userId"] == "user_id")
+        client.track("test context")
+        
+        let trackEvent = resultPlugin.lastMessage as? TrackMessage
+        XCTAssertTrue(trackEvent?.userId == "user_id")
+        let trackTraits = trackEvent?.context?["traits"] as? [String: Any]
+        XCTAssertNotNil(trackTraits)
+        XCTAssertTrue(trackTraits?["email"] as? String == "abc@def.com")
+        XCTAssertTrue(trackTraits?["userId"] as? String == "user_id")
+        
+        let clientTraits = client.traits
+        XCTAssertNotNil(clientTraits)
+        XCTAssertTrue(clientTraits?["email"] == "abc@def.com")
+        XCTAssertTrue(clientTraits?["userId"] == "user_id")
     }    
 }
 
@@ -204,11 +220,15 @@ class ResultPlugin: RSPlugin {
     var client: RSClient?
     var lastMessage: RSMessage?
     var trackList = [TrackMessage]()
+    var identifyList = [IdentifyMessage]()
             
     func execute<T>(message: T?) -> T? where T: RSMessage {
         lastMessage = message
         if let message = message as? TrackMessage {
             trackList.append(message)
+        }
+        if let message = message as? IdentifyMessage {
+            identifyList.append(message)
         }
         return message
     }
