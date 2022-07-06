@@ -51,6 +51,8 @@ public struct RSEvents {
         public static let completeTutorial = "Complete Tutorial"
         public static let achieveLevel = "Achieve Level"
         public static let unlockAchievement = "Unlock Achievement"
+        public static let subscribe = "Subscribe"
+        public static let startTrial = "Start Trial"
     }
 }
 
@@ -91,6 +93,7 @@ public struct RSKeys {
         public static let paymentMethod = "payment_method"
         public static let promotionId = "promotion_id"
         public static let creative = "creative"
+        public static let promotionName = "name"
     }
     
     public struct Identify {
@@ -101,6 +104,17 @@ public struct RSKeys {
             public struct Address { // swiftlint:disable:this nesting
                 public static let city = "city"
                 public static let country = "country"
+                public static let postalCode = "postalCode"
+                public static let state = "state"
+                public static let street = "street"
+            }
+            
+            public struct Company { // swiftlint:disable:this nesting
+                public static let name = "name"
+                public static let id = "id"
+                public static let industry = "industry"
+                public static let employeeCount = "employee_count"
+                public static let plan = "plan"
             }
             
             public static let id = "id"
@@ -136,5 +150,6 @@ public struct RSKeys {
         public static let recipient = "recipient"
         public static let interest = "interest"
         public static let itemName = "item_name"
+        public static let description = "Description"
     }
 }

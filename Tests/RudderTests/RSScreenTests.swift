@@ -57,12 +57,4 @@ class RSScreenTests: XCTestCase {
         XCTAssertTrue(properties?["key_1"] as? String == "value_1")
         XCTAssertTrue(properties?["key_2"] as? String == "value_2")
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
