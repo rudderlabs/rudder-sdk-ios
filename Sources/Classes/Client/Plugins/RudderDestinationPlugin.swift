@@ -30,7 +30,8 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         guard let client = self.client, let config = client.config else { return }
         databaseManager = RSDatabaseManager(client: client)
         serviceManager = RSServiceManager(client: client)
-        flushTimer = RSRepeatingTimer(interval: TimeInterval(config.sleepTimeOut)) {
+        flushTimer = RSRepeatingTimer(interval: TimeInterval(config.sleepTimeOut)) { [weak self] in
+            guard let self = self else { return }
             self.periodicFlush()
         }
     }
@@ -129,7 +130,7 @@ extension RudderDestinationPlugin {
     }
     
     func periodicFlush() {
-        uploadsQueue.sync { [weak self] in
+        uploadsQueue.async { [weak self] in
             guard let self = self else { return }
             self.prepareEventsToFlush()
         }
