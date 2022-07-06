@@ -84,12 +84,4 @@ class RSIdentifyTests: XCTestCase {
         let trackTraits = trackEvent?.context?["traits"] as? [String: Any]
         XCTAssertNil(trackTraits)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

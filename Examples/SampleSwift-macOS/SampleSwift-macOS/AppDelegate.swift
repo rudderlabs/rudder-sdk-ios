@@ -11,9 +11,6 @@ import Rudder
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         let config: RSConfig = RSConfig(writeKey: "1wvsoF3Kx2SczQNlx1dvcqW9ODW")
@@ -41,6 +38,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-
 }
-
