@@ -63,7 +63,10 @@ All notable changes to this project will be documented in this file.
 ### Fix
 - `flush` API enhancement & fix.
 
-## Version - 2.1.1 - 2022-07-04
+## Version - 2.1.1 - 2022-07-06
+### Fix
+- Prevent blocking of main thread for periodic `flush`.
+- Remove retain cycles.
 ### Added
 - `subscribe` and `startTrial` in `RSEvents.LifeCycle`.
 - `promotionName` in `RSKeys.Ecommerce`.
