@@ -33,7 +33,7 @@ class RSDatabaseTests: XCTestCase {
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
         if let allEvents = fetchAllEvents() {
-            let event = allEvents[0]["event"] as! String
+            let event = allEvents[0]["event"] as? String
             XCTAssertTrue(event == "sample_track1")
         } else {
             XCTFail("No events found")
@@ -48,7 +48,7 @@ class RSDatabaseTests: XCTestCase {
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
         if let allEvents = fetchAllEvents() {
-            let event = allEvents[0]["event"] as! String
+            let event = allEvents[0]["event"] as? String
             XCTAssertTrue(event == "sample_track1")
         } else {
             XCTFail("No events found")
@@ -59,7 +59,7 @@ class RSDatabaseTests: XCTestCase {
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
         if let allEvents = fetchAllEvents() {
-            let messageId = allEvents[0]["messageId"] as! String
+            let messageId = allEvents[0]["messageId"] as? String
             XCTAssertFalse(messageId == trackMessage.messageId)
         } else {
             XCTFail("No events found")
