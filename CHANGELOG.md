@@ -63,13 +63,13 @@ All notable changes to this project will be documented in this file.
 ### Fix
 - `flush` API enhancement & fix.
 
-## Version - 2.1.1 - 2022-07-06
-### Fix
-- Prevent blocking of main thread for periodic `flush`.
-- Remove retain cycles.
+## Version - 2.2.0 - 2022-07-06
 ### Added
 - `subscribe` and `startTrial` in `RSEvents.LifeCycle`.
 - `promotionName` in `RSKeys.Ecommerce`.
 - `postalCode`, `state` and `street` in `RSKeys.Identify.Address`.
 - `name`, `id`, `industry`, `employeeCount`, and `plan` in `RSKeys.Identify.Company`.
 - `description` in `RSKeys.Others`.
+### Fix
+- Prevent blocking of main thread for periodic `flush`.
+- Remove retain cycles.
