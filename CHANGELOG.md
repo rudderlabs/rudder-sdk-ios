@@ -71,5 +71,5 @@ All notable changes to this project will be documented in this file.
 - `subscribe` and `startTrial` in `RSEvents.LifeCycle`.
 - `promotionName` in `RSKeys.Ecommerce`.
 - `postalCode`, `state` and `street` in `RSKeys.Identify.Address`.
-- `name`, `id`, `industry`, `employeeCount`, and `plan' in `RSKeys.Identify.Company`.
-- `description` in ``RSKeys.Others`.
+- `name`, `id`, `industry`, `employeeCount`, and `plan` in `RSKeys.Identify.Company`.
+- `description` in `RSKeys.Others`.
