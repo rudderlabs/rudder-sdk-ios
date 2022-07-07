@@ -106,6 +106,7 @@ public struct ScreenMessage: RSMessage {
     
     private func dynamicDictionary(dictionary: inout [String: Any]) {
         dictionary["properties"] = properties
+        dictionary[keyPath: "properties.name"] = name
         dictionary["event"] = name
         dictionary["category"] = category
     }
