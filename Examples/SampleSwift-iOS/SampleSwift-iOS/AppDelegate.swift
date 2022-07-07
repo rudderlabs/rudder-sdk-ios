@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .dataPlaneURL(configuration.DATA_PLANE_URL)
                 .loglevel(.verbose)
                 .trackLifecycleEvents(false)
-                .recordScreenViews(false)
+                .recordScreenViews(true)
                 .flushQueueSize(8)
 //                .sleepTimeOut(1)
             RSClient.sharedInstance().configure(with: config)
