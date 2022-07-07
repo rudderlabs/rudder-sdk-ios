@@ -73,3 +73,7 @@ All notable changes to this project will be documented in this file.
 ### Fix
 - Prevent blocking of main thread for periodic `flush`.
 - Remove retain cycles.
+
+## Version - 2.2.1 - 2022-07-07
+### Fix
+- Missing `properties.name` in screen calls.
