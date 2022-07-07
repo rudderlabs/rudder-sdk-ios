@@ -26,9 +26,9 @@
         }
         _carrier = carrierName;
         #endif
-        _wifi = YES;
-        _bluetooth = NO;
-        _cellular = NO;
+//        _wifi = YES;
+//        _bluetooth = NO;
+//        _cellular = NO;
     }
     return self;
 }
