@@ -28,7 +28,9 @@ class ViewController: UIViewController {
                             Task(name: "Single Flush"),
                             Task(name: "Multiple Flush From Background"),
                             Task(name: "Alias"),
-                            Task(name: "Multiple Flush and Multiple Track")]
+                            Task(name: "Multiple Flush and Multiple Track"),
+                            Task(name: "Screen without properties"),
+                            Task(name: "Screen with properties")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,6 +136,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     RSClient.sharedInstance().flush()
                 }
             }
+        case 7:
+            RSClient.sharedInstance().screen("ViewController")
+        case 8:
+            RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
         default:
             break
         }
