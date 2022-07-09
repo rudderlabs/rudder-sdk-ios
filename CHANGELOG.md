@@ -77,3 +77,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.2.1 - 2022-07-07
 ### Fix
 - Missing `properties.name` in screen calls.
+
+## Version - 2.2.2 - 2022-07-08
+### Fix
+- Missing `properties.name` in screen calls for device modes.
