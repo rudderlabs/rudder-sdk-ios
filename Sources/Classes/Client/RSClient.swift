@@ -203,7 +203,12 @@ extension RSClient {
             log(message: "screenName can not be empty", logLevel: .warning)
             return
         }
-        let message = ScreenMessage(title: screenName, category: category, properties: properties, option: option)
+        var screenProperties = ScreenProperties()
+        if let properties = properties {
+            screenProperties = properties
+        }
+        screenProperties["name"] = screenName
+        let message = ScreenMessage(title: screenName, category: category, properties: screenProperties, option: option)
             .applyRawEventData()
         process(message: message)
     }
