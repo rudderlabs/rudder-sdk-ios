@@ -287,6 +287,7 @@ RSClient.sharedInstance().reset()
 | AppsFlyer | https://github.com/rudderlabs/rudder-integration-appsflyer-swift |
 | Branch | https://github.com/rudderlabs/rudder-integration-branch-swift |
 | Bugsnag | https://github.com/rudderlabs/rudder-integration-bugsnag-swift |
+| Facebook App Events | https://github.com/rudderlabs/rudder-integration-facebook-app-events-swift |
 | Firebase | https://github.com/rudderlabs/rudder-integration-firebase-swift |
 | Kochava | https://github.com/rudderlabs/rudder-integration-kochava-swift |
 | MoEngage | https://github.com/rudderlabs/rudder-integration-moengage-swift |
