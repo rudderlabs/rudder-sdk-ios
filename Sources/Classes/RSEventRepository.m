@@ -549,8 +549,7 @@ int deviceModeSleepCount = 0;
 
 - (NSDictionary<NSString*, NSString*>*)flushEventsToTransformationServer:(RSDBMessage *)dbMessage {
     NSDictionary<NSString*, NSString*>* response = nil;
-    NSDictionary<NSString*, NSArray<NSString*>*>* eventToDestinationMapping = [self->dbpersistenceManager getDestinationMappingofEvents:dbMessage.messageIds];
-    NSString* payload = [self __getPayloadForTransformation:dbMessage withEventToTransformationMapping:eventToDestinationMapping];
+    NSString* payload = [self __getPayloadForTransformation:dbMessage];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
     [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
     if (payload != nil) {
@@ -559,7 +558,7 @@ int deviceModeSleepCount = 0;
     return response;
 }
 
--(NSString*) __getPayloadForTransformation:(RSDBMessage *)dbMessage withEventToTransformationMapping:(NSDictionary<NSString*, NSArray<NSString*>*>*) eventsToDestinationsMapping {
+-(NSString*) __getPayloadForTransformation:(RSDBMessage *)dbMessage {
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
@@ -577,8 +576,7 @@ int deviceModeSleepCount = 0;
         NSMutableString* message = [[NSMutableString alloc] init];
         [message appendString:@"{"];
         [message appendFormat:@"\"orderNo\": %@,", messageIds[index]];
-        [message appendFormat:@"\"event\": %@,", messages[index]];
-        [message appendFormat:@"\"destinationIds\" : [%@]", [RSUtils getJSONCSVString: eventsToDestinationsMapping[messageIds[index]]]];
+        [message appendFormat:@"\"event\": %@", messages[index]];
         [message appendFormat:@"},"];
         //  add message size to batch size
         totalBatchSize += [RSUtils getUTF8Length:message];
