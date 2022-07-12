@@ -81,8 +81,8 @@ import UIKit
 extension RSClient {
     internal func setupServerConfigCheck() {
         checkServerConfig()
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { (notification) in
-            guard let app = notification.object as? UIApplication else { return }
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
+            guard let self = self, let app = notification.object as? UIApplication else { return }
             if app.applicationState == .background {
                 self.checkServerConfig()
             }
@@ -100,7 +100,8 @@ import Cocoa
 extension RSClient {
     internal func setupServerConfigCheck() {
         checkServerConfig()
-        RSRepeatingTimer.schedule(interval: .days(1), queue: .main) {
+        RSRepeatingTimer.schedule(interval: .days(1), queue: .main) { [weak self] in
+            guard let self = self else { return }
             self.checkServerConfig()
         }
     }

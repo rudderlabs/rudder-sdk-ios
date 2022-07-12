@@ -913,7 +913,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.4;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -949,7 +949,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.4;
+				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

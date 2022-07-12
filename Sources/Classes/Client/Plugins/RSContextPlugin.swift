@@ -10,7 +10,7 @@ import Foundation
 
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
-    var client: RSClient?
+    weak var client: RSClient?
     
     var context: MessageContext?
     

@@ -35,7 +35,7 @@ import WebKit
 
 class RSAnonymousIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
-    var client: RSClient?
+    weak var client: RSClient?
     
     var anonymousId: String?
 

@@ -10,7 +10,7 @@ import Foundation
 
 class RSIntegrationPlugin: RSPlatformPlugin {
     let type: PluginType = .before
-    var client: RSClient?
+    weak var client: RSClient?
         
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }

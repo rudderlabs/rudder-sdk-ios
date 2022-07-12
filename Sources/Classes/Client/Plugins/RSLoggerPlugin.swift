@@ -13,7 +13,7 @@ import Foundation
 class RSLoggerPlugin: RSUtilityPlugin {
     var logLevel = RSLogLevel.debug
     
-    var client: RSClient? {
+    weak var client: RSClient? {
         didSet {
             addTargets()
         }
