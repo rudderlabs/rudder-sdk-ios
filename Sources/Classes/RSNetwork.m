@@ -18,7 +18,6 @@
 {
     self = [super init];
     if (self) {
-
         #if !TARGET_OS_TV && !TARGET_OS_WATCH
         NSString *carrierName = [[[CTCarrier alloc] init] carrierName];
         if (carrierName == nil) {
@@ -26,9 +25,6 @@
         }
         _carrier = carrierName;
         #endif
-//        _wifi = YES;
-//        _bluetooth = NO;
-//        _cellular = NO;
     }
     return self;
 }
@@ -37,12 +33,7 @@
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
-    
         [tempDict setValue:_carrier forKey:@"carrier"];
-        [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
-        [tempDict setValue:[NSNumber numberWithBool:_bluetooth] forKey:@"bluetooth"];
-        [tempDict setValue:[NSNumber numberWithBool:_cellular] forKey:@"cellular"];
-        
         return [tempDict copy];
     }
 }
