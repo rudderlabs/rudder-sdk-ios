@@ -125,7 +125,7 @@ extension RSClient {
     }
     
     func checkServerConfig() {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             var retryCount = 0
             var isCompleted = false
@@ -158,13 +158,15 @@ extension RSClient {
         let semaphore = DispatchSemaphore(value: 0)
         let serviceManager = RSServiceManager(client: self)
         serviceManager.downloadServerConfig { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let config):
-                serverConfig = config
-                self.update(serverConfig: config, type: .refresh)
-            case .failure(let error):
-                self.error = error
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let config):
+                    serverConfig = config
+                    self.update(serverConfig: config, type: .refresh)
+                case .failure(let error):
+                    self.error = error
+                }
             }
             semaphore.signal()
         }
