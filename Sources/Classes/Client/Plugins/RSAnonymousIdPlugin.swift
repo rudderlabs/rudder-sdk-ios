@@ -10,7 +10,7 @@ import Foundation
 
 class RSAnonymousIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
-    var client: RSClient?
+    weak var client: RSClient?
     
     var anonymousId = UUID().uuidString.lowercased()
 

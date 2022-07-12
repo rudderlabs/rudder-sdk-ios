@@ -13,7 +13,7 @@ import UIKit
 
 class RSiOSLifecycleMonitor: RSPlatformPlugin {
     let type = PluginType.utility
-    var client: RSClient?
+    weak var client: RSClient?
     
     private var application: UIApplication = UIApplication.shared
     private var appNotifications: [NSNotification.Name] = [UIApplication.didEnterBackgroundNotification,
@@ -35,23 +35,23 @@ class RSiOSLifecycleMonitor: RSPlatformPlugin {
     func notificationResponse(notification: NSNotification) {        
         switch notification.name {
         case UIApplication.didEnterBackgroundNotification:
-            self.didEnterBackground(notification: notification)
+            didEnterBackground(notification: notification)
         case UIApplication.willEnterForegroundNotification:
-            self.applicationWillEnterForeground(notification: notification)
+            applicationWillEnterForeground(notification: notification)
         case UIApplication.didFinishLaunchingNotification:
-            self.didFinishLaunching(notification: notification)
+            didFinishLaunching(notification: notification)
         case UIApplication.didBecomeActiveNotification:
-            self.didBecomeActive(notification: notification)
+            didBecomeActive(notification: notification)
         case UIApplication.willResignActiveNotification:
-            self.willResignActive(notification: notification)
+            willResignActive(notification: notification)
         case UIApplication.didReceiveMemoryWarningNotification:
-            self.didReceiveMemoryWarning(notification: notification)
+            didReceiveMemoryWarning(notification: notification)
         case UIApplication.significantTimeChangeNotification:
-            self.significantTimeChange(notification: notification)
+            significantTimeChange(notification: notification)
         case UIApplication.backgroundRefreshStatusDidChangeNotification:
-            self.backgroundRefreshDidChange(notification: notification)
+            backgroundRefreshDidChange(notification: notification)
         case UIApplication.willTerminateNotification:
-            self.willTerminate(notification: notification)
+            willTerminate(notification: notification)
         default:
             
             break

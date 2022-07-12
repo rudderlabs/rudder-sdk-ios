@@ -15,7 +15,7 @@ internal class RSReplayQueuePlugin: RSPlugin {
     
     let type: PluginType = .before
     
-    var client: RSClient?
+    weak var client: RSClient?
     
     let syncQueue = DispatchQueue(label: "replayQueue.rudder.com")
     var queuedEvents = [RSMessage]()
@@ -24,11 +24,12 @@ internal class RSReplayQueuePlugin: RSPlugin {
     
     func execute<T: RSMessage>(message: T?) -> T? {
         if running == true, let e = message {
-            syncQueue.sync {
-                if queuedEvents.count >= Self.maxSize {
-                    queuedEvents.removeFirst()
+            syncQueue.async { [weak self] in
+                guard let self = self else { return }
+                if self.queuedEvents.count >= Self.maxSize {
+                    self.queuedEvents.removeFirst()
                 }
-                queuedEvents.append(e)
+                self.queuedEvents.append(e)
             }
             return nil
         }
@@ -44,11 +45,12 @@ internal class RSReplayQueuePlugin: RSPlugin {
 
 extension RSReplayQueuePlugin {
     internal func replayEvents() {
-        syncQueue.sync {
-            for event in queuedEvents {
-                client?.process(message: event)
+        syncQueue.async { [weak self] in
+            guard let self = self else { return }
+            for event in self.queuedEvents {
+                self.client?.process(message: event)
             }
-            queuedEvents.removeAll()
+            self.queuedEvents.removeAll()
         }
     }
 }

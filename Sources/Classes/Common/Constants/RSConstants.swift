@@ -12,7 +12,7 @@ public let RSDataPlaneUrl = "https://hosted.rudderlabs.com"
 public let RSFlushQueueSize: Int = 30
 public let RSDBCountThreshold: Int = 10000
 public let RSSleepTimeout: Int = 10
-public let RSControlPlaneUrl = "https://api.rudderlabs.com"
+public let RSControlPlaneUrl = "https://api.rudderlabs"
 public let RSTrackLifeCycleEvents = true
 public let RSRecordScreenViews = false
 let RETRY_FLUSH_COUNT = 3
@@ -31,4 +31,4 @@ let MAX_EVENT_SIZE: UInt = 32 * 1024
 let MAX_BATCH_SIZE: UInt = 500 * 1024
 
 // don't move this line
-let RSVersion = "2.2.2"
+let RSVersion = "2.2.3"

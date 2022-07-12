@@ -81,8 +81,8 @@ import UIKit
 extension RSClient {
     internal func setupServerConfigCheck() {
         checkServerConfig()
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { (notification) in
-            guard let app = notification.object as? UIApplication else { return }
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
+            guard let self = self, let app = notification.object as? UIApplication else { return }
             if app.applicationState == .background {
                 self.checkServerConfig()
             }
@@ -100,7 +100,8 @@ import Cocoa
 extension RSClient {
     internal func setupServerConfigCheck() {
         checkServerConfig()
-        RSRepeatingTimer.schedule(interval: .days(1), queue: .main) {
+        RSRepeatingTimer.schedule(interval: .days(1), queue: .main) { [weak self] in
+            guard let self = self else { return }
             self.checkServerConfig()
         }
     }
@@ -124,28 +125,31 @@ extension RSClient {
     }
     
     func checkServerConfig() {
-        var retryCount = 0
-        var isCompleted = false
-        while !isCompleted && retryCount < 4 {
-            if let serverConfig = fetchServerConfig() {
-                self.serverConfig = serverConfig
-                RSUserDefaults.saveServerConfig(serverConfig)
-                RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
-                log(message: "server config download successful", logLevel: .debug)
-                isCompleted = true
-            } else {
-                if error?.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    log(message: "Wrong write key", logLevel: .debug)
-                    retryCount = 4
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            var retryCount = 0
+            var isCompleted = false
+            while !isCompleted && retryCount < 4 {
+                if let serverConfig = self.fetchServerConfig() {
+                    self.serverConfig = serverConfig
+                    RSUserDefaults.saveServerConfig(serverConfig)
+                    RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
+                    self.log(message: "server config download successful", logLevel: .debug)
+                    isCompleted = true
                 } else {
-                    log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
-                    retryCount += 1
-                    sleep(UInt32(retryCount))
+                    if self.error?.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
+                        self.log(message: "Wrong write key", logLevel: .debug)
+                        retryCount = 4
+                    } else {
+                        self.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
+                        retryCount += 1
+                        sleep(UInt32(retryCount))
+                    }
                 }
             }
-        }
-        if !isCompleted {
-            log(message: "Server config download failed.Using last stored config from storage", logLevel: .debug)
+            if !isCompleted {
+                self.log(message: "Server config download failed.Using last stored config from storage", logLevel: .debug)
+            }
         }
     }
     

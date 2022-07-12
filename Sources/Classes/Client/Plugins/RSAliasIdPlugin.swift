@@ -10,7 +10,7 @@ import Foundation
 
 class RSAliasIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
-    var client: RSClient?
+    weak var client: RSClient?
     
     var id: String?
 

@@ -12,7 +12,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     let type = PluginType.destination
     let key: String = "RudderStack"
     let controller = RSController()
-    var client: RSClient? {
+    weak var client: RSClient? {
         didSet {
             initialSetup()
         }
