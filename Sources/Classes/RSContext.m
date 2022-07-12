@@ -223,7 +223,9 @@ static dispatch_queue_t queue;
         
         [tempDict setObject:_locale forKey:@"locale"];
         [tempDict setObject:[_device dict] forKey:@"device"];
-        [tempDict setObject:[_network dict] forKey:@"network"];
+        if([_network dict].count > 0) {
+            [tempDict setObject:[_network dict] forKey:@"network"];
+        }
         [tempDict setObject:_timezone forKey:@"timezone"];
         if (_externalIds != nil) {
             [tempDict setObject:_externalIds forKey:@"externalId"];
