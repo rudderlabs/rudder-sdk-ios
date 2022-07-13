@@ -75,3 +75,6 @@ All notable changes to this project will be documented in this file.
 
 ## Version - 1.6.2 - 2022-06-28
 - Fixed additional / in the url for both control plane url and dataplaneurl as a result of which the network requests to both control plane and data plane url are being failed.
+
+## Version - 1.6.3 - 2022-07-11
+- Removed HardCoded Status values of Bluetooth, Cellular, Wifi from the context object of the event payload
