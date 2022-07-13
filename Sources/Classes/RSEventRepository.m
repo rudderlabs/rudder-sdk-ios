@@ -260,26 +260,16 @@ int deviceModeSleepCount = 0;
                     id object = [RSUtils deSerializeJSONString:responsePayload];
                     if(object != nil && [object isKindOfClass:[NSDictionary class]]) {
                         NSArray* transformedBatches = object[@"transformedBatch"];
-                        for(NSDictionary* transformedBatch in transformedBatches) {
-                            NSDictionary* destinationObject = transformedBatch[@"destination"];
-                            NSString* destinationId = destinationObject[@"id"];
-                            NSString* status = destinationObject[@"status"];
-                            NSArray* transformedPayloads = [destinationObject[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+                        for(NSDictionary* transformedDestination in transformedBatches) {
+                            NSString* destinationId = transformedDestination[@"id"];
+                            NSString* status = transformedDestination[@"status"];
+                            NSArray* transformedPayloads = [transformedDestination[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
                                 return [a[@"orderNo"] compare:b[@"orderNo"]];
                             }];
                             if([status isEqualToString:@"200"]) {
                                 [strongSelf dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
                                 [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withDestinationId:destinationId];
                             }
-                            //                            We would be deleting the events from the events_to_transformation table only on 200 because we will not be getting any events in the case of 400/500
-                            //                            May be we will pick this up in v1
-                            //                            else {
-                            //                                NSMutableArray* successfullyTransformedEventIds = [[NSMutableArray alloc] init];
-                            //                                for(NSDictionary* transformedPayload in transformedPayloads) {
-                            //                                    [successfullyTransformedEventIds addObject:transformedPayload[@"orderNo"]];
-                            //                                }
-                            //                                [strongSelf->dbpersistenceManager deleteEvents:successfullyTransformedEventIds withTransformationId:transformationId];
-                            //                            }
                         }
                         NSArray<NSString*>* eventsWithDestinationsMapping = [strongSelf->dbpersistenceManager getEventIdsWithDestinationMapping:_dbMessage.messageIds];
                         NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
