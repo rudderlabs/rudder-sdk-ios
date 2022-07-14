@@ -81,3 +81,7 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.2.2 - 2022-07-08
 ### Fix
 - Missing `properties.name` in screen calls for device modes.
+
+## Version - 2.2.3 - 2022-07-14
+### Fix
+- [Bugfix] `RSClient` no longer blocks the main thread in `checkServerConfig()`
