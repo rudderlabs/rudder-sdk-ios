@@ -31,6 +31,7 @@ class RSUserIdPlugin: RSPlatformPlugin {
 }
 
 extension RSClient {
+    // TODO: Called from identify and alias - Needs to be synchronised
     internal func setUserId(_ userId: String) {
         if let userIdPlugin = self.find(pluginType: RSUserIdPlugin.self) {
             userIdPlugin.userId = userId

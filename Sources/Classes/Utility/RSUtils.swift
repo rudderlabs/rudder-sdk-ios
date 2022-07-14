@@ -10,11 +10,14 @@ import Foundation
 import SQLite3
 
 struct RSUtils {
+    static let queue4 = DispatchQueue(label: "com.knowstack.queue4")
     static func getDateString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return dateFormatter.string(from: date)
+        queue4.sync {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            return dateFormatter.string(from: date)
+        }
     }
     
     static func getTimestampString() -> String {
