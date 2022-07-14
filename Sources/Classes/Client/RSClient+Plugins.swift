@@ -124,47 +124,59 @@ extension RSClient {
     }
     
     func checkServerConfig() {
-        var retryCount = 0
-        var isCompleted = false
-        while !isCompleted && retryCount < 4 {
-            if let serverConfig = fetchServerConfig() {
-                self.serverConfig = serverConfig
-                RSUserDefaults.saveServerConfig(serverConfig)
-                RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
-                log(message: "server config download successful", logLevel: .debug)
-                isCompleted = true
-            } else {
-                if error?.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    log(message: "Wrong write key", logLevel: .debug)
-                    retryCount = 4
-                } else {
-                    log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
-                    retryCount += 1
-                    sleep(UInt32(retryCount))
-                }
-            }
-        }
-        if !isCompleted {
-            log(message: "Server config download failed.Using last stored config from storage", logLevel: .debug)
+        assert(Thread.isMainThread)
+        guard !self.checkServerConfigInProgress else { return }
+        
+        self.checkServerConfigInProgress = true
+        self.checkServerConfig(retryCount: 0) {
+            assert(Thread.isMainThread)
+            self.checkServerConfigInProgress = false
         }
     }
     
-    private func fetchServerConfig() -> RSServerConfig? {
-        var serverConfig: RSServerConfig?
-        let semaphore = DispatchSemaphore(value: 0)
-        let serviceManager = RSServiceManager(client: self)
-        serviceManager.downloadServerConfig { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let config):
-                serverConfig = config
-                self.update(serverConfig: config, type: .refresh)
-            case .failure(let error):
-                self.error = error
-            }
-            semaphore.signal()
+    private func checkServerConfig(retryCount: Int, completion: @escaping ( ) -> Void) {
+        assert(Thread.isMainThread)
+        let maxRetryCount = 4
+        
+        guard retryCount < maxRetryCount else {
+            log(message: "Server config download failed. Using last stored config from storage", logLevel: .debug)
+            completion()
+            return
         }
-        semaphore.wait()
-        return serverConfig
+        
+        fetchServerConfig { result in
+            assert(Thread.isMainThread)
+            
+            switch result {
+            case .success(let serverConfig):
+                self.update(serverConfig: serverConfig, type: .refresh)
+                self.serverConfig = serverConfig
+                RSUserDefaults.saveServerConfig(serverConfig)
+                RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
+                self.log(message: "server config download successful", logLevel: .debug)
+                completion()
+                
+            case .failure(let error):
+                if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
+                    self.log(message: "Wrong write key", logLevel: .debug)
+                    self.checkServerConfig(retryCount: maxRetryCount, completion: completion)
+                } else {
+                    self.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
+                        self.checkServerConfig(retryCount: retryCount + 1, completion: completion)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func fetchServerConfig(completion: @escaping (HandlerResult<RSServerConfig, NSError>) -> Void) {
+        let serviceManager = RSServiceManager(client: self)
+        serviceManager.downloadServerConfig { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 }
