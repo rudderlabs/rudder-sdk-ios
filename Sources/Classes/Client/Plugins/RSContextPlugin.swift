@@ -7,7 +7,7 @@
 //
 
 import Foundation
-let queue5 = DispatchQueue(label: "com.knowstack.queue5")
+private let syncQueue = DispatchQueue(label: "context.rudder.com")
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
     weak var client: RSClient?
@@ -26,15 +26,15 @@ class RSContextPlugin: RSPlatformPlugin {
     let semaphore = DispatchSemaphore(value: 1)
     
     func execute<T: RSMessage>(message: T?) -> T? {
-        queue5.sync {
-            guard var workingMessage = message else { return message }
+        guard var workingMessage = message else { return message }
+        syncQueue.sync {
             var context = staticContext
             insertDynamicPlatformContextData(context: &context)
             insertDynamicOptionData(message: workingMessage, context: &context)
             workingMessage.context = context
             self.context = context
-            return workingMessage
         }
+        return workingMessage
     }
     
     internal static func staticContextData() -> [String: Any] {
@@ -135,12 +135,10 @@ class RSContextPlugin: RSPlatformPlugin {
         // TODO: Fetch `customContexts` set using setOption API.
     }
 }
-let queue6 = DispatchQueue(label: "com.knowstack.queue6")
-let semaphore = DispatchSemaphore(value: 1)
 extension RSClient {
     
     func updateContext(_ context: MessageContext?) {
-        queue5.sync {
+        syncQueue.sync {
             if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
                 contextPlugin.context = context
             }

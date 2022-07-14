@@ -7,7 +7,7 @@
 //
 
 import Foundation
-let queue9 = DispatchQueue(label: "com.knowstack.queue9")
+private let syncQueue = DispatchQueue(label: "identityTraits.rudder.com")
 class RSIdentifyTraitsPlugin: RSPlatformPlugin {
     let type = PluginType.before
     weak var client: RSClient?
@@ -18,7 +18,7 @@ class RSIdentifyTraitsPlugin: RSPlatformPlugin {
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        queue9.sync {
+        syncQueue.sync {
             if let traits = traits {
                 if var context = workingMessage.context {
                     context["traits"] = traits
@@ -33,7 +33,7 @@ class RSIdentifyTraitsPlugin: RSPlatformPlugin {
 
 extension RSClient {
     internal func setTraits(_ traits: IdentifyTraits?) {
-        queue9.sync {
+        syncQueue.sync {
             if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
                 traitsPlugin.traits = traits
             } else {
