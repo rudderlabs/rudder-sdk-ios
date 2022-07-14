@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) withTrackLifecycleEvens: (BOOL) trackLifecycleEvents;
 - (instancetype) withRecordScreenViews: (BOOL) recordScreenViews;
 - (instancetype) withEnableBackgroundMode:(BOOL) enableBackgroundMode;
+- (instancetype) withAutomaticSessionTracking:(BOOL)automaticSessionTracking;
 - (instancetype) withConfigPlaneUrl: (NSString*) configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
 - (instancetype) withControlPlaneUrl: (NSString*) controlPlaneUrl;
 - (instancetype) withControlPlaneURL: (NSURL*) controlPlaneURL;

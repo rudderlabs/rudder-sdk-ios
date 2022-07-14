@@ -31,6 +31,8 @@ extern bool const RSTrackLifeCycleEvents;
 extern bool const RSRecordScreenViews;
 // whether we should add support for background run time
 extern bool const RSEnableBackgroundMode;
+// default for automatic session tracking
+extern bool const RSAutomaticSessionTracking;
 // SDK Version
 extern NSString *const RS_VERSION;
 // constant used to check if event filtering is disabled

@@ -75,3 +75,7 @@ All notable changes to this project will be documented in this file.
 
 ## Version - 1.6.2 - 2022-06-28
 - Fixed additional / in the url for both control plane url and dataplaneurl as a result of which the network requests to both control plane and data plane url are being failed.
+
+## Version - 1.7.0 - 2022-07-14
+### Feature
+- Added session tracking.

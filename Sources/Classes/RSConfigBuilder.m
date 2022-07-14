@@ -136,6 +136,14 @@
     return self;
 }
 
+- (instancetype) withAutomaticSessionTracking:(BOOL)automaticSessionTracking {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.automaticSessionTracking = automaticSessionTracking;
+    return self;
+}
+
 -(instancetype)withConfigPlaneUrl:(NSString *) configPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];

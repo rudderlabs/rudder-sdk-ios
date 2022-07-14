@@ -231,7 +231,7 @@ typedef enum {
         int sleepCount = 0;
         
         while (YES) {
-            [lock lock];
+            [strongSelf->lock lock];
             [strongSelf clearOldEvents];
             [RSLogger logDebug:@"Fetching events to flush to server in processor"];
             RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
@@ -243,7 +243,7 @@ typedef enum {
                     sleepCount = 0;
                 }
             }
-            [lock unlock];
+            [strongSelf->lock unlock];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
             if (errResp == WRONGWRITEKEY) {
@@ -276,8 +276,8 @@ typedef enum {
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, queue);
     __weak RSEventRepository *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(source)]];
         RSEventRepository* strongSelf = weakSelf;
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(strongSelf->source)]];
         [strongSelf flushSync];
     });
     dispatch_resume(source);
@@ -661,17 +661,24 @@ typedef enum {
         [applicationOpenedProperties setObject:url forKey:@"url"];
     }
 #endif
+    
+    // Session Tracking
+    // Automatic tracking session started
+    if (self->config.automaticSessionTracking) {
+        [[RSClient sharedInstance] startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+    }
+    
     [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
     
 }
 
 - (void)_applicationWillEnterForeground {
-#if TARGET_OS_WATCH
+//#if TARGET_OS_WATCH
     if(self->firstForeGround) {
         self->firstForeGround = NO;
         return;
     }
-#endif
+//#endif
     
     if(config.enableBackgroundMode) {
 #if !TARGET_OS_WATCH
@@ -685,6 +692,12 @@ typedef enum {
         return;
     }
     
+    // Session Tracking
+    // Automatic tracking session started
+    if (self->config.automaticSessionTracking) {
+        [[RSClient sharedInstance] startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+    }
+    
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @YES
     }];
@@ -695,6 +708,10 @@ typedef enum {
         return;
     }
     [[RSClient sharedInstance] track:@"Application Backgrounded"];
+    
+    // Session Tracking
+    // Invalidate sessionId while background
+    [RSClient sharedInstance].sessionId = nil;
 }
 
 - (void) __prepareScreenRecorder {

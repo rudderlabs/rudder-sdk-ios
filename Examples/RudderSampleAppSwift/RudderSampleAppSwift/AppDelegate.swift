@@ -19,10 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
-            .withDataPlaneUrl("https://117d05c4.ngrok.io")
-            .withTrackLifecycleEvens(true)
+            .withDataPlaneUrl("http://localhost:8080")
+            .withTrackLifecycleEvens(false)
             .withRecordScreenViews(true)            
-        RSClient.getInstance("1pAKRv50y15Ti6UWpYroGJaO0Dj", config: builder.build())
+        RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
         
         return true
     }

@@ -294,6 +294,9 @@ static NSString* _deviceToken = nil;
     if (_repository != nil) {
         [_repository reset];
     }
+    // Session Tracking
+    // sessionId will be reset. New sessionId will be generated.
+    [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
 }
 
 - (void)flush {
@@ -404,6 +407,25 @@ static NSString* _deviceToken = nil;
             return;
         }
         [[_instance getContext] putDeviceToken:deviceToken];
+    }
+}
+
+#pragma mark - Session Tracking
+
+- (void)startSession {
+    [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+}
+
+- (void)startSession:(NSString *)sessionId {
+    if ([self configuration].trackLifecycleEvents) {
+        if ([sessionId length] > 0) {
+            self->_sessionId = sessionId;
+            self->_sessionStart = YES;
+        } else {
+            [RSLogger logDebug:@"sessionId can not be empty"];
+        }
+    } else {
+        [RSLogger logDebug:@"Life cycle events tracking is off"];
     }
 }
 
