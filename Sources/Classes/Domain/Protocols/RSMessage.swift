@@ -185,7 +185,7 @@ public struct AliasMessage: RSMessage {
 extension RSMessage {
     internal func applyRawEventData() -> Self {
         var result: Self = self
-        result.messageId = String(format: "%ld-%@", RSUtils.getTimeStamp(), RSUtils.getUniqueId())
+        result.messageId = "\(RSUtils.getTimeStamp())-\(RSUtils.getUniqueId())"
         result.timestamp = RSUtils.getTimestampString()
         result.channel = "mobile"
         return result
