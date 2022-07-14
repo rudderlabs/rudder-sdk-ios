@@ -13,7 +13,7 @@ open class RSClient: NSObject {
     var config: RSConfig?
     var controller: RSController
     var serverConfig: RSServerConfig?
-    var error: NSError?
+	internal var checkServerConfigInProgress = false
     static let shared = RSClient()
     
     private override init() {
