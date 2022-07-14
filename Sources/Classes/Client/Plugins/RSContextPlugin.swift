@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+let queue5 = DispatchQueue(label: "com.knowstack.queue5")
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
     weak var client: RSClient?
@@ -23,15 +23,18 @@ class RSContextPlugin: RSPlatformPlugin {
     
     private var staticContext = staticContextData()
     private static var device = Vendor.current
+    let semaphore = DispatchSemaphore(value: 1)
     
     func execute<T: RSMessage>(message: T?) -> T? {
-        guard var workingMessage = message else { return message }        
-        var context = staticContext
-        insertDynamicPlatformContextData(context: &context)
-        insertDynamicOptionData(message: workingMessage, context: &context)
-        workingMessage.context = context
-        self.context = context
-        return workingMessage
+        queue5.sync {
+            guard var workingMessage = message else { return message }
+            var context = staticContext
+            insertDynamicPlatformContextData(context: &context)
+            insertDynamicOptionData(message: workingMessage, context: &context)
+            workingMessage.context = context
+            self.context = context
+            return workingMessage
+        }
     }
     
     internal static func staticContextData() -> [String: Any] {
@@ -132,11 +135,15 @@ class RSContextPlugin: RSPlatformPlugin {
         // TODO: Fetch `customContexts` set using setOption API.
     }
 }
-
+let queue6 = DispatchQueue(label: "com.knowstack.queue6")
+let semaphore = DispatchSemaphore(value: 1)
 extension RSClient {
+    
     func updateContext(_ context: MessageContext?) {
-        if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
-            contextPlugin.context = context
+        queue5.sync {
+            if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
+                contextPlugin.context = context
+            }
         }
     }
 }

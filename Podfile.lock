@@ -1,5 +1,9 @@
 PODS:
+<<<<<<< HEAD
   - Rudder (2.2.6)
+=======
+  - Rudder (2.2.3)
+>>>>>>> dea6b21 (Provided fix for the track event race condition.)
 
 DEPENDENCIES:
   - Rudder (from `.`)
@@ -9,7 +13,11 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
+<<<<<<< HEAD
   Rudder: 228c479bb2f900cae13fbf469131852201691d67
+=======
+  Rudder: 5f11c123cefcc5bc915947aefce77675a2ecd6f2
+>>>>>>> dea6b21 (Provided fix for the track event race condition.)
 
 PODFILE CHECKSUM: ee379229e6a0b60bc98226700ace2de002171547
 

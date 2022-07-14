@@ -10,6 +10,7 @@ import Foundation
 import SQLite3
 
 struct RSUtils {
+
     static func getDateString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
