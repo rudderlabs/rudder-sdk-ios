@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+let queue11 = DispatchQueue(label: "com.knowstack.queue11")
 class RSAliasIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
     weak var client: RSClient?
@@ -18,11 +18,13 @@ class RSAliasIdPlugin: RSPlatformPlugin {
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        if let id = id {
-            if var context = workingMessage.context {
-                context[keyPath: "traits.id"] = id
-                workingMessage.context = context
-                client?.updateContext(context)
+        queue11.sync {
+            if let id = id {
+                if var context = workingMessage.context {
+                    context[keyPath: "traits.id"] = id
+                    workingMessage.context = context
+                    client?.updateContext(context)
+                }
             }
         }
         return workingMessage
@@ -31,12 +33,14 @@ class RSAliasIdPlugin: RSPlatformPlugin {
 
 extension RSClient {
     internal func setAlias(_ id: String) {
-        if let aliasIdPlugin = self.find(pluginType: RSAliasIdPlugin.self) {
-            aliasIdPlugin.id = id
-        } else {
-            let aliasIdPlugin = RSAliasIdPlugin()
-            aliasIdPlugin.id = id
-            add(plugin: aliasIdPlugin)
+        queue11.sync {
+            if let aliasIdPlugin = self.find(pluginType: RSAliasIdPlugin.self) {
+                aliasIdPlugin.id = id
+            } else {
+                let aliasIdPlugin = RSAliasIdPlugin()
+                aliasIdPlugin.id = id
+                add(plugin: aliasIdPlugin)
+            }
         }
     }
 }

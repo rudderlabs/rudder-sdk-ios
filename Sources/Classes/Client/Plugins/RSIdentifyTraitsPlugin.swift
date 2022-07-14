@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+let queue9 = DispatchQueue(label: "com.knowstack.queue9")
 class RSIdentifyTraitsPlugin: RSPlatformPlugin {
     let type = PluginType.before
     weak var client: RSClient?
@@ -18,11 +18,13 @@ class RSIdentifyTraitsPlugin: RSPlatformPlugin {
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        if let traits = traits {
-            if var context = workingMessage.context {
-                context["traits"] = traits
-                workingMessage.context = context
-                client?.updateContext(context)
+        queue9.sync {
+            if let traits = traits {
+                if var context = workingMessage.context {
+                    context["traits"] = traits
+                    workingMessage.context = context
+                    client?.updateContext(context)
+                }
             }
         }
         return workingMessage
@@ -31,12 +33,14 @@ class RSIdentifyTraitsPlugin: RSPlatformPlugin {
 
 extension RSClient {
     internal func setTraits(_ traits: IdentifyTraits?) {
-        if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
-            traitsPlugin.traits = traits
-        } else {
-            let traitsPlugin = RSIdentifyTraitsPlugin()
-            traitsPlugin.traits = traits
-            add(plugin: traitsPlugin)
+        queue9.sync {
+            if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
+                traitsPlugin.traits = traits
+            } else {
+                let traitsPlugin = RSIdentifyTraitsPlugin()
+                traitsPlugin.traits = traits
+                add(plugin: traitsPlugin)
+            }
         }
     }
 }
