@@ -45,7 +45,7 @@ extension NSViewController {
     func rsViewDidAppear() {
         var name = NSStringFromClass(type(of: self))
         name = name.replacingOccurrences(of: "ViewController", with: "")
-        let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name])
+        let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name]).applyRawEventData(userInfo: NSViewController.client?.userInfo)
         NSViewController.client?.process(message: screenMessage)
         rsViewDidAppear()
     }
