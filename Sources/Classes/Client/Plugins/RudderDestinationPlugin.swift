@@ -23,14 +23,18 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     
     private var databaseManager: RSDatabaseManager?
     private var serviceManager: RSServiceManager?
+    private var config: RSConfig?
+    private var userDefaults: RSUserDefaults?
     
     private let lock = NSLock()
     
     func initialSetup() {
-        guard let client = self.client, let config = client.config else { return }
+        guard let client = self.client else { return }
+        config = client.config
+        userDefaults = client.userDefaults
         databaseManager = RSDatabaseManager(client: client)
         serviceManager = RSServiceManager(client: client)
-        flushTimer = RSRepeatingTimer(interval: TimeInterval(config.sleepTimeOut)) { [weak self] in
+        flushTimer = RSRepeatingTimer(interval: TimeInterval(config?.sleepTimeOut ?? RSSleepTimeout)) { [weak self] in
             guard let self = self else { return }
             self.periodicFlush()
         }
@@ -61,6 +65,9 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private func queueEvent<T: RSMessage>(message: T) {
         guard let databaseManager = self.databaseManager else { return }
         databaseManager.write(message)
+        if let context = message.context {
+            userDefaults?.write(.context, value: try? JSON(context))
+        }
     }
 }
 
@@ -99,7 +106,7 @@ extension RudderDestinationPlugin {
     
     func flush() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self, let databaseManager = self.databaseManager, let config = self.client?.config else {
+            guard let self = self, let databaseManager = self.databaseManager, let config = self.config else {
                 return
             }
             let uploadGroup = DispatchGroup()
@@ -139,7 +146,7 @@ extension RudderDestinationPlugin {
     @discardableResult
     func prepareEventsToFlush() -> RSErrorCode? {
         lock.lock()
-        guard let databaseManager = databaseManager, let config = client?.config else {
+        guard let databaseManager = databaseManager, let config = config else {
             return .UNKNOWN
         }
         var errorCode: RSErrorCode?

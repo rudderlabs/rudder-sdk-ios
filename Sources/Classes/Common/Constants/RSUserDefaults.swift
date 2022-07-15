@@ -8,60 +8,79 @@
 
 import Foundation
 
-class RSUserDefaults {
-    static func getLastUpdatedTime() -> Int? {
-        return UserDefaults.standard.lastUpdateTime
+class RSUserDefaults {    
+    enum Keys: String {
+        case userId
+        case traits
+        case anonymousId
+        case lastUpdateTime
+        case serverConfig
+        case applicationVersion
+        case applicationBuild
+        case optStatus
+        case optInTime
+        case optOutTime
+        case context
     }
     
-    static func updateLastUpdatedTime(_ time: Int) {
-        UserDefaults.standard.lastUpdateTime = time
-    }
+    let syncQueue = DispatchQueue(label: "userDefaults.rudder.com")
+    let userDefaults = UserDefaults.standard
         
-    static func getServerConfig() -> RSServerConfig? {
-        return UserDefaults.standard.serverConfig
+    func write<T: Codable>(_ key: RSUserDefaults.Keys, value: T?) {
+        syncQueue.sync {
+            if isBasicType(value: value) {
+                userDefaults.set(value, forKey: key.rawValue)
+            } else {
+                userDefaults.set(try? PropertyListEncoder().encode(value), forKey: key.rawValue)
+            }
+            userDefaults.synchronize()
+        }
     }
     
-    static func saveServerConfig(_ serverConfig: RSServerConfig) {
-        UserDefaults.standard.serverConfig = serverConfig
+    func read<T: Codable>(_ key: RSUserDefaults.Keys) -> T? {
+        var result: T?
+        syncQueue.sync {
+            let raw = userDefaults.object(forKey: key.rawValue)
+            if let r = raw as? Data {
+                result = PropertyListDecoder().optionalDecode(T.self, from: r)
+            } else {
+                result = userDefaults.object(forKey: key.rawValue) as? T
+            }
+        }
+        return result
     }
-        
-    static func getApplicationVersion() -> String? {
-        return UserDefaults.standard.applicationVersion
-    }
-    
-    static func saveApplicationVersion(_ version: String?) {
-        UserDefaults.standard.applicationVersion = version
-    }
-    
-    static func getApplicationBuild() -> String? {
-        return UserDefaults.standard.applicationBuild
-    }
-    
-    static func saveApplicationBuild(_ build: String?) {
-        UserDefaults.standard.applicationBuild = build
-    }
-    
-    static func getOptStatus() -> Bool? {
-        return UserDefaults.standard.optStatus
-    }
+}
 
-    static func saveOptStatus(_ optStatus: Bool) {
-        UserDefaults.standard.optStatus = optStatus
+extension RSUserDefaults {
+    internal func updateUserInfo(_ userInfo: RSUserInfo) {
+        write(.userId, value: userInfo.userId)
+        write(.traits, value: userInfo.traits)
+        write(.anonymousId, value: userInfo.anonymousId)
     }
-    
-    static func getOptInTime() -> Int? {
-        return UserDefaults.standard.optInTime
+}
+
+extension RSUserDefaults {
+    func isBasicType<T: Any>(value: T?) -> Bool {
+        var result = false
+        if value == nil {
+            result = true
+        } else {
+            switch value {
+            case is NSNull, is Decimal, is NSNumber, is Bool, is String:
+                result = true
+            default:
+                break
+            }
+        }
+        return result
     }
-    
-    static func updateOptInTime(_ optInTime: Int?) {
-        UserDefaults.standard.optInTime = optInTime
-    }
-    
-    static func getOptOutTime() -> Int? {
-        return UserDefaults.standard.optOutTime
-    }
-    
-    static func updateOptOutTime(_ optOutTime: Int?) {
-        UserDefaults.standard.optOutTime = optOutTime
+}
+
+extension PropertyListDecoder {
+    func optionalDecode<T: Decodable>(_ type: T.Type, from object: Any?) -> T? {
+        if let data = object as? Data {
+            return try? PropertyListDecoder().decode(T.self, from: data)
+        }
+        return nil
     }
 }

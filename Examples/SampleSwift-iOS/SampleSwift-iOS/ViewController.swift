@@ -30,7 +30,8 @@ class ViewController: UIViewController {
                             Task(name: "Alias"),
                             Task(name: "Multiple Flush and Multiple Track"),
                             Task(name: "Screen without properties"),
-                            Task(name: "Screen with properties")]
+                            Task(name: "Screen with properties"),
+                            Task(name: "Multiple Track, Screen, Alias, Group, Identify")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +141,41 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             RSClient.sharedInstance().screen("ViewController")
         case 8:
             RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
+        /*case 9:
+            DispatchQueue.global(qos: .background).async {
+                for i in 1...1000 {
+                    print("From Thread 1A, Track No. \(i)")
+                    RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                }
+            }
+                        
+            DispatchQueue.global(qos: .background).async {
+                for i in 1001...2000 {
+                    print("From Thread 2A, Screen No. \(i)")
+                    RSClient.sharedInstance().screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
+                }
+            }
+
+            DispatchQueue.global(qos: .background).async {
+                for i in 2001...3000 {
+                    print("From Thread 3A, Group No. \(i)")
+                    RSClient.sharedInstance().group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
+                }
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                for i in 3001...4000 {
+                    print("From Thread 4A, Alias No. \(i)")
+                    RSClient.sharedInstance().alias("Alias \(i)")
+                }
+            }
+
+            DispatchQueue.global(qos: .background).async {
+                for i in 4001...5000 {
+                    print("From Thread 5A, Identify No. \(i)")
+                    RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
+                }
+            }*/
         default:
             break
         }

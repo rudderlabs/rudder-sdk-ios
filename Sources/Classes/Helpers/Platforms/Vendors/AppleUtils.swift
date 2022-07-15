@@ -47,7 +47,7 @@ internal class PhoneVendor: Vendor {
     }
     
     override var identifierForVendor: String? {
-        return device.identifierForVendor?.uuidString
+        return device.identifierForVendor?.uuidString.lowercased()
     }
     
     override var systemName: String {
@@ -193,8 +193,6 @@ internal class MacVendor: Vendor {
     }
     
     override var identifierForVendor: String? {
-        // apple suggested to use this for receipt validation
-        // in MAS, works for this too.
         return macAddress(bsd: "en0")
     }
     

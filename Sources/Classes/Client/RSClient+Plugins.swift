@@ -34,14 +34,9 @@ extension RSClient {
         var plugins = [RSPlatformPlugin]()
         
         plugins.append(RSContextPlugin())
-        
-        plugins.append(RSIdentifyTraitsPlugin())
-        plugins.append(RSAliasIdPlugin())
-        plugins.append(RSUserIdPlugin())
-        plugins.append(RSAnonymousIdPlugin())
-        plugins.append(RSAppTrackingConsentPlugin())
         plugins.append(RSAdvertisingIdPlugin())
-        
+        plugins.append(RSAppTrackingConsentPlugin())
+
         plugins += Vendor.current.requiredPlugins
 
         if config?.trackLifecycleEvents == true {
@@ -152,8 +147,8 @@ extension RSClient {
             case .success(let serverConfig):
                 self.update(serverConfig: serverConfig, type: .refresh)
                 self.serverConfig = serverConfig
-                RSUserDefaults.saveServerConfig(serverConfig)
-                RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
+                self.userDefaults.write(.serverConfig, value: serverConfig)
+                self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
                 self.log(message: "server config download successful", logLevel: .debug)
                 completion()
                 

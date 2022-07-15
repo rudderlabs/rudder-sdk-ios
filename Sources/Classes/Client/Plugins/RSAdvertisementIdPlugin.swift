@@ -18,11 +18,10 @@ class RSAdvertisingIdPlugin: RSPlatformPlugin {
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        if var context = workingMessage.context, let advertisingId = advertisingId {
+        if var context = workingMessage.context, let advertisingId = advertisingId, advertisingId != "00000000-0000-0000-0000-000000000000" {
             context[keyPath: "device.advertisingId"] = advertisingId
             context[keyPath: "device.adTrackingEnabled"] = true
             workingMessage.context = context
-            client?.updateContext(context)
         }
         return workingMessage
     }
@@ -35,7 +34,7 @@ extension RSClient {
         - advertisingId: IDFA value
      # Example #
      ```
-     client.setAdvertisingId("sample_device_token")
+     client.setAdvertisingId("sample_advertising_id")
      ```
      */
     @objc
