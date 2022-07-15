@@ -43,7 +43,7 @@ extension WKInterfaceController {
     func rsDidAppear() {
         var name = NSStringFromClass(Swift.type(of: self))
         name = name.replacingOccurrences(of: "InterfaceController", with: "")
-        let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name])
+        let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name]).applyRawEventData(userInfo: WKInterfaceController.client?.userInfo)
         WKInterfaceController.client?.process(message: screenMessage)
         rsDidAppear()
     }
