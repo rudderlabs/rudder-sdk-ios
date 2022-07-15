@@ -12,16 +12,17 @@ class RSAppTrackingConsentPlugin: RSPlatformPlugin {
     let type = PluginType.before
     weak var client: RSClient?
     
-    var appTrackingConsent: RSAppTrackingConsent?
+    var appTrackingConsent: RSAppTrackingConsent = .notDetermined
 
     required init() { }
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        if var context = workingMessage.context, let appTrackingConsent = appTrackingConsent {
-            context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
-            workingMessage.context = context
-            client?.updateContext(context)
+        if var context = workingMessage.context {
+            if let advertisingId = context[keyPath: "device.advertisingId"] as? String, advertisingId.isNotEmpty {
+                context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
+                workingMessage.context = context
+            }
         }
         return workingMessage
     }

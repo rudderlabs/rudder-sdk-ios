@@ -7,33 +7,24 @@
 //
 
 import Foundation
-private let syncQueue = DispatchQueue(label: "context.rudder.com")
+
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
     weak var client: RSClient?
     
-    var context: MessageContext?
-    
-    var traits: MessageTraits? {
-        if let traits = context?["traits"] as? MessageTraits {
-            return traits
-        }
-        return nil
-    }
-    
     private var staticContext = staticContextData()
     private static var device = Vendor.current
-    let semaphore = DispatchSemaphore(value: 1)
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
-        syncQueue.sync {
-            var context = staticContext
-            insertDynamicPlatformContextData(context: &context)
-            insertDynamicOptionData(message: workingMessage, context: &context)
-            workingMessage.context = context
-            self.context = context
+        var context = staticContext
+        insertDynamicPlatformContextData(context: &context)
+        insertDynamicOptionData(message: workingMessage, context: &context)
+        if let eventContext = workingMessage.context {
+            context.merge(eventContext) { (_, new) in new }
         }
+        workingMessage.context = context
+        
         return workingMessage
     }
     
@@ -133,15 +124,5 @@ class RSContextPlugin: RSPlatformPlugin {
             }
         }
         // TODO: Fetch `customContexts` set using setOption API.
-    }
-}
-extension RSClient {
-    
-    func updateContext(_ context: MessageContext?) {
-        syncQueue.sync {
-            if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
-                contextPlugin.context = context
-            }
-        }
     }
 }

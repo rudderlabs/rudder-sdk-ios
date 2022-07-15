@@ -21,7 +21,6 @@ class RSDeviceTokenPlugin: RSPlatformPlugin {
         if var context = workingMessage.context, let token = token {
             context[keyPath: "device.token"] = token
             workingMessage.context = context
-            client?.updateContext(context)
         }
         return workingMessage
     }

@@ -10,14 +10,24 @@ import Foundation
 
 class RSGDPRPlugin: RSPlatformPlugin {
     let type = PluginType.before
-    weak var client: RSClient?
+    var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
     
-    var optOutStatus: Bool?
-
+    private var userDefaults: RSUserDefaults?
+    
+    internal func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+    }
+    
     required init() { }
     
     func execute<T: RSMessage>(message: T?) -> T? {
-        if RSUserDefaults.getOptStatus() == true {
+        let optStatus: Bool? = userDefaults?.read(.optStatus)
+        if optStatus == true {
             return nil
         } else {
             return message
@@ -28,18 +38,12 @@ class RSGDPRPlugin: RSPlatformPlugin {
 extension RSClient {
     @objc
     public func setOptOutStatus(_ status: Bool) {
-        RSUserDefaults.saveOptStatus(status)
-        if let gdprPlugin = self.find(pluginType: RSGDPRPlugin.self) {
-            gdprPlugin.optOutStatus = status
-        } else {
-            let gdprPlugin = RSGDPRPlugin()
-            gdprPlugin.optOutStatus = status
-            add(plugin: gdprPlugin)
-        }
+        userDefaults.write(.optStatus, value: status)
     }
     
     @objc
     public func getOptOutStatus() -> Bool {
-        return RSUserDefaults.getOptStatus() ?? false
+        let optStatus: Bool? = userDefaults.read(.optStatus)
+        return optStatus ?? false
     }
 }

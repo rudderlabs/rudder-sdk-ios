@@ -11,13 +11,62 @@ import Foundation
 
 class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
     let type = PluginType.before
-    var client: RSClient?
+    var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
 
     @RSAtomic private var didFinishLaunching = false
     @RSAtomic private var fromBackground = false
-
+    private var userDefaults: RSUserDefaults?
+    private var config: RSConfig?
+    
+    internal func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+        config = client.config
+    }
+    
+    func application(didFinishLaunchingWithOptions launchOptions: [String: Any]?) {
+        didFinishLaunching = true
+        
+        if config?.trackLifecycleEvents == false {
+            return
+        }
+        
+        let previousVersion: String? = userDefaults?.read(.applicationVersion)
+        let previousBuild: String? = userDefaults?.read(.applicationBuild)
+        
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        
+        if previousVersion == nil {
+            client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
+                currentVersion: currentVersion,
+                currentBuild: currentBuild
+            ))
+        } else if currentVersion != previousVersion {
+            client?.track("Application Updated", properties: RSUtils.getLifeCycleProperties(
+                previousVersion: previousVersion,
+                previousBuild: previousBuild,
+                currentVersion: currentVersion,
+                currentBuild: currentBuild
+            ))
+        }
+        
+        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
+            currentVersion: currentVersion,
+            currentBuild: currentBuild,
+            fromBackground: false
+        ))
+        
+        userDefaults?.write(.applicationVersion, value: currentVersion)
+        userDefaults?.write(.applicationBuild, value: currentBuild)
+    }
+    
     func applicationDidBecomeActive() {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         
@@ -67,7 +116,7 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
     }
     
     func applicationWillTerminate() {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         

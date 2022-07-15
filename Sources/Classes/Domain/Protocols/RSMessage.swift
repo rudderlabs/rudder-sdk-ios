@@ -174,8 +174,9 @@ public struct AliasMessage: RSMessage {
         dictionary["previousId"] = previousId
     }
         
-    init(newId: String, option: RSOption? = nil) {
+    init(newId: String, previousId: String?, option: RSOption? = nil) {
         self.userId = newId
+        self.previousId = previousId
         self.option = option
     }    
 }
@@ -183,8 +184,14 @@ public struct AliasMessage: RSMessage {
 // MARK: - RawEvent data helpers
 
 extension RSMessage {
-    internal func applyRawEventData() -> Self {
+    internal func applyRawEventData(userInfo: RSUserInfo?) -> Self {
         var result: Self = self
+        result.userId = userInfo?.userId
+        result.anonymousId = userInfo?.anonymousId
+        if let traits = userInfo?.traits?.dictionaryValue {
+            result.context = MessageContext()
+            result.context?[keyPath: "traits"] = traits
+        }
         result.messageId = "\(RSUtils.getTimeStamp())-\(RSUtils.getUniqueId())"
         result.timestamp = RSUtils.getTimestampString()
         result.channel = "mobile"
@@ -204,9 +211,11 @@ extension RSMessage {
         }
         if let userId = userId {
             dict["userId"] = userId
+            dict[keyPath: "context.traits.userId"] = userId
         }
         if let anonymousId = anonymousId {
             dict["anonymousId"] = anonymousId
+            dict[keyPath: "context.traits.anonymousId"] = anonymousId
         }
         return dict
     }

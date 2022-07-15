@@ -15,9 +15,20 @@ open class RSClient: NSObject {
     var serverConfig: RSServerConfig?
 	internal var checkServerConfigInProgress = false
     static let shared = RSClient()
+    internal let userDefaults = RSUserDefaults()
+    internal var userInfo: RSUserInfo? {
+        let userId: String? = userDefaults.read(.userId)
+        let traits: JSON? = userDefaults.read(.traits)
+        var anonymousId: String? = userDefaults.read(.anonymousId)
+        if anonymousId == nil {
+            anonymousId = Vendor.current.identifierForVendor
+            userDefaults.write(.anonymousId, value: anonymousId)
+        }
+        return RSUserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
+    }
     
     private override init() {
-        serverConfig = RSUserDefaults.getServerConfig()
+        serverConfig = userDefaults.read(.serverConfig)
         controller = RSController()
     }
     
@@ -194,7 +205,7 @@ extension RSClient {
             return
         }
         let message = TrackMessage(event: eventName, properties: properties, option: option)
-            .applyRawEventData()
+            .applyRawEventData(userInfo: userInfo)
         process(message: message)
     }
     
@@ -209,7 +220,7 @@ extension RSClient {
         }
         screenProperties["name"] = screenName
         let message = ScreenMessage(title: screenName, category: category, properties: screenProperties, option: option)
-            .applyRawEventData()
+            .applyRawEventData(userInfo: userInfo)
         process(message: message)
     }
     
@@ -219,7 +230,7 @@ extension RSClient {
             return
         }
         let message = GroupMessage(groupId: groupId, traits: traits, option: option)
-            .applyRawEventData()
+            .applyRawEventData(userInfo: userInfo)
         process(message: message)
     }
     
@@ -228,11 +239,15 @@ extension RSClient {
             log(message: "newId can not be empty", logLevel: .warning)
             return
         }
-        let message = AliasMessage(newId: newId, option: option)
-            .applyAlias(newId: newId, client: self)
-            .applyRawEventData()
-        setAlias(newId)
-        setUserId(newId)
+        let previousId: String? = userDefaults.read(.userId)
+        userDefaults.write(.userId, value: newId)
+        var dict: [String: Any] = ["id": newId]
+        if let json: JSON = userDefaults.read(.traits), let traits = json.dictionaryValue {
+            dict.merge(traits) { (_, new) in new }
+        }
+        userDefaults.write(.traits, value: try? JSON(dict))
+        let message = AliasMessage(newId: newId, previousId: previousId, option: option)
+            .applyRawEventData(userInfo: userInfo)
         process(message: message)
     }
     
@@ -241,10 +256,12 @@ extension RSClient {
             log(message: "userId can not be empty", logLevel: .warning)
             return
         }
+        if let traits = traits {
+            userDefaults.write(.traits, value: try? JSON(traits))
+        }
+        userDefaults.write(.userId, value: userId)
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
-            .applyRawEventData()
-        setTraits(traits)
-        setUserId(userId)
+            .applyRawEventData(userInfo: userInfo)
         process(message: message)
     }
 }
@@ -257,10 +274,7 @@ extension RSClient {
      */
     @objc
     public var anonymousId: String? {
-        if let anonymousIdPlugin = self.find(pluginType: RSAnonymousIdPlugin.self) {
-            return anonymousIdPlugin.anonymousId
-        }
-        return nil
+        return userDefaults.read(.anonymousId)
     }
     
     /**
@@ -268,10 +282,7 @@ extension RSClient {
      */
     @objc
     public var userId: String? {
-        if let userIdPlugin = self.find(pluginType: RSUserIdPlugin.self) {
-            return userIdPlugin.userId
-        }
-        return nil
+        return userDefaults.read(.userId)
     }
     
     /**
@@ -279,10 +290,8 @@ extension RSClient {
      */
     @objc
     public var context: MessageContext? {
-        if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
-            return contextPlugin.context
-        }
-        return nil
+        let context: JSON? = userDefaults.read(.context)
+        return context?.dictionaryValue
     }
     
     /**
@@ -290,10 +299,8 @@ extension RSClient {
      */
     @objc
     public var traits: MessageTraits? {
-        if let contextPlugin = self.find(pluginType: RSContextPlugin.self) {
-            return contextPlugin.traits
-        }
-        return nil
+        let traits: MessageTraits? = userDefaults.read(.traits)
+        return traits
     }
     
     /**
@@ -380,5 +387,25 @@ extension RSClient {
         default:
             break
         }
+    }
+}
+
+extension RSClient {
+    /**
+     API for setting unique identifier of every call.
+     - Parameters:
+        - anonymousId: Unique identifier of every event
+     # Example #
+     ```
+     client.setAnonymousId("sample_anonymous_id")
+     ```
+     */
+    @objc
+    public func setAnonymousId(_ anonymousId: String) {
+        guard anonymousId.isNotEmpty else {
+            log(message: "anonymousId can not be empty", logLevel: .warning)
+            return
+        }
+        userDefaults.write(.anonymousId, value: anonymousId)
     }
 }
