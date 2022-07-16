@@ -68,7 +68,7 @@ internal class PhoneVendor: Vendor {
     }
     
     override var requiredPlugins: [RSPlatformPlugin] {
-        return [RSiOSLifecycleMonitor(), RSDeviceTokenPlugin()]
+        return [RSiOSLifecycleMonitor()]
     }
     
     private func deviceModel() -> String {
@@ -217,7 +217,7 @@ internal class MacVendor: Vendor {
     }
     
     override var requiredPlugins: [RSPlatformPlugin] {
-        return [RSmacOSLifecycleMonitor(), RSDeviceTokenPlugin()]
+        return [RSmacOSLifecycleMonitor()]
     }
     
     private func deviceModel() -> String {

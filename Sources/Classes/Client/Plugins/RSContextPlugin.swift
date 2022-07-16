@@ -20,8 +20,9 @@ class RSContextPlugin: RSPlatformPlugin {
         var context = staticContext
         insertDynamicPlatformContextData(context: &context)
         insertDynamicOptionData(message: workingMessage, context: &context)
+        insertDynamicDeviceInfoData(eventContext: workingMessage.context, context: &context)
         if let eventContext = workingMessage.context {
-            context.merge(eventContext) { (_, new) in new }
+            context.merge(eventContext) { (new, _) in new }
         }
         workingMessage.context = context
         
@@ -53,7 +54,7 @@ class RSContextPlugin: RSPlatformPlugin {
         // device
         let device = Self.device
         
-        let deviceInfo = [
+        let deviceInfo: [String: Any] = [
             "manufacturer": device.manufacturer,
             "type": device.type,
             "model": device.model,
@@ -109,6 +110,13 @@ class RSContextPlugin: RSPlatformPlugin {
             "wifi": wifi,
             "carrier": device.carrier
         ]
+    }
+    
+    internal func insertDynamicDeviceInfoData(eventContext: [String: Any]?, context: inout [String: Any]) {
+        if let eventDeviceInfo = eventContext?["device"] as? [String: Any], var existingDeviceInfo = context["device"] as? [String: Any] {
+            existingDeviceInfo.merge(eventDeviceInfo) { (new, _) in new }
+            context["device"] = existingDeviceInfo
+        }
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {

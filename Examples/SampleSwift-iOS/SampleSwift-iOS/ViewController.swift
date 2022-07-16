@@ -31,7 +31,8 @@ class ViewController: UIViewController {
                             Task(name: "Multiple Flush and Multiple Track"),
                             Task(name: "Screen without properties"),
                             Task(name: "Screen with properties"),
-                            Task(name: "Multiple Track, Screen, Alias, Group, Identify")]
+                            Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
+                            Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +73,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
         case 3:
             RSClient.sharedInstance().flush()
-        case 4:
+        /*case 4:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1, Flush No. \(i)")
@@ -92,10 +93,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     print("From Thread 3, Flush No. \(i)")
                     RSClient.sharedInstance().flush()
                 }
-            }
+            }*/
         case 5:
             RSClient.sharedInstance().alias("new_user_id")
-        case 6:
+        /*case 6:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
@@ -136,7 +137,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     print("From Thread 3, Flush No. \(i)")
                     RSClient.sharedInstance().flush()
                 }
-            }
+            }*/
         case 7:
             RSClient.sharedInstance().screen("ViewController")
         case 8:
@@ -176,6 +177,63 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
                 }
             }*/
+        case 10:
+            DispatchQueue.global(qos: .background).async {
+                for i in 1...1000 {
+                    print("From Thread 1A, Track No. \(i)")
+                    if i % 2 == 0 {
+                        RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    } else {
+                        RSClient.sharedInstance().setAdvertisingId("Advertising Id \(i)")
+                    }
+                }
+            }
+                        
+            DispatchQueue.global(qos: .background).async {
+                for i in 1001...2000 {
+                    print("From Thread 2A, Screen No. \(i)")
+                    if i % 2 == 0 {
+                        RSClient.sharedInstance().screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    } else {
+                        RSClient.sharedInstance().setAnonymousId("Anonymous Id \(i)")
+                    }
+                }
+            }
+
+            DispatchQueue.global(qos: .background).async {
+                for i in 2001...3000 {
+                    print("From Thread 3A, Group No. \(i)")
+                    if i % 2 == 0 {
+                        RSClient.sharedInstance().group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
+                    } else {
+                        RSClient.sharedInstance().setDeviceToken("Device Token \(i)")
+                    }
+                }
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                for i in 3001...4000 {
+                    print("From Thread 4A, Alias No. \(i)")
+                    if i % 2 == 0 {
+                        RSClient.sharedInstance().alias("Alias \(i)")
+                    } else {
+                        RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+                    }
+                }
+            }
+
+            DispatchQueue.global(qos: .background).async {
+                for i in 4001...5000 {
+                    print("From Thread 5A, Identify No. \(i)")
+                    if i % 2 == 0 {
+                    RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
+                    } else {
+                        RSClient.sharedInstance().setDeviceToken("Device Token \(i)")
+                        RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+                    }
+                }
+            }
+            
         default:
             break
         }

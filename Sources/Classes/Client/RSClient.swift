@@ -26,6 +26,7 @@ open class RSClient: NSObject {
         }
         return RSUserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
     }
+    var globalOption: RSOption?
     
     private override init() {
         serverConfig = userDefaults.read(.serverConfig)
@@ -407,5 +408,74 @@ extension RSClient {
             return
         }
         userDefaults.write(.anonymousId, value: anonymousId)
+    }
+
+    /**
+     API for setting enable/disable sending the events across all the event calls made using the SDK to the specified destinations.
+     - Parameters:
+        - option: Options related to every API call
+     # Example #
+     ```
+     let defaultOption = RSOption()
+     defaultOption.putIntegration("Amplitude", isEnabled: true)
+     
+     client.setOption(defaultOption)
+     ```
+     */
+    @objc
+    public func setOption(_ option: RSOption) {
+        globalOption = option
+    }
+
+    /**
+     API for setting token under context.device.token.
+     - Parameters:
+        - token: Token of the device
+     # Example #
+     ```
+     client.setDeviceToken("sample_device_token")
+     ```
+     */
+    @objc
+    public func setDeviceToken(_ token: String) {
+        guard token.isNotEmpty else {
+            log(message: "token can not be empty", logLevel: .warning)
+            return
+        }
+        RSSessionStorage.shared.write(.deviceToken, value: token)
+    }
+
+    /**
+     API for setting identifier under context.device.advertisingId.
+     - Parameters:
+        - advertisingId: IDFA value
+     # Example #
+     ```
+     client.setAdvertisingId("sample_advertising_id")
+     ```
+     */
+    @objc
+    public func setAdvertisingId(_ advertisingId: String) {
+        guard advertisingId.isNotEmpty else {
+            log(message: "advertisingId can not be empty", logLevel: .warning)
+            return
+        }
+        if advertisingId != "00000000-0000-0000-0000-000000000000" {
+            RSSessionStorage.shared.write(.advertisingId, value: advertisingId)
+        }
+    }
+
+    /**
+     API for app tracking consent management.
+     - Parameters:
+        - appTrackingConsent: App tracking consent
+     # Example #
+     ```
+     client.setAppTrackingConsent(.authorize)
+     ```
+     */
+    @objc
+    public func setAppTrackingConsent(_ appTrackingConsent: RSAppTrackingConsent) {
+        RSSessionStorage.shared.write(.appTrackingConsent, value: appTrackingConsent)
     }
 }

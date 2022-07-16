@@ -34,8 +34,6 @@ extension RSClient {
         var plugins = [RSPlatformPlugin]()
         
         plugins.append(RSContextPlugin())
-        plugins.append(RSAdvertisingIdPlugin())
-        plugins.append(RSAppTrackingConsentPlugin())
 
         plugins += Vendor.current.requiredPlugins
 
@@ -135,6 +133,9 @@ extension RSClient {
         let maxRetryCount = 4
         
         guard retryCount < maxRetryCount else {
+            if let serverConfig = serverConfig {
+                update(serverConfig: serverConfig, type: .refresh)
+            }
             log(message: "Server config download failed. Using last stored config from storage", logLevel: .debug)
             completion()
             return
