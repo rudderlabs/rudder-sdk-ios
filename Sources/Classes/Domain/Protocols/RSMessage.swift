@@ -186,12 +186,33 @@ public struct AliasMessage: RSMessage {
 extension RSMessage {
     internal func applyRawEventData(userInfo: RSUserInfo?) -> Self {
         var result: Self = self
-        result.userId = userInfo?.userId
-        result.anonymousId = userInfo?.anonymousId
+        result.context = MessageContext()
         if let traits = userInfo?.traits?.dictionaryValue {
-            result.context = MessageContext()
             result.context?[keyPath: "traits"] = traits
         }
+        if let userId = userInfo?.userId {
+            result.context?[keyPath: "traits.userId"] = userId
+        }
+        if let anonymousId = userInfo?.anonymousId {
+            result.context?[keyPath: "traits.anonymousId"] = anonymousId
+        }
+        var device = [String: Any]()
+        if let deviceToken: String = RSSessionStorage.shared.read(.deviceToken) {
+            device["token"] = deviceToken
+//            result.context?[keyPath: "device.token"] = "\(deviceToken)"
+        }
+        if let advertisingId: String = RSSessionStorage.shared.read(.advertisingId), advertisingId.isNotEmpty {
+            device["advertisingId"] = advertisingId
+//            result.context?[keyPath: "device.advertisingId"] = advertisingId
+            let appTrackingConsent: RSAppTrackingConsent = RSSessionStorage.shared.read(.appTrackingConsent) ?? .notDetermined
+            device["attTrackingStatus"] = appTrackingConsent.rawValue
+//            result.context?[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
+        }
+        if !device.isEmpty {
+            result.context?["device"] = device
+        }
+        result.userId = userInfo?.userId
+        result.anonymousId = userInfo?.anonymousId
         result.messageId = "\(RSUtils.getTimeStamp())-\(RSUtils.getUniqueId())"
         result.timestamp = RSUtils.getTimestampString()
         result.channel = "mobile"
@@ -211,11 +232,9 @@ extension RSMessage {
         }
         if let userId = userId {
             dict["userId"] = userId
-            dict[keyPath: "context.traits.userId"] = userId
         }
         if let anonymousId = anonymousId {
             dict["anonymousId"] = anonymousId
-            dict[keyPath: "context.traits.anonymousId"] = anonymousId
         }
         return dict
     }

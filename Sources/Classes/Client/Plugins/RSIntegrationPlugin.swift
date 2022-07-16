@@ -19,8 +19,8 @@ class RSIntegrationPlugin: RSPlatformPlugin {
             if messageIntegrations["All"] == nil {
                 workingMessage.integrations?["All"] = true
             }
-        } else if let optionPlugin = client?.find(pluginType: RSOptionPlugin.self) {
-            if let integrations = optionPlugin.option?.integrations {
+        } else if let globalOption = client?.globalOption {
+            if let integrations = globalOption.integrations {
                 workingMessage.integrations = integrations
                 if integrations["All"] == nil {
                     workingMessage.integrations?["All"] = true

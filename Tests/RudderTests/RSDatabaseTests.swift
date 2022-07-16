@@ -27,7 +27,7 @@ class RSDatabaseTests: XCTestCase {
 
     func testWriteEvent() {
         let trackMessage = TrackMessage(event: "sample_track1", properties: nil)
-            .applyRawEventData()
+            .applyRawEventData(userInfo: client.userInfo)
         databaseManager.write(trackMessage)
 
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
@@ -42,7 +42,7 @@ class RSDatabaseTests: XCTestCase {
     
     func testRemoveEvent() {
         let trackMessage = TrackMessage(event: "sample_track1", properties: nil)
-            .applyRawEventData()
+            .applyRawEventData(userInfo: client.userInfo)
         databaseManager.write(trackMessage)
 
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
