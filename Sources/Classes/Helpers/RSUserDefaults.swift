@@ -52,14 +52,6 @@ class RSUserDefaults {
 }
 
 extension RSUserDefaults {
-    internal func updateUserInfo(_ userInfo: RSUserInfo) {
-        write(.userId, value: userInfo.userId)
-        write(.traits, value: userInfo.traits)
-        write(.anonymousId, value: userInfo.anonymousId)
-    }
-}
-
-extension RSUserDefaults {
     func isBasicType<T: Any>(value: T?) -> Bool {
         var result = false
         if value == nil {

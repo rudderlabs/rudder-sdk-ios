@@ -26,8 +26,8 @@ class RSGDPRPlugin: RSPlatformPlugin {
     required init() { }
     
     func execute<T: RSMessage>(message: T?) -> T? {
-        let optStatus: Bool? = userDefaults?.read(.optStatus)
-        if optStatus == true {
+        if getOptOutStatus() == true {
+            client?.log(message: "User Opted out for tracking the activity, hence dropping the event", logLevel: .debug)
             return nil
         } else {
             return message
@@ -35,15 +35,16 @@ class RSGDPRPlugin: RSPlatformPlugin {
     }
 }
 
+extension RSGDPRPlugin {
+    internal func getOptOutStatus() -> Bool {
+        let optStatus: Bool? = userDefaults?.read(.optStatus)
+        return optStatus ?? false
+    }
+}
+
 extension RSClient {
     @objc
     public func setOptOutStatus(_ status: Bool) {
         userDefaults.write(.optStatus, value: status)
-    }
-    
-    @objc
-    public func getOptOutStatus() -> Bool {
-        let optStatus: Bool? = userDefaults.read(.optStatus)
-        return optStatus ?? false
     }
 }

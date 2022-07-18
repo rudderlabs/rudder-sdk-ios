@@ -199,14 +199,11 @@ extension RSMessage {
         var device = [String: Any]()
         if let deviceToken: String = RSSessionStorage.shared.read(.deviceToken) {
             device["token"] = deviceToken
-//            result.context?[keyPath: "device.token"] = "\(deviceToken)"
         }
         if let advertisingId: String = RSSessionStorage.shared.read(.advertisingId), advertisingId.isNotEmpty {
             device["advertisingId"] = advertisingId
-//            result.context?[keyPath: "device.advertisingId"] = advertisingId
             let appTrackingConsent: RSAppTrackingConsent = RSSessionStorage.shared.read(.appTrackingConsent) ?? .notDetermined
             device["attTrackingStatus"] = appTrackingConsent.rawValue
-//            result.context?[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
         }
         if !device.isEmpty {
             result.context?["device"] = device
