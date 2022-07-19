@@ -20,7 +20,8 @@ typedef enum {
 
 typedef enum {
     CLOUDMODE =2,
-    DEVICEMODE =1
+    DEVICEMODE =1,
+    ALL = 3
 } MODES;
 
 NS_ASSUME_NONNULL_BEGIN
