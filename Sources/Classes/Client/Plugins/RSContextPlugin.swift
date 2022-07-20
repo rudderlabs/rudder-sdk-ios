@@ -41,7 +41,7 @@ class RSContextPlugin: RSPlatformPlugin {
         // app info
         let info = Bundle.main.infoDictionary
         staticContext["app"] = [
-            "name": info?["CFBundleDisplayName"] ?? "",
+            "name": info?["CFBundleDisplayName"] ?? (info?["CFBundleName"] ?? ""),
             "version": info?["CFBundleShortVersionString"] ?? "",
             "build": info?["CFBundleVersion"] ?? "",
             "namespace": Bundle.main.bundleIdentifier ?? ""
