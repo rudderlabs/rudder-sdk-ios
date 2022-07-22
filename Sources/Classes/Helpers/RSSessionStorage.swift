@@ -13,6 +13,7 @@ class RSSessionStorage {
         case deviceToken
         case advertisingId
         case appTrackingConsent
+        case option
     }
     
     static let shared = RSSessionStorage()
@@ -20,7 +21,8 @@ class RSSessionStorage {
     private var deviceToken: String?
     private var advertisingId: String?
     private var appTrackingConsent: RSAppTrackingConsent?
-        
+    private var option: RSOption?
+
     func write<T: Any>(_ key: RSSessionStorage.Keys, value: T?) {
         syncQueue.sync {
             switch key {
@@ -30,6 +32,8 @@ class RSSessionStorage {
                 advertisingId = value as? String
             case .appTrackingConsent:
                 appTrackingConsent = value as? RSAppTrackingConsent
+            case .option:
+                option = value as? RSOption
             }
         }
     }
@@ -41,11 +45,22 @@ class RSSessionStorage {
             case .deviceToken:
                 result = deviceToken as? T
             case .advertisingId:
-                result = advertisingId  as? T
+                result = advertisingId as? T
             case .appTrackingConsent:
-                result = appTrackingConsent  as? T
+                result = appTrackingConsent as? T
+            case .option:
+                result = option as? T
             }
         }
         return result
+    }
+    
+    func reset() {
+        syncQueue.sync {
+            deviceToken = nil
+            advertisingId = nil
+            appTrackingConsent = .notDetermined
+            option = nil
+        }
     }
 }

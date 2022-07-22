@@ -76,7 +76,7 @@ class RSContextPlugin: RSPlatformPlugin {
         ]
         // locale
         if !Locale.preferredLanguages.isEmpty {
-            context["locale"] = "\(Locale.preferredLanguages[0] ?? "")-\(Locale.current.regionCode ?? "")"
+            context["locale"] = "\(Locale.preferredLanguages[0])-\(Locale.current.regionCode ?? "")"
         }
         // timezone
         context["timezone"] = TimeZone.current.identifier

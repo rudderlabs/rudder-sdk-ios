@@ -33,8 +33,8 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         waitUntilStarted(client: client)
         waitUntilServerConfigDownloaded(client: client)
         
-        RSUserDefaults.saveApplicationVersion(nil)
-        RSUserDefaults.saveApplicationBuild(nil)
+        client.userDefaults.write(application: .version, value: nil)
+        client.userDefaults.write(application: .build, value: nil)
                 
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
@@ -59,8 +59,8 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         waitUntilStarted(client: client)
         waitUntilServerConfigDownloaded(client: client)
         
-        RSUserDefaults.saveApplicationVersion("2.0.0")
-        RSUserDefaults.saveApplicationBuild("2")
+        client.userDefaults.write(application: .version, value: "2.0.0")
+        client.userDefaults.write(application: .build, value: "2")
         
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))

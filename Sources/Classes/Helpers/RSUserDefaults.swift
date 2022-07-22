@@ -9,18 +9,21 @@
 import Foundation
 
 class RSUserDefaults {    
-    enum Keys: String {
+    enum Keys: String, CaseIterable {
         case userId
         case traits
         case anonymousId
         case lastUpdateTime
         case serverConfig
-        case applicationVersion
-        case applicationBuild
         case optStatus
         case optInTime
         case optOutTime
         case context
+    }
+    
+    enum ApplicationKeys: String {
+        case version
+        case build
     }
     
     let syncQueue = DispatchQueue(label: "userDefaults.rudder.com")
@@ -48,6 +51,29 @@ class RSUserDefaults {
             }
         }
         return result
+    }
+    
+    func write(application key: RSUserDefaults.ApplicationKeys, value: String?) {
+        syncQueue.sync {
+            userDefaults.set(value, forKey: key.rawValue)
+            userDefaults.synchronize()
+        }
+    }
+    
+    func read(application key: RSUserDefaults.ApplicationKeys) -> String? {
+        var result: String?
+        syncQueue.sync {
+            result = userDefaults.string(forKey: key.rawValue)
+        }
+        return result
+    }
+    
+    func reset() {
+        syncQueue.sync {
+            for key in RSUserDefaults.Keys.allCases {
+                userDefaults.removeObject(forKey: key.rawValue)
+            }
+        }
     }
 }
 
