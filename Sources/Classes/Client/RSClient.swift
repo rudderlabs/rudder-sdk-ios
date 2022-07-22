@@ -82,6 +82,11 @@ open class RSClient: NSObject {
     }
     
     @objc
+    public func track(_ eventName: String, option: RSOption) {
+        _track(eventName, properties: nil, option: option)
+    }
+    
+    @objc
     public func track(_ eventName: String) {
         _track(eventName, properties: nil, option: nil)
     }
@@ -106,6 +111,11 @@ open class RSClient: NSObject {
     @objc
     public func identify(_ userId: String, traits: IdentifyTraits) {
         _identify(userId, traits: traits, option: nil)
+    }
+    
+    @objc
+    public func identify(_ userId: String, option: RSOption) {
+        _identify(userId, traits: nil, option: option)
     }
     
     @objc
@@ -136,6 +146,11 @@ open class RSClient: NSObject {
     }
     
     @objc
+    public func screen(_ screenName: String, properties: ScreenProperties, option: RSOption) {
+        _screen(screenName, category: nil, properties: properties, option: option)
+    }
+    
+    @objc
     public func screen(_ screenName: String, properties: ScreenProperties) {
         _screen(screenName, category: nil, properties: properties, option: nil)
     }
@@ -143,6 +158,11 @@ open class RSClient: NSObject {
     @objc
     public func screen(_ screenName: String, category: String) {
         _screen(screenName, category: category, properties: nil, option: nil)
+    }
+    
+    @objc
+    public func screen(_ screenName: String, option: RSOption) {
+        _screen(screenName, category: nil, properties: nil, option: option)
     }
     
     @objc
@@ -170,6 +190,11 @@ open class RSClient: NSObject {
     @objc
     public func group(_ groupId: String, traits: GroupTraits) {
         _group(groupId, traits: traits, option: nil)
+    }
+    
+    @objc
+    public func group(_ groupId: String, option: RSOption) {
+        _group(groupId, traits: nil, option: option)
     }
     
     @objc
