@@ -144,6 +144,7 @@
 		ED5603842881C691004B5BEC /* RSUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUserInfo.swift; sourceTree = "<group>"; };
 		ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSessionStorage.swift; sourceTree = "<group>"; };
 		ED560388288316C2004B5BEC /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		ED56038A2887EA73004B5BEC /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ED910CDE273BA25100A3EDFF /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		ED910CE0273BA25100A3EDFF /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		ED910CE1273BA25100A3EDFF /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };

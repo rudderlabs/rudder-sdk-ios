@@ -55,6 +55,8 @@ open class RSClient: NSObject {
      */
     @objc
     public func configure(with config: RSConfig) {
+        // Config can be set only one time per session.
+        guard self.config == nil else { return }
         self.config = config
         addPlugins()
     }
