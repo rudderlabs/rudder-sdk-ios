@@ -125,8 +125,8 @@ class RSContextPlugin: RSPlatformPlugin {
                 context["externalId"] = externalIds
             }
             if let customContexts = option.customContexts {
-                for key in customContexts.keys {
-                    context[key] = [key: customContexts]
+                for (key, value) in customContexts {
+                    context[key] = value
                 }
             }
         }

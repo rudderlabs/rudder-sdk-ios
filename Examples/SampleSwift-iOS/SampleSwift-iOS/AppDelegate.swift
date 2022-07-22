@@ -38,36 +38,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                .sleepTimeOut(1)
             RSClient.sharedInstance().configure(with: config)
             RSClient.sharedInstance().addDestination(CustomDestination())
+            
+            let option = RSOption()
+                        option.putExternalId("key-1", withId: "value-1")
+                        option.putExternalId("key-2", withId: "value-2")
+                        option.putExternalId("key-3", withId: "value-3")
+                        option.putExternalId("key-4", withId: "value-4")
 
-            RSClient.sharedInstance().track("sample_track_1")
+                        option.putIntegration("key-5", isEnabled: true)
+                        option.putIntegration("key-6", isEnabled: true)
+                        option.putIntegration("key-7", isEnabled: true)
+                        option.putIntegration("key-8", isEnabled: false)
+
+                        option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
+                        option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
+                        option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
+                        option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")
+            
+            RSClient.sharedInstance().setAdvertisingId("advertising_id")
+            RSClient.sharedInstance().track("track events_1", properties: [:], option: option)
+
+            /*RSClient.sharedInstance().track("sample_track_1")
             RSClient.sharedInstance().setDeviceToken("device_token_1")
             RSClient.sharedInstance().identify("user_id_1", traits: ["name": "Pallab", "email": "pallab@pallab.com", "age": 79])
             RSClient.sharedInstance().setDeviceToken("device_token_2")
             RSClient.sharedInstance().track("sample_track_2")
             RSClient.sharedInstance().setDeviceToken("device_token_3")
             RSClient.sharedInstance().alias("user_id_2")
-//            RSClient.sharedInstance().setAdvertisingId("advertising_id")
+            RSClient.sharedInstance().setAdvertisingId("advertising_id")
             RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+            RSClient.sharedInstance().configure(with: config)
             RSClient.sharedInstance().track("sample_track_3")
-        /*client?.addDestination(CustomDestination())
-        
-        client?.setAppTrackingConsent(.authorize)
-        client?.setAnonymousId("example_anonymous_id")
-        client?.setAdvertisingId(getIDFA())
-        client?.setDeviceToken("example_device_token")*/
-        
-        /*client?.setOptOutStatus(true)
-        client?.reset()
-                
-        let traits = client?.traits
-        let defaultOption = RSOption()
-        defaultOption.putIntegration("Amplitude", isEnabled: true)
-        client?.setOption(defaultOption)
-        
-        let messageOption = RSOption()
-        messageOption.putIntegration("MoEngage", isEnabled: true)
-        messageOption.putExternalId("", withId: "")
-        client?.identify("Track 2", traits: ["email": "abc@def.com"], option: messageOption)*/
+            RSClient.sharedInstance().addDestination(CustomDestination())
+            
+            RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+            RSClient.sharedInstance().setAnonymousId("example_anonymous_id")
+            RSClient.sharedInstance().setAdvertisingId(getIDFA())
+            RSClient.sharedInstance().setDeviceToken("example_device_token")
+            
+            RSClient.sharedInstance().setOptOutStatus(true)
+            RSClient.sharedInstance().reset()
+            
+            let traits = RSClient.sharedInstance().traits
+            let defaultOption = RSOption()
+            defaultOption.putIntegration("Amplitude", isEnabled: true)
+            RSClient.sharedInstance().setOption(defaultOption)
+            
+            let messageOption = RSOption()
+            messageOption.putIntegration("MoEngage", isEnabled: true)
+            messageOption.putExternalId("", withId: "")
+            RSClient.sharedInstance().identify("Track 2", traits: ["email": "abc@def.com"], option: messageOption)*/
         } catch { }
         return true
     }

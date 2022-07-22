@@ -202,6 +202,7 @@ extension RSMessage {
         }
         if let advertisingId: String = RSSessionStorage.shared.read(.advertisingId), advertisingId.isNotEmpty {
             device["advertisingId"] = advertisingId
+            device["adTrackingEnabled"] = true
             let appTrackingConsent: RSAppTrackingConsent = RSSessionStorage.shared.read(.appTrackingConsent) ?? .notDetermined
             device["attTrackingStatus"] = appTrackingConsent.rawValue
         }
