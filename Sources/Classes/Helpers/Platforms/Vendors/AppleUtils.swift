@@ -26,11 +26,11 @@ internal class PhoneVendor: Vendor {
     
     override var type: String {
         #if os(iOS)
-        return "ios"
+        return "iOS"
         #elseif os(tvOS)
-        return "tvos"
+        return "tvOS"
         #elseif targetEnvironment(macCatalyst)
-        return "macos"
+        return "macOS"
         #else
         return "unknown"
         #endif
@@ -43,7 +43,7 @@ internal class PhoneVendor: Vendor {
     
     override var name: String {
         // eg. "iPod Touch"
-        return device.model
+        return device.name
     }
     
     override var identifierForVendor: String? {
@@ -107,7 +107,7 @@ internal class WatchVendor: Vendor {
     }
     
     override var name: String {
-        return device.model
+        return device.name
     }
     
     override var identifierForVendor: String? {
