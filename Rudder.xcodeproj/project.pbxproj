@@ -17,9 +17,6 @@
 		ED157C5827D0FFA400F22202 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
 		ED157C5A27D1010D00F22202 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
 		ED277FA127421B06002A8FEA /* RSEventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */; };
-		ED277FF92744F199002A8FEA /* RSAnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FF82744F199002A8FEA /* RSAnyCodable.swift */; };
-		ED277FFB2744F265002A8FEA /* RSAnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FFA2744F265002A8FEA /* RSAnyDecodable.swift */; };
-		ED277FFD2744F2AD002A8FEA /* RSAnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FFC2744F2AD002A8FEA /* RSAnyEncodable.swift */; };
 		ED3D225B279EAC2800EC8366 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; };
 		ED3D229427A3F0C100EC8366 /* RSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226227A3F0C100EC8366 /* RSClient.swift */; };
 		ED3D229527A3F0C100EC8366 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226627A3F0C100EC8366 /* Vendor.swift */; };
@@ -106,9 +103,7 @@
 		ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLifeCycle.swift; sourceTree = "<group>"; };
 		ED157C5927D1010D00F22202 /* RSPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPushNotifications.swift; sourceTree = "<group>"; };
 		ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventsAndKeys.swift; sourceTree = "<group>"; };
-		ED277FF82744F199002A8FEA /* RSAnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAnyCodable.swift; sourceTree = "<group>"; };
-		ED277FFA2744F265002A8FEA /* RSAnyDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAnyDecodable.swift; sourceTree = "<group>"; };
-		ED277FFC2744F2AD002A8FEA /* RSAnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAnyEncodable.swift; sourceTree = "<group>"; };
+		ED308480288A97C200A357E3 /* main.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = main.yml; path = .github/workflows/main.yml; sourceTree = "<group>"; };
 		ED3D2257279EAC2800EC8366 /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3D226227A3F0C100EC8366 /* RSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSClient.swift; sourceTree = "<group>"; };
 		ED3D226627A3F0C100EC8366 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
@@ -206,6 +201,7 @@
 		06CABB7A2630C3CA0097BEFF = {
 			isa = PBXGroup;
 			children = (
+				ED308480288A97C200A357E3 /* main.yml */,
 				ED56038A2887EA73004B5BEC /* .swiftlint.yml */,
 				EDAE4EC0286F0CFF00AACDB5 /* .travis.yml */,
 				ED910CE0273BA25100A3EDFF /* CHANGELOG.md */,
@@ -486,9 +482,6 @@
 			isa = PBXGroup;
 			children = (
 				ED3D226427A3F0C100EC8366 /* Platforms */,
-				ED277FF82744F199002A8FEA /* RSAnyCodable.swift */,
-				ED277FFA2744F265002A8FEA /* RSAnyDecodable.swift */,
-				ED277FFC2744F2AD002A8FEA /* RSAnyEncodable.swift */,
 				EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */,
 				ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */,
 				EDA7EF452739119600E73142 /* RSUserDefaults.swift */,
@@ -629,7 +622,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED277FFD2744F2AD002A8FEA /* RSAnyEncodable.swift in Sources */,
 				EDC132A227D7D61D00AFD833 /* JSON.swift in Sources */,
 				ED3D229B27A3F0C100EC8366 /* RSiOSLifecycleEvents.swift in Sources */,
 				EDA7EFA22739119600E73142 /* RSServiceType.swift in Sources */,
@@ -647,7 +639,6 @@
 				EDD3AA3627C659C80048E61E /* RSAtomic.swift in Sources */,
 				ED3D22A427A3F0C100EC8366 /* RSReplayQueuePlugin.swift in Sources */,
 				EDA7EF962739119600E73142 /* RSOption.swift in Sources */,
-				ED277FFB2744F265002A8FEA /* RSAnyDecodable.swift in Sources */,
 				ED277FA127421B06002A8FEA /* RSEventsAndKeys.swift in Sources */,
 				ED157C4527CFD99700F22202 /* RSIntegrationPlugin.swift in Sources */,
 				EDC14DDE2859C7DB00E2E6FE /* RSRepeatingTimer.swift in Sources */,
@@ -658,7 +649,6 @@
 				EDA7EF752739119600E73142 /* API.swift in Sources */,
 				EDA7EF812739119600E73142 /* RSDatabaseManager.swift in Sources */,
 				EDA7EF992739119600E73142 /* RSServerConfig.swift in Sources */,
-				ED277FF92744F199002A8FEA /* RSAnyCodable.swift in Sources */,
 				ED3D229E27A3F0C100EC8366 /* RSmacOSLifecycleMonitor.swift in Sources */,
 				ED3D229D27A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift in Sources */,
 				ED5603852881C691004B5BEC /* RSUserInfo.swift in Sources */,

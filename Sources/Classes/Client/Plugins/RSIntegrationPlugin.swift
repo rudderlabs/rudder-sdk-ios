@@ -19,7 +19,7 @@ class RSIntegrationPlugin: RSPlatformPlugin {
             if messageIntegrations["All"] == nil {
                 workingMessage.integrations?["All"] = true
             }
-        } else if let globalOption = client?.globalOption {
+        } else if let globalOption: RSOption = RSSessionStorage.shared.read(.option) {
             if let integrations = globalOption.integrations {
                 workingMessage.integrations = integrations
                 if integrations["All"] == nil {

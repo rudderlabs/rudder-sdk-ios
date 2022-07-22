@@ -34,8 +34,8 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
             return
         }
         
-        let previousVersion: String? = userDefaults?.read(.applicationVersion)
-        let previousBuild: String? = userDefaults?.read(.applicationBuild)
+        let previousVersion: String? = userDefaults?.read(application: .version)
+        let previousBuild: String? = userDefaults?.read(application: .build)
         
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
@@ -60,8 +60,8 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
             fromBackground: false
         ))
         
-        userDefaults?.write(.applicationVersion, value: currentVersion)
-        userDefaults?.write(.applicationBuild, value: currentBuild)
+        userDefaults?.write(application: .version, value: currentVersion)
+        userDefaults?.write(application: .build, value: currentBuild)
     }
     
     /*

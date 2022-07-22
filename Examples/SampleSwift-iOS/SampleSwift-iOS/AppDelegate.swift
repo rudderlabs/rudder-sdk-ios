@@ -55,8 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
                         option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")
             
+            RSClient.sharedInstance().setOption(option)
             RSClient.sharedInstance().setAdvertisingId("advertising_id")
-            RSClient.sharedInstance().track("track events_1", properties: [:], option: option)
+            RSClient.sharedInstance().identify("user_id_1")
+            RSClient.sharedInstance().track("track events_1")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                RSClient.sharedInstance().reset()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                RSClient.sharedInstance().track("track events_2")
+            }
+            
 
             /*RSClient.sharedInstance().track("sample_track_1")
             RSClient.sharedInstance().setDeviceToken("device_token_1")

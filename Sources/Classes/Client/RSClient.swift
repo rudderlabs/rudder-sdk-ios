@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable file_length
 @objc
 open class RSClient: NSObject {
     var config: RSConfig?
@@ -26,7 +27,6 @@ open class RSClient: NSObject {
         }
         return RSUserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
     }
-    var globalOption: RSOption?
     
     private override init() {
         serverConfig = userDefaults.read(.serverConfig)
@@ -348,6 +348,8 @@ extension RSClient {
      */
     @objc
     public func reset() {
+        userDefaults.reset()
+        RSSessionStorage.shared.reset()
         apply { plugin in
             if let p = plugin as? RSEventPlugin {
                 p.reset()
@@ -451,7 +453,7 @@ extension RSClient {
      */
     @objc
     public func setOption(_ option: RSOption) {
-        globalOption = option
+        RSSessionStorage.shared.write(.option, value: option)
     }
 
     /**
