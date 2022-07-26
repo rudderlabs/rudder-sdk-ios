@@ -19,6 +19,7 @@ class RSUserDefaults {
         case optInTime
         case optOutTime
         case context
+        case externalId
     }
     
     enum ApplicationKeys: String {
@@ -70,9 +71,9 @@ class RSUserDefaults {
     
     func reset() {
         syncQueue.sync {
-            for key in RSUserDefaults.Keys.allCases {
-                userDefaults.removeObject(forKey: key.rawValue)
-            }
+            // Generate new traits object with only anonymousId
+            // Overwrite old traits with new
+            // Reset externalIds
         }
     }
 }
