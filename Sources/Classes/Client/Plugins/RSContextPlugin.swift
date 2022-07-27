@@ -10,11 +10,20 @@ import Foundation
 
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
-    weak var client: RSClient?
+    weak var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
     
     private var staticContext = staticContextData()
     private static var device = Vendor.current
-    internal let userDefaults = RSUserDefaults()
+    private var userDefaults: RSUserDefaults?
+    
+    func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+    }
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
@@ -142,7 +151,7 @@ class RSContextPlugin: RSPlatformPlugin {
                 }
             }
             /// Fetch `externalIds` set using identify API.
-            if let externalIds: [[String: String]] = userDefaults.read(.externalId) {
+            if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
                 context["externalId"] = externalIds
             }
         }
