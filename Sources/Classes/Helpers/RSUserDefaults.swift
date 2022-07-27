@@ -71,9 +71,9 @@ class RSUserDefaults {
     
     func reset() {
         syncQueue.sync {
-            // Generate new traits object with only anonymousId
-            // Overwrite old traits with new
-            // Reset externalIds
+            userDefaults.removeObject(forKey: RSUserDefaults.Keys.traits.rawValue)
+            userDefaults.removeObject(forKey: RSUserDefaults.Keys.externalId.rawValue)
+            userDefaults.removeObject(forKey: RSUserDefaults.Keys.userId.rawValue)
         }
     }
 }
