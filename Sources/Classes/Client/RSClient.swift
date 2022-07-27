@@ -288,6 +288,9 @@ extension RSClient {
             userDefaults.write(.traits, value: try? JSON(traits))
         }
         userDefaults.write(.userId, value: userId)
+        if let externalIds = option?.externalIds {
+            userDefaults.write(.externalId, value: try? JSON(externalIds))
+        }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
             .applyRawEventData(userInfo: userInfo)
         process(message: message)

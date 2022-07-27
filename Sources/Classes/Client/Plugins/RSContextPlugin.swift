@@ -10,10 +10,20 @@ import Foundation
 
 class RSContextPlugin: RSPlatformPlugin {
     let type: PluginType = .before
-    weak var client: RSClient?
+    weak var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
     
     private var staticContext = staticContextData()
     private static var device = Vendor.current
+    private var userDefaults: RSUserDefaults?
+    
+    func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+    }
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
@@ -120,6 +130,7 @@ class RSContextPlugin: RSPlatformPlugin {
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {
+        /// First priority will given to the `option` passed along with the event
         if let option = message.option {
             if let externalIds = option.externalIds {
                 context["externalId"] = externalIds
@@ -128,6 +139,20 @@ class RSContextPlugin: RSPlatformPlugin {
                 for (key, value) in customContexts {
                     context[key] = value
                 }
+            }
+        }
+        else {
+            /// Fetch `customContexts` set using setOption API.
+            if let globalOption: RSOption = RSSessionStorage.shared.read(.option) {
+                if let customContexts = globalOption.customContexts {
+                    for (key, value) in customContexts {
+                        context[key] = value
+                    }
+                }
+            }
+            /// Fetch `externalIds` set using identify API.
+            if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
+                context["externalId"] = externalIds
             }
         }
     }
