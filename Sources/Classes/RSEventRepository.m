@@ -711,7 +711,7 @@ typedef enum {
     
     // Session Tracking
     // Invalidate sessionId while background
-    [RSClient sharedInstance].sessionId = nil;
+    [[RSClient userSession] clearSession];
 }
 
 - (void) __prepareScreenRecorder {

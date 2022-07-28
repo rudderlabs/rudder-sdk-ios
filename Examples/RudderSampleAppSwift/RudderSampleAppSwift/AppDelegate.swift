@@ -20,9 +20,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
             .withDataPlaneUrl("http://localhost:8080")
-            .withTrackLifecycleEvens(false)
-            .withRecordScreenViews(true)            
+            .withTrackLifecycleEvens(true)
+            .withRecordScreenViews(false)
+            .withSleepTimeOut(4)
+            .withSessionDuration(10)
         RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
+        
+        
+//        RSClient.sharedInstance()?.track("track_1")
+        
+//        RSClient.putDeviceToken("device_token")
+//        RSClient.sharedInstance()?.getContext().putAdvertisementId("advertising_id")
+//        RSClient.sharedInstance()?.getContext().putAppTrackingConsent(RSATTAuthorize)
+        
+        
+//        RSClient.sharedInstance()?.track("track_2")
+//        RSClient.sharedInstance()?.track("track_3")
+//        RSClient.sharedInstance()?.track("track_4")
+        
+//        RSClient.sharedInstance()?.track("Track 1")
+//        RSClient.sharedInstance()?.identify("user_1")
+//        RSClient.sharedInstance()?.track("Track 2")
+//        RSClient.sharedInstance()?.alias("alias")
+//        RSClient.sharedInstance()?.track("Track 3")
+
+//        RSClient.sharedInstance()?.track("track_1_d")
+//        RSClient.sharedInstance()?.track("track_2_d")
+//        RSClient.sharedInstance()?.track("track_3_d")
+//        RSClient.sharedInstance()?.track("track_4_d")
+
         
         return true
     }

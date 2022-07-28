@@ -136,14 +136,6 @@
     return self;
 }
 
-- (instancetype) withAutomaticSessionTracking:(BOOL)automaticSessionTracking {
-    if (config == nil) {
-        config = [[RSConfig alloc] init];
-    }
-    config.automaticSessionTracking = automaticSessionTracking;
-    return self;
-}
-
 -(instancetype)withConfigPlaneUrl:(NSString *) configPlaneUrl {
     if (config == nil) {
         config = [[RSConfig alloc] init];
@@ -173,6 +165,25 @@
     if([RSUtils isValidURL:controlPlaneURL]) {
         config.controlPlaneUrl = [RSUtils appendSlashToUrl: controlPlaneURL.absoluteString];
     }
+    return self;
+}
+
+- (instancetype)withAutomaticSessionTracking:(BOOL)automaticSessionTracking {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.automaticSessionTracking = automaticSessionTracking;
+    return self;
+}
+
+- (instancetype)withSessionDuration:(int)sessionDuration {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    if (sessionDuration < 5) {
+        return self;
+    }
+    config.sessionDuration = sessionDuration;
     return self;
 }
 

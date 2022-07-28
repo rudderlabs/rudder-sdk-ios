@@ -23,6 +23,8 @@ extern int const RSDBCountThreshold;
 // if events are registered and flushQueueSize is not reached
 // events will be flushed to server after sleepTimeOut seconds
 extern int const RSSleepTimeout;
+// default duration for session
+extern int const RSSessionDuration;
 // config-plane url to get the config for the writeKey
 extern NSString *const RSControlPlaneUrl;
 // whether we should trackLifecycle events

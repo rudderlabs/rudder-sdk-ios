@@ -11,6 +11,9 @@ import Rudder
 
 class ViewController: UIViewController {
 
+    let queue0 = DispatchQueue(label: "com.knowstack.queue0")
+    var count = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -142,6 +145,60 @@ class ViewController: UIViewController {
     
     @IBAction func onTrackAfterBackground(_ sender: UIButton) {
         RSClient.sharedInstance()?.track("track_after_background")
+    }
+    
+    @IBAction func onSimpleTrack(_ sender: UIButton) {
+        RSClient.sharedInstance()?.track("simple_track_\(count)")
+        count += 1
+    }
+    
+    @IBAction func onMultipleThread(_ sender: UIButton) {
+        DispatchQueue.global(qos: .background).async {
+            for i in 1...1000 {
+                print("From Thread 1A, Track No. \(i)")
+                if i % 2 == 0 {
+                    RSClient.sharedInstance()?.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                } else {
+                    RSClient.sharedInstance()?.startSession("\(Date().timeIntervalSince1970)")
+                }
+            }
+        }
+        
+        queue0.async {
+            let queue = DispatchQueue(label: "com.knowstack.queue1")
+            let queue2 = DispatchQueue(label: "com.knowstack.queue2")
+            let queue3 = DispatchQueue(label: "com.knowstack.queue3")
+            
+            queue.async {
+                for i in 1...10000 {
+                    print("Thread-2: \(i)")
+                    self.call(index: i)
+                }
+            }
+            queue2.async {
+                for i in 1...10000 {
+                    print("Thread-3: \(i)")
+                    self.call(index: i)
+                }
+            }
+            queue3.async {
+                for i in 1...10000 {
+                    print("Thread-4: \(i)")
+                    self.call(index: i)
+                }
+            }
+        }
+    }
+    
+    func call(index: Int) {
+        emptyEvents(index: index)
+        func emptyEvents(index: Int) {
+            if index % 2 == 0 {
+                RSClient.sharedInstance()?.track("Track \(index)", properties: ["time": Date().timeIntervalSince1970])
+            } else {
+                RSClient.sharedInstance()?.startSession("session_id_\(index)")
+            }
+        }
     }
 }
 

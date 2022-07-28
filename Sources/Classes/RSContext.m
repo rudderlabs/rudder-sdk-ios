@@ -233,11 +233,11 @@ static dispatch_queue_t queue;
         }
         
         // Session Tracking
-        if ([RSClient sharedInstance].sessionId) {
-            [tempDict setValue:[RSClient sharedInstance].sessionId forKey:@"sessionId"];
-            if ([RSClient sharedInstance].sessionStart) {
+        if ([[RSClient userSession] getSessionId]) {
+            [tempDict setValue:[[RSClient userSession] getSessionId] forKey:@"sessionId"];
+            if ([[RSClient userSession] getSessionStart]) {
                 [tempDict setValue:@YES forKey:@"sessionStart"];
-                [RSClient sharedInstance].sessionStart = NO;
+                [[RSClient userSession] sessionStart:NO];
             }
         }
     });

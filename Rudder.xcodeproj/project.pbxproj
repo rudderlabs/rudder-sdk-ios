@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
+		ED3084832891900100A357E3 /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3084812891900100A357E3 /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED3084842891900100A357E3 /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3084822891900100A357E3 /* RSUserSession.m */; };
 		ED83000027310B44006F27B3 /* RSECommerceCoupon.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5927310B44006F27B3 /* RSECommerceCoupon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED83000127310B44006F27B3 /* RSECommerceCart.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5A27310B44006F27B3 /* RSECommerceCart.m */; };
 		ED83000227310B44006F27B3 /* RSECommercePromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5B27310B44006F27B3 /* RSECommercePromotion.m */; };
@@ -184,6 +186,8 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		ED3084812891900100A357E3 /* RSUserSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
+		ED3084822891900100A357E3 /* RSUserSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSUserSession.m; sourceTree = "<group>"; };
 		ED83FDAE2731019F006F27B3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		ED83FDAF2731019F006F27B3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ED83FDB02731019F006F27B3 /* Rudder.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rudder.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -441,12 +445,12 @@
 				ED83FF1227310B44006F27B3 /* RSDBPersistentManager.m */,
 				ED83FF1F27310B44006F27B3 /* RSDeviceInfo.m */,
 				ED83FFB227310B44006F27B3 /* RSElementCache.m */,
+				F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */,
 				ED83FFB427310B44006F27B3 /* RSEventRepository.m */,
 				ED83FF1127310B44006F27B3 /* RSLibraryInfo.m */,
 				ED83FFB627310B44006F27B3 /* RSLogger.m */,
 				ED83FFB327310B44006F27B3 /* RSMessage.m */,
 				ED83FF4927310B44006F27B3 /* RSMessageBuilder.m */,
-				F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */,
 				ED83FF2027310B44006F27B3 /* RSMessageType.m */,
 				ED83FF1427310B44006F27B3 /* RSNetwork.m */,
 				ED83FF4827310B44006F27B3 /* RSOption.m */,
@@ -463,9 +467,10 @@
 				ED83FF1B27310B44006F27B3 /* RSTrackPropertyBuilder.m */,
 				ED83FF1027310B44006F27B3 /* RSTraits.m */,
 				ED83FF1927310B44006F27B3 /* RSTraitsBuilder.m */,
+				ED3084822891900100A357E3 /* RSUserSession.m */,
 				ED83FF1A27310B44006F27B3 /* RSUtils.m */,
-				F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */,
 				ED83FF1D27310B44006F27B3 /* UIViewController+RSScreen.m */,
+				F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -483,7 +488,6 @@
 				ED83FF3727310B44006F27B3 /* RSConfig.h */,
 				ED83FF2B27310B44006F27B3 /* RSConfigBuilder.h */,
 				ED83FF2727310B44006F27B3 /* RSConstants.h */,
-				F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */,
 				ED83FF2A27310B44006F27B3 /* RSContext.h */,
 				ED83FF9F27310B44006F27B3 /* RSCouponAppliedEvent.h */,
 				ED83FF9D27310B44006F27B3 /* RSCouponDeniedEvent.h */,
@@ -513,6 +517,7 @@
 				ED83FF6127310B44006F27B3 /* RSECommerceWishList.h */,
 				ED83FF6827310B44006F27B3 /* RSECommerceWishListBuilder.h */,
 				ED83FF3227310B44006F27B3 /* RSElementCache.h */,
+				F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */,
 				ED83FF3127310B44006F27B3 /* RSEventRepository.h */,
 				ED83FF3E27310B44006F27B3 /* RSIntegration.h */,
 				ED83FF3527310B44006F27B3 /* RSIntegrationFactory.h */,
@@ -554,6 +559,7 @@
 				ED83FF4127310B44006F27B3 /* RSTrackPropertyBuilder.h */,
 				ED83FF3B27310B44006F27B3 /* RSTraits.h */,
 				ED83FF3D27310B44006F27B3 /* RSTraitsBuilder.h */,
+				ED3084812891900100A357E3 /* RSUserSession.h */,
 				ED83FF4227310B44006F27B3 /* RSUtils.h */,
 				ED83FFA427310B44006F27B3 /* RSWishListProductAddedToCartEvent.h */,
 				ED83FF2927310B44006F27B3 /* Rudder.h */,
@@ -717,6 +723,7 @@
 				ED83000627310B44006F27B3 /* RSECommerceCheckout.h in Headers */,
 				ED83004B27310B45006F27B3 /* RSCheckoutStepCompletedEvent.h in Headers */,
 				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
+				ED3084832891900100A357E3 /* RSUserSession.h in Headers */,
 				ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */,
 				ED83FFD627310B44006F27B3 /* RSServerDestinationDefinition.h in Headers */,
 			);
@@ -852,6 +859,7 @@
 				ED83005927310B45006F27B3 /* RSMessage.m in Sources */,
 				ED83000D27310B44006F27B3 /* RSECommerceEvents.m in Sources */,
 				ED83001027310B44006F27B3 /* RSECommerceCartBuilder.m in Sources */,
+				ED3084842891900100A357E3 /* RSUserSession.m in Sources */,
 				ED83003727310B45006F27B3 /* RSProductRemovedEvent.m in Sources */,
 				ED83000527310B44006F27B3 /* RSECommerceSortBuilder.m in Sources */,
 				ED83000A27310B44006F27B3 /* RSECommercePromotionBuilder.m in Sources */,

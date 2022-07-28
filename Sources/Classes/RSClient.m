@@ -15,6 +15,7 @@
 
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
+static RSUserSession *_userSession = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
 
@@ -39,6 +40,7 @@ static NSString* _deviceToken = nil;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:config];
+            _userSession = [RSUserSession initiate:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0)
             {
                 [[_instance getContext] putDeviceToken:_deviceToken];
@@ -56,6 +58,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
+    [_userSession checkSessionDuration];
     if (_repository != nil && message != nil) {
         message.type = type;
         [_repository dump:message];
@@ -412,21 +415,20 @@ static NSString* _deviceToken = nil;
 
 #pragma mark - Session Tracking
 
++ (RSUserSession *)userSession {
+    return _userSession;
+}
+
 - (void)startSession {
     [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
 }
 
 - (void)startSession:(NSString *)sessionId {
-    if ([self configuration].trackLifecycleEvents) {
-        if ([sessionId length] > 0) {
-            self->_sessionId = sessionId;
-            self->_sessionStart = YES;
-        } else {
-            [RSLogger logDebug:@"sessionId can not be empty"];
-        }
-    } else {
-        [RSLogger logDebug:@"Life cycle events tracking is off"];
-    }
+    [_userSession startSession:sessionId];
+}
+
+- (void)checkSessionDuration {
+    [_userSession checkSessionDuration];
 }
 
 @end

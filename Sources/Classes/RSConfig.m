@@ -21,6 +21,7 @@
         _sleepTimeout = RSSleepTimeout;
         _logLevel = RSLogLevelError;
         _configRefreshInterval = RSConfigRefreshInterval;
+        _sessionDuration = RSSessionDuration;
         _trackLifecycleEvents = RSTrackLifeCycleEvents;
         _recordScreenViews = RSRecordScreenViews;
         _enableBackgroundMode = RSEnableBackgroundMode;
@@ -37,6 +38,7 @@
     dbCountThreshold: (int) dbCountThreshold
         sleepTimeOut: (int) sleepTimeout
             logLevel: (int) logLevel
+     sessionDuration: (int) sessionDuration
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 enableBackgroundMode: (BOOL) enableBackgroundMode
@@ -50,6 +52,7 @@ automaticSessionTracking: (BOOL) automaticSessionTracking
         _flushQueueSize = flushQueueSize;
         _dbCountThreshold = dbCountThreshold;
         _sleepTimeout = sleepTimeout;
+        _sessionDuration = sessionDuration;
         _logLevel = logLevel;
         _configRefreshInterval = configRefreshInteval;
         _trackLifecycleEvents = trackLifecycleEvents;

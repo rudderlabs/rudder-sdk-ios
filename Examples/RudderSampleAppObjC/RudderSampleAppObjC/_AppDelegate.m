@@ -30,8 +30,9 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withEnableBackgroundMode:YES];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
-    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
+    [builder withDataPlaneUrl:@"http://localhost:8080"];
+    [builder withCustomFactory:[CustomFactory instance]];
+    [RSClient getInstance:@"1wvsoF3Kx2SczQNlx1dvcqW9ODW" config:[builder build]];
     
     [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
         @"key_1" : @"value_1",

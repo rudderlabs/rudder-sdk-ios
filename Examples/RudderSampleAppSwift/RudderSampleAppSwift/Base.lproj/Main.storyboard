@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-p6-DYB">
-                                <rect key="frame" x="0.0" y="344.5" width="414" height="217"/>
+                                <rect key="frame" x="0.0" y="313.5" width="414" height="279"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-lB-WFr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="31"/>
@@ -95,6 +95,28 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Track After Background"/>
                                         <connections>
                                             <action selector="onTrackAfterBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dvv-Xf-qqU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2M-S7-Bb3">
+                                        <rect key="frame" x="0.0" y="217" width="414" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="g1R-SM-SFy"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Multiple Thread"/>
+                                        <connections>
+                                            <action selector="onMultipleThread:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uRE-0p-Ryb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzm-63-BfM">
+                                        <rect key="frame" x="0.0" y="248" width="414" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="OXc-qy-Yp0"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Sample Track"/>
+                                        <connections>
+                                            <action selector="onSimpleTrack:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m9y-dq-kGQ"/>
                                         </connections>
                                     </button>
                                 </subviews>

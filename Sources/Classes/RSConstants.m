@@ -14,6 +14,7 @@ NSString *const RSDataPlaneUrl = @"https://hosted.rudderlabs.com/";
 int const RSFlushQueueSize = 30;
 int const RSDBCountThreshold = 10000;
 int const RSSleepTimeout = 10;
+int const RSSessionDuration = 5;
 NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com/";
 bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
