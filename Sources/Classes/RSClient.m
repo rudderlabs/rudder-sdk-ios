@@ -427,8 +427,4 @@ static NSString* _deviceToken = nil;
     [_userSession startSession:sessionId];
 }
 
-- (void)checkSessionDuration {
-    [_userSession checkSessionDuration];
-}
-
 @end
