@@ -29,6 +29,10 @@ internal class PhoneVendor: Vendor {
         return "iOS"
         #elseif os(tvOS)
         return "tvOS"
+        #elseif os(watchOS)
+        return "watchOS"
+        #elseif os(iPadOS)
+        return "iPadOS"
         #elseif targetEnvironment(macCatalyst)
         return "macOS"
         #else
