@@ -57,9 +57,6 @@ class RSSessionStorage {
     
     func reset() {
         syncQueue.sync {
-            deviceToken = nil
-            advertisingId = nil
-            appTrackingConsent = .notDetermined
             option = nil
         }
     }
