@@ -85,3 +85,9 @@ All notable changes to this project will be documented in this file.
 ## Version - 2.2.3 - 2022-07-14
 ### Fix
 - [Bugfix] `RSClient` no longer blocks the main thread in `checkServerConfig()`
+
+## Version - 2.2.4 - 2022-08-02
+### Added
+- `anonymousId` in `RSKeys.Identify.Traits`.
+- `externalId` in `RSKeys.Other`.
+- `pushAuthorizationFromUserNotificationCenter` a push notification API
