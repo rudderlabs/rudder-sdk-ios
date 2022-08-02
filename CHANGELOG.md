@@ -90,4 +90,5 @@ All notable changes to this project will be documented in this file.
 ### Added
 - `anonymousId` in `RSKeys.Identify.Traits`.
 - `externalId` in `RSKeys.Other`.
-- `pushAuthorizationFromUserNotificationCenter` a push notification API
+- Push Notification API
+`pushAuthorizationFromUserNotificationCenter`
