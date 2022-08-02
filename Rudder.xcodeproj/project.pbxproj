@@ -12,7 +12,6 @@
 		ED157C4B27CFE86100F22202 /* RSAppTrackingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4A27CFE86100F22202 /* RSAppTrackingConsent.swift */; };
 		ED157C4D27D0A63A00F22202 /* RSiOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4C27D0A63A00F22202 /* RSiOSScreenViewEvents.swift */; };
 		ED157C4F27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4E27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift */; };
-		ED157C5427D0CA6900F22202 /* RSGDPRPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5327D0CA6900F22202 /* RSGDPRPlugin.swift */; };
 		ED157C5627D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5527D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift */; };
 		ED157C5827D0FFA400F22202 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
 		ED157C5A27D1010D00F22202 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
@@ -98,7 +97,6 @@
 		ED157C4A27CFE86100F22202 /* RSAppTrackingConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAppTrackingConsent.swift; sourceTree = "<group>"; };
 		ED157C4C27D0A63A00F22202 /* RSiOSScreenViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSiOSScreenViewEvents.swift; sourceTree = "<group>"; };
 		ED157C4E27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSwatchOSScreenViewEvents.swift; sourceTree = "<group>"; };
-		ED157C5327D0CA6900F22202 /* RSGDPRPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSGDPRPlugin.swift; sourceTree = "<group>"; };
 		ED157C5527D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSmacOSScreenViewEvents.swift; sourceTree = "<group>"; };
 		ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLifeCycle.swift; sourceTree = "<group>"; };
 		ED157C5927D1010D00F22202 /* RSPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPushNotifications.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				ED3D227C27A3F0C100EC8366 /* RSContextPlugin.swift */,
-				ED157C5327D0CA6900F22202 /* RSGDPRPlugin.swift */,
 				ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */,
 				ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */,
 				ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */,
@@ -677,7 +674,6 @@
 				EDA7EF9C2739119600E73142 /* RSDestination.swift in Sources */,
 				ED3D229C27A3F0C100EC8366 /* RSiOSDelegation.swift in Sources */,
 				ED3D229A27A3F0C100EC8366 /* RSwatchOSLifecycleMonitor.swift in Sources */,
-				ED157C5427D0CA6900F22202 /* RSGDPRPlugin.swift in Sources */,
 				EDA7EF8A2739119600E73142 /* RSUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

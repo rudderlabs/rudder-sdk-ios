@@ -32,7 +32,13 @@ class ViewController: UIViewController {
                             Task(name: "Screen without properties"),
                             Task(name: "Screen with properties"),
                             Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
-                            Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent")]
+                            Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent"),
+                            Task(name: "Opt In"),
+                            Task(name: "Opt Out"),
+                            Task(name: "Set AnonymousId"),
+                            Task(name: "Set Device Token"),
+                            Task(name: "Set AdvertisingId"),
+                            Task(name: "Set Option")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,7 +239,33 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
-            
+        case 11:
+            RSClient.sharedInstance().setOptOutStatus(false)
+        case 12:
+            RSClient.sharedInstance().setOptOutStatus(true)
+        case 13:
+            RSClient.sharedInstance().setAnonymousId("anonymous_id_1")
+        case 14:
+            RSClient.sharedInstance().setDeviceToken("device_token_1")
+        case 15:
+            RSClient.sharedInstance().setAdvertisingId("advertising_id_1")
+        case 16:
+            let option = RSOption()
+                        option.putExternalId("key-1", withId: "value-1")
+                        option.putExternalId("key-2", withId: "value-2")
+                        option.putExternalId("key-3", withId: "value-3")
+                        option.putExternalId("key-4", withId: "value-4")
+
+                        option.putIntegration("key-5", isEnabled: true)
+                        option.putIntegration("key-6", isEnabled: true)
+                        option.putIntegration("key-7", isEnabled: true)
+                        option.putIntegration("key-8", isEnabled: false)
+
+                        option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
+                        option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
+                        option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
+                        option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")            
+            RSClient.sharedInstance().setOption(option)
         default:
             break
         }

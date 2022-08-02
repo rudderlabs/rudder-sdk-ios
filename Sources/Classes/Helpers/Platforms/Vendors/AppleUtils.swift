@@ -26,13 +26,13 @@ internal class PhoneVendor: Vendor {
     
     override var type: String {
         #if os(iOS)
-        return "iOS"
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return "iPadOS"
+        } else {
+            return "iOS"
+        }
         #elseif os(tvOS)
         return "tvOS"
-        #elseif os(watchOS)
-        return "watchOS"
-        #elseif os(iPadOS)
-        return "iPadOS"
         #elseif targetEnvironment(macCatalyst)
         return "macOS"
         #else
@@ -103,7 +103,7 @@ internal class WatchVendor: Vendor {
     }
     
     override var type: String {
-        return "watchos"
+        return "watchOS"
     }
     
     override var model: String {
@@ -185,7 +185,7 @@ internal class MacVendor: Vendor {
     }
     
     override var type: String {
-        return "macos"
+        return "macOS"
     }
     
     override var model: String {

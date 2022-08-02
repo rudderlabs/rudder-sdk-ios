@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// Create a `Configuration.json` file on root directory. The JSON should be look like:
         /// {
         ///    "WRITE_KEY": "WRITE_KEY_VALUE",
-        ///    "DATA_PLANE_URL": "DATA_PLANE_URL_VALUE",
+        ///    "DATA_PLANE_URL_LOCAL": "DATA_PLANE_URL_LOCAL_VALUE",
+        ///    "DATA_PLANE_URL_PROD": "DATA_PLANE_URL_PROD_VALUE",
         ///    "CONTROL_PLANE_URL": "CONTROL_PLANE_URL_VALUE"
         /// }
         
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let configuration = try JSONDecoder().decode(Configuration.self, from: jsonData)
             
             let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
-                .dataPlaneURL(configuration.DATA_PLANE_URL)
+                .dataPlaneURL(configuration.DATA_PLANE_URL_LOCAL)
                 .loglevel(.verbose)
                 .trackLifecycleEvents(false)
                 .recordScreenViews(false)
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RSClient.sharedInstance().configure(with: config)
             RSClient.sharedInstance().addDestination(CustomDestination())
             
-            let option = RSOption()
+            /*let option = RSOption()
                         option.putExternalId("key-1", withId: "value-1")
                         option.putExternalId("key-2", withId: "value-2")
                         option.putExternalId("key-3", withId: "value-3")
@@ -69,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
 
-            /*RSClient.sharedInstance().track("sample_track_1")
+            RSClient.sharedInstance().track("sample_track_1")
             RSClient.sharedInstance().setDeviceToken("device_token_1")
             RSClient.sharedInstance().identify("user_id_1", traits: ["name": "Pallab", "email": "pallab@pallab.com", "age": 79])
             RSClient.sharedInstance().setDeviceToken("device_token_2")
@@ -123,7 +124,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 struct Configuration: Codable {
-    let DATA_PLANE_URL: String
-    let CONTROL_PLANE_URL: String
     let WRITE_KEY: String
+    let DATA_PLANE_URL_LOCAL: String
+    let DATA_PLANE_URL_PROD: String
+    let CONTROL_PLANE_URL: String
 }
