@@ -48,6 +48,15 @@ extension RSClient {
             }
         }
     }
+    
+    @objc
+    public func pushAuthorizationFromUserNotificationCenter(_ granted: Bool) {
+        apply { plugin in
+            if let p = plugin as? RSPushNotifications {
+                p.pushAuthorizationFromUserNotificationCenter(granted)
+            }
+        }
+    }
 }
 
 #endif
