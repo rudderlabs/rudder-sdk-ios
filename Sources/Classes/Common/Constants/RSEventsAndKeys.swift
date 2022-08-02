@@ -134,6 +134,7 @@ public struct RSKeys {
             public static let username = "username"
             public static let website = "website"
             public static let avatar = "avatar"
+            public static let anonymousId = "anonymousId"
         }
     }
     
@@ -151,5 +152,6 @@ public struct RSKeys {
         public static let interest = "interest"
         public static let itemName = "item_name"
         public static let description = "Description"
+        public static let externalId = "externalId"
     }
 }
