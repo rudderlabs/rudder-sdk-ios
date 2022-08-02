@@ -18,6 +18,7 @@ public protocol RSPushNotifications: RSPlugin {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error)
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
+    func pushAuthorizationFromUserNotificationCenter(_ granted: Bool)
 }
 
 public extension RSPushNotifications {
@@ -25,6 +26,7 @@ public extension RSPushNotifications {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {}
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {}
+    func pushAuthorizationFromUserNotificationCenter(_ granted: Bool) {}
 }
 #endif
 
