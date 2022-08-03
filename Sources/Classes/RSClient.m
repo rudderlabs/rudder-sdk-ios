@@ -58,6 +58,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
+    // Session Tracking
     [_userSession checkSessionDuration];
     if (_repository != nil && message != nil) {
         message.type = type;
