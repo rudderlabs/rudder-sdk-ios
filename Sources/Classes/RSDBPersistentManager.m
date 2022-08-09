@@ -126,6 +126,19 @@ NSString* _Nonnull const COL_STATUS = @"status";
     return [NSNumber numberWithInt:rowId];
 }
 
+
+- (void) clearOldEventsWithThreshold:(int) threshold {
+    [self clearProcessedEventsFromDB];
+    int recordCount = [self getDBRecordCountForMode:CLOUDMODE|DEVICEMODE];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"DBRecordCount %d", recordCount]];
+    
+    if (recordCount > threshold) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Old DBRecordCount %d", (recordCount - threshold)]];
+        RSDBMessage *dbMessage = [self fetchEventsFromDB:(recordCount - threshold) ForMode: DEVICEMODE | CLOUDMODE];
+        [self clearEventsFromDB:dbMessage.messageIds];
+    }
+}
+
 - (void)clearEventsFromDB:(NSMutableArray<NSString *> *)messageIds {
     NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [RSUtils getCSVString:messageIds]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventSql: %@", deleteSqlString]];

@@ -360,7 +360,7 @@ static NSString* _deviceToken = nil;
     if ([RSClient getOptStatus]) {
         return;
     }
-    [_repository _applicationDidFinishLaunchingWithOptions:launchOptions];
+    [_repository applicationDidFinishLaunchingWithOptions:launchOptions];
 }
 
 + (instancetype)sharedInstance {

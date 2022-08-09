@@ -181,6 +181,20 @@
 		F63CBCB02846422900A3F71D /* DBPersistentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */; };
 		F63CBCB12846422900A3F71D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		F648527F284911250068EA48 /* RSServerConfigManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */; };
+		F659794828A2A8EB00A24B04 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */; };
+		F659794928A2A8EB00A24B04 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */; };
+		F659794A28A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */; };
+		F659794E28A2A8F800A24B04 /* RSDeviceModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */; };
+		F659794F28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */; };
+		F659795028A2A8F800A24B04 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */; };
+		F659795328A2AAF600A24B04 /* RSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795128A2AAF600A24B04 /* RSNetworkManager.m */; };
+		F659795428A2AAF600A24B04 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795228A2AAF600A24B04 /* RSFlushManager.m */; };
+		F659795728A2AB0000A24B04 /* RSFlushManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795528A2AB0000A24B04 /* RSFlushManager.h */; };
+		F659795828A2AB0000A24B04 /* RSNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795628A2AB0000A24B04 /* RSNetworkManager.h */; };
+		F659795A28A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */; };
+		F659795C28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */; };
+		F659795E28A2C0B600A24B04 /* RSBackGroundModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */; };
+		F659796028A2C0BF00A24B04 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */; };
 		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
@@ -383,6 +397,20 @@
 		F63CBCAD2846422900A3F71D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPersistentManagerTest.swift; sourceTree = "<group>"; };
 		F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSServerConfigManagerTest.swift; sourceTree = "<group>"; };
+		F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceModeManager.h; sourceTree = "<group>"; };
+		F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCloudModeManager.h; sourceTree = "<group>"; };
+		F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceModeTransformationManager.h; sourceTree = "<group>"; };
+		F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDeviceModeManager.m; sourceTree = "<group>"; };
+		F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDeviceModeTransformationManager.m; sourceTree = "<group>"; };
+		F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCloudModeManager.m; sourceTree = "<group>"; };
+		F659795128A2AAF600A24B04 /* RSNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNetworkManager.m; sourceTree = "<group>"; };
+		F659795228A2AAF600A24B04 /* RSFlushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFlushManager.m; sourceTree = "<group>"; };
+		F659795528A2AB0000A24B04 /* RSFlushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFlushManager.h; sourceTree = "<group>"; };
+		F659795628A2AB0000A24B04 /* RSNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNetworkManager.h; sourceTree = "<group>"; };
+		F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApplicationLifeCycleManager.m; sourceTree = "<group>"; };
+		F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApplicationLifeCycleManager.h; sourceTree = "<group>"; };
+		F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBackGroundModeManager.m; sourceTree = "<group>"; };
+		F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBackGroundModeManager.h; sourceTree = "<group>"; };
 		F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
 		F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -479,6 +507,13 @@
 		ED83FF0E27310B44006F27B3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */,
+				F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */,
+				F659795228A2AAF600A24B04 /* RSFlushManager.m */,
+				F659795128A2AAF600A24B04 /* RSNetworkManager.m */,
+				F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */,
+				F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */,
+				F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */,
 				ED83FF5027310B44006F27B3 /* Ecomm */,
 				ED83FF2127310B44006F27B3 /* Public */,
 				ED83FF1527310B44006F27B3 /* RSApp.m */,
@@ -523,6 +558,13 @@
 		ED83FF2127310B44006F27B3 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */,
+				F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */,
+				F659795528A2AB0000A24B04 /* RSFlushManager.h */,
+				F659795628A2AB0000A24B04 /* RSNetworkManager.h */,
+				F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */,
+				F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */,
+				F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */,
 				ED83FF3427310B44006F27B3 /* RSApp.h */,
 				ED83FF9A27310B44006F27B3 /* RSCartSharedEvent.h */,
 				ED83FF8F27310B44006F27B3 /* RSCartViewedEvent.h */,
@@ -697,6 +739,7 @@
 				ED83FFDA27310B44006F27B3 /* RSElementCache.h in Headers */,
 				ED83FFE527310B44006F27B3 /* RSTraitsBuilder.h in Headers */,
 				ED83FFEC27310B44006F27B3 /* UIViewController+RSScreen.h in Headers */,
+				F659795C28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h in Headers */,
 				ED83FFCC27310B44006F27B3 /* RSProperty.h in Headers */,
 				ED83FFCA27310B44006F27B3 /* RSMessageType.h in Headers */,
 				ED83FFCD27310B44006F27B3 /* RSOption.h in Headers */,
@@ -721,6 +764,8 @@
 				ED83FFED27310B44006F27B3 /* RSDBMessage.h in Headers */,
 				ED83FFD027310B44006F27B3 /* RSServerConfigManager.h in Headers */,
 				ED83FFD727310B44006F27B3 /* RSLogger.h in Headers */,
+				F659794828A2A8EB00A24B04 /* RSDeviceModeManager.h in Headers */,
+				F659794928A2A8EB00A24B04 /* RSCloudModeManager.h in Headers */,
 				ED83FFDB27310B44006F27B3 /* RSMessage.h in Headers */,
 				ED83FFEA27310B44006F27B3 /* RSUtils.h in Headers */,
 				ED83FFCF27310B44006F27B3 /* RSConstants.h in Headers */,
@@ -744,6 +789,7 @@
 				ED83001227310B44006F27B3 /* RSECommerceSortBuilder.h in Headers */,
 				ED83004F27310B45006F27B3 /* RSProductClickedEvent.h in Headers */,
 				ED83001B27310B45006F27B3 /* RSProductListFilteredEvent.h in Headers */,
+				F659794A28A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h in Headers */,
 				ED83005627310B45006F27B3 /* RSECommerceSort.h in Headers */,
 				ED83005127310B45006F27B3 /* RSProductReviewedEvent.h in Headers */,
 				ED83003527310B45006F27B3 /* RSCartViewedEvent.h in Headers */,
@@ -771,11 +817,14 @@
 				ED83003927310B45006F27B3 /* RSPromotionViewedEvent.h in Headers */,
 				ED83003C27310B45006F27B3 /* RSProductSearchedEvent.h in Headers */,
 				F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */,
+				F659795728A2AB0000A24B04 /* RSFlushManager.h in Headers */,
 				ED83003F27310B45006F27B3 /* RSCouponRemovedEvent.h in Headers */,
 				ED83004327310B45006F27B3 /* RSCouponDeniedEvent.h in Headers */,
+				F659795828A2AB0000A24B04 /* RSNetworkManager.h in Headers */,
 				ED83000627310B44006F27B3 /* RSECommerceCheckout.h in Headers */,
 				ED83004B27310B45006F27B3 /* RSCheckoutStepCompletedEvent.h in Headers */,
 				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
+				F659796028A2C0BF00A24B04 /* RSBackGroundModeManager.h in Headers */,
 				ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */,
 				ED83FFD627310B44006F27B3 /* RSServerDestinationDefinition.h in Headers */,
 			);
@@ -930,10 +979,12 @@
 			files = (
 				ED83FFC727310B44006F27B3 /* RSPagePropertyBuilder.m in Sources */,
 				ED83002E27310B45006F27B3 /* RSProductRemovedFromWishListEvent.m in Sources */,
+				F659795328A2AAF600A24B04 /* RSNetworkManager.m in Sources */,
 				ED83000227310B44006F27B3 /* RSECommercePromotion.m in Sources */,
 				ED83001727310B44006F27B3 /* RSECommerceOrder.m in Sources */,
 				ED83002927310B45006F27B3 /* RSCouponAppliedEvent.m in Sources */,
 				ED83FFBC27310B44006F27B3 /* RSConfig.m in Sources */,
+				F659795A28A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m in Sources */,
 				ED83003027310B45006F27B3 /* RSOrderCompletedEvent.m in Sources */,
 				ED83000E27310B44006F27B3 /* RSECommerceProductBuilder.m in Sources */,
 				ED83001D27310B45006F27B3 /* RSCouponRemovedEvent.m in Sources */,
@@ -945,6 +996,7 @@
 				ED83001A27310B44006F27B3 /* RSECommerceFilterBuilder.m in Sources */,
 				ED83003227310B45006F27B3 /* RSProductSharedEvent.m in Sources */,
 				ED83FFBB27310B44006F27B3 /* RSDBPersistentManager.m in Sources */,
+				F659795028A2A8F800A24B04 /* RSCloudModeManager.m in Sources */,
 				ED83FFC527310B44006F27B3 /* RSDBMessage.m in Sources */,
 				ED83003127310B45006F27B3 /* RSWishListProductAddedToCartEvent.m in Sources */,
 				ED83003827310B45006F27B3 /* RSCouponEnteredEvent.m in Sources */,
@@ -969,11 +1021,14 @@
 				ED83005027310B45006F27B3 /* RSCartViewedEvent.m in Sources */,
 				ED83FFC127310B44006F27B3 /* RSClient.m in Sources */,
 				ED83FFC627310B44006F27B3 /* UIViewController+RSScreen.m in Sources */,
+				F659794E28A2A8F800A24B04 /* RSDeviceModeManager.m in Sources */,
+				F659795E28A2C0B600A24B04 /* RSBackGroundModeManager.m in Sources */,
 				ED83FFF127310B44006F27B3 /* RSMessageBuilder.m in Sources */,
 				ED83FFF227310B44006F27B3 /* RSProperty.m in Sources */,
 				ED83FFF427310B44006F27B3 /* RSScreenInfo.m in Sources */,
 				ED83005C27310B45006F27B3 /* RSLogger.m in Sources */,
 				ED83FFC927310B44006F27B3 /* RSMessageType.m in Sources */,
+				F659794F28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m in Sources */,
 				ED83002C27310B45006F27B3 /* RSOrderRefundedEvent.m in Sources */,
 				ED83FFF327310B44006F27B3 /* RSServerDestinationDefinition.m in Sources */,
 				ED83FFEE27310B44006F27B3 /* RSServerConfigManager.m in Sources */,
@@ -1005,6 +1060,7 @@
 				ED83005A27310B45006F27B3 /* RSEventRepository.m in Sources */,
 				ED83000927310B44006F27B3 /* RSECommerceSort.m in Sources */,
 				ED83002127310B45006F27B3 /* RSProductSearchedEvent.m in Sources */,
+				F659795428A2AAF600A24B04 /* RSFlushManager.m in Sources */,
 				ED83FFBE27310B44006F27B3 /* RSApp.m in Sources */,
 				ED83005327310B45006F27B3 /* RSECommerceCheckout.m in Sources */,
 				ED83004727310B45006F27B3 /* RSProductViewedEvent.m in Sources */,

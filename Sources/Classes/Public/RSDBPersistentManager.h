@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(BOOL) checkIfStatusColumnExists;
 -(void) performMigration;
 -(NSNumber*) saveEvent: (NSString*) message;
+- (void) clearOldEventsWithThreshold:(int)threshold;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode;
 -(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;

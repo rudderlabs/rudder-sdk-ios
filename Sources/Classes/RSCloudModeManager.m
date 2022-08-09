@@ -1,0 +1,111 @@
+//
+//  RSCloudModeManager.m
+//  Rudder
+//
+//  Created by Desu Sai Venkat on 09/08/22.
+//  Copyright © 2022 Rudder Labs India Pvt Ltd. All rights reserved.
+//
+
+#import "RSConfig.h"
+#import "RSLogger.h"
+#import "RSCloudModeManager.h"
+#import "RSNetworkManager.h"
+
+
+@implementation RSCloudModeManager
+
+
+- (instancetype)initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *) dbPersistentManager andNetworkManager:(RSNetworkManager *) networkManager andLock: (NSLock *) lock {
+    self = [super init];
+    if(self){
+        self->dbPersistentManager = dbPersistentManager;
+        self->networkManager = networkManager;
+        self->config = config;
+        self->lock = lock;
+        self->cloud_mode_processor_queue = dispatch_queue_create("com.rudder.RSCloudModeManager", NULL);
+    }
+    return self;
+}
+
+- (void) startCloudModeProcessor {
+    __weak RSCloudModeManager *weakSelf = self;
+    dispatch_async(cloud_mode_processor_queue, ^{
+        RSCloudModeManager *strongSelf = weakSelf;
+        [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Started"];
+        int errResp = 0;
+        int sleepCount = 0;
+        
+        while (YES) {
+            [strongSelf->lock lock];
+            errResp = -1;
+            [strongSelf->dbPersistentManager clearOldEventsWithThreshold: strongSelf->config.dbCountThreshold];
+            [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Fetching events to flush to server in cloud mode processor"];
+            RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
+            if ((dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
+                NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                NSDictionary<NSString*, NSString*>* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT];
+                errResp = [response[STATUS] intValue];
+                if (errResp == 0) {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                    [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
+                    [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
+                    sleepCount = 0;
+                }
+            }
+            [strongSelf->lock unlock];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: SleepCount: %d", sleepCount]];
+            sleepCount += 1;
+            if (errResp == WRONGWRITEKEY) {
+                [RSLogger logDebug:@"RSEventRepository: initiateProcessor: Wrong WriteKey. Aborting."];
+                break;
+            } else if (errResp == NETWORKERROR) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+                usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
+            } else {
+                usleep(1000000);
+            }
+        }
+    });
+}
+
++ (NSString*) getPayloadFromMessages: (RSDBMessage*)dbMessage{
+    NSMutableArray<NSString *>* messages = dbMessage.messages;
+    NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
+    NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
+    NSString* sentAt = [RSUtils getTimestamp];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
+    
+    NSMutableString* json = [[NSMutableString alloc] init];
+    [json appendString:@"{"];
+    [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
+    [json appendString:@"\"batch\":["];
+    unsigned int totalBatchSize = [RSUtils getUTF8Length:json] + 2; // we add 2 characters at the end
+    for (int index = 0; index < messages.count; index++) {
+        NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
+        long length = message.length;
+        message = [[NSMutableString alloc] initWithString:[message substringWithRange:NSMakeRange(0, (length-1))]];
+        [message appendFormat:@",\"sentAt\":\"%@\"},", sentAt];
+        // add message size to batch size
+        totalBatchSize += [RSUtils getUTF8Length:message];
+        // check totalBatchSize
+        if(totalBatchSize > MAX_BATCH_SIZE) {
+            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            break;
+        }
+        [json appendString:message];
+        [batchMessageIds addObject:messageIds[index]];
+    }
+    if([json characterAtIndex:[json length]-1] == ',') {
+        // remove trailing ','
+        [json deleteCharactersInRange:NSMakeRange([json length]-1, 1)];
+    }
+    [json appendString:@"]}"];
+    // retain all events that are part of the current event
+    dbMessage.messageIds = batchMessageIds;
+    return [json copy];
+}
+
+@end
