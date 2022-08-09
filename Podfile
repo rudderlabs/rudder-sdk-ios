@@ -16,20 +16,17 @@ target 'Rudder' do
   platform :ios, '9.0'
    target 'RudderTests' do
      inherit!:search_paths
-     pod 'Rudder-Firebase'
-     pod 'Rudder-Adjust'
    end
 end
 
 
 target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
-    platform :ios, '9.0'
+    platform :ios, '10.0'
     shared_pods
-    pod 'Firebase/Analytics'
-    pod 'Firebase/Messaging'
-    pod 'Rudder-Firebase'
-    pod 'Rudder-Adjust'
+    pod 'Rudder-Amplitude'
+    pod 'Amplitude', '~> 7.2.0'
+    pod 'Rudder-Braze'
 end
 
 target 'RudderSampleAppSwift' do
