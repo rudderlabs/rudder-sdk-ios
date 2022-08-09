@@ -89,7 +89,7 @@ static dispatch_queue_t transformation_processor_queue;
         [RSElementCache initiate];
         
         [RSLogger logDebug:@"EventRepository: initiating eventReplayMessage queue"];
-        self->eventReplayMessage = [[NSMutableDictionary alloc] init];
+        self->eventReplayMessage = [[NSMutableArray alloc] init];
         
         [self setAnonymousIdToken];
         
@@ -262,17 +262,12 @@ int deviceModeSleepCount = 0;
                         NSArray* transformedBatches = object[@"transformedBatch"];
                         for(NSDictionary* transformedDestination in transformedBatches) {
                             NSString* destinationId = transformedDestination[@"id"];
-                            NSString* status = transformedDestination[@"status"];
                             NSArray* transformedPayloads = [transformedDestination[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
                                 return [a[@"orderNo"] compare:b[@"orderNo"]];
                             }];
                             [strongSelf dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
-                            [strongSelf->dbpersistenceManager deleteEvents:_dbMessage.messageIds withDestinationId:destinationId];
                         }
-                        NSArray<NSString*>* eventsWithDestinationsMapping = [strongSelf->dbpersistenceManager getEventIdsWithDestinationMapping:_dbMessage.messageIds];
-                        NSMutableArray<NSString*>* processedEvents = [_dbMessage.messageIds mutableCopy];
-                        [processedEvents removeObjectsInArray:eventsWithDestinationsMapping];
-                        [strongSelf->dbpersistenceManager updateEventsWithIds:processedEvents withStatus:DEVICEMODEPROCESSINGDONE];
+                        [strongSelf->dbpersistenceManager updateEventsWithIds:_dbMessage.messageIds withStatus:DEVICEMODEPROCESSINGDONE];
                         [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                     }
                 }
@@ -288,9 +283,8 @@ int deviceModeSleepCount = 0;
     @synchronized (self->eventReplayMessage) {
         [RSLogger logDebug:@"replaying old messages with factory"];
         if (self->eventReplayMessage.count > 0) {
-            NSArray* rowIds = [[self->eventReplayMessage allKeys] sortedArrayUsingSelector:@selector(compare:)];
-            for (NSNumber *rowId in rowIds) {
-                [self makeFactoryDump:eventReplayMessage[rowId] withRowId:rowId andFromHistory:YES];
+            for (RSMessage *message in eventReplayMessage) {
+                [self makeFactoryDump:message FromHistory:YES];
             }
         }
         [self->eventReplayMessage removeAllObjects];
@@ -623,19 +617,19 @@ int deviceModeSleepCount = 0;
         return;
     }
     
-    NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
-    [self makeFactoryDump: message withRowId: rowId andFromHistory:NO];
+    [self->dbpersistenceManager saveEvent:jsonString];
+    [self makeFactoryDump: message FromHistory:NO];
     
 }
 
-- (void) makeFactoryDump:(RSMessage *)message withRowId:(NSNumber*) rowId andFromHistory:(BOOL) fromHistory {
+- (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory {
     if (self->areFactoriesInitialized || fromHistory) {
         [RSLogger logDebug:@"dumping message to native sdk factories"];
         NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
         // If All is set to true we will dump to all the integrations which are not set to false
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             
-            if(([(NSNumber*)integrationOptions[@"All"] boolValue] && (integrationOptions[key]==nil ||[(NSNumber*)integrationOptions[key] boolValue])) || ([(NSNumber*)integrationOptions[key] boolValue]))
+            if(([(NSNumber*)integrationOptions[@"All"] boolValue] && (integrationOptions[key]==nil)) || ([(NSNumber*)integrationOptions[key] boolValue]))
             {
                 id<RSIntegration> integration = [self->integrationOperationMap objectForKey:key];
                 if (integration != nil)
@@ -648,8 +642,7 @@ int deviceModeSleepCount = 0;
                             
                         }
                         else {
-                            [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence saving it to the transformation table", key]];
-                            [dbpersistenceManager saveEvent:rowId toDestinationId:destinationsWithTransformationsEnabled[key]];
+                            [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"Destination %@ needs transformation, hence batching it to send to transformation service", key]];
                         }
                     }
                 }
@@ -658,7 +651,7 @@ int deviceModeSleepCount = 0;
     } else {
         @synchronized (self->eventReplayMessage) {
             [RSLogger logDebug:@"factories are not initialized. dumping to replay queue"];
-            self->eventReplayMessage[rowId] = message;
+            [self->eventReplayMessage addObject:message];
         }
     }
 }

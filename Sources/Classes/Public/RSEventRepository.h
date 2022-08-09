@@ -35,7 +35,7 @@ typedef enum {
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
+    NSMutableArray<RSMessage*> *eventReplayMessage;
     NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;

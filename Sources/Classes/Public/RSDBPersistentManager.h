@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) createDB;
 -(void) createTables;
 -(void) createEventsTableWithVersion:(int) version;
--(void) createEventsToDestinationIdMappingTable;
 -(void) checkForMigrations;
 -(BOOL) checkIfStatusColumnExists;
 -(void) performMigration;
@@ -42,10 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 -(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
 -(void) updateEventsWithIds:(NSMutableArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status;
 -(void) clearProcessedEventsFromDB;
--(NSArray<NSString*>*) getEventIdsWithDestinationMapping:(NSArray*) eventIds;
-- (void) saveEvent:(NSNumber*) rowId toDestinationId:(NSString*) destinationId;
-- (void) deleteEvents:(NSArray*) eventIds withDestinationId:(NSString*) destinationId;
--(NSDictionary<NSString*, NSArray<NSString*>*>*) getDestinationMappingofEvents:(NSArray<NSString*>*) eventIds;
 - (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;
 
