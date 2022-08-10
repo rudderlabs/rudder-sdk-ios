@@ -10,15 +10,15 @@
 @implementation RSConstants
 
 int const RSConfigRefreshInterval = 2;
-NSString *const RSDataPlaneUrl = @"https://hosted.rudderlabs.com";
+NSString *const RSDataPlaneUrl = @"https://hosted.rudderlabs.com/";
 int const RSFlushQueueSize = 30;
 int const RSDBCountThreshold = 10000;
 int const RSSleepTimeout = 10;
-NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com";
+NSString *const RSControlPlaneUrl = @"https://api.rudderlabs.com/";
 bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
 bool const RSEnableBackgroundMode = NO;
-NSString *const RS_VERSION = @"1.6.0";
+NSString *const RS_VERSION = @"1.6.3";
 NSString* const DISABLE = @"disable";
 NSString* const WHITELISTED_EVENTS = @"whitelistedEvents";
 NSString* const BLACKLISTED_EVENTS = @"blacklistedEvents";
