@@ -7,6 +7,8 @@
 //
 
 #import "RSServerConfigManager.h"
+#import "RSNetworkResponse.h"
+#import "RSNetworkEnums.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
 #import "RSServerDestination.h"
@@ -19,23 +21,21 @@ static NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformation
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static RSServerConfigSource *serverConfig;
 
-int receivedError = NETWORKSUCCESS;
+int receivedError = NETWORK_SUCCESS;
 
 @implementation RSServerConfigManager
 
-- (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig
-{
+- (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig andNetworkManager: (RSNetworkManager *) networkManager {
     self = [super init];
     if (self) {
-        _preferenceManager = [RSPreferenceManager getInstance];
-        // TODO : is this required?
-        // pthread_mutex_init(&mutex, NULL);
+        self->preferenceManager = [RSPreferenceManager getInstance];
+        self->networkManager = networkManager;
         if (writeKey == nil || [writeKey isEqualToString:@""]) {
             [RSLogger logError:@"writeKey can not be null or empty"];
-            receivedError = WRONGWRITEKEY;
+            receivedError = WRONG_WRITE_KEY;
         } else {
-            _writeKey = writeKey;
-            _rudderConfig = rudderConfig;
+            self->writeKey = writeKey;
+            self->rudderConfig = rudderConfig;
             // fetchConfig and populate serverConfig
             __weak RSServerConfigManager *weakSelf = self;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
@@ -49,13 +49,13 @@ int receivedError = NETWORKSUCCESS;
 
 - (BOOL) _isServerConfigOutDated {
     long currentTime = [RSUtils getTimeStampLong];
-    long lastUpdatedTime = [_preferenceManager getLastUpdatedTime];
+    long lastUpdatedTime = [self->preferenceManager getLastUpdatedTime];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Last updated config time: %ld", lastUpdatedTime]];
-    return (currentTime - lastUpdatedTime) > (_rudderConfig.configRefreshInterval * 60 * 60 * 1000);
+    return (currentTime - lastUpdatedTime) > (rudderConfig.configRefreshInterval * 60 * 60 * 1000);
 }
 
 - (RSServerConfigSource* _Nullable) _retrieveConfig {
-    NSString* configStr = [_preferenceManager getConfigJson];
+    NSString* configStr = [self->preferenceManager getConfigJson];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", configStr]];
     if (configStr == nil) {
         return nil;
@@ -142,7 +142,7 @@ int receivedError = NETWORKSUCCESS;
     serverConfig = [self _retrieveConfig];
     if (serverConfig == nil) {
         [RSLogger logDebug:@"Server config retrieval failed.No config found in storage"];
-        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch server config for writeKey: %@", _writeKey]];
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch server config for writeKey: %@", writeKey]];
     }
     pthread_mutex_unlock(&mutex);
 }
@@ -151,11 +151,11 @@ int receivedError = NETWORKSUCCESS;
     BOOL isDone = NO;
     int retryCount = 0;
     while (isDone == NO && retryCount <= 3) {
-        NSString* configJson = [self _networkRequest];
-        
+        RSNetworkResponse* response = [self->networkManager sendNetworkRequest:nil toEndpoint:SOURCE_CONFIG_ENDPOINT withRequestMethod:GET];
+        NSString* configJson = response.responsePayload;
         if (configJson != nil) {
-            [_preferenceManager saveConfigJson:configJson];
-            [_preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
+            [preferenceManager saveConfigJson:configJson];
+            [preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
             [RSLogger logDebug:@"server config download successful"];
             
@@ -174,52 +174,6 @@ int receivedError = NETWORKSUCCESS;
     if (!isDone) {
         [RSLogger logError:@"Server config download failed.Using last stored config from storage"];
     }
-}
-
-- (NSString *)_networkRequest {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    __block NSString *responseStr = nil;
-    NSString *controlPlaneEndPoint = nil;
-    if([_rudderConfig.controlPlaneUrl hasSuffix:@"/"]) {
-        controlPlaneEndPoint= [NSString stringWithFormat:@"%@sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
-    } else {
-        controlPlaneEndPoint= [NSString stringWithFormat:@"%@/sourceConfig?p=ios&v=%@", _rudderConfig.controlPlaneUrl, RS_VERSION];
-    }
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configUrl: %@", controlPlaneEndPoint]];
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:controlPlaneEndPoint]];
-    NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
-    [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]] forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"response status code: %ld", (long)httpResponse.statusCode]];
-        NSString *dataError = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        if (httpResponse.statusCode == 200) {
-            if (data != nil) {
-                responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                receivedError = NETWORKSUCCESS;
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"configJson: %@", responseStr]];
-            }
-        }else if([dataError isEqual:@"{\"message\":\"Invalid write key\"}"]){
-            receivedError = WRONGWRITEKEY;
-        }else{
-            receivedError = NETWORKERROR;
-        }
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    [dataTask resume];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    
-#if !__has_feature(objc_arc)
-    dispatch_release(sema);
-#endif
-    
-    return responseStr;
 }
 
 - (RSServerConfigSource *) getConfig {

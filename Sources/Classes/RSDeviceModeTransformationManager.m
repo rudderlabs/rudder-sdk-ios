@@ -7,6 +7,7 @@
 //
 
 #import "RSDeviceModeTransformationManager.h"
+#import "RSNetworkResponse.h"
 
 @implementation RSDeviceModeTransformationManager
 
@@ -50,16 +51,15 @@ int deviceModeSleepCount = 0;
             do {
                 RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
                 NSString* payload = [self __getPayloadForTransformation:dbMessage];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                NSDictionary<NSString*, NSString*>* response = [self->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT];
-                int errResp = [response[STATUS] intValue];
-                NSString* responsePayload = response[RESPONSE];
-                if (errResp == WRONGWRITEKEY) {
-                    [RSLogger logDebug:@"RSEventRepository: initiateTransformationProcessor: Wrong WriteKey. Aborting."];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT withRequestMethod:POST];
+                NSString* responsePayload = response.responsePayload;
+                if (response.state == WRONG_WRITE_KEY) {
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Wrong WriteKey. Aborting."];
                     break;
-                } else if (errResp == NETWORKERROR) {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
+                } else if (response.state == NETWORK_ERROR) {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
                     usleep(abs(deviceModeSleepCount - strongSelf->config.sleepTimeout) * 1000000);
                 }
                 else {
@@ -78,10 +78,10 @@ int deviceModeSleepCount = 0;
                         [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     }
                 }
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
             }while([strongSelf->dbPersistentManager getDBRecordCountForMode:DEVICEMODE] > 0);
         }
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateTransformationProcessor: deviceModeSleepCount: %d", deviceModeSleepCount]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: deviceModeSleepCount: %d", deviceModeSleepCount]];
         deviceModeSleepCount += 1;
     });
 }
@@ -91,8 +91,8 @@ int deviceModeSleepCount = 0;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
     NSString* sentAt = [RSUtils getTimestamp];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: getPayloadForTransformation: RecordCount: %lu", (unsigned long)messages.count]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: getPayloadForTransformation: sentAtTimeStamp: %@", sentAt]];
     
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
     [jsonPayload appendString:@"{"];
@@ -110,7 +110,7 @@ int deviceModeSleepCount = 0;
         totalBatchSize += [RSUtils getUTF8Length:message];
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
-            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            [RSLogger logDebug:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: getPayloadForTransformation: MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
             break;
         }
         [jsonPayload appendString:message];

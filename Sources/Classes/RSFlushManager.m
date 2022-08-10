@@ -10,6 +10,7 @@
 #import "RSConfig.h"
 #import "RSFlushManager.h"
 #import "RSDBPersistentManager.h"
+#import "RSNetworkResponse.h"
 
 @implementation RSFlushManager
 
@@ -30,7 +31,7 @@
     __weak RSFlushManager *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
         RSFlushManager* strongSelf = weakSelf;
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(strongSelf->source)]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: setUpFlush: coalesce %lu calls into a single flush call", dispatch_source_get_data(strongSelf->source)]];
         [strongSelf flushSync];
     });
     dispatch_resume(self->source);
@@ -46,8 +47,7 @@
     [RSLogger logDebug:@"RSFlushUtils: flushSync: Fetching events to flush to server in flush"];
     RSDBMessage* _dbMessage = [self->dbPersistentManager fetchAllEventsFromDBForMode:CLOUDMODE];
     int numberOfBatches = [RSUtils getNumberOfBatches:_dbMessage withFlushQueueSize:self->config.flushQueueSize];
-    int errResp = -1;
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: %d batches of events to be flushed", numberOfBatches]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: %d batches of events to be flushed", numberOfBatches]];
     BOOL lastBatchFailed = NO;
     for(int i=1; i<= numberOfBatches; i++) {
         lastBatchFailed = YES;
@@ -59,11 +59,10 @@
             batchDBMessage.messageIds = messageIds;
             batchDBMessage.messages = messages;
             NSString* payload = [RSCloudModeManager getPayloadFromMessages:batchDBMessage];
-            NSDictionary<NSString*, NSString*>* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT];
-            errResp = [response[STATUS] intValue];
-            if( errResp == 0){
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Successfully sent batch %d/%d", i, numberOfBatches]];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Clearing events of batch %d from DB", i]];
+            RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+            if( response.state == NETWORK_SUCCESS){
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Successfully sent batch %d/%d", i, numberOfBatches]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Clearing events of batch %d from DB", i]];
                 [self->dbPersistentManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
                 [self->dbPersistentManager clearProcessedEventsFromDB];
                 [_dbMessage.messages removeObjectsInArray:messages];
@@ -71,10 +70,10 @@
                 lastBatchFailed = NO;
                 break;
             }
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d, retrying again, %d retries left", i, numberOfBatches, retries]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Failed to send %d/%d, retrying again, %d retries left", i, numberOfBatches, retries]];
         }
         if(lastBatchFailed) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
             break;
         }
     }

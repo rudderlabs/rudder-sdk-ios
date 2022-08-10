@@ -10,6 +10,8 @@
 
 @implementation RSNetworkManager
 
+NSString* const STATUS = @"STATUS";
+NSString* const RESPONSE = @"RESPONSE";
 
 - (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken {
     self = [super init];
@@ -22,77 +24,96 @@
     return self;
 }
 
--(NSDictionary<NSString*, NSString*>*) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint {
-    NSMutableDictionary<NSString*, NSString*>* responseDict = [[NSMutableDictionary alloc] init];
+-(RSNetworkResponse*) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint withRequestMethod:(REQUEST_METHOD) method {
+    RSNetworkResponse *result = [[RSNetworkResponse alloc] init];
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
-        [RSLogger logError:@"WriteKey was not correct. Aborting flush to server"];
-        responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", WRONGWRITEKEY];
-        return responseDict;
+        [RSLogger logError:@"RSNetworkManager: sendNetworkRequest: WriteKey was in-correct. Aborting the network request"];
+        result.state = WRONG_WRITE_KEY;
+        return result;
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    int __block respStatus = NETWORKSUCCESS;
-    NSString *requestEndPoint = nil;
-    switch(endpoint) {
-        case TRANSFORM_ENDPOINT:
-            requestEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/transform"];
-            break;
-        default:
-            requestEndPoint = [@"https://e582-2409-4070-2e8f-e60d-94ce-840b-d457-d541.ngrok.io" stringByAppendingString:@"/v1/batch"];
-            //requestEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"/v1/batch"];
-    }
-    
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", requestEndPoint]];
-    
+    NSString *requestEndPoint = [self getRequestUrl:endpoint];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: requestURL %@", requestEndPoint]];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:requestEndPoint]];
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
-    dispatch_sync([RSContext getQueue], ^{
+    if(method == GET) {
+        [urlRequest setHTTPMethod:@"GET"];
+    }
+    else {
+        [urlRequest setHTTPMethod:@"POST"];
+        [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
-    });
-    NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
-    [urlRequest setHTTPBody:httpBody];
-    
+        NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
+        [urlRequest setHTTPBody:httpBody];
+    }
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"statusCode %ld", (long)httpResponse.statusCode]];
+        result.statusCode = (long)httpResponse.statusCode;
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, result.statusCode ]];
         NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        responseDict[RESPONSE] = responseString;
-        if (httpResponse.statusCode == 200) {
-            respStatus = NETWORKSUCCESS;
-            responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", NETWORKSUCCESS];
+        if (result.statusCode == 200) {
+            result.state = NETWORK_SUCCESS;
+            result.responsePayload = responseString;
+            result.errorPayload = nil;
         } else {
-            if (
-                ![responseString isEqualToString:@""] && // non-empty response
-                [[responseString lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound
-                ) {
-                    respStatus = WRONGWRITEKEY;
-                    responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", WRONGWRITEKEY];
-                } else {
-                    respStatus = NETWORKERROR;
-                    responseDict[STATUS] = [[NSString alloc] initWithFormat:@"%d", NETWORKERROR];
-                }
-            [RSLogger logError:[[NSString alloc] initWithFormat:@"ServerError: %@", responseString]];
+            result.errorPayload = responseString;
+            result.responsePayload = nil;
+            if(result.statusCode == 404) {
+                result.state = RESOURCE_NOT_FOUND;
+            } else if (![result.errorPayload isEqualToString:@""] && [[result.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
+                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, result.statusCode ]];
+                result.state = WRONG_WRITE_KEY;
+            } else {
+                result.state = NETWORK_ERROR;
+            }
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, result.statusCode, result.errorPayload]];
         }
-        
         dispatch_semaphore_signal(semaphore);
     }];
     [networkLock lock];
     [dataTask resume];
-    [networkLock unlock];
-    
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    [networkLock unlock];
     
 #if !__has_feature(objc_arc)
     dispatch_release(semaphore);
 #endif
-    
-    return responseDict;
+    return result;;
 }
 
+- (NSString *) getRequestUrl:(ENDPOINT) endpoint {
+    NSString* baseUrl = [self getBaseUrl:endpoint];
+    NSString* path = [self getEndpointPath:endpoint];
+    return [baseUrl stringByAppendingString:path];
+}
 
+- (NSString *) getBaseUrl: (ENDPOINT) endpoint {
+    switch(endpoint) {
+        case BATCH_ENDPOINT:            
+        case TRANSFORM_ENDPOINT:
+            return [self addSlashAtTheEnd:self->config.dataPlaneUrl];
+        case SOURCE_CONFIG_ENDPOINT:
+            return [self addSlashAtTheEnd:self->config.controlPlaneUrl];
+    }
+}
+
+- (NSString *) addSlashAtTheEnd:(NSString *) url {
+    if([url hasSuffix:@"/"]) {
+        return url;
+    }
+    return [url stringByAppendingString:@"/"];
+}
+
+- (NSString *) getEndpointPath: (ENDPOINT) endpoint {
+    switch(endpoint) {
+        case BATCH_ENDPOINT:
+            return @"v1/batch";
+        case TRANSFORM_ENDPOINT:
+            return @"transform";
+        case SOURCE_CONFIG_ENDPOINT:
+            return [[NSString alloc] initWithFormat:@"sourceConfig?p=ios&v=%@", RS_VERSION];
+    }
+}
 @end

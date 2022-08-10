@@ -7,20 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSServerConfigSource.h"
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
 #import "RSNetworkManager.h"
+#import "RSServerConfigSource.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSServerConfigManager : NSObject
+@interface RSServerConfigManager : NSObject {
+    NSString *writeKey;
+    RSConfig *rudderConfig;
+    RSPreferenceManager *preferenceManager;
+    RSNetworkManager* networkManager;
+}
 
-@property NSString *writeKey;
-@property RSConfig *rudderConfig;
-@property RSPreferenceManager *preferenceManager;
-
-- (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
+- (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig andNetworkManager: (RSNetworkManager *) networkManager;
 - (RSServerConfigSource*) getConfig;
 - (NSDictionary<NSString*, NSString*>*) getDestinationsWithTransformationsEnabled;
 - (int) getError;

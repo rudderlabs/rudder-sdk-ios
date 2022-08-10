@@ -26,8 +26,8 @@
 
 #if !TARGET_OS_WATCH
 - (void) trackApplicationLifeCycle {
+    [RSLogger logVerbose:@"RSApplicationLifeCycleManager: trackApplicationLifeCycle: Registering for Application Life Cycle Notifications"];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
     for (NSString *name in @[ UIApplicationDidEnterBackgroundNotification,
                               UIApplicationDidFinishLaunchingNotification,
                               UIApplicationWillEnterForegroundNotification,
@@ -50,6 +50,7 @@
 
 #else
 - (void) trackApplicationLifeCycle {
+    [RSLogger logVerbose:@"RSApplicationLifeCycleManager: trackApplicationLifeCycle: Registering for Application Life Cycle Notifications"];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     for (NSString *name in @[ WKApplicationDidEnterBackgroundNotification,
                               WKApplicationDidFinishLaunchingNotification,
@@ -79,11 +80,13 @@
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
     
     if (!previousVersion) {
+        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Installed"];
         [[RSClient sharedInstance] track:@"Application Installed" properties:@{
             @"version": currentVersion
         }];
         [preferenceManager saveBuildVersionCode:currentVersion];
     } else if (![currentVersion isEqualToString:previousVersion]) {
+        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
         [[RSClient sharedInstance] track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion
@@ -127,6 +130,7 @@
 }
 
 - (void) sendApplicationOpenedWithProperties:(NSDictionary *) properties {
+    [RSLogger logVerbose:@"RSApplicationLifeCycleManager: sendApplicationOpenedWithProperties: Tracking Application Opened"];
     [[RSClient sharedInstance] track:@"Application Opened" properties:properties];
 }
 
@@ -134,6 +138,7 @@
     if (!self->config.trackLifecycleEvents) {
         return;
     }
+    [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidEnterBackground: Tracking Application Backgrounded"];
     [[RSClient sharedInstance] track:@"Application Backgrounded"];
 }
 

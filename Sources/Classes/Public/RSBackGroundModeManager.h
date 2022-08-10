@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Rudder/Rudder.h>
-
-NS_ASSUME_NONNULL_BEGIN
+#import "RSConfig.h"
+#import "RSLogger.h"
 
 @interface RSBackGroundModeManager : NSObject {
     RSConfig* config;
@@ -19,11 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 #else
     dispatch_semaphore_t semaphore;
 #endif
+    
 }
 
 - (instancetype)initWithConfig:(RSConfig *) config;
 - (void) registerForBackGroundMode;
 
 @end
-
-NS_ASSUME_NONNULL_END

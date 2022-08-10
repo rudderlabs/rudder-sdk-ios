@@ -10,21 +10,8 @@
 #import "RSLogger.h"
 #import "RSConfig.h"
 #import "RSContext.h"
-
-
-typedef enum {
-    NETWORKERROR =1,
-    NETWORKSUCCESS =0,
-    WRONGWRITEKEY =2
-} NETWORKSTATE;
-
-typedef enum {
-    BATCH_ENDPOINT = 0,
-    TRANSFORM_ENDPOINT = 1
-} ENDPOINT;
-
-NSString* const STATUS = @"STATUS";
-NSString* const RESPONSE = @"RESPONSE";
+#import "RSConstants.h"
+#import "RSNetworkResponse.h"
 
 @interface RSNetworkManager : NSObject {
     RSConfig* config;
@@ -33,6 +20,9 @@ NSString* const RESPONSE = @"RESPONSE";
     NSLock* networkLock;
 }
 
+extern NSString* const STATUS;
+extern NSString* const RESPONSE;
+
 - (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken;
-- (NSDictionary<NSString*, NSString*>*) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint;
+- (RSNetworkResponse *) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint withRequestMethod:(REQUEST_METHOD) method;
 @end

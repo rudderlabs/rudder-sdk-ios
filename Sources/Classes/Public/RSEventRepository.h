@@ -7,22 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSMessage.h"
-#import "RSServerConfigManager.h"
-#import "RSDBPersistentManager.h"
+
+
+#import "RSUtils.h"
 #import "RSConfig.h"
-#import "RSPreferenceManager.h"
-#import "RSBackGroundModeManager.h"
-#import "RSApplicationLifeCycleManager.h"
+#import "RSLogger.h"
+#import "RSMessage.h"
 #import "RSFlushManager.h"
+#import "RSElementCache.h"
 #import "RSCloudModeManager.h"
 #import "RSDeviceModeManager.h"
-#import "RSElementCache.h"
-#import "RSUtils.h"
-#import "RSLogger.h"
-#import "WKInterfaceController+RSScreen.h"
+#import "RSPreferenceManager.h"
+#import "RSDBPersistentManager.h"
+#import "RSServerConfigManager.h"
+#import "RSDBPersistentManager.h"
 #import "UIViewController+RSScreen.h"
-
+#import "RSApplicationLifeCycleManager.h"
+#import "WKInterfaceController+RSScreen.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

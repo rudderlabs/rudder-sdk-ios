@@ -11,7 +11,6 @@
 
 int const RS_DB_Version = 2;
 int const DEFAULT_STATUS_VALUE = 0;
-static id DB_LOCK;
 NSString* _Nonnull const TABLE_EVENTS = @"events";
 NSString* _Nonnull const COL_ID = @"id";
 NSString* _Nonnull const COL_MESSAGE = @"message";
@@ -26,7 +25,6 @@ NSString* _Nonnull const COL_STATUS = @"status";
     self = [super init];
     if (self) {
         [self createDB];
-        DB_LOCK =  [[NSObject alloc] init];
     }
     return self;
 }
@@ -142,7 +140,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
 - (void)clearEventsFromDB:(NSMutableArray<NSString *> *)messageIds {
     NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [RSUtils getCSVString:messageIds]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventSql: %@", deleteSqlString]];
-    @synchronized (DB_LOCK) {
+    @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
             return;
@@ -187,7 +185,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
     
-    @synchronized (DB_LOCK) {
+    @synchronized (self) {
         sqlite3_stmt *queryStmt = nil;
         if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
             [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: Successfully fetched events from DB"];
@@ -225,7 +223,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getDBRecordCount: countSQLString: %@", countSQLString]];
     int count = 0;
     const char* countSQL = [countSQLString UTF8String];
-    @synchronized (DB_LOCK) {
+    @synchronized (self) {
         sqlite3_stmt *countStmt = nil;
         if (sqlite3_prepare_v2(self->_database, countSQL, -1, &countStmt, nil) == SQLITE_OK) {
             [RSLogger logDebug:@"RSDBPersistentManager: getDBRecordCount: Successfully fetched events count from DB"];
@@ -244,7 +242,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSString *messageIdsCsv = [RSUtils getCSVString:messageIds];
     if(messageIdsCsv != nil) {
         NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %@ | %d WHERE %@ IN (%@);", TABLE_EVENTS, COL_STATUS, COL_STATUS, status, COL_ID, messageIdsCsv];
-        @synchronized (DB_LOCK) {
+        @synchronized (self) {
             if([self execSQL:updateEventStatusSQL]) {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateEventsStatus: Successfully updated the event status for events %@", messageIdsCsv]];
                 return;
@@ -257,7 +255,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
 // need to synchronize
 -(void) clearProcessedEventsFromDB {
     NSString* clearProcessedEventsSQL = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", TABLE_EVENTS, COL_STATUS, COMPLETEPROCESSINGDONE];
-    @synchronized (DB_LOCK) {
+    @synchronized (self) {
         if([self execSQL:clearProcessedEventsSQL]){
             [RSLogger logDebug:@"RSDBPersistentManager: clearProcessedEventsFromDB: Successfully cleared the processed events from the db"];
             return;

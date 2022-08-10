@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSDBPersistentManager.h"
 #import "RSNetworkManager.h"
+#import "RSNetworkEnums.h"
 
 @interface RSCloudModeManager : NSObject {
     RSDBPersistentManager* dbPersistentManager;

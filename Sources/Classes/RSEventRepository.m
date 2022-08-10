@@ -7,14 +7,6 @@
 //
 
 #import "RSEventRepository.h"
-#import "RSElementCache.h"
-#import "RSUtils.h"
-#import "RSLogger.h"
-#import "RSDBPersistentManager.h"
-#import "RSApplicationLifeCycleManager.h"
-#import "WKInterfaceController+RSScreen.h"
-#import "UIViewController+RSScreen.h"
-
 
 static RSEventRepository* _instance;
 @implementation RSEventRepository
@@ -37,12 +29,19 @@ static RSEventRepository* _instance;
  * constructor to be called from RSClient internally.
  * -- tasks to be performed
  * 1. persist the value of config
- * 2. initiate RSElementCache
- * 3. initiate DBPersistentManager for SQLite operations
- * 4. initiate RSServerConfigManager
- * 5. start processor thread
- * 6. initiate factories
+ * 2. Initiate RSElementCache
+ * 3. Initiate RSNetworkManager
+ * 4. Initiate RSServerConfigManager
+ * 5. Initiate RSPreferenceManager
+ * 6. Initiate RSDBPersistentManager for SQLite operations
+ * 7. Initiate RSCloudModeManager
+ * 8. Initiate RSFlushManager
+ * 9. Initiate RSDeviceModeManager
+ * 10.Initiate SDK
+ * 11.Initiate RSBackGroundModeManager
+ * 12.Initiate RSApplicationLifeCycleManager
  * */
+
 - (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
     self = [super init];
     if (self) {
@@ -68,7 +67,7 @@ static RSEventRepository* _instance;
         self->networkManager = [[RSNetworkManager alloc] initWithConfig:config andAuthToken:authToken andAnonymousIdToken:anonymousIdToken];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSServerConfigManager"];
-        self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config];
+        self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config andNetworkManager:self->networkManager];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];

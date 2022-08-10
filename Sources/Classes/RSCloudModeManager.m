@@ -10,6 +10,7 @@
 #import "RSLogger.h"
 #import "RSCloudModeManager.h"
 #import "RSNetworkManager.h"
+#import "RSNetworkResponse.h"
 
 
 @implementation RSCloudModeManager
@@ -31,40 +32,38 @@
     __weak RSCloudModeManager *weakSelf = self;
     dispatch_async(cloud_mode_processor_queue, ^{
         RSCloudModeManager *strongSelf = weakSelf;
-        [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Started"];
-        int errResp = 0;
+        [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Starting the Cloud Mode Processor"];
         int sleepCount = 0;
         
         while (YES) {
             [strongSelf->lock lock];
-            errResp = -1;
+            RSNetworkResponse* response = nil;
             [strongSelf->dbPersistentManager clearOldEventsWithThreshold: strongSelf->config.dbCountThreshold];
-            [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Fetching events to flush to server in cloud mode processor"];
+            [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Fetching events to flush to server"];
             RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
             if ((dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
                 NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Payload: %@", payload]];
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                NSDictionary<NSString*, NSString*>* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT];
-                errResp = [response[STATUS] intValue];
-                if (errResp == 0) {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+                if (response.state == NETWORK_SUCCESS) {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     sleepCount = 0;
                 }
             }
             [strongSelf->lock unlock];
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: SleepCount: %d", sleepCount]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: SleepCount: %d", sleepCount]];
             sleepCount += 1;
-            if (errResp == WRONGWRITEKEY) {
-                [RSLogger logDebug:@"RSEventRepository: initiateProcessor: Wrong WriteKey. Aborting."];
-                break;
-            } else if (errResp == NETWORKERROR) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSEventRepository: initiateProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
-                usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
-            } else {
+            if(response == nil) {
                 usleep(1000000);
+            } else if (response.state == WRONG_WRITE_KEY) {
+                [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
+                break;
+            } else if (response.state == NETWORK_ERROR) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+                usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
             }
         }
     });
@@ -75,8 +74,8 @@
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
     NSString* sentAt = [RSUtils getTimestamp];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RecordCount: %lu", (unsigned long)messages.count]];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"sentAtTimeStamp: %@", sentAt]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: getPayloadFromMessages: RecordCount: %lu", (unsigned long)messages.count]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: getPayloadFromMessages: sentAtTimeStamp: %@", sentAt]];
     
     NSMutableString* json = [[NSMutableString alloc] init];
     [json appendString:@"{"];
@@ -92,7 +91,7 @@
         totalBatchSize += [RSUtils getUTF8Length:message];
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
-            [RSLogger logDebug:[NSString stringWithFormat:@"MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            [RSLogger logDebug:[NSString stringWithFormat:@"RSCloudModeManager: getPayloadFromMessages: MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
             break;
         }
         [json appendString:message];

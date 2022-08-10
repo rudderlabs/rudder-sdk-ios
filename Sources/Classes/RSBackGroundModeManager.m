@@ -14,7 +14,7 @@
     self = [super init];
     if(self){
         self->config = config;
-        [RSLogger logDebug:@"RSBackGroundModeManager: init: Enabling Background Mode"];
+        [RSLogger logDebug:@"RSBackGroundModeManager: Init: Initializing BackgroundMode Manager"];
 #if !TARGET_OS_WATCH
         self->backgroundTask = UIBackgroundTaskInvalid;
 #endif
