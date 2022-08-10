@@ -144,11 +144,6 @@ int receivedError = NETWORKSUCCESS;
         [RSLogger logDebug:@"Server config retrieval failed.No config found in storage"];
         [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch server config for writeKey: %@", _writeKey]];
     }
-//    destinationToTransformationMapping = [self retrieveDestinationToTransformationMappingWithServerConfig:serverConfig];
-//    if(destinationToTransformationMapping == nil) {
-//        [RSLogger logDebug:@"Destinations to Transformation Mapping retrieval failed. No config found in storage"];
-//        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to fetch destinations to transformation mapping for writeKey: %@", _writeKey]];
-//    }
     pthread_mutex_unlock(&mutex);
 }
 
@@ -180,18 +175,6 @@ int receivedError = NETWORKSUCCESS;
         [RSLogger logError:@"Server config download failed.Using last stored config from storage"];
     }
 }
-
-//- (NSDictionary<NSString*, NSString*>*) retrieveDestinationToTransformationMappingWithServerConfig:(RSServerConfigSource*) serverConfig {
-//    NSMutableDictionary<NSString*, NSString*>* destinationToTransformationMapping = [[NSMutableDictionary alloc]init];
-//    if(serverConfig != nil && serverConfig.destinations != nil) {
-//        for(RSServerDestination* destination in serverConfig.destinations) {
-//            if(destination.destinationName != nil && destination.transformationId != nil) {
-//                destinationToTransformationMapping[destination.destinationName] = destination.transformationId;
-//            }
-//        }
-//    }
-//    return [destinationToTransformationMapping copy];
-//}
 
 - (NSString *)_networkRequest {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);

@@ -12,41 +12,38 @@
 #import "RSDBPersistentManager.h"
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
-#import "RSEventFilteringPlugin.h"
+#import "RSBackGroundModeManager.h"
+#import "RSApplicationLifeCycleManager.h"
+#import "RSFlushManager.h"
+#import "RSCloudModeManager.h"
+#import "RSDeviceModeManager.h"
+#import "RSElementCache.h"
+#import "RSUtils.h"
+#import "RSLogger.h"
+#import "WKInterfaceController+RSScreen.h"
+#import "UIViewController+RSScreen.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef enum {
-    BATCH_ENDPOINT = 0,
-    TRANSFORM_ENDPOINT = 1
-} ENDPOINT;
-
 @interface RSEventRepository : NSObject {
+    RSConfig* config;
+    RSDBPersistentManager* dbpersistenceManager;
+    RSServerConfigManager* configManager;
+    RSNetworkManager* networkManager;
+    RSPreferenceManager *preferenceManager;
+    RSCloudModeManager *cloudModeManager;
+    RSDeviceModeManager *deviceModeManager;
+    RSFlushManager *flushManager;
+    RSBackGroundModeManager *backGroundModeManager;
+    RSApplicationLifeCycleManager *applicationLifeCycleManager;
+    BOOL isSDKInitialized;
+    BOOL isSDKEnabled;
     NSString* writeKey;
     NSString* authToken;
     NSString* anonymousIdToken;
-    RSConfig* config;
-#if !TARGET_OS_WATCH
-    UIBackgroundTaskIdentifier backgroundTask;
-#else
-    dispatch_semaphore_t semaphore;
-#endif
-    RSDBPersistentManager* dbpersistenceManager;
-    RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
-    NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
-    NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
-    RSPreferenceManager *preferenceManager;
-    RSEventFilteringPlugin *eventFilteringPlugin;
-    BOOL firstForeGround;
-    BOOL areFactoriesInitialized;
-    BOOL isSemaphoreReleased;
-    BOOL isSDKInitialized;
-    BOOL isSDKEnabled;
     NSLock* lock;
-    dispatch_source_t source;
-    dispatch_queue_t queue;
 }
 
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
@@ -55,12 +52,10 @@ typedef enum {
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;
-
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
 - (RSConfig* _Nullable) getConfig;
-- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
-
+- (void) applicationDidFinishLaunchingWithOptions:(NSDictionary *) launchOptions;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
-		62015A952429789870212FDD /* Pods_RudderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43313A22D6105FA7432891F /* Pods_RudderTests.framework */; };
-		CCA8A892B2FD0480070C9438 /* Pods_Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55ECC704956D29FAE6D12C1 /* Pods_Rudder.framework */; };
+		0B921DC100EAC5046C86DF98 /* Pods_Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DDF7795A534AED382054C9 /* Pods_Rudder.framework */; };
+		A4B0CD558A2DD1435FF38B82 /* Pods_RudderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5AD6C84C1E2F701C05D64B9 /* Pods_RudderTests.framework */; };
 		ED83000027310B44006F27B3 /* RSECommerceCoupon.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5927310B44006F27B3 /* RSECommerceCoupon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED83000127310B44006F27B3 /* RSECommerceCart.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5A27310B44006F27B3 /* RSECommerceCart.m */; };
 		ED83000227310B44006F27B3 /* RSECommercePromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5B27310B44006F27B3 /* RSECommercePromotion.m */; };
@@ -183,6 +183,20 @@
 		F63CBCB02846422900A3F71D /* DBPersistentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */; };
 		F63CBCB12846422900A3F71D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		F648527F284911250068EA48 /* RSServerConfigManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */; };
+		F659794828A2A8EB00A24B04 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */; };
+		F659794928A2A8EB00A24B04 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */; };
+		F659794A28A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */; };
+		F659794E28A2A8F800A24B04 /* RSDeviceModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */; };
+		F659794F28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */; };
+		F659795028A2A8F800A24B04 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */; };
+		F659795328A2AAF600A24B04 /* RSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795128A2AAF600A24B04 /* RSNetworkManager.m */; };
+		F659795428A2AAF600A24B04 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795228A2AAF600A24B04 /* RSFlushManager.m */; };
+		F659795728A2AB0000A24B04 /* RSFlushManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795528A2AB0000A24B04 /* RSFlushManager.h */; };
+		F659795828A2AB0000A24B04 /* RSNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795628A2AB0000A24B04 /* RSNetworkManager.h */; };
+		F659795A28A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */; };
+		F659795C28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */; };
+		F659795E28A2C0B600A24B04 /* RSBackGroundModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */; };
+		F659796028A2C0BF00A24B04 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */; };
 		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
@@ -208,12 +222,11 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		0A056E5186783A7A02F75249 /* Pods-Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.debug.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.debug.xcconfig"; sourceTree = "<group>"; };
-		1EC17BD27EF25B0BEFF9B931 /* Pods-RudderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests/Pods-RudderTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2ABD97F611CEE1E839F24E54 /* Pods-Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.release.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.release.xcconfig"; sourceTree = "<group>"; };
-		A197B6DDD67AE41FF62DC4C2 /* Pods-RudderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests.release.xcconfig"; path = "Target Support Files/Pods-RudderTests/Pods-RudderTests.release.xcconfig"; sourceTree = "<group>"; };
-		C43313A22D6105FA7432891F /* Pods_RudderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D55ECC704956D29FAE6D12C1 /* Pods_Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F8BC624CDC66EA481D65476 /* Pods-Rudder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.release.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.release.xcconfig"; sourceTree = "<group>"; };
+		2FCD05A150D2D5AF92AE1223 /* Pods-Rudder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder.debug.xcconfig"; path = "Target Support Files/Pods-Rudder/Pods-Rudder.debug.xcconfig"; sourceTree = "<group>"; };
+		9914991021BC21681F92BAD4 /* Pods-RudderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests.release.xcconfig"; path = "Target Support Files/Pods-RudderTests/Pods-RudderTests.release.xcconfig"; sourceTree = "<group>"; };
+		C7DDF7795A534AED382054C9 /* Pods_Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5AD6C84C1E2F701C05D64B9 /* Pods_RudderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED83FDAE2731019F006F27B3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		ED83FDAF2731019F006F27B3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ED83FDB02731019F006F27B3 /* Rudder.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rudder.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -387,12 +400,27 @@
 		ED83FFB427310B44006F27B3 /* RSEventRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventRepository.m; sourceTree = "<group>"; };
 		ED83FFB527310B44006F27B3 /* RSScreenPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSScreenPropertyBuilder.m; sourceTree = "<group>"; };
 		ED83FFB627310B44006F27B3 /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
+		F3CE634CB5A2B5AFA2D55BE8 /* Pods-RudderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests/Pods-RudderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventFilteringPlugin.m; sourceTree = "<group>"; };
 		F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventFilteringPlugin.h; sourceTree = "<group>"; };
 		F63767E4287FFDAA001A8FC0 /* RudderUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RudderUtilsTest.swift; sourceTree = "<group>"; };
 		F63CBCAD2846422900A3F71D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPersistentManagerTest.swift; sourceTree = "<group>"; };
 		F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSServerConfigManagerTest.swift; sourceTree = "<group>"; };
+		F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceModeManager.h; sourceTree = "<group>"; };
+		F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCloudModeManager.h; sourceTree = "<group>"; };
+		F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceModeTransformationManager.h; sourceTree = "<group>"; };
+		F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDeviceModeManager.m; sourceTree = "<group>"; };
+		F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDeviceModeTransformationManager.m; sourceTree = "<group>"; };
+		F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCloudModeManager.m; sourceTree = "<group>"; };
+		F659795128A2AAF600A24B04 /* RSNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNetworkManager.m; sourceTree = "<group>"; };
+		F659795228A2AAF600A24B04 /* RSFlushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFlushManager.m; sourceTree = "<group>"; };
+		F659795528A2AB0000A24B04 /* RSFlushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFlushManager.h; sourceTree = "<group>"; };
+		F659795628A2AB0000A24B04 /* RSNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNetworkManager.h; sourceTree = "<group>"; };
+		F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApplicationLifeCycleManager.m; sourceTree = "<group>"; };
+		F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApplicationLifeCycleManager.h; sourceTree = "<group>"; };
+		F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBackGroundModeManager.m; sourceTree = "<group>"; };
+		F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBackGroundModeManager.h; sourceTree = "<group>"; };
 		F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
 		F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -404,15 +432,7 @@
 			files = (
 				06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */,
 				06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */,
-				CCA8A892B2FD0480070C9438 /* Pods_Rudder.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F63767E728853947001A8FC0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F63767EE28853948001A8FC0 /* Rudder.framework in Frameworks */,
+				0B921DC100EAC5046C86DF98 /* Pods_Rudder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F63CBCB12846422900A3F71D /* Rudder.framework in Frameworks */,
-				62015A952429789870212FDD /* Pods_RudderTests.framework in Frameworks */,
+				A4B0CD558A2DD1435FF38B82 /* Pods_RudderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,8 +480,8 @@
 			children = (
 				06CABC322630C6B00097BEFF /* Foundation.framework */,
 				06CABC2E2630C6660097BEFF /* UIKit.framework */,
-				D55ECC704956D29FAE6D12C1 /* Pods_Rudder.framework */,
-				C43313A22D6105FA7432891F /* Pods_RudderTests.framework */,
+				C7DDF7795A534AED382054C9 /* Pods_Rudder.framework */,
+				D5AD6C84C1E2F701C05D64B9 /* Pods_RudderTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -469,10 +489,10 @@
 		C009CBE41EA38A97169C3353 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0A056E5186783A7A02F75249 /* Pods-Rudder.debug.xcconfig */,
-				2ABD97F611CEE1E839F24E54 /* Pods-Rudder.release.xcconfig */,
-				1EC17BD27EF25B0BEFF9B931 /* Pods-RudderTests.debug.xcconfig */,
-				A197B6DDD67AE41FF62DC4C2 /* Pods-RudderTests.release.xcconfig */,
+				2FCD05A150D2D5AF92AE1223 /* Pods-Rudder.debug.xcconfig */,
+				2F8BC624CDC66EA481D65476 /* Pods-Rudder.release.xcconfig */,
+				F3CE634CB5A2B5AFA2D55BE8 /* Pods-RudderTests.debug.xcconfig */,
+				9914991021BC21681F92BAD4 /* Pods-RudderTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -497,6 +517,13 @@
 		ED83FF0E27310B44006F27B3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F659795D28A2C0B600A24B04 /* RSBackGroundModeManager.m */,
+				F659795928A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m */,
+				F659795228A2AAF600A24B04 /* RSFlushManager.m */,
+				F659795128A2AAF600A24B04 /* RSNetworkManager.m */,
+				F659794D28A2A8F800A24B04 /* RSCloudModeManager.m */,
+				F659794B28A2A8F800A24B04 /* RSDeviceModeManager.m */,
+				F659794C28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m */,
 				ED83FF5027310B44006F27B3 /* Ecomm */,
 				ED83FF2127310B44006F27B3 /* Public */,
 				ED83FF1527310B44006F27B3 /* RSApp.m */,
@@ -541,6 +568,13 @@
 		ED83FF2127310B44006F27B3 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				F659795F28A2C0BF00A24B04 /* RSBackGroundModeManager.h */,
+				F659795B28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h */,
+				F659795528A2AB0000A24B04 /* RSFlushManager.h */,
+				F659795628A2AB0000A24B04 /* RSNetworkManager.h */,
+				F659794628A2A8EB00A24B04 /* RSCloudModeManager.h */,
+				F659794528A2A8EA00A24B04 /* RSDeviceModeManager.h */,
+				F659794728A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h */,
 				ED83FF3427310B44006F27B3 /* RSApp.h */,
 				ED83FF9A27310B44006F27B3 /* RSCartSharedEvent.h */,
 				ED83FF8F27310B44006F27B3 /* RSCartViewedEvent.h */,
@@ -716,6 +750,7 @@
 				ED83FFDA27310B44006F27B3 /* RSElementCache.h in Headers */,
 				ED83FFE527310B44006F27B3 /* RSTraitsBuilder.h in Headers */,
 				ED83FFEC27310B44006F27B3 /* UIViewController+RSScreen.h in Headers */,
+				F659795C28A2ACC500A24B04 /* RSApplicationLifeCycleManager.h in Headers */,
 				ED83FFCC27310B44006F27B3 /* RSProperty.h in Headers */,
 				ED83FFCA27310B44006F27B3 /* RSMessageType.h in Headers */,
 				ED83FFCD27310B44006F27B3 /* RSOption.h in Headers */,
@@ -740,6 +775,8 @@
 				ED83FFED27310B44006F27B3 /* RSDBMessage.h in Headers */,
 				ED83FFD027310B44006F27B3 /* RSServerConfigManager.h in Headers */,
 				ED83FFD727310B44006F27B3 /* RSLogger.h in Headers */,
+				F659794828A2A8EB00A24B04 /* RSDeviceModeManager.h in Headers */,
+				F659794928A2A8EB00A24B04 /* RSCloudModeManager.h in Headers */,
 				ED83FFDB27310B44006F27B3 /* RSMessage.h in Headers */,
 				ED83FFEA27310B44006F27B3 /* RSUtils.h in Headers */,
 				ED83FFCF27310B44006F27B3 /* RSConstants.h in Headers */,
@@ -763,6 +800,7 @@
 				ED83001227310B44006F27B3 /* RSECommerceSortBuilder.h in Headers */,
 				ED83004F27310B45006F27B3 /* RSProductClickedEvent.h in Headers */,
 				ED83001B27310B45006F27B3 /* RSProductListFilteredEvent.h in Headers */,
+				F659794A28A2A8EB00A24B04 /* RSDeviceModeTransformationManager.h in Headers */,
 				ED83005627310B45006F27B3 /* RSECommerceSort.h in Headers */,
 				ED83005127310B45006F27B3 /* RSProductReviewedEvent.h in Headers */,
 				ED83003527310B45006F27B3 /* RSCartViewedEvent.h in Headers */,
@@ -790,11 +828,14 @@
 				ED83003927310B45006F27B3 /* RSPromotionViewedEvent.h in Headers */,
 				ED83003C27310B45006F27B3 /* RSProductSearchedEvent.h in Headers */,
 				F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */,
+				F659795728A2AB0000A24B04 /* RSFlushManager.h in Headers */,
 				ED83003F27310B45006F27B3 /* RSCouponRemovedEvent.h in Headers */,
 				ED83004327310B45006F27B3 /* RSCouponDeniedEvent.h in Headers */,
+				F659795828A2AB0000A24B04 /* RSNetworkManager.h in Headers */,
 				ED83000627310B44006F27B3 /* RSECommerceCheckout.h in Headers */,
 				ED83004B27310B45006F27B3 /* RSCheckoutStepCompletedEvent.h in Headers */,
 				F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */,
+				F659796028A2C0BF00A24B04 /* RSBackGroundModeManager.h in Headers */,
 				ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */,
 				ED83FFD627310B44006F27B3 /* RSServerDestinationDefinition.h in Headers */,
 			);
@@ -807,7 +848,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */;
 			buildPhases = (
-				133D3AFD21D979643FB7D6E4 /* [CP] Check Pods Manifest.lock */,
+				99A31D5164FD2B84F3160D45 /* [CP] Check Pods Manifest.lock */,
 				06CABB7F2630C3CA0097BEFF /* Headers */,
 				06CABB802630C3CA0097BEFF /* Sources */,
 				06CABB812630C3CA0097BEFF /* Frameworks */,
@@ -842,7 +883,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F63CBCB62846422900A3F71D /* Build configuration list for PBXNativeTarget "RudderTests" */;
 			buildPhases = (
-				2E9DBB2EEEF5A2847C765918 /* [CP] Check Pods Manifest.lock */,
+				151B2F5D15CBE0A6DC5FE017 /* [CP] Check Pods Manifest.lock */,
 				F63CBCA92846422900A3F71D /* Sources */,
 				F63CBCAA2846422900A3F71D /* Frameworks */,
 				F63CBCAB2846422900A3F71D /* Resources */,
@@ -924,46 +965,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0FF1FA7B76EDDD17C99511C9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests/Pods-RudderTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests/Pods-RudderTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests/Pods-RudderTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		133D3AFD21D979643FB7D6E4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Rudder-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2E9DBB2EEEF5A2847C765918 /* [CP] Check Pods Manifest.lock */ = {
+		151B2F5D15CBE0A6DC5FE017 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -985,6 +987,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		99A31D5164FD2B84F3160D45 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -994,10 +1018,12 @@
 			files = (
 				ED83FFC727310B44006F27B3 /* RSPagePropertyBuilder.m in Sources */,
 				ED83002E27310B45006F27B3 /* RSProductRemovedFromWishListEvent.m in Sources */,
+				F659795328A2AAF600A24B04 /* RSNetworkManager.m in Sources */,
 				ED83000227310B44006F27B3 /* RSECommercePromotion.m in Sources */,
 				ED83001727310B44006F27B3 /* RSECommerceOrder.m in Sources */,
 				ED83002927310B45006F27B3 /* RSCouponAppliedEvent.m in Sources */,
 				ED83FFBC27310B44006F27B3 /* RSConfig.m in Sources */,
+				F659795A28A2ACBE00A24B04 /* RSApplicationLifeCycleManager.m in Sources */,
 				ED83003027310B45006F27B3 /* RSOrderCompletedEvent.m in Sources */,
 				ED83000E27310B44006F27B3 /* RSECommerceProductBuilder.m in Sources */,
 				ED83001D27310B45006F27B3 /* RSCouponRemovedEvent.m in Sources */,
@@ -1009,6 +1035,7 @@
 				ED83001A27310B44006F27B3 /* RSECommerceFilterBuilder.m in Sources */,
 				ED83003227310B45006F27B3 /* RSProductSharedEvent.m in Sources */,
 				ED83FFBB27310B44006F27B3 /* RSDBPersistentManager.m in Sources */,
+				F659795028A2A8F800A24B04 /* RSCloudModeManager.m in Sources */,
 				ED83FFC527310B44006F27B3 /* RSDBMessage.m in Sources */,
 				ED83003127310B45006F27B3 /* RSWishListProductAddedToCartEvent.m in Sources */,
 				ED83003827310B45006F27B3 /* RSCouponEnteredEvent.m in Sources */,
@@ -1033,11 +1060,14 @@
 				ED83005027310B45006F27B3 /* RSCartViewedEvent.m in Sources */,
 				ED83FFC127310B44006F27B3 /* RSClient.m in Sources */,
 				ED83FFC627310B44006F27B3 /* UIViewController+RSScreen.m in Sources */,
+				F659794E28A2A8F800A24B04 /* RSDeviceModeManager.m in Sources */,
+				F659795E28A2C0B600A24B04 /* RSBackGroundModeManager.m in Sources */,
 				ED83FFF127310B44006F27B3 /* RSMessageBuilder.m in Sources */,
 				ED83FFF227310B44006F27B3 /* RSProperty.m in Sources */,
 				ED83FFF427310B44006F27B3 /* RSScreenInfo.m in Sources */,
 				ED83005C27310B45006F27B3 /* RSLogger.m in Sources */,
 				ED83FFC927310B44006F27B3 /* RSMessageType.m in Sources */,
+				F659794F28A2A8F800A24B04 /* RSDeviceModeTransformationManager.m in Sources */,
 				ED83002C27310B45006F27B3 /* RSOrderRefundedEvent.m in Sources */,
 				ED83FFF327310B44006F27B3 /* RSServerDestinationDefinition.m in Sources */,
 				ED83FFEE27310B44006F27B3 /* RSServerConfigManager.m in Sources */,
@@ -1069,6 +1099,7 @@
 				ED83005A27310B45006F27B3 /* RSEventRepository.m in Sources */,
 				ED83000927310B44006F27B3 /* RSECommerceSort.m in Sources */,
 				ED83002127310B45006F27B3 /* RSProductSearchedEvent.m in Sources */,
+				F659795428A2AAF600A24B04 /* RSFlushManager.m in Sources */,
 				ED83FFBE27310B44006F27B3 /* RSApp.m in Sources */,
 				ED83005327310B45006F27B3 /* RSECommerceCheckout.m in Sources */,
 				ED83004727310B45006F27B3 /* RSProductViewedEvent.m in Sources */,
@@ -1228,7 +1259,7 @@
 		};
 		06CABB992630C3CA0097BEFF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A056E5186783A7A02F75249 /* Pods-Rudder.debug.xcconfig */;
+			baseConfigurationReference = 2FCD05A150D2D5AF92AE1223 /* Pods-Rudder.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -1251,7 +1282,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1265,7 +1296,7 @@
 		};
 		06CABB9A2630C3CA0097BEFF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2ABD97F611CEE1E839F24E54 /* Pods-Rudder.release.xcconfig */;
+			baseConfigurationReference = 2F8BC624CDC66EA481D65476 /* Pods-Rudder.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -1288,7 +1319,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1341,7 +1372,7 @@
 		};
 		F63CBCB42846422900A3F71D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EC17BD27EF25B0BEFF9B931 /* Pods-RudderTests.debug.xcconfig */;
+			baseConfigurationReference = F3CE634CB5A2B5AFA2D55BE8 /* Pods-RudderTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -1362,7 +1393,7 @@
 		};
 		F63CBCB52846422900A3F71D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A197B6DDD67AE41FF62DC4C2 /* Pods-RudderTests.release.xcconfig */;
+			baseConfigurationReference = 9914991021BC21681F92BAD4 /* Pods-RudderTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;

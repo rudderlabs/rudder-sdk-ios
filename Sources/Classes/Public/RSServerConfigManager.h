@@ -10,12 +10,7 @@
 #import "RSServerConfigSource.h"
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
-
-typedef enum {
-    NETWORKERROR =1,
-    NETWORKSUCCESS =0,
-    WRONGWRITEKEY =2
-} NETWORKSTATE;
+#import "RSNetworkManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
