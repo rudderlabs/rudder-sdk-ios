@@ -84,6 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startSession;
 - (void)startSession:(NSString *)sessionId;
+- (void)endSession;
 + (RSUserSession *)userSession;
 
 @end

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-p6-DYB">
-                                <rect key="frame" x="0.0" y="313.5" width="414" height="279"/>
+                                <rect key="frame" x="0.0" y="298" width="414" height="310"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-lB-WFr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="31"/>
@@ -117,6 +117,17 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Sample Track"/>
                                         <connections>
                                             <action selector="onSimpleTrack:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m9y-dq-kGQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrC-MV-t77">
+                                        <rect key="frame" x="0.0" y="279" width="414" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="Ni7-aq-jHu"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="End Session"/>
+                                        <connections>
+                                            <action selector="onEndSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hUD-i1-m6S"/>
                                         </connections>
                                     </button>
                                 </subviews>

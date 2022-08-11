@@ -46,17 +46,13 @@ static dispatch_queue_t queue;
 }
 
 - (void)_startSession:(NSString *)sessionId {
-    if ([client configuration].trackLifecycleEvents) {
-        if ([sessionId length] > 0) {
-            self->sessionId = sessionId;
-            self->sessionStart = YES;
-            self->sessionStartTime = [[NSDate alloc] init];
-            [RSLogger logDebug:[NSString stringWithFormat:@"Starting new session with id: %@", sessionId]];
-        } else {
-            [RSLogger logDebug:@"sessionId can not be empty"];
-        }
+    if ([sessionId length] > 0) {
+        self->sessionId = sessionId;
+        self->sessionStart = YES;
+        self->sessionStartTime = [[NSDate alloc] init];
+        [RSLogger logDebug:[NSString stringWithFormat:@"Starting new session with id: %@", sessionId]];
     } else {
-        [RSLogger logDebug:@"Life cycle events tracking is off"];
+        [RSLogger logDebug:@"sessionId can not be empty"];
     }
 }
 
@@ -73,6 +69,8 @@ static dispatch_queue_t queue;
 - (void)clearSession {
     dispatch_sync(queue, ^{
         self->sessionId = nil;
+        self->sessionStart = NO;
+        self->sessionStartTime = nil;
     });
 }
 

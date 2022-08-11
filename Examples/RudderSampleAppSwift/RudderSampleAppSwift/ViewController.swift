@@ -152,6 +152,10 @@ class ViewController: UIViewController {
         count += 1
     }
     
+    @IBAction func onEndSession(_ sender: UIButton) {
+        RSClient.sharedInstance()?.endSession()
+    }
+    
     @IBAction func onMultipleThread(_ sender: UIButton) {
         DispatchQueue.global(qos: .background).async {
             for i in 1...1000 {
