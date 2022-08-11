@@ -72,7 +72,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
 
 - (void) performMigration {
     NSString* alterTableSQLString = [[NSString alloc] initWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ INTEGER DEFAULT %d;", TABLE_EVENTS, COL_STATUS, DEFAULT_STATUS_VALUE];
-    NSString* updateTableSQLString = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d;", TABLE_EVENTS, COL_STATUS, DEVICEMODEPROCESSINGDONE];
+    NSString* updateTableSQLString = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d;", TABLE_EVENTS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE];
     
     if([self execSQL:alterTableSQLString] && [self execSQL:updateTableSQLString]) {
         [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migrated to add status column"];
@@ -153,10 +153,10 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSString* querySQLString = nil;
     switch(mode) {
         case CLOUDMODE:
-            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC LIMIT %d ;", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE, COL_UPDATED, count];
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC LIMIT %d ;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, DEVICE_MODE_PROCESSING_DONE, COL_UPDATED, count];
             break;
         case DEVICEMODE:
-            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC LIMIT %d ;", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE, COL_UPDATED, count];
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC LIMIT %d ;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE, COL_UPDATED, count];
             break;
         default:
             querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC LIMIT %d;", TABLE_EVENTS, COL_UPDATED, count];
@@ -168,10 +168,10 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSString* querySQLString = nil;
     switch(mode) {
         case CLOUDMODE:
-            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC ;", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE, COL_UPDATED];
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC ;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, DEVICE_MODE_PROCESSING_DONE, COL_UPDATED];
             break;
         case DEVICEMODE:
-            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC ;", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE, COL_UPDATED];
+            querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC ;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE, COL_UPDATED];
             break;
         default:
             querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ ORDER BY %@ ASC;", TABLE_EVENTS, COL_UPDATED];
@@ -212,10 +212,10 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSString *countSQLString = nil;
     switch(mode) {
         case DEVICEMODE:
-            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, CLOUDMODEPROCESSINGDONE];
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE];
             break;
         case CLOUDMODE:
-            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOTPROCESSED, DEVICEMODEPROCESSINGDONE];
+            countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d)", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, DEVICE_MODE_PROCESSING_DONE];
             break;
         default:
             countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@", TABLE_EVENTS];
@@ -237,8 +237,11 @@ NSString* _Nonnull const COL_STATUS = @"status";
     return count;
 }
 
-// need to synchronize
--(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status {
+-(void) updateEventWithId:(NSNumber *) messageId withStatus:(EVENT_PROCESSING_STATUS) status {
+    [self updateEventsWithIds:@[[messageId stringValue]] withStatus:status];
+}
+
+-(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENT_PROCESSING_STATUS) status {
     NSString *messageIdsCsv = [RSUtils getCSVString:messageIds];
     if(messageIdsCsv != nil) {
         NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %@ | %d WHERE %@ IN (%@);", TABLE_EVENTS, COL_STATUS, COL_STATUS, status, COL_ID, messageIdsCsv];
@@ -252,9 +255,8 @@ NSString* _Nonnull const COL_STATUS = @"status";
     }
 }
 
-// need to synchronize
 -(void) clearProcessedEventsFromDB {
-    NSString* clearProcessedEventsSQL = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", TABLE_EVENTS, COL_STATUS, COMPLETEPROCESSINGDONE];
+    NSString* clearProcessedEventsSQL = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", TABLE_EVENTS, COL_STATUS, COMPLETE_PROCESSING_DONE];
     @synchronized (self) {
         if([self execSQL:clearProcessedEventsSQL]){
             [RSLogger logDebug:@"RSDBPersistentManager: clearProcessedEventsFromDB: Successfully cleared the processed events from the db"];

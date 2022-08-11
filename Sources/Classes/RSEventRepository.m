@@ -189,8 +189,8 @@ static RSEventRepository* _instance;
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         return;
     }
-    [self->dbpersistenceManager saveEvent:jsonString];
-    [self->deviceModeManager makeFactoryDump: message FromHistory:NO];
+    NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
+    [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
 }
 
 - (void) reset {

@@ -93,6 +93,12 @@
     return [val description];
 }
 
++ (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:order == ASCENDING];
+    [mutableArrayOfNumbers sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    return mutableArrayOfNumbers;
+}
+
 + (NSDictionary<NSString *,id> *)serializeDict:(NSDictionary<NSString*, id>*)dict {
     // if dict is not null
     if (dict) {

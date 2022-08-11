@@ -19,16 +19,17 @@
     RSNetworkManager *networkManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableArray<RSMessage*> *eventReplayMessage;
+    NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
     NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
     BOOL areFactoriesInitialized;
 }
 
-- (instancetype)initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
+- (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
 - (void) startDeviceModeProcessor:(RSServerConfigSource *) serverConfig andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
-- (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory;
--(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId;
-- (void)reset;
-- (void)flush;
+- (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
+- (void) dumpOriginalEvents:(NSArray *) originalPayloads;
+- (void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId;
+- (void) reset;
+- (void) flush;
 
 @end

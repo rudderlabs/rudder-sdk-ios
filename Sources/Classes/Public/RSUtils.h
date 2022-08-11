@@ -11,6 +11,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum {
+    ASCENDING,
+    DESCENDING
+} ORDER;
+
 @interface RSUtils : NSObject
 
 + (NSString*) getTimestamp;
@@ -19,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getUniqueId;
 + (NSString*) getLocale;
 + (NSString*) getDateString: (NSDate*) date;
++ (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order;
 + (unsigned int) getUTF8Length: (NSString*) message;
 + (NSDictionary<NSString*, id>*) serializeDict: (NSDictionary<NSString*, id>* _Nullable) dict;
 + (NSArray*) serializeArray: (NSArray*) array;

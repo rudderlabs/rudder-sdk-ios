@@ -12,11 +12,11 @@
 #import "RSUtils.h"
 
 typedef enum {
-    NOTPROCESSED =0,
-    DEVICEMODEPROCESSINGDONE =1,
-    CLOUDMODEPROCESSINGDONE =2,
-    COMPLETEPROCESSINGDONE =3
-} EVENTPROCESSINGSTATUS;
+    NOT_PROCESSED =0,
+    DEVICE_MODE_PROCESSING_DONE =1,
+    CLOUD_MODE_PROCESSING_DONE =2,
+    COMPLETE_PROCESSING_DONE =3
+} EVENT_PROCESSING_STATUS;
 
 typedef enum {
     CLOUDMODE =2,
@@ -40,7 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode;
 -(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
--(void) updateEventsWithIds:(NSMutableArray*) messageIds withStatus:(EVENTPROCESSINGSTATUS) status;
+-(void) updateEventWithId:(NSNumber *) messageId withStatus:(EVENT_PROCESSING_STATUS) status;
+-(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENT_PROCESSING_STATUS) status;
 -(void) clearProcessedEventsFromDB;
 - (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;

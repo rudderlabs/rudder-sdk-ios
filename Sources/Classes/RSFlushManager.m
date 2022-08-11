@@ -63,7 +63,7 @@
             if( response.state == NETWORK_SUCCESS){
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Successfully sent batch %d/%d", i, numberOfBatches]];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Clearing events of batch %d from DB", i]];
-                [self->dbPersistentManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUDMODEPROCESSINGDONE];
+                [self->dbPersistentManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                 [self->dbPersistentManager clearProcessedEventsFromDB];
                 [_dbMessage.messages removeObjectsInArray:messages];
                 [_dbMessage.messageIds removeObjectsInArray:messageIds];

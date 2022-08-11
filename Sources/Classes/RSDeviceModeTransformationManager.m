@@ -61,22 +61,37 @@ int deviceModeSleepCount = 0;
                 } else if (response.state == NETWORK_ERROR) {
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
                     usleep(abs(deviceModeSleepCount - strongSelf->config.sleepTimeout) * 1000000);
-                }
-                else {
+                } else if (response.state == RESOURCE_NOT_FOUND) {  // So when the customer is not eligible for Device Mode Transformations, we get RESOURCE_NOT_FOUND, and in this case we will dump the original methods itself to the factories.
+                    deviceModeSleepCount = 0;
+                    id object = [RSUtils deSerializeJSONString:payload];
+                    if(object !=nil && [object isKindOfClass:[NSDictionary class]]) {
+                        NSArray* originalBatch = object[@"batch"];
+                        if(originalBatch != nil && originalBatch.count > 0) {
+                            [strongSelf->deviceModeManager dumpOriginalEvents:originalBatch];
+                        }
+                    }
+                    [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
+                    [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
+                } else {
                     deviceModeSleepCount = 0;
                     id object = [RSUtils deSerializeJSONString:responsePayload];
                     if(object != nil && [object isKindOfClass:[NSDictionary class]]) {
-                        NSArray* transformedBatches = object[@"transformedBatch"];
-                        for(NSDictionary* transformedDestination in transformedBatches) {
-                            NSString* destinationId = transformedDestination[@"id"];
-                            NSArray* transformedPayloads = [transformedDestination[@"payload"] sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
-                                return [a[@"orderNo"] compare:b[@"orderNo"]];
-                            }];
-                            [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
+                        NSArray* transformedBatch = object[@"transformedBatch"];
+                        if(transformedBatch != nil && transformedBatch.count > 0) {
+                            for(NSDictionary* transformedDestination in transformedBatch) {
+                                NSString* destinationId = transformedDestination[@"id"];
+                                NSArray* transformedPayloads = transformedDestination[@"payload"];
+                                [transformedPayloads sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+                                    return [a[@"orderNo"] compare:b[@"orderNo"]];
+                                }];
+                                if(transformedPayloads != nil && transformedPayloads.count > 0 && destinationId != nil) {
+                                    [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
+                                }
+                            }
                         }
-                        [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICEMODEPROCESSINGDONE];
-                        [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     }
+                    [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
+                    [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                 }
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
             }while([strongSelf->dbPersistentManager getDBRecordCountForMode:DEVICEMODE] > 0);
