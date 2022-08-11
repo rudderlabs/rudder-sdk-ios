@@ -71,6 +71,7 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
+        [self->preferenceManager performMigration];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSDBPersistentManager"];
         self->dbpersistenceManager = [[RSDBPersistentManager alloc] init];
@@ -238,5 +239,4 @@ static RSEventRepository* _instance;
         [preferenceManager updateOptInTime:[RSUtils getTimeStampLong]];
     }
 }
-
 @end

@@ -33,6 +33,8 @@ typedef enum {
 + (NSString*) getCSVString:(NSArray*) inputStrings;
 + (NSString*) getJSONCSVString:(NSArray*) inputStrings;
 + (id) deSerializeJSONString:(NSString*) jsonString;
++ (BOOL) isValidURL:(NSURL*) url;
++ (NSString*) appendSlashToUrl:(NSString*) url;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

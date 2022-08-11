@@ -15,6 +15,7 @@ target 'Rudder' do
   project 'Rudder.xcodeproj'
   platform :ios, '9.0'
    target 'RudderTests' do
+     platform :ios, '10.0'
      inherit!:search_paths
    end
 end

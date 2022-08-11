@@ -93,9 +93,9 @@ class RSServerConfigManagerTest: XCTestCase {
         let rsConfigBuilder = RSConfigBuilder();
         rsConfigBuilder.withFactory(RudderAdjustFactory())
         rsConfigBuilder.withFactory(RudderFirebaseFactory())
-        rsConfigBuilder.withControlPlaneUrl("https://invalidurl")
+        rsConfigBuilder.withControlPlaneUrl("https://47b1ca4f-4a28-463e-bbb2-04ff60a9b577.mock.pstmn.io")
         rsServerConfigManager = RSServerConfigManager.init("1pTxG1Tqxr7FCrqIy7j0p28AENV", rudderConfig: rsConfigBuilder.build())
-        sleep(20)
+        sleep(2)
     }
     
     override func tearDownWithError() throws {
@@ -103,9 +103,10 @@ class RSServerConfigManagerTest: XCTestCase {
     }
     
     func testGetDestinationToTransformationMapping() {
-        let destinationToTransformationMapping:[String:String] = rsServerConfigManager.getDestinationToTransformationMapping()
-        XCTAssert(destinationToTransformationMapping["Adjust"] == "1wZzqrP8pG55s2GSN0pAzEiatBL")
-        XCTAssert(destinationToTransformationMapping["Firebase"] == "1wZzqrP8pG55s2GSN0pAzEiatBLUS")
+        let destinationToTransformationMapping:[String:String] = rsServerConfigManager.getDestinationsWithTransformationsEnabled()
+        print(destinationToTransformationMapping)
+        XCTAssert(destinationToTransformationMapping["Adjust"] == "230BDAJ9l9z4N6FE7YsxA3ZPxHm")
+        XCTAssert(destinationToTransformationMapping["Firebase"] == "23VDGOseYM8ymh2iIjsSErewmMW")
         
     }
     

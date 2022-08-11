@@ -178,6 +178,8 @@
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */; };
 		F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F63767E5287FFDAA001A8FC0 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63767E4287FFDAA001A8FC0 /* RudderUtilsTest.swift */; };
+		F63767EE28853948001A8FC0 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		F63CBCB02846422900A3F71D /* DBPersistentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */; };
 		F63CBCB12846422900A3F71D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		F648527F284911250068EA48 /* RSServerConfigManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */; };
@@ -203,6 +205,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F63767EF28853948001A8FC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CABB832630C3CA0097BEFF;
+			remoteInfo = Rudder;
+		};
 		F63CBCB22846422900A3F71D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
@@ -396,6 +405,7 @@
 		ED83FFB627310B44006F27B3 /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
 		F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventFilteringPlugin.m; sourceTree = "<group>"; };
 		F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventFilteringPlugin.h; sourceTree = "<group>"; };
+		F63767E4287FFDAA001A8FC0 /* RudderUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RudderUtilsTest.swift; sourceTree = "<group>"; };
 		F63CBCAD2846422900A3F71D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPersistentManagerTest.swift; sourceTree = "<group>"; };
 		F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSServerConfigManagerTest.swift; sourceTree = "<group>"; };
@@ -732,6 +742,7 @@
 			children = (
 				F648527E284911250068EA48 /* RSServerConfigManagerTest.swift */,
 				F63CBCAF2846422900A3F71D /* DBPersistentManagerTest.swift */,
+				F63767E4287FFDAA001A8FC0 /* RudderUtilsTest.swift */,
 			);
 			path = RudderTests;
 			sourceTree = "<group>";
@@ -863,6 +874,22 @@
 			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		F63767E928853947001A8FC0 /* Utils */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F63767F328853948001A8FC0 /* Build configuration list for PBXNativeTarget "Utils" */;
+			buildPhases = (
+				F63767E728853947001A8FC0 /* Frameworks */,
+				F63767E828853947001A8FC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F63767F028853948001A8FC0 /* PBXTargetDependency */,
+			);
+			name = Utils;
+			productName = Utils;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F63CBCAC2846422900A3F71D /* RudderTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F63CBCB62846422900A3F71D /* Build configuration list for PBXNativeTarget "RudderTests" */;
@@ -871,6 +898,7 @@
 				F63CBCA92846422900A3F71D /* Sources */,
 				F63CBCAA2846422900A3F71D /* Frameworks */,
 				F63CBCAB2846422900A3F71D /* Resources */,
+				0FF1FA7B76EDDD17C99511C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -895,6 +923,9 @@
 						CreatedOnToolsVersion = 12.3;
 						LastSwiftMigration = 1310;
 					};
+					F63767E928853947001A8FC0 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
 					F63CBCAC2846422900A3F71D = {
 						CreatedOnToolsVersion = 13.4;
 					};
@@ -915,12 +946,20 @@
 			targets = (
 				06CABB832630C3CA0097BEFF /* Rudder */,
 				F63CBCAC2846422900A3F71D /* RudderTests */,
+				F63767E928853947001A8FC0 /* Utils */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		06CABB822630C3CA0097BEFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F63767E828853947001A8FC0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1086,6 +1125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F63767E5287FFDAA001A8FC0 /* RudderUtilsTest.swift in Sources */,
 				F63CBCB02846422900A3F71D /* DBPersistentManagerTest.swift in Sources */,
 				F648527F284911250068EA48 /* RSServerConfigManagerTest.swift in Sources */,
 			);
@@ -1094,6 +1134,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F63767F028853948001A8FC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 06CABB832630C3CA0097BEFF /* Rudder */;
+			targetProxy = F63767EF28853948001A8FC0 /* PBXContainerItemProxy */;
+		};
 		F63CBCB32846422900A3F71D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -1248,7 +1294,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1285,7 +1331,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1293,6 +1339,46 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
+			};
+			name = Release;
+		};
+		F63767F128853948001A8FC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Utils;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F63767F228853948001A8FC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Utils;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1355,6 +1441,15 @@
 			buildConfigurations = (
 				06CABB992630C3CA0097BEFF /* Debug */,
 				06CABB9A2630C3CA0097BEFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F63767F328853948001A8FC0 /* Build configuration list for PBXNativeTarget "Utils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F63767F128853948001A8FC0 /* Debug */,
+				F63767F228853948001A8FC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

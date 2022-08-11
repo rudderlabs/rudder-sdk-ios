@@ -33,8 +33,17 @@ extern NSString *const RSOptOutTimeKey;
 - (void) saveTraits: (NSString* __nonnull) traits;
 - (NSString* __nonnull) getTraits;
 
-- (NSString* __nullable) getBuildVersionCode;
-- (void) saveBuildVersionCode: (NSString* __nonnull) versionCode;
+- (void) saveBuildVersionCode:(NSString* __nonnull)versionCode;
+- (NSString* __nullable) getBuildVersionCode; 
+- (void) deleteBuildVersionCode;
+
+- (void) performMigration;
+
+- (NSString* __nullable) getBuildNumber;
+- (void) saveBuildNumber: (NSString* __nonnull) buildNumber;
+
+- (NSString* __nullable) getVersionNumber;
+- (void) saveVersionNumber: (NSString* __nonnull) versionNumber;
 
 - (NSString* __nullable) getExternalIds;
 - (void) saveExternalIds: (NSString* __nonnull) externalIdsJson;
