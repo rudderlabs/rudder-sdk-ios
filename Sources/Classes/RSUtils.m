@@ -28,6 +28,7 @@
 + (const char *)getDBPath {
     NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
     NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
+    NSLog(@"Desu Path of the db is %@", [fileUrl path]);
     return [[fileUrl path] UTF8String];
 }
 
@@ -93,10 +94,10 @@
     return [val description];
 }
 
-+ (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order {
++ (NSArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) arrayOfNumbers inOrder:(ORDER) order {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:order == ASCENDING];
-    [mutableArrayOfNumbers sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    return mutableArrayOfNumbers;
+    [arrayOfNumbers sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    return [arrayOfNumbers copy];
 }
 
 + (NSDictionary<NSString *,id> *)serializeDict:(NSDictionary<NSString*, id>*)dict {
@@ -173,6 +174,7 @@
         return nil;
     }
     return object;
+}
 
 + (BOOL) isValidURL:(NSURL*) url {
     return url && [url scheme] && [url host];

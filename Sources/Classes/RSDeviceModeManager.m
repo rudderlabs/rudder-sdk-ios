@@ -40,16 +40,18 @@
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Replaying the message queue to the Factories"];
     [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
-    // initaiting the transformation processor only if there are any device mode destinations with transformations enabled
-    if([self-> destinationsWithTransformationsEnabled count] > 0){
+    // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
+    if([self doFactoriesPassedHaveTransformationsEnabled]){
         RSDeviceModeTransformationManager* deviceModeTransformationManager = [[RSDeviceModeTransformationManager alloc] initWithConfig:self->config andDBPersistentManager:self->dbPersistentManager andDeviceModeManager:self andNetworkManager:self->networkManager];
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Transformation Processor"];
         [deviceModeTransformationManager startTransformationProcessor];
+    } else {
+        [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: No Device Mode Destinations with transformations attached hence device mode transformation processor need not to be started"];
     }
 }
 
 - (void) initiateFactories : (NSArray*) destinations {
-    if (self->config == nil || config.factories == nil || config.factories.count == 0) {
+    if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
         return;
     } else {
@@ -82,7 +84,7 @@
 }
 
 - (void) initiateCustomFactories {
-    if (self->config == nil || config.customFactories == nil || config.customFactories.count == 0) {
+    if (![self areCustomFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateCustomFactories: No custom factory found"];
         return;
     }
@@ -122,7 +124,7 @@
                 id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destinationName];
                 if (integration != nil) {
                     if(destinationsWithTransformationsEnabled[destinationName] == nil) {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: dumping for %@", destinationName]];
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: dumping message of type %@ and name %@ for %@",message.type, message.event, destinationName]];
                         [integration dump:message];
                     } else {
                         isTransformationNeeded = YES;
@@ -230,6 +232,29 @@
         }
     }
     return transformationEnabledDestinations;
+}
+
+- (BOOL) doFactoriesPassedHaveTransformationsEnabled {
+    if(![self areFactoriesPassedInConfig])
+        return NO;
+    for(id<RSIntegrationFactory> factory in self->config.factories) {
+        // If the Factory has some transformations connected to it, then return true;
+        if([self->destinationsWithTransformationsEnabled objectForKey:factory.key])
+            return YES;
+    }
+    return NO;
+}
+
+- (BOOL) areFactoriesPassedInConfig {
+    if(self->config == nil || self->config.factories == nil || self->config.factories.count == 0)
+        return NO;
+    return YES;
+}
+
+- (BOOL) areCustomFactoriesPassedInConfig {
+    if(self->config == nil || self->config.customFactories == nil || self->config.customFactories.count == 0)
+        return NO;
+    return YES;
 }
 
 @end

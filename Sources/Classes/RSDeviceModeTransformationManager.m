@@ -32,6 +32,7 @@ static dispatch_queue_t transformation_processor_queue;
 
 - (void) startTransformationProcessor {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [RSLogger logDebug:@"RSDeviceModeTransformationManager: startTransformationProcessor: Transformation processor started"];
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(transformationProcessor) userInfo:nil repeats:YES];
     });
 }
@@ -42,8 +43,7 @@ int deviceModeSleepCount = 0;
     __weak RSDeviceModeTransformationManager *weakSelf = self;
     dispatch_sync(transformation_processor_queue, ^{
         RSDeviceModeTransformationManager *strongSelf = weakSelf;
-        [RSLogger logDebug:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Transformation processor started"];
-        [RSLogger logDebug:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Fetching events to flush to transformations server"];
+        [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Fetching events to flush to transformations server"];
         int deviceModeEventsCount = [strongSelf->dbPersistentManager getDBRecordCountForMode:DEVICEMODE];
         
         // the flow would get started only if the number of eligible events for device mode transformation is greater than DMT_BATCH_SIZE (OR) if the sleepCount is greater than the sleepTimeOut and number of eligible events for Device Mode is >0
@@ -51,15 +51,16 @@ int deviceModeSleepCount = 0;
             do {
                 RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
                 NSString* payload = [self __getPayloadForTransformation:dbMessage];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Payload: %@", payload]];
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT withRequestMethod:POST];
                 NSString* responsePayload = response.responsePayload;
                 if (response.state == WRONG_WRITE_KEY) {
-                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Wrong WriteKey. Aborting."];
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Wrong WriteKey. Aborting."];
                     break;
                 } else if (response.state == NETWORK_ERROR) {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
+                    deviceModeSleepCount += 1;
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Retrying in: %d s", abs(deviceModeSleepCount - strongSelf->config.sleepTimeout)]];
                     usleep(abs(deviceModeSleepCount - strongSelf->config.sleepTimeout) * 1000000);
                 } else if (response.state == RESOURCE_NOT_FOUND) {  // So when the customer is not eligible for Device Mode Transformations, we get RESOURCE_NOT_FOUND, and in this case we will dump the original methods itself to the factories.
                     deviceModeSleepCount = 0;
@@ -70,6 +71,7 @@ int deviceModeSleepCount = 0;
                             [strongSelf->deviceModeManager dumpOriginalEvents:originalBatch];
                         }
                     }
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                 } else {
@@ -90,13 +92,14 @@ int deviceModeSleepCount = 0;
                             }
                         }
                     }
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                 }
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: SleepCount: %d", deviceModeSleepCount]];
             }while([strongSelf->dbPersistentManager getDBRecordCountForMode:DEVICEMODE] > 0);
         }
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: initiateTransformationProcessor: deviceModeSleepCount: %d", deviceModeSleepCount]];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: deviceModeSleepCount: %d", deviceModeSleepCount]];
         deviceModeSleepCount += 1;
     });
 }

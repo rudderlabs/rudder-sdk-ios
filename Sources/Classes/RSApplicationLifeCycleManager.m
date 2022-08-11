@@ -76,23 +76,31 @@
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    NSString *previousVersion = [preferenceManager getBuildVersionCode];
-    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-    
-    if (!previousVersion) {
-        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Installed"];
-        [[RSClient sharedInstance] track:@"Application Installed" properties:@{
-            @"version": currentVersion
-        }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
-    } else if (![currentVersion isEqualToString:previousVersion]) {
-        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
-        [[RSClient sharedInstance] track:@"Application Updated" properties:@{
-            @"previous_version" : previousVersion ?: @"",
-            @"version": currentVersion
-        }];
-        [preferenceManager saveBuildVersionCode:currentVersion];
-    }
+    NSString *previousVersion = [preferenceManager getVersionNumber];
+       NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+       
+       NSString* previousBuildNumber = [preferenceManager getBuildNumber];
+       NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+       
+       if (!previousVersion) {
+           [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Installed"];
+           [[RSClient sharedInstance] track:@"Application Installed" properties:@{
+               @"version": currentVersion,
+               @"build": currentBuildNumber
+           }];
+           [preferenceManager saveVersionNumber:currentVersion];
+           [preferenceManager saveBuildNumber:currentBuildNumber];
+       } else if (![previousVersion isEqualToString:currentVersion]) {
+           [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
+           [[RSClient sharedInstance] track:@"Application Updated" properties:@{
+               @"previous_version" : previousVersion ?: @"",
+               @"version": currentVersion,
+               @"previous_build": previousBuildNumber ?: @"",
+               @"build": currentBuildNumber
+           }];
+           [preferenceManager saveVersionNumber:currentVersion];
+           [preferenceManager saveBuildNumber:currentBuildNumber];
+       }
     [self sendApplicationOpenedOnLaunch:launchOptions withVersion:currentVersion];
 }
 

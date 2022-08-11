@@ -17,7 +17,7 @@ PODS:
     - Appboy-iOS-SDK/Core
     - Appboy-iOS-SDK/InAppMessage
     - Appboy-iOS-SDK/NewsFeed
-  - Rudder (1.6.0)
+  - Rudder (1.6.3)
   - Rudder-Amplitude (1.0.2):
     - Amplitude (~> 7.2.0)
     - Rudder
@@ -49,10 +49,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplitude: 517cdc7c485bda64b685174426ecbf17746eb16a
   Appboy-iOS-SDK: 4a7dfe908639da81e5e85849355f6066b58b4cc6
-  Rudder: 67c3dffe0b253236794e448d5d279a4d54819804
+  Rudder: 59634aec6dd26a4672f74f40fc45bc17f91af3f0
   Rudder-Amplitude: f845cc125a1a58d4de6155391a2b0392815ae898
   Rudder-Braze: e58e0e8163a2dcf0d45ec2d12bdb0ec3329c3681
   SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866
 
-PODFILE CHECKSUM: cefec7b3117377591914288d208a7a638dcc6c6c
+PODFILE CHECKSUM: 814358e6f5add6f5d4aa613a70bec5651f2e15b2
+
 COCOAPODS: 1.11.3

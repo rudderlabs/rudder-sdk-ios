@@ -51,7 +51,6 @@
     if(self) {
         _carrier = dict[@"carrier"];
         _wifi = dict[@"wifi"];
-        _bluetooth = dict[@"bluetooth"];
         _cellular = dict[@"cellular"];
     }
     return self;

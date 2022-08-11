@@ -66,4 +66,10 @@ class RudderUtilsTest: XCTestCase {
         
         
     }
+    
+    func testSortArray() throws {
+        let numsArr = [3,2,12,6,5]
+        XCTAssertEqual(RSUtils.sortArray(NSMutableArray(array:numsArr), in: ASCENDING), NSMutableArray(array:[2,3,5,6,12]))
+        XCTAssertEqual(RSUtils.sortArray(NSMutableArray(array:numsArr), in: DESCENDING), NSMutableArray(array:[12,6,5,3,2]))
+    }
 }
