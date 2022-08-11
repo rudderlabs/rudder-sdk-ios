@@ -54,7 +54,7 @@
                 }
             }
             [strongSelf->lock unlock];
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: SleepCount: %d", sleepCount]];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: cloudModeSleepCount: %d", sleepCount]];
             sleepCount += 1;
             if(response == nil) {
                 usleep(1000000);
