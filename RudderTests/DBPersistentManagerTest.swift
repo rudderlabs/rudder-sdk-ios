@@ -28,8 +28,16 @@ class DBPersistentManagerTest: XCTestCase {
     "sentAt": "2022-03-14T06:46:41.365Z"
     }
 """
-    let DESTINATION_ID_1 = "1wZzqrP8pG55s2GSN0pAzEiatBL"
-    let DESTINATION_ID_2 = "1wZzqrP8pG55s2GSN0pAsadiesh"
+    
+    
+    let MESSAGE_3 = """
+    {
+    "event": "mess-3",
+    "messageId": "e-3",
+    "message": "m-3",
+    "sentAt": "2022-03-14T06:46:41.365Z"
+    }
+"""
     
     let ROWID_1 = 1 as NSNumber
     let ROWID_2 = 2 as NSNumber
@@ -58,14 +66,16 @@ class DBPersistentManagerTest: XCTestCase {
         // verifying that the status column is missing from the events table
         XCTAssert(!dbPersistentManager.checkIfStatusColumnExists())
         dbPersistentManager.performMigration()
+        // inserting message3 into the table after the migration
+        dbPersistentManager.saveEvent(MESSAGE_3)
         // verifying if the status column exists in the event table after migration
         XCTAssert(dbPersistentManager.checkIfStatusColumnExists())
         // verifying if both the messages exist in the table even after migration
         let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
-        print(rsDbMessage.statuses)
-        XCTAssert(rsDbMessage.messageIds.count==2)
+        XCTAssert(rsDbMessage.messageIds.count==3)
         XCTAssert(rsDbMessage.statuses[0] as? Int == 1)
         XCTAssert(rsDbMessage.statuses[1] as? Int == 1)
+        XCTAssert(rsDbMessage.statuses[2] as? Int == 0)
     }
     
     func testCreateEventsTableWithVersion () throws {
@@ -102,11 +112,6 @@ class DBPersistentManagerTest: XCTestCase {
         XCTAssert(rowIds == savedRowIds)
     }
     
-    func testCreateEventsToDestinationIdMappingTable() throws {
-        dbPersistentManager.createEventsToDestinationIdMappingTable();
-        XCTAssert(getCount(sqlString: getCheckIfTableExistCommand(tableName: "events_to_destination")) > 0)
-    }
-    
     func testFetchEventsFromDB() {
         dbPersistentManager.createEventsTable(withVersion: 2)
         var rowIds:[Int] = []
@@ -126,8 +131,8 @@ class DBPersistentManagerTest: XCTestCase {
         
         
         // test updateEventsWithIds
-        dbPersistentManager.updateEvents(withIds: NSMutableArray(array:device_mode_rowIds), with: CLOUDMODEPROCESSINGDONE)
-        dbPersistentManager.updateEvents(withIds: NSMutableArray(array:cloud_mode_rowIds), with: DEVICEMODEPROCESSINGDONE)
+        dbPersistentManager.updateEvents(withIds: device_mode_rowIds, with: CLOUD_MODE_PROCESSING_DONE)
+        dbPersistentManager.updateEvents(withIds: cloud_mode_rowIds, with: DEVICE_MODE_PROCESSING_DONE)
         let fetched_device_mode_ids : [String] = dbPersistentManager.fetchAllEventsFromDB(forMode: DEVICEMODE).messageIds as NSArray as! [String]
         let fetched_cloud_mode_ids : [String] = dbPersistentManager.fetchAllEventsFromDB(forMode: CLOUDMODE).messageIds as NSArray as! [String]
         XCTAssertTrue(fetched_cloud_mode_ids.allSatisfy(cloud_mode_rowIds.contains))
@@ -159,10 +164,10 @@ class DBPersistentManagerTest: XCTestCase {
         }
         XCTAssertEqual(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count , 20)
         
-        dbPersistentManager.updateEvents(withIds: NSMutableArray(array:Array(rowIds[0...9])), with:COMPLETEPROCESSINGDONE)
+        dbPersistentManager.updateEvents(withIds: Array(rowIds[0...9]), with:COMPLETE_PROCESSING_DONE)
         dbPersistentManager.clearProcessedEventsFromDB()
         XCTAssertEqual(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count , 10)
-        dbPersistentManager.updateEvents(withIds: NSMutableArray(array: Array(rowIds[10...19])), with: COMPLETEPROCESSINGDONE)
+        dbPersistentManager.updateEvents(withIds: Array(rowIds[10...19]), with: COMPLETE_PROCESSING_DONE)
         dbPersistentManager.clearProcessedEventsFromDB()
         XCTAssertEqual(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count , 0)
         
@@ -177,46 +182,6 @@ class DBPersistentManagerTest: XCTestCase {
         XCTAssertEqual(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count, 0)
     }
     
-    func testSaveEventWithDestinationId() throws {
-        dbPersistentManager.createEventsTable(withVersion: 2)
-        dbPersistentManager.createEventsToDestinationIdMappingTable()
-        let rowId1: Int = dbPersistentManager.saveEvent(MESSAGE_1).intValue
-        let rowId2: Int = dbPersistentManager.saveEvent(MESSAGE_2).intValue
-        dbPersistentManager.saveEvent(rowId1 as NSNumber, toDestinationId: DESTINATION_ID_1)
-        dbPersistentManager.saveEvent(rowId2 as NSNumber, toDestinationId: DESTINATION_ID_2)
-        let eventsToDestinationMapping: [String:Any] = dbPersistentManager.getDestinationMappingofEvents([String(rowId1),String(rowId2)])
-        var eventIdsArray = Array(eventsToDestinationMapping.keys)
-        eventIdsArray.sort()
-        XCTAssertEqual(Int(eventIdsArray[0]), rowId1)
-        XCTAssertEqual(Int(eventIdsArray[1]), rowId2)
-    }
-    
-    func testDeleteEventWithDestinationId() throws {
-        dbPersistentManager.createEventsToDestinationIdMappingTable()
-        dbPersistentManager.saveEvent(ROWID_1, toDestinationId: DESTINATION_ID_1)
-        dbPersistentManager.saveEvent(ROWID_1, toDestinationId: DESTINATION_ID_2)
-        dbPersistentManager.saveEvent(ROWID_2, toDestinationId: DESTINATION_ID_1)
-        dbPersistentManager.saveEvent(ROWID_2, toDestinationId: DESTINATION_ID_2)
-    
-        var destinationsOfEvent = dbPersistentManager.getDestinationMappingofEvents([ROWID_1.stringValue])
-        XCTAssertTrue([DESTINATION_ID_1, DESTINATION_ID_2].allSatisfy(destinationsOfEvent[ROWID_1.stringValue]!.contains))
-        
-        dbPersistentManager.deleteEvents([ROWID_1.stringValue], withDestinationId: DESTINATION_ID_1)
-        destinationsOfEvent = dbPersistentManager.getDestinationMappingofEvents([ROWID_1.stringValue])
-        XCTAssertFalse([DESTINATION_ID_1, DESTINATION_ID_2].allSatisfy(destinationsOfEvent[ROWID_1.stringValue]!.contains))
-    }
-    
-    func testgetEventIdsWithDestinationMapping() throws {
-        dbPersistentManager.createEventsToDestinationIdMappingTable()
-        dbPersistentManager.saveEvent(ROWID_1, toDestinationId: DESTINATION_ID_1)
-        dbPersistentManager.saveEvent(ROWID_1, toDestinationId: DESTINATION_ID_2)
-        dbPersistentManager.saveEvent(ROWID_2, toDestinationId: DESTINATION_ID_1)
-        dbPersistentManager.saveEvent(ROWID_2, toDestinationId: DESTINATION_ID_2)
-        let destinationMappingOfEvents = dbPersistentManager.getDestinationMappingofEvents([ROWID_1.stringValue, ROWID_2.stringValue, ROWID_3.stringValue])
-        XCTAssertTrue(destinationMappingOfEvents.keys.contains(ROWID_2.stringValue))
-        XCTAssertFalse(destinationMappingOfEvents.keys.contains(ROWID_3.stringValue))
-        
-    }
     
     func deleteEventsTable() {
         executeSQL(sqlString: "drop table if exists events;")

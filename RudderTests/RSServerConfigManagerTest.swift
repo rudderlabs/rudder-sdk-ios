@@ -7,17 +7,20 @@
 
 import XCTest
 import Rudder
-import Rudder_Adjust
-import Rudder_Firebase
 
 class RSServerConfigManagerTest: XCTestCase {
+    
+    static let writeKey = "1pTxG1Tqxr7FCrqIy7j0p28AENV"
+    static let authToken = writeKey.toBase64()
+    
+    static let anonymousId = "2248a26b-339b-4b62-90e0-5a004649267d"
+    static let anonymousIdToken = anonymousId.toBase64()
+    
     
     var rsServerConfigManager: RSServerConfigManager!
     var rsPreferenceManager:RSPreferenceManager!
     var configJSON:String!
     override func setUpWithError() throws {
-        
-        rsPreferenceManager = RSPreferenceManager()
         configJSON = """
 {
   "source": {
@@ -48,7 +51,6 @@ class RSServerConfigManagerTest: XCTestCase {
           ],
           "eventFilteringOption": "disable"
         },
-        "transformationId": "1wZzqrP8pG55s2GSN0pAzEiatBL",
         "id": "230BDAJ9l9z4N6FE7YsxA3ZPxHm",
         "name": "Adjust Dev",
         "enabled": true,
@@ -73,7 +75,7 @@ class RSServerConfigManagerTest: XCTestCase {
           ],
           "eventFilteringOption": "disable"
         },
-        "transformationId": "1wZzqrP8pG55s2GSN0pAzEiatBLUS",
+        "areTransformationsConnected" : true,
         "id": "23VDGOseYM8ymh2iIjsSErewmMW",
         "name": "Firebase Devv",
         "enabled": true,
@@ -83,31 +85,66 @@ class RSServerConfigManagerTest: XCTestCase {
           "displayName": "Firebase",
           "updatedAt": "2022-05-13T09:31:26.459Z"
         }
+      },
+       {
+        "config": {
+          "blacklistedEvents": [
+            {
+              "eventName": ""
+            }
+          ],
+          "whitelistedEvents": [
+            {
+              "eventName": ""
+            }
+          ],
+          "eventFilteringOption": "disable"
+        },
+        "areTransformationsConnected" : true,
+        "id": "23VDGOseYM8ymh2iIjsSEreapd",
+        "name": "AppCenter Dev",
+        "enabled": true,
+        "updatedAt": "2022-05-25T11:31:31.197Z",
+        "destinationDefinition": {
+          "name": "APPCENTER",
+          "displayName": "App Center",
+          "updatedAt": "2022-05-13T09:31:26.459Z"
+        }
       }
     ]
   }
 }
 """
+        rsPreferenceManager = RSPreferenceManager()
         rsPreferenceManager.saveConfigJson(configJSON)
         
-        let rsConfigBuilder = RSConfigBuilder();
-        rsConfigBuilder.withFactory(RudderAdjustFactory())
-        rsConfigBuilder.withFactory(RudderFirebaseFactory())
-        rsConfigBuilder.withControlPlaneUrl("https://47b1ca4f-4a28-463e-bbb2-04ff60a9b577.mock.pstmn.io")
-        rsServerConfigManager = RSServerConfigManager.init("1pTxG1Tqxr7FCrqIy7j0p28AENV", rudderConfig: rsConfigBuilder.build())
-        sleep(2)
+        let rsConfig = RSConfigBuilder().withControlPlaneUrl("https://invalid-rudder.com").build()
+        let rsNetworkManager = RSNetworkManager.init(config: rsConfig, andAuthToken: RSServerConfigManagerTest.authToken, andAnonymousIdToken:RSServerConfigManagerTest.anonymousIdToken)
+        rsServerConfigManager = RSServerConfigManager.init(RSServerConfigManagerTest.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
+        sleep(12)
     }
     
     override func tearDownWithError() throws {
         
     }
     
-    func testGetDestinationToTransformationMapping() {
-        let destinationToTransformationMapping:[String:String] = rsServerConfigManager.getDestinationsWithTransformationsEnabled()
-        print(destinationToTransformationMapping)
-        XCTAssert(destinationToTransformationMapping["Adjust"] == "230BDAJ9l9z4N6FE7YsxA3ZPxHm")
-        XCTAssert(destinationToTransformationMapping["Firebase"] == "23VDGOseYM8ymh2iIjsSErewmMW")
-        
+    func testDestinationsWithTransformationsEnabled() {
+        let destinationsWithTransformationsEnabled:[String:String] = rsServerConfigManager.getDestinationsWithTransformationsEnabled()
+        print(destinationsWithTransformationsEnabled)
+        XCTAssertEqual(destinationsWithTransformationsEnabled["App Center"], "23VDGOseYM8ymh2iIjsSEreapd")
+        XCTAssertEqual(destinationsWithTransformationsEnabled["Firebase"], "23VDGOseYM8ymh2iIjsSErewmMW")
+    }
+}
+
+extension String {
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+        return String(data: data, encoding: .utf8)
     }
     
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
 }
