@@ -153,7 +153,7 @@ int receivedError = NETWORK_SUCCESS;
     while (isDone == NO && retryCount <= 3) {
         RSNetworkResponse* response = [self->networkManager sendNetworkRequest:nil toEndpoint:SOURCE_CONFIG_ENDPOINT withRequestMethod:GET];
         NSString* configJson = response.responsePayload;
-        if (configJson != nil) {
+        if (response.statusCode == 200 && configJson != nil) {
             [preferenceManager saveConfigJson:configJson];
             [preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
