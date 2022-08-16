@@ -28,7 +28,6 @@
 + (const char *)getDBPath {
     NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
     NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
-    NSLog(@"Desu Path of the db is %@", [fileUrl path]);
     return [[fileUrl path] UTF8String];
 }
 
