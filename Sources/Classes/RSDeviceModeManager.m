@@ -117,26 +117,22 @@
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
     if (self->areFactoriesInitialized || fromHistory) {
-        BOOL isTransformationNeeded = NO;
         [RSLogger logVerbose:@"RSDeviceModeManager: makeFactoryDump: dumping message to native sdk factories"];
-        for (NSString *destinationName in [self->integrationOperationMap allKeys]) {
-            if([self isEvent:message allowedForDestination:destinationName]) {
-                id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destinationName];
-                if (integration != nil) {
-                    if(destinationsWithTransformationsEnabled[destinationName] == nil) {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: dumping message of type %@ and name %@ for %@",message.type, message.event, destinationName]];
-                        [integration dump:message];
-                    } else {
-                        isTransformationNeeded = YES;
-                        [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: Destination %@ needs transformation, hence batching it to send to transformation service", destinationName]];
-                    }
-                }
+        NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
+        
+        NSArray<NSString *>* destinationsWithTransformations = [self getDestinationsWithTransformationStatus:ENABLED fromDestinations:eligibleDestinations];
+        if(destinationsWithTransformations.count == 0){
+            [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: No device mode destinations with transformations for message %@, hence updating it's status to DEVICE_MODE_PROCESSING DONE", message.event]];
+            [self->dbPersistentManager updateEventWithId:rowId withStatus:DEVICE_MODE_PROCESSING_DONE];
+        } else {
+            for (NSString * destination in destinationsWithTransformations) {
+                [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: Device Mode Destination %@ needs transformation hence it will be batched and sent to the transformation service", destination]];
             }
         }
-        // If an event doesn't needs transformation immediately mark its status as device mode processing done in the events table
-        if(!isTransformationNeeded) {
-            [self->dbPersistentManager updateEventWithId:rowId withStatus:DEVICE_MODE_PROCESSING_DONE];
-        }
+        
+        NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
+        [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
+        
     }  else {
         @synchronized (self->eventReplayMessage) {
             [RSLogger logDebug:@"RSDeviceModeManager: makeFactoryDump: factories are not initialized. dumping to replay queue"];
@@ -145,37 +141,42 @@
     }
 }
 
-
 - (void) dumpOriginalEvents:(NSArray *) originalPayloads {
+    [RSLogger logWarn:@"RSDeviceModeManager: dumpOriginalEvents: Dumping the original events back to the transformation enabled destinations as the transformations feature is not enabled"];
     for(NSDictionary* originalPayload in originalPayloads) {
         RSMessage* originalMessage = [[RSMessage alloc] initWithDict:originalPayload[@"event"]];
-        NSArray<NSString *> * transformationEnabledDestinations = [self getTransformationEnabledDestinationsForMessage:originalMessage];
-        for(NSString *transformationEnabledDestination in transformationEnabledDestinations) {
-            id<RSIntegration> integration = [self->integrationOperationMap objectForKey:transformationEnabledDestination];
-            if(integration != nil) {
-                [RSLogger logWarn:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpOriginalEvents: dumping the original event %@ for %@ as device mode transformations are not enabled", originalMessage.event, transformationEnabledDestination]];
-                [integration dump:originalMessage];
+        NSArray<NSString *> * transformationEnabledDestinations = [self getDestinationsWithTransformationStatus:ENABLED fromMessage:originalMessage];
+        [self dumpEvent:originalMessage toDestinations:transformationEnabledDestinations withLogTag:@"dumpOriginalEvents"];
+    }
+}
+
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId {
+    NSArray<NSString*>* destinationNames = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId];
+    if(destinationNames.count > 0) {
+        NSString* destinationName = destinationNames[0];
+        [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Dumping back the transformed events to the destination %@", destinationName]];
+        for (NSDictionary* transformedPayload in transformedPayloads) {
+            NSString* status = transformedPayload[@"status"];
+            if(status !=nil && [status isEqualToString:@"200"]) {
+                NSDictionary* event = transformedPayload[@"event"];
+                if(event != nil) {
+                    RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
+                    [self dumpEvent:transformedMessage toDestinations:@[destinationName] withLogTag:@"dumpTransformedEvents"];
+                }
             }
         }
     }
 }
 
--(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId {
-    for (NSDictionary* transformedPayload in transformedPayloads) {
-        NSString* status = transformedPayload[@"status"];
-        if(status !=nil && [status isEqualToString:@"200"]) {
-            NSDictionary* event = transformedPayload[@"event"];
-            if(event != nil) {
-                RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
-                NSArray<NSString*>* destinationNames = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId];
-                if(destinationNames.count >0) {
-                    NSString* destinationName = destinationNames[0];
-                    id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destinationName];
-                    if(integration != nil) {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: dumping the transformed event %@ for %@", transformedMessage.event, destinationName]];
-                        [integration dump:transformedMessage];
-                    }
-                }
+-(void) dumpEvent:(RSMessage *) message toDestinations:(NSArray<NSString *> *) destinations withLogTag:(NSString *) logTag {
+    for(NSString* destination in destinations) {
+        id<RSIntegration> integration = [self->integrationOperationMap objectForKey:destination];
+        if(integration != nil) {
+            @try {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: dumping event %@ to factory %@", logTag, message.event, destination]];
+                [integration dump:message];
+            } @catch(NSException *e) {
+                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: Exception while dumping %@ to factory %@ due to %@", logTag, message.event, destination, e.reason]];
             }
         }
     }
@@ -209,6 +210,33 @@
     }
 }
 
+- (NSArray<NSString *> *) getEligibleDestinations:(RSMessage *) message {
+    NSMutableArray<NSString *>* eligibleDestinations = [[NSMutableArray alloc] init];
+    for(NSString * destinationName in [self->integrationOperationMap allKeys]) {
+        if([self isEvent:message allowedForDestination:destinationName]) {
+            [eligibleDestinations addObject:destinationName];
+        }
+    }
+    return eligibleDestinations;
+}
+
+- (NSArray<NSString *> *) getDestinationsWithTransformationStatus:(TRANSFORMATION_STATUS) status fromDestinations:(NSArray<NSString *> *) inputDestinations {
+    NSMutableArray<NSString *>* outputDestinations = [[NSMutableArray alloc] init];
+    for(NSString* inputDestination in inputDestinations) {
+        BOOL isTransformationEnabledDestination = [[self->destinationsWithTransformationsEnabled allKeys] containsObject:inputDestination];
+        if(status == isTransformationEnabledDestination){
+            [outputDestinations addObject:inputDestination];
+        }
+    }
+    return outputDestinations;
+}
+
+- (NSArray<NSString *> *) getDestinationsWithTransformationStatus:(TRANSFORMATION_STATUS) status fromMessage:(RSMessage *) message {
+    NSArray<NSString *>* inputDestinations = [self getEligibleDestinations:message];
+    return [self getDestinationsWithTransformationStatus:status fromDestinations:inputDestinations];
+}
+
+
 - (BOOL) isEvent:(RSMessage *) message allowedForDestination: (NSString *) destinationName {
     BOOL isDestinationEnabledForMessage = [self isDestination:destinationName enabledForMessage:message];
     BOOL isEventAllowedForDestination = [self->eventFilteringPlugin isEventAllowed:message ForDestination:destinationName];
@@ -224,15 +252,6 @@
     return isAllTrueAndDestinationAbsent || isDestinationEnabled;
 }
 
-- (NSArray<NSString *> *) getTransformationEnabledDestinationsForMessage:(RSMessage *) message {
-    NSMutableArray<NSString *>* transformationEnabledDestinations = [[NSMutableArray alloc] init];
-    for(NSString* destinationName in [self->destinationsWithTransformationsEnabled allKeys]) {
-        if([self isDestination:destinationName enabledForMessage:message]) {
-            [transformationEnabledDestinations addObject:destinationName];
-        }
-    }
-    return transformationEnabledDestinations;
-}
 
 - (BOOL) doFactoriesPassedHaveTransformationsEnabled {
     if(![self areFactoriesPassedInConfig])

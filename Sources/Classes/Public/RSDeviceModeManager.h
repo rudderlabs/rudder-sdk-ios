@@ -12,6 +12,11 @@
 #import "RSDBPersistentManager.h"
 #import "RSNetworkManager.h"
 
+typedef enum {
+    ENABLED = YES,
+    DISABLED = NO
+} TRANSFORMATION_STATUS;
+
 @interface RSDeviceModeManager : NSObject {
     RSConfig *config;
     RSServerConfigSource *serverConfig;
