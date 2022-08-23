@@ -8,11 +8,7 @@
 
 <p align="center">
   <a href="https://cocoapods.org/pods/Rudder">
-<<<<<<< HEAD
     <img src="https://img.shields.io/static/v1?label=pod&message=v1.7.0&color=blue&style=flat">
-=======
-    <img src="https://img.shields.io/static/v1?label=pod&message=v1.6.3&color=blue&style=flat">
->>>>>>> b4be65411effa56d6a3720c0715d9ddb807b49a8
     </a>
 </p>
 
