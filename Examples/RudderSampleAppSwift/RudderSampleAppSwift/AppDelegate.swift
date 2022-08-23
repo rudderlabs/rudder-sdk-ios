@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let builder: RSConfigBuilder = RSConfigBuilder()
-            .withLoglevel(RSLogLevelDebug)
+            .withLoglevel(RSLogLevelNone)
             .withDataPlaneUrl("http://localhost:8080")
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)

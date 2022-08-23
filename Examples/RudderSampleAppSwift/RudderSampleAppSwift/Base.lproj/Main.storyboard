@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-p6-DYB">
-                                <rect key="frame" x="0.0" y="298" width="414" height="310"/>
+                                <rect key="frame" x="0.0" y="437.5" width="414" height="31"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-lB-WFr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="31"/>
@@ -26,108 +26,9 @@
                                             <constraint firstAttribute="height" constant="31" id="h3Q-g9-tI5"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Start Session"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Test User Session"/>
                                         <connections>
-                                            <action selector="onStartSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vqi-Tt-XwA"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC9-Vp-taP">
-                                        <rect key="frame" x="0.0" y="31" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="rd4-EX-zbe"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Start Session With Id"/>
-                                        <connections>
-                                            <action selector="onStartSessionWithId:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Yp-o0-IhJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COs-qZ-ZPg">
-                                        <rect key="frame" x="0.0" y="62" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="bgS-jP-yTG"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Track After New Session"/>
-                                        <connections>
-                                            <action selector="onTrackAfterNewSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cqi-av-A1b"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGC-BX-W7E">
-                                        <rect key="frame" x="0.0" y="93" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="PwC-lg-psw"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Track After New Session With Id"/>
-                                        <connections>
-                                            <action selector="onTrackAfterNewSessionWithId:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8sC-qG-OVc"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNM-5C-G19">
-                                        <rect key="frame" x="0.0" y="124" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="VYb-CL-Swe"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Reset"/>
-                                        <connections>
-                                            <action selector="reset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT8-Vo-8C4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J3Y-Nj-sMy">
-                                        <rect key="frame" x="0.0" y="155" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="5hY-x5-lyL"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Track After Reset"/>
-                                        <connections>
-                                            <action selector="onTrackAfterReset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N1x-5u-Xzm"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJ8-ud-UPY">
-                                        <rect key="frame" x="0.0" y="186" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="Rjc-9p-yU9"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Track After Background"/>
-                                        <connections>
-                                            <action selector="onTrackAfterBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dvv-Xf-qqU"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2M-S7-Bb3">
-                                        <rect key="frame" x="0.0" y="217" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="g1R-SM-SFy"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Multiple Thread"/>
-                                        <connections>
-                                            <action selector="onMultipleThread:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uRE-0p-Ryb"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzm-63-BfM">
-                                        <rect key="frame" x="0.0" y="248" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="OXc-qy-Yp0"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Sample Track"/>
-                                        <connections>
-                                            <action selector="onSimpleTrack:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m9y-dq-kGQ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrC-MV-t77">
-                                        <rect key="frame" x="0.0" y="279" width="414" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="Ni7-aq-jHu"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="End Session"/>
-                                        <connections>
-                                            <action selector="onEndSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hUD-i1-m6S"/>
+                                            <segue destination="FPf-Dt-DGX" kind="show" animates="NO" id="aJ1-u7-LlR"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -145,7 +46,48 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117" y="136"/>
+            <point key="canvasLocation" x="33" y="71"/>
+        </scene>
+        <!--User Session-->
+        <scene sceneID="aiL-F0-CYd">
+            <objects>
+                <viewController id="FPf-Dt-DGX" customClass="SessionViewController" customModule="RudderSampleAppSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MtE-2c-kJj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kLo-Mu-RRA">
+                                <rect key="frame" x="0.0" y="44" width="414" height="798"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="Hac-PQ-LEb">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hac-PQ-LEb" id="0X1-5t-szl">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WSD-he-YDM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WSD-he-YDM" firstAttribute="bottom" secondItem="kLo-Mu-RRA" secondAttribute="bottom" id="0Ke-xF-C7e"/>
+                            <constraint firstItem="kLo-Mu-RRA" firstAttribute="leading" secondItem="WSD-he-YDM" secondAttribute="leading" id="9pM-Sj-cuF"/>
+                            <constraint firstItem="WSD-he-YDM" firstAttribute="trailing" secondItem="kLo-Mu-RRA" secondAttribute="trailing" id="DzQ-of-deE"/>
+                            <constraint firstItem="kLo-Mu-RRA" firstAttribute="top" secondItem="WSD-he-YDM" secondAttribute="top" id="L0k-8A-L8q"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="User Session" id="COa-V1-Sqa"/>
+                    <connections>
+                        <outlet property="tableView" destination="kLo-Mu-RRA" id="ZBh-dn-atm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OWs-l2-63O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="800" y="71"/>
         </scene>
     </scenes>
     <resources>
