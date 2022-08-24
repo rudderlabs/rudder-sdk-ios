@@ -55,8 +55,8 @@
         if (_advertisingId != nil) {
             [tempDict setValue:_advertisingId forKey:@"advertisingId"];
             [tempDict setValue:[NSNumber numberWithBool:_adTrackingEnabled] forKey:@"adTrackingEnabled"];
-            [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
         }
+        [tempDict setValue:[[NSNumber alloc] initWithInt:_attTrackingStatus] forKey:@"attTrackingStatus"];
         return [tempDict copy];
     }
 }
