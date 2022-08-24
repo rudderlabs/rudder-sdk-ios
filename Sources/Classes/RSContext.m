@@ -36,7 +36,7 @@ static dispatch_queue_t queue;
         _library = [[RSLibraryInfo alloc] init];
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
-
+        
         _locale = [RSUtils getLocale];
         _network = [[RSNetwork alloc] init];
         _timezone = [[NSTimeZone localTimeZone] name];
@@ -57,7 +57,7 @@ static dispatch_queue_t queue;
                     [self createAndPersistTraits];
                 }
             }
-        
+            
             // get saved external Ids from prefs
             NSString *externalIdJson = [preferenceManager getExternalIds];
             if (externalIdJson != nil) {
@@ -73,6 +73,9 @@ static dispatch_queue_t queue;
 }
 
 + (dispatch_queue_t) getQueue {
+    if (queue == nil) {
+        queue = dispatch_queue_create("com.rudder.RSContext", NULL);
+    }
     return queue;
 }
 
@@ -172,7 +175,7 @@ static dispatch_queue_t queue;
             }
             [newExternalIds removeObjectsInArray:repeatingExternalIds];
         }
-
+        
         if ([newExternalIds count]) {
             [_externalIds addObjectsFromArray: newExternalIds];
         }
@@ -223,7 +226,9 @@ static dispatch_queue_t queue;
         
         [tempDict setObject:_locale forKey:@"locale"];
         [tempDict setObject:[_device dict] forKey:@"device"];
-        [tempDict setObject:[_network dict] forKey:@"network"];
+        if([_network dict].count > 0) {
+            [tempDict setObject:[_network dict] forKey:@"network"];
+        }
         [tempDict setObject:_timezone forKey:@"timezone"];
         if (_externalIds != nil) {
             [tempDict setObject:_externalIds forKey:@"externalId"];

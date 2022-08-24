@@ -139,6 +139,13 @@
     return url && [url scheme] && [url host];
 }
 
++ (NSString*) appendSlashToUrl:(NSString*) url {
+    if([url hasSuffix:@"/"]){
+        return url;
+    }
+    return [url stringByAppendingString:@"/"];
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 

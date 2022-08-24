@@ -72,3 +72,13 @@ All notable changes to this project will be documented in this file.
 ## Version - 1.6.1 - 2022-06-20
 - Included Build Number as well in the life cycle events Application Installed & Application Updated.
 - Accepting path as well as part of the url for both control plane url and data plane url.
+
+## Version - 1.6.2 - 2022-06-28
+- Fixed additional / in the url for both control plane url and dataplaneurl as a result of which the network requests to both control plane and data plane url are being failed.
+
+## Version - 1.6.3 - 2022-07-11
+- Removed HardCoded Status values of Bluetooth, Cellular, Wifi from the context object of the event payload
+
+## Version - 1.6.4 - 2022-08-24
+- Made `context.device.attTrackingStatus` independent of `context.device.advertisingId` so that the att Tracking status would be sent along in the payload even if the advertisingId is nil as opposed to prior.
+- Handled an edge case where in if the RSOption objects are created even before the SDK was initialized, the queue it was trying to dispatch a task on is nil and resulted in crash.
