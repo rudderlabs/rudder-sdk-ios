@@ -45,7 +45,7 @@
                 NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+                response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
                 if (response.state == NETWORK_SUCCESS) {
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];

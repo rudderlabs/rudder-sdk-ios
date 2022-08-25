@@ -26,10 +26,11 @@ NSString* const RESPONSE = @"RESPONSE";
 
 -(RSNetworkResponse*) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint withRequestMethod:(REQUEST_METHOD) method {
     RSNetworkResponse *result = [[RSNetworkResponse alloc] init];
+    __weak RSNetworkResponse* weakResult = result;
     if (self->authToken == nil || [self->authToken isEqual:@""]) {
         [RSLogger logError:@"RSNetworkManager: sendNetworkRequest: WriteKey was in-correct. Aborting the network request"];
-        result.state = WRONG_WRITE_KEY;
-        return result;
+        weakResult.state = WRONG_WRITE_KEY;
+        return weakResult;
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -50,25 +51,25 @@ NSString* const RESPONSE = @"RESPONSE";
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        result.statusCode = (long)httpResponse.statusCode;
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, result.statusCode ]];
+        weakResult.statusCode = (long)httpResponse.statusCode;
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, weakResult.statusCode ]];
         NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if (result.statusCode == 200) {
-            result.state = NETWORK_SUCCESS;
-            result.responsePayload = responseString;
-            result.errorPayload = nil;
+        if (weakResult.statusCode == 200) {
+            weakResult.state = NETWORK_SUCCESS;
+            weakResult.responsePayload = responseString;
+            weakResult.errorPayload = nil;
         } else {
-            result.errorPayload = responseString;
-            result.responsePayload = nil;
-            if(result.statusCode == 404) {
-                result.state = RESOURCE_NOT_FOUND;
-            } else if (![result.errorPayload isEqualToString:@""] && [[result.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
-                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, result.statusCode ]];
-                result.state = WRONG_WRITE_KEY;
+            weakResult.errorPayload = responseString;
+            weakResult.responsePayload = nil;
+            if(weakResult.statusCode == 404) {
+                weakResult.state = RESOURCE_NOT_FOUND;
+            } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
+                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, weakResult.statusCode ]];
+                weakResult.state = WRONG_WRITE_KEY;
             } else {
-                result.state = NETWORK_ERROR;
+                weakResult.state = NETWORK_ERROR;
             }
-            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, result.statusCode, result.errorPayload]];
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, weakResult.statusCode, weakResult.errorPayload]];
         }
         dispatch_semaphore_signal(semaphore);
     }];
@@ -80,7 +81,7 @@ NSString* const RESPONSE = @"RESPONSE";
 #if !__has_feature(objc_arc)
     dispatch_release(semaphore);
 #endif
-    return result;;
+    return weakResult;
 }
 
 - (NSString *) getRequestUrl:(ENDPOINT) endpoint {
