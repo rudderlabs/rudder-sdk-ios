@@ -14,7 +14,6 @@
 #import "RSMessageBuilder.h"
 #import "RSTraits.h"
 #import "RSContext.h"
-#import "RSUserSession.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol RSIntegrationFactory;
 @protocol RSIntegration;
 @class RSConfig;
-@class RSUserSession;
 
 @interface RSClient : NSObject
 + (instancetype) getInstance;
@@ -85,7 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startSession;
 - (void)startSession:(NSString *)sessionId;
 - (void)endSession;
-+ (RSUserSession *)userSession;
 
 @end
 

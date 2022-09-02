@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
+    RSUserSession * userSession;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;
@@ -51,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
+
+- (void) startSession:(NSString *) sessionId;
+- (void) clearSession;
 
 - (RSConfig* _Nullable) getConfig;
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;

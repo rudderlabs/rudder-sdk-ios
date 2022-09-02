@@ -176,14 +176,15 @@
     return self;
 }
 
-- (instancetype)withSessionDuration:(int)sessionDuration {
+- (instancetype)withSessionInActivityTimeOutInMillis:(int)sessionInActivityTimeOut {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
-    if (sessionDuration < 5) {
+    if (sessionInActivityTimeOut < RSSessionInActivityMinTimeOut) {
+        config.sessionInActivityTimeOut = RSSessionInActivityDefaultTimeOut;
         return self;
     }
-    config.sessionDuration = sessionDuration;
+    config.sessionInActivityTimeOut = sessionInActivityTimeOut;
     return self;
 }
 

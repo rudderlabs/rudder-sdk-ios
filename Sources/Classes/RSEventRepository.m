@@ -65,7 +65,7 @@ typedef enum {
             [self askForAssertionWithSemaphore];
 #endif
         }
-
+        
         [RSLogger logDebug:@"EventRepository: setting up flush"];
         [self setUpFlush];
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
@@ -92,6 +92,11 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
+        
+        self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
+        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+            [self->userSession startSession];
+        }
         
         if (config.trackLifecycleEvents) {
             [RSLogger logDebug:@"EventRepository: tracking application lifecycle"];
@@ -468,6 +473,13 @@ typedef enum {
         
     }
     
+    if([self->userSession getSessionId] != nil) {
+        [message setSessionData: self->userSession];
+    }
+    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [self->userSession updateLastEventTimeStamp];
+    }
+    
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -529,6 +541,9 @@ typedef enum {
 }
 
 -(void) reset {
+    if([self->userSession getSessionId] != nil) {
+        [self->userSession refreshSession];
+    }
     if (self->areFactoriesInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
@@ -661,24 +676,17 @@ typedef enum {
         [applicationOpenedProperties setObject:url forKey:@"url"];
     }
 #endif
-    
-    // Session Tracking
-    // Automatic tracking session started
-    if (self->config.automaticSessionTracking) {
-        [[RSClient sharedInstance] startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
-    }
-    
     [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
     
 }
 
 - (void)_applicationWillEnterForeground {
-//#if TARGET_OS_WATCH
+#if TARGET_OS_WATCH
     if(self->firstForeGround) {
         self->firstForeGround = NO;
         return;
     }
-//#endif
+#endif
     
     if(config.enableBackgroundMode) {
 #if !TARGET_OS_WATCH
@@ -694,8 +702,8 @@ typedef enum {
     
     // Session Tracking
     // Automatic tracking session started
-    if (self->config.automaticSessionTracking) {
-        [[RSClient sharedInstance] startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+    if (self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [self->userSession startSessionIfExpired];
     }
     
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
@@ -708,10 +716,6 @@ typedef enum {
         return;
     }
     [[RSClient sharedInstance] track:@"Application Backgrounded"];
-    
-    // Session Tracking
-    // Invalidate sessionId while background
-    [[RSClient userSession] clearSession];
 }
 
 - (void) __prepareScreenRecorder {
@@ -765,6 +769,21 @@ typedef enum {
 - (void) releaseAssertionWithSemaphore {
     [RSLogger logDebug:@"EventRepository: releaseAssertionWithSemaphore: Releasing Assertion on Semaphore for backgroundMode"];
     dispatch_semaphore_signal(self->semaphore);
+}
+
+- (void) startSession:(NSString *) sessionId {
+    if(self->config.automaticSessionTracking) {
+        [self endSession];
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession startSession:sessionId];
+}
+
+- (void) endSession {
+    if(self->config.automaticSessionTracking) {
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession clearSession];
 }
 
 #endif

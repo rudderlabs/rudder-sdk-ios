@@ -210,6 +210,16 @@ static dispatch_queue_t queue;
     });
 }
 
+- (void) setSessionData:(RSUserSession *) userSession {
+    dispatch_async(queue, ^{
+        self->_sessionId = [userSession getSessionId];
+        if([userSession getSessionStart]) {
+            self->_sessionStart = YES;
+            [userSession setSessionStart:NO];
+        }
+    });
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     dispatch_sync(queue, ^{
@@ -231,13 +241,10 @@ static dispatch_queue_t queue;
         if (_externalIds != nil) {
             [tempDict setObject:_externalIds forKey:@"externalId"];
         }
-        
-        // Session Tracking
-        if ([[RSClient userSession] getSessionId]) {
-            [tempDict setValue:[[RSClient userSession] getSessionId] forKey:@"sessionId"];
-            if ([[RSClient userSession] getSessionStart]) {
-                [tempDict setValue:@YES forKey:@"sessionStart"];
-                [[RSClient userSession] sessionStart:NO];
+        if (_sessionId != nil) {
+            [tempDict setObject:_sessionId forKey:@"sessionId"];
+            if(_sessionStart) {
+                [tempDict setObject:@YES forKey:@"sessionStart"];
             }
         }
     });

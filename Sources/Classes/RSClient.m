@@ -40,7 +40,6 @@ static NSString* _deviceToken = nil;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:config];
-            _userSession = [RSUserSession initiate:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0)
             {
                 [[_instance getContext] putDeviceToken:_deviceToken];
@@ -59,7 +58,6 @@ static NSString* _deviceToken = nil;
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
     // Session Tracking
-    [_userSession checkSessionDuration];
     if (_repository != nil && message != nil) {
         message.type = type;
         [_repository dump:message];
@@ -309,7 +307,7 @@ static NSString* _deviceToken = nil;
     }
     if (_repository != nil) {
         [_repository flush];
-    } 
+    }
 }
 
 + (BOOL)getOptStatus {
@@ -416,20 +414,20 @@ static NSString* _deviceToken = nil;
 
 #pragma mark - Session Tracking
 
-+ (RSUserSession *)userSession {
-    return _userSession;
-}
-
 - (void)startSession {
     [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
 }
 
 - (void)startSession:(NSString *)sessionId {
-    [_userSession startSession:sessionId];
+    if(_repository != nil) {
+        [_repository startSession:sessionId];
+    }
 }
 
 - (void)endSession {
-    [_userSession clearSession];
+    if(_repository != nil) {
+        [_repository clearSession];
+    }
 }
 
 @end

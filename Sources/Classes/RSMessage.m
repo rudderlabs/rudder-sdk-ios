@@ -93,4 +93,8 @@
 - (void)setRudderOption:(RSOption *)option {
     _option = option;
 }
+
+- (void) setSessionData: (RSUserSession*) userSession {
+    [_context setSessionData:userSession];
+}
 @end

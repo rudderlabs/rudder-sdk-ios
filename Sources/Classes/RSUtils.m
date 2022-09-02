@@ -31,6 +31,7 @@
     return [[fileUrl path] UTF8String];
 }
 
+// returns number of seconds elapsed since 1970
 + (long) getTimeStampLong{
     NSDate *date = [[NSDate alloc] init];
     return [date timeIntervalSince1970];

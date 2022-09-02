@@ -27,6 +27,9 @@ NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
 NSString *const RSOptStatus = @"rl_opt_status";
 NSString *const RSOptInTimeKey = @"rl_opt_in_time";
 NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
+NSString *const RSSessionIdKey = @"rl_session_id";
+NSString *const RSLastEventTimeStamp = @"rl_last_event_time_stamp";
+
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -181,6 +184,39 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
         [self deleteBuildVersionCode];
         [self saveVersionNumber:versionNumber];
     }
+}
+
+- (void) saveSessionId: (NSString *) sessionId {
+    [[NSUserDefaults standardUserDefaults] setValue:sessionId forKey:RSSessionIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *) getSessionId {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSSessionIdKey];
+}
+
+- (void) clearSessionId {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSSessionIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) saveLastEventTimeStamp: (long) lastEventTimeStamp {
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:lastEventTimeStamp] forKey:RSLastEventTimeStamp];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (long) getLastEventTimeStamp {
+    NSNumber *lastEventTimeStamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSLastEventTimeStamp];
+    if(lastEventTimeStamp == nil) {
+        return -1;
+    } else {
+        return [lastEventTimeStamp longValue];
+    }
+}
+
+- (void) clearLastEventTimeStamp {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSLastEventTimeStamp];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
