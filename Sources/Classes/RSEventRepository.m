@@ -730,6 +730,21 @@ typedef enum {
 #endif
 }
 
+- (void) startSession:(NSString *) sessionId {
+    if(self->config.automaticSessionTracking) {
+        [self endSession];
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession startSession:sessionId];
+}
+
+- (void) endSession {
+    if(self->config.automaticSessionTracking) {
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession clearSession];
+}
+
 #if !TARGET_OS_WATCH
 - (void) registerBackGroundTask {
     if(backgroundTask != UIBackgroundTaskInvalid) {
@@ -773,21 +788,6 @@ typedef enum {
 - (void) releaseAssertionWithSemaphore {
     [RSLogger logDebug:@"EventRepository: releaseAssertionWithSemaphore: Releasing Assertion on Semaphore for backgroundMode"];
     dispatch_semaphore_signal(self->semaphore);
-}
-
-- (void) startSession:(NSString *) sessionId {
-    if(self->config.automaticSessionTracking) {
-        [self endSession];
-        [self->config setAutomaticSessionTracking:NO];
-    }
-    [self->userSession startSession:sessionId];
-}
-
-- (void) endSession {
-    if(self->config.automaticSessionTracking) {
-        [self->config setAutomaticSessionTracking:NO];
-    }
-    [self->userSession clearSession];
 }
 
 #endif

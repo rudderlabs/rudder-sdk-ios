@@ -78,7 +78,7 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
-  - Protobuf (3.21.2)
+  - Protobuf (3.21.5)
   - Rudder (1.7.0)
 
 DEPENDENCIES:
@@ -119,7 +119,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
+  Protobuf: 7504b04fffcf6662ad629694db8231f5e744327f
   Rudder: b87d9230533ca42a5f48d20d605485cee69e663f
 
 PODFILE CHECKSUM: 33b0e9f1b94a028aa8a3b4aecf718a44c9b6265e

@@ -296,9 +296,6 @@ static NSString* _deviceToken = nil;
     if (_repository != nil) {
         [_repository reset];
     }
-    // Session Tracking
-    // sessionId will be reset. New sessionId will be generated.
-    [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
 }
 
 - (void)flush {
@@ -426,7 +423,7 @@ static NSString* _deviceToken = nil;
 
 - (void)endSession {
     if(_repository != nil) {
-        [_repository clearSession];
+        [_repository endSession];
     }
 }
 
