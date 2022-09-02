@@ -93,8 +93,10 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
         
+        [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
         if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
             [self->userSession startSession];
         }
         
@@ -542,6 +544,7 @@ typedef enum {
 
 -(void) reset {
     if([self->userSession getSessionId] != nil) {
+        [RSLogger logDebug: @"EventRepository: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
     }
     if (self->areFactoriesInitialized) {
@@ -703,6 +706,7 @@ typedef enum {
     // Session Tracking
     // Automatic tracking session started
     if (self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [RSLogger logDebug:@"EventRepository: applicationWillEnterForeground: Checking if session timeout due to inactivity and creating a new one"];
         [self->userSession startSessionIfExpired];
     }
     

@@ -6,11 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSClient.h"
-
+#import "RSPreferenceManager.h"
 NS_ASSUME_NONNULL_BEGIN
-
-@class RSClient;
 
 @interface RSUserSession : NSObject {
     int sessionInActivityTimeOut;

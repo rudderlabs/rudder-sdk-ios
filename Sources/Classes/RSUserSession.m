@@ -57,10 +57,11 @@ static dispatch_queue_t queue;
 
 - (void) startSessionIfExpired {
     if([self isSessionExpired]) {
-        dispatch_sync(queue, ^{
-            [self refreshSession];
-        });
+        [RSLogger logDebug:@"RSUserSession: startSessionIfExpired: Session Expired due to In-activity, hence starting a new session"];
+        [self refreshSession];
+        return;
     }
+    [RSLogger logDebug:@"RSUserSession: startSessionIfExpired: Previous session is still active, continuing with it"];
 }
 
 - (BOOL) isSessionExpired {
@@ -77,13 +78,12 @@ static dispatch_queue_t queue;
 }
 
 - (void) refreshSession {
-    dispatch_sync(queue, ^{
-        [self clearSession];
-        [self startSession];
-    });
+    [self clearSession];
+    [self startSession];
 }
 
 - (void) clearSession {
+    [RSLogger logDebug:@"RSUserSession: clearSession: Resetting the session"];
     dispatch_sync(queue, ^{
         self->sessionId = nil;
         self->sessionStart = NO;
