@@ -32,8 +32,8 @@ static dispatch_queue_t queue;
         }
         self->sessionInActivityTimeOut = sessionInActivityTimeOut;
         self->preferenceManager = preferenceManager;
-        //        self->sessionId = [self->preferenceManager getSessionId];
-        //        self->lastEventTimeStamp = [self->preferenceManager getLastEventTimeStamp];
+        self->sessionId = [self->preferenceManager getSessionId];
+        self->lastEventTimeStamp = [self->preferenceManager getLastEventTimeStamp];
     }
     return self;
 }
@@ -46,7 +46,7 @@ static dispatch_queue_t queue;
     if ([sessionId length] > 0) {
         dispatch_sync(queue, ^{
             self->sessionId = sessionId;
-            //            [self->preferenceManager saveSessionId:self->sessionId];
+            [self->preferenceManager saveSessionId:self->sessionId];
             self->sessionStart = YES;
             [RSLogger logDebug:[NSString stringWithFormat:@"Starting new session with id: %@", sessionId]];
         });
@@ -88,8 +88,8 @@ static dispatch_queue_t queue;
         self->sessionId = nil;
         self->sessionStart = NO;
         self->lastEventTimeStamp = nil;
-        //        [self->preferenceManager clearSessionId];
-        //        [self->preferenceManager clearLastEventTimeStamp];
+        [self->preferenceManager clearSessionId];
+        [self->preferenceManager clearLastEventTimeStamp];
     });
 }
 
@@ -118,7 +118,7 @@ static dispatch_queue_t queue;
 - (void) updateLastEventTimeStamp {
     dispatch_sync(queue, ^{
         self->lastEventTimeStamp = [RSUtils getTimeStampLong];
-        //        [self->preferenceManager saveLastEventTimeStamp:lastEventTimeStamp];
+        [self->preferenceManager saveLastEventTimeStamp:lastEventTimeStamp];
     });
 }
 @end

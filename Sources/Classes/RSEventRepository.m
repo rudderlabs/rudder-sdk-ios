@@ -95,9 +95,17 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
+        
+        // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
+        BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
+        if(previousAutoTrackingStatus != config.automaticSessionTracking) {
+            [self->userSession clearSession];
+        }
+        [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
+        
         if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
             [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
-            [self->userSession startSession];
+            [self->userSession startSessionIfExpired];
         }
         
         if (config.trackLifecycleEvents) {
