@@ -26,12 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withLoglevel:(int)logLevel;
 - (instancetype)withDBCountThreshold:(int)dbCountThreshold;
 - (instancetype)withSleepTimeOut:(int)sleepTimeOut;
-- (instancetype)withSessionTimeoutMillis:(int)sessionInActivityTimeOut;
+- (instancetype)withSessionTimeoutMillis:(int)sessionTimeout;
 - (instancetype)withConfigRefreshInteval:(int)configRefreshInterval;
 - (instancetype)withTrackLifecycleEvens:(BOOL)trackLifecycleEvents;
 - (instancetype)withRecordScreenViews:(BOOL)recordScreenViews;
 - (instancetype)withEnableBackgroundMode:(BOOL)enableBackgroundMode;
-- (instancetype)withAutoSessionTracking:(BOOL)automaticSessionTracking;
+- (instancetype)withAutoSessionTracking:(BOOL)autoSessionTracking;
 - (instancetype)withConfigPlaneUrl:(NSString*)configPlaneUrl __attribute((deprecated("Use withControlPlaneUrl instead.")));
 - (instancetype)withControlPlaneUrl:(NSString*)controlPlaneUrl;
 - (instancetype)withControlPlaneURL:(NSURL*)controlPlaneURL;
