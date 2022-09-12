@@ -168,7 +168,7 @@
     return self;
 }
 
-- (instancetype)withAutomaticSessionTracking:(BOOL)automaticSessionTracking {
+- (instancetype)withAutoSessionTracking:(BOOL)automaticSessionTracking {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
@@ -176,7 +176,7 @@
     return self;
 }
 
-- (instancetype)withSessionInActivityTimeOutInMillis:(int)sessionInActivityTimeOut {
+- (instancetype)withSessionTimeoutMillis:(int)sessionInActivityTimeOut {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
