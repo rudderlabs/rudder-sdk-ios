@@ -98,7 +98,8 @@ typedef enum {
         
         // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
         BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
-        if(previousAutoTrackingStatus != config.automaticSessionTracking) {
+        if(previousAutoTrackingStatus && previousAutoTrackingStatus != config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Automatic Session Tracking status has been updated since last launch, hence clearing the session"];
             [self->userSession clearSession];
         }
         [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
@@ -552,7 +553,7 @@ typedef enum {
 
 -(void) reset {
     if([self->userSession getSessionId] != nil) {
-        [RSLogger logDebug: @"EventRepository: Refreshing the session as the reset is triggered"];
+        [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
     }
     if (self->areFactoriesInitialized) {
@@ -738,7 +739,7 @@ typedef enum {
 #endif
 }
 
-- (void) startSession:(NSString *) sessionId {
+- (void) startSession:(long) sessionId {
     if(self->config.automaticSessionTracking) {
         [self endSession];
         [self->config setAutomaticSessionTracking:NO];

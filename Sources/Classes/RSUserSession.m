@@ -39,20 +39,16 @@ static dispatch_queue_t queue;
 }
 
 - (void) startSession {
-    [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+    [self startSession:[RSUtils getTimeStampLong]];
 }
 
-- (void) startSession:(NSString *)sessionId {
-    if ([sessionId length] > 0) {
+- (void) startSession:(long)sessionId {
         dispatch_sync(queue, ^{
             self->sessionId = sessionId;
             [self->preferenceManager saveSessionId:self->sessionId];
             self->sessionStart = YES;
-            [RSLogger logDebug:[NSString stringWithFormat:@"Starting new session with id: %@", sessionId]];
+            [RSLogger logDebug:[NSString stringWithFormat:@"RSUserSession: startSession: Starting new session with id: %ld", sessionId]];
         });
-    } else {
-        [RSLogger logDebug:@"sessionId can not be empty"];
-    }
 }
 
 - (void) startSessionIfExpired {
@@ -93,8 +89,8 @@ static dispatch_queue_t queue;
     });
 }
 
-- (NSString *) getSessionId {
-    __block NSString *sessionId;
+- (long) getSessionId {
+    __block long sessionId;
     dispatch_sync(queue, ^{
         sessionId = self->sessionId;
     });

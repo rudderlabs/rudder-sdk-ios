@@ -39,7 +39,7 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) RSDeviceInfo* device;
 @property (nonatomic, readwrite) RSNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
-@property (nonatomic, readwrite) NSString* sessionId;
+@property (nonatomic, readwrite) long sessionId;
 @property (nonatomic, readwrite) BOOL sessionStart;
 @property (nonatomic, readwrite) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
 

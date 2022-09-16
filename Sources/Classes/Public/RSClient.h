@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) setAnonymousId: (NSString *__nullable) anonymousId __attribute((deprecated("Discontinuing support. Use putAnonymousId method instead.")));;
 
 - (void)startSession;
-- (void)startSession:(NSString *)sessionId;
+- (void)startSession:(long)sessionId;
 - (void)endSession;
 
 @end

@@ -412,10 +412,14 @@ static NSString* _deviceToken = nil;
 #pragma mark - Session Tracking
 
 - (void)startSession {
-    [self startSession:[NSString stringWithFormat:@"%ld", [RSUtils getTimeStampLong]]];
+    [self startSession:[RSUtils getTimeStampLong]];
 }
 
-- (void)startSession:(NSString *)sessionId {
+- (void)startSession:(long)sessionId {
+    if (sessionId == nil || [[NSString stringWithFormat:@"%ld", sessionId] length] <10) {
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSClient: startSession: Length of the sessionId should be atleast 10: %ld", sessionId]];
+        return;
+    }
     if(_repository != nil) {
         [_repository startSession:sessionId];
     }

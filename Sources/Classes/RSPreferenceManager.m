@@ -187,13 +187,17 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
     }
 }
 
-- (void) saveSessionId: (NSString *) sessionId {
-    [[NSUserDefaults standardUserDefaults] setValue:sessionId forKey:RSSessionIdKey];
+- (void) saveSessionId: (long) sessionId {
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:sessionId] forKey:RSSessionIdKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSString *) getSessionId {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSSessionIdKey];
+- (long) getSessionId {
+    NSNumber* sessionId =  [[NSUserDefaults standardUserDefaults] valueForKey:RSSessionIdKey];
+    if(sessionId == nil) {
+        return -1;
+    }
+    return [sessionId longValue];
 }
 
 - (void) clearSessionId {
@@ -210,9 +214,8 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
     NSNumber *lastEventTimeStamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSLastEventTimeStamp];
     if(lastEventTimeStamp == nil) {
         return -1;
-    } else {
-        return [lastEventTimeStamp longValue];
     }
+    return [lastEventTimeStamp longValue];
 }
 
 - (void) clearLastEventTimeStamp {
