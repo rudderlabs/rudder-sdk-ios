@@ -168,6 +168,26 @@
     return self;
 }
 
+- (instancetype)withAutoSessionTracking:(BOOL)autoSessionTracking {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.automaticSessionTracking = autoSessionTracking;
+    return self;
+}
+
+- (instancetype)withSessionTimeoutMillis:(int)sessionTimeout {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    if (sessionTimeout < RSSessionInActivityMinTimeOut) {
+        config.sessionInActivityTimeOut = RSSessionInActivityDefaultTimeOut;
+        return self;
+    }
+    config.sessionInActivityTimeOut = sessionTimeout;
+    return self;
+}
+
 - (RSConfig*) build {
     if (config == nil) {
         config = [[RSConfig alloc] init];

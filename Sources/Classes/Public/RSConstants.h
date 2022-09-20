@@ -23,6 +23,10 @@ extern int const RSDBCountThreshold;
 // if events are registered and flushQueueSize is not reached
 // events will be flushed to server after sleepTimeOut seconds
 extern int const RSSleepTimeout;
+// Minimum value for the In Activity timeout after which the current session expires.
+extern int const RSSessionInActivityMinTimeOut;
+// Default value for the In Activity timeout after which the current session expires.
+extern int const RSSessionInActivityDefaultTimeOut;
 // config-plane url to get the config for the writeKey
 extern NSString *const RSControlPlaneUrl;
 // whether we should trackLifecycle events
@@ -31,6 +35,8 @@ extern bool const RSTrackLifeCycleEvents;
 extern bool const RSRecordScreenViews;
 // whether we should add support for background run time
 extern bool const RSEnableBackgroundMode;
+// default for automatic session tracking
+extern bool const RSAutomaticSessionTracking;
 // SDK Version
 extern NSString *const RS_VERSION;
 // constant used to check if event filtering is disabled

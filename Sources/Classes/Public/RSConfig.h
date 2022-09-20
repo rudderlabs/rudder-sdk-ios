@@ -19,9 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int sleepTimeout;
 @property (nonatomic) int logLevel;
 @property (nonatomic) int configRefreshInterval;
+@property (nonatomic) int sessionInActivityTimeOut;
 @property (nonatomic) bool trackLifecycleEvents;
 @property (nonatomic) bool recordScreenViews;
 @property (nonatomic) bool enableBackgroundMode;
+@property (nonatomic) bool automaticSessionTracking;
 @property (nonatomic, nonnull) NSString *controlPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 @property (nonatomic, readwrite) NSMutableArray* customFactories;

@@ -65,7 +65,7 @@ typedef enum {
             [self askForAssertionWithSemaphore];
 #endif
         }
-
+        
         [RSLogger logDebug:@"EventRepository: setting up flush"];
         [self setUpFlush];
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
@@ -92,6 +92,22 @@ typedef enum {
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
+        
+        [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
+        self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
+        
+        // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
+        BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
+        if(previousAutoTrackingStatus && previousAutoTrackingStatus != config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Automatic Session Tracking status has been updated since last launch, hence clearing the session"];
+            [self->userSession clearSession];
+        }
+        [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
+        
+        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
+            [self->userSession startSessionIfExpired];
+        }
         
         if (config.trackLifecycleEvents) {
             [RSLogger logDebug:@"EventRepository: tracking application lifecycle"];
@@ -231,7 +247,7 @@ typedef enum {
         int sleepCount = 0;
         
         while (YES) {
-            [lock lock];
+            [strongSelf->lock lock];
             [strongSelf clearOldEvents];
             [RSLogger logDebug:@"Fetching events to flush to server in processor"];
             RSDBMessage* _dbMessage = [strongSelf->dbpersistenceManager fetchEventsFromDB:(strongSelf->config.flushQueueSize)];
@@ -243,7 +259,7 @@ typedef enum {
                     sleepCount = 0;
                 }
             }
-            [lock unlock];
+            [strongSelf->lock unlock];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"SleepCount: %d", sleepCount]];
             sleepCount += 1;
             if (errResp == WRONGWRITEKEY) {
@@ -276,8 +292,8 @@ typedef enum {
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, queue);
     __weak RSEventRepository *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(source)]];
         RSEventRepository* strongSelf = weakSelf;
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Flush: coalesce %lu calls into a single flush call", dispatch_source_get_data(strongSelf->source)]];
         [strongSelf flushSync];
     });
     dispatch_resume(source);
@@ -468,6 +484,13 @@ typedef enum {
         
     }
     
+    if([self->userSession getSessionId] != nil) {
+        [message setSessionData: self->userSession];
+    }
+    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [self->userSession updateLastEventTimeStamp];
+    }
+    
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -529,6 +552,10 @@ typedef enum {
 }
 
 -(void) reset {
+    if([self->userSession getSessionId] != nil) {
+        [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
+        [self->userSession refreshSession];
+    }
     if (self->areFactoriesInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"resetting native SDK for %@", key]];
@@ -685,6 +712,13 @@ typedef enum {
         return;
     }
     
+    // Session Tracking
+    // Automatic tracking session started
+    if (self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [RSLogger logDebug:@"EventRepository: applicationWillEnterForeground: Checking if session timeout due to inactivity and creating a new one"];
+        [self->userSession startSessionIfExpired];
+    }
+    
     [[RSClient sharedInstance] track:@"Application Opened" properties:@{
         @"from_background" : @YES
     }];
@@ -703,6 +737,21 @@ typedef enum {
 #else
     [UIViewController rudder_swizzleView];
 #endif
+}
+
+- (void) startSession:(long) sessionId {
+    if(self->config.automaticSessionTracking) {
+        [self endSession];
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession startSession:sessionId];
+}
+
+- (void) endSession {
+    if(self->config.automaticSessionTracking) {
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession clearSession];
 }
 
 #if !TARGET_OS_WATCH
