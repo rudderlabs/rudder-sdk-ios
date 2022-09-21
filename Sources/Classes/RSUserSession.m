@@ -14,7 +14,7 @@
 static RSUserSession* _instance;
 static dispatch_queue_t queue;
 
-+ (instancetype) initiate:(int)sessionInActivityTimeOut with:(RSPreferenceManager *) preferenceManager {
++ (instancetype) initiate:(long)sessionInActivityTimeOut with:(RSPreferenceManager *) preferenceManager {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -24,7 +24,7 @@ static dispatch_queue_t queue;
     return _instance;
 }
 
-- (instancetype) init:(int)sessionInActivityTimeOut with:(RSPreferenceManager *) preferenceManager {
+- (instancetype) init:(long)sessionInActivityTimeOut with:(RSPreferenceManager *) preferenceManager {
     self = [super init];
     if (self) {
         if (queue == nil) {
