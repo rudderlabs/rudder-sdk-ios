@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withLoglevel:(int)logLevel;
 - (instancetype)withDBCountThreshold:(int)dbCountThreshold;
 - (instancetype)withSleepTimeOut:(int)sleepTimeOut;
-- (instancetype)withSessionTimeoutMillis:(int)sessionTimeout;
+- (instancetype)withSessionTimeoutMillis:(long)sessionTimeout;
 - (instancetype)withConfigRefreshInteval:(int)configRefreshInterval;
 - (instancetype)withTrackLifecycleEvens:(BOOL)trackLifecycleEvents;
 - (instancetype)withRecordScreenViews:(BOOL)recordScreenViews;

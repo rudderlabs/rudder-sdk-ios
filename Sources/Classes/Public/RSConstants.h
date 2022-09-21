@@ -24,9 +24,9 @@ extern int const RSDBCountThreshold;
 // events will be flushed to server after sleepTimeOut seconds
 extern int const RSSleepTimeout;
 // Minimum value for the In Activity timeout after which the current session expires.
-extern int const RSSessionInActivityMinTimeOut;
+extern long const RSSessionInActivityMinTimeOut;
 // Default value for the In Activity timeout after which the current session expires.
-extern int const RSSessionInActivityDefaultTimeOut;
+extern long const RSSessionInActivityDefaultTimeOut;
 // config-plane url to get the config for the writeKey
 extern NSString *const RSControlPlaneUrl;
 // whether we should trackLifecycle events
