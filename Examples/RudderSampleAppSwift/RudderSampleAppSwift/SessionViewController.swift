@@ -58,7 +58,7 @@ extension SessionViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             RSClient.sharedInstance()?.endSession()
         case 2:
-            RSClient.sharedInstance()?.startSession(UUID().uuidString.lowercased())
+            RSClient.sharedInstance()?.startSession(1234567890)
         case 3:
             RSClient.sharedInstance()?.reset()
         case 4:
@@ -128,7 +128,7 @@ extension SessionViewController: UITableViewDataSource, UITableViewDelegate {
             } else if index % 9 == 5 {
                 RSClient.sharedInstance()?.startSession()
             } else if index % 9 == 6 {
-                RSClient.sharedInstance()?.startSession("session_id_\(index)")
+                RSClient.sharedInstance()?.startSession(Int(Date().timeIntervalSince1970))
             } else if index % 9 == 7 {
                 RSClient.sharedInstance()?.endSession()
             } else if index % 9 == 8 {

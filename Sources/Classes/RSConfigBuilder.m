@@ -176,7 +176,7 @@
     return self;
 }
 
-- (instancetype)withSessionTimeoutMillis:(int)sessionTimeout {
+- (instancetype)withSessionTimeoutMillis:(long)sessionTimeout {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }

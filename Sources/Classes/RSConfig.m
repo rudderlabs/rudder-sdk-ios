@@ -38,7 +38,7 @@
     dbCountThreshold: (int) dbCountThreshold
         sleepTimeOut: (int) sleepTimeout
             logLevel: (int) logLevel
-     sessionInActivityTimeOut: (int) sessionInActivityTimeOut
+     sessionInActivityTimeOut: (long) sessionInActivityTimeOut
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 enableBackgroundMode: (BOOL) enableBackgroundMode

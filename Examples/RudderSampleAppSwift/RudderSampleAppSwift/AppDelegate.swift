@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
-            .withSessionDuration(10)
+            .withSessionTimeoutMillis(30000)
         RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
         
         
