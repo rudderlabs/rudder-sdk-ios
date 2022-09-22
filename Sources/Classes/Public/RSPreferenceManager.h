@@ -21,6 +21,9 @@ extern NSString *const RSExternalIdKey;
 extern NSString *const RSOptStatus;
 extern NSString *const RSOptInTimeKey;
 extern NSString *const RSOptOutTimeKey;
+extern NSString *const RSSessionIdKey;
+extern NSString *const RSLastEventTimeStamp;
+extern NSString *const RSSessionAutoTrackStatus;
 
 + (instancetype) getInstance;
 
@@ -58,6 +61,17 @@ extern NSString *const RSOptOutTimeKey;
 - (long) getOptInTime;
 - (void) updateOptOutTime: (long) updatedTime;
 - (long) getOptOutTime;
+
+- (void) saveSessionId: (long) sessionId;
+- (long) getSessionId;
+- (void) clearSessionId;
+
+- (void) saveLastEventTimeStamp: (long) lastEventTimeStamp;
+- (long) getLastEventTimeStamp;
+- (void) clearLastEventTimeStamp;
+
+- (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus;
+- (BOOL) getAutoTrackingStatus;
 
 @end
 

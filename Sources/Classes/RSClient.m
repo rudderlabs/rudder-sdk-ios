@@ -15,6 +15,7 @@
 
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
+static RSUserSession *_userSession = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
 
@@ -56,6 +57,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void) dumpInternal:(RSMessage *)message type:(NSString*) type {
+    // Session Tracking
     if (_repository != nil && message != nil) {
         message.type = type;
         [_repository dump:message];
@@ -302,7 +304,7 @@ static NSString* _deviceToken = nil;
     }
     if (_repository != nil) {
         [_repository flush];
-    } 
+    }
 }
 
 + (BOOL)getOptStatus {
@@ -404,6 +406,28 @@ static NSString* _deviceToken = nil;
             return;
         }
         [[_instance getContext] putDeviceToken:deviceToken];
+    }
+}
+
+#pragma mark - Session Tracking
+
+- (void)startSession {
+    [self startSession:[RSUtils getTimeStampLong]];
+}
+
+- (void)startSession:(long)sessionId {
+    if (sessionId == nil || [[NSString stringWithFormat:@"%ld", sessionId] length] <10) {
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSClient: startSession: Length of the sessionId should be atleast 10: %ld", sessionId]];
+        return;
+    }
+    if(_repository != nil) {
+        [_repository startSession:sessionId];
+    }
+}
+
+- (void)endSession {
+    if(_repository != nil) {
+        [_repository endSession];
     }
 }
 
