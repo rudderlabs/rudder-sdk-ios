@@ -78,3 +78,7 @@ All notable changes to this project will be documented in this file.
 
 ## Version - 1.6.3 - 2022-07-11
 - Removed HardCoded Status values of Bluetooth, Cellular, Wifi from the context object of the event payload
+
+## Version - 1.8.0.beta.1 - 2022-10-17
+### Feature
+- Device Mode Transformation
