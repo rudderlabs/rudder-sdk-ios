@@ -55,6 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) flush;
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
+
+- (void) startSession:(long) sessionId;
+- (void) endSession;
+
 - (RSConfig* _Nullable) getConfig;
 - (void) applicationDidFinishLaunchingWithOptions:(NSDictionary *) launchOptions;
 @end

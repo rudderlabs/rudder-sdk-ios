@@ -95,6 +95,22 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: Initiating RSBackGroundModeManager"];
         self->backGroundModeManager = [[RSBackGroundModeManager alloc] initWithConfig:_config];
         
+        [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
+        self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
+        
+        // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
+        BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
+        if(previousAutoTrackingStatus && previousAutoTrackingStatus != config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Automatic Session Tracking status has been updated since last launch, hence clearing the session"];
+            [self->userSession clearSession];
+        }
+        [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
+        
+        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+            [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
+            [self->userSession startSessionIfExpired];
+        }
+
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
         self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager];
         
@@ -182,6 +198,15 @@ static RSEventRepository* _instance;
         [mutableIntegrations setObject:@YES forKey:@"All"];
         message.integrations = mutableIntegrations;
     }
+    
+    if([self->userSession getSessionId] != nil) {
+        [message setSessionData: self->userSession];
+    }
+    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [self->userSession updateLastEventTimeStamp];
+    }
+    
+    [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
@@ -195,6 +220,10 @@ static RSEventRepository* _instance;
 }
 
 - (void) reset {
+    if([self->userSession getSessionId] != nil) {
+        [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
+        [self->userSession refreshSession];
+    }
     [self->deviceModeManager reset];
 }
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RSContext.h"
+#import "RSUserSession.h"
 #import "RSOption.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) updateTraits: (RSTraits*) traits;
 - (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
 - (void) setRudderOption: (RSOption*) option;
+- (void) setSessionData:(RSUserSession *) userSession;
 
 @end
 
