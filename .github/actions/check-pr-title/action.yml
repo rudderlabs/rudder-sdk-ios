@@ -1,0 +1,5 @@
+name: 'Pull Request title rules'
+description: 'Github action to enforce Pull Request title conventions'
+runs:
+  using: 'node16'
+  main: 'index.js'

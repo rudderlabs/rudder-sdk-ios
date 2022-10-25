@@ -1,0 +1,26 @@
+name: Deploy to Cocoapods
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+    
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/master') || github.event.pull_request.merged == true
+    if: github.event.base_ref == 'refs/heads/master'
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Install Cocoapods
+      run: gem install cocoapods
+      
+    - name: Publish to CocoaPod register
+      env:
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      run: |
+        pod trunk push --allow-warnings

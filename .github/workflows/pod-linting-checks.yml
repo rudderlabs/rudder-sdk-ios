@@ -1,0 +1,20 @@
+name: Pod Linting Checks
+on:
+  pull_request:
+    branches: ['master', 'develop']
+    types: ['opened', 'reopened', 'synchronize']
+
+jobs:
+  build:
+    name: Pod Linting Checks
+    runs-on: macOS-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Install Cocoapods
+        run: gem install cocoapods
+      
+      - name: Execute pod lint
+        run: pod lib lint --no-clean --allow-warnings
