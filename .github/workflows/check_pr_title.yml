@@ -14,7 +14,9 @@ jobs:
 
       - name: Check PR title
         uses: rudderlabs/github-action-check-pr-title@1.0.3
-  
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
 #      - name: Check PR title
 #        uses: aslafy-z/conventional-pr-title-action@v2.2.0
 #        env:
