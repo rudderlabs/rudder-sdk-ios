@@ -12,7 +12,7 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@v3
 
-      - name: conventional-pr-title
+      - name: Check PR title
         uses: aslafy-z/conventional-pr-title-action@v2.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
