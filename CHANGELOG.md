@@ -87,3 +87,7 @@ All notable changes to this project will be documented in this file.
 ### Feature
 - Added session tracking.
 
+## Version - 1.8.0
+
+### Feature
+- Added Data Residency Support.

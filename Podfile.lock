@@ -1,5 +1,5 @@
 PODS:
-  - Rudder (1.7.0)
+  - Rudder (1.8.0)
 
 DEPENDENCIES:
   - Rudder (from `.`)
