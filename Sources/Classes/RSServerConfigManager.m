@@ -114,6 +114,15 @@ int receivedError = NETWORKSUCCESS;
             destination.destinationConfig = [destinationDict objectForKey:@"config"];
             [destinations addObject:destination];
         }
+        
+        NSDictionary *dataResidencyUrls = [sourceDict objectForKey:@"dataPlaneUrls"];
+        for (NSString *key in [dataResidencyUrls allKeys]) {
+            if([[key lowercaseString] isEqualToString:@"us"]) {
+                [source addDataResidencyUrl:[dataResidencyUrls objectForKey:key] forResidency:US];
+            } else if ([[key lowercaseString] isEqualToString:@"eu"]) {
+                [source addDataResidencyUrl:[dataResidencyUrls objectForKey:key] forResidency:EU];
+            }
+        }
         source.destinations = destinations;
     } else {
         [RSLogger logError:@"config deserializaion error"];

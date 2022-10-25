@@ -46,6 +46,14 @@
     return self;
 }
 
+- (instancetype) withDataResidencyServer:(DataResidencyServer) dataResidencyServer {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.dataResidencyServer = dataResidencyServer;
+    return self;
+}
+
 - (instancetype) withFlushQueueSize: (int) flushQueueSize {
     if (config == nil) {
         config = [[RSConfig alloc] init];

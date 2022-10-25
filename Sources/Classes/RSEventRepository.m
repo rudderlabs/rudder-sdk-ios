@@ -144,6 +144,7 @@ typedef enum {
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
+                    [self setDataPlaneUrl];
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     
@@ -236,6 +237,15 @@ typedef enum {
         }
         [self->eventReplayMessage removeAllObjects];
     }
+}
+
+- (void) setDataPlaneUrl {
+    RSServerConfigSource *serverConfig = [self->configManager getConfig];
+    if([serverConfig getDataResidencyUrl:self->config.dataResidencyServer]) {
+        self->dataPlaneUrl = [RSUtils appendSlashToUrl:[serverConfig getDataResidencyUrl:self->config.dataResidencyServer]];
+        return;
+    }
+    self->dataPlaneUrl = [RSUtils appendSlashToUrl:self->config.dataPlaneUrl];
 }
 
 - (void) __initiateProcessor {
@@ -413,7 +423,7 @@ typedef enum {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     int __block respStatus = NETWORKSUCCESS;
-    NSString *dataPlaneEndPoint = [self->config.dataPlaneUrl stringByAppendingString:@"v1/batch"];
+    NSString *dataPlaneEndPoint = [self->dataPlaneUrl stringByAppendingString:@"v1/batch"];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"endPointToFlush %@", dataPlaneEndPoint]];
     
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:dataPlaneEndPoint]];

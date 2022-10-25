@@ -178,6 +178,7 @@
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */; };
 		F623D3AD27954C010027CBC3 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F669056F2907EB8800FE4507 /* RSEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = F65E31162907E8BF00B46FB6 /* RSEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A146842769DBC6009EF620 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A1468A2769E28A009EF620 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */; };
 /* End PBXBuildFile section */
@@ -363,6 +364,7 @@
 		ED83FFB627310B44006F27B3 /* RSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLogger.m; sourceTree = "<group>"; };
 		F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEventFilteringPlugin.m; sourceTree = "<group>"; };
 		F623D3AC27954C010027CBC3 /* RSEventFilteringPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventFilteringPlugin.h; sourceTree = "<group>"; };
+		F65E31162907E8BF00B46FB6 /* RSEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSEnums.h; sourceTree = "<group>"; };
 		F6A146832769DBC5009EF620 /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
 		F6A146892769E28A009EF620 /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -478,6 +480,7 @@
 		ED83FF2127310B44006F27B3 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				F65E31162907E8BF00B46FB6 /* RSEnums.h */,
 				ED83FF3427310B44006F27B3 /* RSApp.h */,
 				ED83FF9A27310B44006F27B3 /* RSCartSharedEvent.h */,
 				ED83FF8F27310B44006F27B3 /* RSCartViewedEvent.h */,
@@ -646,6 +649,7 @@
 				ED83FFEC27310B44006F27B3 /* UIViewController+RSScreen.h in Headers */,
 				ED83FFCC27310B44006F27B3 /* RSProperty.h in Headers */,
 				ED83FFCA27310B44006F27B3 /* RSMessageType.h in Headers */,
+				F669056F2907EB8800FE4507 /* RSEnums.h in Headers */,
 				ED83FFCD27310B44006F27B3 /* RSOption.h in Headers */,
 				ED83FFE327310B44006F27B3 /* RSTraits.h in Headers */,
 				ED83FFD427310B44006F27B3 /* RSPreferenceManager.h in Headers */,
@@ -1017,7 +1021,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1051,7 +1055,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
