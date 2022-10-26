@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property RSPreferenceManager *preferenceManager;
 
 - (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig;
+- (RSServerConfigSource *)_parseConfig:(NSString *)configStr;
 - (RSServerConfigSource*) getConfig;
 - (int) getError;
 

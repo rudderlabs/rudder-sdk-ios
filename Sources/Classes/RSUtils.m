@@ -147,6 +147,13 @@
     return [url stringByAppendingString:@"/"];
 }
 
++ (NSString *) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig {
+    if([serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer]) {
+        return [RSUtils appendSlashToUrl:[serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer]];
+    }
+    return [RSUtils appendSlashToUrl:rsConfig.dataPlaneUrl];
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 

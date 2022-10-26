@@ -144,7 +144,7 @@ typedef enum {
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
-                    [self setDataPlaneUrl];
+                    self->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     
@@ -237,15 +237,6 @@ typedef enum {
         }
         [self->eventReplayMessage removeAllObjects];
     }
-}
-
-- (void) setDataPlaneUrl {
-    RSServerConfigSource *serverConfig = [self->configManager getConfig];
-    if([serverConfig getDataResidencyUrl:self->config.dataResidencyServer]) {
-        self->dataPlaneUrl = [RSUtils appendSlashToUrl:[serverConfig getDataResidencyUrl:self->config.dataResidencyServer]];
-        return;
-    }
-    self->dataPlaneUrl = [RSUtils appendSlashToUrl:self->config.dataPlaneUrl];
 }
 
 - (void) __initiateProcessor {
