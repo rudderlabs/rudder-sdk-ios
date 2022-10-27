@@ -24,11 +24,11 @@
     [self.destinations addObject:destination];
 }
 
-- (void) addDataResidencyUrl:(NSString *) url forResidency:(DataResidencyServer) residency {
+- (void) addDataResidencyUrl:(NSString *) url forResidency:(RSDataResidencyServer) residency {
     [self.dataResidencyUrls setValue:url forKey:@(residency)];
 }
 
-- (NSString *) getDataResidencyUrl:(DataResidencyServer) residency {
+- (NSString *) getDataResidencyUrl:(RSDataResidencyServer) residency {
     if([self.dataResidencyUrls objectForKey:@(residency)]) {
         return [self.dataResidencyUrls objectForKey:@(residency)];
     }

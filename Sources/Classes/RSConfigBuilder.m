@@ -46,7 +46,7 @@
     return self;
 }
 
-- (instancetype) withDataResidencyServer:(DataResidencyServer) dataResidencyServer {
+- (instancetype) withDataResidencyServer:(RSDataResidencyServer) dataResidencyServer {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }

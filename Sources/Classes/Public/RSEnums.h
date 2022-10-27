@@ -11,6 +11,6 @@
 typedef enum {
     EU,
     US
-} DataResidencyServer;
+} RSDataResidencyServer;
 
 #endif /* RSEnums_h */
