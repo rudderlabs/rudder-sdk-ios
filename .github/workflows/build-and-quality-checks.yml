@@ -1,4 +1,4 @@
-name: Pod Linting Checks
+name: Code Quality Checks
 on:
   pull_request:
     branches: ['master', 'develop']
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Pod Linting Checks
+    name: Code Quality Checks
     runs-on: macOS-latest
     
     steps:

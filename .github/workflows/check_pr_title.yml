@@ -1,7 +1,7 @@
 name: Check PR title
 on:
   pull_request:
-    branches: ['main', 'develop']
+    branches: ['master', 'develop']
     types: ['opened', 'reopened', 'edited', 'synchronize']
 
 jobs:
@@ -12,19 +12,5 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@v3
 
-      - name: Set Node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-          cache-dependency-path: ./.github/actions/check-pr-title/package-lock.json
-
-      - name: Install action dependencies
-        env:
-          HUSKY: 0
-        run: |
-          cd ./.github/actions/check-pr-title
-          npm ci
-
       - name: Check PR title
-        uses: ./.github/actions/check-pr-title
+        uses: rudderlabs/github-action-check-pr-title@v1.0.7
