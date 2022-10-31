@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSMutableDictionary* dataResidencyUrls;
 
 - (void) addDestination: (RSServerDestination*) destination;
-- (void) addDataResidencyUrl:(NSString *)url forResidency:(RSDataResidencyServer)residency;
 - (NSString *) getDataResidencyUrl:(RSDataResidencyServer) residency;
 
 @end

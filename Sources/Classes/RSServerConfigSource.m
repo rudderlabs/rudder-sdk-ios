@@ -24,16 +24,15 @@
     [self.destinations addObject:destination];
 }
 
-- (void) addDataResidencyUrl:(NSString *) url forResidency:(RSDataResidencyServer) residency {
-    [self.dataResidencyUrls setValue:url forKey:@(residency)];
-}
-
 - (NSString *) getDataResidencyUrl:(RSDataResidencyServer) residency {
-    if([self.dataResidencyUrls objectForKey:@(residency)]) {
-        return [self.dataResidencyUrls objectForKey:@(residency)];
+    switch(residency) {
+        case EU:
+            if([self.dataResidencyUrls objectForKey:@"eu"] != nil) {
+                return [self.dataResidencyUrls objectForKey:@"eu"];
+            }
+        default:
+            return [self.dataResidencyUrls objectForKey:@"us"];
     }
-    // defaulted to US
-    return [self.dataResidencyUrls objectForKey:@(US)];
 }
 
 @end
