@@ -35,7 +35,7 @@
 }
 
 - (instancetype)init:(NSString *) dataPlaneUrl
-withDataResidencyServer: (RSDataResidencyServer) dataResidencyServer
+dataResidencyServer: (RSDataResidencyServer) dataResidencyServer
       flushQueueSize: (int) flushQueueSize
     dbCountThreshold: (int) dbCountThreshold
         sleepTimeOut: (int) sleepTimeout
