@@ -1,0 +1,4 @@
+{
+    "version": "1.7.0",
+    "description": "Adapter to help snowplow migration to RudderStack"
+}

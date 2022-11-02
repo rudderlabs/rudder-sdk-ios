@@ -67,11 +67,13 @@ jobs:
           npm i -g conventional-changelog-cli
           SUMMARY=$(((npx conventional-changelog -u) 2>&1) | sed "s/*/<br> */g" | sed "s/#/ /g" | tr -d '\n' || true)
           echo $SUMMARY
-          echo $CURRENT_VERSION_VALUE
-          echo $NEW_VERSION_VALUE
+          echo "Current version: $CURRENT_VERSION_VALUE"
+          echo "New version: $NEW_VERSION_VALUE"
+          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md Sources/Classes/Public/RSVersion.h
+          git add README.md Sources/Classes/Public/RSVersion.h
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          npx standard-version
+          npx standard-version -a
 
       - name: Push new version in release branch & tag
         run: |
