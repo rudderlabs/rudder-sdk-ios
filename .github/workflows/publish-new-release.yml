@@ -11,18 +11,17 @@ jobs:
   release:
     name: Publish new release
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true # only merged pull requests must trigger this job
+    if: startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/') && github.event.pull_request.merged == true # only merged pull requests must trigger this job
     steps:
       - name: Extract version from branch name (for release branches)
         id: extract-version
-        if: startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/')
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix-}
           VERSION=${VERSION#release/}
           echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Checkout
+      - name: Checkout source branch
         uses: actions/checkout@v3
         with:
           fetch-depth: 0

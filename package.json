@@ -1,4 +1,4 @@
 {
     "version": "1.7.0",
-    "description": "Adapter to help snowplow migration to RudderStack"
+    "description": "Rudder is a platform for collecting, storing and routing customer event data to dozens of tools"
 }
