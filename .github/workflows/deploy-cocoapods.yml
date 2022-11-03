@@ -1,17 +1,13 @@
 name: Deploy to Cocoapods
+
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - master
-    types:
-      - closed
+  release:
+    types: [created]
     
 jobs:
   build:
     name: Deploy to Cocoapods
     runs-on: macOS-latest
-    if: startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/') && github.event.pull_request.merged == true # only merged pull requests must trigger this job
     steps:
     - name: Checkout source branch
       uses: actions/checkout@v3
