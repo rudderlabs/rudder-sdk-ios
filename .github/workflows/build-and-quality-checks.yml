@@ -18,15 +18,15 @@ jobs:
 
       - name: Build SDK(iOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
           
       - name: Build SDK(watchOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' | xcpretty
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
       
       - name: Build SDK(tvOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
           
       - name: Install Cocoapods
         run: gem install cocoapods
