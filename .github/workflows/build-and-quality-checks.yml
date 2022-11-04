@@ -12,7 +12,14 @@ jobs:
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v3
-        
+      
+      - name: Install xcpretty
+        run: gem install xcpretty
+
+      - name: Build SDK
+        run: |
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.2' | xcpretty
+          
       - name: Install Cocoapods
         run: gem install cocoapods
       
