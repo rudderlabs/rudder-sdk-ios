@@ -6,6 +6,7 @@
 //
 
 #import "RSConstants.h"
+#import "RSVersion.h"
 
 @implementation RSConstants
 
@@ -21,7 +22,7 @@ bool const RSTrackLifeCycleEvents = YES;
 bool const RSRecordScreenViews = NO;
 bool const RSEnableBackgroundMode = NO;
 bool const RSAutomaticSessionTracking = YES;
-NSString *const RS_VERSION = @"1.7.0";
+NSString *const RS_VERSION = SDK_VERSION;
 NSString* const DISABLE = @"disable";
 NSString* const WHITELISTED_EVENTS = @"whitelistedEvents";
 NSString* const BLACKLISTED_EVENTS = @"blacklistedEvents";
