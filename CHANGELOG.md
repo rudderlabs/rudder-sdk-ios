@@ -145,4 +145,3 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * Removed User agent
->>>>>>> 0aec3ca84a075f921feeb96213068190112325e9
