@@ -69,3 +69,9 @@ fastlane/screenshots
 fastlane/test_output
 IDEWorkspaceChecks.plist
 *.DS_Store
+.idea
+.scannerwork
+
+# Sonar
+relative_or_absolute_path_to_cache_location
+compile_commands.json

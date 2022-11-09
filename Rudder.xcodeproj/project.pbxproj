@@ -200,6 +200,7 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED3084812891900100A357E3 /* RSUserSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
 		ED3084822891900100A357E3 /* RSUserSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSUserSession.m; sourceTree = "<group>"; };
 		ED83FDAE2731019F006F27B3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -680,6 +681,7 @@
 				ED83FE5E2731019F006F27B3 /* Podfile */,
 				ED83FDAF2731019F006F27B3 /* README.md */,
 				ED83FDB02731019F006F27B3 /* Rudder.podspec */,
+				ED056314291AABFD00BAEE65 /* sonar-project.properties */,
 			);
 			name = Others;
 			sourceTree = "<group>";
