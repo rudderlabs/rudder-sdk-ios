@@ -50,10 +50,8 @@ struct RSKeyPath {
     static func register(_ handler: KeyPathHandler) { handlers.insert(handler, at: 0) }
     static func handlerFor(keyPath: RSKeyPath, input: Any?) -> KeyPathHandler? {
         guard let input = input as? [String: Any] else { return nil }
-        for item in handlers {
-            if item.isHandled(keyPath, forInput: input[keyPath.current]) {
-                return item
-            }
+        for item in handlers where item.isHandled(keyPath, forInput: input[keyPath.current]) {
+            return item            
         }
         return nil
     }
