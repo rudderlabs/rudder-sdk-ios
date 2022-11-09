@@ -28,6 +28,10 @@ jobs:
         run: |
           xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
           
+      - name: Build SDK(macOS)
+        run: |
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=macOS,variant=Mac Catalyst' | xcpretty
+          
       - name: Install Cocoapods
         run: gem install cocoapods
       
