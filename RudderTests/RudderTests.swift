@@ -45,9 +45,19 @@ class RudderTests: XCTestCase {
     "liveEventsConfig": {
 
     },
-    "dataPlaneUrls": {
-      "eu": "https://rudderstacgwyx-eu.dataplane.rudderstack.com",
-      "us": "https://rudderstacgwyx-us.dataplane.rudderstack.com"
+    "dataplanes": {
+      "EU": [
+        {
+          "url": "https://rudderstacgwyx-eu.dataplane.rudderstack.com",
+          "default": true
+        }
+      ],
+      "US": [
+        {
+          "url": "https://rudderstacgwyx-us.dataplane.rudderstack.com",
+          "default": true
+        }
+      ]
     },
     "id": "2GcaJMDRDWtZsZdeusASLcpyamz",
     "name": "Android Dev 2",
@@ -119,8 +129,13 @@ class RudderTests: XCTestCase {
     "liveEventsConfig": {
 
     },
-    "dataPlaneUrls": {
-      "us": "https://rudderstacgwyx-us.dataplane.rudderstack.com"
+    "dataplanes": {
+      "US": [
+        {
+          "url": "https://rudderstacgwyx-us.dataplane.rudderstack.com",
+          "default": true
+        }
+      ]
     },
     "id": "2GcaJMDRDWtZsZdeusASLcpyamz",
     "name": "Android Dev 2",
@@ -192,8 +207,13 @@ class RudderTests: XCTestCase {
     "liveEventsConfig": {
 
     },
-    "dataPlaneUrls": {
-      "eu": "https://rudderstacgwyx-eu.dataplane.rudderstack.com"
+    "dataplanes": {
+      "EU": [
+        {
+          "url": "https://rudderstacgwyx-eu.dataplane.rudderstack.com",
+          "default": true
+        }
+      ]
     },
     "id": "2GcaJMDRDWtZsZdeusASLcpyamz",
     "name": "Android Dev 2",

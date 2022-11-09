@@ -660,14 +660,6 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
-		F69E95A929093E630016E5C9 /* RudderTests */ = {
-			isa = PBXGroup;
-			children = (
-				F69E95AA29093E630016E5C9 /* RudderTests.swift */,
-			);
-			path = RudderTests;
-            sourceTree = "<group>";
-        };
 		ED857DEE2912750900B7BFCE /* Others */ = {
 			isa = PBXGroup;
 			children = (
@@ -684,6 +676,14 @@
 				ED056314291AABFD00BAEE65 /* sonar-project.properties */,
 			);
 			name = Others;
+			sourceTree = "<group>";
+		};
+		F69E95A929093E630016E5C9 /* RudderTests */ = {
+			isa = PBXGroup;
+			children = (
+				F69E95AA29093E630016E5C9 /* RudderTests.swift */,
+			);
+			path = RudderTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

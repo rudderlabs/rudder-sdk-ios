@@ -115,7 +115,7 @@ int receivedError = NETWORKSUCCESS;
             [destinations addObject:destination];
         }
         
-        source.dataResidencyUrls = [sourceDict objectForKey:@"dataPlaneUrls"];
+        source.dataPlanes = [sourceDict objectForKey:@"dataplanes"];
         source.destinations = destinations;
     } else {
         [RSLogger logError:@"config deserializaion error"];

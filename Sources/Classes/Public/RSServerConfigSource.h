@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) BOOL isSourceEnabled;
 @property (nonatomic, readwrite) NSString *updatedAt;
 @property (nonatomic, readwrite) NSMutableArray *destinations;
-@property (nonatomic, readwrite) NSMutableDictionary* dataResidencyUrls;
+@property (nonatomic, readwrite) NSMutableDictionary* dataPlanes;
 
 - (void) addDestination: (RSServerDestination*) destination;
 - (NSString *) getDataResidencyUrl:(RSDataResidencyServer) residency;
