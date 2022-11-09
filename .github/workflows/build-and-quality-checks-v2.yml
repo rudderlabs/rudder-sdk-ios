@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Code Quality Checks
+    name: Code Quality Checks(v2)
     runs-on: macOS-latest
     
     steps:
