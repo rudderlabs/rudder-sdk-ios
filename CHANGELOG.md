@@ -1,40 +1,64 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Version - 2.0.0 - 2022-05-26
-### Added
-- Releasing Rudder Version 2.
+### [2.2.4](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.3...v2.2.4) (2022-08-02)
 
-## Version - 2.1.0 - 2022-06-09
-### Fix
-- `flush` API enhancement & fix.
 
-## Version - 2.2.0 - 2022-07-06
-### Added
-- `subscribe` and `startTrial` in `RSEvents.LifeCycle`.
-- `promotionName` in `RSKeys.Ecommerce`.
-- `postalCode`, `state` and `street` in `RSKeys.Identify.Address`.
-- `name`, `id`, `industry`, `employeeCount`, and `plan` in `RSKeys.Identify.Company`.
-- `description` in `RSKeys.Others`.
-### Fix
-- Prevent blocking of main thread for periodic `flush`.
-- Remove retain cycles.
+### Feature
 
-## Version - 2.2.1 - 2022-07-07
-### Fix
-- Missing `properties.name` in screen calls.
+* moved `anonymousId` in `RSKeys.Identify.Traits`.
+* moved `externalId` in `RSKeys.Other`.
+* added Push Notification API `pushAuthorizationFromUserNotificationCenter`.
 
-## Version - 2.2.2 - 2022-07-08
-### Fix
-- Missing `properties.name` in screen calls for device modes.
+### [2.2.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.2...v2.2.3) (2022-07-14)
 
-## Version - 2.2.3 - 2022-07-14
-### Fix
-- [Bugfix] `RSClient` no longer blocks the main thread in `checkServerConfig()`
 
-## Version - 2.2.4 - 2022-08-02
-### Added
-- `anonymousId` in `RSKeys.Identify.Traits`.
-- `externalId` in `RSKeys.Other`.
-- Push Notification API
-`pushAuthorizationFromUserNotificationCenter`
+### Bug Fixes
+
+* main thread is getting blocked on `checkServerConfig()` in `RSClient`.
+
+### [2.2.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.1...v2.2.2) (2022-07-08)
+
+
+### Bug Fixes
+
+* added `properties.name` in screen calls for device modes.
+
+### [2.2.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.0...v2.2.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* added `properties.name` in screen calls.
+
+### [2.2.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.0) (2022-07-06)
+
+
+### Feature
+
+* added `subscribe` and `startTrial` in `RSEvents.LifeCycle`.
+* added `promotionName` in `RSKeys.Ecommerce`.
+* added `postalCode`, `state` and `street` in `RSKeys.Identify.Address`.
+* added `name`, `id`, `industry`, `employeeCount`, and `plan` in `RSKeys.Identify.Company`.
+* added `description` in `RSKeys.Others`.
+
+
+### Bug Fixes
+
+* main thread is getting blocked on `flush`.
+* removed retain cycles.
+
+
+### [2.1.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.0.0...v2.1.0) (2022-06-09)
+
+
+### Bug Fixes
+
+* `flush` API.
+
+### 2.0.0 (2022-05-26)
+
+
+### Feature
+
+* release version 2.
