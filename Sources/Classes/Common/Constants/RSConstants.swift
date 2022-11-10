@@ -29,6 +29,3 @@ let RSOptInTimeKey = "rs_opt_in_time"
 let RSOptOutTimeKey = "rs_opt_out_time"
 let MAX_EVENT_SIZE: UInt = 32 * 1024
 let MAX_BATCH_SIZE: UInt = 500 * 1024
-
-// don't move this line
-let RSVersion = "2.2.4"
