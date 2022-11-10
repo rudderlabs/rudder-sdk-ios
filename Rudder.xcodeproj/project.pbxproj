@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED05631F291BEB0400BAEE65 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
 		ED157C3727CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */; };
 		ED157C3927CE1C0800F22202 /* RSUserIdPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3827CE1C0800F22202 /* RSUserIdPlugin.swift */; };
 		ED157C4127CFC33800F22202 /* RSAdvertisementIdPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4027CFC33800F22202 /* RSAdvertisementIdPlugin.swift */; };
@@ -102,6 +103,14 @@
 
 /* Begin PBXFileReference section */
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED056315291BB03900BAEE65 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
+		ED056316291BB03900BAEE65 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		ED056317291BB03900BAEE65 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
+		ED056318291BB03900BAEE65 /* CODEOWNERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = CODEOWNERS; sourceTree = "<group>"; };
+		ED05631B291BB0AE00BAEE65 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		ED05631C291BB35600BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
+		ED05631D291BE61000BAEE65 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
+		ED05631E291BEB0400BAEE65 /* RSVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSVersion.swift; sourceTree = "<group>"; };
 		ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSmacOSLifecycleEvents.swift; sourceTree = "<group>"; };
 		ED157C3827CE1C0800F22202 /* RSUserIdPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSUserIdPlugin.swift; sourceTree = "<group>"; };
 		ED157C4027CFC33800F22202 /* RSAdvertisementIdPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAdvertisementIdPlugin.swift; sourceTree = "<group>"; };
@@ -143,7 +152,6 @@
 		ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSClient+Plugins.swift"; sourceTree = "<group>"; };
 		ED3D229227A3F0C100EC8366 /* RSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMessage.swift; sourceTree = "<group>"; };
 		ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTypeAlias.swift; sourceTree = "<group>"; };
-		ED488F8627EB141700831594 /* release.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		ED4EACA827F5EA1F00207AF1 /* RSIdentifyTraitsPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSIdentifyTraitsPlugin.swift; sourceTree = "<group>"; };
 		ED4EACAA27F5F03C00207AF1 /* RSAliasIdPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAliasIdPlugin.swift; sourceTree = "<group>"; };
 		ED910CDE273BA25100A3EDFF /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -174,7 +182,6 @@
 		EDA7EF632739119600E73142 /* RSDestinationDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDestinationDefinition.swift; sourceTree = "<group>"; };
 		EDA7EF642739119600E73142 /* RSDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDestination.swift; sourceTree = "<group>"; };
 		EDA7EF6B2739119600E73142 /* RSServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSServiceType.swift; sourceTree = "<group>"; };
-		EDAE4EC0286F0CFF00AACDB5 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		EDC1327B27D614C400AFD833 /* RSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSClientTests.swift; sourceTree = "<group>"; };
 		EDC132A127D7D61D00AFD833 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		EDC132A327D8D55600AFD833 /* RSTrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTrackTests.swift; sourceTree = "<group>"; };
@@ -217,14 +224,7 @@
 		06CABB7A2630C3CA0097BEFF = {
 			isa = PBXGroup;
 			children = (
-				EDAE4EC0286F0CFF00AACDB5 /* .travis.yml */,
-				ED910CE0273BA25100A3EDFF /* CHANGELOG.md */,
-				ED910CE2273BA25100A3EDFF /* LICENSE */,
-				ED910CDE273BA25100A3EDFF /* Package.swift */,
-				ED910CE1273BA25100A3EDFF /* Podfile */,
-				ED910CE4273BA25100A3EDFF /* README.md */,
-				ED488F8627EB141700831594 /* release.sh */,
-				ED910CE3273BA25100A3EDFF /* Rudder.podspec */,
+				ED056319291BB06C00BAEE65 /* Others */,
 				EDA7EF2D2739119600E73142 /* Sources */,
 				EDC1325A27D612B600AFD833 /* Tests */,
 				06CABB852630C3CA0097BEFF /* Products */,
@@ -238,6 +238,26 @@
 				ED3D2257279EAC2800EC8366 /* RudderTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ED056319291BB06C00BAEE65 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				ED05631D291BE61000BAEE65 /* .github */,
+				ED05631B291BB0AE00BAEE65 /* .swiftlint.yml */,
+				ED910CE0273BA25100A3EDFF /* CHANGELOG.md */,
+				ED056318291BB03900BAEE65 /* CODEOWNERS */,
+				ED056315291BB03900BAEE65 /* Configuration.json */,
+				ED056317291BB03900BAEE65 /* CONTRIBUTING.md */,
+				ED910CE2273BA25100A3EDFF /* LICENSE */,
+				ED056316291BB03900BAEE65 /* package.json */,
+				ED910CDE273BA25100A3EDFF /* Package.swift */,
+				ED910CE1273BA25100A3EDFF /* Podfile */,
+				ED910CE4273BA25100A3EDFF /* README.md */,
+				ED910CE3273BA25100A3EDFF /* Rudder.podspec */,
+				ED05631C291BB35600BAEE65 /* sonar-project.properties */,
+			);
+			name = Others;
 			sourceTree = "<group>";
 		};
 		ED3D226327A3F0C100EC8366 /* Plugins */ = {
@@ -360,6 +380,7 @@
 				ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */,
 				ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */,
 				EDA7EF452739119600E73142 /* RSUserDefaults.swift */,
+				ED05631E291BEB0400BAEE65 /* RSVersion.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -636,7 +657,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -677,6 +698,7 @@
 				EDA7EF752739119600E73142 /* API.swift in Sources */,
 				EDA7EF812739119600E73142 /* RSDatabaseManager.swift in Sources */,
 				ED157C4127CFC33800F22202 /* RSAdvertisementIdPlugin.swift in Sources */,
+				ED05631F291BEB0400BAEE65 /* RSVersion.swift in Sources */,
 				EDA7EF992739119600E73142 /* RSServerConfig.swift in Sources */,
 				ED277FF92744F199002A8FEA /* RSAnyCodable.swift in Sources */,
 				ED157C3927CE1C0800F22202 /* RSUserIdPlugin.swift in Sources */,
@@ -876,10 +898,10 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -894,6 +916,7 @@
 				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SUPPORTS_MACCATALYST = YES;
@@ -910,10 +933,10 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -929,6 +952,7 @@
 				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SUPPORTS_MACCATALYST = YES;
