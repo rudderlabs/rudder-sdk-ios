@@ -67,7 +67,7 @@ int receivedError = NETWORKSUCCESS;
     }
 }
 
-- (RSServerConfigSource *)_parseConfig:(NSString *)configStr {
+- (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr {
     NSError *error;
     NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     

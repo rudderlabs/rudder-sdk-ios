@@ -24,11 +24,12 @@
     [self.destinations addObject:destination];
 }
 
-- (NSString *) getDataResidencyUrl:(RSDataResidencyServer) residency {
+- (NSString *_Nullable) getDataResidencyUrl:(RSDataResidencyServer) residency {
     NSArray * residenceDataPlanes;
     switch(residency) {
         case EU:
             residenceDataPlanes = [self.dataPlanes objectForKey:@"EU"];
+        // If EU is missing from the sourceConfig response we should fallback to the US, hence the break is not added here.
         default:
             if (residenceDataPlanes != nil)
                 break;
@@ -39,7 +40,6 @@
         return nil;
     for (NSDictionary* residenceDataPlane in residenceDataPlanes) {
         if([[residenceDataPlane objectForKey:@"default"] boolValue]) {
-            NSLog(@"Data type is %@",[[residenceDataPlane objectForKey:@"default"] class]);
             return [residenceDataPlane objectForKey:@"url"];
         }
     }
