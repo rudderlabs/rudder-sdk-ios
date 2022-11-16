@@ -1,5 +1,8 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.2.5](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.5) (2022-11-16)
 
 ### [2.2.4](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.3...v2.2.4) (2022-08-02)
 
