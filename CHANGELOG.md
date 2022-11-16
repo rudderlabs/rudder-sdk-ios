@@ -1,5 +1,13 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.2.5](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.5) (2022-11-16)
+
+
+### Bug Fixes
+
+* **macOS:** life cycle events were not tracking properly ([8879ff4](https://github.com/rudderlabs/rudder-sdk-ios/commit/8879ff40af77aabe3e3f842a52eb38f52576e83f))
 
 ### [2.2.4](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.3...v2.2.4) (2022-08-02)
 
