@@ -35,7 +35,6 @@ public enum JSON: Equatable {
     }
     
     // For primitives??
-    // swiftlint:disable cyclomatic_complexity
     public init(_ value: Any) throws { 
         switch value {
         // handle NS values
