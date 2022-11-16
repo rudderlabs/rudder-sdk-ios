@@ -43,6 +43,9 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
                     currentBuild: currentBuild
                 ))
             }
+            
+            RSUserDefaults.saveApplicationVersion(currentVersion)
+            RSUserDefaults.saveApplicationBuild(currentBuild)
         }
         
         client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
@@ -51,8 +54,6 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
             fromBackground: fromBackground
         ))
         
-        RSUserDefaults.saveApplicationVersion(currentVersion)
-        RSUserDefaults.saveApplicationBuild(currentBuild)
     }
     
     func applicationDidResignActive() {
