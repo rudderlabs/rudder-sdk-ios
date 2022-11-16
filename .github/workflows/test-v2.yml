@@ -1,0 +1,45 @@
+name: 'Tests & Coverage(v2)'
+on:
+  workflow_dispatch:
+  push:
+    branches: ['master-v2', 'develop-v2']
+  pull_request:
+    branches: ['master-v2', 'develop-v2']
+    types: ['opened', 'reopened', 'synchronize']
+
+jobs:
+  build:
+    name: 'Tests & Coverage(v2)'
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install xcpretty
+        run: gem install xcpretty
+
+#      - name: Run tests(suite)
+#        run: |
+#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+
+#      - name: Run tests(1)
+#        run: |
+#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests" | xcpretty
+
+#      - name: Run tests(2)
+#        run: |
+#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests2" | xcpretty
+
+#      - name: Run tests(3)
+#        run: |
+#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests3" | xcpretty
+            
+      - name: Install SonarCloud
+        run: npm install -g sonarqube-scanner
+        
+      - name: SonarCloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner -Dsonar.host.url=https://sonarcloud.io
