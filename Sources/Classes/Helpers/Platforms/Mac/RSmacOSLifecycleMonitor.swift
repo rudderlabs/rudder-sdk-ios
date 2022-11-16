@@ -10,12 +10,10 @@
 import Cocoa
 
 class RSmacOSLifecycleMonitor: RSPlatformPlugin {
-    static var specificName = "Rudder_macOSLifecycleMonitor"
     let type = PluginType.utility
-    let name = specificName
     var client: RSClient?
     
-    private var application: NSApplication
+    private var application: NSApplication = NSApplication.shared
     private var appNotifications: [NSNotification.Name] =
         [NSApplication.didFinishLaunchingNotification,
          NSApplication.didResignActiveNotification,
@@ -33,7 +31,6 @@ class RSmacOSLifecycleMonitor: RSPlatformPlugin {
          NSApplication.didChangeScreenParametersNotification]
     
     required init() {
-        self.application = NSApplication.shared        
         setupListeners()
     }
     
@@ -76,9 +73,8 @@ class RSmacOSLifecycleMonitor: RSPlatformPlugin {
     
     func setupListeners() {
         // Configure the current life cycle events
-        let notificationCenter = NotificationCenter.default
         for notification in appNotifications {
-            notificationCenter.addObserver(self, selector: #selector(notificationResponse(notification:)), name: notification, object: application)
+            NotificationCenter.default.addObserver(self, selector: #selector(notificationResponse(notification:)), name: notification, object: application)
         }
     }
     

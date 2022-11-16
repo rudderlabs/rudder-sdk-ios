@@ -14,85 +14,56 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
     var client: RSClient?
 
     @RSAtomic private var didFinishLaunching = false
-    
-    func application(didFinishLaunchingWithOptions launchOptions: [String: Any]?) {
-        didFinishLaunching = true
-        
-        if client?.config?.trackLifecycleEvents == false {
-            return
-        }
-        
-        let previousVersion = RSUserDefaults.getApplicationVersion()
-        let previousBuild = RSUserDefaults.getApplicationBuild()
-        
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        
-        if previousVersion == nil {
-            client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
-                currentVersion: currentVersion,
-                currentBuild: currentBuild
-            ))
-        } else if currentVersion != previousVersion {
-            client?.track("Application Updated", properties: RSUtils.getLifeCycleProperties(
-                previousVersion: previousVersion,
-                previousBuild: previousBuild,
-                currentVersion: currentVersion,
-                currentBuild: currentBuild
-            ))
-        }
-        
-        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
-            currentVersion: currentVersion,
-            currentBuild: currentBuild,
-            fromBackground: false
-        ))
-        
-        RSUserDefaults.saveApplicationVersion(currentVersion)
-        RSUserDefaults.saveApplicationBuild(currentBuild)
-    }
-    
-    /*
-    func applicationDidUnhide() {
-        if client?.config?.trackLifecycleEvents == false {
-            return
-        }
-        
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        
-        client?.track("Application Unhidden", properties: RSUtils.getLifeCycleProperties(
-            currentVersion: currentVersion,
-            currentBuild: currentBuild,
-            fromBackground: true
-        ))
-    }
-    
-    func applicationDidHide() {
-        if client?.config?.trackLifecycleEvents == false {
-            return
-        }
-        
-        client?.track("Application Hidden")
-    }
-    
-    func applicationDidResignActive() {
-        if client?.config?.trackLifecycleEvents == false {
-            return
-        }
-        
-        client?.track("Application Backgrounded")
-    }
-    */
-    
+    @RSAtomic private var fromBackground = false
+
     func applicationDidBecomeActive() {
         if client?.config?.trackLifecycleEvents == false {
             return
         }
         
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+
         if didFinishLaunching == false {
-            application(didFinishLaunchingWithOptions: nil)
+            didFinishLaunching = true
+            
+            let previousVersion = RSUserDefaults.getApplicationVersion()
+            let previousBuild = RSUserDefaults.getApplicationBuild()
+                        
+            if previousVersion == nil {
+                client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
+                    currentVersion: currentVersion,
+                    currentBuild: currentBuild
+                ))
+            } else if currentVersion != previousVersion {
+                client?.track("Application Updated", properties: RSUtils.getLifeCycleProperties(
+                    previousVersion: previousVersion,
+                    previousBuild: previousBuild,
+                    currentVersion: currentVersion,
+                    currentBuild: currentBuild
+                ))
+            }
+            
+            RSUserDefaults.saveApplicationVersion(currentVersion)
+            RSUserDefaults.saveApplicationBuild(currentBuild)
         }
+        
+        client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
+            currentVersion: currentVersion,
+            currentBuild: currentBuild,
+            fromBackground: fromBackground
+        ))
+        
+    }
+    
+    func applicationDidResignActive() {
+        fromBackground = true
+
+        if client?.config?.trackLifecycleEvents == false {
+            return
+        }
+        
+        client?.track("Application Backgrounded")
     }
     
     func applicationWillTerminate() {
