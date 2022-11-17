@@ -16,7 +16,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           PROJECT_NAME: 'iOS SDK'
         with:
-          channel-id: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
+          channel-id: "${{ secrets.SLACK_RELEASE_CHANNEL_ID }}"
           payload: |
             {
               "blocks": [
