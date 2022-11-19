@@ -157,8 +157,8 @@ typedef enum {
                         [strongSelf __initiateFactories: serverConfig.destinations];
                         [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
                         strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
-                        
                     } else {
+                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                     
