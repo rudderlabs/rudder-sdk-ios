@@ -8,9 +8,9 @@
 #ifndef RSEnums_h
 #define RSEnums_h
 
-typedef enum {
-    EU,
-    US
-} RSDataResidencyServer;
+typedef NS_ENUM(NSInteger, RSDataResidencyServer) {
+  EU,
+  US
+};
 
 #endif /* RSEnums_h */
