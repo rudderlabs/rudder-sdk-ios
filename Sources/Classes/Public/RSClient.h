@@ -77,6 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void) putAnonymousId: (NSString *_Nonnull) anonymousId;
 + (void) putDeviceToken: (NSString *_Nonnull) deviceToken;
++ (void) putAuthToken: (NSString *_Nonnull) authToken;
 
 + (void) setAnonymousId: (NSString *__nullable) anonymousId __attribute((deprecated("Discontinuing support. Use putAnonymousId method instead.")));;
 

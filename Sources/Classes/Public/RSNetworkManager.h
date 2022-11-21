@@ -16,6 +16,7 @@
 @interface RSNetworkManager : NSObject {
     RSConfig* config;
     NSString* authToken;
+    NSString* ctsAuthToken;
     NSString* anonymousIdToken;
     NSLock* networkLock;
 }
@@ -23,6 +24,8 @@
 extern NSString* const STATUS;
 extern NSString* const RESPONSE;
 
-- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken;
+
+- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *)authToken andAnonymousIdToken:(NSString *) anonymousIdToken;
 - (RSNetworkResponse *) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint withRequestMethod:(REQUEST_METHOD) method;
+- (void) updateCTSAuthToken;
 @end

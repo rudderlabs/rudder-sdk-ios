@@ -7,6 +7,7 @@
 //
 
 #import "RSUtils.h"
+#import "RSContext.h"
 #import "RSLogger.h"
 #import "RSDBMessage.h"
 
@@ -185,6 +186,17 @@
         return url;
     }
     return [url stringByAppendingString:@"/"];
+}
+
++ (NSString*) getBase64EncodedString:(NSString* __nonnull) inputString {
+    __block NSString* base64EncodedString = nil;
+    if(inputString != nil && [inputString length] !=0) {
+        NSData* inputStringData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_sync([RSContext getQueue], ^{
+            base64EncodedString = [inputStringData base64EncodedStringWithOptions:0];
+        });
+    }
+    return base64EncodedString;
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSFlushManager *flushManager;
     RSBackGroundModeManager *backGroundModeManager;
     RSApplicationLifeCycleManager *applicationLifeCycleManager;
+    RSUserSession * userSession;
     BOOL isSDKInitialized;
     BOOL isSDKEnabled;
     NSString* writeKey;
@@ -50,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
 + (instancetype) getInstance;
 - (void) setAnonymousIdToken;
+- (void) updateCTSAuthToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;
