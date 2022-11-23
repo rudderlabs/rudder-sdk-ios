@@ -148,10 +148,11 @@
 }
 
 + (NSString *) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig {
-    if([serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer] != nil) {
-        return [RSUtils appendSlashToUrl:[serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer]];
+    NSString* dataResidencyUrl = [serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer];
+    if(dataResidencyUrl == nil) {
+        return [RSUtils appendSlashToUrl:rsConfig.dataPlaneUrl];
     }
-    return [RSUtils appendSlashToUrl:rsConfig.dataPlaneUrl];
+    return [RSUtils appendSlashToUrl:dataResidencyUrl];
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
