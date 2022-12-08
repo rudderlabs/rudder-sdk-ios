@@ -16,7 +16,7 @@
 {
     self = [super init];
     if (self) {
-        _messageId = [[NSString alloc] initWithFormat:@"%ld-%@", [RSUtils getTimeStampLong], [RSUtils getUniqueId]];
+        _messageId = [RSUtils getUniqueId];
         _channel = @"mobile";
         _context = [RSElementCache getContext];
         _originalTimestamp = [RSUtils getTimestamp];
