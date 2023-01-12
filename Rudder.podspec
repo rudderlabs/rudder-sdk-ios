@@ -19,6 +19,8 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '11.0'
   s.watchos.deployment_target = '4.0'
   
+  s.swift_versions = ['4.0']
+  
   s.source_files = 'Sources/**/*.{h,m}'
   
   s.ios.dependency 'OneTrust-CMP-XCFramework', '202212.1.0'
