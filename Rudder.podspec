@@ -12,12 +12,15 @@ Pod::Spec.new do |s|
 
   s.homepage         = "https://github.com/rudderlabs/rudder-sdk-ios"
   s.license          = { :type => "Apache", :file => "LICENSE" }
-  s.author           = { "Rudderstack" => "arnab@rudderlabs.com" }
+  s.author           = { "RudderStack" => "arnab@rudderlabs.com" }
   s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :tag => "v#{s.version}" }
 
-  s.ios.deployment_target = '9.0'
-  s.tvos.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
+  s.tvos.deployment_target = '11.0'
   s.watchos.deployment_target = '4.0'
   
   s.source_files = 'Sources/**/*.{h,m}'
+  
+  s.ios.dependency 'OneTrust-CMP-XCFramework', '202212.1.0'
+  s.tvos.dependency 'OneTrust-CMP-tvOS-XCFramework', '202212.1.0'
 end

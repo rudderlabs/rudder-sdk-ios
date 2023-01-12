@@ -245,7 +245,7 @@ static dispatch_queue_t queue;
             [tempDict setObject:_externalIds forKey:@"externalId"];
         }
         if (_sessionId != nil) {
-            [tempDict setObject:[NSNumber numberWithLong:_sessionId] forKey:@"sessionId"];
+            [tempDict setObject:_sessionId forKey:@"sessionId"];
             if(_sessionStart) {
                 [tempDict setObject:@YES forKey:@"sessionStart"];
             }

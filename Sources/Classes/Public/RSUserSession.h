@@ -11,23 +11,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSUserSession : NSObject {
     long sessionInActivityTimeOut;
-    long sessionId;
+    NSNumber *sessionId;
     BOOL sessionStart;
-    long lastEventTimeStamp;
+    NSNumber *lastEventTimeStamp;
     RSPreferenceManager* preferenceManager;
 }
 
 + (instancetype) initiate:(long)sessionInActivityTimeOut with:(RSPreferenceManager *) preferenceManager;
 
-- (void) startSession;
+- (void)startSession;
 - (void)startSession:(long)sessionId;
 - (void)setSessionStart:(BOOL)sessionStart;
-- (BOOL) isSessionExpired;
+- (BOOL)isSessionExpired;
 - (void)startSessionIfExpired;
-- (void) refreshSession;
+- (void)refreshSession;
 - (void)clearSession;
-- (void) updateLastEventTimeStamp;
-- (long)getSessionId;
+- (void)updateLastEventTimeStamp;
+- (NSNumber *)getSessionId;
 - (BOOL)getSessionStart;
 
 @end

@@ -416,7 +416,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void)startSession:(long)sessionId {
-    if (sessionId == nil || [[NSString stringWithFormat:@"%ld", sessionId] length] <10) {
+    if ([[NSString stringWithFormat:@"%ld", sessionId] length] < 10) {
         [RSLogger logError:[[NSString alloc] initWithFormat:@"RSClient: startSession: Length of the sessionId should be atleast 10: %ld", sessionId]];
         return;
     }
