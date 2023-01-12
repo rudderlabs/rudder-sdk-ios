@@ -8,6 +8,6 @@
 #ifndef RSVersion_h
 #define RSVersion_h
 
-NSString *const SDK_VERSION = @"1.7.2";
+NSString *const SDK_VERSION = @"1.8.0";
 
 #endif /* RSVersion_h */

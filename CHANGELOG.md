@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.7.1...v1.8.0) (2022-12-08)
+
+
+### Features
+
+* remove timestamp from messageId ([a0f89fc](https://github.com/rudderlabs/rudder-sdk-ios/commit/a0f89fcb20d0bb0c76919d78a3e19585e489bbed))
+
+
+### Bug Fixes
+
+* initialise `eventFiltering` object even when `destinations` is empty ([3a5c1c4](https://github.com/rudderlabs/rudder-sdk-ios/commit/3a5c1c412c63c4ca0a9c57538135fbfde238a69a))
+
 ### [1.7.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.7.1...v1.7.2) (2022-11-17)
 
 
