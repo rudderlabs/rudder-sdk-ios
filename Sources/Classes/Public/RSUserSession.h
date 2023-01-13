@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)refreshSession;
 - (void)clearSession;
 - (void)updateLastEventTimeStamp;
-- (NSNumber *)getSessionId;
+- (NSNumber * __nullable)getSessionId;
 - (BOOL)getSessionStart;
 
 @end

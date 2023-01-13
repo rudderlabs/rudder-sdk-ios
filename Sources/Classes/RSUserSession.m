@@ -89,7 +89,9 @@ static dispatch_queue_t queue;
     });
 }
 
-- (NSNumber *) getSessionId {
+- (NSNumber * __nullable) getSessionId {
+    if(self->sessionId == nil)
+        return nil;
     __block NSNumber *sessionId;
     dispatch_sync(queue, ^{
         sessionId = self->sessionId;

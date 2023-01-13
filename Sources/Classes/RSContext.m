@@ -214,11 +214,13 @@ static dispatch_queue_t queue;
 }
 
 - (void) setSessionData:(RSUserSession *) userSession {
-    dispatch_async(queue, ^{
-        self->_sessionId = [userSession getSessionId];
-        if([userSession getSessionStart]) {
-            self->_sessionStart = YES;
-            [userSession setSessionStart:NO];
+    dispatch_async(queue, ^{        
+        if ([userSession getSessionId] != nil) {
+            self->_sessionId = [userSession getSessionId];
+            if([userSession getSessionStart]) {
+                self->_sessionStart = YES;
+                [userSession setSessionStart:NO];
+            }
         }
     });
 }
