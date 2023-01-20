@@ -118,18 +118,19 @@ class RSContextPlugin: RSPlatformPlugin {
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {
+        /// First priority will given to the `option` passed along with the event
         if let option = message.option {
             if let externalIds = option.externalIds {
                 context["externalId"] = externalIds
             }
             if let customContexts = option.customContexts {
-                for key in customContexts.keys {
-                    context[key] = [key: customContexts]
+                for (key, value) in customContexts {
+                    context[key] = value
                 }
             }
         }
+        // TODO: Fetch `customContexts` set using setOption API.
     }
-
 }
 
 extension RSClient {
