@@ -13,6 +13,7 @@
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
 #import "RSEventFilteringPlugin.h"
+#import "RSConsentFilter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
     RSUserSession * userSession;
+    RSConsentFilter *consentFilter;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;

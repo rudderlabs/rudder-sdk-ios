@@ -213,12 +213,10 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OneTrust-CMP-XCFramework/OTPublishersHeadlessSDK.framework/OTPublishersHeadlessSDK",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OTPublishersHeadlessSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

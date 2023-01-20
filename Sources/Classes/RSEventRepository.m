@@ -165,6 +165,10 @@ typedef enum {
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
                     strongSelf->areFactoriesInitialized = YES;
+                    
+                    // initiate consent filter
+                    strongSelf->consentFilter = [RSConsentFilter initiate:serverConfig withRudderCofig:self->config];
+                    
                     [strongSelf __replayMessageQueue];
                     
                 } else {
@@ -466,23 +470,24 @@ typedef enum {
             return;
         }
     });
-    if([message.integrations count]==0){
-        if(RSClient.getDefaultOptions!=nil &&
-           RSClient.getDefaultOptions.integrations!=nil &&
-           [RSClient.getDefaultOptions.integrations count]!=0){
+    if ([message.integrations count] == 0) {
+        if(RSClient.getDefaultOptions != nil && RSClient.getDefaultOptions.integrations != nil && [RSClient.getDefaultOptions.integrations count] != 0) {
             message.integrations = RSClient.getDefaultOptions.integrations;
         }
         else{
             message.integrations = @{@"All": @YES};
         }
     }
+    
+    if (consentFilter != nil) {
+        message = [consentFilter applyConsents:message];
+    }
+    
     // If `All` is absent in the integrations object we will set it to true for making All is true by default
-    if(message.integrations[@"All"]==nil)
-    {
+    if (message.integrations[@"All"] == nil) {
         NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
         [mutableIntegrations setObject:@YES forKey:@"All"];
         message.integrations = mutableIntegrations;
-        
     }
     
     if([self->userSession getSessionId] != nil) {

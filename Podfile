@@ -15,23 +15,27 @@ project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodepro
 target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
 <<<<<<< HEAD
+<<<<<<< HEAD
     platform :ios, '9.0'
     shared_pods
 =======
     platform :ios, '11.0'
+=======
+    platform :ios, '9.0'
+>>>>>>> 225213e (initial development)
     shared_pods    
 >>>>>>> 0ee2bfa (warnings removed)
 end
 
 target 'RudderSampleAppSwift' do
     project 'Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
-    platform :ios, '11.0'
+    platform :ios, '9.0'
     shared_pods
 end
 
 target 'RudderSampleApptvOSObjC' do
     project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
-    platform :tvos, '11.0'
+    platform :tvos, '9.0'
     shared_pods
 end
 
@@ -39,10 +43,4 @@ target 'RudderSampleAppwatchOSObjC WatchKit Extension' do
   project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj'
   platform :watchos, '8.0'
   shared_pods
-end
-
-target 'RudderSampleAppOneTrustConsent' do
-    project 'Examples/RudderSampleAppOneTrustConsent/RudderSampleAppOneTrustConsent.xcodeproj'
-    platform :ios, '11.0'
-    shared_pods
 end
