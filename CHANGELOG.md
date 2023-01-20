@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.6](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.6) (2023-01-20)
+
+
+### Bug Fixes
+
+* improper way of handling customContext ([#239](https://github.com/rudderlabs/rudder-sdk-ios/issues/239)) ([7a91754](https://github.com/rudderlabs/rudder-sdk-ios/commit/7a91754cb62f398b5ded4f933c7ab1dce7c1b5ae))
+* **macOS:** life cycle events were not tracking properly ([8879ff4](https://github.com/rudderlabs/rudder-sdk-ios/commit/8879ff40af77aabe3e3f842a52eb38f52576e83f))
+
 ### [2.2.5](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.5) (2022-11-16)
 
 
