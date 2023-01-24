@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.7](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.5...v2.2.7) (2023-01-24)
+
+
+### Bug Fixes
+
+* improper way of handling customContext ([#239](https://github.com/rudderlabs/rudder-sdk-ios/issues/239)) ([7a91754](https://github.com/rudderlabs/rudder-sdk-ios/commit/7a91754cb62f398b5ded4f933c7ab1dce7c1b5ae))
+
 ### [2.2.6](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.6) (2023-01-20)
 
 
