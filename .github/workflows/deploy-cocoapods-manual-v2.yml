@@ -1,4 +1,4 @@
-name: Deploy to Cocoapods(Manually)
+name: Deploy to Cocoapods(Manually)(v2)
 
 on:
   workflow_dispatch
@@ -7,7 +7,7 @@ jobs:
   deploy-cocoapods-manual:
     name: Draft a new release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/master')
+    if: startsWith(github.ref, 'refs/heads/master-v2')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v3
