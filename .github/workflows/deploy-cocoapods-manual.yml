@@ -6,7 +6,7 @@ on:
 jobs:
   deploy-cocoapods-manual:
     name: Draft a new release
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     if: startsWith(github.ref, 'refs/heads/master')
     steps:
       - name: Checkout source branch
