@@ -7,7 +7,7 @@ jobs:
   deploy-cocoapods-manual:
     name: Draft a new release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/master') || startsWith(github.ref, 'refs/heads/master-v2')
+    if: startsWith(github.ref, 'refs/heads/master')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v3
