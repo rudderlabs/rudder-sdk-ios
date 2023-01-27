@@ -14,13 +14,13 @@
 static RSConsentFilter* _instance;
 static dispatch_queue_t queue;
 
-- (instancetype)init:(NSMutableArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig {
+- (instancetype)init:(NSArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig {
     self = [super init];
     if (self) {
         if (queue == nil) {
             queue = dispatch_queue_create("com.rudder.RSConsentFilter", NULL);
         }
-        self->consentInterceptorList = consentInterceptorList;
+        self->consentInterceptorList = [[NSMutableArray alloc] initWithArray:consentInterceptorList];
         self->serverConfig = serverConfig;
     }
     return self;

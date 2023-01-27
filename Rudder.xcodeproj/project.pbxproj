@@ -11,6 +11,7 @@
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
 		ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */; };
 		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
+		ED04A247298424040080A88D /* RSConserFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A246298424040080A88D /* RSConserFilterTests.swift */; };
 		ED3084832891900100A357E3 /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3084812891900100A357E3 /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED3084842891900100A357E3 /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3084822891900100A357E3 /* RSUserSession.m */; };
 		ED56ABCC29755616008728BF /* RSConsentInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAE2AC12975549D00635F3A /* RSConsentInterceptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,6 +208,7 @@
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventRepositoryTests.swift; sourceTree = "<group>"; };
+		ED04A246298424040080A88D /* RSConserFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSConserFilterTests.swift; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED3084812891900100A357E3 /* RSUserSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
 		ED3084822891900100A357E3 /* RSUserSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSUserSession.m; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 			isa = PBXGroup;
 			children = (
 				ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */,
+				ED04A246298424040080A88D /* RSConserFilterTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED04A247298424040080A88D /* RSConserFilterTests.swift in Sources */,
 				ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

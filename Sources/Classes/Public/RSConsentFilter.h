@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigSource *serverConfig;
 }
 
-- (instancetype)init:(NSMutableArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig;
+- (instancetype)init:(NSArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig;
 - (RSMessage *)applyConsents:(RSMessage *)message;
 
 @end
