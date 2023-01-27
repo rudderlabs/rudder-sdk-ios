@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSMutableArray* factories;
 @property (nonatomic, readwrite) NSMutableArray* customFactories;
 @property (nonatomic, readwrite) NSMutableArray<id<RSConsentInterceptor>>* consents;
-@property (nonatomic, readwrite) NSMutableArray<id<RSConsentInterceptor>>* customConsents;
 
 @end
 

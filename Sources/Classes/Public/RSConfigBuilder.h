@@ -41,8 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withControlPlaneURL:(NSURL*)controlPlaneURL;
 - (instancetype)withFactory:(id <RSIntegrationFactory> _Nonnull)factory;
 - (instancetype)withCustomFactory:(id <RSIntegrationFactory> _Nonnull)customFactory;
-- (instancetype)withConsent:(id<RSConsentInterceptor> _Nonnull)consent;
-- (instancetype)withCustomConsent:(id<RSConsentInterceptor> _Nonnull)consent;
+- (instancetype)withConsentInterceptor:(id<RSConsentInterceptor> _Nonnull)consent;
 - (RSConfig*)build;
 
 @end

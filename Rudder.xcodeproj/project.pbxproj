@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
+		ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */; };
+		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		ED3084832891900100A357E3 /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3084812891900100A357E3 /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED3084842891900100A357E3 /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3084822891900100A357E3 /* RSUserSession.m */; };
 		ED56ABCC29755616008728BF /* RSConsentInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAE2AC12975549D00635F3A /* RSConsentInterceptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -190,7 +192,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F69E95AD29093E630016E5C9 /* PBXContainerItemProxy */ = {
+		ED04A24129839DCC0080A88D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
 			proxyType = 1;
@@ -203,6 +205,8 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventRepositoryTests.swift; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED3084812891900100A357E3 /* RSUserSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
 		ED3084822891900100A357E3 /* RSUserSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSUserSession.m; sourceTree = "<group>"; };
@@ -405,11 +409,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F69E95A529093E630016E5C9 /* Frameworks */ = {
+		ED04A23929839DCC0080A88D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F69E95AC29093E630016E5C9 /* Rudder.framework in Frameworks */,
+				ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +425,7 @@
 			children = (
 				ED857DEE2912750900B7BFCE /* Others */,
 				ED83FDB32731019F006F27B3 /* Sources */,
-				F69E95A929093E630016E5C9 /* RudderTests */,
+				ED04A23D29839DCC0080A88D /* Tests */,
 				06CABB852630C3CA0097BEFF /* Products */,
 				06CABC2D2630C6660097BEFF /* Frameworks */,
 			);
@@ -431,7 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				06CABB842630C3CA0097BEFF /* Rudder.framework */,
-				F69E95A829093E630016E5C9 /* RudderTests.xctest */,
+				ED04A23C29839DCC0080A88D /* RudderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -443,6 +447,14 @@
 				06CABC2E2630C6660097BEFF /* UIKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED04A23D29839DCC0080A88D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		ED83FDB32731019F006F27B3 /* Sources */ = {
@@ -817,22 +829,22 @@
 			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F69E95A729093E630016E5C9 /* RudderTests */ = {
+		ED04A23B29839DCC0080A88D /* RudderTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F69E95B129093E630016E5C9 /* Build configuration list for PBXNativeTarget "RudderTests" */;
+			buildConfigurationList = ED04A24529839DCC0080A88D /* Build configuration list for PBXNativeTarget "RudderTests" */;
 			buildPhases = (
-				F69E95A429093E630016E5C9 /* Sources */,
-				F69E95A529093E630016E5C9 /* Frameworks */,
-				F69E95A629093E630016E5C9 /* Resources */,
+				ED04A23829839DCC0080A88D /* Sources */,
+				ED04A23929839DCC0080A88D /* Frameworks */,
+				ED04A23A29839DCC0080A88D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F69E95AE29093E630016E5C9 /* PBXTargetDependency */,
+				ED04A24229839DCC0080A88D /* PBXTargetDependency */,
 			);
 			name = RudderTests;
 			productName = RudderTests;
-			productReference = F69E95A829093E630016E5C9 /* RudderTests.xctest */;
+			productReference = ED04A23C29839DCC0080A88D /* RudderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -841,15 +853,15 @@
 		06CABB7B2630C3CA0097BEFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					06CABB832630C3CA0097BEFF = {
 						CreatedOnToolsVersion = 12.3;
 						LastSwiftMigration = 1310;
 					};
-					F69E95A729093E630016E5C9 = {
-						CreatedOnToolsVersion = 14.0.1;
+					ED04A23B29839DCC0080A88D = {
+						CreatedOnToolsVersion = 14.2;
 					};
 				};
 			};
@@ -867,7 +879,7 @@
 			projectRoot = "";
 			targets = (
 				06CABB832630C3CA0097BEFF /* Rudder */,
-				F69E95A729093E630016E5C9 /* RudderTests */,
+				ED04A23B29839DCC0080A88D /* RudderTests */,
 			);
 		};
 /* End PBXProject section */
@@ -880,7 +892,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F69E95A629093E630016E5C9 /* Resources */ = {
+		ED04A23A29839DCC0080A88D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -982,21 +994,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F69E95A429093E630016E5C9 /* Sources */ = {
+		ED04A23829839DCC0080A88D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F69E95AB29093E630016E5C9 /* RudderTests.swift in Sources */,
+				ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F69E95AE29093E630016E5C9 /* PBXTargetDependency */ = {
+		ED04A24229839DCC0080A88D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 06CABB832630C3CA0097BEFF /* Rudder */;
-			targetProxy = F69E95AD29093E630016E5C9 /* PBXContainerItemProxy */;
+			targetProxy = ED04A24129839DCC0080A88D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1192,21 +1205,17 @@
 			};
 			name = Release;
 		};
-		F69E95AF29093E630016E5C9 /* Debug */ = {
+		ED04A24329839DCC0080A88D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1215,21 +1224,17 @@
 			};
 			name = Debug;
 		};
-		F69E95B029093E630016E5C9 /* Release */ = {
+		ED04A24429839DCC0080A88D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1259,11 +1264,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F69E95B129093E630016E5C9 /* Build configuration list for PBXNativeTarget "RudderTests" */ = {
+		ED04A24529839DCC0080A88D /* Build configuration list for PBXNativeTarget "RudderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F69E95AF29093E630016E5C9 /* Debug */,
-				F69E95B029093E630016E5C9 /* Release */,
+				ED04A24329839DCC0080A88D /* Debug */,
+				ED04A24429839DCC0080A88D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

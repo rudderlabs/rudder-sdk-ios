@@ -89,7 +89,7 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
         [self->preferenceManager performMigration];
-        
+                
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
         
@@ -167,7 +167,8 @@ typedef enum {
                     strongSelf->areFactoriesInitialized = YES;
                     
                     // initiate consent filter
-                    strongSelf->consentFilter = [RSConsentFilter initiate:serverConfig withRudderCofig:self->config];
+                    [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
+                    strongSelf->consentFilter = [[RSConsentFilter alloc] init:strongSelf->config.consents withServerConfig:serverConfig];
                     
                     [strongSelf __replayMessageQueue];
                     

@@ -112,19 +112,11 @@
     return self;
 }
 
-- (instancetype)withConsent:(id<RSConsentInterceptor> _Nonnull)consent {
+- (instancetype)withConsentInterceptor:(id<RSConsentInterceptor> _Nonnull)consent {
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
     [config.consents addObject:consent];
-    return self;
-}
-
-- (instancetype)withCustomConsent:(id<RSConsentInterceptor> _Nonnull)consent {
-    if (config == nil) {
-        config = [[RSConfig alloc] init];
-    }
-    [config.customConsents addObject:consent];
     return self;
 }
 

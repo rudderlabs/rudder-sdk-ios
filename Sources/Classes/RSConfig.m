@@ -31,7 +31,6 @@
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];
         _consents = [[NSMutableArray alloc] init];
-        _customConsents = [[NSMutableArray alloc] init];
     }
     return self;
 }
