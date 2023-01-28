@@ -22,7 +22,8 @@ final class RSConserFilterTests: XCTestCase {
 
     override func tearDown() {
         super.tearDown()
-        
+        consentInterceptorList = nil
+        consentFilter = nil
     }
 
     func testAppliedConsentsMessage_EventName() {

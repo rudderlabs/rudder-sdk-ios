@@ -89,7 +89,7 @@ typedef enum {
         [RSLogger logDebug:@"EventRepository: initiating preferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
         [self->preferenceManager performMigration];
-                
+        
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
         [self __initiateSDK];
         
@@ -471,32 +471,9 @@ typedef enum {
             return;
         }
     });
-    if ([message.integrations count] == 0) {
-        if(RSClient.getDefaultOptions != nil && RSClient.getDefaultOptions.integrations != nil && [RSClient.getDefaultOptions.integrations count] != 0) {
-            message.integrations = RSClient.getDefaultOptions.integrations;
-        }
-        else{
-            message.integrations = @{@"All": @YES};
-        }
-    }
-    
-    if (consentFilter != nil) {
-        message = [consentFilter applyConsents:message];
-    }
-    
-    // If `All` is absent in the integrations object we will set it to true for making All is true by default
-    if (message.integrations[@"All"] == nil) {
-        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
-        [mutableIntegrations setObject:@YES forKey:@"All"];
-        message.integrations = mutableIntegrations;
-    }
-    
-    if([self->userSession getSessionId] != nil) {
-        [message setSessionData: self->userSession];
-    }
-    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
-        [self->userSession updateLastEventTimeStamp];
-    }
+    [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
+    [self applyConsents:message withConsentFilter:consentFilter];
+    [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
@@ -511,6 +488,39 @@ typedef enum {
     }
     
     [self->dbpersistenceManager saveEvent:jsonString];
+}
+
+- (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {
+    if ([message.integrations count] == 0) {
+        if(defaultOption != nil && defaultOption.integrations != nil && [defaultOption.integrations count] != 0) {
+            message.integrations = defaultOption.integrations;
+        }
+        else{
+            message.integrations = @{@"All": @YES};
+        }
+    }
+    
+    // If `All` is absent in the integrations object we will set it to true for making All is true by default
+    if (message.integrations[@"All"] == nil) {
+        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
+        [mutableIntegrations setObject:@YES forKey:@"All"];
+        message.integrations = mutableIntegrations;
+    }
+}
+
+- (void)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter {
+    if (consentFilter != nil) {
+        message = [consentFilter applyConsents:message];
+    }
+}
+
+- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig {
+    if([userSession getSessionId] != nil) {
+        [message setSessionData: userSession];
+    }
+    if(rudderConfig.trackLifecycleEvents && rudderConfig.automaticSessionTracking) {
+        [userSession updateLastEventTimeStamp];
+    }
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {
