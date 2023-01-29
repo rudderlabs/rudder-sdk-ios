@@ -25,7 +25,7 @@ jobs:
 
       - name: Run build-wrapper
         run: |
-          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13'
           
       - name: Run tests(suite)
         run: |
