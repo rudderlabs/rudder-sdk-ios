@@ -86,11 +86,11 @@ final class RSEventRepositoryTests: XCTestCase {
         options.putIntegration("test_integration", isEnabled: true)
         options.putIntegration("test_integration_2", isEnabled: false)
         
-        let message = RSMessageBuilder()
+        var message = RSMessageBuilder()
             .setRSOption(options)
             .build()
         
-        eventRepository.applyConsents(message, with: consentFilter)
+        message = eventRepository.applyConsents(message, with: consentFilter)
         XCTAssertNotNil(message)
         XCTAssertNotNil(message.integrations)
         XCTAssertEqual(message.integrations, expectedIntegrations)

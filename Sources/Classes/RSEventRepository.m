@@ -472,7 +472,7 @@ typedef enum {
         }
     });
     [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
-    [self applyConsents:message withConsentFilter:consentFilter];
+    message = [self applyConsents:message withConsentFilter:consentFilter];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     [self makeFactoryDump: message];
@@ -508,10 +508,11 @@ typedef enum {
     }
 }
 
-- (void)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter {
+- (RSMessage *)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter {
     if (consentFilter != nil) {
-        message = [consentFilter applyConsents:message];
+        return [consentFilter applyConsents:message];
     }
+    return message;
 }
 
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig {

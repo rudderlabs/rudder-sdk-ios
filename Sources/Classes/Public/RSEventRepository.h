@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption;
-- (void)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter;
+- (RSMessage *)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter;
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig;
 
 @end
