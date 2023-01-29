@@ -19,9 +19,9 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty
 
-#      - name: Run tests(suite)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+      - name: Run tests(suite)
+        run: |
+          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
 
 #      - name: Run tests(1)
 #        run: |
