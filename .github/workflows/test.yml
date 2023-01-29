@@ -11,29 +11,28 @@ jobs:
   build:
     name: 'Tests & Coverage'
     runs-on: macOS-latest
-
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+        
       - name: Install xcpretty
         run: gem install xcpretty
 
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS
+          
       - name: Run tests(suite)
         run: |
-          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
-
-#      - name: Run tests(1)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests" | xcpretty
-
-#      - name: Run tests(2)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests2" | xcpretty
-
-#      - name: Run tests(3)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests3" | xcpretty
+          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+      - name: Collect coverage into one XML report
+        run: |
+          bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
       
       - name: Build SDK(iOS)
         run: |

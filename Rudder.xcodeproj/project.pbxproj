@@ -209,6 +209,7 @@
 		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventRepositoryTests.swift; sourceTree = "<group>"; };
 		ED04A246298424040080A88D /* RSConserFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSConserFilterTests.swift; sourceTree = "<group>"; };
+		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED3084812891900100A357E3 /* RSUserSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
 		ED3084822891900100A357E3 /* RSUserSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSUserSession.m; sourceTree = "<group>"; };
@@ -698,6 +699,7 @@
 				ED83FDAF2731019F006F27B3 /* README.md */,
 				ED83FDB02731019F006F27B3 /* Rudder.podspec */,
 				ED056314291AABFD00BAEE65 /* sonar-project.properties */,
+				ED04A2482986C1750080A88D /* xccov-to-generic.sh */,
 			);
 			name = Others;
 			sourceTree = "<group>";
