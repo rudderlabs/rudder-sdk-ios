@@ -25,7 +25,7 @@ jobs:
 
       - name: Run build-wrapper
         run: |
-          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13
           
       - name: Run tests(suite)
         run: |
@@ -37,10 +37,7 @@ jobs:
       - name: Build SDK(iOS)
         run: |
           xcodebuild clean build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator | xcpretty -r json-compilation-database -o compile_commands.json
-      
-      - name: Install SonarCloud
-        run: npm install -g sonarqube-scanner
-        
+              
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
