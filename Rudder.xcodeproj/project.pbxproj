@@ -455,8 +455,8 @@
 		ED04A23D29839DCC0080A88D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */,
 				ED04A246298424040080A88D /* RSConserFilterTests.swift */,
+				ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

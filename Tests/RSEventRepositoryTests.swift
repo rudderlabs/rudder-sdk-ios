@@ -98,16 +98,16 @@ final class RSEventRepositoryTests: XCTestCase {
     
     func testApplySession() {
         RSElementCache.initiate()
-        let rudderConfig = RSConfigBuilder()
+        let internalRudderConfig = RSConfigBuilder()
             .build()
         
-        let userSession = RSUserSession.initiate(rudderConfig.sessionInActivityTimeOut, with: RSPreferenceManager.getInstance())
+        let userSession = RSUserSession.initiate(internalRudderConfig.sessionInActivityTimeOut, with: RSPreferenceManager.getInstance())
         userSession.start()
         
         let message = RSMessageBuilder()
             .build()
 
-        eventRepository.applySession(message, with: userSession, andRudderConfig: rudderConfig)
+        eventRepository.applySession(message, with: userSession, andRudderConfig: internalRudderConfig)
         XCTAssertNotNil(message)
         XCTAssertNotNil(message.context)
         XCTAssertNotNil(message.context.sessionId)
@@ -116,7 +116,7 @@ final class RSEventRepositoryTests: XCTestCase {
         let message2 = RSMessageBuilder()
             .build()
         
-        eventRepository.applySession(message2, with: userSession, andRudderConfig: rudderConfig)
+        eventRepository.applySession(message2, with: userSession, andRudderConfig: internalRudderConfig)
         XCTAssertNotNil(message2)
         XCTAssertNotNil(message2.context)
         XCTAssertNotNil(message2.context.sessionId)

@@ -16,6 +16,7 @@ final class RSConserFilterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         consentInterceptorList = [RSConsentInterceptor]()
+        consentInterceptorList.append(TestConsentInterceptor1())
         let serverConfig = RSServerConfigSource()
         consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
     }
@@ -194,21 +195,41 @@ final class RSConserFilterTests: XCTestCase {
         XCTAssertEqual(external!["type"], expectedType)
     }
     
-    func testAppliedConsentsMessage_MultipleInterceptor() {
-        var consentInterceptorList = [RSConsentInterceptor]()
-        consentInterceptorList.append(TestConsentInterceptor1())
-        consentInterceptorList.append(TestConsentInterceptor2())
-        let serverConfig = RSServerConfigSource()
-        let consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
-        let message = RSMessageBuilder()
-            .setEventName("Test Track")
-            .build()
+    func test_applyConsentsThreadSafety() {
+        var internalConsentInterceptorList = [RSConsentInterceptor]()
+        internalConsentInterceptorList.append(TestConsentInterceptor1())
+        internalConsentInterceptorList.append(TestConsentInterceptor2())
+        let internalServerConfig = RSServerConfigSource()
+        let internalConsentFilter = RSConsentFilter.initiate(internalConsentInterceptorList, withServerConfig: internalServerConfig)
+
+        var updatedMessageList = [RSMessage]()
         
-        let updatedMessage = consentFilter.applyConsents(message)
-        XCTAssertNotNil(updatedMessage)
-        XCTAssertEqual(updatedMessage.event, "Test Track")
-        XCTAssertNotNil(updatedMessage.integrations)
-        XCTAssertEqual(updatedMessage.integrations, [:])
+        let dispatchGroup = DispatchGroup()
+        let exp = expectation(description: "multi thread")
+        for i in 0..<100 {
+            let message = RSMessageBuilder()
+                .setEventName("Test - \(i)")
+                .build()
+            dispatchGroup.enter()
+            DispatchQueue.global().async {
+                updatedMessageList.append(internalConsentFilter.applyConsents(message))
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 0.2)
+        for i in 0..<20 {
+            let updatedMessage = updatedMessageList[i]
+            XCTAssertNotNil(updatedMessage)
+            XCTAssertNotNil(updatedMessage.integrations)
+            XCTAssertEqual(updatedMessage.integrations, [:])
+        }
+        
+        XCTAssertTrue(updatedMessageList.count == 100)
     }
 }
 
