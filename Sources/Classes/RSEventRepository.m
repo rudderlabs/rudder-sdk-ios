@@ -168,7 +168,7 @@ typedef enum {
                     
                     // initiate consent filter
                     [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
-                    strongSelf->consentFilter = [[RSConsentFilter alloc] init:strongSelf->config.consents withServerConfig:serverConfig];
+                    strongSelf->consentFilter = [RSConsentFilter initiate:strongSelf->config.consents withServerConfig:serverConfig];
                     
                     [strongSelf __replayMessageQueue];
                     

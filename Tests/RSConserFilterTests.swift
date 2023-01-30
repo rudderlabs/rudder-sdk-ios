@@ -17,7 +17,7 @@ final class RSConserFilterTests: XCTestCase {
         super.setUp()
         consentInterceptorList = [RSConsentInterceptor]()
         let serverConfig = RSServerConfigSource()
-        consentFilter = RSConsentFilter(consentInterceptorList, withServerConfig: serverConfig)
+        consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
     }
 
     override func tearDown() {
@@ -192,5 +192,34 @@ final class RSConserFilterTests: XCTestCase {
         
         XCTAssertNotNil(external!["type"])
         XCTAssertEqual(external!["type"], expectedType)
+    }
+    
+    func testAppliedConsentsMessage_MultipleInterceptor() {
+        var consentInterceptorList = [RSConsentInterceptor]()
+        consentInterceptorList.append(TestConsentInterceptor1())
+        consentInterceptorList.append(TestConsentInterceptor2())
+        let serverConfig = RSServerConfigSource()
+        let consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
+        let message = RSMessageBuilder()
+            .setEventName("Test Track")
+            .build()
+        
+        let updatedMessage = consentFilter.applyConsents(message)
+        XCTAssertNotNil(updatedMessage)
+        XCTAssertEqual(updatedMessage.event, "Test Track")
+        XCTAssertNotNil(updatedMessage.integrations)
+        XCTAssertEqual(updatedMessage.integrations, [:])
+    }
+}
+
+class TestConsentInterceptor1: RSConsentInterceptor {
+    func intercept(withServerConfig serverConfig: RSServerConfigSource, andMessage message: RSMessage) -> RSMessage {
+        return message
+    }
+}
+
+class TestConsentInterceptor2: RSConsentInterceptor {
+    func intercept(withServerConfig serverConfig: RSServerConfigSource, andMessage message: RSMessage) -> RSMessage {
+        return message
     }
 }

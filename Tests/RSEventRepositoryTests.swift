@@ -78,7 +78,7 @@ final class RSEventRepositoryTests: XCTestCase {
     func testApplyConsents() {
         let consentInterceptorList = [RSConsentInterceptor]()
         let serverConfig = RSServerConfigSource()
-        let consentFilter = RSConsentFilter(consentInterceptorList, withServerConfig: serverConfig)
+        let consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
         
         let expectedIntegrations = ["test_integration": true as NSObject, "test_integration_2": false as NSObject]
         

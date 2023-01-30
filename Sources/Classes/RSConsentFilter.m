@@ -14,6 +14,16 @@
 static RSConsentFilter* _instance;
 static dispatch_queue_t queue;
 
++ (instancetype)initiate:(NSArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig {
+    if (_instance == nil) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _instance = [[self alloc] init:consentInterceptorList withServerConfig:serverConfig];
+        });
+    }
+    return _instance;
+}
+
 - (instancetype)init:(NSArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig {
     self = [super init];
     if (self) {
