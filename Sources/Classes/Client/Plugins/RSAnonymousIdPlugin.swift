@@ -52,7 +52,6 @@ class RSAnonymousIdPlugin: RSPlatformPlugin {
     }
     
     private func macAddress(bsd: String) -> String? {
-        let bsd: String = "en0"
         let MAC_ADDRESS_LENGTH = 6
         let separator = ":"
         
