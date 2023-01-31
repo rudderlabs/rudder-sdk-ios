@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.2.6 (2023-01-31)
+
+
+### Bug Fixes
+
+* enhance support for anonymousId for all supported platforms ([#257](https://github.com/rudderlabs/rudder-sdk-ios/issues/257)) ([60a0d70](https://github.com/rudderlabs/rudder-sdk-ios/commit/60a0d7042cf9a208f9dea1c2c6f677f335891cef))
+* improper way of handling customContext ([9b2297e](https://github.com/rudderlabs/rudder-sdk-ios/commit/9b2297e2eca7cc0e694b142cda3f5507e80fff85))
+
 ### [2.2.5](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.5) (2022-11-16)
 
 
