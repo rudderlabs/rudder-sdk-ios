@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "RSIntegrationFactory.h"
+#import "RSEnums.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSConfig : NSObject
 
 @property (nonatomic, nonnull) NSString *dataPlaneUrl;
+@property (nonatomic) RSDataResidencyServer dataResidencyServer;
 @property (nonatomic) int flushQueueSize;
 @property (nonatomic) int dbCountThreshold;
 @property (nonatomic) int sleepTimeout;

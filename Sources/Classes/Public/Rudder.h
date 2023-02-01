@@ -9,6 +9,7 @@
 
 #import "RSConfig.h"
 #import "RSConfigBuilder.h"
+#import "RSEnums.h"
 
 #import "RSMessage.h"
 #import "RSMessageBuilder.h"

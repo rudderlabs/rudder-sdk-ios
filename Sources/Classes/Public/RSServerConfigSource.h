@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RSConfig.h"
 #import "RSServerDestination.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -18,8 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) BOOL isSourceEnabled;
 @property (nonatomic, readwrite) NSString *updatedAt;
 @property (nonatomic, readwrite) NSMutableArray *destinations;
+@property (nonatomic, readwrite) NSMutableDictionary* dataPlanes;
 
 - (void) addDestination: (RSServerDestination*) destination;
+- (NSString *_Nullable) getDataResidencyUrl:(RSDataResidencyServer) residency;
 
 @end
 

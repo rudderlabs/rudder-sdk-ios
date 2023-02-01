@@ -16,6 +16,7 @@
     self = [super init];
     if (self) {
         _dataPlaneUrl = RSDataPlaneUrl;
+        _dataResidencyServer = US;
         _flushQueueSize = RSFlushQueueSize;
         _dbCountThreshold = RSDBCountThreshold;
         _sleepTimeout = RSSleepTimeout;
@@ -34,11 +35,12 @@
 }
 
 - (instancetype)init:(NSString *) dataPlaneUrl
+dataResidencyServer: (RSDataResidencyServer) dataResidencyServer
       flushQueueSize: (int) flushQueueSize
     dbCountThreshold: (int) dbCountThreshold
         sleepTimeOut: (int) sleepTimeout
             logLevel: (int) logLevel
-     sessionInActivityTimeOut: (long) sessionInActivityTimeOut
+sessionInActivityTimeOut: (long) sessionInActivityTimeOut
 configRefreshInterval: (int) configRefreshInteval
 trackLifecycleEvents: (BOOL) trackLifecycleEvents
 enableBackgroundMode: (BOOL) enableBackgroundMode
@@ -49,6 +51,7 @@ automaticSessionTracking: (BOOL) automaticSessionTracking
     self = [super init];
     if (self) {
         _dataPlaneUrl = dataPlaneUrl;
+        _dataResidencyServer = dataResidencyServer;
         _flushQueueSize = flushQueueSize;
         _dbCountThreshold = dbCountThreshold;
         _sleepTimeout = sleepTimeout;
