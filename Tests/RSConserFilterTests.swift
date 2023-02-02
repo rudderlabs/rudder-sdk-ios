@@ -26,6 +26,19 @@ final class RSConserFilterTests: XCTestCase {
         consentInterceptorList = nil
         consentFilter = nil
     }
+    
+    func test_EmptyConsent() {
+        let interceptorList = [RSConsentInterceptor]()
+        let sConfig = RSServerConfigSource()
+        let cFilter = RSConsentFilter.initiate(interceptorList, withServerConfig: sConfig)
+        let message = RSMessageBuilder()
+            .setEventName("Test Track")
+            .build()
+        
+        let updatedMessage = cFilter.applyConsents(message)
+        XCTAssertNotNil(updatedMessage)
+        XCTAssertEqual(message, updatedMessage)
+    }
 
     func testAppliedConsentsMessage_EventName() {
         let message = RSMessageBuilder()
