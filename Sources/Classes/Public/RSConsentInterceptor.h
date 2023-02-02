@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class RSClient;
 @class RSConfig;
+@class RSServerConfigSource;
 
 @protocol RSConsentInterceptor
 

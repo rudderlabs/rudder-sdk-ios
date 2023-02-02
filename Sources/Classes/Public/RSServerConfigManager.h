@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr;
 - (RSServerConfigSource*) getConfig;
 - (int) getError;
-- (RSServerConfigSource *)_parseConfig:(NSString *)configStr;
 
 @end
 
