@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.8.0...v1.9.0) (2023-02-02)
+
+
+### Features
+
+* added Data Residency support ([#203](https://github.com/rudderlabs/rudder-sdk-ios/issues/203)) ([3b2b933](https://github.com/rudderlabs/rudder-sdk-ios/commit/3b2b933fabb8568f80217d2367ed8ce3e7c41efe))
+
 ## [1.8.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.7.1...v1.8.0) (2022-12-08)
 
 
