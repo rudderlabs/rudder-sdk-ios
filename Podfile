@@ -14,17 +14,9 @@ project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodepro
 
 target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
-<<<<<<< HEAD
-<<<<<<< HEAD
     platform :ios, '9.0'
-    shared_pods
-=======
-    platform :ios, '11.0'
-=======
-    platform :ios, '9.0'
->>>>>>> 225213e (initial development)
     shared_pods    
->>>>>>> 0ee2bfa (warnings removed)
+    pod 'FirebaseMessaging'
 end
 
 target 'RudderSampleAppSwift' do

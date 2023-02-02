@@ -180,7 +180,7 @@
 		ED83FFFD27310B44006F27B3 /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5627310B44006F27B3 /* RSECommerceCheckoutBuilder.m */; };
 		ED83FFFE27310B44006F27B3 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED83FF5727310B44006F27B3 /* RSECommerceCouponBuilder.m */; };
 		ED83FFFF27310B44006F27B3 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED83FF5827310B44006F27B3 /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED857DF4291279CF00B7BFCE /* RSVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED857DF32912773300B7BFCE /* RSVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED857DF4291279CF00B7BFCE /* RSVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED857DF32912773300B7BFCE /* RSVersion.h */; };
 		ED86DF3D29768ACE006A752A /* RSConsentFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED86DF3B29768ACE006A752A /* RSConsentFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED86DF3E29768ACE006A752A /* RSConsentFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED86DF3C29768ACE006A752A /* RSConsentFilter.m */; };
 		F623D3AB27954BF10027CBC3 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F623D3AA27954BF10027CBC3 /* RSEventFilteringPlugin.m */; };
