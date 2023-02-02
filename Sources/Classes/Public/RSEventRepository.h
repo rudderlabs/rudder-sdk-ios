@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString* writeKey;
     NSString* authToken;
     NSString* anonymousIdToken;
+    NSString* dataPlaneUrl;
     RSConfig* config;
 #if !TARGET_OS_WATCH
     UIBackgroundTaskIdentifier backgroundTask;

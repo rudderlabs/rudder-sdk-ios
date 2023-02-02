@@ -4,9 +4,9 @@ on:
   workflow_dispatch
 
 jobs:
-  deploy-cocoapods-manual:
+  build:
     name: Draft a new release
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     if: startsWith(github.ref, 'refs/heads/master-v2')
     steps:
       - name: Checkout source branch
