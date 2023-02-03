@@ -25,23 +25,53 @@ static NSString* _deviceToken = nil;
     return _instance;
 }
 
-+ (instancetype) getInstance:(NSString *)writeKey {
-    return [RSClient getInstance:writeKey config:[[RSConfig alloc] init]];
++ (instancetype)getInstance:(NSString *)writeKey {
+//    return [RSClient getInstance:writeKey config:[[RSConfig alloc] init]];
+    return [self initiate:writeKey config:nil options:nil consentInterceptor:nil];
 }
 
-+ (instancetype) getInstance:(NSString *)writeKey config: (RSConfig*) config options: (RSOption*) options {
-    _defaultOptions = options;
-    return [RSClient getInstance:writeKey config:config];
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config options:(RSOption*)options {
+//    _defaultOptions = options;
+//    return [RSClient getInstance:writeKey config:config];
+    return [self initiate:writeKey config:config options:options consentInterceptor:nil];
 }
 
-+ (instancetype) getInstance: (NSString *) writeKey config: (RSConfig*) config {
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config {
+//    if (_instance == nil) {
+//        static dispatch_once_t onceToken;
+//        dispatch_once(&onceToken, ^{
+//            _instance = [[self alloc] init];
+//            _repository = [RSEventRepository initiate:writeKey config:config];
+//            if(_deviceToken != nil && [_deviceToken length] != 0)
+//            {
+//                [[_instance getContext] putDeviceToken:_deviceToken];
+//            }
+//        });
+//    }
+//    return _instance;
+    return [self initiate:writeKey config:config options:nil consentInterceptor:nil];
+}
+
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig* __nullable)config options:(RSOption* __nullable)options consentInterceptor:(id <RSConsentInterceptor> __nullable)consentInterceptor {
+    //    _defaultOptions = options;
+    //    return [RSClient getInstance:writeKey config:config];
+    return [self initiate:writeKey config:config options:options consentInterceptor:consentInterceptor];
+}
+
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig * __nullable)config options:(RSOption * __nullable)options consentInterceptor:(id <RSConsentInterceptor> __nullable)consentInterceptor {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
-            _repository = [RSEventRepository initiate:writeKey config:config];
-            if(_deviceToken != nil && [_deviceToken length] != 0)
-            {
+            if (options != nil) {
+                _defaultOptions = options;
+            }
+            RSConfig *_config = [[RSConfig alloc] init];
+            if (config != nil) {
+                _config = config;
+            }            
+            _repository = [RSEventRepository initiate:writeKey config:_config consentInterceptor:consentInterceptor];
+            if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];
             }
         });

@@ -27,7 +27,7 @@ end
 
 target 'RudderSampleApptvOSObjC' do
     project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
-    platform :tvos, '9.0'
+    platform :tvos, '10.0'
     shared_pods
 end
 

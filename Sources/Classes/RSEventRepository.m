@@ -10,6 +10,7 @@
 #import "RSElementCache.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
+#import "RSConsentFilter.h"
 
 #import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
@@ -23,11 +24,11 @@ typedef enum {
     WRONGWRITEKEY =2
 } NETWORKSTATE;
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config consentInterceptor:(id <RSConsentInterceptor> __nullable)consentInterceptor {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init:writeKey config:config];
+            _instance = [[self alloc] init:writeKey config:config consentInterceptor:consentInterceptor];
         });
     }
     return _instance;
@@ -43,7 +44,7 @@ typedef enum {
  * 5. start processor thread
  * 6. initiate factories
  * */
-- (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config consentInterceptor:(id <RSConsentInterceptor> __nullable)_consentInterceptor {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
@@ -52,6 +53,7 @@ typedef enum {
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         self->isSDKInitialized = NO;
+        self->consentInterceptor = _consentInterceptor;
         
         writeKey = _writeKey;
         config = _config;
@@ -148,6 +150,12 @@ typedef enum {
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     
+                    // initiate consent filter
+                    if (self->consentInterceptor != nil) {
+                        [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
+                        self->consentFilter = [RSConsentFilter initiate:self->consentInterceptor withServerConfig:serverConfig];
+                    }
+                    
                     // initialize integrationOperationMap
                     strongSelf->integrationOperationMap = [[NSMutableDictionary alloc] init];
                     
@@ -165,10 +173,6 @@ typedef enum {
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
                     strongSelf->areFactoriesInitialized = YES;
-                    
-                    // initiate consent filter
-                    [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
-                    strongSelf->consentFilter = [RSConsentFilter initiate:strongSelf->config.consents withServerConfig:serverConfig];
                     
                     [strongSelf __replayMessageQueue];
                     
@@ -197,6 +201,11 @@ typedef enum {
         if (destinations.count == 0) {
             [RSLogger logInfo:@"EventRepository: No native SDK factory is found in the server config"];
         } else {
+            // initiate consent filter
+            NSDictionary <NSString *, NSNumber *> *consentedIntegrations;
+            if (self->consentFilter) {
+                consentedIntegrations = [consentFilter getConsentedIntegrations];
+            }
             NSMutableDictionary<NSString*, RSServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
             for (RSServerDestination *destination in destinations) {
                 [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
@@ -205,7 +214,11 @@ typedef enum {
                 RSServerDestination *destination = [destinationDict objectForKey:factory.key];
                 if (destination != nil && destination.isDestinationEnabled == YES) {
                     NSDictionary *destinationConfig = destination.destinationConfig;
-                    if (destinationConfig != nil) {
+                    BOOL isConsented = YES;
+                    if (consentedIntegrations && consentedIntegrations[factory.key]) {
+                        isConsented = [consentedIntegrations[destination.destinationDefinition.displayName] boolValue];
+                    }
+                    if (destinationConfig != nil && isConsented) {
                         id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:[RSClient sharedInstance] rudderConfig:self->config];
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
                         [integrationOperationMap setValue:nativeOp forKey:factory.key];
@@ -472,7 +485,8 @@ typedef enum {
         }
     });
     [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
-    message = [self applyConsents:message withConsentFilter:consentFilter];
+    // We can use this for cloud mode. Commenting for now.
+//    message = [self applyConsents:message withConsentFilter:consentFilter];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     [self makeFactoryDump: message];

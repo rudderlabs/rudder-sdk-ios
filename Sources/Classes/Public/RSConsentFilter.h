@@ -8,15 +8,17 @@
 #import <Foundation/Foundation.h>
 #import "RSServerConfigSource.h"
 #import "RSConsentInterceptor.h"
+#import "RSIntegrationFactory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSConsentFilter : NSObject {
-    NSMutableArray <id<RSConsentInterceptor>> *consentInterceptorList;
+    id<RSConsentInterceptor> consentInterceptor;
     RSServerConfigSource *serverConfig;
 }
 
-+ (instancetype)initiate:(NSArray <id<RSConsentInterceptor>> *)consentInterceptorList withServerConfig:(RSServerConfigSource *)serverConfig;
++ (instancetype)initiate:(id<RSConsentInterceptor>)consentInterceptor withServerConfig:(RSServerConfigSource *)serverConfig;
+- (NSDictionary <NSString *, NSNumber *> * __nullable)getConsentedIntegrations;
 - (RSMessage *)applyConsents:(RSMessage *)message;
 
 @end

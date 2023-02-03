@@ -6,18 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSMessage.h"
-#import "RSServerConfigSource.h"
+#import "RSServerDestination.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class RSClient;
-@class RSConfig;
-@class RSServerConfigSource;
+@class RSServerDestination;
 
 @protocol RSConsentInterceptor
 
-- (RSMessage *)interceptWithServerConfig:(RSServerConfigSource *)serverConfig andMessage:(RSMessage *)message;
+- (NSDictionary <NSString *, NSNumber *> * __nullable)filterConsentedDestinations:(NSArray <RSServerDestination *> *)destinations;
 
 @end
 
