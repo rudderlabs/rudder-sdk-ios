@@ -30,7 +30,6 @@
         _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];
-        _consents = [[NSMutableArray alloc] init];
     }
     return self;
 }

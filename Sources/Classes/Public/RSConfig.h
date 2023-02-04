@@ -30,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nonnull) NSString *controlPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 @property (nonatomic, readwrite) NSMutableArray* customFactories;
-@property (nonatomic, readwrite) NSMutableArray<id<RSConsentFilter>>* consents;
 
 @end
 

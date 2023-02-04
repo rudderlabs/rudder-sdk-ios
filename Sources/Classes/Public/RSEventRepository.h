@@ -34,11 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     id<RSConsentFilter> consentFilter;
+    RSConsentFilterHandler *consentFilterHandler;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
     RSUserSession *userSession;
-    RSConsentFilterHandler *consentFilterHandler;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;
