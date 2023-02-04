@@ -112,14 +112,6 @@
     return self;
 }
 
-- (instancetype)withConsentInterceptor:(id<RSConsentInterceptor> _Nonnull)consent {
-    if (config == nil) {
-        config = [[RSConfig alloc] init];
-    }
-    [config.consents addObject:consent];
-    return self;
-}
-
 - (instancetype)withConfigRefreshInteval:(int)configRefreshInterval {
     if (config == nil) {
         config = [[RSConfig alloc] init];

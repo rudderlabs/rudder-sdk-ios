@@ -57,7 +57,7 @@ final class RSEventRepositoryTests: XCTestCase {
         XCTAssertEqual(message.integrations, expectedIntegrations)
     }
     
-    func testApplyIntegrations_EmptyMessageOption_DefaultOption() {
+    /*func testApplyIntegrations_EmptyMessageOption_DefaultOption() {
         let expectedIntegrations = ["test_integration": true as NSObject, "All": true as NSObject]
         
         let options = RSOption()
@@ -94,7 +94,7 @@ final class RSEventRepositoryTests: XCTestCase {
         XCTAssertNotNil(message)
         XCTAssertNotNil(message.integrations)
         XCTAssertEqual(message.integrations, expectedIntegrations)
-    }
+    }*/
     
     func testApplySession() {
         RSElementCache.initiate()

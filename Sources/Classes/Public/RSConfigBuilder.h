@@ -9,12 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSEnums.h"
-#import "RSConsentInterceptor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol RSIntegrationFactory;
-@protocol RSConsentInterceptor;
 @class RSConfig;
 
 @interface RSConfigBuilder : NSObject  {
@@ -41,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withControlPlaneURL:(NSURL*)controlPlaneURL;
 - (instancetype)withFactory:(id <RSIntegrationFactory> _Nonnull)factory;
 - (instancetype)withCustomFactory:(id <RSIntegrationFactory> _Nonnull)customFactory;
-- (instancetype)withConsentInterceptor:(id<RSConsentInterceptor> _Nonnull)consent;
 - (RSConfig*)build;
 
 @end

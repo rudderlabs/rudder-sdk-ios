@@ -2,24 +2,19 @@
 //  RSConsentFilter.h
 //  Rudder
 //
-//  Created by Pallab Maiti on 17/01/23.
+//  Created by Pallab Maiti on 16/01/23.
 //
 
 #import <Foundation/Foundation.h>
-#import "RSServerConfigSource.h"
-#import "RSConsentInterceptor.h"
-#import "RSIntegrationFactory.h"
+#import "RSServerDestination.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSConsentFilter : NSObject {
-    id<RSConsentInterceptor> consentInterceptor;
-    RSServerConfigSource *serverConfig;
-}
+@class RSServerDestination;
 
-+ (instancetype)initiate:(id<RSConsentInterceptor>)consentInterceptor withServerConfig:(RSServerConfigSource *)serverConfig;
-- (NSDictionary <NSString *, NSNumber *> * __nullable)getConsentedIntegrations;
-- (RSMessage *)applyConsents:(RSMessage *)message;
+@protocol RSConsentFilter
+
+- (NSDictionary <NSString *, NSNumber *> * __nullable)filterConsentedDestinations:(NSArray <RSServerDestination *> *)destinations;
 
 @end
 

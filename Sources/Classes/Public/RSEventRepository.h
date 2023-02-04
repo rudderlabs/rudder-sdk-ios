@@ -13,8 +13,8 @@
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
 #import "RSEventFilteringPlugin.h"
-#import "RSConsentInterceptor.h"
 #import "RSConsentFilter.h"
+#import "RSConsentFilterHandler.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,12 +33,12 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    id<RSConsentInterceptor> consentInterceptor;
+    id<RSConsentFilter> consentFilter;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
-    RSUserSession * userSession;
-    RSConsentFilter *consentFilter;
+    RSUserSession *userSession;
+    RSConsentFilterHandler *consentFilterHandler;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;
@@ -47,9 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSLock* lock;
     dispatch_source_t source;
     dispatch_queue_t queue;
+    RSClient *client;
 }
 
-+ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config consentInterceptor:(id <RSConsentInterceptor> __nullable)consentInterceptor;
++ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client consentFilter:(id <RSConsentFilter> __nullable)consentFilter;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;

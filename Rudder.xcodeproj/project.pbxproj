@@ -28,7 +28,6 @@
 		ED7DFE44298C091800ED5A8E /* RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD91298C091800ED5A8E /* RSUtils.m */; };
 		ED7DFE45298C091800ED5A8E /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */; };
 		ED7DFE46298C091800ED5A8E /* RSTrackPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD93298C091800ED5A8E /* RSTrackPropertyBuilder.m */; };
-		ED7DFE47298C091800ED5A8E /* RSConsentFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD94298C091800ED5A8E /* RSConsentFilter.m */; };
 		ED7DFE48298C091800ED5A8E /* RSDBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD95298C091800ED5A8E /* RSDBMessage.m */; };
 		ED7DFE49298C091800ED5A8E /* UIViewController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */; };
 		ED7DFE4A298C091800ED5A8E /* RSPagePropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD97298C091800ED5A8E /* RSPagePropertyBuilder.m */; };
@@ -52,7 +51,7 @@
 		ED7DFE5C298C091800ED5A8E /* RSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAA298C091800ED5A8E /* RSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE5D298C091800ED5A8E /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAB298C091800ED5A8E /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE5E298C091800ED5A8E /* RSScreenPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAC298C091800ED5A8E /* RSScreenPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED7DFE5F298C091800ED5A8E /* RSConsentInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAD298C091800ED5A8E /* RSConsentInterceptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED7DFE5F298C091800ED5A8E /* RSConsentFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE60298C091800ED5A8E /* RSEventRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAE298C091800ED5A8E /* RSEventRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE61298C091800ED5A8E /* RSElementCache.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAF298C091800ED5A8E /* RSElementCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE62298C091800ED5A8E /* RSMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB0298C091800ED5A8E /* RSMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,7 +69,6 @@
 		ED7DFE6E298C091800ED5A8E /* RSIntegration.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBC298C091800ED5A8E /* RSIntegration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE6F298C091800ED5A8E /* RSOSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBD298C091800ED5A8E /* RSOSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE70298C091800ED5A8E /* RSServerDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBE298C091800ED5A8E /* RSServerDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED7DFE71298C091800ED5A8E /* RSConsentFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBF298C091800ED5A8E /* RSConsentFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE72298C091800ED5A8E /* RSTrackPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE73298C091800ED5A8E /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED7DFE74298C091800ED5A8E /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC2298C091800ED5A8E /* RSUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -189,6 +187,8 @@
 		ED7DFEE5298C091800ED5A8E /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE35298C091800ED5A8E /* RSScreenPropertyBuilder.m */; };
 		ED7DFEE6298C091800ED5A8E /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE36298C091800ED5A8E /* RSUserSession.m */; };
 		ED7DFEE7298C091800ED5A8E /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
+		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; };
+		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,7 +226,6 @@
 		ED7DFD91298C091800ED5A8E /* RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSUtils.m; sourceTree = "<group>"; };
 		ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceController+RSScreen.m"; sourceTree = "<group>"; };
 		ED7DFD93298C091800ED5A8E /* RSTrackPropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTrackPropertyBuilder.m; sourceTree = "<group>"; };
-		ED7DFD94298C091800ED5A8E /* RSConsentFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilter.m; sourceTree = "<group>"; };
 		ED7DFD95298C091800ED5A8E /* RSDBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDBMessage.m; sourceTree = "<group>"; };
 		ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RSScreen.m"; sourceTree = "<group>"; };
 		ED7DFD97298C091800ED5A8E /* RSPagePropertyBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPagePropertyBuilder.m; sourceTree = "<group>"; };
@@ -250,7 +249,7 @@
 		ED7DFDAA298C091800ED5A8E /* RSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLogger.h; sourceTree = "<group>"; };
 		ED7DFDAB298C091800ED5A8E /* RSUserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUserSession.h; sourceTree = "<group>"; };
 		ED7DFDAC298C091800ED5A8E /* RSScreenPropertyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSScreenPropertyBuilder.h; sourceTree = "<group>"; };
-		ED7DFDAD298C091800ED5A8E /* RSConsentInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentInterceptor.h; sourceTree = "<group>"; };
+		ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilter.h; sourceTree = "<group>"; };
 		ED7DFDAE298C091800ED5A8E /* RSEventRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEventRepository.h; sourceTree = "<group>"; };
 		ED7DFDAF298C091800ED5A8E /* RSElementCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSElementCache.h; sourceTree = "<group>"; };
 		ED7DFDB0298C091800ED5A8E /* RSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMessage.h; sourceTree = "<group>"; };
@@ -268,7 +267,6 @@
 		ED7DFDBC298C091800ED5A8E /* RSIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIntegration.h; sourceTree = "<group>"; };
 		ED7DFDBD298C091800ED5A8E /* RSOSInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOSInfo.h; sourceTree = "<group>"; };
 		ED7DFDBE298C091800ED5A8E /* RSServerDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSServerDestination.h; sourceTree = "<group>"; };
-		ED7DFDBF298C091800ED5A8E /* RSConsentFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilter.h; sourceTree = "<group>"; };
 		ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTrackPropertyBuilder.h; sourceTree = "<group>"; };
 		ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceController+RSScreen.h"; sourceTree = "<group>"; };
 		ED7DFDC2298C091800ED5A8E /* RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUtils.h; sourceTree = "<group>"; };
@@ -398,6 +396,8 @@
 		ED857DF02912754400B7BFCE /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		ED857DF12912754400B7BFCE /* CODEOWNERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = CODEOWNERS; sourceTree = "<group>"; };
 		ED857DF22912754400B7BFCE /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
+		ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilterHandler.h; sourceTree = "<group>"; };
+		ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilterHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,7 +469,7 @@
 				ED7DFD8F298C091800ED5A8E /* RSClient.m */,
 				ED7DFD89298C091800ED5A8E /* RSConfig.m */,
 				ED7DFDCE298C091800ED5A8E /* RSConfigBuilder.m */,
-				ED7DFD94298C091800ED5A8E /* RSConsentFilter.m */,
+				ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */,
 				ED7DFDC7298C091800ED5A8E /* RSConstants.m */,
 				ED7DFDCF298C091800ED5A8E /* RSContext.m */,
 				ED7DFD95298C091800ED5A8E /* RSDBMessage.m */,
@@ -513,8 +513,8 @@
 				ED7DFDB9298C091800ED5A8E /* RSClient.h */,
 				ED7DFDB4298C091800ED5A8E /* RSConfig.h */,
 				ED7DFDA5298C091800ED5A8E /* RSConfigBuilder.h */,
-				ED7DFDBF298C091800ED5A8E /* RSConsentFilter.h */,
-				ED7DFDAD298C091800ED5A8E /* RSConsentInterceptor.h */,
+				ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */,
+				ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */,
 				ED7DFDA0298C091800ED5A8E /* RSConstants.h */,
 				ED7DFDA4298C091800ED5A8E /* RSContext.h */,
 				ED7DFDC5298C091800ED5A8E /* RSDBMessage.h */,
@@ -769,8 +769,7 @@
 				ED7DFE60298C091800ED5A8E /* RSEventRepository.h in Headers */,
 				ED7DFEA5298C091800ED5A8E /* RSProductListFilteredEvent.h in Headers */,
 				ED7DFEDC298C091800ED5A8E /* RSProductListViewedEvent.h in Headers */,
-				ED7DFE71298C091800ED5A8E /* RSConsentFilter.h in Headers */,
-				ED7DFE5F298C091800ED5A8E /* RSConsentInterceptor.h in Headers */,
+				ED7DFE5F298C091800ED5A8E /* RSConsentFilter.h in Headers */,
 				ED7DFE5A298C091800ED5A8E /* RSEnums.h in Headers */,
 				ED7DFE63298C091800ED5A8E /* RSApp.h in Headers */,
 				ED7DFEC9298C091800ED5A8E /* RSCouponRemovedEvent.h in Headers */,
@@ -798,6 +797,7 @@
 				ED7DFED3298C091800ED5A8E /* RSOrderCompletedEvent.h in Headers */,
 				ED7DFE9D298C091800ED5A8E /* RSECommercePromotion.h in Headers */,
 				ED7DFE67298C091800ED5A8E /* RSDBPersistentManager.h in Headers */,
+				ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */,
 				ED7DFE56298C091800ED5A8E /* RSContext.h in Headers */,
 				ED7DFEC6298C091800ED5A8E /* RSProductSearchedEvent.h in Headers */,
 				ED7DFE55298C091800ED5A8E /* RSVersion.h in Headers */,
@@ -904,7 +904,6 @@
 			files = (
 				ED7DFE42298C091800ED5A8E /* RSClient.m in Sources */,
 				ED7DFE8C298C091800ED5A8E /* RSECommercePromotion.m in Sources */,
-				ED7DFE47298C091800ED5A8E /* RSConsentFilter.m in Sources */,
 				ED7DFEBE298C091800ED5A8E /* RSProductReviewedEvent.m in Sources */,
 				ED7DFE94298C091800ED5A8E /* RSECommercePromotionBuilder.m in Sources */,
 				ED7DFE4B298C091800ED5A8E /* RSDeviceInfo.m in Sources */,
@@ -925,6 +924,7 @@
 				ED7DFE8B298C091800ED5A8E /* RSECommerceCart.m in Sources */,
 				ED7DFEA6298C091800ED5A8E /* RSPromotionClickedEvent.m in Sources */,
 				ED7DFEE1298C091800ED5A8E /* RSECommerceWishList.m in Sources */,
+				ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */,
 				ED7DFE3A298C091800ED5A8E /* RSLibraryInfo.m in Sources */,
 				ED7DFE9B298C091800ED5A8E /* RSECommerceParamNames.m in Sources */,
 				ED7DFEA8298C091800ED5A8E /* RSCartSharedEvent.m in Sources */,
