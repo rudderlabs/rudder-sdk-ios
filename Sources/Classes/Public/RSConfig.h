@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RSIntegrationFactory.h"
 #import "RSEnums.h"
-#import "RSConsentFilter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
