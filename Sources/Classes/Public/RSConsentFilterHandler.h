@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RSConsentFilterHandler : NSObject {
     id<RSConsentFilter> consentFilter;
     RSServerConfigSource *serverConfig;
-    NSDictionary <NSString *, NSNumber *> *consentedIntegrationsMap;
+    NSDictionary <NSString *, NSNumber *> *consentedIntegrationsDict;
 }
 
 + (instancetype)initiate:(id<RSConsentFilter>)consentFilter withServerConfig:(RSServerConfigSource *)serverConfig;
-- (NSDictionary <NSString *, NSNumber *> * __nullable)getConsentedIntegrations;
 - (BOOL)isFactoryConsented:(NSString *)factoryKey;
+- (void)updateConsentedIntegrationsDict;
 
 @end
 

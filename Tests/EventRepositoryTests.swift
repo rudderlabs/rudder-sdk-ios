@@ -1,5 +1,5 @@
 //
-//  RSEventRepositoryTests.swift
+//  EventRepositoryTests.swift
 //  RudderTests
 //
 //  Created by Pallab Maiti on 27/01/23.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import Rudder
 
-final class RSEventRepositoryTests: XCTestCase {
+final class EventRepositoryTests: XCTestCase {
 
     var eventRepository: RSEventRepository!
     
@@ -56,45 +56,6 @@ final class RSEventRepositoryTests: XCTestCase {
         XCTAssertNotNil(message.integrations)
         XCTAssertEqual(message.integrations, expectedIntegrations)
     }
-    
-    /*func testApplyIntegrations_EmptyMessageOption_DefaultOption() {
-        let expectedIntegrations = ["test_integration": true as NSObject, "All": true as NSObject]
-        
-        let options = RSOption()
-        
-        let defaultOption = RSOption()
-        defaultOption.putIntegration("test_integration", isEnabled: true)
-
-        let message = RSMessageBuilder()
-            .setRSOption(options)
-            .build()
-        
-        eventRepository.applyIntegrations(message, withDefaultOption: defaultOption)
-        XCTAssertNotNil(message)
-        XCTAssertNotNil(message.integrations)
-        XCTAssertEqual(message.integrations, expectedIntegrations)
-    }
-        
-    func testApplyConsents() {
-        let consentInterceptorList = [RSConsentInterceptor]()
-        let serverConfig = RSServerConfigSource()
-        let consentFilter = RSConsentFilter.initiate(consentInterceptorList, withServerConfig: serverConfig)
-        
-        let expectedIntegrations = ["test_integration": true as NSObject, "test_integration_2": false as NSObject]
-        
-        let options = RSOption()
-        options.putIntegration("test_integration", isEnabled: true)
-        options.putIntegration("test_integration_2", isEnabled: false)
-        
-        var message = RSMessageBuilder()
-            .setRSOption(options)
-            .build()
-        
-        message = eventRepository.applyConsents(message, with: consentFilter)
-        XCTAssertNotNil(message)
-        XCTAssertNotNil(message.integrations)
-        XCTAssertEqual(message.integrations, expectedIntegrations)
-    }*/
     
     func testApplySession() {
         RSElementCache.initiate()

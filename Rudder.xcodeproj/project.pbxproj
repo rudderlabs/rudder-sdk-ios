@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
-		ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */; };
+		ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */; };
 		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
-		ED04A247298424040080A88D /* RSConserFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A246298424040080A88D /* RSConserFilterTests.swift */; };
+		ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */; };
 		ED7DFD81298C061A00ED5A8E /* RudderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD80298C061A00ED5A8E /* RudderTests.swift */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
 		ED7DFE39298C091800ED5A8E /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
@@ -187,7 +187,7 @@
 		ED7DFEE5298C091800ED5A8E /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE35298C091800ED5A8E /* RSScreenPropertyBuilder.m */; };
 		ED7DFEE6298C091800ED5A8E /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE36298C091800ED5A8E /* RSUserSession.m */; };
 		ED7DFEE7298C091800ED5A8E /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
-		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; };
+		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
 /* End PBXBuildFile section */
 
@@ -206,8 +206,8 @@
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventRepositoryTests.swift; sourceTree = "<group>"; };
-		ED04A246298424040080A88D /* RSConserFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSConserFilterTests.swift; sourceTree = "<group>"; };
+		ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepositoryTests.swift; sourceTree = "<group>"; };
+		ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConserFilterHandlerTests.swift; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED7DFD80298C061A00ED5A8E /* RudderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderTests.swift; sourceTree = "<group>"; };
@@ -454,8 +454,8 @@
 			isa = PBXGroup;
 			children = (
 				ED7DFD80298C061A00ED5A8E /* RudderTests.swift */,
-				ED04A246298424040080A88D /* RSConserFilterTests.swift */,
-				ED04A23E29839DCC0080A88D /* RSEventRepositoryTests.swift */,
+				ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */,
+				ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -995,8 +995,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7DFD81298C061A00ED5A8E /* RudderTests.swift in Sources */,
-				ED04A247298424040080A88D /* RSConserFilterTests.swift in Sources */,
-				ED04A23F29839DCC0080A88D /* RSEventRepositoryTests.swift in Sources */,
+				ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */,
+				ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,27 +33,28 @@ static dispatch_queue_t queue;
         }
         self->serverConfig = serverConfig;
         self->consentFilter = consentFilter;
-        [self updateConsentedIntegrationsMap];
+        [self updateConsentedIntegrationsDict];
     }
     return self;
 }
 
-- (void)updateConsentedIntegrationsMap {
-    __block NSDictionary <NSString *, NSNumber *> *list;
-    dispatch_sync(queue, ^{
-        list = [consentFilter filterConsentedDestinations:serverConfig.destinations];
+- (void)updateConsentedIntegrationsDict {
+     dispatch_sync(queue, ^{
+         consentedIntegrationsDict = [consentFilter filterConsentedDestinations:serverConfig.destinations];
     });
-    consentedIntegrationsMap = list;
 }
 
 - (BOOL)isFactoryConsented:(NSString *)factoryKey {
-    if (consentedIntegrationsMap == nil) {
+    if (consentedIntegrationsDict == nil) {
         return YES;
     }
-    if (consentedIntegrationsMap[factoryKey]) {
-        return [consentedIntegrationsMap[factoryKey] boolValue];
-    }
-    return YES;
+    __block BOOL isConsented = YES;
+    dispatch_sync(queue, ^{
+        if (consentedIntegrationsDict[factoryKey]) {
+            isConsented = [consentedIntegrationsDict[factoryKey] boolValue];
+        }
+    });
+    return isConsented;
 }
 
 @end
