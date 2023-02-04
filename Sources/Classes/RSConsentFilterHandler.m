@@ -9,11 +9,10 @@
 #import "RSLogger.h"
 #import "RSConsentFilter.h"
 
-@implementation RSConsentFilterHandler
-
 static RSConsentFilterHandler* _instance;
 static dispatch_queue_t queue;
 
+@implementation RSConsentFilterHandler
 
 + (instancetype)initiate:(id<RSConsentFilter>)consentFilter withServerConfig:(RSServerConfigSource *)serverConfig {
     if (_instance == nil) {
@@ -25,14 +24,14 @@ static dispatch_queue_t queue;
     return _instance;
 }
 
-- (instancetype)init:(id<RSConsentFilter>)consentFilter withServerConfig:(RSServerConfigSource *)serverConfig {
+- (instancetype)init:(id<RSConsentFilter>)_consentFilter withServerConfig:(RSServerConfigSource *)_serverConfig {
     self = [super init];
     if (self) {
         if (queue == nil) {
             queue = dispatch_queue_create("com.rudder.RSConsentFilter", NULL);
         }
-        self->serverConfig = serverConfig;
-        self->consentFilter = consentFilter;
+        self->serverConfig = _serverConfig;
+        self->consentFilter = _consentFilter;
         [self updateConsentedIntegrationsDict];
     }
     return self;

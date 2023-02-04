@@ -9,21 +9,13 @@ import XCTest
 @testable import Rudder
 
 final class ConserFilterHandlerTests: XCTestCase {
-
-    var consentFilter: RSConsentFilter!
-    var consentFilterHandler: RSConsentFilterHandler!
     
-    override func setUp() {
-        super.setUp()
-        consentFilter = TestConsentFilter()
-        let serverConfig = RSServerConfigSource()
-        consentFilterHandler = RSConsentFilterHandler.initiate(consentFilter, withServerConfig: serverConfig)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        consentFilter = nil
-        consentFilterHandler = nil
+    func test_checkConsentedIntegration() {
+        let consentFilterHandler2 = RSConsentFilterHandler.initiate(TestConsentFilter(), withServerConfig: RSServerConfigSource())
+        
+        XCTAssertEqual(consentFilterHandler2.isFactoryConsented("key_1"), true)
+        XCTAssertEqual(consentFilterHandler2.isFactoryConsented("key_2"), false)
+        XCTAssertEqual(consentFilterHandler2.isFactoryConsented("key_10"), true)
     }
     
     func test_updateConsentedIntegrationsDictThreadSafety() {
@@ -48,10 +40,10 @@ final class ConserFilterHandlerTests: XCTestCase {
             }
         }
         
-        for _ in 0..<100 {
+        for i in 0..<100 {
             dispatchGroup.enter()
             DispatchQueue.global().async {
-                consentFilterHandler.isFactoryConsented("key")
+                consentFilterHandler.isFactoryConsented("key_\(i)")
                 dispatchGroup.leave()
             }
         }
@@ -65,7 +57,9 @@ final class ConserFilterHandlerTests: XCTestCase {
 }
 
 class TestConsentFilter: RSConsentFilter {
-    func filterConsentedDestinations(_ destinations: [RSServerDestination]) -> [String : NSNumber]? {
-        return [:]
+    var count = 0
+    func filterConsentedDestinations(_ destinations: [RSServerDestination]) -> [String: NSNumber]? {
+        count += 1
+        return ["key_\(count)": NSNumber(booleanLiteral: true), "key_\(count + 1)": NSNumber(booleanLiteral: false)]
     }
 }
