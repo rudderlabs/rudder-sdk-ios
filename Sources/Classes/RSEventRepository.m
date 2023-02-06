@@ -156,20 +156,8 @@ typedef enum {
                         strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:consentFilter withServerConfig:serverConfig];
                     }
                     
-                    // initialize integrationOperationMap
-                    strongSelf->integrationOperationMap = [[NSMutableDictionary alloc] init];
-                    
                     // initiate the native SDK factories if destinations are present
-                    if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                        NSArray <RSServerDestination *> *consentedDestinations = strongSelf->consentFilterHandler != nil ? [strongSelf->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
-                        [RSLogger logDebug:@"EventRepository: initiating factories"];
-                        [strongSelf __initiateFactories:consentedDestinations];
-                        [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
-                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:consentedDestinations];
-                    } else {
-                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
-                        [RSLogger logDebug:@"EventRepository: no device mode present"];
-                    }
+                    [strongSelf __initiateNativeFactories:serverConfig];
                     
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
@@ -192,6 +180,22 @@ typedef enum {
             }
         }
     });
+}
+
+- (void)__initiateNativeFactories:(RSServerConfigSource *)serverConfig {
+    // initialize integrationOperationMap
+    integrationOperationMap = [[NSMutableDictionary alloc] init];
+    
+    if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
+        NSArray <RSServerDestination *> *consentedDestinations = consentFilterHandler != nil ? [consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
+        [RSLogger logDebug:@"EventRepository: initiating factories"];
+        [self __initiateFactories:consentedDestinations];
+        [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
+        eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:consentedDestinations];
+    } else {
+        eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
+        [RSLogger logDebug:@"EventRepository: no device mode present"];
+    }
 }
 
 - (void) __initiateFactories : (NSArray*) destinations {
@@ -520,12 +524,12 @@ typedef enum {
     return message;
 }
 
-- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig {
-    if([userSession getSessionId] != nil) {
-        [message setSessionData: userSession];
+- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)_userSession andRudderConfig:(RSConfig *)rudderConfig {
+    if([_userSession getSessionId] != nil) {
+        [message setSessionData: _userSession];
     }
     if(rudderConfig.trackLifecycleEvents && rudderConfig.automaticSessionTracking) {
-        [userSession updateLastEventTimeStamp];
+        [_userSession updateLastEventTimeStamp];
     }
 }
 
