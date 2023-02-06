@@ -31,29 +31,48 @@ static dispatch_queue_t queue;
             queue = dispatch_queue_create("com.rudder.RSConsentFilter", NULL);
         }
         self->serverConfig = _serverConfig;
-        self->consentFilter = _consentFilter;
-        [self updateConsentedIntegrationsDict];
+        [self updateConsentedIntegrationsDict:_consentFilter];
     }
     return self;
 }
 
-- (void)updateConsentedIntegrationsDict {
+- (void)updateConsentedIntegrationsDict:(id<RSConsentFilter>)consentFilter {
      dispatch_sync(queue, ^{
          consentedIntegrationsDict = [consentFilter filterConsentedDestinations:serverConfig.destinations];
     });
 }
 
-- (BOOL)isFactoryConsented:(NSString *)factoryKey {
+- (NSArray <RSServerDestination *> *)filterDestinationList:(NSArray <RSServerDestination *> *)destinations {
     if (consentedIntegrationsDict == nil) {
-        return YES;
+        return destinations;
     }
-    __block BOOL isConsented = YES;
+    NSMutableArray <RSServerDestination *> *filteredList = [[NSMutableArray alloc] initWithArray:destinations];
+    for (RSServerDestination *destination in destinations) {
+        NSString *factoryKey = destination.destinationDefinition.displayName;
+        dispatch_sync(queue, ^{
+            if (consentedIntegrationsDict[factoryKey] && ![consentedIntegrationsDict[factoryKey] boolValue]) {
+                [filteredList removeObject:destination];
+            }
+        });
+    }
+    return filteredList;
+}
+
+- (RSMessage *)applyConsents:(RSMessage *)message {
+    if (message.integrations == nil || consentedIntegrationsDict == nil) {
+        return message;
+    }
+    __block RSMessage *updatedMessage = message;
+    __block NSMutableDictionary <NSString *, NSObject *> *consentedMessageIntegrationsDict = [[NSMutableDictionary alloc] initWithDictionary:message.integrations];
     dispatch_sync(queue, ^{
-        if (consentedIntegrationsDict[factoryKey]) {
-            isConsented = [consentedIntegrationsDict[factoryKey] boolValue];
-        }
+        [message.integrations enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSObject * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (consentedIntegrationsDict[key]) {
+                [consentedMessageIntegrationsDict setValue:consentedIntegrationsDict[key] forKey:key];
+            }
+        }];
+        updatedMessage.integrations = consentedMessageIntegrationsDict;
     });
-    return isConsented;
+    return updatedMessage;
 }
 
 @end

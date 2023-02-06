@@ -22,7 +22,7 @@ final class EventRepositoryTests: XCTestCase {
         eventRepository = nil
     }
 
-    func testApplyIntegrations_EmptyMessageOption_EmptyDefaultOption() {
+    func test_applyIntegrations_EmptyMessageOption_EmptyDefaultOption() {
         let expectedIntegrations = ["All": true as NSObject]
         
         let options = RSOption()
@@ -39,7 +39,7 @@ final class EventRepositoryTests: XCTestCase {
         XCTAssertEqual(message.integrations, expectedIntegrations)
     }
     
-    func testApplyIntegrations_MessageOption_EmptyDefaultOption() {
+    func test_applyIntegrations_MessageOption_EmptyDefaultOption() {
         let expectedIntegrations = ["test_integration": true as NSObject, "All": true as NSObject]
         
         let options = RSOption()

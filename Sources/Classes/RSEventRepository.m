@@ -53,7 +53,6 @@ typedef enum {
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         self->isSDKInitialized = NO;
-        self->consentFilter = _consentFilter;
         self->client = _client;
         
         writeKey = _writeKey;
@@ -94,7 +93,7 @@ typedef enum {
         [self->preferenceManager performMigration];
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
-        [self __initiateSDK];
+        [self __initiateSDK:_consentFilter];
         
         [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
@@ -133,7 +132,7 @@ typedef enum {
     });
 }
 
-- (void) __initiateSDK {
+- (void) __initiateSDK:(id<RSConsentFilter> __nullable)consentFilter {
     __weak RSEventRepository *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         RSEventRepository *strongSelf = weakSelf;
@@ -152,9 +151,9 @@ typedef enum {
                     [strongSelf __initiateProcessor];
                     
                     // initiate consent filter handler
-                    if (self->consentFilter != nil) {
+                    if (consentFilter != nil) {
                         [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
-                        self->consentFilterHandler = [RSConsentFilterHandler initiate:self->consentFilter withServerConfig:serverConfig];
+                        strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:consentFilter withServerConfig:serverConfig];
                     }
                     
                     // initialize integrationOperationMap
@@ -162,10 +161,11 @@ typedef enum {
                     
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
+                        NSArray <RSServerDestination *> *consentedDestinations = strongSelf->consentFilterHandler != nil ? [strongSelf->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
                         [RSLogger logDebug:@"EventRepository: initiating factories"];
-                        [strongSelf __initiateFactories: serverConfig.destinations];
+                        [strongSelf __initiateFactories:consentedDestinations];
                         [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
-                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
+                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:consentedDestinations];
                     } else {
                         strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
@@ -208,11 +208,7 @@ typedef enum {
             }
             for (id<RSIntegrationFactory> factory in self->config.factories) {
                 RSServerDestination *destination = [destinationDict objectForKey:factory.key];
-                BOOL isConsented = YES;
-                if (consentFilterHandler != nil) {
-                    isConsented = [consentFilterHandler isFactoryConsented:factory.key];
-                }
-                if (destination != nil && destination.isDestinationEnabled == YES && isConsented) {
+                if (destination != nil && destination.isDestinationEnabled == YES) {
                     NSDictionary *destinationConfig = destination.destinationConfig;
                     if (destinationConfig != nil) {
                         id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:config];
@@ -481,6 +477,7 @@ typedef enum {
         }
     });
     [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
+    message = [self applyConsents:message];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     [self makeFactoryDump: message];
@@ -514,6 +511,13 @@ typedef enum {
         [mutableIntegrations setObject:@YES forKey:@"All"];
         message.integrations = mutableIntegrations;
     }
+}
+
+- (RSMessage *)applyConsents:(RSMessage *)message {
+    if (consentFilterHandler != nil) {
+        return [consentFilterHandler applyConsents:message];
+    }
+    return message;
 }
 
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig {

@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    id<RSConsentFilter> consentFilter;
     RSConsentFilterHandler *consentFilterHandler;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
@@ -66,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption; // Added this method in header for testing purpose
-//- (RSMessage *)applyConsents:(RSMessage *)message withConsentFilter:(RSConsentFilter *)consentFilter; // Added this method in header for testing purpose
+- (RSMessage *)applyConsents:(RSMessage *)message; // Added this method in header for testing purpose
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig; // Added this method in header for testing purpose
 
 @end

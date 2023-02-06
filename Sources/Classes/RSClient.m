@@ -49,10 +49,7 @@ static NSString* _deviceToken = nil;
             if (options != nil) {
                 _defaultOptions = options;
             }
-            RSConfig *_config = [[RSConfig alloc] init];
-            if (config != nil) {
-                _config = config;
-            }            
+            RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];            
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance consentFilter:consentFilter];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];
