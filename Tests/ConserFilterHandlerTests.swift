@@ -64,12 +64,14 @@ final class ConserFilterHandlerTests: XCTestCase {
     func test_applyConsents_EmptyDestinationList() {
         let expected = [
             "test_destination_1": true as NSObject,
-            "test_destination_2": false as NSObject
+            "test_destination_2": false as NSObject,
+            "test_destination_4": false as NSObject,
+            "test_destination_5": false as NSObject
         ]
         
         let options = RSOption()
         options.putIntegration("test_destination_1", isEnabled: true)
-        options.putIntegration("test_destination_2", isEnabled: false)
+        options.putIntegration("test_destination_2", isEnabled: true)
         
         let message = RSMessageBuilder()
             .setEventName("Test Track")
@@ -90,7 +92,8 @@ final class ConserFilterHandlerTests: XCTestCase {
             "test_destination_1": false as NSObject,
             "test_destination_2": false as NSObject,
             "test_destination_4": false as NSObject,
-            "test_destination_22": true as NSObject
+            "test_destination_22": true as NSObject,
+            "test_destination_5": false as NSObject
         ]
         
         var serverConfig = RSServerConfigSource()
@@ -119,7 +122,8 @@ final class ConserFilterHandlerTests: XCTestCase {
             "test_destination_1": false as NSObject,
             "test_destination_2": false as NSObject,
             "test_destination_4": false as NSObject,
-            "test_destination_22": true as NSObject
+            "test_destination_22": true as NSObject,
+            "test_destination_5": false as NSObject
         ]
 
         var serverConfig = RSServerConfigSource()

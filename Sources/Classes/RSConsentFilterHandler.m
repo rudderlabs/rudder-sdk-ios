@@ -65,9 +65,9 @@ static dispatch_queue_t queue;
     __block RSMessage *updatedMessage = message;
     __block NSMutableDictionary <NSString *, NSObject *> *consentedMessageIntegrationsDict = [[NSMutableDictionary alloc] initWithDictionary:message.integrations];
     dispatch_sync(queue, ^{
-        [message.integrations enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSObject * _Nonnull obj, BOOL * _Nonnull stop) {
-            if (consentedIntegrationsDict[key]) {
-                [consentedMessageIntegrationsDict setValue:consentedIntegrationsDict[key] forKey:key];
+        [consentedIntegrationsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (![obj boolValue]) {
+                [consentedMessageIntegrationsDict setObject:[NSNumber numberWithBool:false] forKey:key];
             }
         }];
         updatedMessage.integrations = consentedMessageIntegrationsDict;
