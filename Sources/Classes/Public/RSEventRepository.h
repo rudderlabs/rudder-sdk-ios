@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSClient *client;
 }
 
-+ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client consentFilter:(id <RSConsentFilter> __nullable)consentFilter;
++ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;

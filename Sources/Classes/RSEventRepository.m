@@ -24,11 +24,11 @@ typedef enum {
     WRONGWRITEKEY =2
 } NETWORKSTATE;
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client consentFilter:(id <RSConsentFilter> __nullable)consentFilter {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init:writeKey config:config client:client consentFilter:consentFilter];
+            _instance = [[self alloc] init:writeKey config:config client:client];
         });
     }
     return _instance;
@@ -44,7 +44,7 @@ typedef enum {
  * 5. start processor thread
  * 6. initiate factories
  * */
-- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client consentFilter:(id <RSConsentFilter> __nullable)_consentFilter {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
@@ -93,7 +93,7 @@ typedef enum {
         [self->preferenceManager performMigration];
         
         [RSLogger logDebug:@"EventRepository: initiating processor and factories"];
-        [self __initiateSDK:_consentFilter];
+        [self __initiateSDK];
         
         [RSLogger logDebug:@"EventRepository: Initiating User Session Manager"];
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
@@ -132,7 +132,7 @@ typedef enum {
     });
 }
 
-- (void) __initiateSDK:(id<RSConsentFilter> __nullable)consentFilter {
+- (void) __initiateSDK {
     __weak RSEventRepository *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         RSEventRepository *strongSelf = weakSelf;
@@ -151,9 +151,9 @@ typedef enum {
                     [strongSelf __initiateProcessor];
                     
                     // initiate consent filter handler
-                    if (consentFilter != nil) {
+                    if (strongSelf->config.consentFilter != nil) {
                         [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
-                        strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:consentFilter withServerConfig:serverConfig];
+                        strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
                     }
                     
                     // initiate the native SDK factories if destinations are present

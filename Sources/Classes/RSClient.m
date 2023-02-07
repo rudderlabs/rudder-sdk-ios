@@ -26,22 +26,18 @@ static NSString* _deviceToken = nil;
 }
 
 + (instancetype)getInstance:(NSString *)writeKey {
-    return [self initiate:writeKey config:nil options:nil consentFilter:nil];
+    return [self initiate:writeKey config:nil options:nil];
 }
 
 + (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config options:(RSOption*)options {
-    return [self initiate:writeKey config:config options:options consentFilter:nil];
+    return [self initiate:writeKey config:config options:options];
 }
 
 + (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config {
-    return [self initiate:writeKey config:config options:nil consentFilter:nil];
+    return [self initiate:writeKey config:config options:nil];
 }
 
-+ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig* __nullable)config options:(RSOption* __nullable)options consentFilter:(id <RSConsentFilter> __nullable)consentFilter {
-    return [self initiate:writeKey config:config options:options consentFilter:consentFilter];
-}
-
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig * __nullable)config options:(RSOption * __nullable)options consentFilter:(id <RSConsentFilter> __nullable)consentFilter {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig * __nullable)config options:(RSOption * __nullable)options {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -50,7 +46,7 @@ static NSString* _deviceToken = nil;
                 _defaultOptions = options;
             }
             RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];            
-            _repository = [RSEventRepository initiate:writeKey config:_config client:_instance consentFilter:consentFilter];
+            _repository = [RSEventRepository initiate:writeKey config:_config client:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];
             }

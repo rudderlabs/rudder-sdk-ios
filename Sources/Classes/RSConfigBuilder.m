@@ -112,6 +112,14 @@
     return self;
 }
 
+- (instancetype)withConsentFilter:(id <RSConsentFilter> _Nonnull)consentFilter {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.consentFilter = consentFilter;
+    return self;
+}
+
 - (instancetype)withConfigRefreshInteval:(int)configRefreshInterval {
     if (config == nil) {
         config = [[RSConfig alloc] init];
