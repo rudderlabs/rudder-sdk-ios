@@ -144,7 +144,10 @@ typedef enum {
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
-                    self->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    if (strongSelf->dataPlaneUrl == nil) {
+                        [NSException raise:@"Invalid dataPlaneUrl" format:@"The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl is mandatory for Free Plan users from version 1.10.0**"];
+                    }
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     

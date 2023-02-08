@@ -1,5 +1,5 @@
 PODS:
-  - Rudder (1.7.2)
+  - Rudder (1.9.0)
 
 DEPENDENCIES:
   - Rudder (from `.`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  Rudder: 473a45c60ca589c1f9bce568f4837c46a1b15de4
+  Rudder: 908fa6dd15d979aa51fa526d0087af08409743f7
 
 PODFILE CHECKSUM: b22a79db44ea2c78e3500063ff2c7312ef613413
 

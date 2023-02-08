@@ -101,7 +101,7 @@ class RudderTests: XCTestCase {
 }
 """
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataPlaneUrl("https://some.random.dataplane.com").build()
-        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig);
+        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig)
         rsServerConfigSource = rsServerConfigManager._parseConfig(configJson)
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://rudderstacgwyx-us.dataplane.rudderstack.com/")
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataResidencyServer(RSDataResidencyServer.EU).withDataPlaneUrl("https://some.random.dataplane.com").build()
@@ -179,7 +179,7 @@ class RudderTests: XCTestCase {
 }
 """
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataPlaneUrl("https://some.random.dataplane.com").build()
-        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig);
+        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig)
         rsServerConfigSource = rsServerConfigManager._parseConfig(configJson)
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://rudderstacgwyx-us.dataplane.rudderstack.com/")
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataResidencyServer(RSDataResidencyServer.EU).withDataPlaneUrl("https://some.random.dataplane.com").build()
@@ -257,7 +257,7 @@ class RudderTests: XCTestCase {
 }
 """
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataPlaneUrl("https://some.random.dataplane.com").build()
-        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig);
+        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig)
         rsServerConfigSource = rsServerConfigManager._parseConfig(configJson)
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://some.random.dataplane.com/")
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataResidencyServer(RSDataResidencyServer.EU).withDataPlaneUrl("https://some.random.dataplane.com").build()
@@ -326,7 +326,7 @@ class RudderTests: XCTestCase {
 }
 """
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataPlaneUrl("https://some.random.dataplane.com").build()
-        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig);
+        rsServerConfigManager = RSServerConfigManager(writeKey, rudderConfig: rsConfig)
         rsServerConfigSource = rsServerConfigManager._parseConfig(configJson)
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://some.random.dataplane.com/")
         
@@ -337,10 +337,10 @@ class RudderTests: XCTestCase {
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://some.random.dataplane.com/")
         
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataPlaneUrl("https::/somerandomdataplanecom").build()
-        XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://hosted.rudderlabs.com/")
+        XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), nil)
         
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).build()
-        XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), "https://hosted.rudderlabs.com/")
+        XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), nil)
         
     }
 }
