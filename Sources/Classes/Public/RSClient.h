@@ -14,6 +14,7 @@
 #import "RSMessageBuilder.h"
 #import "RSTraits.h"
 #import "RSContext.h"
+#import "RSConsentFilter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) getInstance:(NSString*) writeKey;
 + (instancetype) getInstance:(NSString*) writeKey config:(RSConfig*) config;
 + (instancetype) getInstance:(NSString *)writeKey config: (RSConfig*) config options: (RSOption*) options;
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig* __nullable)config options:(RSOption* __nullable)options consentFilter:(id <RSConsentFilter> __nullable)consentFilter;
 
 - (void) trackMessage:(RSMessage*) message __attribute((deprecated("Discontinuing support. Use track method instead.")));
 - (void) trackWithBuilder:(RSMessageBuilder*) builder __attribute((deprecated("Discontinuing support. Use track method instead.")));
