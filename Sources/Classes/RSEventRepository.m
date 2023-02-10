@@ -149,7 +149,7 @@ typedef enum {
                     strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
                     if (strongSelf->dataPlaneUrl == nil) {
                         [RSLogger logError:@"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl is mandatory for Free Plan users from version 1.11.0**"];
-                        break;
+                        return;
                     }
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
