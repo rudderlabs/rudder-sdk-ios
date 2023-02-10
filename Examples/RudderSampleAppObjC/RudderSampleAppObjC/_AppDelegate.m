@@ -30,7 +30,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withEnableBackgroundMode:YES];
-//    [builder withDataPlaneUrl:@"http://localhost:8080"];
+    [builder withDataPlaneUrl:@"http://localhost:8080"];
     [builder withDataResidencyServer:US];
     [builder withCustomFactory:[CustomFactory instance]];
     [RSClient getInstance:@"1wvsoF3Kx2SczQNlx1dvcqW9ODW" config:[builder build]];

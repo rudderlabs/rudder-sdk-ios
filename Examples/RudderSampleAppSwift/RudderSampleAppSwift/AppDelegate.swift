@@ -19,16 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
-//            .withDataPlaneUrl("http://localhost:8080")
-            .withControlPlaneUrl("https://api.dev.rudderlabs.com")
+            .withDataPlaneUrl("http://localhost:8080")
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
             .withSessionTimeoutMillis(30000)
-        RSClient.getInstance("2CYw61Oy8Wsrkh0ZHf65QDLYpDJ", config: builder.build())
+        RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
         
         
-        RSClient.sharedInstance()?.track("track_1")
+//        RSClient.sharedInstance()?.track("track_1")
         
 //        RSClient.putDeviceToken("device_token")
 //        RSClient.sharedInstance()?.getContext().putAdvertisementId("advertising_id")
