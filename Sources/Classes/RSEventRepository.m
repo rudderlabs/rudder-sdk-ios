@@ -10,6 +10,7 @@
 #import "RSElementCache.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
+#import "RSConsentFilterHandler.h"
 
 #import "WKInterfaceController+RSScreen.h"
 #import "UIViewController+RSScreen.h"
@@ -23,11 +24,11 @@ typedef enum {
     WRONGWRITEKEY =2
 } NETWORKSTATE;
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init:writeKey config:config];
+            _instance = [[self alloc] init:writeKey config:config client:client];
         });
     }
     return _instance;
@@ -43,7 +44,7 @@ typedef enum {
  * 5. start processor thread
  * 6. initiate factories
  * */
-- (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
@@ -52,6 +53,7 @@ typedef enum {
         self->areFactoriesInitialized = NO;
         self->isSDKEnabled = YES;
         self->isSDKInitialized = NO;
+        self->client = _client;
         
         writeKey = _writeKey;
         config = _config;
@@ -146,28 +148,25 @@ typedef enum {
                 if  (strongSelf->isSDKEnabled) {
                     strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
                     if (strongSelf->dataPlaneUrl == nil) {
-                        [NSException raise:@"Invalid dataPlaneUrl" format:@"The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl is mandatory for Free Plan users from version 1.10.0**"];
+                        [RSLogger logError:@"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl is mandatory for Free Plan users from version 1.11.0**"];
+                        break;
                     }
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     
-                    // initialize integrationOperationMap
-                    strongSelf->integrationOperationMap = [[NSMutableDictionary alloc] init];
+                    // initiate consent filter handler
+                    if (strongSelf->config.consentFilter != nil) {
+                        [RSLogger logDebug:@"EventRepository: initiating consentFilter"];
+                        strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
+                    }
                     
                     // initiate the native SDK factories if destinations are present
-                    if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                        [RSLogger logDebug:@"EventRepository: initiating factories"];
-                        [strongSelf __initiateFactories: serverConfig.destinations];
-                        [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
-                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
-                    } else {
-                        strongSelf->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
-                        [RSLogger logDebug:@"EventRepository: no device mode present"];
-                    }
+                    [strongSelf __initiateNativeFactories:serverConfig];
                     
                     // initiate custom factories
                     [strongSelf __initiateCustomFactories];
                     strongSelf->areFactoriesInitialized = YES;
+                    
                     [strongSelf __replayMessageQueue];
                     
                 } else {
@@ -187,6 +186,22 @@ typedef enum {
     });
 }
 
+- (void)__initiateNativeFactories:(RSServerConfigSource *)serverConfig {
+    // initialize integrationOperationMap
+    integrationOperationMap = [[NSMutableDictionary alloc] init];
+    
+    if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
+        NSArray <RSServerDestination *> *consentedDestinations = consentFilterHandler != nil ? [consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
+        [RSLogger logDebug:@"EventRepository: initiating factories"];
+        [self __initiateFactories:consentedDestinations];
+        [RSLogger logDebug:@"EventRepository: initiating event filtering plugin for device mode destinations"];
+        eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:consentedDestinations];
+    } else {
+        eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init];
+        [RSLogger logDebug:@"EventRepository: no device mode present"];
+    }
+}
+
 - (void) __initiateFactories : (NSArray*) destinations {
     if (self->config == nil || config.factories == nil || config.factories.count == 0) {
         [RSLogger logInfo:@"EventRepository: No native SDK is found in the config"];
@@ -204,7 +219,7 @@ typedef enum {
                 if (destination != nil && destination.isDestinationEnabled == YES) {
                     NSDictionary *destinationConfig = destination.destinationConfig;
                     if (destinationConfig != nil) {
-                        id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:[RSClient sharedInstance] rudderConfig:self->config];
+                        id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:config];
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating native SDK factory %@", factory.key]];
                         [integrationOperationMap setValue:nativeOp forKey:factory.key];
                         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated native SDK factory %@", factory.key]];
@@ -222,7 +237,7 @@ typedef enum {
         return;
     }
     for (id<RSIntegrationFactory> factory in self->config.customFactories) {
-        id<RSIntegration> nativeOp = [factory initiate:@{} client:[RSClient sharedInstance] rudderConfig:self->config];
+        id<RSIntegration> nativeOp = [factory initiate:@{} client:client rudderConfig:self->config];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiating custom factory %@", factory.key]];
         [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"Initiated custom SDK factory %@", factory.key]];
@@ -469,31 +484,9 @@ typedef enum {
             return;
         }
     });
-    if([message.integrations count]==0){
-        if(RSClient.getDefaultOptions!=nil &&
-           RSClient.getDefaultOptions.integrations!=nil &&
-           [RSClient.getDefaultOptions.integrations count]!=0){
-            message.integrations = RSClient.getDefaultOptions.integrations;
-        }
-        else{
-            message.integrations = @{@"All": @YES};
-        }
-    }
-    // If `All` is absent in the integrations object we will set it to true for making All is true by default
-    if(message.integrations[@"All"]==nil)
-    {
-        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
-        [mutableIntegrations setObject:@YES forKey:@"All"];
-        message.integrations = mutableIntegrations;
-        
-    }
-    
-    if([self->userSession getSessionId] != nil) {
-        [message setSessionData: self->userSession];
-    }
-    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
-        [self->userSession updateLastEventTimeStamp];
-    }
+    [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
+    message = [self applyConsents:message];
+    [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
@@ -508,6 +501,40 @@ typedef enum {
     }
     
     [self->dbpersistenceManager saveEvent:jsonString];
+}
+
+- (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {
+    if ([message.integrations count] == 0) {
+        if(defaultOption != nil && defaultOption.integrations != nil && [defaultOption.integrations count] != 0) {
+            message.integrations = defaultOption.integrations;
+        }
+        else{
+            message.integrations = @{@"All": @YES};
+        }
+    }
+    
+    // If `All` is absent in the integrations object we will set it to true for making All is true by default
+    if (message.integrations[@"All"] == nil) {
+        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
+        [mutableIntegrations setObject:@YES forKey:@"All"];
+        message.integrations = mutableIntegrations;
+    }
+}
+
+- (RSMessage *)applyConsents:(RSMessage *)message {
+    if (consentFilterHandler != nil) {
+        return [consentFilterHandler applyConsents:message];
+    }
+    return message;
+}
+
+- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)_userSession andRudderConfig:(RSConfig *)rudderConfig {
+    if([_userSession getSessionId] != nil) {
+        [message setSessionData: _userSession];
+    }
+    if(rudderConfig.trackLifecycleEvents && rudderConfig.automaticSessionTracking) {
+        [_userSession updateLastEventTimeStamp];
+    }
 }
 
 - (void) makeFactoryDump:(RSMessage *)message {
@@ -660,14 +687,14 @@ typedef enum {
     NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
     
     if (!previousVersion) {
-        [[RSClient sharedInstance] track:@"Application Installed" properties:@{
+        [client track:@"Application Installed" properties:@{
             @"version": currentVersion,
             @"build": currentBuildNumber
         }];
         [preferenceManager saveVersionNumber:currentVersion];
         [preferenceManager saveBuildNumber:currentBuildNumber];
     } else if (![previousVersion isEqualToString:currentVersion]) {
-        [[RSClient sharedInstance] track:@"Application Updated" properties:@{
+        [client track:@"Application Updated" properties:@{
             @"previous_version" : previousVersion ?: @"",
             @"version": currentVersion,
             @"previous_build": previousBuildNumber ?: @"",
@@ -692,7 +719,7 @@ typedef enum {
         [applicationOpenedProperties setObject:url forKey:@"url"];
     }
 #endif
-    [[RSClient sharedInstance] track:@"Application Opened" properties:applicationOpenedProperties];
+    [client track:@"Application Opened" properties:applicationOpenedProperties];
     
 }
 
@@ -723,7 +750,7 @@ typedef enum {
         [self->userSession startSessionIfExpired];
     }
     
-    [[RSClient sharedInstance] track:@"Application Opened" properties:@{
+    [client track:@"Application Opened" properties:@{
         @"from_background" : @YES
     }];
 }
@@ -732,7 +759,7 @@ typedef enum {
     if (!self->config.trackLifecycleEvents) {
         return;
     }
-    [[RSClient sharedInstance] track:@"Application Backgrounded"];
+    [client track:@"Application Backgrounded"];
 }
 
 - (void) __prepareScreenRecorder {

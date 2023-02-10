@@ -62,12 +62,12 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) updateOptOutTime: (long) updatedTime;
 - (long) getOptOutTime;
 
-- (void) saveSessionId: (long) sessionId;
-- (long) getSessionId;
+- (void) saveSessionId: (NSNumber *) sessionId;
+- (NSNumber * __nullable) getSessionId;
 - (void) clearSessionId;
 
-- (void) saveLastEventTimeStamp: (long) lastEventTimeStamp;
-- (long) getLastEventTimeStamp;
+- (void) saveLastEventTimeStamp: (NSNumber *) lastEventTimeStamp;
+- (NSNumber * __nullable) getLastEventTimeStamp;
 - (void) clearLastEventTimeStamp;
 
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus;

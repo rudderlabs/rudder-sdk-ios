@@ -214,11 +214,13 @@ static dispatch_queue_t queue;
 }
 
 - (void) setSessionData:(RSUserSession *) userSession {
-    dispatch_async(queue, ^{
-        self->_sessionId = [userSession getSessionId];
-        if([userSession getSessionStart]) {
-            self->_sessionStart = YES;
-            [userSession setSessionStart:NO];
+    dispatch_async(queue, ^{        
+        if ([userSession getSessionId] != nil) {
+            self->_sessionId = [userSession getSessionId];
+            if([userSession getSessionStart]) {
+                self->_sessionStart = YES;
+                [userSession setSessionStart:NO];
+            }
         }
     });
 }
@@ -245,7 +247,7 @@ static dispatch_queue_t queue;
             [tempDict setObject:_externalIds forKey:@"externalId"];
         }
         if (_sessionId != nil) {
-            [tempDict setObject:[NSNumber numberWithLong:_sessionId] forKey:@"sessionId"];
+            [tempDict setObject:_sessionId forKey:@"sessionId"];
             if(_sessionStart) {
                 [tempDict setObject:@YES forKey:@"sessionStart"];
             }

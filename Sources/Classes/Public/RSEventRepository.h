@@ -13,6 +13,8 @@
 #import "RSConfig.h"
 #import "RSPreferenceManager.h"
 #import "RSEventFilteringPlugin.h"
+#import "RSConsentFilter.h"
+#import "RSConsentFilterHandler.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,10 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
     RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
+    RSConsentFilterHandler *consentFilterHandler;
     NSMutableArray *eventReplayMessage;
     RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
-    RSUserSession * userSession;
+    RSUserSession *userSession;
     BOOL firstForeGround;
     BOOL areFactoriesInitialized;
     BOOL isSemaphoreReleased;
@@ -43,9 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSLock* lock;
     dispatch_source_t source;
     dispatch_queue_t queue;
+    RSClient *client;
 }
 
-+ (instancetype) initiate: (NSString*) writeKey config: (RSConfig*) config;
++ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
@@ -59,6 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (RSConfig* _Nullable) getConfig;
 - (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+
+- (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption; // Added this method in header for testing purpose
+- (RSMessage *)applyConsents:(RSMessage *)message; // Added this method in header for testing purpose
+- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig; // Added this method in header for testing purpose
 
 @end
 
