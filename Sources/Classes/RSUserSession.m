@@ -43,12 +43,12 @@ static dispatch_queue_t queue;
 }
 
 - (void) startSession:(long)sessionId {
-        dispatch_sync(queue, ^{
-            self->sessionId = sessionId;
-            [self->preferenceManager saveSessionId:self->sessionId];
-            self->sessionStart = YES;
-            [RSLogger logDebug:[NSString stringWithFormat:@"RSUserSession: startSession: Starting new session with id: %ld", sessionId]];
-        });
+    dispatch_sync(queue, ^{
+        self->sessionId = [[NSNumber alloc] initWithLong:sessionId];
+        [self->preferenceManager saveSessionId:self->sessionId];
+        self->sessionStart = YES;
+        [RSLogger logDebug:[NSString stringWithFormat:@"RSUserSession: startSession: Starting new session with id: %ld", sessionId]];
+    });
 }
 
 - (void) startSessionIfExpired {
@@ -65,7 +65,7 @@ static dispatch_queue_t queue;
         return YES;
     __block NSTimeInterval timeDifference;
     dispatch_sync(queue, ^{
-        timeDifference = fabs([RSUtils getTimeStampLong] - self->lastEventTimeStamp);
+        timeDifference = labs([RSUtils getTimeStampLong] - [self->lastEventTimeStamp longValue]);
     });
     if (timeDifference > (self->sessionInActivityTimeOut / 1000)) {
         return YES;
@@ -89,8 +89,10 @@ static dispatch_queue_t queue;
     });
 }
 
-- (long) getSessionId {
-    __block long sessionId;
+- (NSNumber * __nullable) getSessionId {
+    if(self->sessionId == nil)
+        return nil;
+    __block NSNumber *sessionId;
     dispatch_sync(queue, ^{
         sessionId = self->sessionId;
     });
@@ -113,7 +115,7 @@ static dispatch_queue_t queue;
 
 - (void) updateLastEventTimeStamp {
     dispatch_sync(queue, ^{
-        self->lastEventTimeStamp = [RSUtils getTimeStampLong];
+        self->lastEventTimeStamp = [[NSNumber alloc] initWithLong:[RSUtils getTimeStampLong]];
         [self->preferenceManager saveLastEventTimeStamp:lastEventTimeStamp];
     });
 }

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSEnums.h"
+#import "RSConsentFilter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withControlPlaneURL:(NSURL*)controlPlaneURL;
 - (instancetype)withFactory:(id <RSIntegrationFactory> _Nonnull)factory;
 - (instancetype)withCustomFactory:(id <RSIntegrationFactory> _Nonnull)customFactory;
+- (instancetype)withConsentFilter:(id <RSConsentFilter> _Nonnull)consentFilter;
 - (RSConfig*)build;
 
 @end

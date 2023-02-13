@@ -14,6 +14,7 @@
 #import "RSMessageBuilder.h"
 #import "RSTraits.h"
 #import "RSContext.h"
+#import "RSConsentFilter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

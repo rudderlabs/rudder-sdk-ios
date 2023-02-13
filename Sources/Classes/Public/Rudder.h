@@ -72,7 +72,6 @@
 #import "UIViewController+RSScreen.h"
 #import "WKInterfaceController+RSScreen.h"
 #import "RSApp.h"
-
 //! Project version number for RS.
 FOUNDATION_EXPORT double RSVersionNumber;
 
