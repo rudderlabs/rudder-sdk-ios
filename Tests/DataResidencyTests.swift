@@ -105,6 +105,9 @@ class DataResidencyTests: XCTestCase {
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataResidencyServer(RSDataResidencyServer.US).build()
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), nil)
         
+        rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).withDataResidencyServer(RSDataResidencyServer.EU).build()
+        XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), nil)
+        
         rsConfig = RSConfigBuilder().withLoglevel(RSLogLevelVerbose).build()
         XCTAssertEqual(RSUtils.getDataPlaneUrl(from: rsServerConfigSource, andRSConfig: rsConfig), nil)
     }
