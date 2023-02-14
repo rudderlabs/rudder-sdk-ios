@@ -147,7 +147,7 @@
     return [url stringByAppendingString:@"/"];
 }
 
-+ (NSString *) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig {
++ (NSString * __nullable) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig {
     NSString* dataResidencyUrl = [serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer];
     if(dataResidencyUrl == nil) {
         return [RSUtils appendSlashToUrl:rsConfig.dataPlaneUrl];

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (instancetype)withEndPointUrl:(NSString*)endPointUrl __attribute((deprecated("Use withDataPlaneUrl instead.")));
-- (instancetype)withDataPlaneUrl:(NSString*)dataPlaneUrl;
+- (instancetype)withDataPlaneUrl:(NSString* __nullable)dataPlaneUrl;
 - (instancetype)withDataPlaneURL:(NSURL*)dataPlaneURL;
 - (instancetype)withDataResidencyServer:(RSDataResidencyServer) dataResidencyServer;
 - (instancetype)withFlushQueueSize:(int)flushQueueSize;

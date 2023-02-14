@@ -12,7 +12,15 @@
 		ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */; };
 		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */; };
-		ED7DFD81298C061A00ED5A8E /* RudderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD80298C061A00ED5A8E /* RudderTests.swift */; };
+		ED20F4E8299605F600F3FD0E /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */; };
+		ED20F4EF2996078B00F3FD0E /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */; };
+		ED20F4F02996078B00F3FD0E /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */; };
+		ED20F4F12996078B00F3FD0E /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */; };
+		ED20F4F22996078B00F3FD0E /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */; };
+		ED20F4F32996078B00F3FD0E /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */; };
+		ED20F4F42996078B00F3FD0E /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */; };
+		ED20F4F62996083B00F3FD0E /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED20F4F52996083B00F3FD0E /* TestUtils.swift */; };
+		ED7DFD81298C061A00ED5A8E /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
 		ED7DFE39298C091800ED5A8E /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
 		ED7DFE3A298C091800ED5A8E /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */; };
@@ -189,6 +197,8 @@
 		ED7DFEE7298C091800ED5A8E /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
 		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
+		EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */; };
+		EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,7 +220,15 @@
 		ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConserFilterHandlerTests.swift; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
-		ED7DFD80298C061A00ED5A8E /* RudderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderTests.swift; sourceTree = "<group>"; };
+		ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "no-dataresidency.json"; sourceTree = "<group>"; };
+		ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4F52996083B00F3FD0E /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigSource.m; sourceTree = "<group>"; };
 		ED7DFD86298C091800ED5A8E /* RSTraits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraits.m; sourceTree = "<group>"; };
 		ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLibraryInfo.m; sourceTree = "<group>"; };
@@ -398,6 +416,8 @@
 		ED857DF22912754400B7BFCE /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilterHandler.h; sourceTree = "<group>"; };
 		ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilterHandler.m; sourceTree = "<group>"; };
+		EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-eu-true.json"; sourceTree = "<group>"; };
+		EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,11 +473,29 @@
 		ED04A23D29839DCC0080A88D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ED7DFD80298C061A00ED5A8E /* RudderTests.swift */,
+				ED20F4E62996059A00F3FD0E /* Fixtures */,
 				ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */,
+				ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */,
 				ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */,
+				ED20F4F52996083B00F3FD0E /* TestUtils.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		ED20F4E62996059A00F3FD0E /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */,
+				ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */,
+				ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */,
+				ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */,
+				EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */,
+				EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */,
+				ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */,
+				ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */,
+				ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		ED7DFD84298C091800ED5A8E /* Classes */ = {
@@ -892,6 +930,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */,
+				EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */,
+				ED20F4EF2996078B00F3FD0E /* eu-dataresidency-default-true.json in Resources */,
+				ED20F4F02996078B00F3FD0E /* multi-dataresidency-default-false.json in Resources */,
+				ED20F4F32996078B00F3FD0E /* eu-dataresidency-default-false.json in Resources */,
+				ED20F4F42996078B00F3FD0E /* us-dataresidency-default-false.json in Resources */,
+				ED20F4F12996078B00F3FD0E /* us-dataresidency-default-true.json in Resources */,
+				ED20F4F22996078B00F3FD0E /* no-dataresidency.json in Resources */,
+				ED20F4E8299605F600F3FD0E /* multi-dataresidency-default-true.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,9 +1041,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED7DFD81298C061A00ED5A8E /* RudderTests.swift in Sources */,
+				ED7DFD81298C061A00ED5A8E /* DataResidencyTests.swift in Sources */,
 				ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */,
 				ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */,
+				ED20F4F62996083B00F3FD0E /* TestUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
