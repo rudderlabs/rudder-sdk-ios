@@ -15,7 +15,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _dataPlaneUrl = RSDataPlaneUrl;
+        _dataPlaneUrl = nil;
         _dataResidencyServer = US;
         _flushQueueSize = RSFlushQueueSize;
         _dbCountThreshold = RSDBCountThreshold;
