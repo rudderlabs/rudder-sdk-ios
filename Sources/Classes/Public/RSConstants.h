@@ -50,6 +50,10 @@ extern NSString* const EVENT_FILTERING_OPTION;
 // constant used in retrieving event name form the white/black list events from the destination config
 extern NSString* const EVENT_NAME;
 
+// Error messages
+extern NSString *const WRITE_KEY_ERROR;
+extern NSString *const DATA_PLANE_URL_ERROR;
+extern NSString *const DATA_PLANE_URL_FLUSH_ERROR;
 @end
 
 NS_ASSUME_NONNULL_END

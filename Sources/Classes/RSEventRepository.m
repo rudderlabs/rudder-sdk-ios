@@ -148,7 +148,7 @@ typedef enum {
                 if  (strongSelf->isSDKEnabled) {
                     strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
                     if (strongSelf->dataPlaneUrl == nil) {
-                        [RSLogger logError:@"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl or dataResidencyServer(for Enterprise Users only) is mandatory from version 1.11.0**"];
+                        [RSLogger logError:DATA_PLANE_URL_ERROR];
                         return;
                     }
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
@@ -320,7 +320,7 @@ typedef enum {
 
 -(void) flush {
     if (self->dataPlaneUrl == nil) {
-        [RSLogger logError:@"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid. Ignoring flush call. \n**Note: dataPlaneUrl or dataResidencyServer(for Enterprise Users only) is mandatory from version 1.11.0**\n"];
+        [RSLogger logError:DATA_PLANE_URL_FLUSH_ERROR];
         return;
     }
     if (self->areFactoriesInitialized) {
@@ -339,7 +339,7 @@ typedef enum {
 
 - (void)flushSync {
     if (self->dataPlaneUrl == nil) {
-        [RSLogger logError:@"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid. Ignoring flush call. \n**Note: dataPlaneUrl or dataResidencyServer(for Enterprise Users only) is mandatory from version 1.11.0**\n"];
+        [RSLogger logError:DATA_PLANE_URL_FLUSH_ERROR];
         return;
     }
     [lock lock];

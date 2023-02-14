@@ -39,7 +39,7 @@ static NSString* _deviceToken = nil;
 
 + (instancetype)initiate:(NSString *)writeKey config:(RSConfig * __nullable)config options:(RSOption * __nullable)options {
     if ([writeKey length] == 0) {
-        [RSLogger logError:@"Invalid writeKey: Provided writeKey is empty"];
+        [RSLogger logError:WRITE_KEY_ERROR];
     }
     if (_instance == nil) {
         static dispatch_once_t onceToken;
