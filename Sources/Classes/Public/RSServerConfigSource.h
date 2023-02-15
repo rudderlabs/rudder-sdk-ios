@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSServerDestination.h"
+#import "RSEnums.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

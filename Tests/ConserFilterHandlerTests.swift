@@ -60,40 +60,13 @@ final class ConserFilterHandlerTests: XCTestCase {
         }
         XCTAssertEqual(filteredDisplayNames, expectedDisplayNames)
     }
-    
-    func test_applyConsents_EmptyDestinationList() {
-        let expected = [
-            "test_destination_1": true as NSObject,
-            "test_destination_2": false as NSObject,
-            "test_destination_4": false as NSObject,
-            "test_destination_5": false as NSObject
-        ]
         
-        let options = RSOption()
-        options.putIntegration("test_destination_1", isEnabled: true)
-        options.putIntegration("test_destination_2", isEnabled: true)
-        
-        let message = RSMessageBuilder()
-            .setEventName("Test Track")
-            .setRSOption(options)
-            .build()
-        
-        let serverConfig = RSServerConfigSource()
-        let consentFilterHandler = RSConsentFilterHandler.initiate(TestConsentFilter(), withServerConfig: serverConfig)
-        
-        let updatedMessage = consentFilterHandler.applyConsents(message)
-        XCTAssertNotNil(updatedMessage)
-        XCTAssertEqual(updatedMessage.event, "Test Track")
-        XCTAssertEqual(updatedMessage.integrations, expected)
-    }
-    
-    func test_applyConsents() {
+    func test_applyConsents_Integrations() {
         let expected = [
             "test_destination_1": false as NSObject,
-            "test_destination_2": false as NSObject,
-            "test_destination_4": false as NSObject,
-            "test_destination_22": true as NSObject,
-            "test_destination_5": false as NSObject
+            "test_destination_2": true as NSObject,
+            "test_destination_4": true as NSObject,
+            "test_destination_22": true as NSObject
         ]
         
         var serverConfig = RSServerConfigSource()
@@ -117,13 +90,30 @@ final class ConserFilterHandlerTests: XCTestCase {
         XCTAssertEqual(updatedMessage.integrations, expected)
     }
     
+    func test_applyConsents() {
+        let expected = ["CAT03", "CAT05", "CAT08"]
+                        
+        RSElementCache.initiate()
+        let message = RSMessageBuilder()
+            .setEventName("Test Track")
+            .build()
+        
+        let serverConfig = RSServerConfigSource()
+        let consentFilterHandler = RSConsentFilterHandler.initiate(TestConsentFilter(), withServerConfig: serverConfig)
+        
+        let updatedMessage = consentFilterHandler.applyConsents(message)
+        XCTAssertNotNil(updatedMessage)
+        XCTAssertEqual(updatedMessage.event, "Test Track")
+        let consentManagement = (updatedMessage.context.dict()["consentManagement"] as! [String: [String]])["deniedConsentIds"]
+        XCTAssertEqual(Set(consentManagement!), Set(expected))
+    }
+    
     func test_applyConsents_ThreadSafety() {
         let expected = [
             "test_destination_1": false as NSObject,
-            "test_destination_2": false as NSObject,
-            "test_destination_4": false as NSObject,
-            "test_destination_22": true as NSObject,
-            "test_destination_5": false as NSObject
+            "test_destination_2": true as NSObject,
+            "test_destination_4": true as NSObject,
+            "test_destination_22": true as NSObject
         ]
 
         var serverConfig = RSServerConfigSource()
@@ -179,5 +169,9 @@ extension ConserFilterHandlerTests {
 class TestConsentFilter: RSConsentFilter {
     func filterConsentedDestinations(_ destinations: [RSServerDestination]) -> [String: NSNumber]? {
         return ["test_destination_2": NSNumber(booleanLiteral: false), "test_destination_4": NSNumber(booleanLiteral: false), "test_destination_5": NSNumber(booleanLiteral: false)]
+    }
+    
+    func getConsentCategoriesDict() -> [String : NSNumber]? {
+        return ["CAT01": true, "CAT02": true, "CAT03": false, "CAT04": true, "CAT05": false, "CAT06": true, "CAT07": true, "CAT08": false]
     }
 }

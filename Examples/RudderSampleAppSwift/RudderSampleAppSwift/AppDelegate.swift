@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
             .withSessionTimeoutMillis(30000)
+//            .withConsentFilter(CustomFilter())
         RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
         
         

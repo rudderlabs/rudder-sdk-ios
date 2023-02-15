@@ -8,13 +8,17 @@
 #import <Foundation/Foundation.h>
 #import "RSServerConfigSource.h"
 #import "RSConsentFilter.h"
-#import "RSIntegrationFactory.h"
+#import "RSMessage.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class RSMessage;
+@class RSServerConfigSource;
 
 @interface RSConsentFilterHandler : NSObject {
     RSServerConfigSource *serverConfig;
     NSDictionary <NSString *, NSNumber *> *consentedIntegrationsDict;
+    NSArray <NSString *> *deniedConsentIds;
 }
 
 + (instancetype)initiate:(id<RSConsentFilter>)consentFilter withServerConfig:(RSServerConfigSource *)serverConfig;

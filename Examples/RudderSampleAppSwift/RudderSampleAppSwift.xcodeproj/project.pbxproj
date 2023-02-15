@@ -15,6 +15,7 @@
 		06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06EABC9024665E480043D720 /* LaunchScreen.storyboard */; };
 		D55B72537AC03E9A3F7524FA /* Pods_RudderSampleAppSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FE82D63F0324B1B29DBA09 /* Pods_RudderSampleAppSwift.framework */; };
 		ED00467228A64DE50007206F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00467128A64DE50007206F /* SessionViewController.swift */; };
+		EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		95FE82D63F0324B1B29DBA09 /* Pods_RudderSampleAppSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E32C35F6B909BB22A7F0553E /* Pods-RudderSampleAppSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.release.xcconfig"; sourceTree = "<group>"; };
 		ED00467128A64DE50007206F /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
+		EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		FD4DAD4049ABA2A60254AD71 /* Pods-RudderSampleAppSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +75,7 @@
 				06EABC8E24665E480043D720 /* Assets.xcassets */,
 				06EABC9024665E480043D720 /* LaunchScreen.storyboard */,
 				06EABC9324665E480043D720 /* Info.plist */,
+				EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */,
 			);
 			path = RudderSampleAppSwift;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				ED00467228A64DE50007206F /* SessionViewController.swift in Sources */,
 				06EABC8624665E470043D720 /* AppDelegate.swift in Sources */,
 				06EABC8824665E470043D720 /* SceneDelegate.swift in Sources */,
+				EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
