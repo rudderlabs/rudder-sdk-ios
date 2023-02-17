@@ -115,7 +115,7 @@
             int messageId = sqlite3_column_int(queryStmt, 0);
             const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
             if (*queryResultCol1 == 0) {
-                [RSLogger logError:[[NSString alloc] initWithFormat:@"got corrupt data for messageId: %d", messageId]];
+                [RSLogger logError:[[NSString alloc] initWithFormat:@"got corrupt data for id: %d", messageId]];
                 continue;
             }
             NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
