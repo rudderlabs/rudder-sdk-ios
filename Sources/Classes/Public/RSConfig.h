@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSConfig : NSObject
 
-@property (nonatomic, nonnull) NSString *dataPlaneUrl;
+@property (nonatomic, nullable) NSString *dataPlaneUrl;
 @property (nonatomic) RSDataResidencyServer dataResidencyServer;
 @property (nonatomic) int flushQueueSize;
 @property (nonatomic) int dbCountThreshold;

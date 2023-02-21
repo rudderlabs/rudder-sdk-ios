@@ -1,0 +1,64 @@
+{
+    "isHosted": true,
+    "source": {
+        "config": {
+            "statsCollection": {
+                "errorReports": {
+                    "enabled": false
+                },
+                "metrics": {
+                    "enabled": false
+                }
+            }
+        },
+        "liveEventsConfig": {
+            
+        },
+        "dataplanes": {
+            "EU": [
+                {
+                    "url": "https://rudderstacgwyx-eu.dataplane.rudderstack.com",
+                    "default": true
+                }
+            ]
+        },
+        "id": "2GcaJMDRDWtZsZdeusASLcpyamz",
+        "name": "Android Dev 2",
+        "writeKey": "2GcaJLm1a8cSKbfCZdKNGn5XDcO",
+        "enabled": true,
+        "sourceDefinitionId": "1QGzOQGVLM35GgtteFH1vYCE0WT",
+        "createdBy": "2FkbV0e3wAJaiqxfFkWVqDrtT7I",
+        "workspaceId": "2FkbaBpkwsVa3A3B4ZMZ365BVC3",
+        "deleted": false,
+        "transient": false,
+        "secretVersion": null,
+        "createdAt": "2022-10-25T09:30:52.830Z",
+        "updatedAt": "2022-10-25T09:30:52.830Z",
+        "connections": [
+            {
+                "id": "2GcaQeqMFrit8Wju1xDuEA5KgU6",
+                "sourceId": "2GcaJMDRDWtZsZdeusASLcpyamz",
+                "destinationId": "2GcaQQ7ce7kPlhvnbQiINUXOa0h",
+                "enabled": true,
+                "deleted": false,
+                "createdAt": "2022-10-25T09:31:50.331Z",
+                "updatedAt": "2022-10-25T09:31:50.331Z"
+            }
+        ],
+        "destinations": [
+            
+        ],
+        "sourceDefinition": {
+            "options": null,
+            "config": null,
+            "configSchema": null,
+            "uiConfig": null,
+            "id": "1QGzOQGVLM35GgtteFH1vYCE0WT",
+            "name": "Android",
+            "displayName": "Android",
+            "category": null,
+            "createdAt": "2019-09-02T08:08:08.373Z",
+            "updatedAt": "2020-06-18T11:54:00.449Z"
+        }
+    }
+}

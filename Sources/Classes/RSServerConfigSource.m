@@ -36,7 +36,7 @@
             residenceDataPlanes = [self.dataPlanes objectForKey:@"US"];
     }
     
-    if(residenceDataPlanes == nil)
+    if(residenceDataPlanes == nil || [residenceDataPlanes count] == 0)
         return nil;
     for (NSDictionary* residenceDataPlane in residenceDataPlanes) {
         if([[residenceDataPlane objectForKey:@"default"] boolValue]) {

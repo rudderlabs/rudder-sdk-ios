@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
 + (BOOL) isValidURL:(NSURL*) url;
 + (NSString*) appendSlashToUrl:(NSString*) url;
-+ (NSString *) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig;
++ (NSString * __nullable) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

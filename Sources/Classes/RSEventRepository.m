@@ -146,7 +146,11 @@ typedef enum {
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
-                    self->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    if (strongSelf->dataPlaneUrl == nil) {
+                        [RSLogger logError:DATA_PLANE_URL_ERROR];
+                        return;
+                    }
                     [RSLogger logDebug:@"EventRepository: initiating processor"];
                     [strongSelf __initiateProcessor];
                     
@@ -315,6 +319,10 @@ typedef enum {
 }
 
 -(void) flush {
+    if (self->dataPlaneUrl == nil) {
+        [RSLogger logError:DATA_PLANE_URL_FLUSH_ERROR];
+        return;
+    }
     if (self->areFactoriesInitialized) {
         for (NSString *key in [self->integrationOperationMap allKeys]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"flushing native SDK for %@", key]];
@@ -330,6 +338,10 @@ typedef enum {
 }
 
 - (void)flushSync {
+    if (self->dataPlaneUrl == nil) {
+        [RSLogger logError:DATA_PLANE_URL_FLUSH_ERROR];
+        return;
+    }
     [lock lock];
     [self clearOldEvents];
     [RSLogger logDebug:@"Fetching events to flush to server in flush"];
