@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.0...v1.11.1) (2023-02-28)
+
+
+### Bug Fixes
+
+* ci ([4f8daef](https://github.com/rudderlabs/rudder-sdk-ios/commit/4f8daef57565a20f0a8c1b58ebf4cb1c0476a3cd))
+* ci draft ([a304efe](https://github.com/rudderlabs/rudder-sdk-ios/commit/a304efe72ad3c2f3208f55cc08d889ad93e45565))
+* semantic versioning issue ([2e5e184](https://github.com/rudderlabs/rudder-sdk-ios/commit/2e5e184bb6a7c9d6a5d84901c6f45e578bb73fdf))
+* swift package manager build issue ([320a600](https://github.com/rudderlabs/rudder-sdk-ios/commit/320a60098ddb983f02c1280c48ff985783e51fc8))
+
 ## [1.11.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.9.0...v1.11.0) (2023-02-21)
 
 
