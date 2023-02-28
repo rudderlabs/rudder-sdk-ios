@@ -24,6 +24,11 @@ let package = Package(
                 .headerSearchPath("Classes/Ecomm"),
                 .headerSearchPath("Classes/Ecomm/Events")
             ]
-        )
+        ),
+        .testTarget(
+            name: "RudderTests",
+            dependencies: ["Rudder"],
+            path: "Tests"
+        ),
     ]
 )
