@@ -31,14 +31,16 @@ jobs:
         with:
           node-version: 16
 
-      - name: Create Github Release
+      - name: Create Github Release & Tag
         id: create_release
         env:
           HUSKY: 0
           GITHUB_TOKEN: ${{ secrets.PAT }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
         run: |
-          npx conventional-github-releaser -p angular
+          git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
+          git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
+          DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
