@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.10.0...v1.12.0) (2023-02-28)
+
+
+### Features
+
+* log error message for empty writeKey & dataPlaneUrl ([f7887d8](https://github.com/rudderlabs/rudder-sdk-ios/commit/f7887d82cefbce54b9fc07c53caeb3b23b8c77d8))
+
+
+### Bug Fixes
+
+* handled corrupt data of database ([fd67568](https://github.com/rudderlabs/rudder-sdk-ios/commit/fd67568bd13d6f4cf5704b598eb2343ba886cb04))
+* swift package manager build issue ([320a600](https://github.com/rudderlabs/rudder-sdk-ios/commit/320a60098ddb983f02c1280c48ff985783e51fc8))
+
 ## [1.11.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.9.0...v1.11.0) (2023-02-21)
 
 
