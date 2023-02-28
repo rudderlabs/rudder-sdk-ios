@@ -36,6 +36,8 @@ jobs:
           release_type=release
           grep -q "hotfix/" <<< "${GITHUB_REF}" && release_type=hotfix-release
           git fetch origin master --depth=1
+          git fetch --tags origin
+          git tag -l
           git merge origin/master
           current_version=$(jq -r .version package.json)
           
