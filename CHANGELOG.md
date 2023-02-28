@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.0...v1.11.1) (2023-02-28)
+
+
+### Bug Fixes
+
+* semantic versioning issue ([c329286](https://github.com/rudderlabs/rudder-sdk-ios/commit/c329286dda04010207254833df4738d5cb3d5612))
+* swift package manager build issue ([320a600](https://github.com/rudderlabs/rudder-sdk-ios/commit/320a60098ddb983f02c1280c48ff985783e51fc8))
+
+## [1.11.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.9.0...v1.11.0) (2023-02-21)
+
+
+### Features
+
+* added consent support ([c39786c](https://github.com/rudderlabs/rudder-sdk-ios/commit/c39786c13da1cec0ffe49308e4c686a4471ccefc))
+* log error message for empty writeKey & dataPlaneUrl ([f7887d8](https://github.com/rudderlabs/rudder-sdk-ios/commit/f7887d82cefbce54b9fc07c53caeb3b23b8c77d8))
+
+
+### Bug Fixes
+
+* handled corrupt data of database ([fd67568](https://github.com/rudderlabs/rudder-sdk-ios/commit/fd67568bd13d6f4cf5704b598eb2343ba886cb04))
+
 ## [1.10.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.8.0...v1.10.0) (2023-02-09)
 
 
