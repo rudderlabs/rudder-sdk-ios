@@ -13,6 +13,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class RSContext;
+
 @interface RSMessage : NSObject
 
 @property (atomic, readwrite) NSString* messageId;
@@ -34,12 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSString* destinationProps;
 @property (atomic, readwrite) RSOption* option;
 
-- (NSDictionary<NSString*, NSObject*>*) dict;
-- (void) updateContext: (RSContext*) context;
-- (void) updateTraits: (RSTraits*) traits;
-- (void) updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
-- (void) setRudderOption: (RSOption*) option;
-- (void) setSessionData:(RSUserSession *) userSession;
+- (NSDictionary<NSString*, NSObject*>*)dict;
+- (void)updateContext:(RSContext*)context;
+- (void)updateTraits:(RSTraits*)traits;
+- (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits;
+- (void)setRudderOption:(RSOption*)option;
+- (void)setSessionData:(RSUserSession *)userSession;
 
 @end
 

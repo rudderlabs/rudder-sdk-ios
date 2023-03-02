@@ -54,6 +54,12 @@ extern NSString* const EVENT_NAME;
 extern NSString *const WRITE_KEY_ERROR;
 extern NSString *const DATA_PLANE_URL_ERROR;
 extern NSString *const DATA_PLANE_URL_FLUSH_ERROR;
+
+extern int const RSATTNotDetermined;
+extern int const RSATTRestricted;
+extern int const RSATTDenied;
+extern int const RSATTAuthorize;
+
 @end
 
 NS_ASSUME_NONNULL_END
