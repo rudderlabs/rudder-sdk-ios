@@ -32,13 +32,31 @@ static dispatch_queue_t queue;
         }
         self->serverConfig = _serverConfig;
         [self updateConsentedIntegrationsDict:_consentFilter];
+        [self updateDeniedConsentIds:_consentFilter];
     }
     return self;
 }
 
-- (void)updateConsentedIntegrationsDict:(id<RSConsentFilter>)consentFilter {
+- (void)updateConsentedIntegrationsDict:(id<RSConsentFilter>)_consentFilter {
      dispatch_sync(queue, ^{
-         consentedIntegrationsDict = [consentFilter filterConsentedDestinations:serverConfig.destinations];
+         consentedIntegrationsDict = [_consentFilter filterConsentedDestinations:serverConfig.destinations];
+    });
+}
+
+- (void)updateDeniedConsentIds:(id<RSConsentFilter>)_consentFilter {
+    dispatch_sync(queue, ^{
+        id consentFilter = _consentFilter;
+        if ([consentFilter respondsToSelector:@selector(getConsentCategoriesDict)]) {
+            NSMutableArray <NSString *> *_deniedConsentIds = [[NSMutableArray alloc] init];
+            [[_consentFilter getConsentCategoriesDict] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
+                if (![obj boolValue]) {
+                    [_deniedConsentIds addObject:key];
+                }
+            }];
+            if (_deniedConsentIds != nil && [_deniedConsentIds count] > 0) {
+                deniedConsentIds = _deniedConsentIds;
+            }
+        }
     });
 }
 
@@ -59,20 +77,11 @@ static dispatch_queue_t queue;
 }
 
 - (RSMessage *)applyConsents:(RSMessage *)message {
-    if (message.integrations == nil || consentedIntegrationsDict == nil) {
+    if (deniedConsentIds == nil || [deniedConsentIds count] == 0 || message.context == nil) {
         return message;
     }
-    __block RSMessage *updatedMessage = message;
-    __block NSMutableDictionary <NSString *, NSObject *> *consentedMessageIntegrationsDict = [[NSMutableDictionary alloc] initWithDictionary:message.integrations];
-    dispatch_sync(queue, ^{
-        [consentedIntegrationsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
-            if (![obj boolValue]) {
-                [consentedMessageIntegrationsDict setObject:[NSNumber numberWithBool:false] forKey:key];
-            }
-        }];
-        updatedMessage.integrations = consentedMessageIntegrationsDict;
-    });
-    return updatedMessage;
+    [message.context setConsentData:deniedConsentIds];
+    return message;
 }
 
 @end

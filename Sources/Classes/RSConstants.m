@@ -31,4 +31,10 @@ NSString* const EVENT_NAME = @"eventName";
 NSString *const WRITE_KEY_ERROR = @"Invalid writeKey: Provided writeKey is empty";
 NSString *const DATA_PLANE_URL_ERROR = @"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid\n**Note: dataPlaneUrl or dataResidencyServer(for Enterprise Users only) is mandatory from version 1.11.0**";
 NSString *const DATA_PLANE_URL_FLUSH_ERROR = @"Invalid dataPlaneUrl: The dataPlaneUrl is not provided or given dataPlaneUrl is not valid. Ignoring flush call. \n**Note: dataPlaneUrl or dataResidencyServer(for Enterprise Users only) is mandatory from version 1.11.0**";
+
+int const RSATTNotDetermined = 0;
+int const RSATTRestricted = 1;
+int const RSATTDenied = 2;
+int const RSATTAuthorize = 3;
+
 @end
