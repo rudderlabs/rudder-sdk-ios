@@ -48,14 +48,14 @@ extern int const RSATTAuthorize;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 - (void) resetTraits;
 - (void) updateTraits: (RSTraits* _Nullable) traits;
-- (void) persistTraits;
+- (void) persistTraitsOnQueue;
 - (void) updateTraitsDict: (NSMutableDictionary<NSString*, NSObject*>*) traitsDict;
 - (void) updateTraitsAnonymousId;
 - (void) putDeviceToken: (NSString*) deviceToken;
 - (void) putAdvertisementId: (NSString *_Nonnull) idfa;
 - (void) putAppTrackingConsent: (int) att;
 - (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
-- (void) resetExternalIds;
+- (void) resetExternalIdsOnQueue;
 - (void) persistExternalIds;
 - (void) setSessionData:(RSUserSession *) userSession;
 
