@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.11.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.0...v1.11.1) (2023-02-28)
+## [1.12.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.1...v1.12.0) (2023-03-02)
+
+
+### Features
+
+* added consent support for cloud mode ([22745d9](https://github.com/rudderlabs/rudder-sdk-ios/commit/22745d90e87a137833549c45652d083b6d99c845))
+
+
+## [1.11.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.0...v1.11.1) (2023-02-28)
 
 
 ### Bug Fixes
