@@ -35,7 +35,8 @@ jobs:
           source_branch_name=${GITHUB_REF##*/}
           release_type=release
           grep -q "hotfix/" <<< "${GITHUB_REF}" && release_type=hotfix-v2-release
-          git fetch origin master-v2 --depth=1
+          git fetch origin master-v2
+          git fetch --tags origin
           git merge origin/master-v2
           current_version=$(jq -r .version package.json)
           
@@ -73,11 +74,11 @@ jobs:
           git add README.md Sources/Classes/Common/Constants/RSVersion.swift sonar-project.properties
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          npx standard-version -a
+          npx standard-version -a --skip.tag
 
       - name: Push new version in release branch & tag
         run: |
-          git push --follow-tags
+          git push
 
       - name: Create pull request into master
         uses: repo-sync/pull-request@v2
