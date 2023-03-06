@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class RSMessage;
+
 @protocol RSIntegration<NSObject>
 
 - (void) dump: (RSMessage*) message;

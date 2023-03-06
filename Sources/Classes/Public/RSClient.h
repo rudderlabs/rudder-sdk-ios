@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol RSIntegrationFactory;
 @protocol RSIntegration;
 @class RSConfig;
+@class RSMessage;
+@class RSContext;
+@class RSMessageBuilder;
 
 @interface RSClient : NSObject
 + (instancetype) getInstance;

@@ -10,11 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class RSServerDestination;
+//@class RSServerDestination;
 
 @protocol RSConsentFilter
 
 - (NSDictionary <NSString *, NSNumber *> * __nullable)filterConsentedDestinations:(NSArray <RSServerDestination *> *)destinations;
+
+@optional
+- (NSDictionary <NSString *, NSNumber *> * __nullable)getConsentCategoriesDict;
 
 @end
 

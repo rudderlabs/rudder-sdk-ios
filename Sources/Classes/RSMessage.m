@@ -77,7 +77,7 @@
 
 - (void)updateContext:(RSContext *)context {
     if (context != nil) {
-        self.context = context;
+        _context = context;
     }
 }
 
@@ -96,6 +96,8 @@
 }
 
 - (void) setSessionData: (RSUserSession*) userSession {
-    [_context setSessionData:userSession];
+    if (_context != nil) {
+        [_context setSessionData:userSession];
+    }
 }
 @end

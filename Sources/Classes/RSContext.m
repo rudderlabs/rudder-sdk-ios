@@ -10,19 +10,13 @@
 #import "RSUtils.h"
 #import "RSLogger.h"
 #import "RSClient.h"
+#import "RSConstants.h"
 
 @implementation RSContext
 
-int const RSATTNotDetermined = 0;
-int const RSATTRestricted = 1;
-int const RSATTDenied = 2;
-int const RSATTAuthorize = 3;
-
-
 static dispatch_queue_t queue;
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         
@@ -232,6 +226,12 @@ static dispatch_queue_t queue;
     });
 }
 
+- (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds {
+    dispatch_async(queue, ^{
+        self->consentManagement = @{@"deniedConsentIds": deniedConsentIds};
+    });
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     dispatch_sync(queue, ^{
@@ -258,6 +258,9 @@ static dispatch_queue_t queue;
             if(_sessionStart) {
                 [tempDict setObject:@YES forKey:@"sessionStart"];
             }
+        }
+        if (consentManagement != nil) {
+            [tempDict setObject:consentManagement forKey:@"consentManagement"];
         }
     });
     return [tempDict copy];
