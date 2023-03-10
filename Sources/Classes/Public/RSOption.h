@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol RSIntegrationFactory;
-@interface RSOption : NSObject
+@interface RSOption : NSObject {
+    dispatch_queue_t optionsQueue;
+}
 
 @property (nonatomic, strong) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
 @property (nonatomic, strong) NSMutableDictionary<NSString*, NSObject*>* integrations;

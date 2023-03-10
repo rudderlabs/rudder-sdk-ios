@@ -45,7 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL isSDKEnabled;
     NSLock* lock;
     dispatch_source_t source;
-    dispatch_queue_t queue;
+    dispatch_queue_t repositoryQueue;
+    dispatch_queue_t flushQueue;
     RSClient *client;
 }
 

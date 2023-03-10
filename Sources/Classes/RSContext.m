@@ -37,41 +37,34 @@ static dispatch_queue_t queue;
         _timezone = [[NSTimeZone localTimeZone] name];
         _externalIds = nil;
         
-        dispatch_sync(queue, ^{
-            NSString *traitsJson = [preferenceManager getTraits];
-            if (traitsJson == nil) {
-                // no persisted traits, create new and persist
-                [self createAndPersistTraits];
+        
+        NSString *traitsJson = [preferenceManager getTraits];
+        if (traitsJson == nil) {
+            // no persisted traits, create new and persist
+            [self createAndPersistTraits];
+        } else {
+            NSError *error;
+            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _traits = [traitsDict mutableCopy];
             } else {
-                NSError *error;
-                NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-                if (error == nil) {
-                    _traits = [traitsDict mutableCopy];
-                } else {
-                    // persisted traits persing error. initiate blank
-                    [self createAndPersistTraits];
-                }
+                // persisted traits persing error. initiate blank
+                [self createAndPersistTraits];
             }
-            
-            // get saved external Ids from prefs
-            NSString *externalIdJson = [preferenceManager getExternalIds];
-            if (externalIdJson != nil) {
-                NSError *error;
-                NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-                if (error == nil) {
-                    _externalIds = [externalIdDict mutableCopy];
-                }
+        }
+        
+        // get saved external Ids from prefs
+        NSString *externalIdJson = [preferenceManager getExternalIds];
+        if (externalIdJson != nil) {
+            NSError *error;
+            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _externalIds = [externalIdDict mutableCopy];
             }
-        });
+        }
+        
     }
     return self;
-}
-
-+ (dispatch_queue_t) getQueue {
-    if (queue == nil) {
-        queue = dispatch_queue_create("com.rudder.RSContext", NULL);
-    }
-    return queue;
 }
 
 - (void) createAndPersistTraits {

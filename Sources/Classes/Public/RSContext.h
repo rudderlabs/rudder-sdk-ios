@@ -44,7 +44,6 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) BOOL sessionStart;
 @property (nonatomic, readwrite) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*> *externalIds;
 
-+ (dispatch_queue_t)getQueue;
 - (NSDictionary<NSString*, NSObject *>*)dict;
 - (void)resetTraits;
 - (void)updateTraits:(RSTraits* _Nullable)traits;
