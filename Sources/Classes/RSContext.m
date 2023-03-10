@@ -220,7 +220,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         self->consentManagement = @{@"deniedConsentIds": deniedConsentIds};
     });
 }

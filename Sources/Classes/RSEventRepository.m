@@ -144,11 +144,11 @@ typedef enum {
             int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                dispatch_sync(repositoryQueue, ^{
+                dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
-                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:strongSelf->config];
                     if (strongSelf->dataPlaneUrl == nil) {
                         [RSLogger logError:DATA_PLANE_URL_ERROR];
                         return;
@@ -309,7 +309,7 @@ typedef enum {
 
 - (void) setUpFlush {
     lock = [NSLock new];
-    flushQueue = dispatch_queue_create("com.rudder.flushQueue", NULL);
+    dispatch_queue_t flushQueue = dispatch_queue_create("com.rudder.flushQueue", NULL);
     source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, flushQueue);
     __weak RSEventRepository *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
