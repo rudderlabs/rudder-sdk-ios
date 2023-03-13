@@ -184,6 +184,14 @@ static dispatch_queue_t queue;
     });
 }
 
+- (NSArray<NSDictionary<NSString*, NSObject*>*>*) getExternalIds {
+    __block NSArray<NSDictionary<NSString*, NSObject*>*>* externalIdsCopy = nil;
+    dispatch_sync(queue, ^{
+        externalIdsCopy = [self->_externalIds copy];
+    });
+    return externalIdsCopy;
+}
+
 - (void) resetExternalIdsOnQueue {
     dispatch_sync(queue, ^{
         [self resetExternalIds];
@@ -223,6 +231,14 @@ static dispatch_queue_t queue;
     dispatch_sync(queue, ^{
         self->consentManagement = @{@"deniedConsentIds": deniedConsentIds};
     });
+}
+
+- (NSDictionary<NSString *, NSArray<NSString *> *> *) getConsentData {
+    __block NSDictionary<NSString *, NSArray<NSString *> *> * consentManagementCopy= nil;
+    dispatch_sync(queue, ^{
+        consentManagementCopy = [self->consentManagement copy];
+    });
+    return consentManagementCopy;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {

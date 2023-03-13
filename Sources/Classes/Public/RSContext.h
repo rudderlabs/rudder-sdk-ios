@@ -56,8 +56,10 @@ extern int const RSATTAuthorize;
 - (void)updateExternalIds:(NSMutableArray* __nullable)externalIds;
 - (void)resetExternalIdsOnQueue;
 - (void)persistExternalIds;
+- (NSArray<NSDictionary<NSString*, NSObject*>*>*)getExternalIds;
 - (void)setSessionData:(RSUserSession *)userSession;
-- (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds;
+- (void)setConsentData:(NSArray <NSString*>*)deniedConsentIds;
+- (NSDictionary<NSString *, NSArray<NSString*>*>*)getConsentData;
 
 @end
 
