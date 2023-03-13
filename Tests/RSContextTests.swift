@@ -60,6 +60,7 @@ class RSContextTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        context = nil;
         preferenceManager.clearAnonymousId()
         preferenceManager.clearTraits()
         preferenceManager.clearExternalIds()
