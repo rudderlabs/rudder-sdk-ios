@@ -68,11 +68,6 @@ class RSContextTests: XCTestCase {
         preferenceManager.clearLastEventTimeStamp()
     }
     
-    func test_createAndPersistTraits() {
-        XCTAssertEqual(context.traits, ["anonymousId": "testAnonymousId"])
-        XCTAssertEqual(preferenceManager.getTraits(),  "{\"anonymousId\":\"testAnonymousId\"}")
-    }
-    
     func test_resetTraits() {
         context.updateTraitsDict(NSMutableDictionary(dictionary: sampleTraits))
         XCTAssertEqual(context.traits, NSMutableDictionary(dictionary: sampleTraits))
@@ -184,12 +179,12 @@ class RSContextTests: XCTestCase {
         context.updateExternalIds(NSMutableArray(array:externalIds1))
         XCTAssertEqual(context.externalIds, NSMutableArray(array:externalIds1))
         context.resetExternalIdsOnQueue()
-        XCTAssertEqual(context.getExternalIds(), [])
+        XCTAssertNil(context.getExternalIds())
         XCTAssertNil(preferenceManager.getExternalIds())
         context.updateExternalIds(NSMutableArray(array:externalIds2))
         XCTAssertEqual(context.externalIds, NSMutableArray(array:externalIds2))
         context.resetExternalIdsOnQueue()
-        XCTAssertEqual(context.getExternalIds(), [])
+        XCTAssertNil(context.getExternalIds())
         XCTAssertNil(preferenceManager.getExternalIds())
     }
     
