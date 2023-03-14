@@ -9,10 +9,11 @@ import Foundation
 import XCTest
 @testable import Rudder
 
-class RSContextTests: XCTestCase {
+class ContextTests: XCTestCase {
     
     var context: RSContext!
     var preferenceManager: RSPreferenceManager!
+    var testUtils: TestUtils!
     var sampleTraits = ["firstname": "bravo", "lastname": "dwayne", "country": "westindies"]
     var user1Traits = ["userId": "1", "name" : "user1", "country": "one"]
     var user2Traits = ["userId": "2", "name" : "user2", "country": "two"]
@@ -25,7 +26,7 @@ class RSContextTests: XCTestCase {
             "type": "type2",
             "id": "second"
         ] as NSMutableDictionary
-    ]
+    ] as NSMutableArray
     let externalIds2 = [
         [
             "type": "type2",
@@ -35,7 +36,7 @@ class RSContextTests: XCTestCase {
             "type": "type3",
             "id": "three"
         ] as NSMutableDictionary
-    ]
+    ] as NSMutableArray
     let finalExternalIds = [
         [
             "type": "type1",
@@ -49,23 +50,25 @@ class RSContextTests: XCTestCase {
             "type": "type3",
             "id": "three"
         ] as NSMutableDictionary
-    ]
+    ] as NSMutableArray
     
     override func setUp() {
         super.setUp()
         preferenceManager = RSPreferenceManager.getInstance()
-        preferenceManager.saveAnonymousId("testAnonymousId")
-        context = RSContext()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        context = nil;
         preferenceManager.clearAnonymousId()
         preferenceManager.clearTraits()
         preferenceManager.clearExternalIds()
         preferenceManager.clearSessionId()
         preferenceManager.clearLastEventTimeStamp()
+        preferenceManager.saveAnonymousId("testAnonymousId")
+        context = RSContext()
+        testUtils = TestUtils()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        context = nil;
+        testUtils = nil
     }
     
     func test_resetTraits() {
@@ -113,11 +116,11 @@ class RSContextTests: XCTestCase {
         context.updateTraits(traits1)
         context.persistTraitsOnQueue()
         user1Traits["anonymousId"] = "testAnonymousId";
-        XCTAssertEqual(convertToDictionary(text: preferenceManager.getTraits()), user1Traits)
+        XCTAssertEqual(testUtils.convertToDictionary(text: preferenceManager.getTraits()), user1Traits)
         context.updateTraits(RSTraits(dict: ["userId": "1", "rank": "1"]))
         context.persistTraitsOnQueue()
         user1Traits["rank"] = "1"
-        XCTAssertEqual(convertToDictionary(text: preferenceManager.getTraits()), user1Traits)
+        XCTAssertEqual(testUtils.convertToDictionary(text: preferenceManager.getTraits()), user1Traits)
     }
     
     func test_updateTraitsDict() {
@@ -160,29 +163,29 @@ class RSContextTests: XCTestCase {
     }
     
     func test_updateExternalIds() {
-        context.updateExternalIds(NSMutableArray(array:externalIds1))
-        XCTAssertEqual(context.externalIds, NSMutableArray(array:externalIds1))
-        context.updateExternalIds(NSMutableArray(array:externalIds2))
-        XCTAssertEqual(context.externalIds, NSMutableArray(array:finalExternalIds))
+        context.updateExternalIds(externalIds1)
+        XCTAssertEqual(context.externalIds, externalIds1)
+        context.updateExternalIds(externalIds2)
+        XCTAssertEqual(context.externalIds, finalExternalIds)
     }
     
     func test_persistExternalIds() {
-        context.updateExternalIds(NSMutableArray(array:externalIds1))
+        context.updateExternalIds(externalIds1)
         context.persistExternalIds()
-        XCTAssertEqual(preferenceManager.getExternalIds(), convertToJSONString(arrayObject: externalIds1))
-        context.updateExternalIds(NSMutableArray(array:externalIds2))
+        XCTAssertEqual(preferenceManager.getExternalIds(), testUtils.convertToJSONString(arrayObject: externalIds1))
+        context.updateExternalIds(externalIds2)
         context.persistExternalIds()
-        XCTAssertEqual(preferenceManager.getExternalIds(), convertToJSONString(arrayObject: finalExternalIds))
+        XCTAssertEqual(preferenceManager.getExternalIds(), testUtils.convertToJSONString(arrayObject: finalExternalIds))
     }
     
     func test_resetExternalIds() {
-        context.updateExternalIds(NSMutableArray(array:externalIds1))
-        XCTAssertEqual(context.externalIds, NSMutableArray(array:externalIds1))
+        context.updateExternalIds(externalIds1)
+        XCTAssertEqual(context.externalIds, externalIds1)
         context.resetExternalIdsOnQueue()
         XCTAssertNil(context.getExternalIds())
         XCTAssertNil(preferenceManager.getExternalIds())
-        context.updateExternalIds(NSMutableArray(array:externalIds2))
-        XCTAssertEqual(context.externalIds, NSMutableArray(array:externalIds2))
+        context.updateExternalIds(externalIds2)
+        XCTAssertEqual(context.externalIds, externalIds2)
         context.resetExternalIdsOnQueue()
         XCTAssertNil(context.getExternalIds())
         XCTAssertNil(preferenceManager.getExternalIds())
@@ -221,28 +224,5 @@ class RSContextTests: XCTestCase {
         deniedConsentIds = ["deniedId9", "deniedId10", "deniedId11", "deniedId12"]
         context.setConsentData(deniedConsentIds)
         XCTAssertEqual(context.getConsentData(), ["deniedConsentIds": deniedConsentIds])
-    }
-    
-    func convertToDictionary(text: String) -> [String: String]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
-    }
-    
-    func convertToJSONString(arrayObject: [Any]) -> String? {
-        do {
-            let jsonData: Data = try JSONSerialization.data(withJSONObject: arrayObject, options: [])
-            if  let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) {
-                return jsonString as String
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        return nil
     }
 }

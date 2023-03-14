@@ -199,7 +199,7 @@
 		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
 		EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */; };
 		EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */; };
-		F64F9D7629BF171D009D963F /* RSContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* RSContextTests.swift */; };
+		F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,7 +420,7 @@
 		EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-eu-true.json"; sourceTree = "<group>"; };
 		EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
 		EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "github-release.config.js"; sourceTree = "<group>"; };
-		F64F9D7529BF171D009D963F /* RSContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSContextTests.swift; sourceTree = "<group>"; };
+		F64F9D7529BF171D009D963F /* ContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -481,7 +481,7 @@
 				ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */,
 				ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */,
 				ED20F4F52996083B00F3FD0E /* TestUtils.swift */,
-				F64F9D7529BF171D009D963F /* RSContextTests.swift */,
+				F64F9D7529BF171D009D963F /* ContextTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1062,7 +1062,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F64F9D7629BF171D009D963F /* RSContextTests.swift in Sources */,
+				F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */,
 				ED7DFD81298C061A00ED5A8E /* DataResidencyTests.swift in Sources */,
 				ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */,
 				ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */,
