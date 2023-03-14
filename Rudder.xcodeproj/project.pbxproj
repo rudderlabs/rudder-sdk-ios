@@ -503,7 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				ED7DFDD0298C091800ED5A8E /* Ecomm */,
-				ED7DFD9A298C091800ED5A8E /* Public */,
+				EDA2C5B129C0EB9500B7FF42 /* Headers */,
 				ED7DFD8B298C091800ED5A8E /* RSApp.m */,
 				ED7DFD8F298C091800ED5A8E /* RSClient.m */,
 				ED7DFD89298C091800ED5A8E /* RSConfig.m */,
@@ -588,7 +588,6 @@
 				ED7DFDBA298C091800ED5A8E /* RSTraitsBuilder.h */,
 				ED7DFDAB298C091800ED5A8E /* RSUserSession.h */,
 				ED7DFDC2298C091800ED5A8E /* RSUtils.h */,
-				ED7DFDA3298C091800ED5A8E /* RSVersion.h */,
 				ED7DFDA2298C091800ED5A8E /* Rudder.h */,
 				ED7DFDC4298C091800ED5A8E /* UIViewController+RSScreen.h */,
 				ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */,
@@ -694,6 +693,15 @@
 				EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */,
 			);
 			name = Others;
+			sourceTree = "<group>";
+		};
+		EDA2C5B129C0EB9500B7FF42 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				ED7DFD9A298C091800ED5A8E /* Public */,
+				ED7DFDA3298C091800ED5A8E /* RSVersion.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		EDEC3CD829ADC9CF007DDE07 /* Ecomm */ = {
