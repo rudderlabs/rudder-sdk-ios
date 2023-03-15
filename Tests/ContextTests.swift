@@ -217,12 +217,19 @@ class ContextTests: XCTestCase {
     func test_setConsentData() {
         var deniedConsentIds = ["deniedId1", "deniedId2", "deniedId3", "deniedId4"]
         context.setConsentData(deniedConsentIds)
-        XCTAssertEqual(context.getConsentData(), ["deniedConsentIds": deniedConsentIds])
+        XCTAssertEqual(getConsentData(), ["deniedConsentIds": deniedConsentIds])
         deniedConsentIds = ["deniedId5", "deniedId6", "deniedId7", "deniedId8"]
         context.setConsentData(deniedConsentIds)
-        XCTAssertEqual(context.getConsentData(), ["deniedConsentIds": deniedConsentIds])
+        XCTAssertEqual(getConsentData(), ["deniedConsentIds": deniedConsentIds])
         deniedConsentIds = ["deniedId9", "deniedId10", "deniedId11", "deniedId12"]
         context.setConsentData(deniedConsentIds)
-        XCTAssertEqual(context.getConsentData(), ["deniedConsentIds": deniedConsentIds])
+        XCTAssertEqual(getConsentData(), ["deniedConsentIds": deniedConsentIds])
+    }
+    
+    func getConsentData() -> [String: [String]]{
+        let dict = context.dict()
+        let consentManagement: [String: [String]] = dict["consentManagement"] as! [String: [String]]
+        return consentManagement
+        
     }
 }

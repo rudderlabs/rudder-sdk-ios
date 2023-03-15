@@ -233,14 +233,6 @@ static dispatch_queue_t queue;
     });
 }
 
-- (NSDictionary<NSString *, NSArray<NSString *> *> * __nullable) getConsentData {
-    __block NSDictionary<NSString *, NSArray<NSString *> *> * consentManagementCopy= nil;
-    dispatch_sync(queue, ^{
-        consentManagementCopy = [self->consentManagement copy];
-    });
-    return consentManagementCopy;
-}
-
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     dispatch_sync(queue, ^{
