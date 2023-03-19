@@ -64,7 +64,7 @@ static RSEventRepository* _instance;
         [self setAnonymousIdToken];
 
         [RSLogger logDebug:@"EventRepository: Initiating RSDataResidencyManager"];
-        self->dataResidencyManager = [RSDataResidencyManager alloc] initWithRSConfig:_config];
+        self->dataResidencyManager = [[RSDataResidencyManager alloc] initWithRSConfig:_config];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSNetworkManager"];
         self->networkManager = [[RSNetworkManager alloc] initWithConfig:config andAuthToken:authToken andAnonymousIdToken:anonymousIdToken andDataResidencyManager:self->dataResidencyManager];
@@ -153,27 +153,23 @@ static RSEventRepository* _instance;
                 });
                 if  (strongSelf->isSDKEnabled) {
                     [self->dataResidencyManager setDataResidencyUrlFromSourceConfig: serverConfig];
-                    strongSelf->dataPlaneUrl = [self->dataResidencyManager getDataPlaneUrl];
-
-                    if (strongSelf->dataPlaneUrl == nil) {
+                    NSString* dataPlaneUrl = [self->dataResidencyManager getDataPlaneUrl];
+                    if (dataPlaneUrl == nil) {
                         [RSLogger logError:DATA_PLANE_URL_ERROR];
                         return;
                     }
-
                     [RSLogger logDebug:@"EventRepository: Starting Cloud Mode Processor"];
                     [self-> cloudModeManager startCloudModeProcessor];
-                    
                     if (strongSelf->config.consentFilter != nil) {
                         [RSLogger logDebug:@"EventRepository: Initiating ConsentFilterHandler"];
                         strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
                     }
-
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                        NSArray <RSServerDestination *> *consentedDestinations = consentFilterHandler != nil ? [consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
+                        NSArray <RSServerDestination *> *consentedDestinations = self->consentFilterHandler != nil ? [self->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
                         if(consentedDestinations != nil && consentedDestinations.count > 0 ) {
                             [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
-                        }   
+                        }
                     } else {
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
@@ -204,7 +200,6 @@ static RSEventRepository* _instance;
     message = [self applyConsents:message];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
-    [self makeFactoryDump: message];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
@@ -304,4 +299,21 @@ static RSEventRepository* _instance;
         [preferenceManager updateOptInTime:[RSUtils getTimeStampLong]];
     }
 }
+
+- (void) startSession:(long) sessionId {
+    if(self->config.automaticSessionTracking) {
+        [self endSession];
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession startSession:sessionId];
+}
+
+- (void) endSession {
+    if(self->config.automaticSessionTracking) {
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession clearSession];
+}
+
+
 @end

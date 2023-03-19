@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSEnums.h"
+#import "RSUtils.h"
 #import "RSServerConfigSource.h"
 
 
@@ -19,5 +20,5 @@
 
 - (instancetype)initWithRSConfig:(RSConfig*) rudderConfig;
 - (void)setDataResidencyUrlFromSourceConfig:(RSServerConfigSource*) sourceConfig;
-- (NString*) getDataPlaneUrl;
+- (NSString*) getDataPlaneUrl;
 @end

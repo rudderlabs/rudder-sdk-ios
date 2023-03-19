@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSContext : NSObject <NSCopying> {
     RSPreferenceManager *preferenceManager;
+    NSDictionary<NSString *, NSArray<NSString *> *> * _Nullable consentManagement;
 }
 
 extern int const RSATTNotDetermined;
@@ -39,7 +40,7 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) RSDeviceInfo* device;
 @property (nonatomic, readwrite) RSNetwork* network;
 @property (nonatomic, readwrite) NSString* timezone;
-@property (nonatomic, readwrite) long sessionId;
+@property (nonatomic, readwrite) NSNumber * _Nullable sessionId;
 @property (nonatomic, readwrite) BOOL sessionStart;
 @property (nonatomic, readwrite) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
 
@@ -58,6 +59,7 @@ extern int const RSATTAuthorize;
 - (void) resetExternalIds;
 - (void) persistExternalIds;
 - (void) setSessionData:(RSUserSession *) userSession;
+- (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds;
 
 @end
 

@@ -12,6 +12,8 @@
 #import "RSContext.h"
 #import "RSConstants.h"
 #import "RSNetworkResponse.h"
+#import "RSDataResidencyManager.h"
+
 
 @interface RSNetworkManager : NSObject {
     RSConfig* config;
@@ -24,6 +26,6 @@
 extern NSString* const STATUS;
 extern NSString* const RESPONSE;
 
-- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken;
+- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken andDataResidencyManager:(RSDataResidencyManager *) dataResidencyManager;
 - (RSNetworkResponse *) sendNetworkRequest: (NSString*) payload toEndpoint:(ENDPOINT) endpoint withRequestMethod:(REQUEST_METHOD) method;
 @end

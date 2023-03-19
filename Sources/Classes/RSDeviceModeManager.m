@@ -32,7 +32,7 @@
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Event Filtering Plugin"];
     self->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:destinations];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Device Mode Factories"];
-    [self initiateFactories:self->destinations];
+    [self initiateFactories:destinations];
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];

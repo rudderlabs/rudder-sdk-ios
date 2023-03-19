@@ -1,6 +1,4 @@
-
-
-
+#import "RSDataResidencyManager.h"
 
 @implementation RSDataResidencyManager
 
@@ -14,7 +12,7 @@
 
 - (void)setDataResidencyUrlFromSourceConfig:(RSServerConfigSource*) sourceConfig {
     if(sourceConfig == nil) {
-        return nil;
+        return;
     }
 
     NSArray * residenceDataPlanes;
@@ -29,14 +27,14 @@
     }
     
     if(residenceDataPlanes == nil || [residenceDataPlanes count] == 0)
-        return nil;
+        return;
 
     for (NSDictionary* residenceDataPlane in residenceDataPlanes) {
         if([[residenceDataPlane objectForKey:@"default"] boolValue]) {
-            return [RSUtils appendSlashToUrl:[residenceDataPlane objectForKey:@"url"]];
+            self->dataResidencyUrl = [RSUtils appendSlashToUrl:[residenceDataPlane objectForKey:@"url"]];
         }
     }
-    return nil;
+    return;
 }
 
 - (NSString*) getDataPlaneUrl {
