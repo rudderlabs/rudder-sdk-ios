@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 workspace 'Rudder.xcworkspace'
 use_frameworks!
 inhibit_all_warnings!
@@ -28,6 +29,7 @@ target 'RudderSampleAppObjC' do
     pod 'Rudder-Amplitude'
     pod 'Amplitude', '~> 7.2.0'
     pod 'Rudder-Braze'
+    pod 'FirebaseMessaging'
 end
 
 target 'RudderSampleAppSwift' do
@@ -38,7 +40,7 @@ end
 
 target 'RudderSampleApptvOSObjC' do
     project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
-    platform :tvos, '9.0'
+    platform :tvos, '10.0'
     shared_pods
 end
 

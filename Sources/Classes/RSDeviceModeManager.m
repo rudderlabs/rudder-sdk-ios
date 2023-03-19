@@ -26,14 +26,13 @@
     return self;
 }
 
-- (void) startDeviceModeProcessor:(RSServerConfigSource *) serverConfig andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled {
+- (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled {
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Processor"];
-    self->serverConfig = serverConfig;
     self->destinationsWithTransformationsEnabled = destinationsWithTransformationsEnabled;
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Event Filtering Plugin"];
-    self->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:serverConfig.destinations];
+    self->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:destinations];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Device Mode Factories"];
-    [self initiateFactories:self->serverConfig.destinations];
+    [self initiateFactories:self->destinations];
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];

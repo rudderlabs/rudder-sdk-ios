@@ -25,23 +25,32 @@ static NSString* _deviceToken = nil;
     return _instance;
 }
 
-+ (instancetype) getInstance:(NSString *)writeKey {
-    return [RSClient getInstance:writeKey config:[[RSConfig alloc] init]];
++ (instancetype)getInstance:(NSString *)writeKey {
+    return [self initiate:writeKey config:nil options:nil];
 }
 
-+ (instancetype) getInstance:(NSString *)writeKey config: (RSConfig*) config options: (RSOption*) options {
-    _defaultOptions = options;
-    return [RSClient getInstance:writeKey config:config];
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config options:(RSOption*)options {
+    return [self initiate:writeKey config:config options:options];
 }
 
-+ (instancetype) getInstance: (NSString *) writeKey config: (RSConfig*) config {
++ (instancetype)getInstance:(NSString *)writeKey config:(RSConfig*)config {
+    return [self initiate:writeKey config:config options:nil];
+}
+
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig * __nullable)config options:(RSOption * __nullable)options {
+    if ([writeKey length] == 0) {
+        [RSLogger logError:WRITE_KEY_ERROR];
+    }
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _instance = [[self alloc] init];
-            _repository = [RSEventRepository initiate:writeKey config:config];
-            if(_deviceToken != nil && [_deviceToken length] != 0)
-            {
+            if (options != nil) {
+                _defaultOptions = options;
+            }
+            RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];            
+            _repository = [RSEventRepository initiate:writeKey config:_config client:_instance];
+            if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];
             }
         });
@@ -416,7 +425,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void)startSession:(long)sessionId {
-    if (sessionId == nil || [[NSString stringWithFormat:@"%ld", sessionId] length] <10) {
+    if ([[NSString stringWithFormat:@"%ld", sessionId] length] < 10) {
         [RSLogger logError:[[NSString alloc] initWithFormat:@"RSClient: startSession: Length of the sessionId should be atleast 10: %ld", sessionId]];
         return;
     }

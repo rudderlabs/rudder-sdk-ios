@@ -64,7 +64,7 @@ int receivedError = NETWORK_SUCCESS;
     }
 }
 
-- (RSServerConfigSource *)_parseConfig:(NSString *)configStr {
+- (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr {
     NSError *error;
     NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     
@@ -125,6 +125,8 @@ int receivedError = NETWORK_SUCCESS;
             destination.destinationConfig = [destinationDict objectForKey:@"config"];
             [destinations addObject:destination];
         }
+        
+        source.dataPlanes = [sourceDict objectForKey:@"dataplanes"];
         source.destinations = destinations;
     } else {
         [RSLogger logError:@"config deserializaion error"];

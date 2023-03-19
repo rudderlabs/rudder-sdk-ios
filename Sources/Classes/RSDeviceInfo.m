@@ -9,6 +9,7 @@
 #import "RSDeviceInfo.h"
 #import "RSContext.h"
 #import <UIKit/UIKit.h>
+#import "RSConstants.h"
 #if TARGET_OS_WATCH
 #import <WatchKit/WKInterfaceDevice.h>
 #endif

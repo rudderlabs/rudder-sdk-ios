@@ -46,6 +46,14 @@
     return self;
 }
 
+- (instancetype) withDataResidencyServer:(RSDataResidencyServer) dataResidencyServer {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.dataResidencyServer = dataResidencyServer;
+    return self;
+}
+
 - (instancetype) withFlushQueueSize: (int) flushQueueSize {
     if (config == nil) {
         config = [[RSConfig alloc] init];
@@ -101,6 +109,14 @@
         config = [[RSConfig alloc] init];
     }
     [config.customFactories addObject:customFactory];
+    return self;
+}
+
+- (instancetype)withConsentFilter:(id <RSConsentFilter> _Nonnull)consentFilter {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.consentFilter = consentFilter;
     return self;
 }
 

@@ -150,7 +150,7 @@
 
 
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
-    int messageCount = (int) dbMessage.messageIds.count;
+    int messageCount = (int)dbMessage.messageIds.count;
     if (messageCount % queueSize == 0) {
         return messageCount / queueSize;
     } else {
@@ -161,8 +161,8 @@
 + (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
-    }
-    return [messageDetails subarrayWithRange:NSMakeRange(0, queueSize)];
+    }    
+    return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
 }
 
 + (id) deSerializeJSONString:(NSString*) jsonString {
@@ -186,6 +186,7 @@
     }
     return [url stringByAppendingString:@"/"];
 }
+
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB

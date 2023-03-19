@@ -1,0 +1,38 @@
+name: Code Quality Checks
+on:
+  pull_request:
+    branches: ['master', 'develop']
+    types: ['opened', 'reopened', 'synchronize']
+
+jobs:
+  build:
+    name: Code Quality Checks
+    runs-on: macOS-latest
+    
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v3
+      
+      - name: Install xcpretty
+        run: gem install xcpretty
+      
+      - name: Select Xcode version
+        run: sudo xcode-select -s '/Applications/Xcode_13.2.1.app/Contents/Developer'
+        
+      - name: Build SDK(iOS)
+        run: |
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          
+      - name: Build SDK(watchOS)
+        run: |
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
+      
+      - name: Build SDK(tvOS)
+        run: |
+          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
+          
+      - name: Install Cocoapods
+        run: gem install cocoapods
+      
+      - name: Execute pod lint
+        run: pod lib lint --no-clean --allow-warnings
