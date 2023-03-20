@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (RSServerConfigSource*) getConfig;
 - (NSDictionary<NSString*, NSString*>*) getDestinationsWithTransformationsEnabled;
 - (int) getError;
+- (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr;
 
 @end
 

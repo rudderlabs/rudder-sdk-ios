@@ -226,7 +226,7 @@ static dispatch_queue_t queue;
 }
 
 - (void) setSessionData:(RSUserSession *) userSession {
-    dispatch_async(queue, ^{        
+    dispatch_sync(queue, ^{        
         if ([userSession getSessionId] != nil) {
             self->_sessionId = [userSession getSessionId];
             if([userSession getSessionStart]) {
