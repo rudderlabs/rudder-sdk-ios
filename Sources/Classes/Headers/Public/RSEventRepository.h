@@ -52,7 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString*, NSObject*>* integrations;
     RSConsentFilterHandler *consentFilterHandler;
     RSEventFilteringPlugin *eventFilteringPlugin;
-    RSUserSession *userSession;
     NSLock* lock;
     dispatch_source_t source;
     dispatch_queue_t queue;

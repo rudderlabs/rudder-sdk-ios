@@ -47,9 +47,6 @@ NSString* const RESPONSE = @"RESPONSE";
         [urlRequest setHTTPMethod:@"POST"];
         [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
-        if(endpoint == TRANSFORM_ENDPOINT && self->ctsAuthToken != nil) {
-            [urlRequest addValue:self->ctsAuthToken forHTTPHeaderField:@"X-AUTH-CTS"];
-        }
         NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
         [urlRequest setHTTPBody:httpBody];
     }
@@ -126,6 +123,10 @@ NSString* const RESPONSE = @"RESPONSE";
 - (void) updateCTSAuthToken {
     self->ctsAuthToken = [[RSPreferenceManager getInstance] getAuthToken];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: updateCTSAuthToken: ctsAuthToken is: %@", self->ctsAuthToken]];
+}
+
+- (NSString*) getCTSAuthToken {
+    return self->ctsAuthToken;
 }
 
 @end

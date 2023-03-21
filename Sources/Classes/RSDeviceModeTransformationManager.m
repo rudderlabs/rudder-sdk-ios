@@ -114,6 +114,9 @@ int deviceModeSleepCount = 0;
     
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
     [jsonPayload appendString:@"{"];
+    [jsonPayload appendString:@"\"metadata\": {"];
+    [jsonPayload appendFormat:@"\"Custom-Authorization\": \"%@\"", [self->networkManager getCTSAuthToken]];
+    [jsonPayload appendString:@"},"];
     [jsonPayload appendString:@"\"batch\":"];
     [jsonPayload appendString:@"["];
     
