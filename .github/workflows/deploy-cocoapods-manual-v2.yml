@@ -1,11 +1,11 @@
-name: Deploy to Cocoapods(Manually)(v2)
+name: Manually deploy to Cocoapods(v2)
 
 on:
   workflow_dispatch
 
 jobs:
-  build:
-    name: Draft a new release
+  deploy-cocoapods-manual:
+    name: Manually deploy to Cocoapods(v2)
     runs-on: macOS-latest
     if: startsWith(github.ref, 'refs/heads/master-v2')
     steps:
