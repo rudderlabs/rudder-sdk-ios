@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file. See [standa
 - Device Mode Transformations
 
 
+### [1.12.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.0...v1.12.1) (2023-03-21)
+
+
+### Bug Fixes
+
+* swift package manager umbrella header warning ([041805c](https://github.com/rudderlabs/rudder-sdk-ios/commit/041805cb1e4389b9db821f6549bba3728857acd6))
+
 ## [1.12.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.11.1...v1.12.0) (2023-03-02)
 
 
