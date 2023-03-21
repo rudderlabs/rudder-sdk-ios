@@ -50,11 +50,10 @@ static RSEventRepository* _instance;
         self->isSDKInitialized = NO;
         self->client = _client;
         
-        writeKey = _writeKey;
-        config = _config;
+        self->writeKey = _writeKey;
+        self->config = _config;
         
-        NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
-        authToken = [authData base64EncodedStringWithOptions:0];
+        self->authToken = [RSUtils getBase64EncodedString: [[NSString alloc] initWithFormat:@"%@:", self->writeKey]];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSElementCache"];
@@ -62,6 +61,9 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Setting AnonymousId Token"];
         [self setAnonymousIdToken];
+
+        [RSLogger logDebug:@"EventRepository: Setting CTS Auth Token"];
+        [self updateCTSAuthToken];
 
         [RSLogger logDebug:@"EventRepository: Initiating RSDataResidencyManager"];
         self->dataResidencyManager = [[RSDataResidencyManager alloc] initWithRSConfig:_config];
@@ -113,7 +115,7 @@ static RSEventRepository* _instance;
             [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
             [self->userSession startSessionIfExpired];
         }
-
+        
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
         self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager andUserSession:self->userSession];
         
@@ -136,6 +138,10 @@ static RSEventRepository* _instance;
         self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
+}
+
+- (void) updateCTSAuthToken {
+    [self->networkManager updateCTSAuthToken];
 }
 
 - (void) __initiateSDK {
@@ -251,6 +257,11 @@ static RSEventRepository* _instance;
         [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
     }
+    
+    [RSLogger logDebug: @"EventRepository: reset: clearing the CTS Auth token as the reset is triggered"];
+    [self->preferenceManager clearAuthToken];
+    [self updateCTSAuthToken];
+    
     [self->deviceModeManager reset];
 }
 

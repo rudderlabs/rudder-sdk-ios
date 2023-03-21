@@ -418,6 +418,21 @@ static NSString* _deviceToken = nil;
     }
 }
 
++ (void)putAuthToken:(NSString *_Nonnull) authToken {
+    if(authToken != nil && [authToken length] !=0) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the device token"];
+             return;
+        }
+        NSString* base64EncodedAuthToken = [RSUtils getBase64EncodedString:authToken];
+        [preferenceManager saveAuthToken:base64EncodedAuthToken];
+        if(_repository != nil) {
+            [_repository updateCTSAuthToken];
+        }
+    }
+}
+
 #pragma mark - Session Tracking
 
 - (void)startSession {
