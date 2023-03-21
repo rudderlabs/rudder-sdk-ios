@@ -10,19 +10,13 @@
 #import "RSUtils.h"
 #import "RSLogger.h"
 #import "RSClient.h"
+#import "RSConstants.h"
 
 @implementation RSContext
 
-int const RSATTNotDetermined = 0;
-int const RSATTRestricted = 1;
-int const RSATTDenied = 2;
-int const RSATTAuthorize = 3;
-
-
 static dispatch_queue_t queue;
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         
@@ -232,12 +226,20 @@ static dispatch_queue_t queue;
 }
 
 - (void) setSessionData:(RSUserSession *) userSession {
-    dispatch_async(queue, ^{
-        self->_sessionId = [userSession getSessionId];
-        if([userSession getSessionStart]) {
-            self->_sessionStart = YES;
-            [userSession setSessionStart:NO];
+    dispatch_sync(queue, ^{        
+        if ([userSession getSessionId] != nil) {
+            self->_sessionId = [userSession getSessionId];
+            if([userSession getSessionStart]) {
+                self->_sessionStart = YES;
+                [userSession setSessionStart:NO];
+            }
         }
+    });
+}
+
+- (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds {
+    dispatch_async(queue, ^{
+        self->consentManagement = @{@"deniedConsentIds": deniedConsentIds};
     });
 }
 
@@ -263,10 +265,13 @@ static dispatch_queue_t queue;
             [tempDict setObject:_externalIds forKey:@"externalId"];
         }
         if (_sessionId != nil) {
-            [tempDict setObject:[NSNumber numberWithLong:_sessionId] forKey:@"sessionId"];
+            [tempDict setObject:_sessionId forKey:@"sessionId"];
             if(_sessionStart) {
                 [tempDict setObject:@YES forKey:@"sessionStart"];
             }
+        }
+        if (consentManagement != nil) {
+            [tempDict setObject:consentManagement forKey:@"consentManagement"];
         }
     });
     return [tempDict copy];

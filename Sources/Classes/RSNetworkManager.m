@@ -13,12 +13,13 @@
 NSString* const STATUS = @"STATUS";
 NSString* const RESPONSE = @"RESPONSE";
 
-- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken {
+- (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken andDataResidencyManager:(RSDataResidencyManager *) dataResidencyManager {
     self = [super init];
     if(self){
         self->config = config;
         self->authToken = authToken;
         self->anonymousIdToken = anonymousIdToken;
+        self->dataResidencyManager = dataResidencyManager;
         self->networkLock = [[NSLock alloc] init];
         [self updateCTSAuthToken];
     }
@@ -98,7 +99,7 @@ NSString* const RESPONSE = @"RESPONSE";
     switch(endpoint) {
         case BATCH_ENDPOINT:            
         case TRANSFORM_ENDPOINT:
-            return [self addSlashAtTheEnd:self->config.dataPlaneUrl];
+            return [self addSlashAtTheEnd:[self->dataResidencyManager getDataPlaneUrl]];
         case SOURCE_CONFIG_ENDPOINT:
             return [self addSlashAtTheEnd:self->config.controlPlaneUrl];
     }

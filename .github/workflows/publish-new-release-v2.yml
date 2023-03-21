@@ -1,0 +1,75 @@
+name: Publish new github release(v2)
+
+on:
+  pull_request:
+    branches:
+      - master-v2
+    types:
+      - closed
+
+jobs:
+  release:
+    name: Publish new release(v2)
+    runs-on: ubuntu-latest
+    if: (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-v2-release/')) && github.event.pull_request.merged == true # only merged pull requests must trigger this job
+    steps:
+      - name: Extract version from branch name (for release branches)
+        id: extract-version
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#hotfix-}
+          VERSION=${VERSION#release/}
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout source branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # In order to make a commit, we need to initialize a user.
+      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "GitHub actions"
+          git config user.email noreply@github.com
+          
+      - name: Create Github Release
+        id: create_release
+        env:
+          HUSKY: 0
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
+        run: |
+          git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
+          git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
+          DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
+
+      - name: Create pull request into develop
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: 'master-v2'
+          destination_branch: 'develop-v2'
+          github_token: ${{ secrets.PAT }}
+          pr_title: "chore(release): pulling master into develop post release v${{ steps.extract-version.outputs.release_version }}"
+          pr_body: ':crown: *An automated PR*'
+
+      - name: Delete hotfix release branch
+        uses: koj-co/delete-merged-action@master
+        if: startsWith(github.event.pull_request.head.ref, 'hotfix-v2-release/')
+        with:
+          branches: 'hotfix-v2-release/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete release branch
+        uses: koj-co/delete-merged-action@master
+        if: startsWith(github.event.pull_request.head.ref, 'release/')
+        with:
+          branches: 'release/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -11,11 +11,11 @@
 static RSEventRepository* _instance;
 @implementation RSEventRepository
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *) config {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init:writeKey config:config];
+            _instance = [[self alloc] init:writeKey config:config client:client];
         });
     }
     return _instance;
@@ -41,14 +41,14 @@ static RSEventRepository* _instance;
  * 11.Initiate RSBackGroundModeManager
  * 12.Initiate RSApplicationLifeCycleManager
  * */
-
-- (instancetype)init : (NSString*) _writeKey config:(RSConfig*) _config {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
         
         self->isSDKEnabled = YES;
         self->isSDKInitialized = NO;
+        self->client = _client;
         
         self->writeKey = _writeKey;
         self->config = _config;
@@ -60,14 +60,16 @@ static RSEventRepository* _instance;
         [RSElementCache initiate];
         
         [RSLogger logDebug:@"EventRepository: Setting AnonymousId Token"];
-        self->anonymousIdToken = [RSUtils getBase64EncodedString:[RSElementCache getAnonymousId]];
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
-        
+        [self setAnonymousIdToken];
+
         [RSLogger logDebug:@"EventRepository: Setting CTS Auth Token"];
         [self updateCTSAuthToken];
+
+        [RSLogger logDebug:@"EventRepository: Initiating RSDataResidencyManager"];
+        self->dataResidencyManager = [[RSDataResidencyManager alloc] initWithRSConfig:_config];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSNetworkManager"];
-        self->networkManager = [[RSNetworkManager alloc] initWithConfig:config andAuthToken:authToken andAnonymousIdToken:anonymousIdToken];
+        self->networkManager = [[RSNetworkManager alloc] initWithConfig:config andAuthToken:authToken andAnonymousIdToken:anonymousIdToken andDataResidencyManager:self->dataResidencyManager];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSServerConfigManager"];
         self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config andNetworkManager:self->networkManager];
@@ -115,7 +117,7 @@ static RSEventRepository* _instance;
         }
         
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
-        self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager];
+        self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager andUserSession:self->userSession];
         
         if (config.trackLifecycleEvents) {
             [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
@@ -133,7 +135,8 @@ static RSEventRepository* _instance;
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
     dispatch_sync([RSContext getQueue], ^{
-        
+        self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
 }
 
@@ -155,13 +158,24 @@ static RSEventRepository* _instance;
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
+                    [self->dataResidencyManager setDataResidencyUrlFromSourceConfig: serverConfig];
+                    NSString* dataPlaneUrl = [self->dataResidencyManager getDataPlaneUrl];
+                    if (dataPlaneUrl == nil) {
+                        [RSLogger logError:DATA_PLANE_URL_ERROR];
+                        return;
+                    }
                     [RSLogger logDebug:@"EventRepository: Starting Cloud Mode Processor"];
                     [self-> cloudModeManager startCloudModeProcessor];
-                    
+                    if (strongSelf->config.consentFilter != nil) {
+                        [RSLogger logDebug:@"EventRepository: Initiating ConsentFilterHandler"];
+                        strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
+                    }
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
-                        [RSLogger logDebug:@"EventRepository: Starting Device Mode Processor"];
-                        [self->deviceModeManager startDeviceModeProcessor:serverConfig andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
+                        NSArray <RSServerDestination *> *consentedDestinations = self->consentFilterHandler != nil ? [self->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
+                        if(consentedDestinations != nil && consentedDestinations.count > 0 ) {
+                            [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
+                        }
                     } else {
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
@@ -188,29 +202,9 @@ static RSEventRepository* _instance;
             return;
         }
     });
-    if([message.integrations count]==0){
-        if(RSClient.getDefaultOptions!=nil &&
-           RSClient.getDefaultOptions.integrations!=nil &&
-           [RSClient.getDefaultOptions.integrations count]!=0){
-            message.integrations = RSClient.getDefaultOptions.integrations;
-        }
-        else{
-            message.integrations = @{@"All": @YES};
-        }
-    }
-    // If `All` is absent in the integrations object we will set it to true for making All is true by default
-    if(message.integrations[@"All"]==nil) {
-        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
-        [mutableIntegrations setObject:@YES forKey:@"All"];
-        message.integrations = mutableIntegrations;
-    }
-    
-    if([self->userSession getSessionId] != nil) {
-        [message setSessionData: self->userSession];
-    }
-    if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
-        [self->userSession updateLastEventTimeStamp];
-    }
+    [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
+    message = [self applyConsents:message];
+    [self applySession:message withUserSession:userSession andRudderConfig:config];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -224,7 +218,41 @@ static RSEventRepository* _instance;
     [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
 }
 
-- (void) reset {
+- (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {
+    if ([message.integrations count] == 0) {
+        if(defaultOption != nil && defaultOption.integrations != nil && [defaultOption.integrations count] != 0) {
+            message.integrations = defaultOption.integrations;
+        }
+        else{
+            message.integrations = @{@"All": @YES};
+        }
+    }
+    
+    // If `All` is absent in the integrations object we will set it to true for making All is true by default
+    if (message.integrations[@"All"] == nil) {
+        NSMutableDictionary<NSString *, NSObject *>* mutableIntegrations = [message.integrations mutableCopy];
+        [mutableIntegrations setObject:@YES forKey:@"All"];
+        message.integrations = mutableIntegrations;
+    }
+}
+
+- (RSMessage *)applyConsents:(RSMessage *)message {
+    if (consentFilterHandler != nil) {
+        return [consentFilterHandler applyConsents:message];
+    }
+    return message;
+}
+
+- (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)_userSession andRudderConfig:(RSConfig *)rudderConfig {
+    if([_userSession getSessionId] != nil) {
+        [message setSessionData: _userSession];
+    }
+    if(rudderConfig.trackLifecycleEvents && rudderConfig.automaticSessionTracking) {
+        [_userSession updateLastEventTimeStamp];
+    }
+}
+
+-(void) reset {
     if([self->userSession getSessionId] != nil) {
         [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
@@ -238,6 +266,10 @@ static RSEventRepository* _instance;
 }
 
 -(void) flush {
+    if ([self->dataResidencyManager getDataPlaneUrl] == nil) {
+        [RSLogger logError:DATA_PLANE_URL_FLUSH_ERROR];
+        return;
+    }
     [self->deviceModeManager flush];
     [self->flushManager flush];
 }
@@ -278,4 +310,21 @@ static RSEventRepository* _instance;
         [preferenceManager updateOptInTime:[RSUtils getTimeStampLong]];
     }
 }
+
+- (void) startSession:(long) sessionId {
+    if(self->config.automaticSessionTracking) {
+        [self endSession];
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession startSession:sessionId];
+}
+
+- (void) endSession {
+    if(self->config.automaticSessionTracking) {
+        [self->config setAutomaticSessionTracking:NO];
+    }
+    [self->userSession clearSession];
+}
+
+
 @end

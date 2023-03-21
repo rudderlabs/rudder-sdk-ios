@@ -18,12 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let builder: RSConfigBuilder = RSConfigBuilder()
-            .withLoglevel(RSLogLevelNone)
+            .withLoglevel(RSLogLevelDebug)
             .withDataPlaneUrl("http://localhost:8080")
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
             .withSessionTimeoutMillis(30000)
+//            .withConsentFilter(CustomFilter())
         RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
         
         

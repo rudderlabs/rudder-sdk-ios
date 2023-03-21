@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.destinations = [[NSMutableArray alloc] init];
+        self.dataPlanes = [[NSMutableDictionary alloc] init];
     }
     return self;
 }

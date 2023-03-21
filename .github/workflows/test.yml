@@ -1,0 +1,45 @@
+name: 'Tests & Coverage'
+on:
+  workflow_dispatch:
+  push:
+    branches: ['master', 'develop']
+  pull_request:
+    branches: ['master', 'develop']
+    types: ['opened', 'reopened', 'synchronize']
+
+jobs:
+  build:
+    name: 'Tests & Coverage'
+    runs-on: macOS-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+        
+      - name: Install xcpretty
+        run: gem install xcpretty
+
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          
+      - name: Run tests(suite)
+        run: |
+          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+      - name: Collect coverage into one XML report
+        run: |
+          bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
+      
+#      - name: Build SDK(iOS)
+#        run: |
+#          xcodebuild clean build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator | xcpretty -r json-compilation-database -o compile_commands.json
+              
+      - name: SonarCloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner -Dsonar.host.url=https://sonarcloud.io

@@ -151,7 +151,7 @@
 
 
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
-    int messageCount = (int) dbMessage.messageIds.count;
+    int messageCount = (int)dbMessage.messageIds.count;
     if (messageCount % queueSize == 0) {
         return messageCount / queueSize;
     } else {
@@ -162,8 +162,8 @@
 + (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
-    }
-    return [messageDetails subarrayWithRange:NSMakeRange(0, queueSize)];
+    }    
+    return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
 }
 
 + (id) deSerializeJSONString:(NSString*) jsonString {
