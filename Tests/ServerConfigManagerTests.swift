@@ -1,6 +1,6 @@
 //
-//  RSServerConfigManagerTest.swift
-//  RudderTests
+//  ServerConfigManagerTests.swift
+//  Tests
 //
 //  Created by Desu Sai Venkat on 02/06/22.
 //
@@ -8,7 +8,7 @@
 import XCTest
 import Rudder
 
-class RSServerConfigManagerTest: XCTestCase {
+class ServerConfigManagerTests: XCTestCase {
     
     static let writeKey = "1pTxG1Tqxr7FCrqIy7j0p28AENV"
     static let authToken = writeKey.toBase64()
@@ -119,8 +119,8 @@ class RSServerConfigManagerTest: XCTestCase {
         rsPreferenceManager.saveConfigJson(configJSON)
         
         let rsConfig = RSConfigBuilder().withControlPlaneUrl("https://invalid-rudder.com").build()
-        let rsNetworkManager = RSNetworkManager.init(config: rsConfig, andAuthToken: RSServerConfigManagerTest.authToken, andAnonymousIdToken:RSServerConfigManagerTest.anonymousIdToken)
-        rsServerConfigManager = RSServerConfigManager.init(RSServerConfigManagerTest.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
+        let rsNetworkManager = RSNetworkManager.init(config: rsConfig, andAuthToken: ServerConfigManagerTests.authToken, andAnonymousIdToken:ServerConfigManagerTests.anonymousIdToken)
+        rsServerConfigManager = RSServerConfigManager.init(ServerConfigManagerTests.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
         sleep(12)
     }
     

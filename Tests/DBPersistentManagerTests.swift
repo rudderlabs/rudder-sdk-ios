@@ -1,6 +1,6 @@
 //
-//  RudderTests.swift
-//  RudderTests
+//  DBPersistentManagerTests.swift
+//  Tests
 //
 //  Created by Desu Sai Venkat on 31/05/22.
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import Rudder
 
-class DBPersistentManagerTest: XCTestCase {
+class DBPersistentManagerTests: XCTestCase {
     
     var dbPersistentManager: RSDBPersistentManager!
     let MESSAGE_1 = """

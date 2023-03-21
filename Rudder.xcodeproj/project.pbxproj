@@ -14,14 +14,20 @@
 		ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */; };
 		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
 		ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */; };
-		ED20F4E8299605F600F3FD0E /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */; };
-		ED20F4EF2996078B00F3FD0E /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */; };
-		ED20F4F02996078B00F3FD0E /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */; };
-		ED20F4F12996078B00F3FD0E /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */; };
-		ED20F4F22996078B00F3FD0E /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */; };
-		ED20F4F32996078B00F3FD0E /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */; };
-		ED20F4F42996078B00F3FD0E /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */; };
 		ED20F4F62996083B00F3FD0E /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED20F4F52996083B00F3FD0E /* TestUtils.swift */; };
+		ED38D33429CA0BC8003A7544 /* DBPersistentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D32629CA0BC8003A7544 /* DBPersistentManagerTests.swift */; };
+		ED38D33529CA0BC8003A7544 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32829CA0BC8003A7544 /* multi-dataresidency-us-true.json */; };
+		ED38D33629CA0BC8003A7544 /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32929CA0BC8003A7544 /* eu-dataresidency-default-false.json */; };
+		ED38D33729CA0BC8003A7544 /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32A29CA0BC8003A7544 /* multi-dataresidency-default-false.json */; };
+		ED38D33829CA0BC8003A7544 /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32B29CA0BC8003A7544 /* multi-dataresidency-default-true.json */; };
+		ED38D33929CA0BC8003A7544 /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32C29CA0BC8003A7544 /* no-dataresidency.json */; };
+		ED38D33A29CA0BC8003A7544 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32D29CA0BC8003A7544 /* multi-dataresidency-eu-true.json */; };
+		ED38D33B29CA0BC8003A7544 /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32E29CA0BC8003A7544 /* eu-dataresidency-default-true.json */; };
+		ED38D33C29CA0BC8003A7544 /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D32F29CA0BC8003A7544 /* us-dataresidency-default-true.json */; };
+		ED38D33D29CA0BC8003A7544 /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = ED38D33029CA0BC8003A7544 /* us-dataresidency-default-false.json */; };
+		ED38D33E29CA0BC8003A7544 /* ServerConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D33129CA0BC8003A7544 /* ServerConfigManagerTests.swift */; };
+		ED38D33F29CA0BC8003A7544 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D33229CA0BC8003A7544 /* Extensions.swift */; };
+		ED38D34029CA0BC8003A7544 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D33329CA0BC8003A7544 /* RudderUtilsTest.swift */; };
 		ED7DFD81298C061A00ED5A8E /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
 		ED7DFE39298C091800ED5A8E /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
@@ -199,8 +205,6 @@
 		ED7DFEE7298C091800ED5A8E /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
 		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
-		EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */; };
-		EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */; };
 		F6B4B52729C8236100344864 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51D29C8236100344864 /* RSCloudModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52829C8236100344864 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52929C8236100344864 /* RSNetworkEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51F29C8236100344864 /* RSNetworkEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -247,14 +251,20 @@
 		ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConserFilterHandlerTests.swift; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
-		ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
-		ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "no-dataresidency.json"; sourceTree = "<group>"; };
-		ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
-		ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
 		ED20F4F52996083B00F3FD0E /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		ED38D32629CA0BC8003A7544 /* DBPersistentManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBPersistentManagerTests.swift; sourceTree = "<group>"; };
+		ED38D32829CA0BC8003A7544 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
+		ED38D32929CA0BC8003A7544 /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED38D32A29CA0BC8003A7544 /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED38D32B29CA0BC8003A7544 /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED38D32C29CA0BC8003A7544 /* no-dataresidency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "no-dataresidency.json"; sourceTree = "<group>"; };
+		ED38D32D29CA0BC8003A7544 /* multi-dataresidency-eu-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-eu-true.json"; sourceTree = "<group>"; };
+		ED38D32E29CA0BC8003A7544 /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED38D32F29CA0BC8003A7544 /* us-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED38D33029CA0BC8003A7544 /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED38D33129CA0BC8003A7544 /* ServerConfigManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConfigManagerTests.swift; sourceTree = "<group>"; };
+		ED38D33229CA0BC8003A7544 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		ED38D33329CA0BC8003A7544 /* RudderUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderUtilsTest.swift; sourceTree = "<group>"; };
 		ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigSource.m; sourceTree = "<group>"; };
 		ED7DFD86298C091800ED5A8E /* RSTraits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraits.m; sourceTree = "<group>"; };
@@ -443,8 +453,6 @@
 		ED857DF22912754400B7BFCE /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilterHandler.h; sourceTree = "<group>"; };
 		ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilterHandler.m; sourceTree = "<group>"; };
-		EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-eu-true.json"; sourceTree = "<group>"; };
-		EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
 		EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "github-release.config.js"; sourceTree = "<group>"; };
 		F6B4B51D29C8236100344864 /* RSCloudModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCloudModeManager.h; sourceTree = "<group>"; };
 		F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBackGroundModeManager.h; sourceTree = "<group>"; };
@@ -536,27 +544,31 @@
 		ED04A23D29839DCC0080A88D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ED20F4E62996059A00F3FD0E /* Fixtures */,
+				ED38D32729CA0BC8003A7544 /* Fixtures */,
 				ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */,
 				ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */,
+				ED38D32629CA0BC8003A7544 /* DBPersistentManagerTests.swift */,
 				ED04A23E29839DCC0080A88D /* EventRepositoryTests.swift */,
+				ED38D33229CA0BC8003A7544 /* Extensions.swift */,
+				ED38D33129CA0BC8003A7544 /* ServerConfigManagerTests.swift */,
+				ED38D33329CA0BC8003A7544 /* RudderUtilsTest.swift */,
 				ED20F4F52996083B00F3FD0E /* TestUtils.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		ED20F4E62996059A00F3FD0E /* Fixtures */ = {
+		ED38D32729CA0BC8003A7544 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */,
-				ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */,
-				ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */,
-				ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */,
-				EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */,
-				EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */,
-				ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */,
-				ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */,
-				ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */,
+				ED38D32929CA0BC8003A7544 /* eu-dataresidency-default-false.json */,
+				ED38D32E29CA0BC8003A7544 /* eu-dataresidency-default-true.json */,
+				ED38D32A29CA0BC8003A7544 /* multi-dataresidency-default-false.json */,
+				ED38D32B29CA0BC8003A7544 /* multi-dataresidency-default-true.json */,
+				ED38D32D29CA0BC8003A7544 /* multi-dataresidency-eu-true.json */,
+				ED38D32829CA0BC8003A7544 /* multi-dataresidency-us-true.json */,
+				ED38D32C29CA0BC8003A7544 /* no-dataresidency.json */,
+				ED38D33029CA0BC8003A7544 /* us-dataresidency-default-false.json */,
+				ED38D32F29CA0BC8003A7544 /* us-dataresidency-default-true.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -1049,15 +1061,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */,
-				EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */,
-				ED20F4EF2996078B00F3FD0E /* eu-dataresidency-default-true.json in Resources */,
-				ED20F4F02996078B00F3FD0E /* multi-dataresidency-default-false.json in Resources */,
-				ED20F4F32996078B00F3FD0E /* eu-dataresidency-default-false.json in Resources */,
-				ED20F4F42996078B00F3FD0E /* us-dataresidency-default-false.json in Resources */,
-				ED20F4F12996078B00F3FD0E /* us-dataresidency-default-true.json in Resources */,
-				ED20F4F22996078B00F3FD0E /* no-dataresidency.json in Resources */,
-				ED20F4E8299605F600F3FD0E /* multi-dataresidency-default-true.json in Resources */,
+				ED38D33B29CA0BC8003A7544 /* eu-dataresidency-default-true.json in Resources */,
+				ED38D33929CA0BC8003A7544 /* no-dataresidency.json in Resources */,
+				ED38D33629CA0BC8003A7544 /* eu-dataresidency-default-false.json in Resources */,
+				ED38D33A29CA0BC8003A7544 /* multi-dataresidency-eu-true.json in Resources */,
+				ED38D33729CA0BC8003A7544 /* multi-dataresidency-default-false.json in Resources */,
+				ED38D33529CA0BC8003A7544 /* multi-dataresidency-us-true.json in Resources */,
+				ED38D33C29CA0BC8003A7544 /* us-dataresidency-default-true.json in Resources */,
+				ED38D33D29CA0BC8003A7544 /* us-dataresidency-default-false.json in Resources */,
+				ED38D33829CA0BC8003A7544 /* multi-dataresidency-default-true.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1217,9 +1229,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7DFD81298C061A00ED5A8E /* DataResidencyTests.swift in Sources */,
+				ED38D33E29CA0BC8003A7544 /* ServerConfigManagerTests.swift in Sources */,
 				ED04A247298424040080A88D /* ConserFilterHandlerTests.swift in Sources */,
 				ED04A23F29839DCC0080A88D /* EventRepositoryTests.swift in Sources */,
+				ED38D33429CA0BC8003A7544 /* DBPersistentManagerTests.swift in Sources */,
 				ED20F4F62996083B00F3FD0E /* TestUtils.swift in Sources */,
+				ED38D33F29CA0BC8003A7544 /* Extensions.swift in Sources */,
+				ED38D34029CA0BC8003A7544 /* RudderUtilsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
