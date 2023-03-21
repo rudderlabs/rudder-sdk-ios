@@ -13,11 +13,12 @@
 @interface RSApplicationLifeCycleManager : NSObject {
     RSPreferenceManager* preferenceManager;
     RSBackGroundModeManager* backGroundModeManager;
+    RSUserSession* userSession;
     RSConfig* config;
     BOOL firstForeGround;
 }
 
-- (instancetype)initWithConfig:(RSConfig*) config andPreferenceManager:(RSPreferenceManager*) preferenceManager andBackGroundModeManager:(RSBackGroundModeManager*) backGroundModeManager;
+- (instancetype)initWithConfig:(RSConfig*) config andPreferenceManager:(RSPreferenceManager*) preferenceManager andBackGroundModeManager:(RSBackGroundModeManager *) backGroundModeManager andUserSession:(RSUserSession *) userSession;
 - (void) applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void) trackApplicationLifeCycle;
 - (void) prepareScreenRecorder;

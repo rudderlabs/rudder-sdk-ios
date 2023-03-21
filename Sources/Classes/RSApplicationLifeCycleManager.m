@@ -13,11 +13,12 @@
 @implementation RSApplicationLifeCycleManager
 
 
-- (instancetype)initWithConfig:(RSConfig*) config andPreferenceManager:(RSPreferenceManager*) preferenceManager andBackGroundModeManager:(RSBackGroundModeManager *) backGroundModeManager {
+- (instancetype)initWithConfig:(RSConfig*) config andPreferenceManager:(RSPreferenceManager*) preferenceManager andBackGroundModeManager:(RSBackGroundModeManager *) backGroundModeManager andUserSession:(RSUserSession *) userSession {
     self = [super init];
     if(self){
         self->config = config;
         self->preferenceManager = preferenceManager;
+        self->userSession = userSession;
         self->firstForeGround = YES;
         self->backGroundModeManager = backGroundModeManager;
     }
@@ -114,6 +115,10 @@
     [self->backGroundModeManager registerForBackGroundMode];
     if (!self->config.trackLifecycleEvents) {
         return;
+    }
+    if (self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        [RSLogger logDebug:@"RSApplicationLifeCycleManager: applicationWillEnterForeground: Checking if session timeout due to inactivity and creating a new one"];
+        [self->userSession startSessionIfExpired];
     }
     [self sendApplicationOpenedWithProperties:@{@"from_background" : @YES}];
 }

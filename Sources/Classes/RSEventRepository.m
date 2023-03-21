@@ -115,7 +115,7 @@ static RSEventRepository* _instance;
         }
 
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
-        self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager];
+        self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager andUserSession:self->userSession];
         
         if (config.trackLifecycleEvents) {
             [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
