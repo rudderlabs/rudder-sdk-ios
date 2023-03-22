@@ -56,7 +56,10 @@ int deviceModeSleepCount = 0;
                 RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT withRequestMethod:POST];
                 NSString* responsePayload = response.responsePayload;
                 if (response.state == WRONG_WRITE_KEY) {
-                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Wrong WriteKey. Aborting."];
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Wrong WriteKey. Aborting the TransformationProcessor."];
+                    break;
+                } else if (response.state == INVALID_URL) {
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Invalid Data Plane URL. Aborting the TransformationProcessor"];
                     break;
                 } else if (response.state == NETWORK_ERROR) {
                     deviceModeSleepCount += 1;

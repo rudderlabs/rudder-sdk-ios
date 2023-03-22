@@ -36,8 +36,19 @@ NSString* const RESPONSE = @"RESPONSE";
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     NSString *requestEndPoint = [self getRequestUrl:endpoint];
+    if(requestEndPoint == nil || [requestEndPoint length] == 0) {
+        [RSLogger logError:@"RSNetworkManager: Request URL is missing"];
+        weakResult.state = INVALID_URL;
+        return weakResult;
+    }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: requestURL %@", requestEndPoint]];
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:requestEndPoint]];
+    NSURL* url = [[NSURL alloc] initWithString:requestEndPoint];
+    if (url == nil) {
+        [RSLogger logError:@"RSNetworkManager: Error occured while creating the NSURL object from the request URL"];
+        weakResult.state = INVALID_URL;
+        return weakResult;
+    }
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
     if(method == GET) {
         [urlRequest setHTTPMethod:@"GET"];
@@ -93,7 +104,7 @@ NSString* const RESPONSE = @"RESPONSE";
 
 - (NSString *) getBaseUrl: (ENDPOINT) endpoint {
     switch(endpoint) {
-        case BATCH_ENDPOINT:            
+        case BATCH_ENDPOINT:
         case TRANSFORM_ENDPOINT:
             return [self addSlashAtTheEnd:[self->dataResidencyManager getDataPlaneUrl]];
         case SOURCE_CONFIG_ENDPOINT:

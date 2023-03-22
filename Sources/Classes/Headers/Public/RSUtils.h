@@ -30,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
 + (NSString*) getCSVString:(NSArray*) inputStrings;
 + (NSString*) getJSONCSVString:(NSArray*) inputStrings;
-+ (id) deSerializeJSONString:(NSString*) jsonString;
++ (id _Nullable) deSerializeJSONString:(NSString*) jsonString;
 + (BOOL) isValidURL:(NSURL*) url;
 + (NSString*) appendSlashToUrl:(NSString*) url;
-+ (NSString*) getBase64EncodedString:(NSString* __nonnull) inputString;
++ (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

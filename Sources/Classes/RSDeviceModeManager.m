@@ -53,29 +53,33 @@
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
         return;
-    } else {
-        if (destinations.count == 0) {
-            [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
-        } else {
-            NSMutableDictionary<NSString*, RSServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
-            for (RSServerDestination *destination in destinations) {
-                [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
-            }
-            for (id<RSIntegrationFactory> factory in self->config.factories) {
-                RSServerDestination *destination = [destinationDict objectForKey:factory.key];
-                if (destination != nil && destination.isDestinationEnabled == YES) {
-                    NSDictionary *destinationConfig = destination.destinationConfig;
-                    if (destinationConfig != nil) {
-                        @try {
-                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Initiating native SDK factory %@", factory.key]];
-                            id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:[RSClient sharedInstance] rudderConfig:self->config];
-                            [integrationOperationMap setValue:nativeOp forKey:factory.key];
-                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Initiated native SDK factory %@", factory.key]];
-                        }
-                        @catch(NSException* e){
-                            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Exception while initiating native SDK Factory %@ due to %@", factory.key,e.reason]];
-                        }
-                    }
+    }
+    if (destinations.count == 0) {
+        [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
+        return;
+    }
+    RSClient* client = [RSClient sharedInstance];
+    if(client == nil) {
+        [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: RudderClient instance is found to be nil, aborting the initialization of device modes"];
+        return;
+    }
+    NSMutableDictionary<NSString*, RSServerDestination*> *destinationDict = [[NSMutableDictionary alloc] init];
+    for (RSServerDestination *destination in destinations) {
+        [destinationDict setObject:destination forKey:destination.destinationDefinition.displayName];
+    }
+    for (id<RSIntegrationFactory> factory in self->config.factories) {
+        RSServerDestination *destination = [destinationDict objectForKey:factory.key];
+        if (destination != nil && destination.isDestinationEnabled == YES) {
+            NSDictionary *destinationConfig = destination.destinationConfig;
+            if (destinationConfig != nil) {
+                @try {
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Initiating native SDK factory %@", factory.key]];
+                    id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:self->config];
+                    [integrationOperationMap setValue:nativeOp forKey:factory.key];
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Initiated native SDK factory %@", factory.key]];
+                }
+                @catch(NSException* e){
+                    [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Exception while initiating native SDK Factory %@ due to %@", factory.key,e.reason]];
                 }
             }
         }
@@ -87,10 +91,15 @@
         [RSLogger logInfo:@"RSDeviceModeManager: initiateCustomFactories: No custom factory found"];
         return;
     }
+    RSClient* client = [RSClient sharedInstance];
+    if(client == nil) {
+        [RSLogger logInfo:@"RSDeviceModeManager: initiateCustomFactories: RudderClient instance is found to be nil, aborting the initialization of custom factories"];
+        return;
+    }
     for (id<RSIntegrationFactory> factory in self->config.customFactories) {
         @try {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateCustomFactories: Initiating custom factory %@", factory.key]];
-            id<RSIntegration> nativeOp = [factory initiate:@{} client:[RSClient sharedInstance] rudderConfig:self->config];
+            id<RSIntegration> nativeOp = [factory initiate:@{} client:client rudderConfig:self->config];
             [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateCustomFactories: Initiated custom SDK factory %@", factory.key]];
         }

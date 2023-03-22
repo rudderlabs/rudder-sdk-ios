@@ -59,9 +59,13 @@
             if(response == nil) {
                 usleep(1000000);
             } else if (response.state == WRONG_WRITE_KEY) {
-                [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
+                [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
                 break;
-            } else if (response.state == NETWORK_ERROR) {
+            } else if (response.state == INVALID_URL) {
+                [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
+                break;
+            }
+            else if (response.state == NETWORK_ERROR) {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
                 usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
             }

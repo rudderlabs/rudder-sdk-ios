@@ -166,7 +166,7 @@
     return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
 }
 
-+ (id) deSerializeJSONString:(NSString*) jsonString {
++ (id _Nullable) deSerializeJSONString:(NSString*) jsonString {
     NSError *error = nil;
     NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -188,7 +188,7 @@
     return [url stringByAppendingString:@"/"];
 }
 
-+ (NSString*) getBase64EncodedString:(NSString* __nonnull) inputString {
++ (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString {
     __block NSString* base64EncodedString = nil;
     if(inputString != nil && [inputString length] !=0) {
         NSData* inputStringData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
