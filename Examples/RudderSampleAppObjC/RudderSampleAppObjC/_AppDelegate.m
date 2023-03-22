@@ -13,8 +13,8 @@
 #import <AdSupport/ASIdentifierManager.h>
 
 
-static NSString *WRITE_KEY = @"2CpkPQoOX97OkRqVemj5PvUdvkg";
-static NSString *DATA_PLANE_URL = @"https://shadowfax-dataplane.dev-rudder.rudderlabs.com";
+static NSString *WRITE_KEY = @"1xXCubSHWXbpBI2h6EpCjKOsxmQ";
+static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack.com";
 static NSString *CONTROL_PLANE_URL = @"https://api.dev.rudderlabs.com";
 
 @implementation _AppDelegate
@@ -27,7 +27,7 @@ static NSString *CONTROL_PLANE_URL = @"https://api.dev.rudderlabs.com";
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
+//    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withDataResidencyServer:US];
     [builder withFactory:[RudderAmplitudeFactory instance]];
     [builder withFactory:[RudderBrazeFactory instance]];

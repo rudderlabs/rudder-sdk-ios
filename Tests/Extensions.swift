@@ -1,6 +1,6 @@
 //
-//  Utils.swift
-//  RudderTests
+//  Extensions.swift
+//  Tests
 //
 //  Created by Desu Sai Venkat on 16/08/22.
 //

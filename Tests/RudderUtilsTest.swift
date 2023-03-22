@@ -1,6 +1,6 @@
 //
 //  RudderUtilsTest.swift
-//  RudderTests
+//  Tests
 //
 //  Created by Desu Sai Venkat on 14/07/22.
 //
