@@ -13,10 +13,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef enum {
-    ASCENDING,
-    DESCENDING
-} ORDER;
 
 @interface RSUtils : NSObject
 

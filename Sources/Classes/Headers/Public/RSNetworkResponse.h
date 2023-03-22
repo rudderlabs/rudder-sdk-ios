@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSNetworkEnums.h"
+#import "RSEnums.h"
 
 
 @interface RSNetworkResponse : NSObject

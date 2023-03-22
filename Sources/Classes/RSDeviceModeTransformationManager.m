@@ -87,7 +87,7 @@ int deviceModeSleepCount = 0;
                                     return [a[@"orderNo"] compare:b[@"orderNo"]];
                                 }];
                                 if(transformedPayloads != nil && transformedPayloads.count > 0 && destinationId != nil) {
-                                    [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads ToDestination:destinationId];
+                                    [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads ToDestinationId:destinationId];
                                 }
                             }
                         }
@@ -115,7 +115,7 @@ int deviceModeSleepCount = 0;
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
     [jsonPayload appendString:@"{"];
     [jsonPayload appendString:@"\"metadata\": {"];
-    [jsonPayload appendFormat:@"\"Custom-Authorization\": \"%@\"", [self->networkManager getCTSAuthToken]];
+    [jsonPayload appendFormat:@"\"Custom-Authorization\": \"%@\"", [[RSPreferenceManager getInstance] getAuthToken]];
     [jsonPayload appendString:@"},"];
     [jsonPayload appendString:@"\"batch\":"];
     [jsonPayload appendString:@"["];

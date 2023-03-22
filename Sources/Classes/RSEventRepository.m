@@ -62,9 +62,6 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: Setting AnonymousId Token"];
         [self setAnonymousIdToken];
 
-        [RSLogger logDebug:@"EventRepository: Setting CTS Auth Token"];
-        [self updateCTSAuthToken];
-
         [RSLogger logDebug:@"EventRepository: Initiating RSDataResidencyManager"];
         self->dataResidencyManager = [[RSDataResidencyManager alloc] initWithRSConfig:_config];
         
@@ -138,10 +135,6 @@ static RSEventRepository* _instance;
         self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
-}
-
-- (void) updateCTSAuthToken {
-    [self->networkManager updateCTSAuthToken];
 }
 
 - (void) __initiateSDK {

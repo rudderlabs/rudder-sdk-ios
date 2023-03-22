@@ -8,7 +8,7 @@
 
 #import "RSServerConfigManager.h"
 #import "RSNetworkResponse.h"
-#import "RSNetworkEnums.h"
+#import "RSEnums.h"
 #import "RSUtils.h"
 #import "RSLogger.h"
 #import "RSServerDestination.h"

@@ -184,7 +184,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     const char* querySQL = [querySQLString UTF8String];
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
-    NSMutableArray<NSNumber *>* statuses = [[NSMutableArray alloc] init];
+    NSMutableArray<NSNumber *>* statusList = [[NSMutableArray alloc] init];
     
     @synchronized (self) {
         sqlite3_stmt *queryStmt = nil;
@@ -197,7 +197,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
                 int status = sqlite3_column_int(queryStmt,3);
                 [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
                 [messages addObject:message];
-                [statuses addObject:[NSNumber numberWithInt:status]];
+                [statusList addObject:[NSNumber numberWithInt:status]];
             }
         } else {
             [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
@@ -207,7 +207,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     RSDBMessage *dbMessage = [[RSDBMessage alloc] init];
     dbMessage.messageIds = messageIds;
     dbMessage.messages = messages;
-    dbMessage.statuses = statuses;
+    dbMessage.statusList = statusList;
     return dbMessage;
 }
 

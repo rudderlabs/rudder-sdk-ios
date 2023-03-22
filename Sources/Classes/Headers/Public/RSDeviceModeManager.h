@@ -13,11 +13,6 @@
 #import "RSNetworkManager.h"
 #import "RSConsentFilterHandler.h"
 
-typedef enum {
-    ENABLED = YES,
-    DISABLED = NO
-} TRANSFORMATION_STATUS;
-
 @interface RSDeviceModeManager : NSObject {
     RSConfig *config;
     RSDBPersistentManager *dbPersistentManager;
@@ -34,7 +29,7 @@ typedef enum {
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
 - (void) dumpOriginalEvents:(NSArray *) originalPayloads;
-- (void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId;
+- (void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestinationId:(NSString*) destinationId;
 - (void) reset;
 - (void) flush;
 

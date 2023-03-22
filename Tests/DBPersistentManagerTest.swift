@@ -73,9 +73,9 @@ class DBPersistentManagerTest: XCTestCase {
         // verifying if both the messages exist in the table even after migration
         let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
         XCTAssert(rsDbMessage.messageIds.count==3)
-        XCTAssert(rsDbMessage.statuses[0] as? Int == 1)
-        XCTAssert(rsDbMessage.statuses[1] as? Int == 1)
-        XCTAssert(rsDbMessage.statuses[2] as? Int == 0)
+        XCTAssert(rsDbMessage.statusList[0] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[1] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[2] as? Int == 0)
     }
     
     func testCreateEventsTableWithVersion () throws {

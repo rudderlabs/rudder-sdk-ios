@@ -12,16 +12,6 @@ project 'Examples/RudderSammpleAppSwift/RudderSammpleAppSwift.xcodeproj'
 project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
 project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj'
 
-target 'Rudder' do
-  project 'Rudder.xcodeproj'
-  platform :ios, '9.0'
-   target 'RudderTests' do
-     platform :ios, '10.0'
-     inherit!:search_paths
-   end
-end
-
-
 target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
     platform :ios, '10.0'

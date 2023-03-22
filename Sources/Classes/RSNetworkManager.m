@@ -21,7 +21,6 @@ NSString* const RESPONSE = @"RESPONSE";
         self->anonymousIdToken = anonymousIdToken;
         self->dataResidencyManager = dataResidencyManager;
         self->networkLock = [[NSLock alloc] init];
-        [self updateCTSAuthToken];
     }
     return self;
 }
@@ -118,15 +117,6 @@ NSString* const RESPONSE = @"RESPONSE";
         case SOURCE_CONFIG_ENDPOINT:
             return [[NSString alloc] initWithFormat:@"sourceConfig?p=ios&v=%@", RS_VERSION];
     }
-}
-
-- (void) updateCTSAuthToken {
-    self->ctsAuthToken = [[RSPreferenceManager getInstance] getAuthToken];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: updateCTSAuthToken: ctsAuthToken is: %@", self->ctsAuthToken]];
-}
-
-- (NSString*) getCTSAuthToken {
-    return self->ctsAuthToken;
 }
 
 @end

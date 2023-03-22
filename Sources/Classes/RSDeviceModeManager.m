@@ -149,7 +149,7 @@
     }
 }
 
--(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestination:(NSString*) destinationId {
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestinationId:(NSString*) destinationId {
     NSArray<NSString*>* destinationNames = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId];
     if(destinationNames.count > 0) {
         NSString* destinationName = destinationNames[0];

@@ -74,7 +74,7 @@ static dispatch_queue_t queue;
         _traits = dict[@"traits"];
         _library = [[RSLibraryInfo alloc] initWithDict:dict[@"library"]];
         _os = [[RSOSInfo alloc] initWithDict:dict[@"os"]];
-        _screen = [[RSScreenInfo alloc] initWithDict:dict[@"screen"]]; //
+        _screen = [[RSScreenInfo alloc] initWithDict:dict[@"screen"]]; 
         _userAgent = dict[@"userAgent"];
         _locale = dict[@"locale"];
         _device = [[RSDeviceInfo alloc] initWithDict:dict[@"device"]];

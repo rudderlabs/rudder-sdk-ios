@@ -10,7 +10,7 @@
 #import "RSLogger.h"
 #import "RSConfig.h"
 #import "RSNetworkManager.h"
-#import "RSNetworkEnums.h"
+#import "RSEnums.h"
 #import "RSDeviceModeManager.h"
 #import "RSDBPersistentManager.h"
 
