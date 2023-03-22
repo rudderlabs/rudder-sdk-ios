@@ -48,7 +48,7 @@ static NSString* _deviceToken = nil;
             if (options != nil) {
                 _defaultOptions = options;
             }
-            RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];            
+            RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];
@@ -423,10 +423,12 @@ static NSString* _deviceToken = nil;
         RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
         if([preferenceManager getOptStatus]) {
             [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the auth token"];
-             return;
+            return;
         }
         NSString* base64EncodedAuthToken = [RSUtils getBase64EncodedString:authToken];
-        [preferenceManager saveAuthToken:base64EncodedAuthToken];
+        if(base64EncodedAuthToken != nil) {
+            [preferenceManager saveAuthToken:base64EncodedAuthToken];
+        }
     }
 }
 
