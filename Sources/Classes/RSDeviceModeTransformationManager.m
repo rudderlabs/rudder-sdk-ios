@@ -90,7 +90,7 @@ int deviceModeSleepCount = 0;
                                     return [a[@"orderNo"] compare:b[@"orderNo"]];
                                 }];
                                 if(transformedPayloads != nil && transformedPayloads.count > 0 && destinationId != nil) {
-                                    [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads ToDestinationId:destinationId];
+                                    [strongSelf->deviceModeManager dumpTransformedEvents:transformedPayloads toDestinationId:destinationId];
                                 }
                             }
                         }
