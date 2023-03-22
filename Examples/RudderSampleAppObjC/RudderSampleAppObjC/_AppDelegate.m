@@ -13,62 +13,77 @@
 #import <AdSupport/ASIdentifierManager.h>
 
 
+static int userCount = 1;
+static int eventCount = 1;
+static int groupCount = 1;
+static int screenCount = 1;
+
+
 static NSString *WRITE_KEY = @"1xXCubSHWXbpBI2h6EpCjKOsxmQ";
 static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack.com";
-static NSString *CONTROL_PLANE_URL = @"https://api.dev.rudderlabs.com";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+//    [RSClient putAuthToken:@"testAuthToken"];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withLoglevel:RSLogLevelVerbose];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-//    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
-    [builder withDataResidencyServer:US];
     [builder withFactory:[RudderAmplitudeFactory instance]];
     [builder withFactory:[RudderBrazeFactory instance]];
-    [RSClient getInstance:WRITE_KEY config:[builder build]];    
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    }];
-    
-    [[RSClient sharedInstance] identify:@"testUserId"
-                                 traits:@{@"firstname": @"First Name"}
-                                options:nil];
-    
-    [[RSClient sharedInstance] screen:@"ViewController"];
-    
-    [[RSClient sharedInstance] group:@"sample_group_id"
-                              traits:@{@"foo": @"bar",
-                                       @"foo1": @"bar1",
-                                       @"email": @"ruchira@gmail.com"}
-    ];
-    
-    [[RSClient sharedInstance] alias:@"new_user_id"];
-    
-    RSOption* option1 = [[RSOption alloc] init];
-    [option1 putIntegration:@"Amplitude" isEnabled:YES];
-    
-    RSOption* option2 = [[RSOption alloc] init];
-    [option2 putIntegration:@"Braze" isEnabled:YES];
-    
-    NSDictionary* props = @{@"data": @YES};
-    
-    for(int i=0; i<5;i++) {
-        NSDictionary* duplicateProps = nil;
-        if(i%2 ==0){
-            duplicateProps = props;
-        }
-        [[RSClient sharedInstance] track:[[NSString alloc] initWithFormat:@"Test Event %@: %d", @"Amplitude", i] properties:props options:option1];
-        [[RSClient sharedInstance] track:[[NSString alloc] initWithFormat:@"Test Event %@: %d", @"Braze", i] properties:props options:option2];
-    }
+    [RSClient getInstance:WRITE_KEY config:[builder build]];
     
     return YES;
+}
+
++ (void) sendIdentify {
+    NSString* userId = [[NSString alloc] initWithFormat:@"User %d",userCount];
+    NSString* userEmail = [[NSString alloc] initWithFormat:@"User%d@gmail.com",userCount];
+    NSString* userName = [[NSString alloc] initWithFormat:@"Mr. User %d",userCount];
+    [[RSClient sharedInstance] identify:userId traits:@{
+        @"email": userEmail,
+        @"name": userName
+    }];
+    userCount = userCount+1;
+}
+
++ (void) sendTrack {
+    NSString* eventName = [[NSString alloc] initWithFormat:@"Test Event %d",eventCount];
+    NSString* propKey = [[NSString alloc] initWithFormat:@"Test Event Key %d",eventCount];
+    NSString* propValue = [[NSString alloc] initWithFormat:@"Test Event Value %d",eventCount];
+    [[RSClient sharedInstance] track:eventName properties: @{
+        propKey : propValue
+    }];
+    eventCount = eventCount + 1;
+}
+
++ (void) sendScreen {
+    NSString* screenName = [[NSString alloc] initWithFormat:@"Test Screen %d",eventCount];
+    NSString* propKey = [[NSString alloc] initWithFormat:@"Test Screen Key %d",eventCount];
+    NSString* propValue = [[NSString alloc] initWithFormat:@"Test Screen Value %d",eventCount];
+    [[RSClient sharedInstance] screen:screenName properties: @{
+        propKey : propValue
+    }];
+    screenCount = screenCount+1;
+}
+
++ (void) sendGroup {
+    NSString* groupId = [[NSString alloc] initWithFormat:@"group %d",groupCount];
+    [[RSClient sharedInstance] group:groupId];
+    groupCount = groupCount+1;
+}
+
++ (void) sendAlias {
+    NSString* newUserId = [[NSString alloc] initWithFormat:@"New User %d",userCount];
+    [[RSClient sharedInstance] alias:newUserId];
+}
+
++ (void) sendReset {
+    [[RSClient sharedInstance] reset];
 }
 
 @end

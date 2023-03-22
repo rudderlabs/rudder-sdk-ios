@@ -8,6 +8,7 @@
 
 #import "_ViewController.h"
 #import <Rudder/Rudder.h>
+#import "_AppDelegate.h"
 
 @interface _ViewController ()
 
@@ -25,6 +26,24 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)sendIdentify:(id)sender {
+    [_AppDelegate sendIdentify];
+}
+- (IBAction)sendTrack:(id)sender {
+    [_AppDelegate sendTrack];
+}
+- (IBAction)sendScreen:(id)sender {
+    [_AppDelegate sendScreen];
+}
+- (IBAction)sendGroup:(id)sender {
+    [_AppDelegate sendGroup];
+}
+- (IBAction)sendAlias:(id)sender {
+    [_AppDelegate sendAlias];
+}
+- (IBAction)sendReset:(id)sender {
+    [_AppDelegate sendReset];
 }
 
 @end
