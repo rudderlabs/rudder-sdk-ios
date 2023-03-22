@@ -29,7 +29,7 @@
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
 - (void) dumpOriginalEvents:(NSArray *) originalPayloads;
-- (void) dumpTransformedEvents:(NSArray*) transformedPayloads ToDestinationId:(NSString*) destinationId;
+- (void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId;
 - (void) reset;
 - (void) flush;
 
