@@ -114,9 +114,12 @@ int deviceModeSleepCount = 0;
     
     NSMutableString* jsonPayload = [[NSMutableString alloc] init];
     [jsonPayload appendString:@"{"];
-    [jsonPayload appendString:@"\"metadata\": {"];
-    [jsonPayload appendFormat:@"\"Custom-Authorization\": \"%@\"", [[RSPreferenceManager getInstance] getAuthToken]];
-    [jsonPayload appendString:@"},"];
+    NSString* authToken = [[RSPreferenceManager getInstance] getAuthToken];
+    if(authToken!= nil && [authToken length]!=0) {
+        [jsonPayload appendString:@"\"metadata\": {"];
+        [jsonPayload appendFormat:@"\"Custom-Authorization\": \"%@\"", [[RSPreferenceManager getInstance] getAuthToken]];
+        [jsonPayload appendString:@"},"];
+    }
     [jsonPayload appendString:@"\"batch\":"];
     [jsonPayload appendString:@"["];
     

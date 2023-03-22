@@ -61,7 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;
 + (instancetype) getInstance;
 - (void) setAnonymousIdToken;
-- (void) updateCTSAuthToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;

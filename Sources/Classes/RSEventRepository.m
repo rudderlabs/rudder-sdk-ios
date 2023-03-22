@@ -253,7 +253,6 @@ static RSEventRepository* _instance;
     
     [RSLogger logDebug: @"EventRepository: reset: clearing the CTS Auth token as the reset is triggered"];
     [self->preferenceManager clearAuthToken];
-    [self updateCTSAuthToken];
     
     [self->deviceModeManager reset];
 }

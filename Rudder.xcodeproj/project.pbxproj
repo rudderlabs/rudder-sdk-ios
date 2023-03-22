@@ -240,15 +240,6 @@
 		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
-		ED38D32829CA0BC8003A7544 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
-		ED38D32929CA0BC8003A7544 /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
-		ED38D32A29CA0BC8003A7544 /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
-		ED38D32B29CA0BC8003A7544 /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED38D32C29CA0BC8003A7544 /* no-dataresidency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "no-dataresidency.json"; sourceTree = "<group>"; };
-		ED38D32D29CA0BC8003A7544 /* multi-dataresidency-eu-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-eu-true.json"; sourceTree = "<group>"; };
-		ED38D32E29CA0BC8003A7544 /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED38D32F29CA0BC8003A7544 /* us-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-true.json"; sourceTree = "<group>"; };
-		ED38D33029CA0BC8003A7544 /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
 		ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConserFilterHandlerTests.swift; sourceTree = "<group>"; };
 		ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryTests.swift; sourceTree = "<group>"; };
@@ -454,7 +445,6 @@
 		ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilterHandler.h; sourceTree = "<group>"; };
 		ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilterHandler.m; sourceTree = "<group>"; };
 		EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "github-release.config.js"; sourceTree = "<group>"; };
-		F69932C229CAEBDA002CCDE4 /* RudderUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderUtilsTest.swift; sourceTree = "<group>"; };
 		F6B4B51D29C8236100344864 /* RSCloudModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCloudModeManager.h; sourceTree = "<group>"; };
 		F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBackGroundModeManager.h; sourceTree = "<group>"; };
 		F6B4B52029C8236100344864 /* RSDeviceModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDeviceModeManager.h; sourceTree = "<group>"; };
@@ -505,7 +495,6 @@
 				06CABB852630C3CA0097BEFF /* Products */,
 				06CABC2D2630C6660097BEFF /* Frameworks */,
 				DFB2363B6EC8D146934DE8DD /* Pods */,
-				ED38D34B29CAF9E1003A7544 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -532,23 +521,6 @@
 			children = (
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		ED38D34B29CAF9E1003A7544 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				ED38D32E29CA0BC8003A7544 /* eu-dataresidency-default-true.json */,
-				ED38D32C29CA0BC8003A7544 /* no-dataresidency.json */,
-				ED38D32929CA0BC8003A7544 /* eu-dataresidency-default-false.json */,
-				ED38D32D29CA0BC8003A7544 /* multi-dataresidency-eu-true.json */,
-				ED38D32A29CA0BC8003A7544 /* multi-dataresidency-default-false.json */,
-				ED38D32829CA0BC8003A7544 /* multi-dataresidency-us-true.json */,
-				ED38D32F29CA0BC8003A7544 /* us-dataresidency-default-true.json */,
-				ED38D33029CA0BC8003A7544 /* us-dataresidency-default-false.json */,
-				ED38D32B29CA0BC8003A7544 /* multi-dataresidency-default-true.json */,
-				F69932C229CAEBDA002CCDE4 /* RudderUtilsTest.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		ED38D36B29CB01A0003A7544 /* Tests */ = {

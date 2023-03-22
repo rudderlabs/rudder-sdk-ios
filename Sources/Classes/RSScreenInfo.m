@@ -34,9 +34,9 @@
 - (instancetype) initWithDict:(NSDictionary*) dict {
     self = [super init];
     if(self) {
-        _density = dict[@"density"];
-        _height = dict[@"height"];
-        _width = dict[@"width"];
+        _density = [dict[@"density"] intValue];
+        _height = [dict[@"height"] intValue];
+        _width = [dict[@"width"] intValue];
     }
     return self;
 }
