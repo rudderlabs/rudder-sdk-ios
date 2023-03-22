@@ -119,15 +119,10 @@ class ServerConfigManagerTests: XCTestCase {
         rsPreferenceManager.saveConfigJson(configJSON)
         
         let rsConfig = RSConfigBuilder().withControlPlaneUrl("https://invalid-rudder.com").build()
-<<<<<<<< HEAD:Tests/RSServerConfigManagerTest.swift
         let dataResidencyManager = RSDataResidencyManager(rsConfig: rsConfig)
-        let rsNetworkManager = RSNetworkManager(config: rsConfig, andAuthToken:RSServerConfigManagerTest.authToken, andAnonymousIdToken: RSServerConfigManagerTest.anonymousIdToken, andDataResidencyManager: dataResidencyManager)
+        let rsNetworkManager = RSNetworkManager(config: rsConfig, andAuthToken:ServerConfigManagerTests.authToken, andAnonymousIdToken: ServerConfigManagerTests.anonymousIdToken, andDataResidencyManager: dataResidencyManager)
         
-        rsServerConfigManager = RSServerConfigManager(RSServerConfigManagerTest.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
-========
-        let rsNetworkManager = RSNetworkManager.init(config: rsConfig, andAuthToken: ServerConfigManagerTests.authToken, andAnonymousIdToken:ServerConfigManagerTests.anonymousIdToken)
-        rsServerConfigManager = RSServerConfigManager.init(ServerConfigManagerTests.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
->>>>>>>> 6bba6d2b7780b8ca9d2b19375c79b9e79fbac4a1:Tests/ServerConfigManagerTests.swift
+        rsServerConfigManager = RSServerConfigManager(ServerConfigManagerTests.writeKey, rudderConfig: rsConfig, andNetworkManager: rsNetworkManager!)
         sleep(12)
     }
     
