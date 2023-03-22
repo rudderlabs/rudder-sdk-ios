@@ -70,7 +70,7 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.2.0)
-  - Rudder (1.12.1)
+  - Rudder (1.13.0.beta.1)
   - Rudder-Amplitude (1.0.2):
     - Amplitude (~> 7.2.0)
     - Rudder
@@ -121,11 +121,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  Rudder: 4355b65884b35dd7b50abcd241453c3dc8095c8c
+  Rudder: a69d45190da377355c537196af2bdfc0698c7e07
   Rudder-Amplitude: f845cc125a1a58d4de6155391a2b0392815ae898
   Rudder-Braze: e8b8c76b7e7f0348c79f8cc359e43f4c6cd7ac9b
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
 
 PODFILE CHECKSUM: 42bfa6ba9271b8d9518a669daca1fd9a7bbf9f6e
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3
