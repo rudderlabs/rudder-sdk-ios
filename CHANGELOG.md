@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0.beta.2]
+
+### Features
+
+* Made the Identify and Reset API's Synchronous
+
+
 ### [1.12.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.0...v1.12.1) (2023-03-21)
 
 
