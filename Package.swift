@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS(.v9), .tvOS(.v9)
+        .iOS(.v9), .tvOS(.v10)
     ],
     products: [
         .library(
@@ -18,11 +18,9 @@ let package = Package(
             name: "Rudder",
             path: "Sources",
             sources: ["Classes/"],
-            publicHeadersPath: "Classes/Public/",
+            publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
-                .headerSearchPath("Classes/"),
-                .headerSearchPath("Classes/Ecomm"),
-                .headerSearchPath("Classes/Ecomm/Events")
+                .headerSearchPath("Classes/Headers/")
             ]
         ),
         .testTarget(
