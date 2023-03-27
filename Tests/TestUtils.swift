@@ -32,4 +32,27 @@ internal final class TestUtils {
             fatalError("Can not parse or invalid JSON.")
         }
     }
+    
+    func convertToDictionary(text: String) -> [String: String]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    func convertToJSONString(arrayObject: NSMutableArray) -> String? {
+        do {
+            let jsonData: Data = try JSONSerialization.data(withJSONObject: arrayObject, options: [])
+            if  let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) {
+                return jsonString as String
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
 }
