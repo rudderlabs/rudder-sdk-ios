@@ -37,41 +37,34 @@ static dispatch_queue_t queue;
         _timezone = [[NSTimeZone localTimeZone] name];
         _externalIds = nil;
         
-        dispatch_sync(queue, ^{
-            NSString *traitsJson = [preferenceManager getTraits];
-            if (traitsJson == nil) {
-                // no persisted traits, create new and persist
-                [self createAndPersistTraits];
+        
+        NSString *traitsJson = [preferenceManager getTraits];
+        if (traitsJson == nil) {
+            // no persisted traits, create new and persist
+            [self createAndPersistTraits];
+        } else {
+            NSError *error;
+            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _traits = [traitsDict mutableCopy];
             } else {
-                NSError *error;
-                NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-                if (error == nil) {
-                    _traits = [traitsDict mutableCopy];
-                } else {
-                    // persisted traits persing error. initiate blank
-                    [self createAndPersistTraits];
-                }
+                // persisted traits persing error. initiate blank
+                [self createAndPersistTraits];
             }
-            
-            // get saved external Ids from prefs
-            NSString *externalIdJson = [preferenceManager getExternalIds];
-            if (externalIdJson != nil) {
-                NSError *error;
-                NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-                if (error == nil) {
-                    _externalIds = [externalIdDict mutableCopy];
-                }
+        }
+        
+        // get saved external Ids from prefs
+        NSString *externalIdJson = [preferenceManager getExternalIds];
+        if (externalIdJson != nil) {
+            NSError *error;
+            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+            if (error == nil) {
+                _externalIds = [externalIdDict mutableCopy];
             }
-        });
+        }
+        
     }
     return self;
-}
-
-+ (dispatch_queue_t) getQueue {
-    if (queue == nil) {
-        queue = dispatch_queue_create("com.rudder.RSContext", NULL);
-    }
-    return queue;
 }
 
 - (void) createAndPersistTraits {
@@ -83,7 +76,7 @@ static dispatch_queue_t queue;
 }
 
 - (void) resetTraits {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         RSTraits* traits = [[RSTraits alloc] init];
         traits.anonymousId = [self->preferenceManager getAnonymousId];
         [self->_traits removeAllObjects];
@@ -91,44 +84,47 @@ static dispatch_queue_t queue;
     });
 }
 
-- (void)updateTraits:(RSTraits *)traits {
-    dispatch_async(queue, ^{
+- (void) updateTraits:(RSTraits *)traits {
+    dispatch_sync(queue, ^{
         NSString* existingId = (NSString*)[self->_traits objectForKey:@"userId"];
         NSString* userId = (NSString*) traits.userId;
         
         if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
         {
-            self->_traits = [[traits dict]mutableCopy];
+            self->_traits = [[traits dict] mutableCopy];
             [self resetExternalIds];
             return;
         }
         [self->_traits setValuesForKeysWithDictionary:[traits dict]];
     });
-} 
+}
 
--(void) persistTraits {
-    dispatch_async(queue, ^{
-        NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:self->_traits] options:0 error:nil];
-        NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
-        
-        [self->preferenceManager saveTraits:traitsString];
+- (void) persistTraitsOnQueue {
+    dispatch_sync(queue, ^{
+        [self persistTraits];
     });
 }
 
+-(void) persistTraits {
+    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:self->_traits] options:0 error:nil];
+    NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
+    [self->preferenceManager saveTraits:traitsString];
+}
+
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         self->_traits = traitsDict;
     });
 }
 
 - (void)updateTraitsAnonymousId {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         self->_traits[@"anonymousId"] = [self->preferenceManager getAnonymousId];
     });
 }
 
 - (void)putDeviceToken:(NSString *)deviceToken {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         self->_device.token = deviceToken;
     });
 }
@@ -136,7 +132,7 @@ static dispatch_queue_t queue;
 - (void)putAdvertisementId:(NSString *_Nonnull)idfa {
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         if( idfa != nil && [idfa length] != 0) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
             BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
@@ -150,7 +146,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)updateExternalIds:(NSMutableArray *)externalIds {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         if(self->_externalIds == nil)
         {
             self->_externalIds = [[NSMutableArray alloc] init];
@@ -178,7 +174,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)persistExternalIds {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         if (self->_externalIds != nil) {
             // update persistence storage
             NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[self->_externalIds copy]] options:0 error:nil];
@@ -188,15 +184,27 @@ static dispatch_queue_t queue;
     });
 }
 
-- (void)resetExternalIds {
-    dispatch_async(queue, ^{
-        self->_externalIds = nil;
-        [self->preferenceManager clearExternalIds];
+- (NSArray<NSDictionary<NSString*, NSObject*>*>* __nullable) getExternalIds {
+    __block NSArray<NSDictionary<NSString*, NSObject*>*>* externalIdsCopy = nil;
+    dispatch_sync(queue, ^{
+        externalIdsCopy = [self->_externalIds copy];
+    });
+    return externalIdsCopy;
+}
+
+- (void) resetExternalIdsOnQueue {
+    dispatch_sync(queue, ^{
+        [self resetExternalIds];
     });
 }
 
+- (void)resetExternalIds {
+    self->_externalIds = nil;
+    [self->preferenceManager clearExternalIds];
+}
+
 - (void)putAppTrackingConsent:(int)att {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         if (att < RSATTNotDetermined) {
             self->_device.attTrackingStatus = RSATTNotDetermined;
         } else if (att > RSATTAuthorize) {
@@ -208,7 +216,7 @@ static dispatch_queue_t queue;
 }
 
 - (void) setSessionData:(RSUserSession *) userSession {
-    dispatch_async(queue, ^{        
+    dispatch_sync(queue, ^{
         if ([userSession getSessionId] != nil) {
             self->_sessionId = [userSession getSessionId];
             if([userSession getSessionStart]) {
@@ -220,7 +228,7 @@ static dispatch_queue_t queue;
 }
 
 - (void)setConsentData:(NSArray <NSString *> *)deniedConsentIds {
-    dispatch_async(queue, ^{
+    dispatch_sync(queue, ^{
         self->consentManagement = @{@"deniedConsentIds": deniedConsentIds};
     });
 }

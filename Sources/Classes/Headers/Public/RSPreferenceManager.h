@@ -35,6 +35,7 @@ extern NSString *const RSSessionAutoTrackStatus;
 
 - (void) saveTraits: (NSString* __nonnull) traits;
 - (NSString* __nonnull) getTraits;
+- (void) clearTraits;
 
 - (void) saveBuildVersionCode:(NSString* __nonnull)versionCode;
 - (NSString* __nullable) getBuildVersionCode; 
@@ -54,6 +55,7 @@ extern NSString *const RSSessionAutoTrackStatus;
 
 - (NSString* __nullable) getAnonymousId;
 - (void) saveAnonymousId: (NSString* __nullable) anonymousId;
+- (void) clearAnonymousId;
 
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;

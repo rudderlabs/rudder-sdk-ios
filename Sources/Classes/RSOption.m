@@ -19,6 +19,7 @@
         _externalIds = nil;
         _customContexts = nil;
         _integrations = [[NSMutableDictionary alloc] init];
+        optionsQueue = dispatch_queue_create("com.rudder.RSOption", NULL);
     }
     return self;
 }
@@ -28,7 +29,7 @@
         _externalIds = [[NSMutableArray alloc] init];
     }
     
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(optionsQueue, ^{
         // find out if something is already present in the storage (PreferenceManager)
         NSMutableDictionary* externalIdDict = nil;
         int dictIndex = -1;
