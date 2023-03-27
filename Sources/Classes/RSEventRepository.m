@@ -68,6 +68,8 @@ typedef enum {
 #endif
         }
         
+        [RSLogger logVerbose:@"EventRepository: Creating EventRepository Internal Queue"];
+        repositoryQueue = dispatch_queue_create("com.rudder.EventRepository", NULL);
         [RSLogger logDebug:@"EventRepository: setting up flush"];
         [self setUpFlush];
         NSData *authData = [[[NSString alloc] initWithFormat:@"%@:", _writeKey] dataUsingEncoding:NSUTF8StringEncoding];
@@ -126,7 +128,7 @@ typedef enum {
 
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(repositoryQueue, ^{
         self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
@@ -142,11 +144,11 @@ typedef enum {
             int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                dispatch_sync([RSContext getQueue], ^{
+                dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
-                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:self->config];
+                    strongSelf->dataPlaneUrl = [RSUtils getDataPlaneUrlFrom:serverConfig andRSConfig:strongSelf->config];
                     if (strongSelf->dataPlaneUrl == nil) {
                         [RSLogger logError:DATA_PLANE_URL_ERROR];
                         return;
@@ -307,8 +309,8 @@ typedef enum {
 
 - (void) setUpFlush {
     lock = [NSLock new];
-    queue = dispatch_queue_create("com.rudder.flushQueue", NULL);
-    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, queue);
+    dispatch_queue_t flushQueue = dispatch_queue_create("com.rudder.flushQueue", NULL);
+    source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, flushQueue);
     __weak RSEventRepository *weakSelf = self;
     dispatch_source_set_event_handler(source, ^{
         RSEventRepository* strongSelf = weakSelf;
@@ -447,7 +449,7 @@ typedef enum {
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:[[NSString alloc] initWithFormat:@"Basic %@", self->authToken] forHTTPHeaderField:@"Authorization"];
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(repositoryQueue, ^{
         [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
     });
     NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
@@ -487,7 +489,7 @@ typedef enum {
 }
 
 - (void) dump:(RSMessage *)message {
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             return;
         }

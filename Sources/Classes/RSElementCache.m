@@ -23,36 +23,29 @@ static RSContext* cachedContext;
 }
 
 + (void)updateTraits:(RSTraits *)traits {
-    dispatch_async([RSContext getQueue], ^{
-        [cachedContext updateTraits:traits];
-        [self persistTraits];
-    });
+    [cachedContext updateTraits:traits];
+    [self persistTraits];
 }
 
+
 + (void)persistTraits {
-    [cachedContext persistTraits];
+    [cachedContext persistTraitsOnQueue];
 }
 
 + (void) reset {
-    dispatch_async([RSContext getQueue], ^{
-        [cachedContext resetTraits];
-        [cachedContext persistTraits];
-        [cachedContext resetExternalIds];
-    });
+    [cachedContext resetTraits];
+    [cachedContext persistTraitsOnQueue];
+    [cachedContext resetExternalIdsOnQueue];
 }
 
 + (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *> *)traitsDict {
-    dispatch_async([RSContext getQueue], ^{
-        [cachedContext updateTraitsDict: traitsDict];
-        [self persistTraits];
-    });
+    [cachedContext updateTraitsDict: traitsDict];
+    [self persistTraits];
 }
 
-+(void) updateTraitsAnonymousId {
-    dispatch_async([RSContext getQueue], ^{
-        [cachedContext updateTraitsAnonymousId];
-        [self persistTraits];
-    });
++ (void) updateTraitsAnonymousId {
+    [cachedContext updateTraitsAnonymousId];
+    [self persistTraits];
 }
 
 + (NSString *)getAnonymousId {
@@ -60,9 +53,7 @@ static RSContext* cachedContext;
 }
 
 + (void) updateExternalIds:(NSMutableArray *)externalIds {
-   dispatch_async([RSContext getQueue], ^{
-        [cachedContext updateExternalIds:externalIds];
-        [cachedContext persistExternalIds];
-    });
+    [cachedContext updateExternalIds:externalIds];
+    [cachedContext persistExternalIds];
 }
 @end
