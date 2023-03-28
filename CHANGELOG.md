@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.7](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.7) (2023-03-28)
+
+
+### Bug Fixes
+
+* config specified log level is not working ([aaa91d7](https://github.com/rudderlabs/rudder-sdk-ios/commit/aaa91d7683e3c48c548f9171710749a2c7c5a0ac))
+* convert date into gregorian calendar ([#296](https://github.com/rudderlabs/rudder-sdk-ios/issues/296)) ([b9df566](https://github.com/rudderlabs/rudder-sdk-ios/commit/b9df5668e4cbf227c6f42c091b93da8118ab8947))
+* enhance support for anonymousId for all supported platforms ([#257](https://github.com/rudderlabs/rudder-sdk-ios/issues/257)) ([60a0d70](https://github.com/rudderlabs/rudder-sdk-ios/commit/60a0d7042cf9a208f9dea1c2c6f677f335891cef))
+* improper way of handling customContext ([9b2297e](https://github.com/rudderlabs/rudder-sdk-ios/commit/9b2297e2eca7cc0e694b142cda3f5507e80fff85))
+* **macOS:** life cycle events were not tracking properly ([1733753](https://github.com/rudderlabs/rudder-sdk-ios/commit/17337536adb725411f9446c59bf99e2975975205))
+
 ### 2.2.6 (2023-01-31)
 
 
