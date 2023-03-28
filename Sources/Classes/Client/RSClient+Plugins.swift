@@ -158,7 +158,7 @@ extension RSClient {
                 
             case .failure(let error):
                 if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    self.log(message: "Wrong write key", logLevel: .debug)
+                    self.log(message: "Wrong write key", logLevel: .error)
                     self.checkServerConfig(retryCount: maxRetryCount, completion: completion)
                 } else {
                     self.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)

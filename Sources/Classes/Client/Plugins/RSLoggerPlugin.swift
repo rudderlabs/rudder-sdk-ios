@@ -55,9 +55,10 @@ class RSLoggerPlugin: RSUtilityPlugin {
     }
     
     func log(_ logMessage: RSLogMessage, destination: RSLoggingType.LogDestination) {
-        
-        for (logType, target) in loggingMediator where logType.contains(destination) {
-            target.parseLog(logMessage)
+        if client?.config?.logLevel == .verbose || logMessage.logLevel == client?.config?.logLevel {
+            for (logType, target) in loggingMediator where logType.contains(destination) {
+                target.parseLog(logMessage)
+            }
         }
     }
     
