@@ -110,7 +110,6 @@
 		ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLifeCycle.swift; sourceTree = "<group>"; };
 		ED157C5927D1010D00F22202 /* RSPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPushNotifications.swift; sourceTree = "<group>"; };
 		ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventsAndKeys.swift; sourceTree = "<group>"; };
-		ED308480288A97C200A357E3 /* main.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = main.yml; path = .github/workflows/main.yml; sourceTree = "<group>"; };
 		ED3D2257279EAC2800EC8366 /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3D226227A3F0C100EC8366 /* RSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSClient.swift; sourceTree = "<group>"; };
 		ED3D226627A3F0C100EC8366 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
@@ -133,11 +132,9 @@
 		ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSClient+Plugins.swift"; sourceTree = "<group>"; };
 		ED3D229227A3F0C100EC8366 /* RSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMessage.swift; sourceTree = "<group>"; };
 		ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTypeAlias.swift; sourceTree = "<group>"; };
-		ED488F8627EB141700831594 /* release.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		ED5603842881C691004B5BEC /* RSUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUserInfo.swift; sourceTree = "<group>"; };
 		ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSessionStorage.swift; sourceTree = "<group>"; };
 		ED560388288316C2004B5BEC /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
-		ED56038A2887EA73004B5BEC /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ED910CDE273BA25100A3EDFF /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		ED910CE0273BA25100A3EDFF /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		ED910CE1273BA25100A3EDFF /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -353,7 +350,6 @@
 				EDA7EF462739119600E73142 /* RSConstants.swift */,
 				ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */,
 				ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */,
-				EDA7EF452739119600E73142 /* RSUserDefaults.swift */,
 				ED05631E291BEB0400BAEE65 /* RSVersion.swift */,
 			);
 			path = Constants;

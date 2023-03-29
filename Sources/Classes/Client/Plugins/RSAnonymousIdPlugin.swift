@@ -32,7 +32,6 @@ import Cocoa
 import WebKit
 #endif
 
-
 class RSAnonymousIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
     weak var client: RSClient?

@@ -130,7 +130,7 @@ class RSContextPlugin: RSPlatformPlugin {
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {
-        /// First priority will given to the `option` passed along with the event
+        // First priority will given to the `option` passed along with the event
         if let option = message.option {
             if let externalIds = option.externalIds {
                 context["externalId"] = externalIds
@@ -141,7 +141,7 @@ class RSContextPlugin: RSPlatformPlugin {
                 }
             }
         } else {
-            /// Fetch `customContexts` set using setOption API.
+            // Fetch `customContexts` set using setOption API.
             if let globalOption: RSOption = RSSessionStorage.shared.read(.option) {
                 if let customContexts = globalOption.customContexts {
                     for (key, value) in customContexts {
@@ -149,7 +149,7 @@ class RSContextPlugin: RSPlatformPlugin {
                     }
                 }
             }
-            /// Fetch `externalIds` set using identify API.
+            // Fetch `externalIds` set using identify API.
             if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
                 context["externalId"] = externalIds
             }

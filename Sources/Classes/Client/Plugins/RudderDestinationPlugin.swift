@@ -71,36 +71,36 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     }
 }
 
-//extension RudderDestinationPlugin {
-//    internal func configureCloudDestinations<T: RSMessage>(message: T) -> T {
-//        guard let serverConfig = client?.serverConfig else { return message }
-//        guard let plugins = client?.controller.plugins[.destination]?.plugins as? [RSDestinationPlugin] else { return message }
-//        guard let customerValues = message.integrations else { return message }
-//
-//        var merged = [String: Bool]()
-//
-//        for plugin in plugins {
-//            var hasSettings = false
-//            if let destinations = serverConfig.destinations {
-//                if let destination = destinations.first(where: { $0.destinationDefinition?.displayName == plugin.key }), destination.enabled {
-//                    hasSettings = true
-//                }
-//            }
-//            if hasSettings {
-//                merged[plugin.key] = false
-//            }
-//        }
-//
-//        for (key, value) in customerValues {
-//            merged[key] = value
-//        }
-//
-//        var modified = message
-//        modified.integrations = merged
-//
-//        return modified
-//    }
-//}
+/*extension RudderDestinationPlugin {
+    internal func configureCloudDestinations<T: RSMessage>(message: T) -> T {
+        guard let serverConfig = client?.serverConfig else { return message }
+        guard let plugins = client?.controller.plugins[.destination]?.plugins as? [RSDestinationPlugin] else { return message }
+        guard let customerValues = message.integrations else { return message }
+
+        var merged = [String: Bool]()
+
+        for plugin in plugins {
+            var hasSettings = false
+            if let destinations = serverConfig.destinations {
+                if let destination = destinations.first(where: { $0.destinationDefinition?.displayName == plugin.key }), destination.enabled {
+                    hasSettings = true
+                }
+            }
+            if hasSettings {
+                merged[plugin.key] = false
+            }
+        }
+
+        for (key, value) in customerValues {
+            merged[key] = value
+        }
+
+        var modified = message
+        modified.integrations = merged
+
+        return modified
+    }
+}*/
 
 extension RudderDestinationPlugin {
     
