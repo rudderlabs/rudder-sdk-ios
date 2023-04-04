@@ -43,7 +43,8 @@ jobs:
           git merge origin/master
           current_version=$(jq -r .version package.json)
           
-          new_version="${current_version}.beta.${{ github.event.inputs.beta_version }}"
+          npx standard-version --skip.commit --skip.tag --skip.changelog
+          new_version="$(jq -r .version package.json).beta.${{ github.event.inputs.beta_version }}"
           git reset --hard
 
           branch_name="${release_type}/${new_version}"
