@@ -1,0 +1,82 @@
+name: Draft new Beta release
+
+on:
+  workflow_dispatch:
+    inputs:
+      beta_version:
+        description: "Beta version(Only single digit, example: 1)"
+        required: true
+
+jobs:
+  draft-new-beta-release:
+    name: Draft a new Beta release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/fix/') || startsWith(github.ref, 'refs/heads/feat/')
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          
+      # In order to make a commit, we need to initialize a user.
+      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "GitHub actions"
+          git config user.email noreply@github.com
+
+      # Calculate the next release version based on conventional semantic release
+      - name: Create release branch
+        id: create-release
+        env:
+          HUSKY: 0
+        run: |
+          source_branch_name=${GITHUB_REF##*/}
+          release_type=beta-release
+          git fetch origin master
+          git fetch --tags origin
+          git merge origin/master
+          current_version=$(jq -r .version package.json)
+          
+          new_version="${current_version}.beta.${{ github.event.inputs.beta_version }}"
+          git reset --hard
+
+          branch_name="${release_type}/${new_version}"
+
+          echo "Source branch for new release is $source_branch_name"
+          echo "Current version is $current_version"
+          echo "Release type is $release_type"
+          echo "New version is $new_version"
+          echo "New release branch name is $branch_name"
+          git checkout -b "$branch_name"
+          git push --set-upstream origin "$branch_name"
+          
+          echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
+          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+          echo "CURRENT_VERSION_VALUE=$current_version" >> $GITHUB_ENV
+          echo "NEW_VERSION_VALUE=$new_version" >> $GITHUB_ENV
+
+      - name: Bump version
+        id: finish-release
+        env:
+          HUSKY: 0
+        run: |
+          echo "Current version: $CURRENT_VERSION_VALUE"
+          echo "New version: $NEW_VERSION_VALUE"
+          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE Sources/Classes/Headers/RSVersion.h package.json
+          git add Sources/Classes/Headers/RSVersion.h package.json
+          echo ${{ steps.create-release.outputs.new_version }}
+          echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
+          git commit -m "chore(beta-relase): $NEW_VERSION_VALUE"
+          git tag -a "v$NEW_VERSION_VALUE" -m "chore: release v$NEW_VERSION_VALUE"
+          git push origin "v$NEW_VERSION_VALUE"
+
+      - name: Push new version in release branch & tag
+        run: |
+          git push
