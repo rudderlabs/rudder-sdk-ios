@@ -15,9 +15,6 @@ jobs:
       
       - name: Install xcpretty
         run: gem install xcpretty
-
-      - name: Select Xcode version
-        run: sudo xcode-select -s '/Applications/Xcode_13.2.1.app/Contents/Developer'
         
       - name: Build SDK(iOS)
         run: |

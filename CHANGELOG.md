@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.0...v1.13.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* correct the width and height properties ([#302](https://github.com/rudderlabs/rudder-sdk-ios/issues/302)) ([98d5b55](https://github.com/rudderlabs/rudder-sdk-ios/commit/98d5b55de4ae5f5da5f15ab1954c1b628ced3465))
+
 ## [1.13.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.1...v1.13.0) (2023-03-27)
 
 

@@ -1,18 +1,16 @@
-name: Manually deploy to Cocoapods
+name: Beta deploy to Cocoapods
 
 on:
   workflow_dispatch
 
 jobs:
-  deploy-cocoapods-manual:
-    name: Manually deploy to Cocoapods
+  deploy-cocoapods-beta:
+    name: Beta deploy to Cocoapods
     runs-on: macOS-latest
+    if: startsWith(github.ref, 'refs/heads/beta-release/')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v3
-
-      - name: Select Xcode version
-        run: sudo xcode-select -s '/Applications/Xcode_13.2.1.app/Contents/Developer'
 
       - name: Install Cocoapods
         run: gem install cocoapods
