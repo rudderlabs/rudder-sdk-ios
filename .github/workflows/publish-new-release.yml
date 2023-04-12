@@ -45,6 +45,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
         run: |
+          git for-each-ref refs/tags
+          git tag --delete ${{ steps.extract-version.outputs.release_version }}
+          git push --delete origin ${{ steps.extract-version.outputs.release_version }}
           git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
           git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
