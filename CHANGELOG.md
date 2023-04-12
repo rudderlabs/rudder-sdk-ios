@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.1...v1.13.2) (2023-04-12)
+
+
+### Bug Fixes
+
+* restricted nil assign of dataPlaneUrl and controlPlaneUrl ([#307](https://github.com/rudderlabs/rudder-sdk-ios/issues/307)) ([0e28b6f](https://github.com/rudderlabs/rudder-sdk-ios/commit/0e28b6f6f3539837608840d61fc7bf453097809f))
+
 ### [1.13.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.0...v1.13.1) (2023-04-11)
 
 
