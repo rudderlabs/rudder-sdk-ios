@@ -221,6 +221,7 @@
 		ED04A246298424040080A88D /* ConserFilterHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConserFilterHandlerTests.swift; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
+		ED1C4C8829E6CCC7007007C9 /* find-tag.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "find-tag.sh"; sourceTree = "<group>"; };
 		ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
 		ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
 		ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
@@ -486,6 +487,14 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		ED1C4C8729E6CCC7007007C9 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				ED1C4C8829E6CCC7007007C9 /* find-tag.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		ED20F4E62996059A00F3FD0E /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,15 +694,16 @@
 				ED83FE5D2731019F006F27B3 /* CHANGELOG.md */,
 				ED857DF12912754400B7BFCE /* CODEOWNERS */,
 				ED857DF22912754400B7BFCE /* CONTRIBUTING.md */,
+				EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */,
 				ED83FDB12731019F006F27B3 /* LICENSE */,
 				ED857DEF2912752300B7BFCE /* package.json */,
 				ED83FDAE2731019F006F27B3 /* Package.swift */,
 				ED83FE5E2731019F006F27B3 /* Podfile */,
 				ED83FDAF2731019F006F27B3 /* README.md */,
 				ED83FDB02731019F006F27B3 /* Rudder.podspec */,
+				ED1C4C8729E6CCC7007007C9 /* Scripts */,
 				ED056314291AABFD00BAEE65 /* sonar-project.properties */,
 				ED04A2482986C1750080A88D /* xccov-to-generic.sh */,
-				EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */,
 			);
 			name = Others;
 			sourceTree = "<group>";
