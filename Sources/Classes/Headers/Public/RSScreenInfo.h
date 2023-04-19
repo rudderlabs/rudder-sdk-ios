@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSScreenInfo : NSObject
 
+- (instancetype) initWithDict:(NSDictionary*) dict;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
 @property (nonatomic, readwrite) int density;

@@ -40,6 +40,22 @@
     return self;
 }
 
+- (instancetype) initWithDict:(NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _identifier = dict[@"id"];
+        _manufacturer = dict[@"manufacturer"];
+        _model = dict[@"model"];
+        _name = dict[@"name"];
+        _type = dict[@"type"];
+        _token = dict[@"token"];
+        _advertisingId = dict[@"advertisingId"];
+        _adTrackingEnabled = dict[@"adTrackingEnabled"];
+        _attTrackingStatus = [dict[@"attTrackingStatus"] intValue];
+    }
+    return self;
+}
+
 - (NSDictionary<NSString *,NSObject *> *)dict {
     NSMutableDictionary *tempDict;
     @synchronized (tempDict){

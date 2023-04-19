@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RSDBMessage : NSObject
     @property (nonatomic) NSMutableArray<NSString *>* messages;
     @property (nonatomic) NSMutableArray<NSString *>* messageIds;
+    @property (nonatomic) NSMutableArray<NSNumber *>* statusList;
 @end
 
 NS_ASSUME_NONNULL_END

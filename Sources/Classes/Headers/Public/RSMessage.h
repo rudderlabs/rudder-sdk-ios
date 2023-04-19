@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, readwrite) NSString* destinationProps;
 @property (atomic, readwrite) RSOption* option;
 
+- (instancetype)initWithDict:(NSDictionary*)dict;
 - (NSDictionary<NSString*, NSObject*>*)dict;
 - (void)updateContext:(RSContext*)context;
 - (void)updateTraits:(RSTraits*)traits;

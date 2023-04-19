@@ -57,6 +57,10 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) saveAnonymousId: (NSString* __nullable) anonymousId;
 - (void) clearAnonymousId;
 
+- (NSString* __nullable) getAuthToken;
+- (void) saveAuthToken: (NSString* __nonnull) authToken;
+- (void) clearAuthToken;
+
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
 - (void) updateOptInTime: (long) updatedTime;

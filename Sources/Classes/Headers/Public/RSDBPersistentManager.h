@@ -10,6 +10,8 @@
 #import <sqlite3.h>
 #import "RSDBMessage.h"
 #import "RSUtils.h"
+#import "RSEnums.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,13 +20,20 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 -(void) createDB;
--(void) createSchema;
--(void) saveEvent: (NSString*) message;
--(void) clearEventFromDB: (int) messageId;
+-(void) createTables;
+-(void) createEventsTableWithVersion:(int) version;
+-(void) checkForMigrations;
+-(BOOL) checkIfStatusColumnExists;
+-(void) performMigration;
+-(NSNumber*) saveEvent: (NSString*) message;
+- (void) clearOldEventsWithThreshold:(int)threshold;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
--(RSDBMessage*) fetchEventsFromDB:(int) count;
--(RSDBMessage*) fetchAllEventsFromDB;
--(int) getDBRecordCount;
+-(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode;
+-(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
+-(void) updateEventWithId:(NSNumber *) messageId withStatus:(EVENT_PROCESSING_STATUS) status;
+-(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENT_PROCESSING_STATUS) status;
+-(void) clearProcessedEventsFromDB;
+- (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;
 
 @end

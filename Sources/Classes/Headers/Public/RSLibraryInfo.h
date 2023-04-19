@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSLibraryInfo : NSObject
 
+- (instancetype) initWithDict:(NSDictionary*) dict;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
 @property (nonatomic, readwrite) NSString* name;
