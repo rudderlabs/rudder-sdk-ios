@@ -145,6 +145,11 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)clearAnonymousId {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (NSString* __nullable) getAuthToken {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSAuthToken];
 }
@@ -156,11 +161,6 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 
 - (void) clearAuthToken {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAuthToken];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)clearAnonymousId {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

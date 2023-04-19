@@ -90,8 +90,7 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Initiating and Setting up RSFlushManager"];
         self->flushManager = [[RSFlushManager alloc] initWithConfig:config andPersistentManager:self->dbpersistenceManager andNetworkManager:self->networkManager andLock:self->lock];
-        [self->flushManager 
-        ];
+        [self->flushManager setUpFlush];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSDeviceModeManager"];
         self->deviceModeManager = [[RSDeviceModeManager alloc] initWithConfig:config andDBPersistentManager:self->dbpersistenceManager andNetworkManager:self->networkManager];

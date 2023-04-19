@@ -56,7 +56,7 @@ extern int const RSATTAuthorize;
 - (void) putAdvertisementId: (NSString *_Nonnull) idfa;
 - (void) putAppTrackingConsent: (int) att;
 - (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
-- (void) resetExternalIds;
+- (void) resetExternalIdsOnQueue;
 - (void) persistExternalIds;
 - (NSArray<NSDictionary<NSString*, NSObject*>*>* __nullable)getExternalIds;
 - (void) setSessionData:(RSUserSession *) userSession;
