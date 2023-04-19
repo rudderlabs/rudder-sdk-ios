@@ -33,6 +33,28 @@
     return self;
 }
 
+- (instancetype) initWithDict: (NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _messageId = dict[@"messageId"];
+        _channel = dict[@"channel"];
+        _context = [[RSContext alloc] initWithDict:dict[@"context"]];
+        _type = dict[@"type"];
+        _action = dict[@"action"];
+        _originalTimestamp = dict[@"originalTimestamp"];
+        _previousId = dict[@"previousId"];
+        _groupId = dict[@"groupId"];
+        _traits = dict[@"traits"];
+        _anonymousId = dict[@"anonymousId"];
+        _userId = dict[@"userId"];
+        _properties = dict[@"properties"];
+        _event = dict[@"event"];
+        _userProperties = dict[@"userProperties"];
+        _integrations = dict[@"integrations"];
+    }
+    return self;
+}
+
 - (NSDictionary<NSString*, NSObject*>*) dict {
     NSMutableDictionary* tempDict = [[NSMutableDictionary alloc] init];
     

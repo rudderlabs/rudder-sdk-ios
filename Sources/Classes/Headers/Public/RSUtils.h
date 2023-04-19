@@ -13,6 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface RSUtils : NSObject
 
 + (NSString*) getTimestamp;
@@ -21,14 +22,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getUniqueId;
 + (NSString*) getLocale;
 + (NSString*) getDateString: (NSDate*) date;
++ (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order;
 + (unsigned int) getUTF8Length: (NSString*) message;
 + (NSDictionary<NSString*, id>*) serializeDict: (NSDictionary<NSString*, id>* _Nullable) dict;
 + (NSArray*) serializeArray: (NSArray*) array;
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize;
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
++ (NSString*) getCSVString:(NSArray*) inputStrings;
++ (NSString*) getJSONCSVString:(NSArray*) inputStrings;
++ (id _Nullable) deSerializeJSONString:(NSString*) jsonString;
 + (BOOL) isValidURL:(NSURL*) url;
 + (NSString*) appendSlashToUrl:(NSString*) url;
-+ (NSString * __nullable) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig;
++ (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

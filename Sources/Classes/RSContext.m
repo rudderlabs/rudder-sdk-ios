@@ -67,6 +67,31 @@ static dispatch_queue_t queue;
     return self;
 }
 
+- (instancetype) initWithDict:(NSDictionary*) dict {
+    self = [super init];
+    if(self) {
+        _app = [[RSApp alloc] initWithDict:dict[@"app"]];
+        _traits = dict[@"traits"];
+        _library = [[RSLibraryInfo alloc] initWithDict:dict[@"library"]];
+        _os = [[RSOSInfo alloc] initWithDict:dict[@"os"]];
+        _screen = [[RSScreenInfo alloc] initWithDict:dict[@"screen"]]; 
+        _userAgent = dict[@"userAgent"];
+        _locale = dict[@"locale"];
+        _device = [[RSDeviceInfo alloc] initWithDict:dict[@"device"]];
+        _network = [[RSNetwork alloc] initWithDict:dict[@"network"]]; 
+        _timezone = dict[@"timezone"];
+        _externalIds = dict[@"externalIds"];
+    }
+    return self;
+}
+
++ (dispatch_queue_t) getQueue {
+    if (queue == nil) {
+        queue = dispatch_queue_create("com.rudder.RSContext", NULL);
+    }
+    return queue;
+}
+
 - (void) createAndPersistTraits {
     RSTraits* traits = [[RSTraits alloc] init];
     traits.anonymousId = [preferenceManager getAnonymousId];

@@ -7,42 +7,51 @@
 //
 
 #import <Foundation/Foundation.h>
+
+
+#import "RSUtils.h"
+#import "RSConfig.h"
+#import "RSLogger.h"
 #import "RSMessage.h"
+#import "RSFlushManager.h"
+#import "RSElementCache.h"
+#import "RSCloudModeManager.h"
+#import "RSDeviceModeManager.h"
+#import "RSPreferenceManager.h"
+#import "RSDBPersistentManager.h"
+#import "RSDataResidencyManager.h"
 #import "RSServerConfigManager.h"
 #import "RSDBPersistentManager.h"
-#import "RSConfig.h"
-#import "RSPreferenceManager.h"
+#import "UIViewController+RSScreen.h"
+#import "RSApplicationLifeCycleManager.h"
 #import "RSEventFilteringPlugin.h"
+#import "WKInterfaceController+RSScreen.h"
 #import "RSConsentFilter.h"
 #import "RSConsentFilterHandler.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSEventRepository : NSObject {
+    RSConfig* config;
+    RSDBPersistentManager* dbpersistenceManager;
+    RSDataResidencyManager* dataResidencyManager;
+    RSServerConfigManager* configManager;
+    RSNetworkManager* networkManager;
+    RSPreferenceManager *preferenceManager;
+    RSCloudModeManager *cloudModeManager;
+    RSDeviceModeManager *deviceModeManager;
+    RSFlushManager *flushManager;
+    RSBackGroundModeManager *backGroundModeManager;
+    RSApplicationLifeCycleManager *applicationLifeCycleManager;
+    RSUserSession * userSession;
+    BOOL isSDKInitialized;
+    BOOL isSDKEnabled;
     NSString* writeKey;
     NSString* authToken;
     NSString* anonymousIdToken;
-    NSString* dataPlaneUrl;
-    RSConfig* config;
-#if !TARGET_OS_WATCH
-    UIBackgroundTaskIdentifier backgroundTask;
-#else
-    dispatch_semaphore_t semaphore;
-#endif
-    RSDBPersistentManager* dbpersistenceManager;
-    RSServerConfigManager* configManager;
     NSMutableDictionary<NSString*, NSObject*>* integrations;
-    NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     RSConsentFilterHandler *consentFilterHandler;
-    NSMutableArray *eventReplayMessage;
-    RSPreferenceManager *preferenceManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
-    RSUserSession *userSession;
-    BOOL firstForeGround;
-    BOOL areFactoriesInitialized;
-    BOOL isSemaphoreReleased;
-    BOOL isSDKInitialized;
-    BOOL isSDKEnabled;
     NSLock* lock;
     dispatch_source_t source;
     dispatch_queue_t repositoryQueue;
@@ -50,11 +59,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;
++ (instancetype) getInstance;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;
 - (void) reset;
 - (void) flush;
-
 - (BOOL) getOptStatus;
 - (void) saveOptStatus: (BOOL) optStatus;
 
@@ -62,12 +71,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) endSession;
 
 - (RSConfig* _Nullable) getConfig;
-- (void)_applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
-
+- (void)applicationDidFinishLaunchingWithOptions:(NSDictionary *) launchOptions;
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption; // Added this method in header for testing purpose
 - (RSMessage *)applyConsents:(RSMessage *)message; // Added this method in header for testing purpose
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig; // Added this method in header for testing purpose
-
 @end
 
 NS_ASSUME_NONNULL_END

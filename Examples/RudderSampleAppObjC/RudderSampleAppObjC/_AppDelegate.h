@@ -15,4 +15,11 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
++ (void) sendIdentify;
++ (void) sendTrack;
++ (void) sendScreen;
++ (void) sendGroup;
++ (void) sendAlias;
++ (void) sendReset;
+
 @end

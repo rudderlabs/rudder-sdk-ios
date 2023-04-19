@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.2...v1.14.0) (2023-04-19)
+
+
+### Features
+
+* added support for device mode transformations ([#160](https://github.com/rudderlabs/rudder-sdk-ios/issues/160)) ([9f145eb](https://github.com/rudderlabs/rudder-sdk-ios/commit/9f145eb2c16ec8a83bc120a0788b94b294148241))
+
 ### [1.13.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.1...v1.13.2) (2023-04-12)
 
 
@@ -22,6 +29,13 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * made reset and identify api's synchronous to reflect the data immediately ([#284](https://github.com/rudderlabs/rudder-sdk-ios/issues/284)) ([6047fc6](https://github.com/rudderlabs/rudder-sdk-ios/commit/6047fc6a7a2d260edc49e6d6c3ea219b5392f95c))
+
+
+### 1.13.0.beta.1 (2023-03-22)
+
+### Features
+* Device Mode Transformations
+
 
 ### [1.12.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.0...v1.12.1) (2023-03-21)
 

@@ -24,6 +24,7 @@ NSString *const RSApplicationVersionKey = @"rl_application_version_key";
 NSString *const RSApplicationInfoKey = @"rl_application_info_key";
 NSString *const RSExternalIdKey =  @"rl_external_id";
 NSString *const RSAnonymousIdKey =  @"rl_anonymous_id";
+NSString *const RSAuthToken = @"rl_auth_token";
 NSString *const RSOptStatus = @"rl_opt_status";
 NSString *const RSOptInTimeKey = @"rl_opt_in_time";
 NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
@@ -146,6 +147,20 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 
 - (void)clearAnonymousId {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString* __nullable) getAuthToken {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAuthToken];
+}
+
+- (void) saveAuthToken: (NSString* __nonnull) authToken {
+    [[NSUserDefaults standardUserDefaults] setValue:authToken forKey:RSAuthToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) clearAuthToken {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAuthToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

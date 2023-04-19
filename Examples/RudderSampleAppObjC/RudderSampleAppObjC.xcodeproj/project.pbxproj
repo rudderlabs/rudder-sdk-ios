@@ -12,7 +12,6 @@
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		ED3B022E272A6588000893AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED3B022D272A6588000893AA /* GoogleService-Info.plist */; };
 		ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED7619ED2727E28700B086F4 /* InfoPlist.strings */; };
 		ED761A002727E28800B086F4 /* CustomIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619EF2727E28700B086F4 /* CustomIntegration.m */; };
 		ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */; };
@@ -33,7 +32,6 @@
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		ED3B022D272A6588000893AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED3B022F272A67AB000893AA /* RudderSampleAppObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RudderSampleAppObjC.entitlements; sourceTree = "<group>"; };
 		ED7619EC2727E28700B086F4 /* RudderSampleAppObjC-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RudderSampleAppObjC-Info.plist"; sourceTree = "<group>"; };
 		ED7619EE2727E28700B086F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				ED7619FC2727E28800B086F4 /* CustomFactory.m */,
 				ED7619FB2727E28800B086F4 /* CustomIntegration.h */,
 				ED7619EF2727E28700B086F4 /* CustomIntegration.m */,
-				ED3B022D272A6588000893AA /* GoogleService-Info.plist */,
 				ED7619FA2727E28800B086F4 /* Images.xcassets */,
 				ED7619ED2727E28700B086F4 /* InfoPlist.strings */,
 				ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */,
@@ -196,7 +193,6 @@
 			files = (
 				ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */,
 				ED761A052727E28800B086F4 /* Images.xcassets in Resources */,
-				ED3B022E272A6588000893AA /* GoogleService-Info.plist in Resources */,
 				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
 				ED761A022727E28800B086F4 /* Main.storyboard in Resources */,
 			);
@@ -212,18 +208,38 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Amplitude/Amplitude.framework",
+				"${BUILT_PRODUCTS_DIR}/Appboy-iOS-SDK/Appboy_iOS_SDK.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
+				"${BUILT_PRODUCTS_DIR}/Rudder-iOS10.0/Rudder.framework",
+				"${BUILT_PRODUCTS_DIR}/Rudder-Amplitude/Rudder_Amplitude.framework",
+				"${BUILT_PRODUCTS_DIR}/Rudder-Braze/Rudder_Braze.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Appboy_iOS_SDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder_Amplitude.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder_Braze.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,13 +423,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RudderSampleAppObjC/RudderSampleAppObjC.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = GTGKNDBD23;
 				EXCLUDED_ARCHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RudderSampleAppObjC/RudderSampleAppObjC-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/RudderSampleAppObjC/RudderSampleAppObjC-Info.plist";
+				MARKETING_VERSION = 1.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.objc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,12 +445,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RudderSampleAppObjC/RudderSampleAppObjC.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = GTGKNDBD23;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RudderSampleAppObjC/RudderSampleAppObjC-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/RudderSampleAppObjC/RudderSampleAppObjC-Info.plist";
+				MARKETING_VERSION = 1.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.objc;
 				PRODUCT_NAME = "$(TARGET_NAME)";

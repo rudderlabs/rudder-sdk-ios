@@ -20,6 +20,6 @@
 }
 
 - (instancetype)init: (NSArray*) destinations;
-- (BOOL) isEventAllowed: (NSString*) destinationName withMessage: (RSMessage*) message;
+- (BOOL)isEventAllowed: (RSMessage*) message ForDestination: (NSString *) destinationName;
 
 @end

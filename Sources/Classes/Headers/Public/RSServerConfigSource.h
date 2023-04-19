@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSMutableDictionary* dataPlanes;
 
 - (void) addDestination: (RSServerDestination*) destination;
-- (NSString *_Nullable) getDataResidencyUrl:(RSDataResidencyServer) residency;
 
 @end
 

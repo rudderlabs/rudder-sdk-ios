@@ -7,6 +7,7 @@
 //
 
 #import "RSUtils.h"
+#import "RSContext.h"
 #import "RSLogger.h"
 #import "RSDBMessage.h"
 
@@ -94,6 +95,12 @@
     return [val description];
 }
 
++ (NSArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) arrayOfNumbers inOrder:(ORDER) order {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:order == ASCENDING];
+    [arrayOfNumbers sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    return [arrayOfNumbers copy];
+}
+
 + (NSDictionary<NSString *,id> *)serializeDict:(NSDictionary<NSString*, id>*)dict {
     // if dict is not null
     if (dict) {
@@ -120,6 +127,29 @@
     return array;
 }
 
++(NSString*) getCSVString:(NSArray*) inputStrings {
+    NSMutableString *CSVString = [[NSMutableString alloc] init];
+    for (int index = 0; index < inputStrings.count; index++) {
+        [CSVString appendString:inputStrings[index]];
+        if (index != inputStrings.count -1) {
+            [CSVString appendString:@","];
+        }
+    }
+    return [CSVString copy];
+}
+
++(NSString*) getJSONCSVString:(NSArray*) inputStrings {
+    NSMutableString *JSONCSVString = [[NSMutableString alloc] init];
+    for (int index = 0; index < inputStrings.count; index++) {
+        [JSONCSVString appendFormat:@"\"%@\"", inputStrings[index]];
+        if (index != inputStrings.count -1) {
+            [JSONCSVString appendString:@","];
+        }
+    }
+    return [JSONCSVString copy];
+}
+
+
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
     int messageCount = (int)dbMessage.messageIds.count;
     if (messageCount % queueSize == 0) {
@@ -129,11 +159,22 @@
     }
 }
 
-+ (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize {
++ (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
     }    
     return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
+}
+
++ (id _Nullable) deSerializeJSONString:(NSString*) jsonString {
+    NSError *error = nil;
+    NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if(error) {
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to serialize the given string back to object %@", jsonString]];
+        return nil;
+    }
+    return object;
 }
 
 + (BOOL) isValidURL:(NSURL*) url {
@@ -147,12 +188,15 @@
     return [url stringByAppendingString:@"/"];
 }
 
-+ (NSString * __nullable) getDataPlaneUrlFrom:(RSServerConfigSource *) serverConfig andRSConfig:(RSConfig *) rsConfig {
-    NSString* dataResidencyUrl = [serverConfig getDataResidencyUrl:rsConfig.dataResidencyServer];
-    if(dataResidencyUrl == nil) {
-        return [RSUtils appendSlashToUrl:rsConfig.dataPlaneUrl];
++ (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString {
+    __block NSString* base64EncodedString = nil;
+    if(inputString != nil && [inputString length] !=0) {
+        NSData* inputStringData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_sync([RSContext getQueue], ^{
+            base64EncodedString = [inputStringData base64EncodedStringWithOptions:0];
+        });
     }
-    return [RSUtils appendSlashToUrl:dataResidencyUrl];
+    return base64EncodedString;
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
