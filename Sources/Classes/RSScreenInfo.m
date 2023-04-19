@@ -25,8 +25,8 @@
         CGRect bounds = [[WKInterfaceDevice currentDevice] screenBounds];
         _density = [[WKInterfaceDevice currentDevice] screenScale];
 #endif
-        _height = bounds.size.width;
-        _width = bounds.size.height;
+        _width = bounds.size.width;
+        _height = bounds.size.height;
     }
     return self;
 }

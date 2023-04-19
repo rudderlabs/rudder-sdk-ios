@@ -2,9 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## Version - 1.13.0.beta.1 - 2023-03-22
-### Feature
-- Device Mode Transformations
+### [1.13.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.1...v1.13.2) (2023-04-12)
+
+
+### Bug Fixes
+
+* restricted nil assign of dataPlaneUrl and controlPlaneUrl ([#307](https://github.com/rudderlabs/rudder-sdk-ios/issues/307)) ([0e28b6f](https://github.com/rudderlabs/rudder-sdk-ios/commit/0e28b6f6f3539837608840d61fc7bf453097809f))
+
+### [1.13.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.13.0...v1.13.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* correct the width and height properties ([#302](https://github.com/rudderlabs/rudder-sdk-ios/issues/302)) ([98d5b55](https://github.com/rudderlabs/rudder-sdk-ios/commit/98d5b55de4ae5f5da5f15ab1954c1b628ced3465))
+
+## [1.13.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.1...v1.13.0) (2023-03-27)
+
+
+### Features
+
+* made reset and identify api's synchronous to reflect the data immediately ([#284](https://github.com/rudderlabs/rudder-sdk-ios/issues/284)) ([6047fc6](https://github.com/rudderlabs/rudder-sdk-ios/commit/6047fc6a7a2d260edc49e6d6c3ea219b5392f95c))
+
+
+### 1.13.0.beta.1 (2023-03-22)
+
+### Features
+* Device Mode Transformations
 
 
 ### [1.12.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.12.0...v1.12.1) (2023-03-21)

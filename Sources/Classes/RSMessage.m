@@ -103,8 +103,9 @@
     }
 }
 
-- (void)updateTraits:(RSTraits *)traits {
-    [_context updateTraits:traits];
+- (void) updateTraits:(RSTraits *)traits {
+    [RSElementCache updateTraits:traits];
+    [self updateContext:[RSElementCache getContext]];
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *,NSObject *>*)traits {

@@ -221,6 +221,9 @@
 		F6B4B54029C8237D00344864 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */; };
 		F6B4B54129C8237D00344864 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53829C8237D00344864 /* RSFlushManager.m */; };
 		F6B4B54229C8237D00344864 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53929C8237D00344864 /* RSCloudModeManager.m */; };
+		EDB3393629960F5E00706003 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393429960F5E00706003 /* multi-dataresidency-eu-true.json */; };
+		EDB3393729960F5E00706003 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = EDB3393529960F5E00706003 /* multi-dataresidency-us-true.json */; };
+		F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,6 +260,16 @@
 		ED38D37B29CB01A0003A7544 /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
 		ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConfigManagerTests.swift; sourceTree = "<group>"; };
 		ED38D37D29CB01A0003A7544 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		ED1C4C8829E6CCC7007007C9 /* find-tag.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "find-tag.sh"; sourceTree = "<group>"; };
+		ED20F4E7299605F600F3FD0E /* multi-dataresidency-default-true.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4E92996078B00F3FD0E /* eu-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4EA2996078B00F3FD0E /* multi-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4EB2996078B00F3FD0E /* us-dataresidency-default-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-true.json"; sourceTree = "<group>"; };
+		ED20F4EC2996078B00F3FD0E /* no-dataresidency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "no-dataresidency.json"; sourceTree = "<group>"; };
+		ED20F4ED2996078B00F3FD0E /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4EE2996078B00F3FD0E /* us-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "us-dataresidency-default-false.json"; sourceTree = "<group>"; };
+		ED20F4F52996083B00F3FD0E /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		ED7DFD80298C061A00ED5A8E /* DataResidencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigSource.m; sourceTree = "<group>"; };
 		ED7DFD86298C091800ED5A8E /* RSTraits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraits.m; sourceTree = "<group>"; };
 		ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLibraryInfo.m; sourceTree = "<group>"; };
@@ -463,6 +476,7 @@
 		F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApplicationLifeCycleManager.m; sourceTree = "<group>"; };
 		F6B4B53829C8237D00344864 /* RSFlushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFlushManager.m; sourceTree = "<group>"; };
 		F6B4B53929C8237D00344864 /* RSCloudModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCloudModeManager.m; sourceTree = "<group>"; };
+		F64F9D7529BF171D009D963F /* ContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,11 +549,21 @@
 				ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */,
 				ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */,
 				ED38D37D29CB01A0003A7544 /* TestUtils.swift */,
+        F64F9D7529BF171D009D963F /* ContextTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
 		ED38D37229CB01A0003A7544 /* Fixtures */ = {
+		ED1C4C8729E6CCC7007007C9 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				ED1C4C8829E6CCC7007007C9 /* find-tag.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		ED20F4E62996059A00F3FD0E /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
 				ED38D37329CB01A0003A7544 /* multi-dataresidency-us-true.json */,
@@ -756,15 +780,16 @@
 				ED83FE5D2731019F006F27B3 /* CHANGELOG.md */,
 				ED857DF12912754400B7BFCE /* CODEOWNERS */,
 				ED857DF22912754400B7BFCE /* CONTRIBUTING.md */,
+				EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */,
 				ED83FDB12731019F006F27B3 /* LICENSE */,
 				ED857DEF2912752300B7BFCE /* package.json */,
 				ED83FDAE2731019F006F27B3 /* Package.swift */,
 				ED83FE5E2731019F006F27B3 /* Podfile */,
 				ED83FDAF2731019F006F27B3 /* README.md */,
 				ED83FDB02731019F006F27B3 /* Rudder.podspec */,
+				ED1C4C8729E6CCC7007007C9 /* Scripts */,
 				ED056314291AABFD00BAEE65 /* sonar-project.properties */,
 				ED04A2482986C1750080A88D /* xccov-to-generic.sh */,
-				EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -1167,6 +1192,7 @@
 				ED38D39E29CB04C7003A7544 /* TestUtils.swift in Sources */,
 				ED38D39829CB04C7003A7544 /* ConserFilterHandlerTests.swift in Sources */,
 				ED38D39B29CB04C7003A7544 /* RudderUtilsTest.swift in Sources */,
+        F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

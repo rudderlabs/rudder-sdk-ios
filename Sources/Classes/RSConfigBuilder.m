@@ -28,6 +28,8 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
+    if (dataPlaneUrl == nil)
+        return self;
     
     NSURL *url = [[NSURL alloc] initWithString:dataPlaneUrl];
     if([RSUtils isValidURL:url]) {
@@ -167,6 +169,9 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
+    if (controlPlaneUrl == nil)
+        return self;
+    
     NSURL *url = [[NSURL alloc] initWithString:controlPlaneUrl];
     if([RSUtils isValidURL:url]) {
         config.controlPlaneUrl = [RSUtils appendSlashToUrl: url.absoluteString];

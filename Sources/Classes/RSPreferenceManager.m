@@ -72,6 +72,11 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSTraitsKey];
 }
 
+- (void)clearTraits {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSTraitsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (NSString* __nullable) getBuildNumber {
     return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationBuildKey];
 }
@@ -130,8 +135,6 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
         anonymousId = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
 #endif
     }
-    
-    
     [self saveAnonymousId:anonymousId];
     
     return anonymousId;
@@ -153,6 +156,11 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 
 - (void) clearAuthToken {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAuthToken];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)clearAnonymousId {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

@@ -54,6 +54,10 @@ static RSEventRepository* _instance;
         self->config = _config;
         
         self->authToken = [RSUtils getBase64EncodedString: [[NSString alloc] initWithFormat:@"%@:", self->writeKey]];
+
+        [RSLogger logVerbose:@"EventRepository: Creating EventRepository Internal Queue"];
+        repositoryQueue = dispatch_queue_create("com.rudder.EventRepository", NULL);
+
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSElementCache"];
@@ -86,7 +90,8 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Initiating and Setting up RSFlushManager"];
         self->flushManager = [[RSFlushManager alloc] initWithConfig:config andPersistentManager:self->dbpersistenceManager andNetworkManager:self->networkManager andLock:self->lock];
-        [self->flushManager setUpFlush];
+        [self->flushManager 
+        ];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSDeviceModeManager"];
         self->deviceModeManager = [[RSDeviceModeManager alloc] initWithConfig:config andDBPersistentManager:self->dbpersistenceManager andNetworkManager:self->networkManager];
@@ -131,7 +136,7 @@ static RSEventRepository* _instance;
 
 - (void) setAnonymousIdToken {
     NSData *anonymousIdData = [[[NSString alloc] initWithFormat:@"%@:", [RSElementCache getAnonymousId]] dataUsingEncoding:NSUTF8StringEncoding];
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(repositoryQueue, ^{
         self->anonymousIdToken = [anonymousIdData base64EncodedStringWithOptions:0];
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: anonymousIdToken: %@", self->anonymousIdToken]];
     });
@@ -147,7 +152,7 @@ static RSEventRepository* _instance;
             int receivedError =[strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
-                dispatch_sync([RSContext getQueue], ^{
+                dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
                 if  (strongSelf->isSDKEnabled) {
@@ -190,7 +195,7 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
-    dispatch_sync([RSContext getQueue], ^{
+    dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             return;
         }
