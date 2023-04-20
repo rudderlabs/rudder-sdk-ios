@@ -13,13 +13,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSNetwork : NSObject
-- (instancetype) initWithDict:(NSDictionary*) dict;
-- (NSDictionary<NSString* , NSObject *>*) dict;
+- (instancetype)initWithDict:(NSDictionary *)dict;
+- (NSDictionary<NSString *, NSObject *> *)dict;
 
-@property (nonatomic, readwrite) NSString* carrier;
-@property (nonatomic, readwrite) bool wifi;
-@property (nonatomic, readwrite) bool isNetworkReachable;
-@property (nonatomic, readwrite) bool cellular;
+@property(nonatomic, strong) NSMutableArray<NSString *> *carriers;
+@property(nonatomic, readwrite) bool wifi;
+@property(nonatomic, readwrite) bool isNetworkReachable;
+@property(nonatomic, readwrite) bool cellular;
 
 @end
 

@@ -19,6 +19,7 @@
 {
     self = [super init];
     if (self) {
+        _carriers = [[NSMutableArray alloc] init];
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
         CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
         NSString *carrierName = nil;
@@ -27,19 +28,19 @@
             NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
             for (NSString *rat in serviceProviders) {
                 CTCarrier *carrier = [serviceProviders objectForKey:rat];
-                if (carrier) {
-                    carrierName = [carrier carrierName];
-                    break;
+                if (carrier && [carrier carrierName]) {
+                    [_carriers addObject:[carrier carrierName]];
                 }
             }
         } else {
             CTCarrier *carrier = [networkInfo subscriberCellularProvider];
             carrierName = [carrier carrierName];
+            if (carrierName) {
+                [_carriers addObject:carrierName];
+            }
         }
         
-        if (carrierName) {
-            _carrier = carrierName;
-        } else {
+        if(_carriers.count == 0) {
             [RSLogger logWarn:@"RSNetwork: init: unable to retrieve carrier name"];
         }
 #endif
@@ -66,7 +67,7 @@
 - (instancetype) initWithDict:(NSDictionary*) dict {
     self = [super init];
     if(self) {
-        _carrier = dict[@"carrier"];
+        _carriers = dict[@"carrier"];
         _wifi = dict[@"wifi"];
         _cellular = dict[@"cellular"];
     }
@@ -77,7 +78,7 @@
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
-        [tempDict setValue:_carrier forKey:@"carrier"];
+        [tempDict setValue:_carriers forKey:@"carriers"];
 #if !TARGET_OS_WATCH
         if(_isNetworkReachable) {
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
