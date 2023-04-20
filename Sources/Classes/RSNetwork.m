@@ -7,7 +7,7 @@
 //
 
 #import "RSNetwork.h"
-
+#import "RSLogger.h"
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -20,11 +20,28 @@
     self = [super init];
     if (self) {
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
-        NSString *carrierName = [[[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider]carrierName];
-        if (carrierName == nil) {
-            carrierName = @"unavailable";
+        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+        NSString *carrierName = nil;
+        
+        if (@available(iOS 12.0, *)) {
+            NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
+            for (NSString *rat in serviceProviders) {
+                CTCarrier *carrier = [serviceProviders objectForKey:rat];
+                if (carrier) {
+                    carrierName = [carrier carrierName];
+                    break;
+                }
+            }
+        } else {
+            CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+            carrierName = [carrier carrierName];
         }
-        _carrier = carrierName;
+        
+        if (carrierName) {
+            _carrier = carrierName;
+        } else {
+            [RSLogger logWarn:@"RSNetwork: init: unable to retrieve carrier name"];
+        }
 #endif
 #if !TARGET_OS_WATCH
         SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, "8.8.8.8");
