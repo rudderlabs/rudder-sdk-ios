@@ -22,19 +22,22 @@
         _carrier = [[NSMutableArray alloc] init];
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
         CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-        NSString *carrierName = nil;
         
         if (@available(iOS 12.0, *)) {
             NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
             for (NSString *rat in serviceProviders) {
                 CTCarrier *carrier = [serviceProviders objectForKey:rat];
-                if (carrier && [carrier carrierName]) {
-                    [_carrier addObject:[carrier carrierName]];
+                if(carrier == nil) {
+                    continue;
+                }
+                NSString *carrierName = [carrier carrierName];
+                if (carrierName) {
+                    [_carrier addObject:carrierName];
                 }
             }
         } else {
             CTCarrier *carrier = [networkInfo subscriberCellularProvider];
-            carrierName = [carrier carrierName];
+            NSString *carrierName = [carrier carrierName];
             if (carrierName) {
                 [_carrier addObject:carrierName];
             }
