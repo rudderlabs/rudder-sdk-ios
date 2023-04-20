@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDict:(NSDictionary *)dict;
 - (NSDictionary<NSString *, NSObject *> *)dict;
 
-@property(nonatomic, strong) NSMutableArray<NSString *> *carriers;
+@property(nonatomic, strong) NSMutableArray<NSString *> *carrier;
 @property(nonatomic, readwrite) bool wifi;
 @property(nonatomic, readwrite) bool isNetworkReachable;
 @property(nonatomic, readwrite) bool cellular;
