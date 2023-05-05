@@ -22,8 +22,10 @@
         _carrier = [[NSMutableArray alloc] init];
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
         CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-        
-        if (@available(iOS 12.0, *)) {
+        if(@available(iOS 16.0, *)) {
+            [RSLogger logWarn:@"RSNetwork: init: cannot retrieve carrier names on iOS 16 and above as CTCarrier is deprecated"];
+        }
+        else if (@available(iOS 12.0, *)) {
             NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
             for (NSString *rat in serviceProviders) {
                 CTCarrier *carrier = [serviceProviders objectForKey:rat];
