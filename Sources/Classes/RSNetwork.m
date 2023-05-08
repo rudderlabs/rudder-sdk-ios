@@ -83,7 +83,9 @@
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
-        [tempDict setValue:_carrier forKey:@"carriers"];
+        if(_carrier.count !=0) {
+            [tempDict setValue:_carrier forKey:@"carriers"];
+        }
 #if !TARGET_OS_WATCH
         if(_isNetworkReachable) {
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
