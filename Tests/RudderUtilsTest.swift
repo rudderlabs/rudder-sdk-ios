@@ -23,6 +23,11 @@ class RudderUtilsTest: XCTestCase {
         let bioCSV = RSUtils.getCSVString(bio)
         print(bioCSV)
         XCTAssert(bioCSV == "Desu,Mobile Engineer,RudderStack")
+        let carriers:[String] = ["Airtel"]
+        let carriersCSV = RSUtils.getCSVString(carriers)
+        print(carriersCSV)
+        XCTAssertEqual(carriersCSV, "Airtel")
+        
     }
     
     func testGetJSONCSVString() throws {
