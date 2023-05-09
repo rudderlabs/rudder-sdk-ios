@@ -8,6 +8,7 @@
 
 #import "RSNetwork.h"
 #import "RSLogger.h"
+#import "RSUtils.h"
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -84,7 +85,7 @@
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
         if(_carrier.count !=0) {
-            [tempDict setValue:_carrier forKey:@"carriers"];
+            [tempDict setValue:[RSUtils getCSVString:_carrier] forKey:@"carrier"];
         }
 #if !TARGET_OS_WATCH
         if(_isNetworkReachable) {
