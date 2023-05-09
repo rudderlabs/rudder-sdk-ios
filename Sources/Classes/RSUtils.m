@@ -128,14 +128,7 @@
 }
 
 +(NSString*) getCSVString:(NSArray*) inputStrings {
-    NSMutableString *CSVString = [[NSMutableString alloc] init];
-    for (int index = 0; index < inputStrings.count; index++) {
-        [CSVString appendString:inputStrings[index]];
-        if (index != inputStrings.count -1) {
-            [CSVString appendString:@","];
-        }
-    }
-    return [CSVString copy];
+    return [inputStrings componentsJoinedByString:@","];
 }
 
 +(NSString*) getJSONCSVString:(NSArray*) inputStrings {
