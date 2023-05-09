@@ -7,7 +7,7 @@
 //
 
 #import "RSNetwork.h"
-
+#import "RSLogger.h"
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -19,12 +19,35 @@
 {
     self = [super init];
     if (self) {
+        _carrier = [[NSMutableArray alloc] init];
 #if !TARGET_OS_TV && !TARGET_OS_WATCH
-        NSString *carrierName = [[[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider]carrierName];
-        if (carrierName == nil) {
-            carrierName = @"unavailable";
+        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+        if(@available(iOS 16.0, *)) {
+            [RSLogger logWarn:@"RSNetwork: init: cannot retrieve carrier names on iOS 16 and above as CTCarrier is deprecated"];
         }
-        _carrier = carrierName;
+        else if (@available(iOS 12.0, *)) {
+            NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
+            for (NSString *rat in serviceProviders) {
+                CTCarrier *carrier = [serviceProviders objectForKey:rat];
+                if(carrier == nil) {
+                    continue;
+                }
+                NSString *carrierName = [carrier carrierName];
+                if (carrierName && ![carrierName isEqualToString:@"--"]) {
+                    [_carrier addObject:carrierName];
+                }
+            }
+        } else {
+            CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+            NSString *carrierName = [carrier carrierName];
+            if (carrierName) {
+                [_carrier addObject:carrierName];
+            }
+        }
+        
+        if(_carrier.count == 0) {
+            [RSLogger logWarn:@"RSNetwork: init: unable to retrieve carrier name"];
+        }
 #endif
 #if !TARGET_OS_WATCH
         SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, "8.8.8.8");
@@ -60,7 +83,9 @@
     NSMutableDictionary *tempDict;
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
-        [tempDict setValue:_carrier forKey:@"carrier"];
+        if(_carrier.count !=0) {
+            [tempDict setValue:_carrier forKey:@"carriers"];
+        }
 #if !TARGET_OS_WATCH
         if(_isNetworkReachable) {
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
