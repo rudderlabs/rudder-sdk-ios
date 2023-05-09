@@ -33,7 +33,7 @@
                     continue;
                 }
                 NSString *carrierName = [carrier carrierName];
-                if (carrierName) {
+                if (carrierName && ![carrierName isEqualToString:@"--"]) {
                     [_carrier addObject:carrierName];
                 }
             }
