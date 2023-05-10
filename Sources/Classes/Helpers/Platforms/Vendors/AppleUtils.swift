@@ -115,7 +115,7 @@ internal class WatchVendor: Vendor {
     }
     
     override var identifierForVendor: String? {
-        return device.identifierForVendor?.uuidString
+        return device.identifierForVendor?.uuidString.lowercased()
     }
     
     override var systemName: String {
@@ -197,7 +197,7 @@ internal class MacVendor: Vendor {
     }
     
     override var identifierForVendor: String? {
-        return macAddress(bsd: "en0")
+        return macAddress(bsd: "en0")?.lowercased()
     }
     
     override var systemName: String {

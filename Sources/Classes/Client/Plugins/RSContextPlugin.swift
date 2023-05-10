@@ -119,7 +119,7 @@ class RSContextPlugin: RSPlatformPlugin {
             "cellular": cellular,
             "wifi": wifi,
             "carrier": device.carrier
-        ]
+        ] as [String: Any]
     }
     
     internal func insertDynamicDeviceInfoData(eventContext: [String: Any]?, context: inout [String: Any]) {
