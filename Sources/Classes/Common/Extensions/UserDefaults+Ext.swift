@@ -90,4 +90,9 @@ extension UserDefaults {
         get { bool(forKey: RSSessionAutoTrackStatus) }
         set { setValue(newValue, forKey: RSSessionAutoTrackStatus) }
     }
+    
+    var manualTrackingStatus: Bool? {
+        get { bool(forKey: RSSessionManualTrackStatus) }
+        set { setValue(newValue, forKey: RSSessionManualTrackStatus) }
+    }
 }

@@ -91,4 +91,12 @@ class RSUserDefaults {
     static func getAutoSessionTrackingStatus() -> Bool? {
         return UserDefaults.standard.autoTrackingStatus
     }
+    
+    static func saveManualSessionTrackingStatus(_ manualTrackingStatus: Bool) {
+        UserDefaults.standard.manualTrackingStatus = manualTrackingStatus
+    }
+    
+    static func getManualSessionTrackingStatus() -> Bool? {
+        return UserDefaults.standard.manualTrackingStatus
+    }
 }

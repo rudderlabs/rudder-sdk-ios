@@ -35,3 +35,4 @@ let RSSessionInActivityMinimumTimeOut = 0
 let RSSessionIdKey = "rl_session_id"
 let RSLastEventTimeStamp = "rl_last_event_time_stamp"
 let RSSessionAutoTrackStatus = "rl_session_auto_track_status"
+let RSSessionManualTrackStatus = "rl_session_manual_track_status"
