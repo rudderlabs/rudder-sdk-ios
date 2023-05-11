@@ -75,4 +75,19 @@ extension UserDefaults {
         get { integer(forKey: RSOptOutTimeKey) }
         set { setValue(newValue, forKey: RSOptOutTimeKey) }
     }
+    
+    var sessionId: Int? {
+        get { integer(forKey: RSSessionIdKey) }
+        set { setValue(newValue, forKey: RSSessionIdKey) }
+    }
+    
+    var lastEventTimeStamp: Int? {
+        get { integer(forKey: RSLastEventTimeStamp) }
+        set { setValue(newValue, forKey: RSLastEventTimeStamp) }
+    }
+    
+    var autoTrackingStatus: Bool? {
+        get { bool(forKey: RSSessionAutoTrackStatus) }
+        set { setValue(newValue, forKey: RSSessionAutoTrackStatus) }
+    }
 }

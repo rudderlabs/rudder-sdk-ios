@@ -64,4 +64,31 @@ class RSUserDefaults {
     static func updateOptOutTime(_ optOutTime: Int?) {
         UserDefaults.standard.optOutTime = optOutTime
     }
+    
+    static func saveSessionId(_ sessionId: Int) {
+        UserDefaults.standard.sessionId = sessionId
+    }
+    
+    static func getSessionId() -> Int? {
+        return UserDefaults.standard.sessionId
+    }
+    
+    static func saveLastEventTimeStamp(_ lastEventTimeStamp: Int) {
+        UserDefaults.standard.lastEventTimeStamp = lastEventTimeStamp
+    }
+    
+    static func getLastEventTimeStamp() -> Int? {
+        if let sessionId = UserDefaults.standard.lastEventTimeStamp, String(sessionId).count >= 10 {
+            return sessionId
+        }
+        return nil
+    }
+    
+    static func saveAutoSessionTrackingStatus(_ autoTrackingStatus: Bool) {
+        UserDefaults.standard.autoTrackingStatus = autoTrackingStatus
+    }
+    
+    static func getAutoSessionTrackingStatus() -> Bool? {
+        return UserDefaults.standard.autoTrackingStatus
+    }
 }

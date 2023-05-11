@@ -70,6 +70,8 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         }
         #endif
         
+        RSUserSessionPlugin.sharedInstance()?.startNewSessionIfRequired()
+        
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         

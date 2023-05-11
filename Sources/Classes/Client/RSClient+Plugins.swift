@@ -41,6 +41,7 @@ extension RSClient {
         plugins.append(RSAnonymousIdPlugin())
         plugins.append(RSAppTrackingConsentPlugin())
         plugins.append(RSAdvertisingIdPlugin())
+        plugins.append(RSUserSessionPlugin())
         
         plugins += Vendor.current.requiredPlugins
 

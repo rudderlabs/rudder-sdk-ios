@@ -55,6 +55,16 @@ open class RSConfig: NSObject {
         return _controlPlaneUrl
     }
     
+    private var _autoSessionTracking: Bool = RSAutoSessionTracking
+    public var autoSessionTracking: Bool {
+        return _autoSessionTracking
+    }
+    
+    private var _sessionTimeout: CLong = RSSessionTimeout
+    public var sessionTimeout: CLong {
+        return _sessionTimeout
+    }
+    
     @objc
     public init(writeKey: String) {
         _writeKey = writeKey
@@ -125,6 +135,22 @@ open class RSConfig: NSObject {
                 }
             }
         }
+        return self
+    }
+    
+    @discardableResult @objc
+    public func autoSessionTracking(_ autoSessionTracking: Bool) -> RSConfig {
+        _autoSessionTracking = autoSessionTracking
+        return self
+    }
+    
+    @discardableResult @objc
+    public func sessionTimeout(_ sessionTimeout: Int) -> RSConfig {
+        guard sessionTimeout >= RSSessionInActivityMinimumTimeOut else {
+            RSClient.rsLog(message: "sessionTimeout can not be less than 0 second", logLevel: .warning)
+            return self
+        }
+        _sessionTimeout = sessionTimeout
         return self
     }
 }
