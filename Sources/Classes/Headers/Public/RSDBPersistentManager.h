@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSDBPersistentManager : NSObject {
     sqlite3 *_database;
+    NSLock* lock;
 }
 
 -(void) createDB;
