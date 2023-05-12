@@ -70,7 +70,7 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
         }
         #endif
         
-        RSUserSessionPlugin.sharedInstance()?.handleAutoSessionTracking()
+        RSUserSessionPlugin.sharedInstance()?.refreshSessionWhenAppEntersForeground()
         
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
