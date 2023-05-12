@@ -11,6 +11,7 @@
 
 int const RS_DB_Version = 2;
 int const DEFAULT_STATUS_VALUE = 0;
+bool isReturnClauseSupported = NO;
 NSString* _Nonnull const TABLE_EVENTS = @"events";
 NSString* _Nonnull const COL_ID = @"id";
 NSString* _Nonnull const COL_MESSAGE = @"message";
@@ -25,6 +26,13 @@ NSString* _Nonnull const COL_STATUS = @"status";
     self = [super init];
     if (self) {
         [self createDB];
+        self->lock = [[NSLock alloc] init];
+        isReturnClauseSupported = [self doesReturnClauseExists];
+        if(isReturnClauseSupported) {
+            [RSLogger logVerbose:@"RSDBPersistentManager: init: SQLiteVersion is >=3.35.0, hence return clause can be used"];
+        } else {
+            [RSLogger logVerbose:@"RSDBPersistentManager: init: SQLiteVersion is <3.35.0, hence return clause cannot be used"];
+        }
     }
     return self;
 }
@@ -104,23 +112,40 @@ NSString* _Nonnull const COL_STATUS = @"status";
 }
 
 - (NSNumber*)saveEvent:(NSString *)message {
-    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld) RETURNING %@;", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong], COL_ID];
+    
+    NSString *insertSQLString;
+    if(isReturnClauseSupported) {
+        insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld) RETURNING %@;", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong], COL_ID];
+    } else {
+        insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld);", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong]];
+    }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: saveEventSQL: %@", insertSQLString]];
+    
     const char* insertSQL = [insertSQLString UTF8String];
     int rowId = -1;
     sqlite3_stmt *insertStmt = nil;
+    [self->lock lock];
     if (sqlite3_prepare_v2(self->_database, insertSQL, -1, &insertStmt, nil) == SQLITE_OK) {
-        if (sqlite3_step(insertStmt) == SQLITE_ROW) {
-            // table created
-            [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
-            rowId = sqlite3_column_int(insertStmt, 0);
+        if(isReturnClauseSupported) {
+            if (sqlite3_step(insertStmt) == SQLITE_ROW) {
+                // table created
+                [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
+                rowId = sqlite3_column_int(insertStmt, 0);
+            } else {
+                [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
+            }
+            sqlite3_finalize(insertStmt);
         } else {
-            [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
+            if(sqlite3_step(insertStmt) == SQLITE_DONE) {
+                sqlite3_finalize(insertStmt);
+                int64_t lastRowId = sqlite3_last_insert_rowid(self->_database);
+                rowId = (int) lastRowId;
+            }
         }
     } else {
         [RSLogger logError:@"RSDBPersistentManager: saveEvent: SQLite Command Preparation Failed"];
     }
-    sqlite3_finalize(insertStmt);
+    [self->lock unlock];
     return [NSNumber numberWithInt:rowId];
 }
 
@@ -296,5 +321,40 @@ NSString* _Nonnull const COL_STATUS = @"status";
     }
     sqlite3_finalize(SqlStatement);
     return executionStatus;
+}
+
+- (BOOL) doesReturnClauseExists {
+    NSString* sqliteVersion = [self getSQLiteVersion];
+    if(sqliteVersion != nil) {
+        NSComparisonResult result = [sqliteVersion compare:@"3.35.0" options:NSNumericSearch];
+        if (result == NSOrderedDescending) {
+            return YES;
+        } else if (result == NSOrderedAscending) {
+            return NO;
+        } else {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (NSString *) getSQLiteVersion {
+    NSString * sqliteVersion;
+    sqlite3_stmt *sqlStatement;
+    NSString *versionSqlQueryString = @"SELECT sqlite_version()";
+    
+    if (sqlite3_prepare_v2(self->_database, [versionSqlQueryString UTF8String], -1, &sqlStatement, NULL) == SQLITE_OK) {
+        if (sqlite3_step(sqlStatement) == SQLITE_ROW) {
+            const unsigned char *versionCString = sqlite3_column_text(sqlStatement, 0);
+            sqliteVersion = [NSString stringWithUTF8String:(const char *)versionCString];
+            [RSLogger logVerbose:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: Running on SQLiteVersion: %@", sqliteVersion]];
+        } else {
+            [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: SQLite Command Execution Failed: %@", versionSqlQueryString]];
+        }
+        sqlite3_finalize(sqlStatement);
+    } else {
+        [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: SQLite Command Preparation Failed: %@", versionSqlQueryString]];
+    }
+    return sqliteVersion;
 }
 @end

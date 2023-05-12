@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.15.0...v1.15.1) (2023-05-12)
+
+
+### Bug Fixes
+
+* fixed insert sql statements to support sqlite versions less than 3.35.0 ([#318](https://github.com/rudderlabs/rudder-sdk-ios/issues/318)) ([4ed5cc2](https://github.com/rudderlabs/rudder-sdk-ios/commit/4ed5cc20e0bb0dd34d11a07100685584958e8f32))
+
 ## [1.15.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.14.0...v1.15.0) (2023-05-09)
 
 
