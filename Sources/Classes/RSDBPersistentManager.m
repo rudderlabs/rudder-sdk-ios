@@ -26,6 +26,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     self = [super init];
     if (self) {
         [self createDB];
+        self->lock = [[NSLock alloc] init];
         isReturnClauseSupported = [self doesReturnClauseExists];
         if(isReturnClauseSupported) {
             [RSLogger logVerbose:@"RSDBPersistentManager: init: SQLiteVersion is >=3.35.0, hence return clause can be used"];
@@ -119,9 +120,11 @@ NSString* _Nonnull const COL_STATUS = @"status";
         insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld);", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong]];
     }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: saveEventSQL: %@", insertSQLString]];
+    
     const char* insertSQL = [insertSQLString UTF8String];
     int rowId = -1;
     sqlite3_stmt *insertStmt = nil;
+    [self->lock lock];
     if (sqlite3_prepare_v2(self->_database, insertSQL, -1, &insertStmt, nil) == SQLITE_OK) {
         if(isReturnClauseSupported) {
             if (sqlite3_step(insertStmt) == SQLITE_ROW) {
@@ -142,6 +145,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     } else {
         [RSLogger logError:@"RSDBPersistentManager: saveEvent: SQLite Command Preparation Failed"];
     }
+    [self->lock unlock];
     return [NSNumber numberWithInt:rowId];
 }
 
