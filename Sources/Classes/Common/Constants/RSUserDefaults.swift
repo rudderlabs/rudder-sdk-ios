@@ -99,4 +99,12 @@ class RSUserDefaults {
     static func getManualSessionTrackingStatus() -> Bool? {
         return UserDefaults.standard.manualTrackingStatus
     }
+    
+    static func saveSessionStoppedStatus(_ sessionStoppedStatus: Bool) {
+        UserDefaults.standard.sessionStoppedStatus = sessionStoppedStatus
+    }
+    
+    static func getSessionStoppedStatus() -> Bool? {
+        return UserDefaults.standard.sessionStoppedStatus
+    }
 }

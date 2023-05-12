@@ -18,13 +18,15 @@ class RSUserSessionPlugin: RSPlatformPlugin {
     
     private var sessionTimeOut: Int?
     private var sessionId: Int?
-    private var isNewSessionStarted: Bool = false
     private var lastEventTimeStamp: Int?
+    private var isNewSessionStarted: Bool = false
+    
     private var previousAutoSessionTrackingStatus: Bool = false
-    var isAutomaticSessionTrackingEnabled: Bool = true
-    private var isManualSessionTrackingEnabled = false
+    private var isAutomaticSessionTrackingEnabled: Bool?
+    private var isSessionStopped: Bool?
+    private var isManualSessionTrackingEnabled: Bool?
+    
     private static var shared: RSUserSessionPlugin?
-    private var trackLifeCycleEvents: Bool?
     
     required init() {}
     
@@ -32,16 +34,29 @@ class RSUserSessionPlugin: RSPlatformPlugin {
         self.sessionTimeOut = client?.config?.sessionTimeout
         self.sessionId = RSUserDefaults.getSessionId()
         self.lastEventTimeStamp = RSUserDefaults.getLastEventTimeStamp()
-        self.previousAutoSessionTrackingStatus = RSUserDefaults.getAutoSessionTrackingStatus()
-        if let manualSessionTrackingStatus = RSUserDefaults.getManualSessionTrackingStatus() {
-            self.isManualSessionTrackingEnabled = manualSessionTrackingStatus
+        self.isSessionStopped = RSUserDefaults.getSessionStoppedStatus()
+        
+        if let autoSessionTrackingStatus = RSUserDefaults.getAutoSessionTrackingStatus() {
+            self.previousAutoSessionTrackingStatus = autoSessionTrackingStatus
+            self.isAutomaticSessionTrackingEnabled = autoSessionTrackingStatus
         }
-        if self.isManualSessionTrackingEnabled {
-            disableManualSessionTracking()
+        
+        self.isManualSessionTrackingEnabled = RSUserDefaults.getManualSessionTrackingStatus()
+        
+        // Reset manual session
+        if shouldResetManualSession() {
             startNewSession()
-        } else {
-            startNewSessionIfRequired()
+            configureAutoSessionTracking(true)
         }
+        // Handle automatic session tracking
+        else if isAutomaticSessionTrackingAllowed() {
+//            if let isAutomaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled, !isAutomaticSessionTrackingEnabled {
+//                configureAutoSessionTracking(true)
+//            }
+            configureAutoSessionTracking(true)
+            handleAutoSessionTracking()
+        }
+        
         if let autoSessionTracking = client?.config?.autoSessionTracking {
             RSUserDefaults.saveAutoSessionTrackingStatus(autoSessionTracking)
             self.previousAutoSessionTrackingStatus = autoSessionTracking
@@ -56,9 +71,6 @@ class RSUserSessionPlugin: RSPlatformPlugin {
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
         if isSessionTrackingAllowed() {
-//        if isAutomaticSessionTrackingAllowed() ||
-//            self.isManualSessionTrackingEnabled {
-//            (!self.isAutomaticSessionTrackingEnabled && !self.isManualSessionTrackingEnabled) {
             if var context = workingMessage.context, let sessionId = self.sessionId {
                 print("Abhishek sessionID: \(sessionId)")
                 context[keyPath: "sessionId"] = sessionId
@@ -77,49 +89,50 @@ class RSUserSessionPlugin: RSPlatformPlugin {
     }
     
     // This method will be called twice: First when SDK is initialised and second when App enters into foreground
-    internal func startNewSessionIfRequired() {
-        guard let previousAutoSessionTrackingStatus = self.previousAutoSessionTrackingStatus,
-                let currentAutoSessionTrackingStatus = client?.config?.autoSessionTracking
+    internal func handleAutoSessionTracking() {
+        guard let currentAutoSessionTrackingStatus = client?.config?.autoSessionTracking, let isAutomaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled
         else { return }
         
         if isAutomaticSessionTrackingEnabled && isAutomaticSessionTrackingAllowed() {
             if isSessionExpired() ||
-                (!previousAutoSessionTrackingStatus && currentAutoSessionTrackingStatus) {
+                (!self.previousAutoSessionTrackingStatus && currentAutoSessionTrackingStatus) {
                 startNewSession()
             }
         }
     }
     
-//    private func isSessionTrackingAllowed() -> Bool {
-//        return self.isManualSessionTrackingEnabled || self.isAutomaticSessionTrackingEnabled && isAutomaticSessionTrackingAllowed()
-//    }
-
     private func isSessionTrackingAllowed() -> Bool {
-        if !self.isAutomaticSessionTrackingEnabled && !self.isManualSessionTrackingEnabled {
+        if let isSessionStopped = self.isSessionStopped, isSessionStopped {
             return false
         }
-        if self.isManualSessionTrackingEnabled {
+        // Return true if manual session is active
+        if let isAutomaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled, !isAutomaticSessionTrackingEnabled {
             return true
         }
         return isAutomaticSessionTrackingAllowed()
     }
     
-    private func isAutomaticSessionTrackingAllowed() -> Bool {
-//        if !self.isAutomaticSessionTrackingEnabled && !self.isManualSessionTrackingEnabled {
-//            return false
-//        }
-        if let isLifecycleAllowed = client?.config?.trackLifecycleEvents,
-           let isSessionTrackingAllowed = client?.config?.autoSessionTracking,
-           isLifecycleAllowed && isSessionTrackingAllowed {
+    private func shouldResetManualSession() -> Bool {
+        if let isAutomaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled, !isAutomaticSessionTrackingEnabled && isAutomaticSessionTrackingAllowed() {
             return true
         }
         return false
     }
     
+    private func isAutomaticSessionTrackingAllowed() -> Bool {
+        guard let clientConfig = client?.config,
+              clientConfig.trackLifecycleEvents,
+              clientConfig.autoSessionTracking
+        else {
+            return false
+        }
+        return true
+    }
+    
     // This method should be called only when session tracking is allowed
     private func isSessionExpired() -> Bool {
         guard let lastEventTimeStamp = self.lastEventTimeStamp, let sessionTimeOut = self.sessionTimeOut else {
-            // SDK is initialised for the first time
+                // SDK is initialised for the first time
             return true
         }
         
@@ -143,25 +156,40 @@ class RSUserSessionPlugin: RSPlatformPlugin {
         RSUserDefaults.saveSessionId(sessionId)
         self.sessionId = sessionId
     }
+}
     
-    // Disable manual session tracking only when automatic session tracking is enabled while SDK initialisation
-    func disableManualSessionTracking() {
-        RSUserDefaults.saveManualSessionTrackingStatus(false)
-        self.isManualSessionTrackingEnabled = false
+extension RSUserSessionPlugin {
+    private func stopSessionTracking(_ isSessionStopped: Bool) {
+        self.isSessionStopped = isSessionStopped
+        RSUserDefaults.saveSessionStoppedStatus(isSessionStopped)
     }
     
-    func disableAutomaticSessionTracking() {
-        self.isAutomaticSessionTrackingEnabled = false
-        if !isAutomaticSessionTrackingAllowed() {
-            RSUserDefaults.saveAutoSessionTrackingStatus(false)
+    private func configureAutoSessionTracking(_ isAutoSessionTrackingEnabled: Bool) {
+        self.isAutomaticSessionTrackingEnabled = isAutoSessionTrackingEnabled
+        RSUserDefaults.saveAutoSessionTrackingStatus(isAutoSessionTrackingEnabled)
+        if isAutoSessionTrackingEnabled {
+            stopSessionTracking(false)
+            RSUserDefaults.saveManualSessionTrackingStatus(false)
+            self.isManualSessionTrackingEnabled = false
         }
-        RSUserDefaults.saveManualSessionTrackingStatus(true)
-        self.isManualSessionTrackingEnabled = true
+        // TODO: Decide to remove it or keep it
+        else {
+            stopSessionTracking(true)
+            RSUserDefaults.saveManualSessionTrackingStatus(true)
+            self.isManualSessionTrackingEnabled = true
+        }
+    }
+
+    func startManualSession() {
+        configureAutoSessionTracking(false)
+//        RSUserDefaults.saveManualSessionTrackingStatus(true)
+        startNewSession()
+        stopSessionTracking(false)
     }
     
     func disableSessionTracking() {
-        disableAutomaticSessionTracking()
-        disableManualSessionTracking()
+        configureAutoSessionTracking(false)
+        stopSessionTracking(true)
     }
 }
 
@@ -169,13 +197,13 @@ extension RSClient {
     @objc
     public func startSession() {
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
-            userSessionPlugin.disableAutomaticSessionTracking()
-            userSessionPlugin.startNewSession()
-//            userSessionPlugin.initialSetup()
-        } else {
-//            let advertisingIdPlugin = RSAdvertisingIdPlugin()
-//            advertisingIdPlugin.advertisingId = advertisingId
-//            add(plugin: advertisingIdPlugin)
+            userSessionPlugin.startManualSession()
+        }
+        else {
+            log(message: "SDK is not yet initialised. Hence Manual session cannot be started", logLevel: .debug)
+//            let userSessionPlugin = RSUserSessionPlugin()
+//            userSessionPlugin.startManualSession()
+//            add(plugin: userSessionPlugin)
         }
     }
     
@@ -196,11 +224,11 @@ extension RSClient {
     public func endSession() {
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
             userSessionPlugin.disableSessionTracking()
-                //            userSessionPlugin.initialSetup()
-        } else {
-                //            let advertisingIdPlugin = RSAdvertisingIdPlugin()
-                //            advertisingIdPlugin.advertisingId = advertisingId
-                //            add(plugin: advertisingIdPlugin)
         }
+//        else {
+//                //            let advertisingIdPlugin = RSAdvertisingIdPlugin()
+//                //            advertisingIdPlugin.advertisingId = advertisingId
+//                //            add(plugin: advertisingIdPlugin)
+//        }
     }
 }

@@ -95,4 +95,9 @@ extension UserDefaults {
         get { bool(forKey: RSSessionManualTrackStatus) }
         set { setValue(newValue, forKey: RSSessionManualTrackStatus) }
     }
+    
+    var sessionStoppedStatus: Bool? {
+        get { bool(forKey: RSSessionStoppedStatus) }
+        set { setValue(newValue, forKey: RSSessionStoppedStatus) }
+    }
 }
