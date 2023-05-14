@@ -55,6 +55,8 @@ class RSwatchOSLifecycleEvents: RSPlatformPlugin, RSwatchOSLifecycle {
             return
         }
         
+        RSUserSessionPlugin.sharedInstance()?.refreshSessionWhenAppEntersForeground()
+        
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         

@@ -86,7 +86,7 @@ extension UserDefaults {
         set { setValue(newValue, forKey: RSLastEventTimeStamp) }
     }
     
-    var autoTrackingStatus: Bool? {
+    var automaticTrackingStatus: Bool? {
         get { bool(forKey: RSSessionAutoTrackStatus) }
         set { setValue(newValue, forKey: RSSessionAutoTrackStatus) }
     }

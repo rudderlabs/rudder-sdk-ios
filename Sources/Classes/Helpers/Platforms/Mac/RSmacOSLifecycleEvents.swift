@@ -48,6 +48,10 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
             RSUserDefaults.saveApplicationBuild(currentBuild)
         }
         
+        if fromBackground {
+            RSUserSessionPlugin.sharedInstance()?.refreshSessionWhenAppEntersForeground()
+        }
+        
         client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
             currentVersion: currentVersion,
             currentBuild: currentBuild,

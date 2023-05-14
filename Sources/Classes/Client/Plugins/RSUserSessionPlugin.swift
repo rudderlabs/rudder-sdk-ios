@@ -17,11 +17,11 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     }
     
     private var sessionTimeOut: Int?
-    private var sessionId: Int?
-    private var lastEventTimeStamp: Int?
     private var isNewSessionStarted: Bool = false
     
-    private var previousAutoSessionTrackingStatus: Bool = false
+    private var sessionId: Int?
+    private var lastEventTimeStamp: Int?
+    
     private var isAutomaticSessionTrackingEnabled: Bool?
     private var isSessionStopped: Bool?
     private var isManualSessionTrackingEnabled: Bool?
@@ -35,22 +35,17 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         self.sessionId = RSUserDefaults.getSessionId()
         self.lastEventTimeStamp = RSUserDefaults.getLastEventTimeStamp()
         
-        if let autoSessionTrackingStatus = RSUserDefaults.getAutoSessionTrackingStatus() {
-            self.previousAutoSessionTrackingStatus = autoSessionTrackingStatus
-        }
-        
-        if isAutomaticSessionTrackingAllowed(),
-           let currentAutoSessionTrackingStatus = client?.config?.autoSessionTracking {
-            if isSessionExpired() || (!self.previousAutoSessionTrackingStatus && currentAutoSessionTrackingStatus) {
+        if isAutomaticSessionTrackingAllowed() {
+            if let previousAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus(), isSessionExpired() || !previousAutomaticSessionTrackingStatus {
                 startNewSession()
-                RSUserDefaults.saveAutoSessionTrackingStatus(true)
+                RSUserDefaults.saveAutomaticSessionTrackingStatus(true)
                 RSUserDefaults.saveManualSessionTrackingStatus(false)
                 RSUserDefaults.saveSessionStoppedStatus(false)
             }
+        } else {
+            RSUserDefaults.saveAutomaticSessionTrackingStatus(false)
         }
-        
         refreshSesionParams()
-        
         RSUserSessionPlugin.shared = self
     }
     
@@ -62,7 +57,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         guard var workingMessage = message else { return message }
         if isSessionTrackingAllowed() {
             if var context = workingMessage.context, let sessionId = self.sessionId {
-                print("Abhishek sessionID: \(sessionId)")
+                print("Abhishek2 sessionID: \(sessionId)")
                 context[keyPath: "sessionId"] = sessionId
                 if isNewSessionStarted {
                     context[keyPath: "sessionStart"] = true
@@ -78,9 +73,8 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         return workingMessage
     }
     
-    // This method will be called twice: First when SDK is initialised and second when App enters into foreground
     internal func refreshSessionWhenAppEntersForeground() {
-        if let automaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled, automaticSessionTrackingEnabled && isSessionExpired() {
+        if isSessionTrackingAllowed(), let automaticSessionTrackingEnabled = self.isAutomaticSessionTrackingEnabled, automaticSessionTrackingEnabled && isSessionExpired() {
             startNewSession()
         }
     }
@@ -95,7 +89,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     private func isAutomaticSessionTrackingAllowed() -> Bool {
         guard let clientConfig = client?.config,
               clientConfig.trackLifecycleEvents,
-              clientConfig.autoSessionTracking
+              clientConfig.automaticSessionTracking
         else {
             return false
         }
@@ -138,7 +132,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     }
     
     private func refreshSesionParams() {
-        self.isAutomaticSessionTrackingEnabled = RSUserDefaults.getAutoSessionTrackingStatus()
+        self.isAutomaticSessionTrackingEnabled = RSUserDefaults.getAutomaticSessionTrackingStatus()
         self.isManualSessionTrackingEnabled = RSUserDefaults.getManualSessionTrackingStatus()
         self.isSessionStopped = RSUserDefaults.getSessionStoppedStatus()
     }
@@ -146,7 +140,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     
 extension RSUserSessionPlugin {
     func startManualSession(_ sessionId: Int?) {
-        RSUserDefaults.saveAutoSessionTrackingStatus(false)
+        RSUserDefaults.saveAutomaticSessionTrackingStatus(false)
         RSUserDefaults.saveManualSessionTrackingStatus(true)
         RSUserDefaults.saveSessionStoppedStatus(false)
         
@@ -156,7 +150,7 @@ extension RSUserSessionPlugin {
     }
     
     func endSession() {
-        RSUserDefaults.saveAutoSessionTrackingStatus(false)
+        RSUserDefaults.saveAutomaticSessionTrackingStatus(false)
         RSUserDefaults.saveManualSessionTrackingStatus(false)
         RSUserDefaults.saveSessionStoppedStatus(true)
     
@@ -166,6 +160,7 @@ extension RSUserSessionPlugin {
     func reset() {
         if isSessionTrackingAllowed() {
             print("Abhishek RESET is called")
+            RSUserDefaults.saveLastEventTimeStamp(RSUtils.getTimeStamp())
             startNewSession()
         }
     }

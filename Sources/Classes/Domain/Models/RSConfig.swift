@@ -56,7 +56,7 @@ open class RSConfig: NSObject {
     }
     
     private var _autoSessionTracking: Bool = RSAutoSessionTracking
-    public var autoSessionTracking: Bool {
+    public var automaticSessionTracking: Bool {
         return _autoSessionTracking
     }
     
