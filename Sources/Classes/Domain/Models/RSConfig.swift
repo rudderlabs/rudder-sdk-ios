@@ -60,8 +60,8 @@ open class RSConfig: NSObject {
         return _autoSessionTracking
     }
     
-    private var _sessionTimeout: CLong = RSSessionTimeout
-    public var sessionTimeout: CLong {
+    private var _sessionTimeout: Int = RSSessionTimeout
+    public var sessionTimeout: Int {
         return _sessionTimeout
     }
     
