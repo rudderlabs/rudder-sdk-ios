@@ -78,7 +78,7 @@ class RSUserDefaults {
     }
     
     static func getLastEventTimeStamp() -> Int? {
-        return nil
+        return UserDefaults.standard.lastEventTimeStamp
     }
     
     static func saveAutomaticSessionTrackingStatus(_ autoTrackingStatus: Bool) {
