@@ -78,9 +78,6 @@ class RSUserDefaults {
     }
     
     static func getLastEventTimeStamp() -> Int? {
-        if let sessionId = UserDefaults.standard.lastEventTimeStamp, String(sessionId).count >= 10 {
-            return sessionId
-        }
         return nil
     }
     

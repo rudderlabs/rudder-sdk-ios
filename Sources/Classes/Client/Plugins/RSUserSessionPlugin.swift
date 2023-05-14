@@ -186,9 +186,8 @@ extension RSClient {
             log(message: "sessionId can not be empty", logLevel: .warning)
             return
         }
-        
-        if String(sessionId).count < 10 {
-            log(message: "RSClient: startSession: Length of the sessionId should be atleast 10: (sessionId)", logLevel: .error)
+        guard String(sessionId).count >= 10 else {
+            log(message: "RSClient: startSession: Length of the sessionId should be at least 10: \(sessionId)", logLevel: .error)
             return
         }
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
