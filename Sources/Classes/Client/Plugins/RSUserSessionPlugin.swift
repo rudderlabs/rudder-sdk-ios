@@ -37,8 +37,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         
         if isAutomaticSessionTrackingAllowed() {
             if let previousAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus(),
-                isSessionExpired() ||
-                !previousAutomaticSessionTrackingStatus {
+                isSessionExpired() || !previousAutomaticSessionTrackingStatus {
                 startNewSession()
                 RSUserDefaults.saveAutomaticSessionTrackingStatus(true)
                 RSUserDefaults.saveManualSessionTrackingStatus(false)
@@ -60,7 +59,6 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         if isSessionTrackingAllowed() {
             if var context = workingMessage.context,
                 let sessionId = self.sessionId {
-                print("Abhishek2 sessionID: \(sessionId)")
                 context[keyPath: "sessionId"] = sessionId
                 if isNewSessionStarted {
                     context[keyPath: "sessionStart"] = true
@@ -119,7 +117,6 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         }
         
         let timeDifference: TimeInterval = TimeInterval(abs(RSUtils.getTimeStamp() - lastEventTimeStamp))
-        print ("Abhishek \(timeDifference)")
         return timeDifference >= Double(sessionTimeOut / 1000)
     }
     
@@ -128,7 +125,6 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     }
     
     func startNewSession(_ newSessionId: Int?) {
-        print("Abhishek: New session starts")
         var sessionId = RSUtils.getTimeStamp()
         if let inputSessionId = newSessionId {
             sessionId = inputSessionId
@@ -167,7 +163,6 @@ extension RSUserSessionPlugin {
     
     func reset() {
         if isSessionTrackingAllowed() {
-            print("Abhishek RESET is called")
             RSUserDefaults.saveLastEventTimeStamp(nil)
             startNewSession()
         }
@@ -210,6 +205,4 @@ extension RSClient {
             userSessionPlugin.endSession()
         }
     }
-    
-    
 }
