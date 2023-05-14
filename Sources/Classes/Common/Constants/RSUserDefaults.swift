@@ -65,7 +65,7 @@ class RSUserDefaults {
         UserDefaults.standard.optOutTime = optOutTime
     }
     
-    static func saveSessionId(_ sessionId: Int) {
+    static func saveSessionId(_ sessionId: Int?) {
         UserDefaults.standard.sessionId = sessionId
     }
     
