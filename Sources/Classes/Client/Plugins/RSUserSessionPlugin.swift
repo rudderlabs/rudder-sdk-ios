@@ -69,9 +69,9 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
                 workingMessage.context = context
                 client?.updateContext(context)
             }
-            let lastEventTimeStamp = RSUtils.getTimeStamp()
-            RSUserDefaults.saveLastEventTimeStamp(lastEventTimeStamp)
-            self.lastEventTimeStamp = lastEventTimeStamp
+            let currentEventTimeStamp = RSUtils.getTimeStamp()
+            RSUserDefaults.saveLastEventTimeStamp(currentEventTimeStamp)
+            self.lastEventTimeStamp = currentEventTimeStamp
         }
         return workingMessage
     }
@@ -135,7 +135,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         }
         client?.log(message: "New session is started", logLevel: .verbose)
         isNewSessionStarted = true
-        RSUserDefaults.saveSessionId(nil)
+        RSUserDefaults.saveSessionId(sessionId)
         self.sessionId = sessionId
     }
     
@@ -168,7 +168,7 @@ extension RSUserSessionPlugin {
     func reset() {
         if isSessionTrackingAllowed() {
             print("Abhishek RESET is called")
-            RSUserDefaults.saveLastEventTimeStamp(RSUtils.getTimeStamp())
+            RSUserDefaults.saveLastEventTimeStamp(nil)
             startNewSession()
         }
     }

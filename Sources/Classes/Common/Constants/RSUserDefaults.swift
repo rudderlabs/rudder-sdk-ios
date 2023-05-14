@@ -65,7 +65,7 @@ class RSUserDefaults {
         UserDefaults.standard.optOutTime = optOutTime
     }
     
-    static func saveSessionId(_ sessionId: Int?) {
+    static func saveSessionId(_ sessionId: Int) {
         UserDefaults.standard.sessionId = sessionId
     }
     
@@ -73,7 +73,7 @@ class RSUserDefaults {
         return UserDefaults.standard.sessionId
     }
     
-    static func saveLastEventTimeStamp(_ lastEventTimeStamp: Int) {
+    static func saveLastEventTimeStamp(_ lastEventTimeStamp: Int?) {
         UserDefaults.standard.lastEventTimeStamp = lastEventTimeStamp
     }
     
