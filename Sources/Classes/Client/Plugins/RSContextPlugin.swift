@@ -114,11 +114,11 @@ class RSContextPlugin: RSPlatformPlugin {
             "cellular": cellular,
             "wifi": wifi,
             "carrier": device.carrier
-        ]
+        ] as [String: Any]
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {
-        /// First priority will given to the `option` passed along with the event
+        // First priority will given to the `option` passed along with the event
         if let option = message.option {
             if let externalIds = option.externalIds {
                 context["externalId"] = externalIds
