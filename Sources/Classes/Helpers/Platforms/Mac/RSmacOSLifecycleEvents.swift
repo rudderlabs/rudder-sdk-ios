@@ -49,7 +49,7 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         }
         
         if fromBackground {
-            RSUserSessionPlugin.sharedInstance()?.refreshSessionWhenAppEntersForeground()
+            client?.refreshSessionIfNeeded()
         }
         
         client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(
