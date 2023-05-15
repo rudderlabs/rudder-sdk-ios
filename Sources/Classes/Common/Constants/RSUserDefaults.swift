@@ -67,6 +67,7 @@ class RSUserDefaults {
     
     static func saveSessionId(_ sessionId: Int) {
         UserDefaults.standard.sessionId = sessionId
+        UserDefaults.standard.synchronize()
     }
     
     static func getSessionId() -> Int? {
@@ -75,14 +76,19 @@ class RSUserDefaults {
     
     static func saveLastEventTimeStamp(_ lastEventTimeStamp: Int?) {
         UserDefaults.standard.lastEventTimeStamp = lastEventTimeStamp
+        UserDefaults.standard.synchronize()
     }
     
     static func getLastEventTimeStamp() -> Int? {
-        return UserDefaults.standard.lastEventTimeStamp
+        if let lastEventTimeStamp = UserDefaults.standard.lastEventTimeStamp, lastEventTimeStamp != 0 {
+            return lastEventTimeStamp;
+        }
+        return nil
     }
     
     static func saveAutomaticSessionTrackingStatus(_ autoTrackingStatus: Bool) {
         UserDefaults.standard.automaticTrackingStatus = autoTrackingStatus
+        UserDefaults.standard.synchronize()
     }
     
     static func getAutomaticSessionTrackingStatus() -> Bool? {
@@ -91,6 +97,7 @@ class RSUserDefaults {
     
     static func saveManualSessionTrackingStatus(_ manualTrackingStatus: Bool) {
         UserDefaults.standard.manualTrackingStatus = manualTrackingStatus
+        UserDefaults.standard.synchronize()
     }
     
     static func getManualSessionTrackingStatus() -> Bool? {
@@ -99,6 +106,7 @@ class RSUserDefaults {
     
     static func saveSessionStoppedStatus(_ sessionStoppedStatus: Bool) {
         UserDefaults.standard.sessionStoppedStatus = sessionStoppedStatus
+        UserDefaults.standard.synchronize()
     }
     
     static func getSessionStoppedStatus() -> Bool? {

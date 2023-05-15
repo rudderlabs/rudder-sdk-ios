@@ -47,8 +47,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         self.lastEventTimeStamp = RSUserDefaults.getLastEventTimeStamp()
         
         if isAutomaticSessionTrackingAllowed {
-            if let previousAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus(),
-                (isSessionExpired() || !previousAutomaticSessionTrackingStatus) {
+            if isSessionExpired() {
                 startNewSession(nil)
                 RSUserDefaults.saveAutomaticSessionTrackingStatus(true)
                 RSUserDefaults.saveManualSessionTrackingStatus(false)
@@ -102,6 +101,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         self.isAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus() ?? false
         self.isManualSessionTrackingStatus = RSUserDefaults.getManualSessionTrackingStatus() ?? false
         self.isSessionStoppedStatus = RSUserDefaults.getSessionStoppedStatus() ?? false
+        self.lastEventTimeStamp = RSUserDefaults.getLastEventTimeStamp()
     }
 }
     
@@ -110,6 +110,7 @@ extension RSUserSessionPlugin {
         RSUserDefaults.saveAutomaticSessionTrackingStatus(false)
         RSUserDefaults.saveManualSessionTrackingStatus(true)
         RSUserDefaults.saveSessionStoppedStatus(false)
+        RSUserDefaults.saveLastEventTimeStamp(nil)
         
         refreshSesionParams()
         
@@ -120,6 +121,7 @@ extension RSUserSessionPlugin {
         RSUserDefaults.saveAutomaticSessionTrackingStatus(false)
         RSUserDefaults.saveManualSessionTrackingStatus(false)
         RSUserDefaults.saveSessionStoppedStatus(true)
+        RSUserDefaults.saveLastEventTimeStamp(nil)
     
         refreshSesionParams()
     }
