@@ -21,12 +21,12 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     private var sessionId: Int?
     private var lastEventTimeStamp: Int?
     
-    private var previousAutomaticSessionTrackingStatus = false
-    private var previousSessionStoppedStatus = false
-    private var previousManualSessionTrackingStatus = false
+    private var isAutomaticSessionTrackingStatus = false
+    private var isSessionStoppedStatus = false
+    private var isManualSessionTrackingStatus = false
     
     private var isSessionTrackingAllowed: Bool {
-        if !previousSessionStoppedStatus && (previousManualSessionTrackingStatus || isAutomaticSessionTrackingAllowed) {
+        if !isSessionStoppedStatus && (isManualSessionTrackingStatus || isAutomaticSessionTrackingAllowed) {
             return true
         }
         return false
@@ -99,9 +99,9 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     }
     
     private func refreshSesionParams() {
-        self.previousAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus() ?? false
-        self.previousManualSessionTrackingStatus = RSUserDefaults.getManualSessionTrackingStatus() ?? false
-        self.previousSessionStoppedStatus = RSUserDefaults.getSessionStoppedStatus() ?? false
+        self.isAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus() ?? false
+        self.isManualSessionTrackingStatus = RSUserDefaults.getManualSessionTrackingStatus() ?? false
+        self.isSessionStoppedStatus = RSUserDefaults.getSessionStoppedStatus() ?? false
     }
 }
     
@@ -132,7 +132,7 @@ extension RSUserSessionPlugin {
     }
     
     func refreshSessionIfNeeded() {
-        if isSessionTrackingAllowed, previousAutomaticSessionTrackingStatus, isSessionExpired() {
+        if isSessionTrackingAllowed, isAutomaticSessionTrackingStatus, isSessionExpired() {
             startNewSession(nil)
         }
     }
