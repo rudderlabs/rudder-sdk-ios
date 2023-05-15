@@ -47,7 +47,8 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
         self.lastEventTimeStamp = RSUserDefaults.getLastEventTimeStamp()
         
         if isAutomaticSessionTrackingAllowed {
-            if isSessionExpired() {
+            if let previousAutomaticSessionTrackingStatus = RSUserDefaults.getAutomaticSessionTrackingStatus(),
+               (isSessionExpired() || !previousAutomaticSessionTrackingStatus) {
                 startNewSession(nil)
                 RSUserDefaults.saveAutomaticSessionTrackingStatus(true)
                 RSUserDefaults.saveManualSessionTrackingStatus(false)
