@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.6...v2.3.0) (2023-05-15)
+
+
+### Features
+
+* implement session tracking for v2 SDK ([#321](https://github.com/rudderlabs/rudder-sdk-ios/issues/321)) ([f401178](https://github.com/rudderlabs/rudder-sdk-ios/commit/f4011787112bea3bc10e11cf3f32c0d5dd438459))
+
+
+### Bug Fixes
+
+* config specified log level is not working ([aaa91d7](https://github.com/rudderlabs/rudder-sdk-ios/commit/aaa91d7683e3c48c548f9171710749a2c7c5a0ac))
+* convert date into gregorian calendar ([#296](https://github.com/rudderlabs/rudder-sdk-ios/issues/296)) ([b9df566](https://github.com/rudderlabs/rudder-sdk-ios/commit/b9df5668e4cbf227c6f42c091b93da8118ab8947))
+
 ### [2.2.7](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.1.0...v2.2.7) (2023-03-28)
 
 
