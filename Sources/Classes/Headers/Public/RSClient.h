@@ -87,6 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startSession;
 - (void)startSession:(long)sessionId;
 - (void)endSession;
+- (NSString*)getSessionId;
 
 @end
 

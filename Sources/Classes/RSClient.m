@@ -18,6 +18,7 @@ static RSEventRepository *_repository = nil;
 static RSUserSession *_userSession = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
+static long currentSessionId = -1;
 
 @implementation RSClient
 
@@ -444,13 +445,23 @@ static NSString* _deviceToken = nil;
         return;
     }
     if(_repository != nil) {
+        currentSessionId = sessionId;
         [_repository startSession:sessionId];
     }
 }
 
 - (void)endSession {
     if(_repository != nil) {
+         currentSessionId=-1;
         [_repository endSession];
+    }
+}
+
+- (NSString*)getSessionId {
+    if (currentSessionId == -1) {
+        return nil;
+    } else {
+        return [NSString stringWithFormat:@"%ld", currentSessionId];
     }
 }
 
