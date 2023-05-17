@@ -78,10 +78,8 @@
             stream.avail_out = (uInt)(output.length - stream.total_out);
             status = inflate (&stream, Z_SYNC_FLUSH);
         }
-        if (inflateEnd(&stream) == Z_OK) {
-            if (status == Z_STREAM_END) {
-                output.length = stream.total_out;
-            }
+        if (inflateEnd(&stream) == Z_OK && status == Z_STREAM_END) {
+            output.length = stream.total_out;
         }
     }
     
