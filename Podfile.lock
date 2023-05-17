@@ -1,18 +1,18 @@
 PODS:
   - Amplitude (7.2.2)
-  - Appboy-iOS-SDK (4.4.2):
-    - Appboy-iOS-SDK/UI (= 4.4.2)
-  - Appboy-iOS-SDK/ContentCards (4.4.2):
+  - Appboy-iOS-SDK (4.5.4):
+    - Appboy-iOS-SDK/UI (= 4.5.4)
+  - Appboy-iOS-SDK/ContentCards (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/Core (4.4.2)
-  - Appboy-iOS-SDK/InAppMessage (4.4.2):
+  - Appboy-iOS-SDK/Core (4.5.4)
+  - Appboy-iOS-SDK/InAppMessage (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/NewsFeed (4.4.2):
+  - Appboy-iOS-SDK/NewsFeed (4.5.4):
     - Appboy-iOS-SDK/Core
     - SDWebImage (< 6, >= 5.8.2)
-  - Appboy-iOS-SDK/UI (4.4.2):
+  - Appboy-iOS-SDK/UI (4.5.4):
     - Appboy-iOS-SDK/ContentCards
     - Appboy-iOS-SDK/Core
     - Appboy-iOS-SDK/InAppMessage
@@ -43,7 +43,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.2):
+  - GoogleDataTransport (9.2.3):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -70,16 +70,16 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.2.0)
-  - Rudder (1.13.2)
+  - Rudder (1.15.1)
   - Rudder-Amplitude (1.0.2):
     - Amplitude (~> 7.2.0)
     - Rudder
-  - Rudder-Braze (1.1.1):
-    - Appboy-iOS-SDK (= 4.4.2)
-    - Rudder (~> 1.0)
-  - SDWebImage (5.15.5):
-    - SDWebImage/Core (= 5.15.5)
-  - SDWebImage/Core (5.15.5)
+  - Rudder-Braze (1.2.0):
+    - Appboy-iOS-SDK (~> 4.5.4)
+    - Rudder (~> 1.12)
+  - SDWebImage (5.15.8):
+    - SDWebImage/Core (= 5.15.8)
+  - SDWebImage/Core (5.15.8)
 
 DEPENDENCIES:
   - Amplitude (~> 7.2.0)
@@ -111,21 +111,21 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Amplitude: 517cdc7c485bda64b685174426ecbf17746eb16a
-  Appboy-iOS-SDK: 4a7dfe908639da81e5e85849355f6066b58b4cc6
+  Appboy-iOS-SDK: 2fc5b290fe1caa85718b811a19b303d45caea975
   FirebaseCore: 2082fffcd855f95f883c0a1641133eb9bbe76d40
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
   FirebaseCoreInternal: bca76517fe1ed381e989f5e7d8abb0da8d85bed3
   FirebaseInstallations: 0a115432c4e223c5ab20b0dbbe4cbefa793a0e8e
   FirebaseMessaging: a4d7910e4af663c9cbfc1071c5bef34651690949
-  GoogleDataTransport: 8378d1fa8ac49753ea6ce70d65a7cb70ce5f66e6
+  GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  Rudder: 1353907b7323389ad213f3ef0a30969261f67773
+  Rudder: 41040d4537a178e4e32477b68400f98ca0c354eb
   Rudder-Amplitude: f845cc125a1a58d4de6155391a2b0392815ae898
-  Rudder-Braze: e8b8c76b7e7f0348c79f8cc359e43f4c6cd7ac9b
-  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
+  Rudder-Braze: e42eb914a03cb418ed8b7a3cd90b724a91476631
+  SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
 
 PODFILE CHECKSUM: 42bfa6ba9271b8d9518a669daca1fd9a7bbf9f6e
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
