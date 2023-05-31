@@ -52,28 +52,31 @@ extension RSIdentifyTraitsPlugin: RSEventPlugin {
     }
     
     func saveTraits(_ traits: [String: Any]?) {
-        if let traits = traits {
-            do {
-                let data: Data = try NSKeyedArchiver.archivedData(withRootObject: traits, requiringSecureCoding: false)
-                RSUserDefaults.saveTraits(data)
-            } catch {
-                self.client?.log(message: "Failed to encode traits: \(error)", logLevel: .error)
-            }
+        guard let traits = traits else {
+            RSUserDefaults.saveTraits(nil)
+            return
+        }
+        do {
+            let data: Data = try NSKeyedArchiver.archivedData(withRootObject: traits, requiringSecureCoding: false)
+            RSUserDefaults.saveTraits(data)
+        } catch {
+            self.client?.log(message: "Failed to encode traits: \(error)", logLevel: .error)
         }
     }
 }
 
 extension RSClient {
     internal func setTraits(_ traits: IdentifyTraits?, _ newUserId: String) {
-        guard var traits = traits else { return }
         if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
+            var updatedTraits = traits
             if let exisitingUserId = RSUserDefaults.getUserId(), exisitingUserId == newUserId {
-                if let traitsPluginTraits = traitsPlugin.traits {
-                    traits.merge(traitsPluginTraits) { (_, new) in new }
+                if var existingTraits = traitsPlugin.traits, let newTraits = traits {
+                    existingTraits.merge(newTraits) { (_, new) in new }
+                    updatedTraits = existingTraits
                 }
             }
-            traitsPlugin.traits = traits
-            traitsPlugin.saveTraits(traits)
+            traitsPlugin.traits = updatedTraits
+            traitsPlugin.saveTraits(updatedTraits)
         } else {
             let traitsPlugin = RSIdentifyTraitsPlugin()
             traitsPlugin.traits = traits
