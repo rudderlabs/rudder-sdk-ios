@@ -75,6 +75,7 @@ extension RSClient {
                     updatedTraits = existingTraits
                 }
             }
+            updatedTraits = (updatedTraits != nil) ? updatedTraits : traitsPlugin.traits
             traitsPlugin.traits = updatedTraits
             traitsPlugin.saveTraits(updatedTraits)
         } else {
