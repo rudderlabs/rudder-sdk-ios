@@ -64,11 +64,13 @@ extension RSIdentifyTraitsPlugin: RSEventPlugin {
 }
 
 extension RSClient {
-    internal func setTraits(_ traits: IdentifyTraits?) {
+    internal func setTraits(_ traits: IdentifyTraits?, _ newUserId: String) {
         guard var traits = traits else { return }
         if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
-            if let traitsPluginTraits = traitsPlugin.traits {
-                traits.merge(traitsPluginTraits) { (_, new) in new }
+            if let exisitingUserId = RSUserDefaults.getUserId(), exisitingUserId == newUserId {
+                if let traitsPluginTraits = traitsPlugin.traits {
+                    traits.merge(traitsPluginTraits) { (_, new) in new }
+                }
             }
             traitsPlugin.traits = traits
             traitsPlugin.saveTraits(traits)
