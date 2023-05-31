@@ -143,7 +143,7 @@ extension RSDatabaseManager {
             guard let self = self else { return }
             self.lock.lock()
             do {
-                let jsonObject = message.dictionaryValue
+                let jsonObject = RSUtils.handleUrlAndDateTypes(message.dictionaryValue)
                 if JSONSerialization.isValidJSONObject(jsonObject) {
                     let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
                     if let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -195,6 +195,35 @@ extension RSDatabaseManager {
         syncQueue.sync { [weak self] in
             guard let self = self else { return }
             self.clearAllEvents()
+        }
+    }
+}
+
+extension RSUtils {    
+    static func handleUrlAndDateTypes(_ message: [String: Any]?) -> [String: Any]? {
+        if var workingMessage = message {
+            for (key, value) in workingMessage {
+                if var dictValue = value as? [String: Any] {
+                    convertIntoString(&dictValue)
+                    workingMessage[key] = dictValue
+                }
+            }
+            return workingMessage
+        }
+        return nil
+    }
+    
+    private static func convertIntoString(_ dictValue: inout [String: Any]) {
+        for (key, value) in dictValue {
+            if var nestedDictValue = value as? [String: Any] {
+                convertIntoString(&nestedDictValue)
+                dictValue[key] = nestedDictValue
+            } else if let dateValue = value as? Date {
+                let dateFormatter = ISO8601DateFormatter()
+                dictValue[key] = dateFormatter.string(from: dateValue)
+            } else if let urlValue = value as? URL {
+                dictValue[key] = urlValue.absoluteString
+            }
         }
     }
 }

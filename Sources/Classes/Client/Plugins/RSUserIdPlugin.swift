@@ -10,11 +10,19 @@ import Foundation
 
 class RSUserIdPlugin: RSPlatformPlugin {
     let type = PluginType.before
-    var client: RSClient?
+    var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
     
     var userId: String?
 
     required init() { }
+    
+    func initialSetup() {
+        userId = RSUserDefaults.getUserId()
+    }
     
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
@@ -30,13 +38,22 @@ class RSUserIdPlugin: RSPlatformPlugin {
     }
 }
 
+extension RSUserIdPlugin: RSEventPlugin {
+    func reset() {
+        userId = nil
+        RSUserDefaults.saveUserId(nil)
+    }
+}
+
 extension RSClient {
     internal func setUserId(_ userId: String) {
         if let userIdPlugin = self.find(pluginType: RSUserIdPlugin.self) {
             userIdPlugin.userId = userId
+            RSUserDefaults.saveUserId(userId)
         } else {
             let userIdPlugin = RSUserIdPlugin()
             userIdPlugin.userId = userId
+            RSUserDefaults.saveUserId(userId)
             add(plugin: userIdPlugin)
         }
     }    
