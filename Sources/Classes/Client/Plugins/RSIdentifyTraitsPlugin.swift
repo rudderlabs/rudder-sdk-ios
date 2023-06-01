@@ -70,12 +70,11 @@ extension RSClient {
         if let traitsPlugin = self.find(pluginType: RSIdentifyTraitsPlugin.self) {
             var updatedTraits = traits
             if let exisitingUserId = RSUserDefaults.getUserId(), exisitingUserId == newUserId {
-                if var existingTraits = traitsPlugin.traits, let newTraits = traits {
+                guard let newTraits = traits else { return }
+                if var existingTraits = traitsPlugin.traits {
                     existingTraits.merge(newTraits) { (_, new) in new }
                     updatedTraits = existingTraits
                 }
-                // when second identify event has same userid but empty traits
-                updatedTraits = (updatedTraits != nil) ? updatedTraits : traitsPlugin.traits
             }
             traitsPlugin.traits = updatedTraits
             traitsPlugin.saveTraits(updatedTraits)
