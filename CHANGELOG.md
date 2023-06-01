@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.3.0...v2.3.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* userId and traits behaviour in iOS-v2 ([#327](https://github.com/rudderlabs/rudder-sdk-ios/issues/327)) ([8e9501b](https://github.com/rudderlabs/rudder-sdk-ios/commit/8e9501bcc0e4215e48f3264dbcbbaf82cc940622))
+
 ## [2.3.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.2.6...v2.3.0) (2023-05-15)
 
 
