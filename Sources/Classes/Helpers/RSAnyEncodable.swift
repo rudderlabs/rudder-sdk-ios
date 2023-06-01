@@ -12,6 +12,7 @@ import Foundation
 
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable function_body_length
+// swiftlint:disable type_name
 
 @frozen public struct RSAnyEncodable: Encodable {
     public let value: Any

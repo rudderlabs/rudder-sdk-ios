@@ -29,6 +29,12 @@ class RSAliasIdPlugin: RSPlatformPlugin {
     }
 }
 
+extension RSAliasIdPlugin: RSEventPlugin {
+    func reset() {
+        id = nil
+    }
+}
+
 extension RSClient {
     internal func setAlias(_ id: String) {
         if let aliasIdPlugin = self.find(pluginType: RSAliasIdPlugin.self) {

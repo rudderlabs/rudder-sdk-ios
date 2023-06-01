@@ -9,4 +9,4 @@
 import Foundation
 
 // don't edit this line
-let RSVersion = "2.3.0"
+let RSVersion = "2.3.1"

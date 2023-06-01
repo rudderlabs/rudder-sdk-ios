@@ -243,7 +243,7 @@ extension RSClient {
         }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
             .applyRawEventData()
-        setTraits(traits)
+        setTraits(traits, userId)
         setUserId(userId)
         process(message: message)
     }

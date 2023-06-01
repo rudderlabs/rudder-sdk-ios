@@ -30,7 +30,8 @@ class ViewController: UIViewController {
                             Task(name: "Alias"),
                             Task(name: "Multiple Flush and Multiple Track"),
                             Task(name: "Screen without properties"),
-                            Task(name: "Screen with properties")]
+                            Task(name: "Screen with properties"),
+                            Task(name: "Reset")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,14 +58,26 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
         case 0:
             RSClient.sharedInstance().identify("test_user_id", traits: [
-                "key_1": "value_1",
-                "key_2": "value_2",
-                "int_key": 3,
-                "float_key": 4.56,
-                "bool_key": true
+                "integerValue": 42,
+                "stringValue": "Hello, World!",
+                "boolValue": true,
+                "doubleValue": 3.14159,
+                "arrayValue": [1, 2, 3, 4, 5],
+                "dictionaryValue": ["key1": "value1", "key2": "value2"],
+                "urlValue": URL(string: "https://www.example.com")!,
+                "dateValue": Date()
             ])
         case 1:
-            RSClient.sharedInstance().track("single_track_call")
+                RSClient.sharedInstance().track("single_track_call", properties: [
+                    "integerValue": 42,
+                    "stringValue": "Hello, World!",
+                    "boolValue": true,
+                    "doubleValue": 3.14159,
+                    "arrayValue": [1, 2, 3, 4, 5],
+                    "dictionaryValue": ["key1": "value1", "key2": Date(), "key-3": ["key1": URL(string: "https://www.example.com")!, "key2": Date()] as [String : Any]] as [String : Any],
+                    "urlValue": URL(string: "https://www.example.com")!,
+                    "dateValue": Date()
+                ])
         case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
@@ -140,6 +153,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             RSClient.sharedInstance().screen("ViewController")
         case 8:
             RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
+        case 9:
+            RSClient.sharedInstance().reset()
         default:
             break
         }
