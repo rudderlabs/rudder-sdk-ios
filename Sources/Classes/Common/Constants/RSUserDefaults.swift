@@ -81,7 +81,7 @@ class RSUserDefaults {
     
     static func getLastEventTimeStamp() -> Int? {
         if let lastEventTimeStamp = UserDefaults.standard.lastEventTimeStamp, lastEventTimeStamp != 0 {
-            return lastEventTimeStamp;
+            return lastEventTimeStamp
         }
         return nil
     }
@@ -111,5 +111,23 @@ class RSUserDefaults {
     
     static func getSessionStoppedStatus() -> Bool? {
         return UserDefaults.standard.sessionStoppedStatus
+    }
+    
+    static func saveTraits(_ traits: Data?) {
+        UserDefaults.standard.traits = traits
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getTraits() -> Data? {
+        return UserDefaults.standard.traits
+    }
+    
+    static func saveUserId(_ userId: String?) {
+        UserDefaults.standard.userId = userId
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getUserId() -> String? {
+        return UserDefaults.standard.userId
     }
 }

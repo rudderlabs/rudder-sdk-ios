@@ -11,6 +11,7 @@ import Foundation
 #endif
 
 // swiftlint:disable cyclomatic_complexity
+// swiftlint:disable type_name
 
 @frozen public struct RSAnyDecodable: Decodable {
     public let value: Any

@@ -36,11 +36,6 @@ extension UserDefaults {
         set { setValue(newValue, forKey: RSServerLastUpdatedKey) }
     }
     
-    var traits: String? {
-        get { string(forKey: RSTraitsKey) }
-        set { setValue(newValue, forKey: RSTraitsKey) }
-    }
-    
     var applicationVersion: String? {
         get { string(forKey: RSApplicationVersionKey) }
         set { setValue(newValue, forKey: RSApplicationVersionKey) }
@@ -99,5 +94,15 @@ extension UserDefaults {
     var sessionStoppedStatus: Bool? {
         get { bool(forKey: RSSessionStoppedStatus) }
         set { setValue(newValue, forKey: RSSessionStoppedStatus) }
+    }
+    
+    var traits: Data? {
+        get { data(forKey: RSTraitsKey) }
+        set { setValue(newValue, forKey: RSTraitsKey) }
+    }
+    
+    var userId: String? {
+        get { string(forKey: RSUserIdKey) }
+        set { setValue(newValue, forKey: RSUserIdKey) }
     }
 }
