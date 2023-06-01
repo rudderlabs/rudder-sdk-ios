@@ -74,8 +74,9 @@ extension RSClient {
                     existingTraits.merge(newTraits) { (_, new) in new }
                     updatedTraits = existingTraits
                 }
+                // when second identify event has same userid but empty traits
+                updatedTraits = (updatedTraits != nil) ? updatedTraits : traitsPlugin.traits
             }
-            updatedTraits = (updatedTraits != nil) ? updatedTraits : traitsPlugin.traits
             traitsPlugin.traits = updatedTraits
             traitsPlugin.saveTraits(updatedTraits)
         } else {
