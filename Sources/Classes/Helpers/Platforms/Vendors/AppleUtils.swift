@@ -75,10 +75,12 @@ internal class PhoneVendor: Vendor {
     }
     
     override var carrier: String {
-#if !os(iOS)
+#if os(iOS)
+        return retrieveCarrierNames() ?? "unavailable";
+#else
         return "unavailable"
 #endif
-        return retrieveCarrierNames() ?? "unavailable";
+        
     }
     
 #if os(iOS)
