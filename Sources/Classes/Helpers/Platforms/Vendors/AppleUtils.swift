@@ -85,28 +85,34 @@ internal class PhoneVendor: Vendor {
     
 #if os(iOS)
     func retrieveCarrierNames() -> String? {
-        if #available(iOS 16, *) {
-            RSClient.rsLog(message: "Unable to retrieve carrier name", logLevel: .warning)
-            return nil
-        } else if #available(iOS 12, *) {
-            let networkInfo = CTTelephonyNetworkInfo()
-            var carrierNames: [String] = []
+        let systemVersion = UIDevice.current.systemVersion
+        let versionComponents = systemVersion.split(separator: ".").compactMap { Int($0) }
+        if versionComponents.count > 0 {
+            let majorVersion = versionComponents[0]
             
-            if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
-                for carrierObj in carriers {
-                    if let carrierName = carrierObj.carrierName, carrierName != "--" {
-                        carrierNames.append(carrierName)
+            if majorVersion >= 16 {
+                RSClient.rsLog(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
+                return nil
+            } else if majorVersion >= 12 && majorVersion < 16 {
+                let networkInfo = CTTelephonyNetworkInfo()
+                var carrierNames: [String] = []
+                
+                if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
+                    for carrierObj in carriers {
+                        if let carrierName = carrierObj.carrierName, carrierName != "--" {
+                            carrierNames.append(carrierName)
+                        }
                     }
                 }
-            }
-            if(!carrierNames.isEmpty) {
-                let formattedCarrierNames = carrierNames.joined(separator: ", ")
-                return formattedCarrierNames
-            }
-        } else {
-            let networkInfo = CTTelephonyNetworkInfo()
-            if let carrier = networkInfo.subscriberCellularProvider?.carrierName, carrier != "--" {
-                return carrier
+                if(!carrierNames.isEmpty) {
+                    let formattedCarrierNames = carrierNames.joined(separator: ", ")
+                    return formattedCarrierNames
+                }
+            } else {
+                let networkInfo = CTTelephonyNetworkInfo()
+                if let carrier = networkInfo.subscriberCellularProvider?.carrierName, carrier != "--" {
+                    return carrier
+                }
             }
         }
         return nil
