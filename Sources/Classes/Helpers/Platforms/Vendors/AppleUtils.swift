@@ -12,10 +12,12 @@ import Foundation
 
 #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
 import SystemConfiguration
-import CoreTelephony
 import UIKit
 #if !os(tvOS)
 import WebKit
+#endif
+#if os(iOS)
+import CoreTelephony
 #endif
 
 internal class PhoneVendor: Vendor {
@@ -79,6 +81,7 @@ internal class PhoneVendor: Vendor {
         return retrieveCarrierNames() ?? "unavailable";
     }
     
+#if os(iOS)
     func retrieveCarrierNames() -> String? {
         if #available(iOS 16, *) {
             RSClient.rsLog(message: "Unable to retrieve carrier name", logLevel: .warning)
@@ -88,8 +91,8 @@ internal class PhoneVendor: Vendor {
             var carrierNames: [String] = []
             
             if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
-                for carrier in carriers {
-                    if let carrierName = carrier.carrierName, carrierName != "--" {
+                for carrierObj in carriers {
+                    if let carrierName = carrierObj.carrierName, carrierName != "--" {
                         carrierNames.append(carrierName)
                     }
                 }
@@ -106,6 +109,7 @@ internal class PhoneVendor: Vendor {
         }
         return nil
     }
+#endif
     
     private func deviceModel() -> String {
         var name: [Int32] = [CTL_HW, HW_MACHINE]
