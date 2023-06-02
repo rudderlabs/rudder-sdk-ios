@@ -12,6 +12,7 @@ import Foundation
 
 #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
 import SystemConfiguration
+import CoreTelephony
 import UIKit
 #if !os(tvOS)
 import WebKit
@@ -25,15 +26,15 @@ internal class PhoneVendor: Vendor {
     }
     
     override var type: String {
-        #if os(iOS)
+#if os(iOS)
         return "ios"
-        #elseif os(tvOS)
+#elseif os(tvOS)
         return "tvos"
-        #elseif targetEnvironment(macCatalyst)
+#elseif targetEnvironment(macCatalyst)
         return "macos"
-        #else
+#else
         return "unknown"
-        #endif
+#endif
     }
     
     override var model: String {
@@ -69,6 +70,41 @@ internal class PhoneVendor: Vendor {
     
     override var requiredPlugins: [RSPlatformPlugin] {
         return [RSiOSLifecycleMonitor(), RSDeviceTokenPlugin()]
+    }
+    
+    override var carrier: String {
+#if !os(iOS)
+        return "unavailable"
+#endif
+        return retrieveCarrierNames() ?? "unavailable";
+    }
+    
+    func retrieveCarrierNames() -> String? {
+        if #available(iOS 16, *) {
+            RSClient.rsLog(message: "Unable to retrieve carrier name", logLevel: .warning)
+            return nil
+        } else if #available(iOS 12, *) {
+            let networkInfo = CTTelephonyNetworkInfo()
+            var carrierNames: [String] = []
+            
+            if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
+                for carrier in carriers {
+                    if let carrierName = carrier.carrierName, carrierName != "--" {
+                        carrierNames.append(carrierName)
+                    }
+                }
+            }
+            if(!carrierNames.isEmpty) {
+                let formattedCarrierNames = carrierNames.joined(separator: ", ")
+                return formattedCarrierNames
+            }
+        } else {
+            let networkInfo = CTTelephonyNetworkInfo()
+            if let carrier = networkInfo.subscriberCellularProvider?.carrierName, carrier != "--" {
+                return carrier
+            }
+        }
+        return nil
     }
     
     private func deviceModel() -> String {
@@ -126,7 +162,7 @@ internal class WatchVendor: Vendor {
         let screenSize = device.screenBounds.size
         return ScreenSize(width: Double(screenSize.width), height: Double(screenSize.height), density: device.screenScale)
     }
-        
+    
     override var connection: ConnectionStatus {
         let path = NWPathMonitor().currentPath
         let interfaces = path.availableInterfaces
@@ -161,7 +197,7 @@ internal class WatchVendor: Vendor {
         let model = String(cString: hw_machine)
         return model
     }
-
+    
 }
 
 #endif
@@ -213,7 +249,7 @@ internal class MacVendor: Vendor {
         let screenSize = NSScreen.main?.frame.size ?? CGSize(width: 0, height: 0)
         return ScreenSize(width: Double(screenSize.width), height: Double(screenSize.height), density: Double(NSScreen.main?.backingScaleFactor ?? 0))
     }
-        
+    
     override var connection: ConnectionStatus {
         return connectionStatus()
     }
@@ -232,34 +268,34 @@ internal class MacVendor: Vendor {
         }
         return identifier
     }
-
+    
     private func macAddress(bsd: String) -> String? {
         let MAC_ADDRESS_LENGTH = 6
         let separator = ":"
-
+        
         var length: size_t = 0
         var buffer: [CChar]
-
+        
         let bsdIndex = Int32(if_nametoindex(bsd))
         if bsdIndex == 0 {
             return nil
         }
         let bsdData = Data(bsd.utf8)
         var managementInfoBase = [CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, bsdIndex]
-
+        
         if sysctl(&managementInfoBase, 6, nil, &length, nil, 0) < 0 {
             return nil
         }
-
+        
         buffer = [CChar](unsafeUninitializedCapacity: length, initializingWith: {buffer, initializedCount in
             for x in 0..<length { buffer[x] = 0 }
             initializedCount = length
         })
-
+        
         if sysctl(&managementInfoBase, 6, &buffer, &length, nil, 0) < 0 {
             return nil
         }
-
+        
         let infoData = Data(bytes: buffer, count: length)
         let indexAfterMsghdr = MemoryLayout<if_msghdr>.stride + 1
         let rangeOfToken = infoData[indexAfterMsghdr...].range(of: bsdData)!
@@ -285,20 +321,20 @@ extension ConnectionStatus {
     init(reachabilityFlags flags: SCNetworkReachabilityFlags) {
         let connectionRequired = flags.contains(.connectionRequired)
         let isReachable = flags.contains(.reachable)
-        #if !os(macOS)
+#if !os(macOS)
         let isCellular = flags.contains(.isWWAN)
-        #endif
-
+#endif
+        
         if !connectionRequired && isReachable {
-            #if !os(macOS)
+#if !os(macOS)
             if isCellular {
                 self = .online(.cellular)
             } else {
                 self = .online(.wifi)
             }
-            #else
+#else
             self = .online(.wifi)
-            #endif
+#endif
             
         } else {
             self =  .offline
@@ -310,20 +346,20 @@ internal func connectionStatus() -> ConnectionStatus {
     var zeroAddress = sockaddr_in()
     zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
     zeroAddress.sin_family = sa_family_t(AF_INET)
-
+    
     guard let defaultRouteReachability = (withUnsafePointer(to: &zeroAddress) {
         $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { zeroSockAddress in
             SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
         }
     }) else {
-       return .unknown
+        return .unknown
     }
-
+    
     var flags: SCNetworkReachabilityFlags = []
     if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
         return .unknown
     }
-
+    
     return ConnectionStatus(reachabilityFlags: flags)
 }
 
