@@ -18,6 +18,8 @@
 		ED38D39D29CB04C7003A7544 /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */; };
 		ED38D39E29CB04C7003A7544 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37D29CB01A0003A7544 /* TestUtils.swift */; };
 		ED38D39F29CB04C7003A7544 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37029CB01A0003A7544 /* Extensions.swift */; };
+		ED3CC19F2A14A78200F34082 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED3CC1A02A14A78200F34082 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
 		ED7DFE39298C091800ED5A8E /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
 		ED7DFE3A298C091800ED5A8E /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */; };
@@ -250,6 +252,8 @@
 		ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderUtilsTest.swift; sourceTree = "<group>"; };
 		ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConfigManagerTests.swift; sourceTree = "<group>"; };
 		ED38D37D29CB01A0003A7544 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+GZIP.h"; sourceTree = "<group>"; };
+		ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+GZIP.m"; sourceTree = "<group>"; };
 		ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSServerConfigSource.m; sourceTree = "<group>"; };
 		ED7DFD86298C091800ED5A8E /* RSTraits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTraits.m; sourceTree = "<group>"; };
 		ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLibraryInfo.m; sourceTree = "<group>"; };
@@ -556,6 +560,7 @@
 			children = (
 				ED7DFDD0298C091800ED5A8E /* Ecomm */,
 				EDA2C5B129C0EB9500B7FF42 /* Headers */,
+				ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */,
 				ED7DFD8B298C091800ED5A8E /* RSApp.m */,
 				F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */,
 				F6B4B53529C8237D00344864 /* RSBackGroundModeManager.m */,
@@ -610,6 +615,7 @@
 			isa = PBXGroup;
 			children = (
 				EDEC3CD829ADC9CF007DDE07 /* Ecomm */,
+				ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */,
 				ED7DFDB1298C091800ED5A8E /* RSApp.h */,
 				F6B4B52529C8236100344864 /* RSApplicationLifeCycleManager.h */,
 				F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */,
@@ -946,6 +952,7 @@
 				F6B4B53029C8236100344864 /* RSDeviceModeTransformationManager.h in Headers */,
 				ED7DFED7298C091800ED5A8E /* RSProductRemovedFromWishListEvent.h in Headers */,
 				F6B4B52729C8236100344864 /* RSCloudModeManager.h in Headers */,
+				ED3CC19F2A14A78200F34082 /* NSData+GZIP.h in Headers */,
 				F6B4B52D29C8236100344864 /* RSDataResidencyManager.h in Headers */,
 				ED7DFE90298C091800ED5A8E /* RSECommerceCheckout.h in Headers */,
 				F6B4B52A29C8236100344864 /* RSDeviceModeManager.h in Headers */,
@@ -1158,6 +1165,7 @@
 				ED7DFE4C298C091800ED5A8E /* RSMessageType.m in Sources */,
 				ED7DFEAA298C091800ED5A8E /* RSProductAddedToWishListEvent.m in Sources */,
 				ED7DFED1298C091800ED5A8E /* RSProductViewedEvent.m in Sources */,
+				ED3CC1A02A14A78200F34082 /* NSData+GZIP.m in Sources */,
 				ED7DFE41298C091800ED5A8E /* RSEventFilteringPlugin.m in Sources */,
 				F6B4B54029C8237D00344864 /* RSApplicationLifeCycleManager.m in Sources */,
 				ED7DFEAB298C091800ED5A8E /* RSProductSearchedEvent.m in Sources */,

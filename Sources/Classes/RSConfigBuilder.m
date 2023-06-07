@@ -209,6 +209,14 @@
     return self;
 }
 
+- (instancetype)withGzip:(BOOL)status {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.gzip = status;
+    return self;
+}
+
 - (RSConfig*) build {
     if (config == nil) {
         config = [[RSConfig alloc] init];

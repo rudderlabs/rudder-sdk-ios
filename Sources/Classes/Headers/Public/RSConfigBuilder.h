@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withFactory:(id <RSIntegrationFactory> _Nonnull)factory;
 - (instancetype)withCustomFactory:(id <RSIntegrationFactory> _Nonnull)customFactory;
 - (instancetype)withConsentFilter:(id <RSConsentFilter> _Nonnull)consentFilter;
+- (instancetype)withGzip:(BOOL)status;
 - (RSConfig*)build;
 
 @end

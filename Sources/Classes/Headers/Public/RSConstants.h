@@ -37,6 +37,8 @@ extern bool const RSRecordScreenViews;
 extern bool const RSEnableBackgroundMode;
 // default for automatic session tracking
 extern bool const RSAutomaticSessionTracking;
+// default for gzip request payload
+extern bool const RSGzipStatus;
 // SDK Version
 extern NSString *const RS_VERSION;
 // constant used to check if event filtering is disabled
