@@ -21,8 +21,19 @@
         self->userSession = userSession;
         self->firstForeGround = YES;
         self->backGroundModeManager = backGroundModeManager;
+        
+        self->isApplicationUpdated = NO;
+        NSString *previousVersion = [preferenceManager getVersionNumber];
+        NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+        if (![previousVersion isEqualToString:currentVersion]) {
+            self->isApplicationUpdated = YES;
+        }
     }
     return self;
+}
+
+- (BOOL) isApplicationUpdated {
+    return self->isApplicationUpdated;
 }
 
 #if !TARGET_OS_WATCH

@@ -192,6 +192,12 @@
     return base64EncodedString;
 }
 
++ (NSNumber *) convertStringIntoNSNumber:(NSString* __nonnull) stringNumber {
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    NSNumber *number = [numberFormatter numberFromString:stringNumber];
+    return number;
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 

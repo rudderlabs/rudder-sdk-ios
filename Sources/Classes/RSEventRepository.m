@@ -167,6 +167,13 @@ static RSEventRepository* _instance;
                         [RSLogger logDebug:@"EventRepository: Initiating ConsentFilterHandler"];
                         strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
                     }
+                    
+                    // Check if SDK got updated from post DMT released version to >= 1.15.2, if it is then remove the previous unprocessed device mode events
+                    if ([self isUserHasUpdatedFromPostDMTReleaseVersion]) {
+                        [strongSelf->dbpersistenceManager updateEventsStatusToDeviceModeProcessingDone:[self->deviceModeManager getFirstEventTimestampBeforeSDKInit]];
+                        [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
+                    }
+                    
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         NSArray <RSServerDestination *> *consentedDestinations = self->consentFilterHandler != nil ? [self->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
@@ -174,6 +181,8 @@ static RSEventRepository* _instance;
                             [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
                         }
                     } else {
+                        [self->deviceModeManager sendPreviousUnprocessedDeviceModeEvents];
+                        [strongSelf->dbpersistenceManager clearProcessedEventsFromDB];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                 } else {
@@ -191,6 +200,16 @@ static RSEventRepository* _instance;
             }
         }
     });
+}
+
+- (BOOL) isUserHasUpdatedFromPostDMTReleaseVersion {
+    if (![preferenceManager getEventDeletionCompletedStatus]) {
+        [preferenceManager saveEventDeletionCompletedStatus];
+        if ([self->applicationLifeCycleManager isApplicationUpdated]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void) dump:(RSMessage *)message {

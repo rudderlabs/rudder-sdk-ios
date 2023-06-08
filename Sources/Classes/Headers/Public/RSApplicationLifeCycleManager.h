@@ -16,11 +16,13 @@
     RSUserSession* userSession;
     RSConfig* config;
     BOOL firstForeGround;
+    BOOL isApplicationUpdated;
 }
 
 - (instancetype)initWithConfig:(RSConfig*) config andPreferenceManager:(RSPreferenceManager*) preferenceManager andBackGroundModeManager:(RSBackGroundModeManager *) backGroundModeManager andUserSession:(RSUserSession *) userSession;
 - (void) applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void) trackApplicationLifeCycle;
 - (void) prepareScreenRecorder;
+- (BOOL) isApplicationUpdated;
 
 @end

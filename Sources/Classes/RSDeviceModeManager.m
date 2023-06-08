@@ -21,9 +21,14 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-        self->eventReplayMessage = [[NSMutableDictionary alloc] init];
+        self->beforeSDKInitEventTimestamp = 0;
     }
     return self;
+}
+
+- (void) sendPreviousUnprocessedDeviceModeEvents {
+    self->areFactoriesInitialized = YES;
+    [self replayMessageQueue];
 }
 
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled {
@@ -37,7 +42,6 @@
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Replaying the message queue to the Factories"];
-    [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
     // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
     if([self doFactoriesPassedHaveTransformationsEnabled]){
@@ -45,6 +49,7 @@
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Transformation Processor"];
         [deviceModeTransformationManager startTransformationProcessor];
     } else {
+        [self replayMessageQueue];
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: No Device Mode Destinations with transformations attached hence device mode transformation processor need not to be started"];
     }
 }
@@ -110,17 +115,22 @@
 }
 
 - (void) replayMessageQueue {
-    @synchronized (self->eventReplayMessage) {
-        [RSLogger logDebug:@"RSDeviceModeManager: replayMessageQueue: replaying old messages with factory"];
-        if (self->eventReplayMessage.count > 0) {
-            NSMutableArray<NSNumber*>* rowIds = [self->eventReplayMessage.allKeys mutableCopy];
-            [RSUtils sortArray:rowIds inOrder:ASCENDING];
-            for(NSNumber* rowId in rowIds) {
-                [self makeFactoryDump:eventReplayMessage[rowId] FromHistory:YES withRowId:rowId];
-            }
-        }
-        [self->eventReplayMessage removeAllObjects];
+    RSDBMessage *dbMessage = [self->dbPersistentManager fetchUnprocessedDeviceModeEventsFromDb];
+    NSArray *messageIds = dbMessage.messageIds;
+    NSArray *messages = dbMessage.messages;
+    for (int i=0; i<messageIds.count; i++) {
+        id object = [RSUtils deSerializeJSONString:messages[i]];
+        RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];
+        [self makeFactoryDump:originalMessage FromHistory:YES withRowId:[RSUtils convertStringIntoNSNumber:messageIds[i]]];
     }
+    NSLog(@"Abhishek: %@", dbMessage);
+}
+
+- (long) getFirstEventTimestampBeforeSDKInit {
+    if (self->beforeSDKInitEventTimestamp == 0) {
+        self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
+    }
+    return self->beforeSDKInitEventTimestamp;
 }
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
@@ -140,12 +150,8 @@
         
         NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
         [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
-        
-    }  else {
-        @synchronized (self->eventReplayMessage) {
-            [RSLogger logDebug:@"RSDeviceModeManager: makeFactoryDump: factories are not initialized. dumping to replay queue"];
-            self->eventReplayMessage[rowId] = message;
-        }
+    } else if (self->beforeSDKInitEventTimestamp == 0) {
+        self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
     }
 }
 

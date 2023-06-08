@@ -77,9 +77,9 @@ PODS:
   - Rudder-Braze (1.2.0):
     - Appboy-iOS-SDK (~> 4.5.4)
     - Rudder (~> 1.12)
-  - SDWebImage (5.15.8):
-    - SDWebImage/Core (= 5.15.8)
-  - SDWebImage/Core (5.15.8)
+  - SDWebImage (5.16.0):
+    - SDWebImage/Core (= 5.16.0)
+  - SDWebImage/Core (5.16.0)
 
 DEPENDENCIES:
   - Amplitude (~> 7.2.0)
@@ -124,8 +124,8 @@ SPEC CHECKSUMS:
   Rudder: 41040d4537a178e4e32477b68400f98ca0c354eb
   Rudder-Amplitude: f845cc125a1a58d4de6155391a2b0392815ae898
   Rudder-Braze: e42eb914a03cb418ed8b7a3cd90b724a91476631
-  SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
+  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
 
 PODFILE CHECKSUM: 42bfa6ba9271b8d9518a669daca1fd9a7bbf9f6e
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3
