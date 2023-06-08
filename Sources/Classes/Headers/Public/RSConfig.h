@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSMutableArray* factories;
 @property (nonatomic, readwrite) NSMutableArray* customFactories;
 @property (nonatomic, readwrite, nullable) id<RSConsentFilter> consentFilter;
+@property (nonatomic) bool gzip;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "RSNetworkManager.h"
+#import "NSData+GZIP.h"
 
 @implementation RSNetworkManager
 
@@ -58,6 +59,10 @@ NSString* const RESPONSE = @"RESPONSE";
         [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
         NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
+        if (self-> config.gzip) {
+            httpBody = [httpBody gzippedData];
+            [urlRequest addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
+        }
         [urlRequest setHTTPBody:httpBody];
     }
     NSURLSession *session = [NSURLSession sharedSession];
