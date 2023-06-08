@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.15.1...v1.16.0) (2023-06-08)
+
+
+### Features
+
+* added support for gzip ([#325](https://github.com/rudderlabs/rudder-sdk-ios/issues/325)) ([2e1fba0](https://github.com/rudderlabs/rudder-sdk-ios/commit/2e1fba097b7f288047b5593fe2da4244dbf45ea6))
+
 ### [1.15.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.15.0...v1.15.1) (2023-05-12)
 
 
