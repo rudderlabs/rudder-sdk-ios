@@ -7,8 +7,8 @@
 //
 
 #import "RSApplicationLifeCycleManager.h"
-#import <Rudder/UIViewController+RSScreen.h>
-#import <Rudder/WKInterfaceController+RSScreen.h>
+#import "UIViewController+RSScreen.h"
+#import "WKInterfaceController+RSScreen.h"
 
 @implementation RSApplicationLifeCycleManager
 

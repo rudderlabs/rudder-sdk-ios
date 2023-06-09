@@ -65,7 +65,7 @@ jobs:
         env:
           HUSKY: 0
         run: |
-          npm i -g conventional-changelog-cli
+          npm i -g conventional-changelog-cli@2.2.2
           SUMMARY=$(((npx conventional-changelog -u) 2>&1) | sed "s/*/<br> */g" | sed "s/#/ /g" | tr -d '\n' || true)
           echo $SUMMARY
           echo "Current version: $CURRENT_VERSION_VALUE"
