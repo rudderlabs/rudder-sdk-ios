@@ -82,6 +82,9 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) saveEventDeletionCompletedStatus;
 - (BOOL) getEventDeletionCompletedStatus;
 
+- (void) saveBeforeSDKInitEventTimestamp:(long) beforeSDKInitEventTimestamp;
+- (long) getBeforeSDKInitEventTimestamp;
+
 @end
 
 NS_ASSUME_NONNULL_END

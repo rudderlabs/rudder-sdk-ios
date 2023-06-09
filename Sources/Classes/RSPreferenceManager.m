@@ -32,7 +32,7 @@ NSString *const RSSessionIdKey = @"rl_session_id";
 NSString *const RSLastEventTimeStamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 NSString *const RSEventDeletionCompletedStatus = @"rl_event_deletion_completed_status";
-
+NSString *const RSBeforeSDKInitEventTimestamp = @"rl_before_sdk_init_event_time_stamp";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -263,6 +263,20 @@ NSString *const RSEventDeletionCompletedStatus = @"rl_event_deletion_completed_s
 
 - (BOOL) getEventDeletionCompletedStatus {
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionCompletedStatus];
+}
+
+- (void) saveBeforeSDKInitEventTimestamp:(long) beforeSDKInitEventTimestamp {
+    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:beforeSDKInitEventTimestamp] forKey:RSBeforeSDKInitEventTimestamp];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (long) getBeforeSDKInitEventTimestamp {
+    NSNumber *beforeSDKInitEventTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSBeforeSDKInitEventTimestamp];
+    if(beforeSDKInitEventTimestamp == nil) {
+        return 0;
+    } else {
+        return [beforeSDKInitEventTimestamp longValue];
+    }
 }
 
 @end

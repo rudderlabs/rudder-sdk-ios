@@ -21,7 +21,11 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-        self->beforeSDKInitEventTimestamp = 0;
+        self->beforeSDKInitEventTimestamp = [[RSPreferenceManager getInstance] getBeforeSDKInitEventTimestamp];
+        if (self->beforeSDKInitEventTimestamp == 0) {
+            self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
+            [[RSPreferenceManager getInstance] saveBeforeSDKInitEventTimestamp:self->beforeSDKInitEventTimestamp];
+        }
     }
     return self;
 }
@@ -123,13 +127,9 @@
         RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];
         [self makeFactoryDump:originalMessage FromHistory:YES withRowId:[RSUtils convertStringIntoNSNumber:messageIds[i]]];
     }
-    NSLog(@"Abhishek: %@", dbMessage);
 }
 
 - (long) getFirstEventTimestampBeforeSDKInit {
-    if (self->beforeSDKInitEventTimestamp == 0) {
-        self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
-    }
     return self->beforeSDKInitEventTimestamp;
 }
 
@@ -150,8 +150,6 @@
         
         NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
         [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
-    } else if (self->beforeSDKInitEventTimestamp == 0) {
-        self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
     }
 }
 
