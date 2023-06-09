@@ -25,7 +25,7 @@
         self->isApplicationUpdated = NO;
         NSString *previousVersion = [preferenceManager getVersionNumber];
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-        if (![previousVersion isEqualToString:currentVersion]) {
+        if (previousVersion && ![previousVersion isEqualToString:currentVersion]) {
             self->isApplicationUpdated = YES;
         }
     }
