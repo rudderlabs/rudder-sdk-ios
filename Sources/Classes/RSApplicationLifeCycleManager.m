@@ -23,7 +23,7 @@
         self->backGroundModeManager = backGroundModeManager;
         
         self->isApplicationUpdated = NO;
-        NSString *previousVersion = [preferenceManager getVersionNumber];
+        NSString *previousVersion = [self->preferenceManager getVersionNumber];
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
         if (previousVersion && ![previousVersion isEqualToString:currentVersion]) {
             self->isApplicationUpdated = YES;
