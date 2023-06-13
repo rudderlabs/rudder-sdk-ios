@@ -48,6 +48,11 @@
     }
 }
 
+- (void) handleCaseWhenNoDeviceModeFactoryIsPresent {
+    self->isDeviceModeFactoriesNotPresent = YES;
+    [self replayMessageQueue];
+}
+
 - (void) initiateFactories : (NSArray*) destinations {
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
@@ -123,7 +128,9 @@
 }
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
-    if (self->areFactoriesInitialized || fromHistory) {
+    if (self->isDeviceModeFactoriesNotPresent) {
+        [self->dbPersistentManager updateEventWithId:rowId withStatus:DEVICE_MODE_PROCESSING_DONE];
+    } else if (self->areFactoriesInitialized || fromHistory) {
         [RSLogger logVerbose:@"RSDeviceModeManager: makeFactoryDump: dumping message to native sdk factories"];
         NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
         

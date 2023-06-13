@@ -56,7 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
     dispatch_source_t source;
     dispatch_queue_t repositoryQueue;
     RSClient *client;
-    BOOL isDeviceModeFactoriesNotPresent;
 }
 
 + (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;

@@ -190,7 +190,7 @@ static RSEventRepository* _instance;
                             [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
                         }
                     } else {
-                        self->isDeviceModeFactoriesNotPresent = YES;
+                        [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                 } else {
@@ -229,11 +229,7 @@ static RSEventRepository* _instance;
         return;
     }
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
-    if (self->isDeviceModeFactoriesNotPresent) {
-        [self->dbpersistenceManager updateEventsWithIds:[[NSArray alloc] initWithObjects:rowId, nil] withStatus:DEVICE_MODE_PROCESSING_DONE];
-    } else {
-        [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
-    }
+    [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
 }
 
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {
