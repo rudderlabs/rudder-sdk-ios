@@ -98,7 +98,7 @@ static RSEventRepository* _instance;
         // Prviously in certain cases (e.g., network unavialability) events are not processed by device mode factories and statuses remains at either 0 or 2. Now we are marking those events as device_mode_processing_done.
         [RSLogger logDebug:@"EventRepository: Checking if previous unprocessed event deletion is allowed or not. If allowed then mark previous events with status code 0 and 2 as device_mode_processing_done."];
         if ([self isPreviousEventsDeletionAllowed]) {
-            [self->dbpersistenceManager markUnProcessedDeviceModeEventsStatusesAsDeviceModeProcessingDone];
+            [self->dbpersistenceManager updateDeviceModeEventsStatus];
             [self->dbpersistenceManager clearProcessedEventsFromDB];
         }
         
