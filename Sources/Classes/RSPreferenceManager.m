@@ -256,27 +256,13 @@ NSString *const RSBeforeSDKInitEventTimestamp = @"rl_before_sdk_init_event_time_
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSSessionAutoTrackStatus];
 }
 
-- (void) saveEventDeletionCompletedStatus {
+- (void) saveEventDeletionStatus {
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:RSEventDeletionCompletedStatus];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (BOOL) getEventDeletionCompletedStatus {
+- (BOOL) getEventDeletionStatus {
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionCompletedStatus];
-}
-
-- (void) saveBeforeSDKInitEventTimestamp:(long) beforeSDKInitEventTimestamp {
-    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:beforeSDKInitEventTimestamp] forKey:RSBeforeSDKInitEventTimestamp];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (long) getBeforeSDKInitEventTimestamp {
-    NSNumber *beforeSDKInitEventTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSBeforeSDKInitEventTimestamp];
-    if(beforeSDKInitEventTimestamp == nil) {
-        return 0;
-    } else {
-        return [beforeSDKInitEventTimestamp longValue];
-    }
 }
 
 @end

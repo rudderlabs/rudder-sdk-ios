@@ -22,12 +22,10 @@
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
     NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
     BOOL areFactoriesInitialized;
-    long beforeSDKInitEventTimestamp;
 }
 
 - (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
 - (void) sendPreviousUnprocessedDeviceModeEvents;
-- (long) getFirstEventTimestampBeforeSDKInit;
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
 - (void) dumpOriginalEvents:(NSArray *) originalPayloads;

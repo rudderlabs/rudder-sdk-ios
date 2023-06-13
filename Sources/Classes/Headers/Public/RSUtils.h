@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) appendSlashToUrl:(NSString*) url;
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
 + (NSNumber * _Nullable) convertStringIntoNSNumber:(NSString* __nonnull) stringNumber;
++ (BOOL) isApplicationUpdated;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

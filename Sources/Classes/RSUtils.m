@@ -198,6 +198,12 @@
     return number;
 }
 
++ (BOOL) isApplicationUpdated {
+    NSString *previousVersion = [[RSPreferenceManager getInstance] getVersionNumber];
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    return (previousVersion && ![previousVersion isEqualToString:currentVersion]);
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 

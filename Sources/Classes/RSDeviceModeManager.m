@@ -21,11 +21,6 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-        self->beforeSDKInitEventTimestamp = [[RSPreferenceManager getInstance] getBeforeSDKInitEventTimestamp];
-        if (self->beforeSDKInitEventTimestamp == 0) {
-            self->beforeSDKInitEventTimestamp = [RSUtils getTimeStampLong];
-            [[RSPreferenceManager getInstance] saveBeforeSDKInitEventTimestamp:self->beforeSDKInitEventTimestamp];
-        }
     }
     return self;
 }
@@ -46,6 +41,7 @@
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Replaying the message queue to the Factories"];
+    [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
     // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
     if([self doFactoriesPassedHaveTransformationsEnabled]){
@@ -53,7 +49,6 @@
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Transformation Processor"];
         [deviceModeTransformationManager startTransformationProcessor];
     } else {
-        [self replayMessageQueue];
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: No Device Mode Destinations with transformations attached hence device mode transformation processor need not to be started"];
     }
 }
@@ -119,7 +114,7 @@
 }
 
 - (void) replayMessageQueue {
-    RSDBMessage *dbMessage = [self->dbPersistentManager fetchUnprocessedDeviceModeEventsFromDb];
+    RSDBMessage *dbMessage = [self->dbPersistentManager fetchAllEventsFromDBForMode:DEVICEMODE];
     NSArray *messageIds = dbMessage.messageIds;
     NSArray *messages = dbMessage.messages;
     for (int i=0; i<messageIds.count; i++) {
@@ -130,10 +125,6 @@
             [self makeFactoryDump:originalMessage FromHistory:YES withRowId:rowId];
         }
     }
-}
-
-- (long) getFirstEventTimestampBeforeSDKInit {
-    return self->beforeSDKInitEventTimestamp;
 }
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
