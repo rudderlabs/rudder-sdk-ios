@@ -56,10 +56,12 @@
 - (void) initiateFactories : (NSArray*) destinations {
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     if (destinations.count == 0) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     RSClient* client = [RSClient sharedInstance];
