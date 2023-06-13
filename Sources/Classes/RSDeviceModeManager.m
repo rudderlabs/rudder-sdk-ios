@@ -25,11 +25,6 @@
     return self;
 }
 
-- (void) sendPreviousUnprocessedDeviceModeEvents {
-    self->areFactoriesInitialized = YES;
-    [self replayMessageQueue];
-}
-
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled {
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Processor"];
     self->destinationsWithTransformationsEnabled = destinationsWithTransformationsEnabled;
