@@ -31,8 +31,7 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 NSString *const RSSessionIdKey = @"rl_session_id";
 NSString *const RSLastEventTimeStamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
-NSString *const RSEventDeletionCompletedStatus = @"rl_event_deletion_completed_status";
-NSString *const RSBeforeSDKInitEventTimestamp = @"rl_before_sdk_init_event_time_stamp";
+NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -257,12 +256,12 @@ NSString *const RSBeforeSDKInitEventTimestamp = @"rl_before_sdk_init_event_time_
 }
 
 - (void) saveEventDeletionStatus {
-    [[NSUserDefaults standardUserDefaults] setBool:true forKey:RSEventDeletionCompletedStatus];
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:RSEventDeletionStatus];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL) getEventDeletionStatus {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionCompletedStatus];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionStatus];
 }
 
 @end
