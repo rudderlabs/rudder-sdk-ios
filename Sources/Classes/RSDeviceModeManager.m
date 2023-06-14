@@ -121,7 +121,7 @@
     NSArray *messages = dbMessage.messages;
     for (int i=0; i<messageIds.count; i++) {
         id object = [RSUtils deSerializeJSONString:messages[i]];
-        NSNumber *rowId = [RSUtils convertStringIntoNSNumber:messageIds[i]];
+        NSNumber *rowId = [NSNumber numberWithInt:[messages[i] intValue]];
         if (object && rowId) {
             RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];
             [self makeFactoryDump:originalMessage FromHistory:YES withRowId:rowId];

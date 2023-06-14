@@ -192,12 +192,6 @@
     return base64EncodedString;
 }
 
-+ (NSNumber * _Nullable) convertStringIntoNSNumber:(NSString* __nonnull) stringNumber {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    NSNumber *number = [numberFormatter numberFromString:stringNumber];
-    return number;
-}
-
 + (BOOL) isApplicationUpdated {
     NSString *previousVersion = [[RSPreferenceManager getInstance] getVersionNumber];
     NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
