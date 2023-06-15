@@ -20,9 +20,9 @@
     RSEventFilteringPlugin *eventFilteringPlugin;
     RSConsentFilterHandler *consentFilterHandler;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSMutableDictionary<NSNumber*, RSMessage*> *eventReplayMessage;
     NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
     BOOL areFactoriesInitialized;
+    BOOL isDeviceModeFactoriesNotPresent;
 }
 
 - (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
@@ -32,5 +32,6 @@
 - (void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId;
 - (void) reset;
 - (void) flush;
+- (void) handleCaseWhenNoDeviceModeFactoryIsPresent;
 
 @end

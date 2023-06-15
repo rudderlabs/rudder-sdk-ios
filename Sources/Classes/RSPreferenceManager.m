@@ -31,7 +31,7 @@ NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 NSString *const RSSessionIdKey = @"rl_session_id";
 NSString *const RSLastEventTimeStamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
-
+NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
 + (instancetype)getInstance {
     if (instance == nil) {
@@ -253,6 +253,15 @@ NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 
 - (BOOL) getAutoTrackingStatus {
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSSessionAutoTrackStatus];
+}
+
+- (void) saveEventDeletionStatus {
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:RSEventDeletionStatus];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL) getEventDeletionStatus {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionStatus];
 }
 
 @end

@@ -21,7 +21,6 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-        self->eventReplayMessage = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -49,13 +48,20 @@
     }
 }
 
+- (void) handleCaseWhenNoDeviceModeFactoryIsPresent {
+    self->isDeviceModeFactoriesNotPresent = YES;
+    [self replayMessageQueue];
+}
+
 - (void) initiateFactories : (NSArray*) destinations {
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     if (destinations.count == 0) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     RSClient* client = [RSClient sharedInstance];
@@ -110,21 +116,23 @@
 }
 
 - (void) replayMessageQueue {
-    @synchronized (self->eventReplayMessage) {
-        [RSLogger logDebug:@"RSDeviceModeManager: replayMessageQueue: replaying old messages with factory"];
-        if (self->eventReplayMessage.count > 0) {
-            NSMutableArray<NSNumber*>* rowIds = [self->eventReplayMessage.allKeys mutableCopy];
-            [RSUtils sortArray:rowIds inOrder:ASCENDING];
-            for(NSNumber* rowId in rowIds) {
-                [self makeFactoryDump:eventReplayMessage[rowId] FromHistory:YES withRowId:rowId];
-            }
+    RSDBMessage *dbMessage = [self->dbPersistentManager fetchAllEventsFromDBForMode:DEVICEMODE];
+    NSArray *messageIds = dbMessage.messageIds;
+    NSArray *messages = dbMessage.messages;
+    for (int i=0; i<messageIds.count; i++) {
+        id object = [RSUtils deSerializeJSONString:messages[i]];
+        NSNumber *rowId = [NSNumber numberWithInt:[messageIds[i] intValue]];
+        if (object && rowId) {
+            RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];
+            [self makeFactoryDump:originalMessage FromHistory:YES withRowId:rowId];
         }
-        [self->eventReplayMessage removeAllObjects];
     }
 }
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
-    if (self->areFactoriesInitialized || fromHistory) {
+    if (self->isDeviceModeFactoriesNotPresent) {
+        [self->dbPersistentManager updateEventWithId:rowId withStatus:DEVICE_MODE_PROCESSING_DONE];
+    } else if (self->areFactoriesInitialized || fromHistory) {
         [RSLogger logVerbose:@"RSDeviceModeManager: makeFactoryDump: dumping message to native sdk factories"];
         NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
         
@@ -140,12 +148,6 @@
         
         NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
         [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
-        
-    }  else {
-        @synchronized (self->eventReplayMessage) {
-            [RSLogger logDebug:@"RSDeviceModeManager: makeFactoryDump: factories are not initialized. dumping to replay queue"];
-            self->eventReplayMessage[rowId] = message;
-        }
     }
 }
 

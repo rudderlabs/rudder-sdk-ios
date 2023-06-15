@@ -174,6 +174,17 @@ NSString* _Nonnull const COL_STATUS = @"status";
     }
 }
 
+-(void) updateDeviceModeEventsStatus {
+    NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = (%@ | %d) WHERE %@ IN (%d, %d);", TABLE_EVENTS, COL_STATUS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE];
+    @synchronized (self) {
+        if([self execSQL:updateEventStatusSQL]) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateDeviceModeEventsStatus: Successfully updated the event status for unprocessed and cloud mode processing done events to device mode processing done."]];
+            return;
+        }
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateDeviceModeEventsStatuse: Failed to update the status for events."]];
+    }
+}
+
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode {
     NSString* querySQLString = nil;
     switch(mode) {

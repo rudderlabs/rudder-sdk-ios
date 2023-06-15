@@ -91,7 +91,7 @@
            }];
            [preferenceManager saveVersionNumber:currentVersion];
            [preferenceManager saveBuildNumber:currentBuildNumber];
-       } else if (![previousVersion isEqualToString:currentVersion]) {
+       } else if ([RSUtils isApplicationUpdated]) {
            [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
            [[RSClient sharedInstance] track:@"Application Updated" properties:@{
                @"previous_version" : previousVersion ?: @"",
