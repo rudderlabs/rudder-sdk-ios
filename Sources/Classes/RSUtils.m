@@ -22,6 +22,12 @@
     return [dateFormatter stringFromDate:date];
 }
 
++ (NSString*) getStringFromDict:(NSDictionary *) dict {
+    NSData *dictData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+    NSString *dictString = [[NSString alloc] initWithData:dictData encoding:NSUTF8StringEncoding];
+    return dictString;
+}
+
 + (NSString *)getTimestamp {
     return [self getDateString:[[NSDate alloc] init]];
 }
@@ -29,6 +35,7 @@
 + (const char *)getDBPath {
     NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
     NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
+    NSLog(@"DB File path is %@", [[NSString alloc] initWithCString:[[fileUrl path] UTF8String] encoding:NSUTF8StringEncoding]);
     return [[fileUrl path] UTF8String];
 }
 
@@ -51,6 +58,11 @@
         // Fallback on earlier versions
         return @"NA";
     }
+}
+
++ (unsigned int) getUTF8LengthForDict:(NSDictionary *)message {
+    NSString* msgString = [self getStringFromDict:message];
+    return [self getUTF8Length:msgString];
 }
 
 + (unsigned int) getUTF8Length:(NSString *)message {
@@ -125,6 +137,10 @@
         return [returnArray copy];
     }
     return array;
+}
+
++(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString {
+    return [csvString componentsSeparatedByString:@","];
 }
 
 +(NSString*) getCSVString:(NSArray*) inputStrings {

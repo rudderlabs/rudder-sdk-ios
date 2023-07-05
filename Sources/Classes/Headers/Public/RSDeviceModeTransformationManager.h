@@ -13,6 +13,8 @@
 #import "RSEnums.h"
 #import "RSDeviceModeManager.h"
 #import "RSDBPersistentManager.h"
+#import "RSTransformationRequest.h"
+#import "RSTransformationMetadata.h"
 
 
 

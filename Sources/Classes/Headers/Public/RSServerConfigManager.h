@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init: (NSString*) writeKey rudderConfig:(RSConfig*) rudderConfig andNetworkManager: (RSNetworkManager *) networkManager;
 - (RSServerConfigSource*) getConfig;
 - (NSDictionary<NSString*, NSString*>*) getDestinationsWithTransformationsEnabled;
+- (NSArray<NSString*>*) getDestinationsAcceptingEventsOnTransformationError;
 - (int) getError;
 - (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr;
 

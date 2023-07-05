@@ -19,22 +19,25 @@ static int groupCount = 1;
 static int screenCount = 1;
 
 
-static NSString *WRITE_KEY = @"1xXCubSHWXbpBI2h6EpCjKOsxmQ";
-static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack.com";
+static NSString *WRITE_KEY = @"2OGp1munWZGCCNyMIzKJ8dLV1b1";
+static NSString *DATA_PLANE_URL = @"https://stgentp-dataplane.staging.rudderlabs.com";
+static NSString *CONTROL_PLANE_URL = @"https://3fb7986d-e735-419d-870f-4a9fe39c9633.mock.pstmn.io";
+
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-//    [RSClient putAuthToken:@"testAuthToken"];
+    [RSClient putAuthToken:@"testAuthToken"];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withLoglevel:RSLogLevelVerbose];
-    [builder withTrackLifecycleEvens:YES];
+//    [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
+    [builder withControlPlaneUrl:CONTROL_PLANE_URL];
     [builder withFactory:[RudderAmplitudeFactory instance]];
-    [builder withFactory:[RudderBrazeFactory instance]];
+//    [builder withFactory:[RudderBrazeFactory instance]];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
     return YES;

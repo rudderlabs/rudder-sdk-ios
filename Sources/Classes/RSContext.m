@@ -80,7 +80,12 @@ static dispatch_queue_t queue;
         _device = [[RSDeviceInfo alloc] initWithDict:dict[@"device"]];
         _network = [[RSNetwork alloc] initWithDict:dict[@"network"]]; 
         _timezone = dict[@"timezone"];
+        _sessionId = dict[@"sessionId"];
+        if(dict[@"sessionStart"]) {
+            _sessionStart = dict[@"sessionStart"];
+        }
         _externalIds = dict[@"externalIds"];
+        
     }
     return self;
 }
