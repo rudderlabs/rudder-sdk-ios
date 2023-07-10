@@ -25,7 +25,7 @@
 + (NSString*) getStringFromDict:(NSDictionary *) dict {
     NSData *dictData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     if(dictData == nil)
-        return nil;
+        return @"";
     NSString *dictString = [[NSString alloc] initWithData:dictData encoding:NSUTF8StringEncoding];
     return dictString;
 }
