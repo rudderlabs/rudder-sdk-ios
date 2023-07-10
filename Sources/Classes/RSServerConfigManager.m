@@ -110,7 +110,7 @@ int receivedError = NETWORK_SUCCESS;
             
             
             // checking if transformations are connected for each device mode destination, and if connected storing their id's in an array
-            NSNumber *transformationsEnabledForDeviceMode = [destinationDict objectForKey:@"enableTransformationForDeviceMode"];
+            NSNumber *transformationsEnabledForDeviceMode = [destinationDict objectForKey:@"shouldApplyDeviceModeTransformation"];
             if(transformationsEnabledForDeviceMode != nil && [transformationsEnabledForDeviceMode boolValue] ) {
                 if(destinationsWithTransformationsEnabled == nil) {
                     destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];

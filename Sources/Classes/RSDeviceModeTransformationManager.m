@@ -73,10 +73,11 @@ int deviceModeSleepCount = 0;
                     if (retryCount++ == MAX_RETRIES) {
                         retryCount = 0;
                         deviceModeSleepCount = 0;
+                        [RSLogger logWarn:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Failed to reach transformation service even after %d retries, hence dumping back the original events to the factories", MAX_RETRIES]];
                         [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationError:request.batch];
                         [strongSelf completeDeviceModeEventProcessing:dbMessage];
                     } else {
-                        [RSLogger logDebug:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Network Error, Retrying again in %ld s", (long)delay/1000]];
+                        [RSLogger logDebug:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Network Error, Retrying again in %.2f s", (NSTimeInterval)delay/1000]];
                         usleep((useconds_t)delay* 1000);
                     }
                 } else if (response.state == RESOURCE_NOT_FOUND) {  // So when the customer is not eligible for Device Mode Transformations, we get RESOURCE_NOT_FOUND, and in this case we will dump the original methods itself to the factories.
@@ -92,7 +93,7 @@ int deviceModeSleepCount = 0;
                             for(NSDictionary* transformedDestination in transformedBatch) {
                                 NSString* destinationId = transformedDestination[@"id"];
                                 NSArray* transformedPayloads = transformedDestination[@"payload"];
-                                [transformedPayloads sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+                                transformedPayloads = [transformedPayloads sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
                                     return [a[@"orderNo"] compare:b[@"orderNo"]];
                                 }];
                                 if(transformedPayloads != nil && transformedPayloads.count > 0 && destinationId != nil) {
