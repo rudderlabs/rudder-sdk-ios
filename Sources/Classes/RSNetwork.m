@@ -88,10 +88,8 @@
             [tempDict setValue:[RSUtils getCSVString:_carrier] forKey:@"carrier"];
         }
 #if !TARGET_OS_WATCH
-//        if(_isNetworkReachable) {
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
             [tempDict setValue:[NSNumber numberWithBool:_cellular] forKey:@"cellular"];
-//        }
 #endif
         return [tempDict copy];
     }

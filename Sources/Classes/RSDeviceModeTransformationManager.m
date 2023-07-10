@@ -8,12 +8,11 @@
 
 #import "RSDeviceModeTransformationManager.h"
 
-@implementation RSDeviceModeTransformationManager
-
 int const DMT_BATCH_SIZE = 12;
 int const MAX_RETRIES = 2;  // Maximum number of retries
 int const MAX_DELAY = 1000; // Maximum delay in milliseconds
 
+@implementation RSDeviceModeTransformationManager
 
 static dispatch_queue_t transformation_processor_queue;
 
