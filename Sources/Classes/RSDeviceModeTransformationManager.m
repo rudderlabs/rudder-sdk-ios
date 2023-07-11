@@ -65,14 +65,19 @@ int deviceModeSleepCount = 0;
                     [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Invalid Data Plane URL. Aborting the TransformationProcessor"];
                     break;
                 } else if (response.state == NETWORK_UNAVAILABLE) {
-                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Network Un-available. Aborting the TransformationProcessor for now"];
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Network Un-available. Aborting the TransformationProcessor"];
                     break;
-                } else if (response.state == NETWORK_ERROR) {
+                } else if (response.state == BAD_REQUEST) {
+                    [RSLogger logWarn:@"RSDeviceModeTransformationManager: TransformationProcessor: Bad Request, dumping back the original events to the factories"];
+                    [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationError:request.batch];
+                    [strongSelf completeDeviceModeEventProcessing:dbMessage];
+                }
+                else if (response.state == NETWORK_ERROR) {
                     NSInteger delay = MIN((1 << retryCount) * 500, MAX_DELAY); // Exponential backoff
                     if (retryCount++ == MAX_RETRIES) {
                         retryCount = 0;
                         deviceModeSleepCount = 0;
-                        [RSLogger logWarn:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Failed to reach transformation service even after %d retries, hence dumping back the original events to the factories", MAX_RETRIES]];
+                        [RSLogger logWarn:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Failed to transform events even after %d retries, hence dumping back the original events to the factories", MAX_RETRIES]];
                         [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationError:request.batch];
                         [strongSelf completeDeviceModeEventProcessing:dbMessage];
                     } else {

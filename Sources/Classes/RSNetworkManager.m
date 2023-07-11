@@ -83,6 +83,8 @@ NSString* const RESPONSE = @"RESPONSE";
                 weakResult.responsePayload = nil;
                 if(weakResult.statusCode == 404) {
                     weakResult.state = RESOURCE_NOT_FOUND;
+                } else if (weakResult.statusCode == 400) {
+                    weakResult.state = BAD_REQUEST;
                 } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
                     [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, weakResult.statusCode ]];
                     weakResult.state = WRONG_WRITE_KEY;
