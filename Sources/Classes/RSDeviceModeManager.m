@@ -299,7 +299,7 @@
 
 - (BOOL) isEvent:(RSMessage *) message allowedForDestination: (NSString *) destinationName {
     BOOL isDestinationEnabledInMessage = [self isDestination:destinationName enabledInMessage:message];
-    BOOL isEventAllowedByDestination = [self->eventFilteringPlugin isEventAllowed:message ByDestination:destinationName];
+    BOOL isEventAllowedByDestination = [self->eventFilteringPlugin isEventAllowed:message byDestination:destinationName];
     return isDestinationEnabledInMessage && isEventAllowedByDestination;
 }
 
