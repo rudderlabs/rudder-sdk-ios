@@ -207,6 +207,7 @@
     for(RSTransformationEvent* transformationEvent in request.batch) {
         if(transformationEvent.orderNo == orderNo) {
             originalMessage = transformationEvent.event;
+            return originalMessage;
         }
     }
     return originalMessage;
@@ -233,15 +234,12 @@
         NSNumber* orderNo = [NSNumber numberWithInt:[transformedPayload[@"orderNo"] intValue]];
         RSMessage * originalMessage = [self getOriginalEventWith:orderNo FromRequest:request];
         if(originalMessage == nil) continue;
+        [RSLogger logWarn: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Transformation of %@ event %@ for destination %@ has failed %@", originalMessage.type, originalMessage.event, destinationName, [status isEqualToString:@"410"] ? @"as its configuration has been modified or the transformation is disabled": @""]];
         if(![self->destinationsAcceptingEventsOnTransformationError containsObject:destinationName]) {
             [RSLogger logWarn:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Destination %@ is not accepting events on transformation error, hence dropping the %@ event %@", destinationName, originalMessage.type, originalMessage.event]];
             continue;
         }
-        if ([status isEqualToString:@"410"]) {
-            [RSLogger logWarn: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: The configuration for destination %@ has been changed or transformations are disabled for it now, hence dumping back the original %@ event %@", destinationName, originalMessage.type, originalMessage.event]]; }
-        else {
-            [RSLogger logWarn: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Transformation for destination %@ has failed, hence dumping back the original %@ event %@", destinationName, originalMessage.type, originalMessage.event]];
-        }
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Destination %@ is accepting events on transformation error, hence dumping the original event to it.", destinationName]];
         [self dumpEvent:originalMessage toDestinations:@[destinationName] withLogTag:@"dumpOriginalEvents"];
     }
     
