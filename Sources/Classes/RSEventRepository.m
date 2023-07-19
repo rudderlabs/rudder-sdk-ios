@@ -112,16 +112,18 @@ static RSEventRepository* _instance;
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
         
         // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
+        BOOL currentAutoTrackingStatus = self->config.automaticSessionTracking && self->config.trackLifecycleEvents;
         BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
-        if(previousAutoTrackingStatus && previousAutoTrackingStatus != config.automaticSessionTracking) {
+        if(previousAutoTrackingStatus && previousAutoTrackingStatus != currentAutoTrackingStatus) {
             [RSLogger logDebug:@"EventRepository: Automatic Session Tracking status has been updated since last launch, hence clearing the session"];
             [self->userSession clearSession];
         }
-        [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
-        
-        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        if(currentAutoTrackingStatus) {
+            [self->preferenceManager saveAutoTrackingStatus:YES];
             [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
             [self->userSession startSessionIfExpired];
+        } else {
+            [self->preferenceManager saveAutoTrackingStatus:NO];
         }
         
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
