@@ -73,35 +73,40 @@
 }
 #endif
 
+- (void)saveCurrentBuildNumberAndVersion:(NSString *)currentBuildNumber currentVersion:(NSString *)currentVersion {
+    [preferenceManager saveVersionNumber:currentVersion];
+    [preferenceManager saveBuildNumber:currentBuildNumber];
+}
+
 - (void) applicationDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSString *previousVersion = [preferenceManager getVersionNumber];
+    NSString* previousBuildNumber = [preferenceManager getBuildNumber];
+    
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+    
     if (!self->config.trackLifecycleEvents) {
+        [self saveCurrentBuildNumberAndVersion:currentBuildNumber currentVersion:currentVersion];
         return;
     }
-    NSString *previousVersion = [preferenceManager getVersionNumber];
-       NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-       
-       NSString* previousBuildNumber = [preferenceManager getBuildNumber];
-       NSString *currentBuildNumber = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-       
-       if (!previousVersion) {
-           [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Installed"];
-           [[RSClient sharedInstance] track:@"Application Installed" properties:@{
-               @"version": currentVersion,
-               @"build": currentBuildNumber
-           }];
-           [preferenceManager saveVersionNumber:currentVersion];
-           [preferenceManager saveBuildNumber:currentBuildNumber];
-       } else if ([RSUtils isApplicationUpdated]) {
-           [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
-           [[RSClient sharedInstance] track:@"Application Updated" properties:@{
-               @"previous_version" : previousVersion ?: @"",
-               @"version": currentVersion,
-               @"previous_build": previousBuildNumber ?: @"",
-               @"build": currentBuildNumber
-           }];
-           [preferenceManager saveVersionNumber:currentVersion];
-           [preferenceManager saveBuildNumber:currentBuildNumber];
-       }
+    
+    if (!previousVersion) {
+        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Installed"];
+        [[RSClient sharedInstance] track:@"Application Installed" properties:@{
+            @"version": currentVersion,
+            @"build": currentBuildNumber
+        }];
+    } else if ([RSUtils isApplicationUpdated]) {
+        [RSLogger logVerbose:@"RSApplicationLifeCycleManager: applicationDidFinishLaunchingWithOptions: Tracking Application Updated"];
+        [[RSClient sharedInstance] track:@"Application Updated" properties:@{
+            @"previous_version" : previousVersion ?: @"",
+            @"version": currentVersion,
+            @"previous_build": previousBuildNumber ?: @"",
+            @"build": currentBuildNumber
+        }];
+    }
+    [self saveCurrentBuildNumberAndVersion:currentBuildNumber currentVersion:currentVersion];
     [self sendApplicationOpenedOnLaunch:launchOptions withVersion:currentVersion];
 }
 
