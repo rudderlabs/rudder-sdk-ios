@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "6A651728-EFC6-476A-B1BF-C495E0E28856",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Rudder.xcodeproj",
+        "identifier" : "ED99902C2A69102400031B06",
+        "name" : "RudderTests-tvOS"
+      }
+    }
+  ],
+  "version" : 1
+}

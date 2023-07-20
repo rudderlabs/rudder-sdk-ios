@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "621E6B27-D64E-466D-9073-164F9339FB0C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Rudder.xcodeproj",
+        "identifier" : "ED9990482A69104B00031B06",
+        "name" : "RudderTests-watchOS"
+      }
+    }
+  ],
+  "version" : 1
+}
