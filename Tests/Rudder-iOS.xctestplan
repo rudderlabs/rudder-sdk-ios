@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "8A915B31-41A1-4B89-A0E6-20B36FE6F71B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Rudder.xcodeproj",
+        "identifier" : "ED99903A2A69103A00031B06",
+        "name" : "RudderTests-iOS"
+      }
+    }
+  ],
+  "version" : 1
+}

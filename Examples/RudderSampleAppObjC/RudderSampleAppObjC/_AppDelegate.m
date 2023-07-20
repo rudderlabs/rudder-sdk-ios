@@ -8,8 +8,6 @@
 
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
-#import "RudderAmplitudeFactory.h"
-#import "RudderBrazeFactory.h"
 #import <AdSupport/ASIdentifierManager.h>
 
 
@@ -33,8 +31,6 @@ static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
     [builder withDataPlaneUrl:DATA_PLANE_URL];
-    [builder withFactory:[RudderAmplitudeFactory instance]];
-    [builder withFactory:[RudderBrazeFactory instance]];
     [RSClient getInstance:WRITE_KEY config:[builder build]];
     
     return YES;
