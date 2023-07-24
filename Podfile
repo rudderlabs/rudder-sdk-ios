@@ -9,8 +9,8 @@ def shared_pods
 end
 
 def shared_utility_pods
-   pod 'MetricsReporter', '~> 1.0.0'
-   pod 'RudderKit', '~> 1.2.0'
+    pod 'MetricsReporter', :path => '/Users/pallabmaiti/Documents/Rudder/metrics-reporter-ios'
+    pod 'RudderKit', '~> 1.2.1'
 end
 
 target 'Rudder-iOS' do
@@ -47,12 +47,14 @@ target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
     platform :ios, '12.0'
     shared_pods
+    shared_utility_pods
 end
 
 target 'RudderSampleAppSwift' do
     project 'Examples/RudderSampleAppSwift/RudderSampleAppSwift.xcodeproj'
     platform :ios, '12.0'
     shared_pods
+    shared_utility_pods
 end
 
 target 'RudderSampleApptvOSObjC' do

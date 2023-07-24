@@ -14,7 +14,7 @@
 #import "RSServerDestination.h"
 #import "RSConstants.h"
 #import <pthread.h>
-
+#import "RSMetricsReporter.h"
 
 static RSServerConfigManager *_instance;
 static NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
@@ -160,14 +160,17 @@ int receivedError = NETWORK_SUCCESS;
             [preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
             [RSLogger logDebug:@"server config download successful"];
-            
+            [RSMetricsReporter report:SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
             isDone = YES;
         } else {
-            if(receivedError == 2){
+            if (response.statusCode == 400 || receivedError == 2) {
+                receivedError = WRONG_WRITE_KEY;
                 [RSLogger logInfo:@"Wrong write key"];
+                [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
                 retryCount = 4;
-            }else{
+            } else {
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", retryCount]];
+                [RSMetricsReporter report:SC_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
                 retryCount += 1;
                 usleep(1000000 * retryCount);
             }
@@ -175,6 +178,7 @@ int receivedError = NETWORK_SUCCESS;
     }
     if (!isDone) {
         [RSLogger logError:@"Server config download failed.Using last stored config from storage"];
+        [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: CONTROL_PLANE_URL_INVALID} andValue:1];
     }
 }
 

@@ -8,6 +8,7 @@
 
 #import "RSDBPersistentManager.h"
 #import "RSLogger.h"
+#import "RSMetricsReporter.h"
 
 int const RS_DB_Version = 2;
 int const DEFAULT_STATUS_VALUE = 0;
@@ -168,6 +169,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
+            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OUT_OF_MEMORY} andValue:messageIds.count];
             return;
         }
         [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];

@@ -24,15 +24,15 @@ jobs:
         
       - name: Build SDK(iOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14' | xcpretty
+          xcodebuild build -scheme RudderSDK_iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14' | xcpretty
           
       - name: Build SDK(watchOS)
         run: |
-          xcodebuild build -scheme RudderSDK-watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
+          xcodebuild build -scheme RudderSDK_watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
       
       - name: Build SDK(tvOS)
         run: |
-          xcodebuild build -scheme RudderSDK-tvOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
+          xcodebuild build -scheme RudderSDK_tvOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
       
       - name: Execute pod lint
         run: pod lib lint --no-clean --allow-warnings

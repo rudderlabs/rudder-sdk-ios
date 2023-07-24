@@ -16,16 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
+              let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+              let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
+            return true
+        }
         
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
-            .withDataPlaneUrl("http://localhost:8080")
+            .withDataPlaneUrl(rudderConfig.DEV_DATA_PLANE_URL)
+            .withControlPlaneUrl("https://some.url.com")
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
             .withSessionTimeoutMillis(30000)
 //            .withConsentFilter(CustomFilter())
-        RSClient.getInstance("1wvsoF3Kx2SczQNlx1dvcqW9ODW", config: builder.build())
+        RSClient.getInstance(rudderConfig.WRITE_KEY, config: builder.build())
         
         
 //        RSClient.sharedInstance()?.track("track_1")
