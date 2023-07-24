@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSNumber*) saveEvent: (NSString*) message;
 - (void) clearOldEventsWithThreshold:(int)threshold;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
+-(RSDBMessage *)fetchEventsFromDBForDeviceMode:(int)count andOffset:(int) offset;
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode;
 -(RSDBMessage*) fetchAllEventsFromDBForMode:(MODES) mode;
 -(void) updateEventWithId:(NSNumber *) messageId withStatus:(EVENT_PROCESSING_STATUS) status;

@@ -185,6 +185,11 @@ NSString* _Nonnull const COL_STATUS = @"status";
     }
 }
 
+-(RSDBMessage *)fetchEventsFromDBForDeviceMode:(int)count andOffset:(int) offset {
+    NSString* querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) ORDER BY %@ ASC LIMIT %d OFFSET %d;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE, COL_UPDATED, count, offset];
+    return [self getEventsFromDB:querySQLString];
+}
+
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode {
     NSString* querySQLString = nil;
     switch(mode) {

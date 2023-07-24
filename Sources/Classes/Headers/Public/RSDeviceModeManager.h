@@ -25,6 +25,8 @@
     BOOL isDeviceModeFactoriesNotPresent;
 }
 
+@property (nonatomic, strong) NSObject *replayMessageQueueLock;
+
 - (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
 - (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
