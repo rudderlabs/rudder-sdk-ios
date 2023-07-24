@@ -7,6 +7,7 @@
 //
 
 #import "RSEventRepository.h"
+#import "RSMetricsReporter.h"
 
 static RSEventRepository* _instance;
 @implementation RSEventRepository
@@ -148,13 +149,13 @@ static RSEventRepository* _instance;
         int retryCount = 0;
         while (strongSelf->isSDKInitialized == NO && retryCount <= 5) {
             RSServerConfigSource *serverConfig = [strongSelf->configManager getConfig];
-            int receivedError =[strongSelf->configManager getError];
+            int receivedError = [strongSelf->configManager getError];
             if (serverConfig != nil) {
                 // initiate the processor if the source is enabled
                 dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
                 });
-                if  (strongSelf->isSDKEnabled) {
+                if (strongSelf->isSDKEnabled) {
                     [self->dataResidencyManager setDataResidencyUrlFromSourceConfig: serverConfig];
                     NSString* dataPlaneUrl = [self->dataResidencyManager getDataPlaneUrl];
                     if (dataPlaneUrl == nil) {
@@ -180,13 +181,14 @@ static RSEventRepository* _instance;
                     }
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
+                    [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: SOURCE_DISABLED} andValue:1];
                     [strongSelf->dbpersistenceManager flushEventsFromDB];
                 }
                 strongSelf->isSDKInitialized = YES;
-            } else if(receivedError==2){
-                retryCount= 6;
+            } else if (receivedError == 2) {
+                retryCount = 6;
                 [RSLogger logError:@"WRONG WRITE KEY"];
-            }else {
+            } else {
                 retryCount += 1;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", 2 * retryCount]];
                 usleep(1000000 * 2 * retryCount);
@@ -196,8 +198,11 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
+    [self report:SUBMITTED_EVENTS withProperties:@{@"type": message.type} andValue:1];
     dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
+            if (!self->isSDKEnabled)
+                [self report:EVENTS_DISCARDED withProperties:@{TYPE: SDK_DISABLED} andValue:1];
             return;
         }
     });
@@ -211,10 +216,15 @@ static RSEventRepository* _instance;
     unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
+        [self report:EVENTS_DISCARDED withProperties:@{TYPE: MSG_SIZE_INVALID} andValue:1];
         return;
     }
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
     [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
+}
+
+- (void)report:(NSString *)metricName withProperties:(NSDictionary * _Nullable)properties andValue:(float)value {
+    [RSMetricsReporter report:metricName forMetricType:COUNT withProperties:properties andValue:value];
 }
 
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {

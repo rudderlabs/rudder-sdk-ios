@@ -60,5 +60,17 @@ typedef enum {
     DISABLED = NO
 } TRANSFORMATION_STATUS;
 
+typedef enum {
+    TRACK,
+    SCREEN,
+    ALIAS,
+    IDENTIFY,
+    GROUP
+} MESSAGE_TYPE;
+
+typedef enum {
+    COUNT,
+    GAUGE
+} METRIC_TYPE;
 
 #endif /* RSEnums_h */

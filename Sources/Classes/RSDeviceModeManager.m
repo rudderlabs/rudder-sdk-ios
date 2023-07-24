@@ -11,6 +11,7 @@
 #import "RSServerDestination.h"
 #import "RSDeviceModeManager.h"
 #import "RSDeviceModeTransformationManager.h"
+#import "RSMetricsReporter.h"
 
 @implementation RSDeviceModeManager
 
@@ -87,6 +88,9 @@
                     [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Exception while initiating native SDK Factory %@ due to %@", factory.key,e.reason]];
                 }
             }
+        } else {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: %@ factory is disabled", factory.key]];
+            [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISABLED, INTEGRATION: destination} andValue:1];
         }
     }
 }
@@ -201,6 +205,7 @@
             @try {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: dumping event %@ to factory %@", logTag, message.event, destination]];
                 [integration dump:message];
+                [RSMetricsReporter report:DM_EVENT forMetricType:COUNT withProperties:@{TYPE: message.type, INTEGRATION: destination} andValue:1];
             } @catch(NSException *e) {
                 [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: Exception while dumping %@ to factory %@ due to %@", logTag, message.event, destination, e.reason]];
             }

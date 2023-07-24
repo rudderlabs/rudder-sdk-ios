@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WRITE_KEY</key>
+	<string>2PuQRzr0QTU3cXSE880zk8pyv9I</string>
+	<key>PROD_DATA_PLANE_URL</key>
+	<string>https://rudderstacz.dataplane.rudderstack.com</string>
+	<key>PROD_CONTROL_PLANE_URL</key>
+	<string></string>
+	<key>LOCAL_DATA_PLANE_URL</key>
+	<string>https://0c41-103-242-191-121.in.ngrok.io</string>
+	<key>LOCAL_CONTROL_PLANE_URL</key>
+	<string></string>
+	<key>DEV_DATA_PLANE_URL</key>
+	<string>https://rudderstaclpl.dataplane.dev.rudderlabs.com</string>
+	<key>DEV_CONTROL_PLANE_URL</key>
+	<string>https://api.dev.rudderlabs.com/</string>
+	<key>STORAGE_LOCATION</key>
+	<string>cdn.cookielaw.org</string>
+	<key>DOMAIN_IDENTIFIER</key>
+	<string>03b4f096-bd76-48f1-8ea0-ae82b98502a7-test</string>
+</dict>
+</plist>
