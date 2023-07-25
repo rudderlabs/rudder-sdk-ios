@@ -202,11 +202,11 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
-    [self report:SUBMITTED_EVENTS withProperties:@{@"type": message.type} andValue:1];
+    [RSMetricsReporter report:SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{@"type": message.type} andValue:1];
     dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             if (!self->isSDKEnabled)
-                [self report:EVENTS_DISCARDED withProperties:@{TYPE: SDK_DISABLED} andValue:1];
+                [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: SDK_DISABLED} andValue:1];
             return;
         }
     });
@@ -220,15 +220,11 @@ static RSEventRepository* _instance;
     unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
-        [self report:EVENTS_DISCARDED withProperties:@{TYPE: MSG_SIZE_INVALID} andValue:1];
+        [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: MSG_SIZE_INVALID} andValue:1];
         return;
     }
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
     [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
-}
-
-- (void)report:(NSString *)metricName withProperties:(NSDictionary * _Nullable)properties andValue:(float)value {
-    [RSMetricsReporter report:metricName forMetricType:COUNT withProperties:properties andValue:value];
 }
 
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption {
