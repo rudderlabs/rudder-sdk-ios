@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSEnums.h"
+#import "RSServerConfigSource.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -16,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)initiateWithWriteKey:(NSString *)writeKey andConfig:(RSConfig *)config;
 + (void)report:(NSString *)metricName forMetricType:(METRIC_TYPE)metricType withProperties:(NSDictionary * _Nullable )properties andValue:(float)value;
++ (void)setErrorsCollectionEnabled:(BOOL)status;
++ (void)setMetricsCollectionEnabled:(BOOL)status;
 
-extern NSString *const CONFIG_DOWNLOAD_SUCCESS;
-extern NSString *const CONFIG_DOWNLOAD_RETRY;
 extern NSString *const SUBMITTED_EVENTS;
 extern NSString *const EVENTS_DISCARDED;
 extern NSString *const DM_EVENT;
@@ -42,6 +43,7 @@ extern NSString *const MESSAGES;
 extern NSString *const DM_DISSENTED;
 extern NSString *const DM_DISABLED;
 extern NSString *const CONTROL_PLANE_URL_INVALID;
+extern NSString *const DATA_PLANE_URL_INVALID;
 extern NSString *const SOURCE_DISABLED;
 extern NSString *const WRITEKEY_INVALID;
 extern NSString *const INTEGRATION;

@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSServerConfigSource : NSObject 
+@interface RSServerConfigSource : NSObject
 
 @property (nonatomic, readwrite) NSString *sourceId;
 @property (nonatomic, readwrite) NSString *sourceName;
@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSString *updatedAt;
 @property (nonatomic, readwrite) NSMutableArray *destinations;
 @property (nonatomic, readwrite) NSMutableDictionary* dataPlanes;
+@property (nonatomic, readwrite) BOOL isErrorsCollectionEnabled;
+@property (nonatomic, readwrite) BOOL isMetricsCollectionEnabled;
 
 - (void) addDestination: (RSServerDestination*) destination;
 

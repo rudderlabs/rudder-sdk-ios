@@ -7,6 +7,7 @@
 
 #import "RSMetricsReporter.h"
 #import "RSConstants.h"
+#import "RSLogger.h"
 
 @import MetricsReporter;
 
@@ -29,28 +30,42 @@ RSMetricsClient * _Nullable metricsClient;
 - (instancetype)initWithWriteKey:(NSString *)writeKey andConfig:(RSConfig *)config {
     self = [super init];
     if (self) {
-        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
+        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:@"https://sdk-metrics.dev-rudder.rudderlabs.com"];
         metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
     }
     return self;
 }
 
++ (void)setErrorsCollectionEnabled:(BOOL)status {
+    if (metricsClient != nil)
+        metricsClient.isErrorsCollectionEnabled = status;
+}
+
++ (void)setMetricsCollectionEnabled:(BOOL)status {
+    if (metricsClient != nil)
+        metricsClient.isMetricsCollectionEnabled = status;
+}
+
 + (void)report:(NSString *)metricName forMetricType:(METRIC_TYPE)metricType withProperties:(NSDictionary * _Nullable )properties andValue:(float)value {
-    switch (metricType) {
-        case COUNT: {
-            RSCount *count = [[RSCount alloc] initWithName:metricName labels:properties value:(int)value];
-            if (metricsClient != nil)
-                [metricsClient process:count];
+    @try {
+        switch (metricType) {
+            case COUNT: {
+                RSCount *count = [[RSCount alloc] initWithName:metricName labels:properties value:(int)value];
+                if (metricsClient != nil)
+                    [metricsClient process:count];
+            }
+                break;
+            case GAUGE: {
+                RSGauge *gauge = [[RSGauge alloc] initWithName:metricName labels:properties value:value];
+                if (metricsClient != nil)
+                    [metricsClient process:gauge];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case GAUGE: {
-            RSGauge *gauge = [[RSGauge alloc] initWithName:metricName labels:properties value:value];
-            if (metricsClient != nil)
-                [metricsClient process:gauge];
-        }
-            break;
-        default:
-            break;
+    } @catch (NSException *exception) {
+        [RSLogger logError:[NSString stringWithFormat:@"RSMetricsReporter: Failed to report metric, reason: %@", exception.reason]];
     }
 }
 
@@ -77,6 +92,7 @@ NSString *const MESSAGES = @"messages";
 NSString *const DM_DISSENTED = @"dissented";
 NSString *const DM_DISABLED = @"disabled";
 NSString *const CONTROL_PLANE_URL_INVALID = @"control_plane_url_invalid";
+NSString *const DATA_PLANE_URL_INVALID = @"data_plane_url_invalid";
 NSString *const SOURCE_DISABLED = @"source_disabled";
 NSString *const WRITEKEY_INVALID = @"writekey_invalid";
 NSString *const INTEGRATION = @"integration";

@@ -74,6 +74,18 @@ int receivedError = NETWORK_SUCCESS;
         NSString *sourceId = [sourceDict objectForKey:@"id"];
         NSString *sourceName = [sourceDict objectForKey:@"name"];
         NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];
+        NSDictionary *configDict = [sourceDict objectForKey:@"config"];
+        BOOL isErrorsCollectionEnabled = NO;
+        BOOL isMetricsCollectionEnabled = NO;
+        if (configDict) {
+            NSDictionary *statsCollection = [configDict objectForKey:@"statsCollection"];
+            NSDictionary *errors = [statsCollection objectForKey:@"errors"];
+            NSNumber *isErrorsEnabled = [errors valueForKey:@"enabled"];
+            NSDictionary *metrics = [statsCollection objectForKey:@"metrics"];
+            NSNumber *isMetricsEnabled = [metrics valueForKey:@"enabled"];
+            isErrorsCollectionEnabled = [isErrorsEnabled boolValue];
+            isMetricsCollectionEnabled = [isMetricsEnabled boolValue];
+        }
         BOOL isSourceEnabled = NO;
         if (sourceEnabled != nil) {
             isSourceEnabled = [sourceEnabled boolValue];
@@ -84,6 +96,8 @@ int receivedError = NETWORK_SUCCESS;
         source.sourceName = sourceName;
         source.isSourceEnabled = isSourceEnabled;
         source.updatedAt = updatedAt;
+        source.isErrorsCollectionEnabled = isErrorsCollectionEnabled;
+        source.isMetricsCollectionEnabled = isMetricsCollectionEnabled;
         
         NSArray *destinationArr = [sourceDict objectForKey:@"destinations"];
         NSMutableArray *destinations = [[NSMutableArray alloc] init];
@@ -160,13 +174,11 @@ int receivedError = NETWORK_SUCCESS;
             [preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
             [RSLogger logDebug:@"server config download successful"];
-            [RSMetricsReporter report:SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
             isDone = YES;
         } else {
             if (response.statusCode == 400 || receivedError == 2) {
                 receivedError = WRONG_WRITE_KEY;
                 [RSLogger logInfo:@"Wrong write key"];
-                [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
                 retryCount = 4;
             } else {
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", retryCount]];

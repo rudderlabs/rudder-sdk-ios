@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
             .withDataPlaneUrl(rudderConfig.DEV_DATA_PLANE_URL)
-            .withControlPlaneUrl("https://some.url.com")
+            .withControlPlaneUrl(rudderConfig.DEV_CONTROL_PLANE_URL)
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
             .withSleepTimeOut(4)
