@@ -151,6 +151,8 @@ static RSEventRepository* _instance;
             RSServerConfigSource *serverConfig = [strongSelf->configManager getConfig];
             int receivedError = [strongSelf->configManager getError];
             if (serverConfig != nil) {
+                [RSMetricsReporter setMetricsCollectionEnabled:YES];// serverConfig.isMetricsCollectionEnabled];
+                [RSMetricsReporter setErrorsCollectionEnabled:serverConfig.isErrorsCollectionEnabled];
                 // initiate the processor if the source is enabled
                 dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
@@ -179,6 +181,7 @@ static RSEventRepository* _instance;
                         [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
+                    [RSMetricsReporter report:SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
                     [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: SOURCE_DISABLED} andValue:1];
@@ -188,6 +191,7 @@ static RSEventRepository* _instance;
             } else if (receivedError == 2) {
                 retryCount = 6;
                 [RSLogger logError:@"WRONG WRITE KEY"];
+                [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
             } else {
                 retryCount += 1;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", 2 * retryCount]];

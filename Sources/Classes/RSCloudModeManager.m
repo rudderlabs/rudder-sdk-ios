@@ -62,11 +62,11 @@
                 usleep(1000000);
             } else if (response.state == WRONG_WRITE_KEY) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
-                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:nil andValue:1];
+                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
                 break;
             } else if (response.state == INVALID_URL) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
-                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:nil andValue:1];
+                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: DATA_PLANE_URL_INVALID} andValue:1];
                 break;
             }
             else if (response.state == NETWORK_ERROR) {
