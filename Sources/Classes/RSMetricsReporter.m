@@ -85,6 +85,7 @@ NSString *const TYPE = @"type";
 NSString *const OPT_OUT = @"opt_out";
 NSString *const SDK_DISABLED = @"sdk_disabled";
 NSString *const MSG_SIZE_INVALID = @"msg_size_invalid";
+NSString *const BATCH_SIZE_INVALID = @"batch_size_invalid";
 NSString *const OUT_OF_MEMORY = @"out_of_memory";
 NSString *const MSG_FILTERED = @"msg_filtered";
 NSString *const QUEUES = @"queues";
@@ -92,9 +93,10 @@ NSString *const MESSAGES = @"messages";
 NSString *const DM_DISSENTED = @"dissented";
 NSString *const DM_DISABLED = @"disabled";
 NSString *const CONTROL_PLANE_URL_INVALID = @"control_plane_url_invalid";
-NSString *const DATA_PLANE_URL_INVALID = @"data_plane_url_invalid";
+NSString *const DATA_PLANE_URL_INVALID = @"invalid_data_plane_url";
 NSString *const SOURCE_DISABLED = @"source_disabled";
 NSString *const WRITEKEY_INVALID = @"writekey_invalid";
 NSString *const INTEGRATION = @"integration";
+NSString *const REQUEST_TIMEOUT = @"REQUEST_TIMEOUT";
 
 @end
