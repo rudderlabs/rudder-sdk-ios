@@ -36,6 +36,7 @@ extern NSString *const TYPE;
 extern NSString *const OPT_OUT;
 extern NSString *const SDK_DISABLED;
 extern NSString *const MSG_SIZE_INVALID;
+extern NSString *const BATCH_SIZE_INVALID;
 extern NSString *const MSG_FILTERED;
 extern NSString *const OUT_OF_MEMORY;
 extern NSString *const QUEUES;
@@ -47,6 +48,7 @@ extern NSString *const DATA_PLANE_URL_INVALID;
 extern NSString *const SOURCE_DISABLED;
 extern NSString *const WRITEKEY_INVALID;
 extern NSString *const INTEGRATION;
+extern NSString *const REQUEST_TIMEOUT;
 
 @end
 

@@ -101,6 +101,7 @@
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
             [RSLogger logDebug:[NSString stringWithFormat:@"RSCloudModeManager: getPayloadFromMessages: MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: BATCH_SIZE_INVALID} andValue:1];
             break;
         }
         [json appendString:message];
