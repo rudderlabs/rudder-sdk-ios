@@ -36,7 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) clearProcessedEventsFromDB;
 - (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;
--(void) updateDeviceModeEventsStatus;
 -(RSDBMessage*)fetchDeviceModeWithProcessedPendingEventsFromDb:(int) limit;
 -(int) getDeviceModeWithProcessedPendingEventsRecordCount;
 -(void) markDeviceModeTransformationAndProcessedDone:(NSNumber *) messageId;
