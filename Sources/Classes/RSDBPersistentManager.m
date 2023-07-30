@@ -232,6 +232,7 @@ NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
     NSMutableArray<NSNumber *>* statusList = [[NSMutableArray alloc] init];
+    NSMutableArray<NSNumber *>* dmProcessedList = [[NSMutableArray alloc] init];
     
     @synchronized (self) {
         sqlite3_stmt *queryStmt = nil;
@@ -242,9 +243,11 @@ NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
                 const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
                 NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
                 int status = sqlite3_column_int(queryStmt,3);
+                int dmProcessed = sqlite3_column_int(queryStmt, 4);
                 [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
                 [messages addObject:message];
                 [statusList addObject:[NSNumber numberWithInt:status]];
+                [dmProcessedList addObject:[NSNumber numberWithInt:dmProcessed]];
             }
         } else {
             [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
@@ -255,6 +258,7 @@ NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
     dbMessage.messageIds = messageIds;
     dbMessage.messages = messages;
     dbMessage.statusList = statusList;
+    dbMessage.dmProcessed = dmProcessedList;
     return dbMessage;
 }
 
