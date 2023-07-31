@@ -9,7 +9,7 @@
 #import "RSDBPersistentManager.h"
 #import "RSLogger.h"
 
-int const RS_DB_Version = 2;
+int const RS_DB_Version = 3;
 int const DEFAULT_STATUS_VALUE = 0;
 bool isReturnClauseSupported = NO;
 NSString* _Nonnull const TABLE_EVENTS = @"events";
@@ -17,6 +17,7 @@ NSString* _Nonnull const COL_ID = @"id";
 NSString* _Nonnull const COL_MESSAGE = @"message";
 NSString* _Nonnull const COL_UPDATED = @"updated";
 NSString* _Nonnull const COL_STATUS = @"status";
+NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
 
 
 @implementation RSDBPersistentManager
@@ -47,44 +48,62 @@ NSString* _Nonnull const COL_STATUS = @"status";
 // Migration is needed when an application is updated to the latest version of SDK from a version which doesn't has the status column in its events table
 - (void)checkForMigrations {
     [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: checking if the event table has status column"];
-    if(![self checkIfStatusColumnExists]) {
+    bool isNewColumnAdded = NO;
+    if(![self checkIfColumnExists:COL_STATUS]) {
         [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: events table doesn't has the status column performing migration"];
-        [self performMigration];
-        return;
+        [self performMigration:COL_STATUS];
+        isNewColumnAdded = YES;
     }
-    [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: event table has status column, no migration required"];
+    if(![self checkIfColumnExists:COL_DM_PROCESSED]) {
+        [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: events table doesn't has the dm_processed column performing migration"];
+        [self performMigration:COL_DM_PROCESSED];
+        isNewColumnAdded = YES;
+    }
+    if (!isNewColumnAdded) {
+        [RSLogger logDebug:@"RSDBPersistentManager: checkForMigrations: event table has status and dm_processed columns, no migration required"];
+    }
 }
 
-- (BOOL) checkIfStatusColumnExists {
-    NSString* checkIfStatusExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(\"%@\") where name=\"%@\";", TABLE_EVENTS, COL_STATUS];
-    const char* statusCheckSQL = [checkIfStatusExistsSQLString UTF8String];
-    sqlite3_stmt *statusCheckStmt = nil;
-    BOOL statusColumnExists = NO;
-    if (sqlite3_prepare_v2(self->_database, statusCheckSQL, -1, &statusCheckStmt, nil) == SQLITE_OK) {
-        if(sqlite3_step(statusCheckStmt) == SQLITE_ROW) {
-            int count = sqlite3_column_int(statusCheckStmt, 0);
+- (BOOL) checkIfColumnExists:(NSString *) newColumn {
+    NSString* checkIfNewColumnExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(\"%@\") where name=\"%@\";", TABLE_EVENTS, newColumn];
+    const char* newColumnCheckSQL = [checkIfNewColumnExistsSQLString UTF8String];
+    sqlite3_stmt *newColumnCheckStmt = nil;
+    BOOL newColumnExists = NO;
+    if (sqlite3_prepare_v2(self->_database, newColumnCheckSQL, -1, &newColumnCheckStmt, nil) == SQLITE_OK) {
+        if(sqlite3_step(newColumnCheckStmt) == SQLITE_ROW) {
+            int count = sqlite3_column_int(newColumnCheckStmt, 0);
             if(count > 0) {
-                statusColumnExists = YES;
+                newColumnExists = YES;
             }
         }
         else {
-            [RSLogger logWarn:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Execution Failed: %@", checkIfStatusExistsSQLString]];
+            [RSLogger logWarn:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Execution Failed: %@", checkIfNewColumnExistsSQLString]];
         }
     }
     else {
-        [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Preparation Failed: %@", checkIfStatusExistsSQLString]];
+        [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Preparation Failed: %@", checkIfNewColumnExistsSQLString]];
     }
-    sqlite3_finalize(statusCheckStmt);
-    return statusColumnExists;
+    sqlite3_finalize(newColumnCheckStmt);
+    return newColumnExists;
 }
 
-- (void) performMigration {
-    NSString* alterTableSQLString = [[NSString alloc] initWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ INTEGER DEFAULT %d;", TABLE_EVENTS, COL_STATUS, DEFAULT_STATUS_VALUE];
-    NSString* updateTableSQLString = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d;", TABLE_EVENTS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE];
-    
-    if([self execSQL:alterTableSQLString] && [self execSQL:updateTableSQLString]) {
-        [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migrated to add status column"];
-        return;
+- (void) performMigration:(NSString *) columnName {
+    if ([columnName isEqualToString:COL_STATUS]) {
+        NSString* alterTableSQLString = [[NSString alloc] initWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ INTEGER DEFAULT %d;", TABLE_EVENTS, COL_STATUS, DEFAULT_STATUS_VALUE];
+        NSString* updateTableSQLString = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d;", TABLE_EVENTS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE];
+        
+        if([self execSQL:alterTableSQLString] && [self execSQL:updateTableSQLString]) {
+            [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migrated to add status column"];
+            return;
+        }
+    } else if ([columnName isEqualToString:COL_DM_PROCESSED]) {
+        NSString* alterTableSQLString = [[NSString alloc] initWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ INTEGER DEFAULT %d;", TABLE_EVENTS, COL_DM_PROCESSED, DM_PROCESSED_PENDING];
+        NSString* updateTableSQLString = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = (%@ | %d), %@ = %d;", TABLE_EVENTS, COL_STATUS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE, COL_DM_PROCESSED, DM_PROCESSED_DONE];
+        
+        if([self execSQL:alterTableSQLString] && [self execSQL:updateTableSQLString]) {
+            [RSLogger logDebug:@"RSDBPersistentManager: performMigration: events table migrated to add dm_processed column"];
+            return;
+        }
     }
     [RSLogger logError:@"RSDBPersistentManager: performMigration: events table migration failed"];
 }
@@ -98,6 +117,9 @@ NSString* _Nonnull const COL_STATUS = @"status";
     switch(version) {
         case 1:
             createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED];
+            break;
+        case 3:
+            createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER DEFAULT %d, %@ INTEGER DEFAULT %d);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED, COL_STATUS, DEFAULT_STATUS_VALUE, COL_DM_PROCESSED, DM_PROCESSED_PENDING];
             break;
         default:
             createTableSQLString = [[NSString alloc] initWithFormat:@"CREATE TABLE IF NOT EXISTS %@( %@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER DEFAULT %d);", TABLE_EVENTS, COL_ID, COL_MESSAGE, COL_UPDATED, COL_STATUS, DEFAULT_STATUS_VALUE];
@@ -174,17 +196,6 @@ NSString* _Nonnull const COL_STATUS = @"status";
     }
 }
 
--(void) updateDeviceModeEventsStatus {
-    NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = (%@ | %d) WHERE %@ IN (%d, %d);", TABLE_EVENTS, COL_STATUS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE];
-    @synchronized (self) {
-        if([self execSQL:updateEventStatusSQL]) {
-            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateDeviceModeEventsStatus: Successfully updated the event status for unprocessed and cloud mode processing done events to device mode processing done."]];
-            return;
-        }
-        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: updateDeviceModeEventsStatuse: Failed to update the status for events."]];
-    }
-}
-
 -(RSDBMessage *)fetchEventsFromDB:(int)count ForMode:(MODES) mode {
     NSString* querySQLString = nil;
     switch(mode) {
@@ -221,6 +232,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     NSMutableArray<NSString *> *messageIds = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *messages = [[NSMutableArray alloc] init];
     NSMutableArray<NSNumber *>* statusList = [[NSMutableArray alloc] init];
+    NSMutableArray<NSNumber *>* dmProcessedList = [[NSMutableArray alloc] init];
     
     @synchronized (self) {
         sqlite3_stmt *queryStmt = nil;
@@ -231,9 +243,11 @@ NSString* _Nonnull const COL_STATUS = @"status";
                 const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
                 NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
                 int status = sqlite3_column_int(queryStmt,3);
+                int dmProcessed = sqlite3_column_int(queryStmt, 4);
                 [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
                 [messages addObject:message];
                 [statusList addObject:[NSNumber numberWithInt:status]];
+                [dmProcessedList addObject:[NSNumber numberWithInt:dmProcessed]];
             }
         } else {
             [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
@@ -244,6 +258,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
     dbMessage.messageIds = messageIds;
     dbMessage.messages = messages;
     dbMessage.statusList = statusList;
+    dbMessage.dmProcessed = dmProcessedList;
     return dbMessage;
 }
 
@@ -261,6 +276,10 @@ NSString* _Nonnull const COL_STATUS = @"status";
             countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@", TABLE_EVENTS];
     }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getDBRecordCount: countSQLString: %@", countSQLString]];
+    return [self getDBRecordCoun:countSQLString];
+}
+
+-(int) getDBRecordCoun:(NSString *) countSQLString {
     int count = 0;
     const char* countSQL = [countSQLString UTF8String];
     @synchronized (self) {
@@ -367,5 +386,38 @@ NSString* _Nonnull const COL_STATUS = @"status";
         [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: SQLite Command Preparation Failed: %@", versionSqlQueryString]];
     }
     return sqliteVersion;
+}
+
+-(RSDBMessage*)fetchDeviceModeWithProcessedPendingEventsFromDb:(int) limit {
+    NSString* querySQLString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@ IN (%d,%d) AND %@ = %d ORDER BY %@ ASC LIMIT %d;", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE, COL_DM_PROCESSED, DM_PROCESSED_PENDING, COL_UPDATED, limit];
+    return [self getEventsFromDB:querySQLString];
+}
+
+-(int) getDeviceModeWithProcessedPendingEventsRecordCount {
+    NSString *countSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM %@ where %@ IN (%d,%d) AND %@ = %d", TABLE_EVENTS, COL_STATUS, NOT_PROCESSED, CLOUD_MODE_PROCESSING_DONE, COL_DM_PROCESSED, DM_PROCESSED_PENDING];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getDeviceModeWithProcessedPendingEventsRecordCount: countSQLString: %@", countSQLString]];
+    return [self getDBRecordCoun:countSQLString];
+}
+
+-(void) markDeviceModeTransformationAndProcessedDone:(NSNumber *) messageId {
+    NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %@ | %d, %@ = %d WHERE %@ = %@;", TABLE_EVENTS, COL_STATUS, COL_STATUS, DEVICE_MODE_PROCESSING_DONE, COL_DM_PROCESSED, DM_PROCESSED_DONE, COL_ID, messageId];
+    @synchronized (self) {
+        if([self execSQL:updateEventStatusSQL]) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: markDeviceModeTransformationAndProcessedDone: Successfully updated the event status and dm_processed columns for events %@", messageId]];
+            return;
+        }
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: markDeviceModeTransformationAndProcessedDone: Failed to update the event status and dm_processed columns for events %@", messageId]];
+    }
+}
+
+-(void) markDeviceModeProcessedDone:(NSNumber *) messageId {
+    NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = %@;", TABLE_EVENTS, COL_DM_PROCESSED, DM_PROCESSED_DONE, COL_ID, messageId];
+    @synchronized (self) {
+        if([self execSQL:updateEventStatusSQL]) {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: markDeviceModeProcessedDone: Successfully updated the event dm_processed for events %@", messageId]];
+            return;
+        }
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: markDeviceModeProcessedDone: Failed to update the dm_processed for events %@", messageId]];
+    }
 }
 @end
