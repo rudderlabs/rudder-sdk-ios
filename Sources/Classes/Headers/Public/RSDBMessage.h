@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
     @property (nonatomic) NSMutableArray<NSString *>* messages;
     @property (nonatomic) NSMutableArray<NSString *>* messageIds;
     @property (nonatomic) NSMutableArray<NSNumber *>* statusList;
+    @property (nonatomic) NSMutableArray<NSNumber *>* dmProcessed;
 @end
 
 NS_ASSUME_NONNULL_END

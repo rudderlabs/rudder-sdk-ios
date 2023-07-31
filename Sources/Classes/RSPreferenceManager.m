@@ -255,13 +255,4 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSSessionAutoTrackStatus];
 }
 
-- (void) saveEventDeletionStatus {
-    [[NSUserDefaults standardUserDefaults] setBool:true forKey:RSEventDeletionStatus];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (BOOL) getEventDeletionStatus {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:RSEventDeletionStatus];
-}
-
 @end

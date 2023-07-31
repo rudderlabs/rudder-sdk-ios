@@ -95,13 +95,6 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: Initiating RSDeviceModeManager"];
         self->deviceModeManager = [[RSDeviceModeManager alloc] initWithConfig:config andDBPersistentManager:self->dbpersistenceManager andNetworkManager:self->networkManager];
         
-        // Prviously in certain cases (e.g., network unavialability) events are not processed by device mode factories and statuses remains at either 0 or 2. Now we are marking those events as device_mode_processing_done.
-        [RSLogger logDebug:@"EventRepository: Checking if previous unprocessed event deletion is allowed or not. If allowed then mark previous events with status code 0 and 2 as device_mode_processing_done."];
-        if ([self isPreviousEventsDeletionAllowed]) {
-            [self->dbpersistenceManager updateDeviceModeEventsStatus];
-            [self->dbpersistenceManager clearProcessedEventsFromDB];
-        }
-        
         [RSLogger logDebug:@"EventRepository: Initiating the SDK"];
         [self __initiateSDK];
         
@@ -129,10 +122,8 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
         self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager andUserSession:self->userSession];
         
-        if (config.trackLifecycleEvents) {
-            [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
-            [self->applicationLifeCycleManager trackApplicationLifeCycle];
-        }
+        [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
+        [self->applicationLifeCycleManager trackApplicationLifeCycle];
         
         if (config.recordScreenViews) {
             [RSLogger logDebug:@"EventRepository: Enabling automatic recording of screen views"];
@@ -140,14 +131,6 @@ static RSEventRepository* _instance;
         }
     }
     return self;
-}
-
-- (BOOL) isPreviousEventsDeletionAllowed {
-    if (![preferenceManager getEventDeletionStatus]) {
-        [preferenceManager saveEventDeletionStatus];
-        return [RSUtils isApplicationUpdated];
-    }
-    return NO;
 }
 
 - (void) setAnonymousIdToken {
