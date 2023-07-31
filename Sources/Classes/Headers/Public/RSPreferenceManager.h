@@ -79,9 +79,6 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus;
 - (BOOL) getAutoTrackingStatus;
 
-- (void) saveEventDeletionStatus;
-- (BOOL) getEventDeletionStatus;
-
 @end
 
 NS_ASSUME_NONNULL_END
