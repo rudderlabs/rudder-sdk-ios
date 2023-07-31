@@ -105,25 +105,25 @@ static RSEventRepository* _instance;
         self->userSession = [RSUserSession initiate:self->config.sessionInActivityTimeOut with: self->preferenceManager];
         
         // clear session if automatic session tracking was enabled previously but disabled presently or vice versa.
+        BOOL currentAutoTrackingStatus = self->config.automaticSessionTracking && self->config.trackLifecycleEvents;
         BOOL previousAutoTrackingStatus = [self->preferenceManager getAutoTrackingStatus];
-        if(previousAutoTrackingStatus && previousAutoTrackingStatus != config.automaticSessionTracking) {
+        if(previousAutoTrackingStatus && previousAutoTrackingStatus != currentAutoTrackingStatus) {
             [RSLogger logDebug:@"EventRepository: Automatic Session Tracking status has been updated since last launch, hence clearing the session"];
             [self->userSession clearSession];
         }
-        [self->preferenceManager saveAutoTrackingStatus:config.automaticSessionTracking];
-        
-        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+        if(currentAutoTrackingStatus) {
+            [self->preferenceManager saveAutoTrackingStatus:YES];
             [RSLogger logDebug:@"EventRepository: Starting Automatic Sessions"];
             [self->userSession startSessionIfExpired];
+        } else {
+            [self->preferenceManager saveAutoTrackingStatus:NO];
         }
         
         [RSLogger logDebug:@"EventRepository: Initiating RSApplicationLifeCycleManager"];
         self->applicationLifeCycleManager = [[RSApplicationLifeCycleManager alloc] initWithConfig:config andPreferenceManager:self->preferenceManager andBackGroundModeManager:self->backGroundModeManager andUserSession:self->userSession];
         
-        if (config.trackLifecycleEvents) {
-            [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
-            [self->applicationLifeCycleManager trackApplicationLifeCycle];
-        }
+        [RSLogger logDebug:@"EventRepository: Enabling tracking of application lifecycle events"];
+        [self->applicationLifeCycleManager trackApplicationLifeCycle];
         
         if (config.recordScreenViews) {
             [RSLogger logDebug:@"EventRepository: Enabling automatic recording of screen views"];
@@ -167,6 +167,7 @@ static RSEventRepository* _instance;
                         [RSLogger logDebug:@"EventRepository: Initiating ConsentFilterHandler"];
                         strongSelf->consentFilterHandler = [RSConsentFilterHandler initiate:strongSelf->config.consentFilter withServerConfig:serverConfig];
                     }
+                    
                     // initiate the native SDK factories if destinations are present
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         NSArray <RSServerDestination *> *consentedDestinations = self->consentFilterHandler != nil ? [self->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
@@ -174,6 +175,7 @@ static RSEventRepository* _instance;
                             [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
                         }
                     } else {
+                        [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
                 } else {

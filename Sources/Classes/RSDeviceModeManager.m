@@ -21,7 +21,6 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
-        self->eventReplayMessage = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -36,7 +35,6 @@
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
-    [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Replaying the message queue to the Factories"];
     [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
     // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
@@ -49,13 +47,20 @@
     }
 }
 
+- (void) handleCaseWhenNoDeviceModeFactoryIsPresent {
+    self->isDeviceModeFactoriesNotPresent = YES;
+    [self replayMessageQueue];
+}
+
 - (void) initiateFactories : (NSArray*) destinations {
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     if (destinations.count == 0) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
+        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     RSClient* client = [RSClient sharedInstance];
@@ -110,43 +115,56 @@
 }
 
 - (void) replayMessageQueue {
-    @synchronized (self->eventReplayMessage) {
-        [RSLogger logDebug:@"RSDeviceModeManager: replayMessageQueue: replaying old messages with factory"];
-        if (self->eventReplayMessage.count > 0) {
-            NSMutableArray<NSNumber*>* rowIds = [self->eventReplayMessage.allKeys mutableCopy];
-            [RSUtils sortArray:rowIds inOrder:ASCENDING];
-            for(NSNumber* rowId in rowIds) {
-                [self makeFactoryDump:eventReplayMessage[rowId] FromHistory:YES withRowId:rowId];
+    [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Replaying the message queue to the Factories"];
+    do {
+        RSDBMessage *dbMessage = [self->dbPersistentManager fetchDeviceModeWithProcessedPendingEventsFromDb:RSFlushQueueSize];
+        NSArray *messageIds = dbMessage.messageIds;
+        NSArray *messages = dbMessage.messages;
+        for (int i=0; i<messageIds.count; i++) {
+            id object = [RSUtils deSerializeJSONString:messages[i]];
+            NSNumber *rowId = [NSNumber numberWithInt:[messageIds[i] intValue]];
+            if (object && rowId) {
+                RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];
+                [self makeFactoryDump:originalMessage FromHistory:YES withRowId:rowId];
             }
         }
-        [self->eventReplayMessage removeAllObjects];
-    }
+    } while([self->dbPersistentManager getDeviceModeWithProcessedPendingEventsRecordCount] > 0);
 }
 
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId {
-    if (self->areFactoriesInitialized || fromHistory) {
-        [RSLogger logVerbose:@"RSDeviceModeManager: makeFactoryDump: dumping message to native sdk factories"];
-        NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
-        
-        NSArray<NSString *>* destinationsWithTransformations = [self getDestinationsWithTransformationStatus:ENABLED fromDestinations:eligibleDestinations];
-        if(destinationsWithTransformations.count == 0){
-            [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: No device mode destinations with transformations for message %@, hence updating it's status to DEVICE_MODE_PROCESSING DONE", message.event]];
-            [self->dbPersistentManager updateEventWithId:rowId withStatus:DEVICE_MODE_PROCESSING_DONE];
-        } else {
-            for (NSString * destination in destinationsWithTransformations) {
-                [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: makeFactoryDump: Device Mode Destination %@ needs transformation hence it will be batched and sent to the transformation service", destination]];
-            }
-        }
-        
-        NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
-        [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
-        
-    }  else {
-        @synchronized (self->eventReplayMessage) {
-            [RSLogger logDebug:@"RSDeviceModeManager: makeFactoryDump: factories are not initialized. dumping to replay queue"];
-            self->eventReplayMessage[rowId] = message;
+    @synchronized (self) {
+        if (self->isDeviceModeFactoriesNotPresent) {
+            [self markDeviceModeTransformationDone:rowId andEvent:message.event];
+        } else if (self->areFactoriesInitialized || fromHistory) {
+            [RSLogger logVerbose:@"RSDeviceModeManager: makeFactoryDump: dumping message to native sdk factories"];
+            NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
+            [self updateMessageStatusBasedOnTransformations:eligibleDestinations andRowId:rowId andMessage:message];
+            [self dumpMessageToDestinationWithoutTransformation:eligibleDestinations andMessage:message];
         }
     }
+}
+
+-(void) markDeviceModeTransformationDone:(NSNumber *) rowId andEvent:(NSString *) event {
+    [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: markDeviceModeTransformationDone: Marking message %@ as DEVICE_MODE_DONE and DM_PROCESSED_DONE", event]];
+    [self->dbPersistentManager markDeviceModeTransformationAndProcessedDone:rowId];
+}
+
+-(void) updateMessageStatusBasedOnTransformations:(NSArray<NSString *>*)eligibleDestinations andRowId:(NSNumber *)rowId andMessage:(RSMessage *)message {
+    NSArray<NSString *>* destinationsWithTransformations = [self getDestinationsWithTransformationStatus:ENABLED fromDestinations:eligibleDestinations];
+    if(destinationsWithTransformations.count == 0){
+        [self markDeviceModeTransformationDone:rowId andEvent:message.event];
+    } else {
+        for (NSString * destination in destinationsWithTransformations) {
+            [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: updateMessageStatusBasedOnTransformations: Device Mode Destination %@ needs transformation hence it will be batched and sent to the transformation service", destination]];
+        }
+        [self->dbPersistentManager markDeviceModeProcessedDone:rowId];
+        [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: updateMessageStatusBasedOnTransformations: Marking event: %@, dm_processed as DM_PROCESSED_DONE", message.event]];
+    }
+}
+
+-(void) dumpMessageToDestinationWithoutTransformation:(NSArray<NSString *>*)eligibleDestinations andMessage:(RSMessage *)message {
+    NSArray<NSString *>* destinationsWithoutTransformations = [self getDestinationsWithTransformationStatus:DISABLED fromDestinations:eligibleDestinations];
+    [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
 }
 
 - (void) dumpOriginalEvents:(NSArray *) originalPayloads {

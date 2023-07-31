@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSPreferenceManager.h"
 #import "RSBackGroundModeManager.h"
+#import "RSUtils.h"
 
 @interface RSApplicationLifeCycleManager : NSObject {
     RSPreferenceManager* preferenceManager;

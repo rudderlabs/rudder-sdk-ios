@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) createTables;
 -(void) createEventsTableWithVersion:(int) version;
 -(void) checkForMigrations;
--(BOOL) checkIfStatusColumnExists;
--(void) performMigration;
+-(BOOL) checkIfColumnExists:(NSString *) newColumn;
+-(void) performMigration:(NSString *) columnName;
 -(NSNumber*) saveEvent: (NSString*) message;
 - (void) clearOldEventsWithThreshold:(int)threshold;
 -(void) clearEventsFromDB: (NSMutableArray*) messageIds;
@@ -36,7 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) clearProcessedEventsFromDB;
 - (int) getDBRecordCountForMode:(MODES) mode;
 -(void) flushEventsFromDB;
-
+-(RSDBMessage*)fetchDeviceModeWithProcessedPendingEventsFromDb:(int) limit;
+-(int) getDeviceModeWithProcessedPendingEventsRecordCount;
+-(void) markDeviceModeTransformationAndProcessedDone:(NSNumber *) messageId;
+-(void) markDeviceModeProcessedDone:(NSNumber *) messageId;
 @end
 
 NS_ASSUME_NONNULL_END

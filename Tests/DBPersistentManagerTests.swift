@@ -43,6 +43,9 @@ class DBPersistentManagerTests: XCTestCase {
     let ROWID_2 = 2 as NSNumber
     let ROWID_3 = 3 as NSNumber
     
+    let COL_STATUS = "status";
+    let COL_DM_PROCESSED = "dm_processed";
+    
     override func setUpWithError() throws {
         dbPersistentManager = RSDBPersistentManager()
         deleteEventsTable()
@@ -54,7 +57,7 @@ class DBPersistentManagerTests: XCTestCase {
         deleteEventsToDestinationIdMappingTable()
     }
     
-    func testMigration() throws {
+    func testMigrationFromV1ToV2() throws {
         // creating events table with version 1 i.e prior to migration
         dbPersistentManager.createEventsTable(withVersion:1)
         // inserting message1 into the table prior to migration
@@ -64,12 +67,12 @@ class DBPersistentManagerTests: XCTestCase {
         // checking if both the messages got saved to the db successfully prior to migration
         XCTAssert(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count==2)
         // verifying that the status column is missing from the events table
-        XCTAssert(!dbPersistentManager.checkIfStatusColumnExists())
-        dbPersistentManager.performMigration()
+        XCTAssert(!dbPersistentManager.checkIfColumnExists(COL_STATUS))
+        dbPersistentManager.performMigration(COL_STATUS)
         // inserting message3 into the table after the migration
         dbPersistentManager.saveEvent(MESSAGE_3)
         // verifying if the status column exists in the event table after migration
-        XCTAssert(dbPersistentManager.checkIfStatusColumnExists())
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS))
         // verifying if both the messages exist in the table even after migration
         let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
         XCTAssert(rsDbMessage.messageIds.count==3)
@@ -78,15 +81,85 @@ class DBPersistentManagerTests: XCTestCase {
         XCTAssert(rsDbMessage.statusList[2] as? Int == 0)
     }
     
+    func testMigrationFromV1ToV3() throws {
+        // creating events table with version 1 i.e prior to migration
+        dbPersistentManager.createEventsTable(withVersion:1)
+        // inserting message1 into the table prior to migration
+        dbPersistentManager.saveEvent(MESSAGE_1)
+        // inserting message2 into the table prior to migration
+        dbPersistentManager.saveEvent(MESSAGE_2)
+        // checking if both the messages got saved to the db successfully prior to migration
+        XCTAssert(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count==2)
+        // verifying that the status column is missing from the events table
+        XCTAssert(!dbPersistentManager.checkIfColumnExists(COL_STATUS))
+        dbPersistentManager.performMigration(COL_STATUS)
+        // verifying that the dm_processed column is missing from the events table
+        XCTAssert(!dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED))
+        dbPersistentManager.performMigration(COL_DM_PROCESSED)
+        // inserting message3 into the table after the migration
+        dbPersistentManager.saveEvent(MESSAGE_3)
+        // verifying if the status column exists in the event table after migration
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS))
+        // verifying if the dm_processed column exists in the event table after migration
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED))
+        // verifying if events made prior to migration their status is marked as DEVICE_MODE_PROCESSING_DONE. For new messages it should be 0
+        let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.statusList[0] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[1] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[2] as? Int == 0)
+        // verifying if events made prior to migration their dm_processed is marked as DM_PROCESSED_DONE. For new messages it should be 0
+        XCTAssert(rsDbMessage.dmProcessed[0] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[1] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[2] as? Int == 0)
+    }
+    
+    func testMigrationFromV2ToV3() throws {
+        // creating events table with version 2 i.e prior to migration
+        dbPersistentManager.createEventsTable(withVersion:2)
+        // inserting message1 into the table prior to migration
+        dbPersistentManager.saveEvent(MESSAGE_1)
+        // inserting message2 into the table prior to migration
+        dbPersistentManager.saveEvent(MESSAGE_2)
+        // checking if both the messages got saved to the db successfully prior to migration
+        XCTAssert(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count==2)
+        // verifying that the status column exist in the events table
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS))
+        // verifying that the dm_processed column is missing from the events table
+        XCTAssert(!dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED))
+        dbPersistentManager.performMigration(COL_DM_PROCESSED)
+        // inserting message3 into the table after the migration
+        dbPersistentManager.saveEvent(MESSAGE_3)
+        // verifying if the dm_processed column exists in the event table after migration
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED))
+        // verifying if events made prior to migration, status is marked as DEVICE_MODE_PROCESSING_DONE. For new messages it should be 0
+        let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.statusList[0] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[1] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[2] as? Int == 0)
+        // verifying if events made prior to migration, dm_processed is marked as DM_PROCESSED_DONE. For new messages it should be 0
+        XCTAssert(rsDbMessage.dmProcessed[0] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[1] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[2] as? Int == 0)
+    }
+    
     func testCreateEventsTableWithVersion () throws {
+        dbPersistentManager.createEventsTable(withVersion: 3)
+        XCTAssert(getCount(sqlString: getCheckIfTableExistCommand(tableName: "events")) > 0)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS) == true)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED) == true)
+        deleteEventsTable()
         dbPersistentManager.createEventsTable(withVersion: 2)
         XCTAssert(getCount(sqlString: getCheckIfTableExistCommand(tableName: "events")) > 0)
-        XCTAssert(dbPersistentManager.checkIfStatusColumnExists() == true)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS) == true)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED) == false)
         deleteEventsTable()
         XCTAssert(getCount(sqlString: getCheckIfTableExistCommand(tableName: "events")) == 0)
         dbPersistentManager.createEventsTable(withVersion: 1)
         XCTAssert(getCount(sqlString: getCheckIfTableExistCommand(tableName: "events")) > 0)
-        XCTAssert(dbPersistentManager.checkIfStatusColumnExists() == false)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_STATUS) == false)
+        XCTAssert(dbPersistentManager.checkIfColumnExists(COL_DM_PROCESSED) == false)
     }
     
     func testSaveEvent() throws {
@@ -180,6 +253,48 @@ class DBPersistentManagerTests: XCTestCase {
         }
         dbPersistentManager.flushEventsFromDB()
         XCTAssertEqual(dbPersistentManager.fetchAllEventsFromDB(forMode: ALL).messageIds.count, 0)
+    }
+    
+    func testMarkDeviceModeTransformationAndProcessedDone() throws {
+        dbPersistentManager.createEventsTable(withVersion: 3)
+        for _ in 1...3 {
+            dbPersistentManager.saveEvent(MESSAGE_1)
+        }
+        for i in 1...3 {
+            dbPersistentManager.markDeviceModeTransformationAndProcessedDone(i as NSNumber)
+        }
+        // verifying if status is marked as DEVICE_MODE_PROCESSING_DONE or not
+        let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.statusList[0] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[1] as? Int == 1)
+        XCTAssert(rsDbMessage.statusList[2] as? Int == 1)
+        // verifying if dm_processed is marked as DM_PROCESSED_DONE done or not
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.dmProcessed[0] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[1] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[2] as? Int == 1)
+    }
+    
+    func testMarkDeviceModeProcessedDone() throws {
+        dbPersistentManager.createEventsTable(withVersion: 3)
+        for _ in 1...3 {
+            dbPersistentManager.saveEvent(MESSAGE_1)
+        }
+        for i in 1...3 {
+            dbPersistentManager.markDeviceModeProcessedDone(i as NSNumber)
+        }
+        // verifying if status remains 0
+        let rsDbMessage: RSDBMessage = dbPersistentManager.fetchAllEventsFromDB(forMode: ALL)
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.statusList[0] as? Int == 0)
+        XCTAssert(rsDbMessage.statusList[1] as? Int == 0)
+        XCTAssert(rsDbMessage.statusList[2] as? Int == 0)
+        // verifying if dm_processed is marked as DM_PROCESSED_DONE done or not
+        XCTAssert(rsDbMessage.messageIds.count==3)
+        XCTAssert(rsDbMessage.dmProcessed[0] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[1] as? Int == 1)
+        XCTAssert(rsDbMessage.dmProcessed[2] as? Int == 1)
     }
     
     
