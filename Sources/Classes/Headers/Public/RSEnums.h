@@ -53,6 +53,11 @@ typedef enum {
 } MODES;
 
 typedef enum {
+    DM_PROCESSED_PENDING =0,
+    DM_PROCESSED_DONE =1,
+} DM_PROCESSED;
+
+typedef enum {
     ENABLED = YES,
     DISABLED = NO
 } TRANSFORMATION_STATUS;

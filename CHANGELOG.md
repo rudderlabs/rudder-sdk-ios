@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.16.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.16.0...v1.16.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* event not getting removed from DB and certain processing issue ([#340](https://github.com/rudderlabs/rudder-sdk-ios/issues/340)) ([54d210c](https://github.com/rudderlabs/rudder-sdk-ios/commit/54d210c083d45779c53e1a21659ee71d2ad75b9f))
+* fixed application installed and updated getting triggered in-correctly ([#345](https://github.com/rudderlabs/rudder-sdk-ios/issues/345)) ([cbdf123](https://github.com/rudderlabs/rudder-sdk-ios/commit/cbdf12383fe19de918a42694f22d462d2454294a))
+* fixed automatic session not getting cleared on dynamically disabling track life cycle events ([#344](https://github.com/rudderlabs/rudder-sdk-ios/issues/344)) ([0b580d9](https://github.com/rudderlabs/rudder-sdk-ios/commit/0b580d9203ad47db8c9d263c7020b16c1f193f6e))
+* replay message queue dumping logic  ([#348](https://github.com/rudderlabs/rudder-sdk-ios/issues/348)) ([307e730](https://github.com/rudderlabs/rudder-sdk-ios/commit/307e7304cb9f385dcdc77943e05ee75c79c66006))
+
 ## [1.16.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.15.1...v1.16.0) (2023-06-08)
 
 
