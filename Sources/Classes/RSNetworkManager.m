@@ -56,10 +56,10 @@ NSString* const RESPONSE = @"RESPONSE";
     }
     else {
         [urlRequest setHTTPMethod:@"POST"];
-        [urlRequest addValue:@"Application/json" forHTTPHeaderField:@"Content-Type"];
+        [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue:self->anonymousIdToken forHTTPHeaderField:@"AnonymousId"];
         NSData *httpBody = [payload dataUsingEncoding:NSUTF8StringEncoding];
-        if (self-> config.gzip) {
+        if (self-> config.gzip && endpoint != TRANSFORM_ENDPOINT) {
             httpBody = [httpBody gzippedData];
             [urlRequest addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
         }
@@ -67,29 +67,34 @@ NSString* const RESPONSE = @"RESPONSE";
     }
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        weakResult.statusCode = (long)httpResponse.statusCode;
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, weakResult.statusCode ]];
-        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if (weakResult.statusCode == 200) {
-            weakResult.state = NETWORK_SUCCESS;
-            weakResult.responsePayload = responseString;
-            weakResult.errorPayload = nil;
+        if(error && error.domain == NSURLErrorDomain && error.code == NSURLErrorNotConnectedToInternet) {
+            weakResult.state = NETWORK_UNAVAILABLE;
         } else {
-            weakResult.errorPayload = responseString;
-            weakResult.responsePayload = nil;
-            if(weakResult.statusCode == 404) {
-                weakResult.state = RESOURCE_NOT_FOUND;
-            } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
-                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, weakResult.statusCode ]];
-                weakResult.state = WRONG_WRITE_KEY;
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            weakResult.statusCode = (long)httpResponse.statusCode;
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, weakResult.statusCode ]];
+            NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if (weakResult.statusCode == 200) {
+                weakResult.state = NETWORK_SUCCESS;
+                weakResult.responsePayload = responseString;
+                weakResult.errorPayload = nil;
             } else {
-                weakResult.state = NETWORK_ERROR;
+                weakResult.errorPayload = responseString;
+                weakResult.responsePayload = nil;
+                if(weakResult.statusCode == 404) {
+                    weakResult.state = RESOURCE_NOT_FOUND;
+                } else if (weakResult.statusCode == 400) {
+                    weakResult.state = BAD_REQUEST;
+                } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
+                    [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, weakResult.statusCode ]];
+                    weakResult.state = WRONG_WRITE_KEY;
+                } else {
+                    weakResult.state = NETWORK_ERROR;
+                }
+                [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, weakResult.statusCode, weakResult.errorPayload]];
             }
-            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, weakResult.statusCode, weakResult.errorPayload]];
-        }
-        dispatch_semaphore_signal(semaphore);
-    }];
+            dispatch_semaphore_signal(semaphore);
+        }}];
     [networkLock lock];
     [dataTask resume];
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);

@@ -73,9 +73,9 @@
 - (instancetype) initWithDict:(NSDictionary*) dict {
     self = [super init];
     if(self) {
-        _carrier = dict[@"carrier"];
-        _wifi = dict[@"wifi"];
-        _cellular = dict[@"cellular"];
+        _carrier = [[RSUtils getArrayFromCSVString:dict[@"carrier"]] mutableCopy];
+        _wifi = [dict[@"wifi"] boolValue];
+        _cellular = [dict[@"cellular"] boolValue];
     }
     return self;
 }
@@ -88,10 +88,8 @@
             [tempDict setValue:[RSUtils getCSVString:_carrier] forKey:@"carrier"];
         }
 #if !TARGET_OS_WATCH
-        if(_isNetworkReachable) {
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];
             [tempDict setValue:[NSNumber numberWithBool:_cellular] forKey:@"cellular"];
-        }
 #endif
         return [tempDict copy];
     }

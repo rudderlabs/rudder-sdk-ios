@@ -19,23 +19,34 @@ static int groupCount = 1;
 static int screenCount = 1;
 
 
-static NSString *WRITE_KEY = @"1xXCubSHWXbpBI2h6EpCjKOsxmQ";
-static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack.com";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-//    [RSClient putAuthToken:@"testAuthToken"];
+    /// Create a `configuration.json` file on root directory. The JSON should be look like:
+    /// {
+    ///    "writeKey": "WRITE_KEY_VALUE",
+    ///    "dataPlaneUrl": "DATA_PLANE_URL_VALUE",
+    ///    "controlPlaneUrl": "CONTROL_PLANE_URL_VALUE"
+    /// }
+    
+    NSDictionary *dict = [self JSONFromFile];
+    NSString* dataPlaneUrl = dict[@"dataPlaneUrl"];
+    NSString* writeKey = dict[@"writeKey"];
+    NSString* controlPlaneUrl = dict[@"controlPlaneUrl"];
+    
+    [RSClient putAuthToken:@"testAuthToken"];
     RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
     [builder withLoglevel:RSLogLevelVerbose];
     [builder withTrackLifecycleEvens:YES];
     [builder withRecordScreenViews:YES];
-    [builder withDataPlaneUrl:DATA_PLANE_URL];
+    [builder withDataPlaneUrl:dataPlaneUrl];
+    [builder withControlPlaneUrl:controlPlaneUrl];
     [builder withFactory:[RudderAmplitudeFactory instance]];
     [builder withFactory:[RudderBrazeFactory instance]];
-    [RSClient getInstance:WRITE_KEY config:[builder build]];
+    [RSClient getInstance:writeKey config:[builder build]];
     
     return YES;
 }
@@ -86,4 +97,10 @@ static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack
     [[RSClient sharedInstance] reset];
 }
 
+- (id)JSONFromFile
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"configuration" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+}
 @end

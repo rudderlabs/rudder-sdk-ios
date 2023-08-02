@@ -48,7 +48,7 @@
     return trimmedEventNames;
 }
 
-- (BOOL) isEventAllowed:(RSMessage *) message ForDestination: (NSString *) destinationName; {
+- (BOOL) isEventAllowed:(RSMessage *) message byDestination: (NSString *) destinationName; {
     if(message != nil && message.type != nil && message.type.length > 0 && [message.type isEqualToString:RSTrack] && message.event != nil && message.event.length >0 ) {
         if([self isEventFilteringEnabled:destinationName]) {
             BOOL isEventAllowed = NO;
