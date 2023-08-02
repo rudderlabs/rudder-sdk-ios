@@ -12,24 +12,30 @@
 #import "RSDBPersistentManager.h"
 #import "RSNetworkManager.h"
 #import "RSConsentFilterHandler.h"
+#import "RSServerConfigManager.h"
+#import "RSTransformationEvent.h"
+#import "RSTransformationRequest.h"
 
 @interface RSDeviceModeManager : NSObject {
     RSConfig *config;
     RSDBPersistentManager *dbPersistentManager;
     RSNetworkManager *networkManager;
     RSEventFilteringPlugin *eventFilteringPlugin;
-    RSConsentFilterHandler *consentFilterHandler;
+    NSMutableArray<NSString *>* consentedDestinationNames;
     NSMutableDictionary<NSString*, id<RSIntegration>>* integrationOperationMap;
-    NSDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
+    NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
+    NSMutableArray<NSString*>* destinationsAcceptingEventsOnTransformationError;
     BOOL areFactoriesInitialized;
     BOOL isDeviceModeFactoriesNotPresent;
 }
 
 - (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
-- (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled;
+- (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) consentedDestinations withConfigManager:(RSServerConfigManager *) configManager;
 - (void) makeFactoryDump:(RSMessage *)message FromHistory:(BOOL) fromHistory withRowId:(NSNumber *) rowId;
-- (void) dumpOriginalEvents:(NSArray *) originalPayloads;
-- (void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId;
+- (void) dumpOriginalEventsOnTransformationError:(NSArray<RSTransformationEvent*>*) transformationEvents;
+- (void) dumpOriginalEventsOnTransformationsFeatureDisabled:(NSArray<RSTransformationEvent*>*) transformationEvents;
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId whereOriginalPayload:(RSTransformationRequest*) request;
+- (NSArray<NSString *> *) getDestinationIdsWithTransformationStatus:(TRANSFORMATION_STATUS) status fromMessage:(RSMessage *) message;
 - (void) reset;
 - (void) flush;
 - (void) handleCaseWhenNoDeviceModeFactoryIsPresent;

@@ -76,3 +76,5 @@ IDEWorkspaceChecks.plist
 # Sonar
 relative_or_absolute_path_to_cache_location
 compile_commands.json
+
+configuration.json

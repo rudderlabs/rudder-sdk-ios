@@ -22,6 +22,14 @@
     return [dateFormatter stringFromDate:date];
 }
 
++ (NSString*) getStringFromDict:(NSDictionary *) dict {
+    NSData *dictData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+    if(dictData == nil)
+        return @"";
+    NSString *dictString = [[NSString alloc] initWithData:dictData encoding:NSUTF8StringEncoding];
+    return dictString;
+}
+
 + (NSString *)getTimestamp {
     return [self getDateString:[[NSDate alloc] init]];
 }
@@ -51,6 +59,13 @@
         // Fallback on earlier versions
         return @"NA";
     }
+}
+
++ (unsigned int) getUTF8LengthForDict:(NSDictionary *)message {
+    NSString* msgString = [self getStringFromDict:message];
+    if(msgString == nil)
+        return 0;
+    return [self getUTF8Length:msgString];
 }
 
 + (unsigned int) getUTF8Length:(NSString *)message {
@@ -125,6 +140,10 @@
         return [returnArray copy];
     }
     return array;
+}
+
++(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString {
+    return [csvString componentsSeparatedByString:@","];
 }
 
 +(NSString*) getCSVString:(NSArray*) inputStrings {
