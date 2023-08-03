@@ -24,7 +24,7 @@
 
 ---
 
-# RudderStack iOS SDK
+# RudderStack's iOS SDK
 
 RudderStack's iOS SDK lets you track event data from your **iOS** and **tvOS** applications. After integrating the SDK, you will also be able to send these events to your preferred destinations such as Google Analytics, Amplitude, and more.
 
