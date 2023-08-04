@@ -23,11 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getLocale;
 + (NSString*) getDateString: (NSDate*) date;
 + (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order;
++ (NSString*) getStringFromDict:(NSDictionary *) dict;
++ (unsigned int) getUTF8LengthForDict:(NSDictionary *)message;
 + (unsigned int) getUTF8Length: (NSString*) message;
 + (NSDictionary<NSString*, id>*) serializeDict: (NSDictionary<NSString*, id>* _Nullable) dict;
 + (NSArray*) serializeArray: (NSArray*) array;
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize;
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
++(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString;
 + (NSString*) getCSVString:(NSArray*) inputStrings;
 + (NSString*) getJSONCSVString:(NSArray*) inputStrings;
 + (id _Nullable) deSerializeJSONString:(NSString*) jsonString;

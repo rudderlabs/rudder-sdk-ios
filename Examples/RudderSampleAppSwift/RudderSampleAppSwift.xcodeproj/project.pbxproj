@@ -16,9 +16,9 @@
 		D55B72537AC03E9A3F7524FA /* Pods_RudderSampleAppSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FE82D63F0324B1B29DBA09 /* Pods_RudderSampleAppSwift.framework */; };
 		ED00467228A64DE50007206F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00467128A64DE50007206F /* SessionViewController.swift */; };
 		ED0CA6D52A7AAC5600899C1C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */; };
-		EDA5B7652A6A604300948D18 /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDA5B7622A6A604300948D18 /* RudderConfig.plist */; };
-		EDA5B7662A6A604300948D18 /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDA5B7632A6A604300948D18 /* SampleRudderConfig.plist */; };
-		EDA5B7672A6A604300948D18 /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5B7642A6A604300948D18 /* RudderConfig.swift */; };
+		ED0CA7042A7D0B2B00899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */; };
+		ED0CA7052A7D0B2B00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */; };
+		ED0CA7062A7D0B2B00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */; };
 		EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,9 +35,9 @@
 		E32C35F6B909BB22A7F0553E /* Pods-RudderSampleAppSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.release.xcconfig"; sourceTree = "<group>"; };
 		ED00467128A64DE50007206F /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		EDA5B7622A6A604300948D18 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
-		EDA5B7632A6A604300948D18 /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
-		EDA5B7642A6A604300948D18 /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
+		ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
+		ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
+		ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		FD4DAD4049ABA2A60254AD71 /* Pods-RudderSampleAppSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,7 +75,7 @@
 		06EABC8424665E470043D720 /* RudderSampleAppSwift */ = {
 			isa = PBXGroup;
 			children = (
-				EDA5B7612A6A604300948D18 /* RudderConfig */,
+				ED0CA7002A7D0B2B00899C1C /* RudderConfig */,
 				ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */,
 				06EABC8524665E470043D720 /* AppDelegate.swift */,
 				EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */,
@@ -108,15 +108,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EDA5B7612A6A604300948D18 /* RudderConfig */ = {
+		ED0CA7002A7D0B2B00899C1C /* RudderConfig */ = {
 			isa = PBXGroup;
 			children = (
-				EDA5B7622A6A604300948D18 /* RudderConfig.plist */,
-				EDA5B7632A6A604300948D18 /* SampleRudderConfig.plist */,
-				EDA5B7642A6A604300948D18 /* RudderConfig.swift */,
+				ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */,
+				ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */,
+				ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */,
 			);
 			name = RudderConfig;
-			path = ../../../RudderConfig;
+			path = ../../RudderConfig;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,9 +179,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDA5B7652A6A604300948D18 /* RudderConfig.plist in Resources */,
 				06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */,
-				EDA5B7662A6A604300948D18 /* SampleRudderConfig.plist in Resources */,
+				ED0CA7042A7D0B2B00899C1C /* RudderConfig.plist in Resources */,
+				ED0CA7052A7D0B2B00899C1C /* SampleRudderConfig.plist in Resources */,
 				06EABC8F24665E480043D720 /* Assets.xcassets in Resources */,
 				06EABC8D24665E470043D720 /* Main.storyboard in Resources */,
 				ED0CA6D52A7AAC5600899C1C /* GoogleService-Info.plist in Resources */,
@@ -240,7 +240,7 @@
 				06EABC8A24665E470043D720 /* ViewController.swift in Sources */,
 				ED00467228A64DE50007206F /* SessionViewController.swift in Sources */,
 				06EABC8624665E470043D720 /* AppDelegate.swift in Sources */,
-				EDA5B7672A6A604300948D18 /* RudderConfig.swift in Sources */,
+				ED0CA7062A7D0B2B00899C1C /* RudderConfig.swift in Sources */,
 				06EABC8824665E470043D720 /* SceneDelegate.swift in Sources */,
 				EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */,
 			);

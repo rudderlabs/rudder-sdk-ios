@@ -71,12 +71,19 @@
             destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
             
             // checking if transformations are connected for each device mode destination, and if connected storing their id's in an array
-            NSNumber *transformationsConnected = [destinationDict objectForKey:@"areTransformationsConnected"];
-            BOOL isTransformationConnected = NO;
-            if(transformationsConnected != nil) {
-                isTransformationConnected = [transformationsConnected boolValue];
+            NSNumber *_shouldApplyDeviceModeTransformation = [destinationDict objectForKey:@"shouldApplyDeviceModeTransformation"];
+            BOOL shouldApplyDeviceModeTransformation = NO;
+            if (_shouldApplyDeviceModeTransformation != nil) {
+                shouldApplyDeviceModeTransformation = [_shouldApplyDeviceModeTransformation boolValue];
             }
-            destination.isTransformationConnected = isTransformationConnected;
+            destination.shouldApplyDeviceModeTransformation = shouldApplyDeviceModeTransformation;
+            
+            NSNumber *_propagateEventsUntransformedOnError = [destinationDict objectForKey:@"propagateEventsUntransformedOnError"];
+            BOOL propagateEventsUntransformedOnError = NO;
+            if (_propagateEventsUntransformedOnError != nil) {
+                propagateEventsUntransformedOnError = [_propagateEventsUntransformedOnError boolValue];
+            }
+            destination.propagateEventsUntransformedOnError = propagateEventsUntransformedOnError;
             
             RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
             NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];

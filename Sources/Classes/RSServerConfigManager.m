@@ -18,6 +18,7 @@
 
 static RSServerConfigManager *_instance;
 static NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
+static NSMutableArray<NSString*>* destinationsAcceptingEventsOnTransformationError;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static RSServerConfigSource *serverConfig;
 
@@ -72,11 +73,17 @@ int receivedError = NETWORK_SUCCESS;
     if (error == nil && configDict != nil) {
         source = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
         for (RSServerDestination *destination in source.destinations) {
-            if(destination.isTransformationConnected) {
+            if (destination.shouldApplyDeviceModeTransformation) {
                 if(destinationsWithTransformationsEnabled == nil) {
                     destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
                 }
                 destinationsWithTransformationsEnabled[destination.destinationDefinition.displayName] = destination.destinationId;
+                if (destination.propagateEventsUntransformedOnError) {
+                    if(destinationsAcceptingEventsOnTransformationError == nil) {
+                        destinationsAcceptingEventsOnTransformationError = [[NSMutableArray alloc] init];
+                    }
+                    [destinationsAcceptingEventsOnTransformationError addObject:destination.destinationDefinition.displayName];
+                }
             }
         }
     } else {
@@ -143,6 +150,13 @@ int receivedError = NETWORK_SUCCESS;
     NSDictionary<NSString*, NSString*>* transformationsEnabledDestinations = [destinationsWithTransformationsEnabled copy];
     pthread_mutex_unlock(&mutex);
     return transformationsEnabledDestinations;
+}
+
+- (NSArray<NSString*>*) getDestinationsAcceptingEventsOnTransformationError {
+    pthread_mutex_lock(&mutex);
+    NSArray<NSString*>* destinationsAcceptingEvents = [destinationsAcceptingEventsOnTransformationError copy];
+    pthread_mutex_unlock(&mutex);
+    return destinationsAcceptingEvents;
 }
 
 - (int) getError {

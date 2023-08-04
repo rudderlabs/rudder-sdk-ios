@@ -1,7 +1,7 @@
 PODS:
   - MetricsReporter (1.0.0):
     - RudderKit (~> 1.4.0)
-  - Rudder (1.16.1):
+  - Rudder (1.17.0):
     - MetricsReporter (~> 1.0.0)
   - RudderKit (1.4.0)
 
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MetricsReporter: 35d1a8e62cd99e1434bc8fdd06bf2baf7cb23e42
-  Rudder: 28101ff2029ec23b908511a133c5a788994e3dcd
+  Rudder: a67e7ea0e0fcbba5ecf1828953e959ae64639d68
   RudderKit: d9d6997696e1642b753d8bdf94e57af643a68f03
 
 PODFILE CHECKSUM: 5c764252e2e240120e81c84d37b02256cbb726e5

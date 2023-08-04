@@ -178,7 +178,7 @@ static RSEventRepository* _instance;
                     if (serverConfig.destinations != nil && serverConfig.destinations.count > 0) {
                         NSArray <RSServerDestination *> *consentedDestinations = self->consentFilterHandler != nil ? [self->consentFilterHandler filterDestinationList:serverConfig.destinations] : serverConfig.destinations;
                         if(consentedDestinations != nil && consentedDestinations.count > 0 ) {
-                            [self->deviceModeManager startDeviceModeProcessor:consentedDestinations andDestinationsWithTransformationsEnabled:[strongSelf->configManager getDestinationsWithTransformationsEnabled]];
+                            [self->deviceModeManager startDeviceModeProcessor:consentedDestinations withConfigManager:strongSelf->configManager];
                         }
                     } else {
                         [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];

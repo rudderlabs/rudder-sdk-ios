@@ -8,54 +8,58 @@
 #import "AppDelegate.h"
 #import "CustomFactory.h"
 #import <Rudder/Rudder.h>
+#import "RudderSampleApptvOSObjC-Swift.h"
 
 @interface AppDelegate ()
 
 @end
-
-static NSString *WRITE_KEY = @"21zVhiRJL38EAgphqL65VpzyjLB";
-
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [RSClient putDeviceToken:@"your_device_token"];
-    [RSClient putAnonymousId:@"anonymous_id"];
-    
-    
-    RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withLoglevel:RSLogLevelVerbose];
-    [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:YES];
-    [builder withDataPlaneUrl:@"https://7b7a-61-95-158-116.ngrok.io"];
-//    [builder withEnableBackgroundMode:YES];
-    [RSClient getInstance:@"21zVhiRJL38EAgphqL65VpzyjLB" config:[builder build]];
-    
-    [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
-        @"key_1" : @"value_1",
-        @"key_2" : @"value_2"
-    }];
-    
-    [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
-    
-    RSOption *identifyOptions = [[RSOption alloc] init];
-    [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
-    [[RSClient sharedInstance] identify:@"testUserId"
-                                 traits:@{@"firstname": @"First Name"}
-                                options:identifyOptions];
-    
-    [[RSClient sharedInstance] screen:@"ViewController"];
-    
-    [[RSClient sharedInstance] group:@"sample_group_id"
-                              traits:@{@"foo": @"bar",
-                                       @"foo1": @"bar1",
-                                       @"email": @"ruchira@gmail.com"}
-    ];
-    
-    [[RSClient sharedInstance] alias:@"new_user_id"];
-    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"RudderConfig" ofType:@"plist"];
+    if (path != nil) {
+        NSURL *url = [NSURL fileURLWithPath:path];
+        RudderConfig *rudderConfig = [RudderConfig createFrom:url];
+        if (rudderConfig != nil) {
+            [RSClient putDeviceToken:@"your_device_token"];
+            [RSClient putAnonymousId:@"anonymous_id"];
+            
+            
+            RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
+            [builder withLoglevel:RSLogLevelVerbose];
+            [builder withTrackLifecycleEvens:YES];
+            [builder withRecordScreenViews:YES];
+            [builder withDataPlaneUrl:rudderConfig.PROD_DATA_PLANE_URL];
+            //[builder withEnableBackgroundMode:YES];
+            [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
+            
+            [[RSClient sharedInstance] track:@"simple_track_with_props" properties:@{
+                @"key_1" : @"value_1",
+                @"key_2" : @"value_2"
+            }];
+            
+            [[[RSClient sharedInstance] getContext] putAdvertisementId:@"advertisement_Id"];
+            
+            RSOption *identifyOptions = [[RSOption alloc] init];
+            [identifyOptions putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
+            [[RSClient sharedInstance] identify:@"testUserId"
+                                         traits:@{@"firstname": @"First Name"}
+                                        options:identifyOptions];
+            
+            [[RSClient sharedInstance] screen:@"ViewController"];
+            
+            [[RSClient sharedInstance] group:@"sample_group_id"
+                                      traits:@{@"foo": @"bar",
+                                               @"foo1": @"bar1",
+                                               @"email": @"ruchira@gmail.com"}
+            ];
+            
+            [[RSClient sharedInstance] alias:@"new_user_id"];
+        }
+    }
 
     return YES;
 }

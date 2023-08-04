@@ -22,17 +22,20 @@
         self->dbPersistentManager = dbPersistentManager;
         self->networkManager = networkManager;
         self->integrationOperationMap = [[NSMutableDictionary alloc] init];
+        self->destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
+        self->destinationsAcceptingEventsOnTransformationError = [[NSMutableArray alloc] init];
+        self->consentedDestinationNames = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-- (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) destinations andDestinationsWithTransformationsEnabled: (NSDictionary<NSString*, NSString*>*) destinationsWithTransformationsEnabled {
+- (void) startDeviceModeProcessor:(NSArray<RSServerDestination*>*) consentedDestinations withConfigManager:(RSServerConfigManager *) configManager {
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Starting the Device Mode Processor"];
-    self->destinationsWithTransformationsEnabled = destinationsWithTransformationsEnabled;
+    [self segregateDestinations:consentedDestinations withConfigManager:configManager];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Event Filtering Plugin"];
-    self->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:destinations];
+    self->eventFilteringPlugin = [[RSEventFilteringPlugin alloc] init:consentedDestinations];
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Device Mode Factories"];
-    [self initiateFactories:destinations];
+    [self initiateFactories:consentedDestinations];
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
@@ -45,6 +48,30 @@
         [deviceModeTransformationManager startTransformationProcessor];
     } else {
         [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: No Device Mode Destinations with transformations attached hence device mode transformation processor need not to be started"];
+    }
+}
+
+- (void)segregateDestinations:(NSArray<RSServerDestination*>*)consentedDestinations withConfigManager:(RSServerConfigManager *)configManager {
+    
+    // storing the display names of the destinations for which consent has been granted
+    for(RSServerDestination* destination in consentedDestinations) {
+        [self->consentedDestinationNames addObject:destination.destinationDefinition.displayName];
+    }
+    
+    // filtering out destinations for which consent has been denied from destinationsWithTransformationsEnabled dict
+    NSDictionary<NSString*, NSString*>* inputDestinationsWithTransformationsEnabled = [configManager getDestinationsWithTransformationsEnabled];
+    for(NSString* key in [inputDestinationsWithTransformationsEnabled allKeys]) {
+        if([self->consentedDestinationNames containsObject:key]){
+            self->destinationsWithTransformationsEnabled[key] = inputDestinationsWithTransformationsEnabled[key];
+        }
+    }
+    
+    // filtering out destinations for which consent has been denied from destinationsAcceptingEventsOnTransformationError array
+    NSArray<NSString*>* inputDestinationsAcceptingEventsOnTransformationError = [configManager getDestinationsAcceptingEventsOnTransformationError];
+    for(NSString* destination in inputDestinationsAcceptingEventsOnTransformationError) {
+        if([self->consentedDestinationNames containsObject:destination]){
+            [self->destinationsAcceptingEventsOnTransformationError addObject:destination];
+        }
     }
 }
 
@@ -174,31 +201,71 @@
     [self dumpEvent:message toDestinations:destinationsWithoutTransformations withLogTag:@"makeFactoryDump"];
 }
 
-- (void) dumpOriginalEvents:(NSArray *) originalPayloads {
-    [RSLogger logWarn:@"RSDeviceModeManager: dumpOriginalEvents: Dumping the original events back to the transformation enabled destinations as the transformations feature is not enabled"];
-    for(NSDictionary* originalPayload in originalPayloads) {
-        RSMessage* originalMessage = [[RSMessage alloc] initWithDict:originalPayload[@"event"]];
-        NSArray<NSString *> * transformationEnabledDestinations = [self getDestinationsWithTransformationStatus:ENABLED fromMessage:originalMessage];
-        [self dumpEvent:originalMessage toDestinations:transformationEnabledDestinations withLogTag:@"dumpOriginalEvents"];
+- (void) dumpOriginalEventsOnTransformationError:(NSArray<RSTransformationEvent*>*) transformationEvents {
+    for(RSTransformationEvent* transformationEvent in transformationEvents) {
+        RSMessage* originalMessage = transformationEvent.event;
+        NSArray<NSString *> * destinationNames = [self getDestinationNamesForIds:transformationEvent.destinationIds];
+        for(NSString* destinationName in destinationNames) {
+            if(![self->destinationsAcceptingEventsOnTransformationError containsObject:destinationName]) {
+                [RSLogger logWarn:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpOriginalEventsOnTransformationError: Destination %@ is not configured to accept events on transformation error, hence dropping the %@ event %@", destinationName, originalMessage.type, originalMessage.event]];
+                continue;
+            }
+            [self dumpEvent:originalMessage toDestinations:@[destinationName] withLogTag:@"dumpOriginalEventsOnTransformationError"];
+        }
     }
 }
 
--(void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId {
-    NSArray<NSString*>* destinationNames = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId];
-    if(destinationNames.count > 0) {
-        NSString* destinationName = destinationNames[0];
-        [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Dumping back the transformed events to the destination %@", destinationName]];
-        for (NSDictionary* transformedPayload in transformedPayloads) {
-            NSString* status = transformedPayload[@"status"];
-            if(status !=nil && [status isEqualToString:@"200"]) {
-                NSDictionary* event = transformedPayload[@"event"];
-                if(event != nil) {
-                    RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
-                    [self dumpEvent:transformedMessage toDestinations:@[destinationName] withLogTag:@"dumpTransformedEvents"];
-                }
-            }
+- (void) dumpOriginalEventsOnTransformationsFeatureDisabled:(NSArray<RSTransformationEvent*>*) transformationEvents {
+    [RSLogger logWarn:@"RSDeviceModeManager: dumpOriginalEvents: Transformation Feature is not enabled, hence dumping back the original events to transformation enabled destinations"];
+    for(RSTransformationEvent* transformationEvent in transformationEvents) {
+        RSMessage* originalMessage = transformationEvent.event;
+        NSArray<NSString *> * destinationNames = [self getDestinationNamesForIds:transformationEvent.destinationIds];
+        [self dumpEvent:originalMessage toDestinations:destinationNames withLogTag:@"dumpOriginalEventsOnTransformationsFeatureDisabled"];
+        continue;
+    }
+}
+
+- (RSMessage *)getOriginalEventWith:(NSNumber *)orderNo FromRequest:(RSTransformationRequest *)request {
+    RSMessage* originalMessage = nil;
+    for(RSTransformationEvent* transformationEvent in request.batch) {
+        if(transformationEvent.orderNo == orderNo) {
+            originalMessage = transformationEvent.event;
+            return originalMessage;
         }
     }
+    return originalMessage;
+}
+
+-(void) dumpTransformedEvents:(NSArray*) transformedPayloads toDestinationId:(NSString*) destinationId whereOriginalPayload:(RSTransformationRequest*) request {
+    NSString* destinationName = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId][0];
+    if(destinationName == nil)
+        return;
+    [RSLogger logDebug: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Dumping back the transformed events to the destination %@", destinationName]];
+    for (NSDictionary* transformedPayload in transformedPayloads) {
+        NSString* status = transformedPayload[@"status"];
+        if(status == nil) continue;
+        if([status isEqualToString:@"200"]) {
+            NSDictionary* event = transformedPayload[@"event"];
+            if(event == nil) {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: User Dropped an event for the destination %@ in the transformation service hence ignoring it", destinationName]];
+                continue;
+            }
+            RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
+            [self dumpEvent:transformedMessage toDestinations:@[destinationName] withLogTag:@"dumpTransformedEvents"];
+            continue;
+        }
+        NSNumber* orderNo = [NSNumber numberWithInt:[transformedPayload[@"orderNo"] intValue]];
+        RSMessage * originalMessage = [self getOriginalEventWith:orderNo FromRequest:request];
+        if(originalMessage == nil) continue;
+        [RSLogger logWarn: [[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Transformation of %@ event %@ for destination %@ has failed %@", originalMessage.type, originalMessage.event, destinationName, [status isEqualToString:@"410"] ? @"as its configuration has been modified or the transformation is disabled": @""]];
+        if(![self->destinationsAcceptingEventsOnTransformationError containsObject:destinationName]) {
+            [RSLogger logWarn:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Destination %@ is not accepting events on transformation error, hence dropping the %@ event %@", destinationName, originalMessage.type, originalMessage.event]];
+            continue;
+        }
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: dumpTransformedEvents: Destination %@ is accepting events on transformation error, hence dumping the original event to it.", destinationName]];
+        [self dumpEvent:originalMessage toDestinations:@[destinationName] withLogTag:@"dumpOriginalEvents"];
+    }
+    
 }
 
 -(void) dumpEvent:(RSMessage *) message toDestinations:(NSArray<NSString *> *) destinations withLogTag:(NSString *) logTag {
@@ -254,6 +321,21 @@
     return eligibleDestinations;
 }
 
+- (BOOL) isEvent:(RSMessage *) message allowedForDestination: (NSString *) destinationName {
+    BOOL isDestinationEnabledInMessage = [self isDestination:destinationName enabledInMessage:message];
+    BOOL isEventAllowedByDestination = [self->eventFilteringPlugin isEventAllowed:message byDestination:destinationName];
+    return isDestinationEnabledInMessage && isEventAllowedByDestination;
+}
+
+- (BOOL) isDestination:(NSString *) destinationName enabledInMessage:(RSMessage *) message {
+    NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
+    // If All is set to true and the destination is absent in the integrations object
+    BOOL isAllTrueAndDestinationAbsent = [(NSNumber*)integrationOptions[@"All"] boolValue] && (integrationOptions[destinationName]==nil);
+    // If the destination is present and true in the integrations object
+    BOOL isDestinationEnabled = [(NSNumber*)integrationOptions[destinationName] boolValue];
+    return isAllTrueAndDestinationAbsent || isDestinationEnabled;
+}
+
 - (NSArray<NSString *> *) getDestinationsWithTransformationStatus:(TRANSFORMATION_STATUS) status fromDestinations:(NSArray<NSString *> *) inputDestinations {
     NSMutableArray<NSString *>* outputDestinations = [[NSMutableArray alloc] init];
     for(NSString* inputDestination in inputDestinations) {
@@ -270,22 +352,35 @@
     return [self getDestinationsWithTransformationStatus:status fromDestinations:inputDestinations];
 }
 
-
-- (BOOL) isEvent:(RSMessage *) message allowedForDestination: (NSString *) destinationName {
-    BOOL isDestinationEnabledForMessage = [self isDestination:destinationName enabledForMessage:message];
-    BOOL isEventAllowedForDestination = [self->eventFilteringPlugin isEventAllowed:message ForDestination:destinationName];
-    return isDestinationEnabledForMessage && isEventAllowedForDestination;
+- (NSArray<NSString *> *) getDestinationIdsWithTransformationStatus:(TRANSFORMATION_STATUS) status fromMessage:(RSMessage *) message {
+    NSArray<NSString *>* eligibleDestinations = [self getEligibleDestinations:message];
+    NSArray<NSString*>* destinationNames = [self getDestinationsWithTransformationStatus:status fromDestinations:eligibleDestinations];
+    NSMutableArray<NSString*>* destinationIds = [[NSMutableArray alloc] init];
+    for(NSString* destinationName in destinationNames) {
+        NSString* destinationId = self->destinationsWithTransformationsEnabled[destinationName];
+        if( destinationId!= nil) {
+            [destinationIds addObject: destinationId];
+        }
+    }
+    return destinationIds;
 }
 
-- (BOOL) isDestination:(NSString *) destinationName enabledForMessage:(RSMessage *) message {
-    NSDictionary<NSString*, NSObject*>*  integrationOptions = message.integrations;
-    // If All is set to true and the destination is absent in the integrations object
-    BOOL isAllTrueAndDestinationAbsent = [(NSNumber*)integrationOptions[@"All"] boolValue] && (integrationOptions[destinationName]==nil);
-    // If the destination is present and true in the integrations object
-    BOOL isDestinationEnabled = [(NSNumber*)integrationOptions[destinationName] boolValue];
-    return isAllTrueAndDestinationAbsent || isDestinationEnabled;
+- (NSArray<NSString*>*) getDestinationsAcceptingEventsOnTransformationError:(NSArray<NSString*>*) destinations {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", self->destinationsAcceptingEventsOnTransformationError];
+    NSArray *acceptingDestinations = [destinations filteredArrayUsingPredicate:predicate];
+    return acceptingDestinations;
 }
 
+- (NSArray<NSString*>*) getDestinationNamesForIds:(NSArray<NSString*>*) destinationIds {
+    NSMutableArray<NSString*>* destinationNames = [[NSMutableArray alloc] init];
+    for(NSString* destinationId in destinationIds) {
+        NSString* destinationName = [self->destinationsWithTransformationsEnabled allKeysForObject:destinationId][0];
+        if(destinationName != nil) {
+            [destinationNames addObject:destinationName];
+        }
+    }
+    return destinationNames;
+}
 
 - (BOOL) doFactoriesPassedHaveTransformationsEnabled {
     if(![self areFactoriesPassedInConfig])

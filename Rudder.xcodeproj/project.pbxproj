@@ -15,6 +15,18 @@
 		9FB75F0BAFC4A4C576D36A27 /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CC496FDCC79EADD1C418ED /* Pods_RudderTests_iOS.framework */; };
 		A54B7BB6CB705411E70B8A60 /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F12D7FE81BE2CC4E863A6EDB /* Pods_Rudder_iOS.framework */; };
 		C42410333C63CEC27409D091 /* Pods_RudderTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE06D68F2B273624AAA8EDF /* Pods_RudderTests_tvOS.framework */; };
+		ED0CA6EA2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EB2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EC2A7D08D800899C1C /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6ED2A7D08D800899C1C /* RSTransformationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EE2A7D08D900899C1C /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EF2A7D08D900899C1C /* RSTransformationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6F02A7D09B000899C1C /* RSTransformationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */; };
+		ED0CA6F12A7D09B000899C1C /* RSTransformationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */; };
+		ED0CA6F22A7D09B000899C1C /* RSTransformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */; };
+		ED0CA6F32A7D09B100899C1C /* RSTransformationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */; };
+		ED0CA6F42A7D09B100899C1C /* RSTransformationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */; };
+		ED0CA6F52A7D09B100899C1C /* RSTransformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */; };
 		ED3CC19F2A14A78200F34082 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED3CC1A02A14A78200F34082 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
@@ -670,6 +682,12 @@
 		F6B4B54029C8237D00344864 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */; };
 		F6B4B54129C8237D00344864 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53829C8237D00344864 /* RSFlushManager.m */; };
 		F6B4B54229C8237D00344864 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53929C8237D00344864 /* RSCloudModeManager.m */; };
+		F6F2FA722A53CD200025D510 /* RSTransformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */; };
+		F6F2FA742A53CD9F0025D510 /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6F2FA762A53D8310025D510 /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6F2FA782A53D8520025D510 /* RSTransformationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */; };
+		F6F2FA7A2A53D8BF0025D510 /* RSTransformationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6F2FA7C2A53D8E50025D510 /* RSTransformationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -959,6 +977,12 @@
 		F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApplicationLifeCycleManager.m; sourceTree = "<group>"; };
 		F6B4B53829C8237D00344864 /* RSFlushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFlushManager.m; sourceTree = "<group>"; };
 		F6B4B53929C8237D00344864 /* RSCloudModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCloudModeManager.m; sourceTree = "<group>"; };
+		F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTransformationRequest.m; sourceTree = "<group>"; };
+		F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTransformationRequest.h; sourceTree = "<group>"; };
+		F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTransformationEvent.h; sourceTree = "<group>"; };
+		F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTransformationEvent.m; sourceTree = "<group>"; };
+		F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTransformationMetadata.h; sourceTree = "<group>"; };
+		F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTransformationMetadata.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1162,6 +1186,9 @@
 				ED7DFD91298C091800ED5A8E /* RSUtils.m */,
 				ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */,
 				ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */,
+				F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */,
+				F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */,
+				F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1218,6 +1245,9 @@
 				ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */,
 				ED7DFDB8298C091800ED5A8E /* RSTraits.h */,
 				ED7DFDBA298C091800ED5A8E /* RSTraitsBuilder.h */,
+				F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */,
+				F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */,
+				F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */,
 				ED7DFDAB298C091800ED5A8E /* RSUserSession.h */,
 				ED7DFDC2298C091800ED5A8E /* RSUtils.h */,
 				ED7DFDA2298C091800ED5A8E /* Rudder.h */,
@@ -1426,6 +1456,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7DFE9F298C091800ED5A8E /* RSECommerceCart.h in Headers */,
+				F6F2FA762A53D8310025D510 /* RSTransformationEvent.h in Headers */,
+				F6F2FA7A2A53D8BF0025D510 /* RSTransformationMetadata.h in Headers */,
+				F6F2FA742A53CD9F0025D510 /* RSTransformationRequest.h in Headers */,
 				ED7DFE4F298C091800ED5A8E /* RSProperty.h in Headers */,
 				ED7DFED5298C091800ED5A8E /* RSCheckoutStepCompletedEvent.h in Headers */,
 				ED7DFE73298C091800ED5A8E /* WKInterfaceController+RSScreen.h in Headers */,
@@ -1560,6 +1593,7 @@
 				ED998E602A69003600031B06 /* RSOSInfo.h in Headers */,
 				ED998E612A69003600031B06 /* RSServerConfigSource.h in Headers */,
 				ED998E622A69003600031B06 /* RSProductSharedEvent.h in Headers */,
+				ED0CA6ED2A7D08D800899C1C /* RSTransformationMetadata.h in Headers */,
 				ED998E632A69003600031B06 /* RSTraitsBuilder.h in Headers */,
 				ED998E642A69003600031B06 /* RSUtils.h in Headers */,
 				ED998E652A69003600031B06 /* RSProductAddedToCartEvent.h in Headers */,
@@ -1594,8 +1628,10 @@
 				ED998E812A69003600031B06 /* RSEventRepository.h in Headers */,
 				ED998E822A69003600031B06 /* RSProductListFilteredEvent.h in Headers */,
 				ED998E832A69003600031B06 /* RSProductListViewedEvent.h in Headers */,
+				ED0CA6EC2A7D08D800899C1C /* RSTransformationRequest.h in Headers */,
 				ED998E842A69003600031B06 /* RSConsentFilter.h in Headers */,
 				ED998E852A69003600031B06 /* RSEnums.h in Headers */,
+				ED0CA6EA2A7D08B900899C1C /* RSTransformationEvent.h in Headers */,
 				ED998E862A69003600031B06 /* RSApp.h in Headers */,
 				ED998E872A69003600031B06 /* RSCouponRemovedEvent.h in Headers */,
 				ED998E882A69003600031B06 /* RSUserSession.h in Headers */,
@@ -1669,6 +1705,7 @@
 				ED998F302A69024E00031B06 /* RSOSInfo.h in Headers */,
 				ED998F312A69024E00031B06 /* RSServerConfigSource.h in Headers */,
 				ED998F322A69024E00031B06 /* RSProductSharedEvent.h in Headers */,
+				ED0CA6EF2A7D08D900899C1C /* RSTransformationMetadata.h in Headers */,
 				ED998F332A69024E00031B06 /* RSTraitsBuilder.h in Headers */,
 				ED998F342A69024E00031B06 /* RSUtils.h in Headers */,
 				ED998F352A69024E00031B06 /* RSProductAddedToCartEvent.h in Headers */,
@@ -1703,8 +1740,10 @@
 				ED998F512A69024E00031B06 /* RSEventRepository.h in Headers */,
 				ED998F522A69024E00031B06 /* RSProductListFilteredEvent.h in Headers */,
 				ED998F532A69024E00031B06 /* RSProductListViewedEvent.h in Headers */,
+				ED0CA6EE2A7D08D900899C1C /* RSTransformationRequest.h in Headers */,
 				ED998F542A69024E00031B06 /* RSConsentFilter.h in Headers */,
 				ED998F552A69024E00031B06 /* RSEnums.h in Headers */,
+				ED0CA6EB2A7D08B900899C1C /* RSTransformationEvent.h in Headers */,
 				ED998F562A69024E00031B06 /* RSApp.h in Headers */,
 				ED998F572A69024E00031B06 /* RSCouponRemovedEvent.h in Headers */,
 				ED998F582A69024E00031B06 /* RSUserSession.h in Headers */,
@@ -2180,6 +2219,7 @@
 			files = (
 				ED7DFE42298C091800ED5A8E /* RSClient.m in Sources */,
 				F6B4B53F29C8237D00344864 /* RSDeviceModeTransformationManager.m in Sources */,
+				F6F2FA7C2A53D8E50025D510 /* RSTransformationMetadata.m in Sources */,
 				ED7DFE8C298C091800ED5A8E /* RSECommercePromotion.m in Sources */,
 				ED7DFEBE298C091800ED5A8E /* RSProductReviewedEvent.m in Sources */,
 				ED7DFE94298C091800ED5A8E /* RSECommercePromotionBuilder.m in Sources */,
@@ -2229,6 +2269,7 @@
 				ED7DFED6298C091800ED5A8E /* RSPaymentInfoEnteredEvent.m in Sources */,
 				F6B4B53E29C8237D00344864 /* RSBackGroundModeManager.m in Sources */,
 				ED7DFEA9298C091800ED5A8E /* RSProductAddedToCartEvent.m in Sources */,
+				F6F2FA782A53D8520025D510 /* RSTransformationEvent.m in Sources */,
 				ED7DFE87298C091800ED5A8E /* RSECommerceCheckoutBuilder.m in Sources */,
 				ED7DFE79298C091800ED5A8E /* RSConstants.m in Sources */,
 				ED7DFE97298C091800ED5A8E /* RSECommerceEvents.m in Sources */,
@@ -2268,6 +2309,7 @@
 				ED7DFED1298C091800ED5A8E /* RSProductViewedEvent.m in Sources */,
 				ED3CC1A02A14A78200F34082 /* NSData+GZIP.m in Sources */,
 				ED7DFE41298C091800ED5A8E /* RSEventFilteringPlugin.m in Sources */,
+				F6F2FA722A53CD200025D510 /* RSTransformationRequest.m in Sources */,
 				F6B4B54029C8237D00344864 /* RSApplicationLifeCycleManager.m in Sources */,
 				ED7DFEAB298C091800ED5A8E /* RSProductSearchedEvent.m in Sources */,
 				ED7DFEBB298C091800ED5A8E /* RSWishListProductAddedToCartEvent.m in Sources */,
@@ -2283,6 +2325,7 @@
 			files = (
 				ED998EAF2A69003600031B06 /* RSClient.m in Sources */,
 				ED998EB02A69003600031B06 /* RSDeviceModeTransformationManager.m in Sources */,
+				ED0CA6F12A7D09B000899C1C /* RSTransformationMetadata.m in Sources */,
 				ED998EB12A69003600031B06 /* RSECommercePromotion.m in Sources */,
 				ED998EB22A69003600031B06 /* RSProductReviewedEvent.m in Sources */,
 				ED998EB32A69003600031B06 /* RSECommercePromotionBuilder.m in Sources */,
@@ -2297,6 +2340,7 @@
 				ED998EBC2A69003600031B06 /* RSProductListFilteredEvent.m in Sources */,
 				ED998EBD2A69003600031B06 /* RSProductListViewedEvent.m in Sources */,
 				ED998EBE2A69003600031B06 /* RSDeviceModeManager.m in Sources */,
+				ED0CA6F22A7D09B000899C1C /* RSTransformationRequest.m in Sources */,
 				ED998EBF2A69003600031B06 /* RSScreenPropertyBuilder.m in Sources */,
 				ED998EC02A69003600031B06 /* RSElementCache.m in Sources */,
 				ED998EC12A69003600031B06 /* RSProductClickedEvent.m in Sources */,
@@ -2331,6 +2375,7 @@
 				ED998EDD2A69003600031B06 /* RSPreferenceManager.m in Sources */,
 				ED998EDE2A69003600031B06 /* RSPaymentInfoEnteredEvent.m in Sources */,
 				ED998EDF2A69003600031B06 /* RSBackGroundModeManager.m in Sources */,
+				ED0CA6F02A7D09B000899C1C /* RSTransformationEvent.m in Sources */,
 				ED998EE02A69003600031B06 /* RSProductAddedToCartEvent.m in Sources */,
 				ED998EE12A69003600031B06 /* RSECommerceCheckoutBuilder.m in Sources */,
 				ED998EE22A69003600031B06 /* RSConstants.m in Sources */,
@@ -2386,6 +2431,7 @@
 			files = (
 				ED998F7F2A69024E00031B06 /* RSClient.m in Sources */,
 				ED998F802A69024E00031B06 /* RSDeviceModeTransformationManager.m in Sources */,
+				ED0CA6F42A7D09B100899C1C /* RSTransformationMetadata.m in Sources */,
 				ED998F812A69024E00031B06 /* RSECommercePromotion.m in Sources */,
 				ED998F822A69024E00031B06 /* RSProductReviewedEvent.m in Sources */,
 				ED998F832A69024E00031B06 /* RSECommercePromotionBuilder.m in Sources */,
@@ -2400,6 +2446,7 @@
 				ED998F8C2A69024E00031B06 /* RSProductListFilteredEvent.m in Sources */,
 				ED998F8D2A69024E00031B06 /* RSProductListViewedEvent.m in Sources */,
 				ED998F8E2A69024E00031B06 /* RSDeviceModeManager.m in Sources */,
+				ED0CA6F52A7D09B100899C1C /* RSTransformationRequest.m in Sources */,
 				ED998F8F2A69024E00031B06 /* RSScreenPropertyBuilder.m in Sources */,
 				ED998F902A69024E00031B06 /* RSElementCache.m in Sources */,
 				ED998F912A69024E00031B06 /* RSProductClickedEvent.m in Sources */,
@@ -2434,6 +2481,7 @@
 				ED998FAD2A69024E00031B06 /* RSPreferenceManager.m in Sources */,
 				ED998FAE2A69024E00031B06 /* RSPaymentInfoEnteredEvent.m in Sources */,
 				ED998FAF2A69024E00031B06 /* RSBackGroundModeManager.m in Sources */,
+				ED0CA6F32A7D09B100899C1C /* RSTransformationEvent.m in Sources */,
 				ED998FB02A69024E00031B06 /* RSProductAddedToCartEvent.m in Sources */,
 				ED998FB12A69024E00031B06 /* RSECommerceCheckoutBuilder.m in Sources */,
 				ED998FB22A69024E00031B06 /* RSConstants.m in Sources */,

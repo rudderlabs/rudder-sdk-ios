@@ -9,6 +9,7 @@
 #import "_AppDelegate.h"
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
+#import "RudderSampleAppObjC-Swift.h"
 
 
 static int userCount = 1;
@@ -17,22 +18,24 @@ static int groupCount = 1;
 static int screenCount = 1;
 
 
-static NSString *WRITE_KEY = @"1xXCubSHWXbpBI2h6EpCjKOsxmQ";
-static NSString *DATA_PLANE_URL = @"https://rudderstacgwyx.dataplane.rudderstack.com";
 
 @implementation _AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-//    [RSClient putAuthToken:@"testAuthToken"];
-    RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
-    [builder withLoglevel:RSLogLevelVerbose];
-    [builder withTrackLifecycleEvens:YES];
-    [builder withRecordScreenViews:YES];
-    [builder withDataPlaneUrl:DATA_PLANE_URL];
-    [RSClient getInstance:WRITE_KEY config:[builder build]];
-    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"RudderConfig" ofType:@"plist"];
+    if (path != nil) {
+        NSURL *url = [NSURL fileURLWithPath:path];
+        RudderConfig *rudderConfig = [RudderConfig createFrom:url];
+        if (rudderConfig != nil) {
+            RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
+            [builder withLoglevel:RSLogLevelVerbose];
+            [builder withTrackLifecycleEvens:YES];
+            [builder withRecordScreenViews:YES];
+            [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
+            [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
+        }
+    }
     return YES;
 }
 
