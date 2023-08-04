@@ -50,7 +50,6 @@ static NSString* _deviceToken = nil;
                 _defaultOptions = options;
             }
             RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
-            [RSMetricsReporter initiateWithWriteKey:writeKey andConfig:config];
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [[_instance getContext] putDeviceToken:_deviceToken];

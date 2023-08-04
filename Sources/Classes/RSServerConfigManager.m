@@ -70,78 +70,15 @@ int receivedError = NETWORK_SUCCESS;
     
     RSServerConfigSource *source;
     if (error == nil && configDict != nil) {
-        NSDictionary *sourceDict = [configDict objectForKey:@"source"];
-        NSString *sourceId = [sourceDict objectForKey:@"id"];
-        NSString *sourceName = [sourceDict objectForKey:@"name"];
-        NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];
-        NSDictionary *configDict = [sourceDict objectForKey:@"config"];
-        BOOL isErrorsCollectionEnabled = NO;
-        BOOL isMetricsCollectionEnabled = NO;
-        if (configDict) {
-            NSDictionary *statsCollection = [configDict objectForKey:@"statsCollection"];
-            NSDictionary *errors = [statsCollection objectForKey:@"errors"];
-            NSNumber *isErrorsEnabled = [errors valueForKey:@"enabled"];
-            NSDictionary *metrics = [statsCollection objectForKey:@"metrics"];
-            NSNumber *isMetricsEnabled = [metrics valueForKey:@"enabled"];
-            isErrorsCollectionEnabled = [isErrorsEnabled boolValue];
-            isMetricsCollectionEnabled = [isMetricsEnabled boolValue];
-        }
-        BOOL isSourceEnabled = NO;
-        if (sourceEnabled != nil) {
-            isSourceEnabled = [sourceEnabled boolValue];
-        }
-        NSString *updatedAt = [sourceDict objectForKey:@"updatedAt"];
-        source = [[RSServerConfigSource alloc] init];
-        source.sourceId = sourceId;
-        source.sourceName = sourceName;
-        source.isSourceEnabled = isSourceEnabled;
-        source.updatedAt = updatedAt;
-        source.isErrorsCollectionEnabled = isErrorsCollectionEnabled;
-        source.isMetricsCollectionEnabled = isMetricsCollectionEnabled;
-        
-        NSArray *destinationArr = [sourceDict objectForKey:@"destinations"];
-        NSMutableArray *destinations = [[NSMutableArray alloc] init];
-        for (NSDictionary* destinationDict in destinationArr) {
-            // create destination object
-            RSServerDestination *destination = [[RSServerDestination alloc] init];
-            destination.destinationId = [destinationDict objectForKey:@"id"];
-            destination.destinationName = [destinationDict objectForKey:@"name"];
-            NSNumber *destinationEnabled = [destinationDict objectForKey:@"enabled"];
-            BOOL isDestinationEnabled = NO;
-            if (destinationEnabled != nil) {
-                isDestinationEnabled = [destinationEnabled boolValue];
-            }
-            destination.isDestinationEnabled = isDestinationEnabled;
-            destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
-            
-            // checking if transformations are connected for each device mode destination, and if connected storing their id's in an array
-            NSNumber *transformationsConnected = [destinationDict objectForKey:@"areTransformationsConnected"];
-            BOOL isTransformationConnected = NO;
-            if(transformationsConnected != nil) {
-                isTransformationConnected = [transformationsConnected boolValue];
-            }
-            
-            
-            RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
-            NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];
-            destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
-            destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
-            destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
-            destination.destinationDefinition = destinationDefinition;
-            
-            if(isTransformationConnected) {
+        source = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
+        for (RSServerDestination *destination in source.destinations) {
+            if(destination.isTransformationConnected) {
                 if(destinationsWithTransformationsEnabled == nil) {
                     destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
                 }
-                destinationsWithTransformationsEnabled[destinationDefinition.displayName] = destination.destinationId;
+                destinationsWithTransformationsEnabled[destination.destinationDefinition.displayName] = destination.destinationId;
             }
-            
-            destination.destinationConfig = [destinationDict objectForKey:@"config"];
-            [destinations addObject:destination];
         }
-        
-        source.dataPlanes = [sourceDict objectForKey:@"dataplanes"];
-        source.destinations = destinations;
     } else {
         [RSLogger logError:@"config deserializaion error"];
     }

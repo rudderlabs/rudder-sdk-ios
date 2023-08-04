@@ -11,10 +11,10 @@ import Rudder
 
 class CustomFilter: RSConsentFilter {
     func filterConsentedDestinations(_ destinations: [RSServerDestination]) -> [String : NSNumber]? {
-        return [:]
+        return nil
     }
     
     func getConsentCategoriesDict() -> [String : NSNumber]? {
-        return [:]
+        return nil
     }
 }

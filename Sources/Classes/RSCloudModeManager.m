@@ -49,7 +49,7 @@
                 response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
                 if (response.state == NETWORK_SUCCESS) {
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
-                    [RSMetricsReporter report:CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
+                    [RSMetricsReporter report:CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:dbMessage.messages.count];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     sleepCount = 0;
@@ -62,7 +62,6 @@
                 usleep(1000000);
             } else if (response.state == WRONG_WRITE_KEY) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
-                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
                 break;
             } else if (response.state == INVALID_URL) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];

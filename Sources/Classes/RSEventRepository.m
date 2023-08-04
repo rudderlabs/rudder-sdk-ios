@@ -80,6 +80,9 @@ static RSEventRepository* _instance;
         self->preferenceManager = [RSPreferenceManager getInstance];
         [self->preferenceManager performMigration];
         
+        [RSLogger logDebug:@"EventRepository: Initiating RSMetricsReporter"];
+        [RSMetricsReporter initiateWithWriteKey:_writeKey preferenceManager:self->preferenceManager andConfig:_config];
+        
         [RSLogger logDebug:@"EventRepository: Initiating RSDBPersistentManager"];
         self->dbpersistenceManager = [[RSDBPersistentManager alloc] init];
         [self->dbpersistenceManager createTables];
@@ -151,7 +154,7 @@ static RSEventRepository* _instance;
             RSServerConfigSource *serverConfig = [strongSelf->configManager getConfig];
             int receivedError = [strongSelf->configManager getError];
             if (serverConfig != nil) {
-                [RSMetricsReporter setMetricsCollectionEnabled:YES];// serverConfig.isMetricsCollectionEnabled];
+                [RSMetricsReporter setMetricsCollectionEnabled:serverConfig.isMetricsCollectionEnabled];
                 [RSMetricsReporter setErrorsCollectionEnabled:serverConfig.isErrorsCollectionEnabled];
                 // initiate the processor if the source is enabled
                 dispatch_sync(strongSelf->repositoryQueue, ^{
@@ -191,7 +194,6 @@ static RSEventRepository* _instance;
             } else if (receivedError == 2) {
                 retryCount = 6;
                 [RSLogger logError:@"WRONG WRITE KEY"];
-                [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: WRITEKEY_INVALID} andValue:1];
             } else {
                 retryCount += 1;
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"server config is null. retrying in %ds.", 2 * retryCount]];
@@ -202,7 +204,7 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
-    [RSMetricsReporter report:SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{@"type": message.type} andValue:1];
+    [RSMetricsReporter report:SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{TYPE: message.type} andValue:1];
     dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             if (!self->isSDKEnabled)

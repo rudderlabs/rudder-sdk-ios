@@ -15,35 +15,37 @@
 
 static RSMetricsReporter* _instance;
 static dispatch_queue_t queue;
-RSMetricsClient * _Nullable metricsClient;
+RSMetricsClient * _Nullable _metricsClient;
 
-+ (instancetype)initiateWithWriteKey:(NSString *)writeKey andConfig:(RSConfig *)config {
++ (instancetype)initiateWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] initWithWriteKey:writeKey andConfig:config];
+            _instance = [[self alloc] initWithWriteKey:writeKey preferenceManager:preferenceManager andConfig:config];
         });
     }
     return _instance;
 }
 
-- (instancetype)initWithWriteKey:(NSString *)writeKey andConfig:(RSConfig *)config {
+- (instancetype)initWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config {
     self = [super init];
     if (self) {
-        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:@"https://sdk-metrics.dev-rudder.rudderlabs.com"];
-        metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
+        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:@"https://sdk-metrics.rudderstack.com" maxMetricsInBatch:nil flushInterval:@5];
+        _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
+        _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
+        _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
     }
     return self;
 }
 
 + (void)setErrorsCollectionEnabled:(BOOL)status {
-    if (metricsClient != nil)
-        metricsClient.isErrorsCollectionEnabled = status;
+    if (_metricsClient != nil)
+        _metricsClient.isErrorsCollectionEnabled = status;
 }
 
 + (void)setMetricsCollectionEnabled:(BOOL)status {
-    if (metricsClient != nil)
-        metricsClient.isMetricsCollectionEnabled = status;
+    if (_metricsClient != nil)
+        _metricsClient.isMetricsCollectionEnabled = status;
 }
 
 + (void)report:(NSString *)metricName forMetricType:(METRIC_TYPE)metricType withProperties:(NSDictionary * _Nullable )properties andValue:(float)value {
@@ -51,14 +53,14 @@ RSMetricsClient * _Nullable metricsClient;
         switch (metricType) {
             case COUNT: {
                 RSCount *count = [[RSCount alloc] initWithName:metricName labels:properties value:(int)value];
-                if (metricsClient != nil)
-                    [metricsClient process:count];
+                if (_metricsClient != nil)
+                    [_metricsClient process:count];
             }
                 break;
             case GAUGE: {
                 RSGauge *gauge = [[RSGauge alloc] initWithName:metricName labels:properties value:value];
-                if (metricsClient != nil)
-                    [metricsClient process:gauge];
+                if (_metricsClient != nil)
+                    [_metricsClient process:gauge];
             }
                 break;
             default:
@@ -97,6 +99,6 @@ NSString *const DATA_PLANE_URL_INVALID = @"invalid_data_plane_url";
 NSString *const SOURCE_DISABLED = @"source_disabled";
 NSString *const WRITEKEY_INVALID = @"writekey_invalid";
 NSString *const INTEGRATION = @"integration";
-NSString *const REQUEST_TIMEOUT = @"REQUEST_TIMEOUT";
+NSString *const REQUEST_TIMEOUT = @"request_timeout";
 
 @end

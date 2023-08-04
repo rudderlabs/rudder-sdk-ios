@@ -19,12 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSString *sourceName;
 @property (nonatomic, readwrite) BOOL isSourceEnabled;
 @property (nonatomic, readwrite) NSString *updatedAt;
-@property (nonatomic, readwrite) NSMutableArray *destinations;
+@property (nonatomic, readwrite) NSMutableArray<RSServerDestination *> *destinations;
 @property (nonatomic, readwrite) NSMutableDictionary* dataPlanes;
 @property (nonatomic, readwrite) BOOL isErrorsCollectionEnabled;
 @property (nonatomic, readwrite) BOOL isMetricsCollectionEnabled;
 
 - (void) addDestination: (RSServerDestination*) destination;
+
+- (instancetype)initWithConfigDict:(NSDictionary *)configDict;
 
 @end
 

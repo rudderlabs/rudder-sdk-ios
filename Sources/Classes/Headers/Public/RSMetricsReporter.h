@@ -9,13 +9,14 @@
 #import "RSConfig.h"
 #import "RSEnums.h"
 #import "RSServerConfigSource.h"
+#import "RSPreferenceManager.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSMetricsReporter : NSObject
 
-+ (instancetype)initiateWithWriteKey:(NSString *)writeKey andConfig:(RSConfig *)config;
++ (instancetype)initiateWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config;
 + (void)report:(NSString *)metricName forMetricType:(METRIC_TYPE)metricType withProperties:(NSDictionary * _Nullable )properties andValue:(float)value;
 + (void)setErrorsCollectionEnabled:(BOOL)status;
 + (void)setMetricsCollectionEnabled:(BOOL)status;

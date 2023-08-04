@@ -75,7 +75,10 @@
     }
     for (id<RSIntegrationFactory> factory in self->config.factories) {
         RSServerDestination *destination = [destinationDict objectForKey:factory.key];
-        if (destination != nil && destination.isDestinationEnabled == YES) {
+        if (destination == nil) {
+            continue;
+        }
+        if (destination.isDestinationEnabled == YES) {
             NSDictionary *destinationConfig = destination.destinationConfig;
             if (destinationConfig != nil) {
                 @try {
@@ -90,7 +93,7 @@
             }
         } else {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: %@ factory is disabled", factory.key]];
-            [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISABLED, INTEGRATION: destination} andValue:1];
+            [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISABLED, INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
         }
     }
 }

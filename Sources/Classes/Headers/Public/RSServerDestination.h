@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) RSServerDestinationDefinition* destinationDefinition;
 @property (nonatomic, readwrite) NSDictionary* destinationConfig;
 @property (nonatomic, readwrite) NSString* transformationId;
+@property (nonatomic, readwrite) BOOL isTransformationConnected;
 
 @end
 

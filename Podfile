@@ -61,10 +61,12 @@ target 'RudderSampleApptvOSObjC' do
     project 'Examples/RudderSampleApptvOSObjC/RudderSampleApptvOSObjC.xcodeproj'
     platform :tvos, '11.0'
     shared_pods
+    shared_utility_pods
 end
 
 target 'RudderSampleAppwatchOSObjC WatchKit Extension' do
   project 'Examples/RudderSampleAppwatchOSObjC/RudderSampleAppwatchOSObjC.xcodeproj'
   platform :watchos, '8.0'
   shared_pods
+  shared_utility_pods
 end
