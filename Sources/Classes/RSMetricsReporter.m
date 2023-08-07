@@ -71,6 +71,8 @@ RSMetricsClient * _Nullable _metricsClient;
     }
 }
 
+@end
+
 NSString *const SUBMITTED_EVENTS = @"submitted_events";
 NSString *const EVENTS_DISCARDED = @"events_discarded";
 NSString *const DM_EVENT = @"dm_event";
@@ -100,5 +102,3 @@ NSString *const SOURCE_DISABLED = @"source_disabled";
 NSString *const WRITEKEY_INVALID = @"writekey_invalid";
 NSString *const INTEGRATION = @"integration";
 NSString *const REQUEST_TIMEOUT = @"request_timeout";
-
-@end
