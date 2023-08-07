@@ -76,10 +76,6 @@ IDEWorkspaceChecks.plist
 # Sonar
 relative_or_absolute_path_to_cache_location
 compile_commands.json
-<<<<<<< HEAD
 GoogleService-Info.plist
 RudderConfig.plist
-=======
-
 configuration.json
->>>>>>> 01edf916301ddf6b414979aed98a9b2d00aba628
