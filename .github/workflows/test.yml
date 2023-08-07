@@ -43,7 +43,7 @@ jobs:
       
       - name: Run tests(watchOS)
         run: |
-          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
           
       - name: Collect coverage into one XML report
         run: |
