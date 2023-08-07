@@ -30,7 +30,7 @@ RSMetricsClient * _Nullable _metricsClient;
 - (instancetype)initWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config {
     self = [super init];
     if (self) {
-        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:@"https://sdk-metrics.rudderstack.com" maxMetricsInBatch:nil flushInterval:@5];
+        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
         _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
         _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
         _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;

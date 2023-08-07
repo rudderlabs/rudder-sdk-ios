@@ -9,7 +9,7 @@ def shared_pods
 end
 
 def shared_utility_pods
-    pod 'MetricsReporter', :path => '/Users/pallabmaiti/Documents/Rudder/metrics-reporter-ios'
+    pod 'MetricsReporter'
     pod 'RudderKit'
 end
 
