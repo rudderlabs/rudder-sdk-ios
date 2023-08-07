@@ -191,7 +191,7 @@ NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
-            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OUT_OF_MEMORY} andValue:messageIds.count];
+            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OUT_OF_MEMORY} andValue:(float)messageIds.count];
             return;
         }
         [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];

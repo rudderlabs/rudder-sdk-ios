@@ -32,7 +32,7 @@ RSMetricsClient * _Nullable _metricsClient;
     if (self) {
         RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
         _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
-        _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
+        _metricsClient.isMetricsCollectionEnabled = YES;//preferenceManager.isMetricsCollectionEnabled;
         _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
     }
     return self;
@@ -45,7 +45,7 @@ RSMetricsClient * _Nullable _metricsClient;
 
 + (void)setMetricsCollectionEnabled:(BOOL)status {
     if (_metricsClient != nil)
-        _metricsClient.isMetricsCollectionEnabled = status;
+        _metricsClient.isMetricsCollectionEnabled = YES;
 }
 
 + (void)report:(NSString *)metricName forMetricType:(METRIC_TYPE)metricType withProperties:(NSDictionary * _Nullable )properties andValue:(float)value {

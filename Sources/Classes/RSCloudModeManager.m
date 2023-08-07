@@ -45,11 +45,11 @@
                 NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                [RSMetricsReporter report:CM_EVENT forMetricType:COUNT withProperties:@{TYPE: MESSAGES} andValue:dbMessage.messages.count];
+                [RSMetricsReporter report:CM_EVENT forMetricType:COUNT withProperties:@{TYPE: MESSAGES} andValue:(float)dbMessage.messages.count];
                 response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
                 if (response.state == NETWORK_SUCCESS) {
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
-                    [RSMetricsReporter report:CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:dbMessage.messages.count];
+                    [RSMetricsReporter report:CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     sleepCount = 0;
