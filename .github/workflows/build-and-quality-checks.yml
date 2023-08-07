@@ -28,7 +28,7 @@ jobs:
           
       - name: Build SDK(watchOS)
         run: |
-          xcodebuild build -scheme Rudder_watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
+          xcodebuild build -scheme Rudder_watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' | xcpretty
       
       - name: Build SDK(tvOS)
         run: |

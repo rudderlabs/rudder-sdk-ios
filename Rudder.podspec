@@ -23,5 +23,5 @@ Pod::Spec.new do |s|
   
   s.source_files = 'Sources/**/*.{h,m}'
   
-  s.dependency 'MetricsReporter', '~> 1.0.0'
+  s.dependency 'MetricsReporter', '1.0.0'
 end
