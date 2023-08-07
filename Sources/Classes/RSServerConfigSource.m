@@ -24,10 +24,10 @@
     [self.destinations addObject:destination];
 }
 
-- (instancetype)initWithConfigDict:(NSDictionary *)configDict {
+- (instancetype)initWithConfigDict:(NSDictionary *)sourceConfigDict {
     self = [super init];
     if (self) {
-        NSDictionary *sourceDict = [configDict objectForKey:@"source"];
+        NSDictionary *sourceDict = [sourceConfigDict objectForKey:@"source"];
         NSString *sourceId = [sourceDict objectForKey:@"id"];
         NSString *sourceName = [sourceDict objectForKey:@"name"];
         NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];

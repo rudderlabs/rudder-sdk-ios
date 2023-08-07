@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) addDestination: (RSServerDestination*) destination;
 
-- (instancetype)initWithConfigDict:(NSDictionary *)configDict;
+- (instancetype)initWithConfigDict:(NSDictionary *)sourceConfigDict;
 
 @end
 
