@@ -8,6 +8,7 @@
 #import "RSConsentFilterHandler.h"
 #import "RSLogger.h"
 #import "RSConsentFilter.h"
+#import "RSMetricsReporter.h"
 
 static RSConsentFilterHandler* _instance;
 static dispatch_queue_t queue;
@@ -70,6 +71,7 @@ static dispatch_queue_t queue;
         dispatch_sync(queue, ^{
             if (consentedIntegrationsDict[factoryKey] && ![consentedIntegrationsDict[factoryKey] boolValue]) {
                 [filteredList removeObject:destination];
+                [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISSENTED, INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
             }
         });
     }

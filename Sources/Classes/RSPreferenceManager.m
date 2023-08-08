@@ -7,6 +7,7 @@
 
 #import "RSPreferenceManager.h"
 #import "RSLogger.h"
+#import "RSServerConfigSource.h"
 #if TARGET_OS_WATCH
 #import <WatchKit/WKInterfaceDevice.h>
 #endif
@@ -253,6 +254,36 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
 - (BOOL) getAutoTrackingStatus {
     return [[NSUserDefaults standardUserDefaults] boolForKey:RSSessionAutoTrackStatus];
+}
+
+- (BOOL)isErrorsCollectionEnabled {
+    RSServerConfigSource *serverSourceConfig = [self getServerSourceConfig];
+    if (serverSourceConfig != nil) {
+        return serverSourceConfig.isErrorsCollectionEnabled;
+    }
+    return NO;
+}
+
+- (BOOL)isMetricsCollectionEnabled {
+    RSServerConfigSource *serverSourceConfig = [self getServerSourceConfig];
+    if (serverSourceConfig != nil) {
+        return serverSourceConfig.isMetricsCollectionEnabled;
+    }
+    return NO;
+}
+
+- (RSServerConfigSource * __nullable)getServerSourceConfig {
+    NSString* configStr = [self getConfigJson];
+    if (configStr == nil) {
+        return nil;
+    }
+    NSError *error;
+    NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error == nil && configDict != nil) {
+        RSServerConfigSource *config = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
+        return config;
+    }
+    return nil;
 }
 
 @end

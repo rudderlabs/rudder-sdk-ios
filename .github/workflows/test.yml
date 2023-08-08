@@ -23,20 +23,31 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty
 
+      - name: Install Cocoapods
+        run: gem install cocoapods
+        
+      - name: Pod install
+        run: pod install --repo-update
+        
       - name: Run build-wrapper
         run: |
-          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme RudderSDK-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} xcodebuild -workspace Rudder.xcworkspace -scheme Rudder_iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' | xcpretty
           
-      - name: Run tests(suite)
+      - name: Run tests(iOS)
         run: |
-          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          
+      - name: Run tests(tvOS)
+        run: |
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-tvOS test -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+      
+      - name: Run tests(watchOS)
+        run: |
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          
       - name: Collect coverage into one XML report
         run: |
           bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
-      
-#      - name: Build SDK(iOS)
-#        run: |
-#          xcodebuild clean build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -sdk iphonesimulator | xcpretty -r json-compilation-database -o compile_commands.json
               
       - name: SonarCloud Scan
         env:

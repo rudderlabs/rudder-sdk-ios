@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1320"
-   version = "1.3">
+   LastUpgradeVersion = "1430"
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06EABC8124665E470043D720"
-               BuildableName = "RudderSampleAppSwift.app"
-               BlueprintName = "RudderSampleAppSwift"
-               ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
+               BlueprintIdentifier = "F6F43B8E2757417F0036CC12"
+               BuildableName = "RudderSampleAppwatchOSObjC WatchKit App.app"
+               BlueprintName = "RudderSampleAppwatchOSObjC WatchKit App"
+               ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F6F43B8A2757417E0036CC12"
+               BuildableName = "RudderSampleAppwatchOSObjC.app"
+               BlueprintName = "RudderSampleAppwatchOSObjC"
+               ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,9 +40,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -44,18 +57,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06EABC8124665E470043D720"
-            BuildableName = "RudderSampleAppSwift.app"
-            BlueprintName = "RudderSampleAppSwift"
-            ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
+            BlueprintIdentifier = "F6F43B8E2757417F0036CC12"
+            BuildableName = "RudderSampleAppwatchOSObjC WatchKit App.app"
+            BlueprintName = "RudderSampleAppwatchOSObjC WatchKit App"
+            ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-FIRDebugEnabled"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -67,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06EABC8124665E470043D720"
-            BuildableName = "RudderSampleAppSwift.app"
-            BlueprintName = "RudderSampleAppSwift"
-            ReferencedContainer = "container:RudderSampleAppSwift.xcodeproj">
+            BlueprintIdentifier = "F6F43B8E2757417F0036CC12"
+            BuildableName = "RudderSampleAppwatchOSObjC WatchKit App.app"
+            BlueprintName = "RudderSampleAppwatchOSObjC WatchKit App"
+            ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -79,6 +79,9 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus;
 - (BOOL) getAutoTrackingStatus;
 
+@property (nonatomic, readwrite) BOOL isMetricsCollectionEnabled;
+@property (nonatomic, readwrite) BOOL isErrorsCollectionEnabled;
+
 @end
 
 NS_ASSUME_NONNULL_END
