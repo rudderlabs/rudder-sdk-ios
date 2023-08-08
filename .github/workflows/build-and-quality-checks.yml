@@ -16,20 +16,23 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty
         
+      - name: Install Cocoapods
+        run: gem install cocoapods
+        
+      - name: Pod install
+        run: pod install --repo-update
+        
       - name: Build SDK(iOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          xcodebuild build -scheme Rudder_iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14' | xcpretty
           
       - name: Build SDK(watchOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
+          xcodebuild build -scheme Rudder_watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' | xcpretty
       
       - name: Build SDK(tvOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
-          
-      - name: Install Cocoapods
-        run: gem install cocoapods
+          xcodebuild build -scheme Rudder_tvOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
       
       - name: Execute pod lint
         run: pod lib lint --no-clean --allow-warnings

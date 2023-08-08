@@ -14,7 +14,7 @@
 #import "RSServerDestination.h"
 #import "RSConstants.h"
 #import <pthread.h>
-
+#import "RSMetricsReporter.h"
 
 static RSServerConfigManager *_instance;
 static NSMutableDictionary<NSString*, NSString*>* destinationsWithTransformationsEnabled;
@@ -71,67 +71,21 @@ int receivedError = NETWORK_SUCCESS;
     
     RSServerConfigSource *source;
     if (error == nil && configDict != nil) {
-        NSDictionary *sourceDict = [configDict objectForKey:@"source"];
-        NSString *sourceId = [sourceDict objectForKey:@"id"];
-        NSString *sourceName = [sourceDict objectForKey:@"name"];
-        NSNumber *sourceEnabled = [sourceDict valueForKey:@"enabled"];
-        BOOL isSourceEnabled = NO;
-        if (sourceEnabled != nil) {
-            isSourceEnabled = [sourceEnabled boolValue];
-        }
-        NSString *updatedAt = [sourceDict objectForKey:@"updatedAt"];
-        source = [[RSServerConfigSource alloc] init];
-        source.sourceId = sourceId;
-        source.sourceName = sourceName;
-        source.isSourceEnabled = isSourceEnabled;
-        source.updatedAt = updatedAt;
-        
-        NSArray *destinationArr = [sourceDict objectForKey:@"destinations"];
-        NSMutableArray *destinations = [[NSMutableArray alloc] init];
-        for (NSDictionary* destinationDict in destinationArr) {
-            // create destination object
-            RSServerDestination *destination = [[RSServerDestination alloc] init];
-            destination.destinationId = [destinationDict objectForKey:@"id"];
-            destination.destinationName = [destinationDict objectForKey:@"name"];
-            NSNumber *destinationEnabled = [destinationDict objectForKey:@"enabled"];
-            BOOL isDestinationEnabled = NO;
-            if (destinationEnabled != nil) {
-                isDestinationEnabled = [destinationEnabled boolValue];
-            }
-            destination.isDestinationEnabled = isDestinationEnabled;
-            destination.updatedAt = [destinationDict objectForKey:@"updatedAt"];
-            
-            RSServerDestinationDefinition *destinationDefinition = [[RSServerDestinationDefinition alloc] init];
-            NSDictionary *definitionDict = [destinationDict objectForKey:@"destinationDefinition"];
-            destinationDefinition.definitionName = [definitionDict objectForKey:@"name"];
-            destinationDefinition.displayName = [definitionDict objectForKey:@"displayName"];
-            destinationDefinition.updatedAt = [definitionDict objectForKey:@"updatedAt"];
-            destination.destinationDefinition = destinationDefinition;
-            
-            
-            // checking if transformations are connected for each device mode destination, and if connected storing their id's in an array
-            NSNumber *transformationsEnabledForDeviceMode = [destinationDict objectForKey:@"shouldApplyDeviceModeTransformation"];
-            if(transformationsEnabledForDeviceMode != nil && [transformationsEnabledForDeviceMode boolValue] ) {
+        source = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
+        for (RSServerDestination *destination in source.destinations) {
+            if (destination.shouldApplyDeviceModeTransformation) {
                 if(destinationsWithTransformationsEnabled == nil) {
                     destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
                 }
-                destinationsWithTransformationsEnabled[destinationDefinition.displayName] = destination.destinationId;
-            }
-            
-            NSNumber *propagateEventsUntransformedOnError = [destinationDict objectForKey:@"propagateEventsUntransformedOnError"];
-            if(propagateEventsUntransformedOnError != nil && [propagateEventsUntransformedOnError boolValue]) {
-                if(destinationsAcceptingEventsOnTransformationError == nil) {
-                    destinationsAcceptingEventsOnTransformationError = [[NSMutableArray alloc] init];
+                destinationsWithTransformationsEnabled[destination.destinationDefinition.displayName] = destination.destinationId;
+                if (destination.propagateEventsUntransformedOnError) {
+                    if(destinationsAcceptingEventsOnTransformationError == nil) {
+                        destinationsAcceptingEventsOnTransformationError = [[NSMutableArray alloc] init];
+                    }
+                    [destinationsAcceptingEventsOnTransformationError addObject:destination.destinationDefinition.displayName];
                 }
-                [destinationsAcceptingEventsOnTransformationError addObject:destinationDefinition.displayName];
             }
-        
-            destination.destinationConfig = [destinationDict objectForKey:@"config"];
-            [destinations addObject:destination];
         }
-        
-        source.dataPlanes = [sourceDict objectForKey:@"dataplanes"];
-        source.destinations = destinations;
     } else {
         [RSLogger logError:@"config deserializaion error"];
     }
@@ -164,14 +118,15 @@ int receivedError = NETWORK_SUCCESS;
             [preferenceManager updateLastUpdatedTime:[RSUtils getTimeStampLong]];
             
             [RSLogger logDebug:@"server config download successful"];
-            
             isDone = YES;
         } else {
-            if(receivedError == 2){
+            if (response.statusCode == 400 || receivedError == 2) {
+                receivedError = WRONG_WRITE_KEY;
                 [RSLogger logInfo:@"Wrong write key"];
                 retryCount = 4;
-            }else{
+            } else {
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"Retrying download in %d seconds", retryCount]];
+                [RSMetricsReporter report:SC_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
                 retryCount += 1;
                 usleep(1000000 * retryCount);
             }
@@ -179,6 +134,7 @@ int receivedError = NETWORK_SUCCESS;
     }
     if (!isDone) {
         [RSLogger logError:@"Server config download failed.Using last stored config from storage"];
+        [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: CONTROL_PLANE_URL_INVALID} andValue:1];
     }
 }
 

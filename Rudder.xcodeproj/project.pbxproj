@@ -9,15 +9,22 @@
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
-		ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
-		ED38D39829CB04C7003A7544 /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */; };
-		ED38D39929CB04C7003A7544 /* DBPersistentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36F29CB01A0003A7544 /* DBPersistentManagerTests.swift */; };
-		ED38D39A29CB04C7003A7544 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */; };
-		ED38D39B29CB04C7003A7544 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */; };
-		ED38D39C29CB04C7003A7544 /* ServerConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */; };
-		ED38D39D29CB04C7003A7544 /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */; };
-		ED38D39E29CB04C7003A7544 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37D29CB01A0003A7544 /* TestUtils.swift */; };
-		ED38D39F29CB04C7003A7544 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37029CB01A0003A7544 /* Extensions.swift */; };
+		08A57598C29F44DF6D5CB076 /* Pods_Rudder_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74B8AB85B4017C33168434D8 /* Pods_Rudder_watchOS.framework */; };
+		6DB3BD081647783C9B97771E /* Pods_RudderTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9B433BF78120425FDD044 /* Pods_RudderTests_tvOS.framework */; };
+		71E66B03ECF863DAAB2CA160 /* Pods_RudderTests_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FBCE1D792856B5F932C85C /* Pods_RudderTests_watchOS.framework */; };
+		D8136C46F41CB7406E2156D6 /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33967B63671F3B7ABD4C07FB /* Pods_RudderTests_iOS.framework */; };
+		ED0CA6EA2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EB2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EC2A7D08D800899C1C /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6ED2A7D08D800899C1C /* RSTransformationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EE2A7D08D900899C1C /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6EF2A7D08D900899C1C /* RSTransformationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0CA6F02A7D09B000899C1C /* RSTransformationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */; };
+		ED0CA6F12A7D09B000899C1C /* RSTransformationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */; };
+		ED0CA6F22A7D09B000899C1C /* RSTransformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */; };
+		ED0CA6F32A7D09B100899C1C /* RSTransformationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */; };
+		ED0CA6F42A7D09B100899C1C /* RSTransformationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */; };
+		ED0CA6F52A7D09B100899C1C /* RSTransformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */; };
 		ED3CC19F2A14A78200F34082 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED3CC1A02A14A78200F34082 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */; };
 		ED7DFE38298C091800ED5A8E /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
@@ -196,16 +203,467 @@
 		ED7DFEE7298C091800ED5A8E /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
 		ED8DB01C298E205100907EC4 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
-		F6113D3429EFD25500A05261 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2B29EFD25400A05261 /* multi-dataresidency-us-true.json */; };
-		F6113D3529EFD25500A05261 /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2C29EFD25400A05261 /* eu-dataresidency-default-false.json */; };
-		F6113D3629EFD25500A05261 /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2D29EFD25400A05261 /* multi-dataresidency-default-false.json */; };
-		F6113D3729EFD25500A05261 /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2E29EFD25400A05261 /* multi-dataresidency-default-true.json */; };
-		F6113D3829EFD25500A05261 /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2F29EFD25400A05261 /* no-dataresidency.json */; };
-		F6113D3929EFD25500A05261 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3029EFD25400A05261 /* multi-dataresidency-eu-true.json */; };
-		F6113D3A29EFD25500A05261 /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3129EFD25400A05261 /* eu-dataresidency-default-true.json */; };
-		F6113D3B29EFD25500A05261 /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3229EFD25400A05261 /* us-dataresidency-default-true.json */; };
-		F6113D3C29EFD25500A05261 /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3329EFD25400A05261 /* us-dataresidency-default-false.json */; };
-		F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
+		ED998E492A69003600031B06 /* RSECommerceCart.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEE298C091800ED5A8E /* RSECommerceCart.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4A2A69003600031B06 /* RSProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9D298C091800ED5A8E /* RSProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4B2A69003600031B06 /* RSCheckoutStepCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE25298C091800ED5A8E /* RSCheckoutStepCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4C2A69003600031B06 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4D2A69003600031B06 /* RSMessageType.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9B298C091800ED5A8E /* RSMessageType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4E2A69003600031B06 /* RSECommerceParamNames.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDDD298C091800ED5A8E /* RSECommerceParamNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E4F2A69003600031B06 /* RSECommerceProductBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD3298C091800ED5A8E /* RSECommerceProductBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E502A69003600031B06 /* RSElementCache.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAF298C091800ED5A8E /* RSElementCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E512A69003600031B06 /* RSProductRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE00298C091800ED5A8E /* RSProductRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E522A69003600031B06 /* RSScreenPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAC298C091800ED5A8E /* RSScreenPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E532A69003600031B06 /* RSECommerceCheckoutBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF2298C091800ED5A8E /* RSECommerceCheckoutBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E542A69003600031B06 /* RSECommerceWishListBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE8298C091800ED5A8E /* RSECommerceWishListBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E552A69003600031B06 /* RSCheckoutStepViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE01298C091800ED5A8E /* RSCheckoutStepViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E562A69003600031B06 /* RSTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB8298C091800ED5A8E /* RSTraits.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E572A69003600031B06 /* RSOption.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9E298C091800ED5A8E /* RSOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E582A69003600031B06 /* RSECommerceSortBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEB298C091800ED5A8E /* RSECommerceSortBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E592A69003600031B06 /* RSDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9C298C091800ED5A8E /* RSDeviceInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5A2A69003600031B06 /* RSECommerceFilterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE0298C091800ED5A8E /* RSECommerceFilterBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5B2A69003600031B06 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA2298C091800ED5A8E /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5C2A69003600031B06 /* RSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAA298C091800ED5A8E /* RSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5D2A69003600031B06 /* RSOrderRefundedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE28298C091800ED5A8E /* RSOrderRefundedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5E2A69003600031B06 /* RSECommerceOrderBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE4298C091800ED5A8E /* RSECommerceOrderBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E5F2A69003600031B06 /* RSECommerceProduct.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD5298C091800ED5A8E /* RSECommerceProduct.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E602A69003600031B06 /* RSOSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBD298C091800ED5A8E /* RSOSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E612A69003600031B06 /* RSServerConfigSource.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB7298C091800ED5A8E /* RSServerConfigSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E622A69003600031B06 /* RSProductSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE22298C091800ED5A8E /* RSProductSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E632A69003600031B06 /* RSTraitsBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBA298C091800ED5A8E /* RSTraitsBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E642A69003600031B06 /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC2298C091800ED5A8E /* RSUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E652A69003600031B06 /* RSProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE18298C091800ED5A8E /* RSProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E662A69003600031B06 /* RSServerDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBE298C091800ED5A8E /* RSServerDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E672A69003600031B06 /* RSProductClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE29298C091800ED5A8E /* RSProductClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E682A69003600031B06 /* RSECommerceCartBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD1298C091800ED5A8E /* RSECommerceCartBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E692A69003600031B06 /* RSPreferenceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA6298C091800ED5A8E /* RSPreferenceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6A2A69003600031B06 /* RSPaymentInfoEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE07298C091800ED5A8E /* RSPaymentInfoEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6B2A69003600031B06 /* RSCartSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1A298C091800ED5A8E /* RSCartSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6C2A69003600031B06 /* RSECommerceEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD4298C091800ED5A8E /* RSECommerceEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6D2A69003600031B06 /* RSECommerceCoupon.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD9298C091800ED5A8E /* RSECommerceCoupon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6E2A69003600031B06 /* RSECommerceWishList.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE1298C091800ED5A8E /* RSECommerceWishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E6F2A69003600031B06 /* RSMessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9F298C091800ED5A8E /* RSMessageBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E702A69003600031B06 /* UIViewController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC4298C091800ED5A8E /* UIViewController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E712A69003600031B06 /* RSOrderCancelledEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE04298C091800ED5A8E /* RSOrderCancelledEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E722A69003600031B06 /* RSCouponAppliedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1F298C091800ED5A8E /* RSCouponAppliedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E732A69003600031B06 /* RSMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB0298C091800ED5A8E /* RSMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E742A69003600031B06 /* RSScreenInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA7298C091800ED5A8E /* RSScreenInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E752A69003600031B06 /* RSCouponEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDFF298C091800ED5A8E /* RSCouponEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E762A69003600031B06 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD8298C091800ED5A8E /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E772A69003600031B06 /* RSIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB2298C091800ED5A8E /* RSIntegrationFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E782A69003600031B06 /* RSECommercePromotionBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2F298C091800ED5A8E /* RSECommercePromotionBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E792A69003600031B06 /* RSPagePropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC3298C091800ED5A8E /* RSPagePropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7A2A69003600031B06 /* RSProductReviewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2B298C091800ED5A8E /* RSProductReviewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7B2A69003600031B06 /* RSCouponDeniedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1D298C091800ED5A8E /* RSCouponDeniedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7C2A69003600031B06 /* RSNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB3298C091800ED5A8E /* RSNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7D2A69003600031B06 /* RSECommerceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDED298C091800ED5A8E /* RSECommerceFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7E2A69003600031B06 /* RSConfigBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA5298C091800ED5A8E /* RSConfigBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E7F2A69003600031B06 /* RSProductAddedToWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE17298C091800ED5A8E /* RSProductAddedToWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E802A69003600031B06 /* RSPromotionClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1C298C091800ED5A8E /* RSPromotionClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E812A69003600031B06 /* RSEventRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAE298C091800ED5A8E /* RSEventRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E822A69003600031B06 /* RSProductListFilteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF5298C091800ED5A8E /* RSProductListFilteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E832A69003600031B06 /* RSProductListViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2C298C091800ED5A8E /* RSProductListViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E842A69003600031B06 /* RSConsentFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E852A69003600031B06 /* RSEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA8298C091800ED5A8E /* RSEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E862A69003600031B06 /* RSApp.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB1298C091800ED5A8E /* RSApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E872A69003600031B06 /* RSCouponRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE19298C091800ED5A8E /* RSCouponRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E882A69003600031B06 /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAB298C091800ED5A8E /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E892A69003600031B06 /* RSCheckoutStartedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE14298C091800ED5A8E /* RSCheckoutStartedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8A2A69003600031B06 /* RSOrderUpdatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE15298C091800ED5A8E /* RSOrderUpdatedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8B2A69003600031B06 /* RSPromotionViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE13298C091800ED5A8E /* RSPromotionViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8C2A69003600031B06 /* RSProductViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE02298C091800ED5A8E /* RSProductViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8D2A69003600031B06 /* RSServerDestinationDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA9298C091800ED5A8E /* RSServerDestinationDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8E2A69003600031B06 /* RSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA0298C091800ED5A8E /* RSConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E8F2A69003600031B06 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBB298C091800ED5A8E /* RSEventFilteringPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E902A69003600031B06 /* RSECommerceSort.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE30298C091800ED5A8E /* RSECommerceSort.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E912A69003600031B06 /* RSCartViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE0F298C091800ED5A8E /* RSCartViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E922A69003600031B06 /* RSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB9298C091800ED5A8E /* RSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E932A69003600031B06 /* RSIntegration.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBC298C091800ED5A8E /* RSIntegration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E942A69003600031B06 /* RSDBMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC5298C091800ED5A8E /* RSDBMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E952A69003600031B06 /* RSWishListProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE24298C091800ED5A8E /* RSWishListProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E962A69003600031B06 /* RSLibraryInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB6298C091800ED5A8E /* RSLibraryInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E972A69003600031B06 /* RSECommerceCouponBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF1298C091800ED5A8E /* RSECommerceCouponBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E982A69003600031B06 /* RSNetworkResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52229C8236100344864 /* RSNetworkResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E992A69003600031B06 /* RSApplicationLifeCycleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52529C8236100344864 /* RSApplicationLifeCycleManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9A2A69003600031B06 /* RSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB4298C091800ED5A8E /* RSConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9B2A69003600031B06 /* RSDeviceModeTransformationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52629C8236100344864 /* RSDeviceModeTransformationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9C2A69003600031B06 /* RSProductRemovedFromWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE27298C091800ED5A8E /* RSProductRemovedFromWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9D2A69003600031B06 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51D29C8236100344864 /* RSCloudModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9E2A69003600031B06 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998E9F2A69003600031B06 /* RSDataResidencyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52329C8236100344864 /* RSDataResidencyManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA02A69003600031B06 /* RSECommerceCheckout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDDF298C091800ED5A8E /* RSECommerceCheckout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA12A69003600031B06 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52029C8236100344864 /* RSDeviceModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA22A69003600031B06 /* RSFlushManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52429C8236100344864 /* RSFlushManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA32A69003600031B06 /* RSNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52129C8236100344864 /* RSNetworkManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA42A69003600031B06 /* RSTrackPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA52A69003600031B06 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA62A69003600031B06 /* RSVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA3298C091800ED5A8E /* RSVersion.h */; };
+		ED998EA72A69003600031B06 /* RSServerConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA1298C091800ED5A8E /* RSServerConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA82A69003600031B06 /* RSOrderCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE23298C091800ED5A8E /* RSOrderCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EA92A69003600031B06 /* RSECommercePromotion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEC298C091800ED5A8E /* RSECommercePromotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EAA2A69003600031B06 /* RSDBPersistentManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB5298C091800ED5A8E /* RSDBPersistentManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EAB2A69003600031B06 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EAC2A69003600031B06 /* RSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA4298C091800ED5A8E /* RSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EAD2A69003600031B06 /* RSProductSearchedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE16298C091800ED5A8E /* RSProductSearchedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998EAF2A69003600031B06 /* RSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8F298C091800ED5A8E /* RSClient.m */; };
+		ED998EB02A69003600031B06 /* RSDeviceModeTransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53629C8237D00344864 /* RSDeviceModeTransformationManager.m */; };
+		ED998EB12A69003600031B06 /* RSECommercePromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDB298C091800ED5A8E /* RSECommercePromotion.m */; };
+		ED998EB22A69003600031B06 /* RSProductReviewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0E298C091800ED5A8E /* RSProductReviewedEvent.m */; };
+		ED998EB32A69003600031B06 /* RSECommercePromotionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE3298C091800ED5A8E /* RSECommercePromotionBuilder.m */; };
+		ED998EB42A69003600031B06 /* RSDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD98298C091800ED5A8E /* RSDeviceInfo.m */; };
+		ED998EB52A69003600031B06 /* RSOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC8298C091800ED5A8E /* RSOption.m */; };
+		ED998EB62A69003600031B06 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53829C8237D00344864 /* RSFlushManager.m */; };
+		ED998EB72A69003600031B06 /* RSPagePropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD97298C091800ED5A8E /* RSPagePropertyBuilder.m */; };
+		ED998EB82A69003600031B06 /* RSECommerceCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDEF298C091800ED5A8E /* RSECommerceCoupon.m */; };
+		ED998EB92A69003600031B06 /* RSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD89298C091800ED5A8E /* RSConfig.m */; };
+		ED998EBA2A69003600031B06 /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
+		ED998EBB2A69003600031B06 /* RSTrackPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD93298C091800ED5A8E /* RSTrackPropertyBuilder.m */; };
+		ED998EBC2A69003600031B06 /* RSProductListFilteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE1B298C091800ED5A8E /* RSProductListFilteredEvent.m */; };
+		ED998EBD2A69003600031B06 /* RSProductListViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0D298C091800ED5A8E /* RSProductListViewedEvent.m */; };
+		ED998EBE2A69003600031B06 /* RSDeviceModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53329C8237D00344864 /* RSDeviceModeManager.m */; };
+		ED998EBF2A69003600031B06 /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE35298C091800ED5A8E /* RSScreenPropertyBuilder.m */; };
+		ED998EC02A69003600031B06 /* RSElementCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE32298C091800ED5A8E /* RSElementCache.m */; };
+		ED998EC12A69003600031B06 /* RSProductClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE10298C091800ED5A8E /* RSProductClickedEvent.m */; };
+		ED998EC22A69003600031B06 /* RSProductSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0C298C091800ED5A8E /* RSProductSharedEvent.m */; };
+		ED998EC32A69003600031B06 /* RSDBPersistentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD88298C091800ED5A8E /* RSDBPersistentManager.m */; };
+		ED998EC42A69003600031B06 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53929C8237D00344864 /* RSCloudModeManager.m */; };
+		ED998EC52A69003600031B06 /* RSProductRemovedFromWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE08298C091800ED5A8E /* RSProductRemovedFromWishListEvent.m */; };
+		ED998EC62A69003600031B06 /* RSECommerceCart.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDA298C091800ED5A8E /* RSECommerceCart.m */; };
+		ED998EC72A69003600031B06 /* RSPromotionClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF6298C091800ED5A8E /* RSPromotionClickedEvent.m */; };
+		ED998EC82A69003600031B06 /* RSECommerceWishList.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE31298C091800ED5A8E /* RSECommerceWishList.m */; };
+		ED998EC92A69003600031B06 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
+		ED998ECA2A69003600031B06 /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */; };
+		ED998ECB2A69003600031B06 /* RSECommerceParamNames.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDEA298C091800ED5A8E /* RSECommerceParamNames.m */; };
+		ED998ECC2A69003600031B06 /* RSCartSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF8298C091800ED5A8E /* RSCartSharedEvent.m */; };
+		ED998ECD2A69003600031B06 /* RSPromotionViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFE298C091800ED5A8E /* RSPromotionViewedEvent.m */; };
+		ED998ECE2A69003600031B06 /* RSOrderCancelledEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE1E298C091800ED5A8E /* RSOrderCancelledEvent.m */; };
+		ED998ECF2A69003600031B06 /* RSECommerceCartBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE9298C091800ED5A8E /* RSECommerceCartBuilder.m */; };
+		ED998ED02A69003600031B06 /* RSECommerceWishListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD2298C091800ED5A8E /* RSECommerceWishListBuilder.m */; };
+		ED998ED12A69003600031B06 /* RSOrderUpdatedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFC298C091800ED5A8E /* RSOrderUpdatedEvent.m */; };
+		ED998ED22A69003600031B06 /* RSECommerceOrderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2E298C091800ED5A8E /* RSECommerceOrderBuilder.m */; };
+		ED998ED32A69003600031B06 /* RSNetworkResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53129C8237D00344864 /* RSNetworkResponse.m */; };
+		ED998ED42A69003600031B06 /* RSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCF298C091800ED5A8E /* RSContext.m */; };
+		ED998ED52A69003600031B06 /* RSDBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD95298C091800ED5A8E /* RSDBMessage.m */; };
+		ED998ED62A69003600031B06 /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
+		ED998ED72A69003600031B06 /* RSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCA298C091800ED5A8E /* RSProperty.m */; };
+		ED998ED82A69003600031B06 /* RSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53429C8237D00344864 /* RSNetworkManager.m */; };
+		ED998ED92A69003600031B06 /* RSCartViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2A298C091800ED5A8E /* RSCartViewedEvent.m */; };
+		ED998EDA2A69003600031B06 /* RSConfigBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCE298C091800ED5A8E /* RSConfigBuilder.m */; };
+		ED998EDB2A69003600031B06 /* RSECommerceProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE5298C091800ED5A8E /* RSECommerceProduct.m */; };
+		ED998EDC2A69003600031B06 /* RSEventRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE34298C091800ED5A8E /* RSEventRepository.m */; };
+		ED998EDD2A69003600031B06 /* RSPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCD298C091800ED5A8E /* RSPreferenceManager.m */; };
+		ED998EDE2A69003600031B06 /* RSPaymentInfoEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE26298C091800ED5A8E /* RSPaymentInfoEnteredEvent.m */; };
+		ED998EDF2A69003600031B06 /* RSBackGroundModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53529C8237D00344864 /* RSBackGroundModeManager.m */; };
+		ED998EE02A69003600031B06 /* RSProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF9298C091800ED5A8E /* RSProductAddedToCartEvent.m */; };
+		ED998EE12A69003600031B06 /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD6298C091800ED5A8E /* RSECommerceCheckoutBuilder.m */; };
+		ED998EE22A69003600031B06 /* RSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC7298C091800ED5A8E /* RSConstants.m */; };
+		ED998EE32A69003600031B06 /* RSECommerceEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE6298C091800ED5A8E /* RSECommerceEvents.m */; };
+		ED998EE42A69003600031B06 /* RSECommerceProductBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE7298C091800ED5A8E /* RSECommerceProductBuilder.m */; };
+		ED998EE52A69003600031B06 /* RSOrderCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0A298C091800ED5A8E /* RSOrderCompletedEvent.m */; };
+		ED998EE62A69003600031B06 /* RSECommerceCheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2D298C091800ED5A8E /* RSECommerceCheckout.m */; };
+		ED998EE72A69003600031B06 /* RSECommerceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDC298C091800ED5A8E /* RSECommerceFilter.m */; };
+		ED998EE82A69003600031B06 /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
+		ED998EE92A69003600031B06 /* RSProductRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE11298C091800ED5A8E /* RSProductRemovedEvent.m */; };
+		ED998EEA2A69003600031B06 /* RSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8A298C091800ED5A8E /* RSNetwork.m */; };
+		ED998EEB2A69003600031B06 /* RSTraitsBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD90298C091800ED5A8E /* RSTraitsBuilder.m */; };
+		ED998EEC2A69003600031B06 /* RSCouponDeniedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE05298C091800ED5A8E /* RSCouponDeniedEvent.m */; };
+		ED998EED2A69003600031B06 /* RSCouponRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF7298C091800ED5A8E /* RSCouponRemovedEvent.m */; };
+		ED998EEE2A69003600031B06 /* RSCheckoutStepViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE20298C091800ED5A8E /* RSCheckoutStepViewedEvent.m */; };
+		ED998EEF2A69003600031B06 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */; };
+		ED998EF02A69003600031B06 /* RSECommerceSortBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDE298C091800ED5A8E /* RSECommerceSortBuilder.m */; };
+		ED998EF12A69003600031B06 /* RSServerDestination.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8C298C091800ED5A8E /* RSServerDestination.m */; };
+		ED998EF22A69003600031B06 /* RSOrderRefundedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE06298C091800ED5A8E /* RSOrderRefundedEvent.m */; };
+		ED998EF32A69003600031B06 /* RSCouponEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE12298C091800ED5A8E /* RSCouponEnteredEvent.m */; };
+		ED998EF42A69003600031B06 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8B298C091800ED5A8E /* RSApp.m */; };
+		ED998EF52A69003600031B06 /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE36298C091800ED5A8E /* RSUserSession.m */; };
+		ED998EF62A69003600031B06 /* RSOSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8D298C091800ED5A8E /* RSOSInfo.m */; };
+		ED998EF72A69003600031B06 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD7298C091800ED5A8E /* RSECommerceCouponBuilder.m */; };
+		ED998EF82A69003600031B06 /* RSECommerceSort.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE2298C091800ED5A8E /* RSECommerceSort.m */; };
+		ED998EF92A69003600031B06 /* RSCheckoutStepCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE09298C091800ED5A8E /* RSCheckoutStepCompletedEvent.m */; };
+		ED998EFA2A69003600031B06 /* RSDataResidencyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53229C8237D00344864 /* RSDataResidencyManager.m */; };
+		ED998EFB2A69003600031B06 /* RSServerDestinationDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCB298C091800ED5A8E /* RSServerDestinationDefinition.m */; };
+		ED998EFC2A69003600031B06 /* RSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE33298C091800ED5A8E /* RSMessage.m */; };
+		ED998EFD2A69003600031B06 /* RSECommerceFilterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF3298C091800ED5A8E /* RSECommerceFilterBuilder.m */; };
+		ED998EFE2A69003600031B06 /* RSECommerceOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF0298C091800ED5A8E /* RSECommerceOrder.m */; };
+		ED998EFF2A69003600031B06 /* RSServerConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC6298C091800ED5A8E /* RSServerConfigManager.m */; };
+		ED998F002A69003600031B06 /* RSCheckoutStartedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFD298C091800ED5A8E /* RSCheckoutStartedEvent.m */; };
+		ED998F012A69003600031B06 /* RSCouponAppliedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE03298C091800ED5A8E /* RSCouponAppliedEvent.m */; };
+		ED998F022A69003600031B06 /* UIViewController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */; };
+		ED998F032A69003600031B06 /* RSMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD99298C091800ED5A8E /* RSMessageType.m */; };
+		ED998F042A69003600031B06 /* RSProductAddedToWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFA298C091800ED5A8E /* RSProductAddedToWishListEvent.m */; };
+		ED998F052A69003600031B06 /* RSProductViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE21298C091800ED5A8E /* RSProductViewedEvent.m */; };
+		ED998F062A69003600031B06 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */; };
+		ED998F072A69003600031B06 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8E298C091800ED5A8E /* RSEventFilteringPlugin.m */; };
+		ED998F082A69003600031B06 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */; };
+		ED998F092A69003600031B06 /* RSProductSearchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFB298C091800ED5A8E /* RSProductSearchedEvent.m */; };
+		ED998F0A2A69003600031B06 /* RSWishListProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0B298C091800ED5A8E /* RSWishListProductAddedToCartEvent.m */; };
+		ED998F0B2A69003600031B06 /* RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD91298C091800ED5A8E /* RSUtils.m */; };
+		ED998F0C2A69003600031B06 /* RSScreenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCC298C091800ED5A8E /* RSScreenInfo.m */; };
+		ED998F0D2A69003600031B06 /* RSMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC9298C091800ED5A8E /* RSMessageBuilder.m */; };
+		ED998F0F2A69003600031B06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
+		ED998F102A69003600031B06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
+		ED998F192A69024E00031B06 /* RSECommerceCart.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEE298C091800ED5A8E /* RSECommerceCart.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1A2A69024E00031B06 /* RSProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9D298C091800ED5A8E /* RSProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1B2A69024E00031B06 /* RSCheckoutStepCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE25298C091800ED5A8E /* RSCheckoutStepCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1C2A69024E00031B06 /* WKInterfaceController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1D2A69024E00031B06 /* RSMessageType.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9B298C091800ED5A8E /* RSMessageType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1E2A69024E00031B06 /* RSECommerceParamNames.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDDD298C091800ED5A8E /* RSECommerceParamNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F1F2A69024E00031B06 /* RSECommerceProductBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD3298C091800ED5A8E /* RSECommerceProductBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F202A69024E00031B06 /* RSElementCache.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAF298C091800ED5A8E /* RSElementCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F212A69024E00031B06 /* RSProductRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE00298C091800ED5A8E /* RSProductRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F222A69024E00031B06 /* RSScreenPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAC298C091800ED5A8E /* RSScreenPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F232A69024E00031B06 /* RSECommerceCheckoutBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF2298C091800ED5A8E /* RSECommerceCheckoutBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F242A69024E00031B06 /* RSECommerceWishListBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE8298C091800ED5A8E /* RSECommerceWishListBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F252A69024E00031B06 /* RSCheckoutStepViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE01298C091800ED5A8E /* RSCheckoutStepViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F262A69024E00031B06 /* RSTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB8298C091800ED5A8E /* RSTraits.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F272A69024E00031B06 /* RSOption.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9E298C091800ED5A8E /* RSOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F282A69024E00031B06 /* RSECommerceSortBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEB298C091800ED5A8E /* RSECommerceSortBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F292A69024E00031B06 /* RSDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9C298C091800ED5A8E /* RSDeviceInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2A2A69024E00031B06 /* RSECommerceFilterBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE0298C091800ED5A8E /* RSECommerceFilterBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2B2A69024E00031B06 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA2298C091800ED5A8E /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2C2A69024E00031B06 /* RSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAA298C091800ED5A8E /* RSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2D2A69024E00031B06 /* RSOrderRefundedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE28298C091800ED5A8E /* RSOrderRefundedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2E2A69024E00031B06 /* RSECommerceOrderBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE4298C091800ED5A8E /* RSECommerceOrderBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F2F2A69024E00031B06 /* RSECommerceProduct.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD5298C091800ED5A8E /* RSECommerceProduct.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F302A69024E00031B06 /* RSOSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBD298C091800ED5A8E /* RSOSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F312A69024E00031B06 /* RSServerConfigSource.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB7298C091800ED5A8E /* RSServerConfigSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F322A69024E00031B06 /* RSProductSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE22298C091800ED5A8E /* RSProductSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F332A69024E00031B06 /* RSTraitsBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBA298C091800ED5A8E /* RSTraitsBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F342A69024E00031B06 /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC2298C091800ED5A8E /* RSUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F352A69024E00031B06 /* RSProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE18298C091800ED5A8E /* RSProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F362A69024E00031B06 /* RSServerDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBE298C091800ED5A8E /* RSServerDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F372A69024E00031B06 /* RSProductClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE29298C091800ED5A8E /* RSProductClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F382A69024E00031B06 /* RSECommerceCartBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD1298C091800ED5A8E /* RSECommerceCartBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F392A69024E00031B06 /* RSPreferenceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA6298C091800ED5A8E /* RSPreferenceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3A2A69024E00031B06 /* RSPaymentInfoEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE07298C091800ED5A8E /* RSPaymentInfoEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3B2A69024E00031B06 /* RSCartSharedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1A298C091800ED5A8E /* RSCartSharedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3C2A69024E00031B06 /* RSECommerceEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD4298C091800ED5A8E /* RSECommerceEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3D2A69024E00031B06 /* RSECommerceCoupon.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD9298C091800ED5A8E /* RSECommerceCoupon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3E2A69024E00031B06 /* RSECommerceWishList.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDE1298C091800ED5A8E /* RSECommerceWishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F3F2A69024E00031B06 /* RSMessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFD9F298C091800ED5A8E /* RSMessageBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F402A69024E00031B06 /* UIViewController+RSScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC4298C091800ED5A8E /* UIViewController+RSScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F412A69024E00031B06 /* RSOrderCancelledEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE04298C091800ED5A8E /* RSOrderCancelledEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F422A69024E00031B06 /* RSCouponAppliedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1F298C091800ED5A8E /* RSCouponAppliedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F432A69024E00031B06 /* RSMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB0298C091800ED5A8E /* RSMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F442A69024E00031B06 /* RSScreenInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA7298C091800ED5A8E /* RSScreenInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F452A69024E00031B06 /* RSCouponEnteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDFF298C091800ED5A8E /* RSCouponEnteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F462A69024E00031B06 /* RSECommerceOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDD8298C091800ED5A8E /* RSECommerceOrder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F472A69024E00031B06 /* RSIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB2298C091800ED5A8E /* RSIntegrationFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F482A69024E00031B06 /* RSECommercePromotionBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2F298C091800ED5A8E /* RSECommercePromotionBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F492A69024E00031B06 /* RSPagePropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC3298C091800ED5A8E /* RSPagePropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4A2A69024E00031B06 /* RSProductReviewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2B298C091800ED5A8E /* RSProductReviewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4B2A69024E00031B06 /* RSCouponDeniedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1D298C091800ED5A8E /* RSCouponDeniedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4C2A69024E00031B06 /* RSNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB3298C091800ED5A8E /* RSNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4D2A69024E00031B06 /* RSECommerceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDED298C091800ED5A8E /* RSECommerceFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4E2A69024E00031B06 /* RSConfigBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA5298C091800ED5A8E /* RSConfigBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F4F2A69024E00031B06 /* RSProductAddedToWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE17298C091800ED5A8E /* RSProductAddedToWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F502A69024E00031B06 /* RSPromotionClickedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE1C298C091800ED5A8E /* RSPromotionClickedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F512A69024E00031B06 /* RSEventRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAE298C091800ED5A8E /* RSEventRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F522A69024E00031B06 /* RSProductListFilteredEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF5298C091800ED5A8E /* RSProductListFilteredEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F532A69024E00031B06 /* RSProductListViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE2C298C091800ED5A8E /* RSProductListViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F542A69024E00031B06 /* RSConsentFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F552A69024E00031B06 /* RSEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA8298C091800ED5A8E /* RSEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F562A69024E00031B06 /* RSApp.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB1298C091800ED5A8E /* RSApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F572A69024E00031B06 /* RSCouponRemovedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE19298C091800ED5A8E /* RSCouponRemovedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F582A69024E00031B06 /* RSUserSession.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDAB298C091800ED5A8E /* RSUserSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F592A69024E00031B06 /* RSCheckoutStartedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE14298C091800ED5A8E /* RSCheckoutStartedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5A2A69024E00031B06 /* RSOrderUpdatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE15298C091800ED5A8E /* RSOrderUpdatedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5B2A69024E00031B06 /* RSPromotionViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE13298C091800ED5A8E /* RSPromotionViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5C2A69024E00031B06 /* RSProductViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE02298C091800ED5A8E /* RSProductViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5D2A69024E00031B06 /* RSServerDestinationDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA9298C091800ED5A8E /* RSServerDestinationDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5E2A69024E00031B06 /* RSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA0298C091800ED5A8E /* RSConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F5F2A69024E00031B06 /* RSEventFilteringPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBB298C091800ED5A8E /* RSEventFilteringPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F602A69024E00031B06 /* RSECommerceSort.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE30298C091800ED5A8E /* RSECommerceSort.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F612A69024E00031B06 /* RSCartViewedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE0F298C091800ED5A8E /* RSCartViewedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F622A69024E00031B06 /* RSClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB9298C091800ED5A8E /* RSClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F632A69024E00031B06 /* RSIntegration.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDBC298C091800ED5A8E /* RSIntegration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F642A69024E00031B06 /* RSDBMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC5298C091800ED5A8E /* RSDBMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F652A69024E00031B06 /* RSWishListProductAddedToCartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE24298C091800ED5A8E /* RSWishListProductAddedToCartEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F662A69024E00031B06 /* RSLibraryInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB6298C091800ED5A8E /* RSLibraryInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F672A69024E00031B06 /* RSECommerceCouponBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDF1298C091800ED5A8E /* RSECommerceCouponBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F682A69024E00031B06 /* RSNetworkResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52229C8236100344864 /* RSNetworkResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F692A69024E00031B06 /* RSApplicationLifeCycleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52529C8236100344864 /* RSApplicationLifeCycleManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6A2A69024E00031B06 /* RSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB4298C091800ED5A8E /* RSConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6B2A69024E00031B06 /* RSDeviceModeTransformationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52629C8236100344864 /* RSDeviceModeTransformationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6C2A69024E00031B06 /* RSProductRemovedFromWishListEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE27298C091800ED5A8E /* RSProductRemovedFromWishListEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6D2A69024E00031B06 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51D29C8236100344864 /* RSCloudModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6E2A69024E00031B06 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = ED3CC19D2A14A78200F34082 /* NSData+GZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F6F2A69024E00031B06 /* RSDataResidencyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52329C8236100344864 /* RSDataResidencyManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F702A69024E00031B06 /* RSECommerceCheckout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDDF298C091800ED5A8E /* RSECommerceCheckout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F712A69024E00031B06 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52029C8236100344864 /* RSDeviceModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F722A69024E00031B06 /* RSFlushManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52429C8236100344864 /* RSFlushManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F732A69024E00031B06 /* RSNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52129C8236100344864 /* RSNetworkManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F742A69024E00031B06 /* RSTrackPropertyBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F752A69024E00031B06 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F762A69024E00031B06 /* RSVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA3298C091800ED5A8E /* RSVersion.h */; };
+		ED998F772A69024E00031B06 /* RSServerConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA1298C091800ED5A8E /* RSServerConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F782A69024E00031B06 /* RSOrderCompletedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE23298C091800ED5A8E /* RSOrderCompletedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F792A69024E00031B06 /* RSECommercePromotion.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDEC298C091800ED5A8E /* RSECommercePromotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F7A2A69024E00031B06 /* RSDBPersistentManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDB5298C091800ED5A8E /* RSDBPersistentManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F7B2A69024E00031B06 /* RSConsentFilterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F7C2A69024E00031B06 /* RSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFDA4298C091800ED5A8E /* RSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F7D2A69024E00031B06 /* RSProductSearchedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = ED7DFE16298C091800ED5A8E /* RSProductSearchedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED998F7F2A69024E00031B06 /* RSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8F298C091800ED5A8E /* RSClient.m */; };
+		ED998F802A69024E00031B06 /* RSDeviceModeTransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53629C8237D00344864 /* RSDeviceModeTransformationManager.m */; };
+		ED998F812A69024E00031B06 /* RSECommercePromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDB298C091800ED5A8E /* RSECommercePromotion.m */; };
+		ED998F822A69024E00031B06 /* RSProductReviewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0E298C091800ED5A8E /* RSProductReviewedEvent.m */; };
+		ED998F832A69024E00031B06 /* RSECommercePromotionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE3298C091800ED5A8E /* RSECommercePromotionBuilder.m */; };
+		ED998F842A69024E00031B06 /* RSDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD98298C091800ED5A8E /* RSDeviceInfo.m */; };
+		ED998F852A69024E00031B06 /* RSOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC8298C091800ED5A8E /* RSOption.m */; };
+		ED998F862A69024E00031B06 /* RSFlushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53829C8237D00344864 /* RSFlushManager.m */; };
+		ED998F872A69024E00031B06 /* RSPagePropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD97298C091800ED5A8E /* RSPagePropertyBuilder.m */; };
+		ED998F882A69024E00031B06 /* RSECommerceCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDEF298C091800ED5A8E /* RSECommerceCoupon.m */; };
+		ED998F892A69024E00031B06 /* RSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD89298C091800ED5A8E /* RSConfig.m */; };
+		ED998F8A2A69024E00031B06 /* RSServerConfigSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD85298C091800ED5A8E /* RSServerConfigSource.m */; };
+		ED998F8B2A69024E00031B06 /* RSTrackPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD93298C091800ED5A8E /* RSTrackPropertyBuilder.m */; };
+		ED998F8C2A69024E00031B06 /* RSProductListFilteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE1B298C091800ED5A8E /* RSProductListFilteredEvent.m */; };
+		ED998F8D2A69024E00031B06 /* RSProductListViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0D298C091800ED5A8E /* RSProductListViewedEvent.m */; };
+		ED998F8E2A69024E00031B06 /* RSDeviceModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53329C8237D00344864 /* RSDeviceModeManager.m */; };
+		ED998F8F2A69024E00031B06 /* RSScreenPropertyBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE35298C091800ED5A8E /* RSScreenPropertyBuilder.m */; };
+		ED998F902A69024E00031B06 /* RSElementCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE32298C091800ED5A8E /* RSElementCache.m */; };
+		ED998F912A69024E00031B06 /* RSProductClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE10298C091800ED5A8E /* RSProductClickedEvent.m */; };
+		ED998F922A69024E00031B06 /* RSProductSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0C298C091800ED5A8E /* RSProductSharedEvent.m */; };
+		ED998F932A69024E00031B06 /* RSDBPersistentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD88298C091800ED5A8E /* RSDBPersistentManager.m */; };
+		ED998F942A69024E00031B06 /* RSCloudModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53929C8237D00344864 /* RSCloudModeManager.m */; };
+		ED998F952A69024E00031B06 /* RSProductRemovedFromWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE08298C091800ED5A8E /* RSProductRemovedFromWishListEvent.m */; };
+		ED998F962A69024E00031B06 /* RSECommerceCart.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDA298C091800ED5A8E /* RSECommerceCart.m */; };
+		ED998F972A69024E00031B06 /* RSPromotionClickedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF6298C091800ED5A8E /* RSPromotionClickedEvent.m */; };
+		ED998F982A69024E00031B06 /* RSECommerceWishList.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE31298C091800ED5A8E /* RSECommerceWishList.m */; };
+		ED998F992A69024E00031B06 /* RSConsentFilterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */; };
+		ED998F9A2A69024E00031B06 /* RSLibraryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD87298C091800ED5A8E /* RSLibraryInfo.m */; };
+		ED998F9B2A69024E00031B06 /* RSECommerceParamNames.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDEA298C091800ED5A8E /* RSECommerceParamNames.m */; };
+		ED998F9C2A69024E00031B06 /* RSCartSharedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF8298C091800ED5A8E /* RSCartSharedEvent.m */; };
+		ED998F9D2A69024E00031B06 /* RSPromotionViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFE298C091800ED5A8E /* RSPromotionViewedEvent.m */; };
+		ED998F9E2A69024E00031B06 /* RSOrderCancelledEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE1E298C091800ED5A8E /* RSOrderCancelledEvent.m */; };
+		ED998F9F2A69024E00031B06 /* RSECommerceCartBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE9298C091800ED5A8E /* RSECommerceCartBuilder.m */; };
+		ED998FA02A69024E00031B06 /* RSECommerceWishListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD2298C091800ED5A8E /* RSECommerceWishListBuilder.m */; };
+		ED998FA12A69024E00031B06 /* RSOrderUpdatedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFC298C091800ED5A8E /* RSOrderUpdatedEvent.m */; };
+		ED998FA22A69024E00031B06 /* RSECommerceOrderBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2E298C091800ED5A8E /* RSECommerceOrderBuilder.m */; };
+		ED998FA32A69024E00031B06 /* RSNetworkResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53129C8237D00344864 /* RSNetworkResponse.m */; };
+		ED998FA42A69024E00031B06 /* RSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCF298C091800ED5A8E /* RSContext.m */; };
+		ED998FA52A69024E00031B06 /* RSDBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD95298C091800ED5A8E /* RSDBMessage.m */; };
+		ED998FA62A69024E00031B06 /* RSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE37298C091800ED5A8E /* RSLogger.m */; };
+		ED998FA72A69024E00031B06 /* RSProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCA298C091800ED5A8E /* RSProperty.m */; };
+		ED998FA82A69024E00031B06 /* RSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53429C8237D00344864 /* RSNetworkManager.m */; };
+		ED998FA92A69024E00031B06 /* RSCartViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2A298C091800ED5A8E /* RSCartViewedEvent.m */; };
+		ED998FAA2A69024E00031B06 /* RSConfigBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCE298C091800ED5A8E /* RSConfigBuilder.m */; };
+		ED998FAB2A69024E00031B06 /* RSECommerceProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE5298C091800ED5A8E /* RSECommerceProduct.m */; };
+		ED998FAC2A69024E00031B06 /* RSEventRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE34298C091800ED5A8E /* RSEventRepository.m */; };
+		ED998FAD2A69024E00031B06 /* RSPreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCD298C091800ED5A8E /* RSPreferenceManager.m */; };
+		ED998FAE2A69024E00031B06 /* RSPaymentInfoEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE26298C091800ED5A8E /* RSPaymentInfoEnteredEvent.m */; };
+		ED998FAF2A69024E00031B06 /* RSBackGroundModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53529C8237D00344864 /* RSBackGroundModeManager.m */; };
+		ED998FB02A69024E00031B06 /* RSProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF9298C091800ED5A8E /* RSProductAddedToCartEvent.m */; };
+		ED998FB12A69024E00031B06 /* RSECommerceCheckoutBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD6298C091800ED5A8E /* RSECommerceCheckoutBuilder.m */; };
+		ED998FB22A69024E00031B06 /* RSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC7298C091800ED5A8E /* RSConstants.m */; };
+		ED998FB32A69024E00031B06 /* RSECommerceEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE6298C091800ED5A8E /* RSECommerceEvents.m */; };
+		ED998FB42A69024E00031B06 /* RSECommerceProductBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE7298C091800ED5A8E /* RSECommerceProductBuilder.m */; };
+		ED998FB52A69024E00031B06 /* RSOrderCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0A298C091800ED5A8E /* RSOrderCompletedEvent.m */; };
+		ED998FB62A69024E00031B06 /* RSECommerceCheckout.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE2D298C091800ED5A8E /* RSECommerceCheckout.m */; };
+		ED998FB72A69024E00031B06 /* RSECommerceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDC298C091800ED5A8E /* RSECommerceFilter.m */; };
+		ED998FB82A69024E00031B06 /* RSTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD86298C091800ED5A8E /* RSTraits.m */; };
+		ED998FB92A69024E00031B06 /* RSProductRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE11298C091800ED5A8E /* RSProductRemovedEvent.m */; };
+		ED998FBA2A69024E00031B06 /* RSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8A298C091800ED5A8E /* RSNetwork.m */; };
+		ED998FBB2A69024E00031B06 /* RSTraitsBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD90298C091800ED5A8E /* RSTraitsBuilder.m */; };
+		ED998FBC2A69024E00031B06 /* RSCouponDeniedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE05298C091800ED5A8E /* RSCouponDeniedEvent.m */; };
+		ED998FBD2A69024E00031B06 /* RSCouponRemovedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF7298C091800ED5A8E /* RSCouponRemovedEvent.m */; };
+		ED998FBE2A69024E00031B06 /* RSCheckoutStepViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE20298C091800ED5A8E /* RSCheckoutStepViewedEvent.m */; };
+		ED998FBF2A69024E00031B06 /* WKInterfaceController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */; };
+		ED998FC02A69024E00031B06 /* RSECommerceSortBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDDE298C091800ED5A8E /* RSECommerceSortBuilder.m */; };
+		ED998FC12A69024E00031B06 /* RSServerDestination.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8C298C091800ED5A8E /* RSServerDestination.m */; };
+		ED998FC22A69024E00031B06 /* RSOrderRefundedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE06298C091800ED5A8E /* RSOrderRefundedEvent.m */; };
+		ED998FC32A69024E00031B06 /* RSCouponEnteredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE12298C091800ED5A8E /* RSCouponEnteredEvent.m */; };
+		ED998FC42A69024E00031B06 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8B298C091800ED5A8E /* RSApp.m */; };
+		ED998FC52A69024E00031B06 /* RSUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE36298C091800ED5A8E /* RSUserSession.m */; };
+		ED998FC62A69024E00031B06 /* RSOSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8D298C091800ED5A8E /* RSOSInfo.m */; };
+		ED998FC72A69024E00031B06 /* RSECommerceCouponBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDD7298C091800ED5A8E /* RSECommerceCouponBuilder.m */; };
+		ED998FC82A69024E00031B06 /* RSECommerceSort.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDE2298C091800ED5A8E /* RSECommerceSort.m */; };
+		ED998FC92A69024E00031B06 /* RSCheckoutStepCompletedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE09298C091800ED5A8E /* RSCheckoutStepCompletedEvent.m */; };
+		ED998FCA2A69024E00031B06 /* RSDataResidencyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53229C8237D00344864 /* RSDataResidencyManager.m */; };
+		ED998FCB2A69024E00031B06 /* RSServerDestinationDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCB298C091800ED5A8E /* RSServerDestinationDefinition.m */; };
+		ED998FCC2A69024E00031B06 /* RSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE33298C091800ED5A8E /* RSMessage.m */; };
+		ED998FCD2A69024E00031B06 /* RSECommerceFilterBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF3298C091800ED5A8E /* RSECommerceFilterBuilder.m */; };
+		ED998FCE2A69024E00031B06 /* RSECommerceOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDF0298C091800ED5A8E /* RSECommerceOrder.m */; };
+		ED998FCF2A69024E00031B06 /* RSServerConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC6298C091800ED5A8E /* RSServerConfigManager.m */; };
+		ED998FD02A69024E00031B06 /* RSCheckoutStartedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFD298C091800ED5A8E /* RSCheckoutStartedEvent.m */; };
+		ED998FD12A69024E00031B06 /* RSCouponAppliedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE03298C091800ED5A8E /* RSCouponAppliedEvent.m */; };
+		ED998FD22A69024E00031B06 /* UIViewController+RSScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */; };
+		ED998FD32A69024E00031B06 /* RSMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD99298C091800ED5A8E /* RSMessageType.m */; };
+		ED998FD42A69024E00031B06 /* RSProductAddedToWishListEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFA298C091800ED5A8E /* RSProductAddedToWishListEvent.m */; };
+		ED998FD52A69024E00031B06 /* RSProductViewedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE21298C091800ED5A8E /* RSProductViewedEvent.m */; };
+		ED998FD62A69024E00031B06 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */; };
+		ED998FD72A69024E00031B06 /* RSEventFilteringPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD8E298C091800ED5A8E /* RSEventFilteringPlugin.m */; };
+		ED998FD82A69024E00031B06 /* RSApplicationLifeCycleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */; };
+		ED998FD92A69024E00031B06 /* RSProductSearchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDFB298C091800ED5A8E /* RSProductSearchedEvent.m */; };
+		ED998FDA2A69024E00031B06 /* RSWishListProductAddedToCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFE0B298C091800ED5A8E /* RSWishListProductAddedToCartEvent.m */; };
+		ED998FDB2A69024E00031B06 /* RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFD91298C091800ED5A8E /* RSUtils.m */; };
+		ED998FDC2A69024E00031B06 /* RSScreenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDCC298C091800ED5A8E /* RSScreenInfo.m */; };
+		ED998FDD2A69024E00031B06 /* RSMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7DFDC9298C091800ED5A8E /* RSMessageBuilder.m */; };
+		ED998FDF2A69024E00031B06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
+		ED998FE02A69024E00031B06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
+		ED9990312A69102400031B06 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED998F152A69003600031B06 /* Rudder.framework */; };
+		ED99903F2A69103B00031B06 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; platformFilter = ios; };
+		ED99904D2A69104B00031B06 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED998FE52A69024E00031B06 /* Rudder.framework */; };
+		ED9990532A69108B00031B06 /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2F29EFD25400A05261 /* no-dataresidency.json */; };
+		ED9990542A69108B00031B06 /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3129EFD25400A05261 /* eu-dataresidency-default-true.json */; };
+		ED9990552A69108B00031B06 /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3329EFD25400A05261 /* us-dataresidency-default-false.json */; };
+		ED9990562A69108B00031B06 /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2D29EFD25400A05261 /* multi-dataresidency-default-false.json */; };
+		ED9990572A69108B00031B06 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2B29EFD25400A05261 /* multi-dataresidency-us-true.json */; };
+		ED9990582A69108B00031B06 /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2C29EFD25400A05261 /* eu-dataresidency-default-false.json */; };
+		ED9990592A69108B00031B06 /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2E29EFD25400A05261 /* multi-dataresidency-default-true.json */; };
+		ED99905A2A69108B00031B06 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3029EFD25400A05261 /* multi-dataresidency-eu-true.json */; };
+		ED99905B2A69108B00031B06 /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3229EFD25400A05261 /* us-dataresidency-default-true.json */; };
+		ED99905C2A69108C00031B06 /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2F29EFD25400A05261 /* no-dataresidency.json */; };
+		ED99905D2A69108C00031B06 /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3129EFD25400A05261 /* eu-dataresidency-default-true.json */; };
+		ED99905E2A69108C00031B06 /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3329EFD25400A05261 /* us-dataresidency-default-false.json */; };
+		ED99905F2A69108C00031B06 /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2D29EFD25400A05261 /* multi-dataresidency-default-false.json */; };
+		ED9990602A69108C00031B06 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2B29EFD25400A05261 /* multi-dataresidency-us-true.json */; };
+		ED9990612A69108C00031B06 /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2C29EFD25400A05261 /* eu-dataresidency-default-false.json */; };
+		ED9990622A69108C00031B06 /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2E29EFD25400A05261 /* multi-dataresidency-default-true.json */; };
+		ED9990632A69108C00031B06 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3029EFD25400A05261 /* multi-dataresidency-eu-true.json */; };
+		ED9990642A69108C00031B06 /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3229EFD25400A05261 /* us-dataresidency-default-true.json */; };
+		ED9990652A69108C00031B06 /* no-dataresidency.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2F29EFD25400A05261 /* no-dataresidency.json */; };
+		ED9990662A69108C00031B06 /* eu-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3129EFD25400A05261 /* eu-dataresidency-default-true.json */; };
+		ED9990672A69108C00031B06 /* us-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3329EFD25400A05261 /* us-dataresidency-default-false.json */; };
+		ED9990682A69108C00031B06 /* multi-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2D29EFD25400A05261 /* multi-dataresidency-default-false.json */; };
+		ED9990692A69108C00031B06 /* multi-dataresidency-us-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2B29EFD25400A05261 /* multi-dataresidency-us-true.json */; };
+		ED99906A2A69108C00031B06 /* eu-dataresidency-default-false.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2C29EFD25400A05261 /* eu-dataresidency-default-false.json */; };
+		ED99906B2A69108C00031B06 /* multi-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D2E29EFD25400A05261 /* multi-dataresidency-default-true.json */; };
+		ED99906C2A69108C00031B06 /* multi-dataresidency-eu-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3029EFD25400A05261 /* multi-dataresidency-eu-true.json */; };
+		ED99906D2A69108C00031B06 /* us-dataresidency-default-true.json in Resources */ = {isa = PBXBuildFile; fileRef = F6113D3229EFD25400A05261 /* us-dataresidency-default-true.json */; };
+		ED99906E2A69109000031B06 /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */; };
+		ED99906F2A69109000031B06 /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
+		ED9990702A69109000031B06 /* DBPersistentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36F29CB01A0003A7544 /* DBPersistentManagerTests.swift */; };
+		ED9990712A69109000031B06 /* ServerConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */; };
+		ED9990722A69109000031B06 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37029CB01A0003A7544 /* Extensions.swift */; };
+		ED9990732A69109000031B06 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */; };
+		ED9990742A69109000031B06 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */; };
+		ED9990752A69109000031B06 /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */; };
+		ED9990762A69109000031B06 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37D29CB01A0003A7544 /* TestUtils.swift */; };
+		ED9990772A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */; };
+		ED9990782A69109100031B06 /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
+		ED9990792A69109100031B06 /* DBPersistentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36F29CB01A0003A7544 /* DBPersistentManagerTests.swift */; };
+		ED99907A2A69109100031B06 /* ServerConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */; };
+		ED99907B2A69109100031B06 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37029CB01A0003A7544 /* Extensions.swift */; };
+		ED99907C2A69109100031B06 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */; };
+		ED99907D2A69109100031B06 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */; };
+		ED99907E2A69109100031B06 /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */; };
+		ED99907F2A69109100031B06 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37D29CB01A0003A7544 /* TestUtils.swift */; };
+		ED9990802A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */; };
+		ED9990812A69109100031B06 /* ContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64F9D7529BF171D009D963F /* ContextTests.swift */; };
+		ED9990822A69109100031B06 /* DBPersistentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36F29CB01A0003A7544 /* DBPersistentManagerTests.swift */; };
+		ED9990832A69109100031B06 /* ServerConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */; };
+		ED9990842A69109100031B06 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37029CB01A0003A7544 /* Extensions.swift */; };
+		ED9990852A69109100031B06 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */; };
+		ED9990862A69109100031B06 /* RudderUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */; };
+		ED9990872A69109100031B06 /* EventRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */; };
+		ED9990882A69109100031B06 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38D37D29CB01A0003A7544 /* TestUtils.swift */; };
+		ED99908E2A6926E000031B06 /* RSMetricsReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED99908C2A6926E000031B06 /* RSMetricsReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED99908F2A6926E000031B06 /* RSMetricsReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED99908C2A6926E000031B06 /* RSMetricsReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED9990902A6926E000031B06 /* RSMetricsReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = ED99908C2A6926E000031B06 /* RSMetricsReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED9990912A6926E000031B06 /* RSMetricsReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99908D2A6926E000031B06 /* RSMetricsReporter.m */; };
+		ED9990922A6926E000031B06 /* RSMetricsReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99908D2A6926E000031B06 /* RSMetricsReporter.m */; };
+		ED9990932A6926E000031B06 /* RSMetricsReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99908D2A6926E000031B06 /* RSMetricsReporter.m */; };
+		F332DC02CF2F409E69082091 /* Pods_Rudder_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83628C3B0AAA0159A77BB1E2 /* Pods_Rudder_tvOS.framework */; };
+		F4EEEBC72A182682CACA3109 /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92376093A7AB0A950356855C /* Pods_Rudder_iOS.framework */; };
 		F6B4B52729C8236100344864 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51D29C8236100344864 /* RSCloudModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52829C8236100344864 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52A29C8236100344864 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52029C8236100344864 /* RSDeviceModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -233,12 +691,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		ED04A24129839DCC0080A88D /* PBXContainerItemProxy */ = {
+		ED9990322A69102400031B06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED998E472A69003600031B06;
+			remoteInfo = "Rudder-tvOS";
+		};
+		ED9990402A69103B00031B06 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 06CABB832630C3CA0097BEFF;
-			remoteInfo = Rudder;
+			remoteInfo = "Rudder-iOS";
+		};
+		ED99904E2A69104B00031B06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED998F172A69024E00031B06;
+			remoteInfo = "Rudder-watchOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -246,7 +718,24 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		ED04A23C29839DCC0080A88D /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		071767445D8AD743D9B3DFD9 /* Pods-Rudder-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		0A4223191D07F684127056ED /* Pods-RudderTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		213BC00A66C5F3BDAFBBC6E8 /* Pods-Rudder-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		2AA80AD88DF698FFA4B1A2A0 /* Pods-RudderTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		33967B63671F3B7ABD4C07FB /* Pods_RudderTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BA8A14544D859D1C41EB023 /* Pods-Rudder-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		46B9B433BF78120425FDD044 /* Pods_RudderTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74B8AB85B4017C33168434D8 /* Pods_Rudder_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77FBCE1D792856B5F932C85C /* Pods_RudderTests_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80A0A3FAF689603109E56DF2 /* Pods-RudderTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		83628C3B0AAA0159A77BB1E2 /* Pods_Rudder_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92376093A7AB0A950356855C /* Pods_Rudder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9253625CD197A51D6AF83BDF /* Pods-RudderTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		B1F70A9E2E67B3A1245606BA /* Pods-RudderTests-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.release.xcconfig"; sourceTree = "<group>"; };
+		B26FF528258A9950DF7C1A35 /* Pods-Rudder-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D574FC75189EA1FD0AE91F82 /* Pods-RudderTests-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E6ED16F6B8A073330D5A2575 /* Pods-Rudder-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		E6F95B44339BF8BA28984C66 /* Pods-Rudder-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.release.xcconfig"; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED1C4C8829E6CCC7007007C9 /* find-tag.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "find-tag.sh"; sourceTree = "<group>"; };
@@ -440,13 +929,25 @@
 		ED83FDB12731019F006F27B3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		ED83FE5D2731019F006F27B3 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		ED83FE5E2731019F006F27B3 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		ED83FF0D27310B44006F27B3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED83FF0D27310B44006F27B3 /* iOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iOS-Info.plist"; sourceTree = "<group>"; };
 		ED857DEF2912752300B7BFCE /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		ED857DF02912754400B7BFCE /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		ED857DF12912754400B7BFCE /* CODEOWNERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = CODEOWNERS; sourceTree = "<group>"; };
 		ED857DF22912754400B7BFCE /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		ED8DB01B298E205100907EC4 /* RSConsentFilterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConsentFilterHandler.h; sourceTree = "<group>"; };
 		ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConsentFilterHandler.m; sourceTree = "<group>"; };
+		ED998F152A69003600031B06 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED998FE52A69024E00031B06 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED998FE72A69034E00031B06 /* watchOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "watchOS-Info.plist"; sourceTree = "<group>"; };
+		ED998FE82A69034E00031B06 /* tvOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tvOS-Info.plist"; sourceTree = "<group>"; };
+		ED99902D2A69102400031B06 /* RudderTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED99903B2A69103A00031B06 /* RudderTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED9990492A69104B00031B06 /* RudderTests-watchOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-watchOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED9990892A6910CE00031B06 /* Rudder-tvOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Rudder-tvOS.xctestplan"; sourceTree = "<group>"; };
+		ED99908A2A69112100031B06 /* Rudder-iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Rudder-iOS.xctestplan"; sourceTree = "<group>"; };
+		ED99908B2A69117600031B06 /* Rudder-watchOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Rudder-watchOS.xctestplan"; sourceTree = "<group>"; };
+		ED99908C2A6926E000031B06 /* RSMetricsReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSMetricsReporter.h; sourceTree = "<group>"; };
+		ED99908D2A6926E000031B06 /* RSMetricsReporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSMetricsReporter.m; sourceTree = "<group>"; };
 		EDEC3CDA29ADEF87007DDE07 /* github-release.config.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "github-release.config.js"; sourceTree = "<group>"; };
 		F6113D2B29EFD25400A05261 /* multi-dataresidency-us-true.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-dataresidency-us-true.json"; sourceTree = "<group>"; };
 		F6113D2C29EFD25400A05261 /* eu-dataresidency-default-false.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "eu-dataresidency-default-false.json"; sourceTree = "<group>"; };
@@ -491,14 +992,54 @@
 			files = (
 				06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */,
 				06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */,
+				F4EEEBC72A182682CACA3109 /* Pods_Rudder_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ED04A23929839DCC0080A88D /* Frameworks */ = {
+		ED998F0E2A69003600031B06 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED04A24029839DCC0080A88D /* Rudder.framework in Frameworks */,
+				ED998F0F2A69003600031B06 /* Foundation.framework in Frameworks */,
+				ED998F102A69003600031B06 /* UIKit.framework in Frameworks */,
+				F332DC02CF2F409E69082091 /* Pods_Rudder_tvOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED998FDE2A69024E00031B06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED998FDF2A69024E00031B06 /* Foundation.framework in Frameworks */,
+				ED998FE02A69024E00031B06 /* UIKit.framework in Frameworks */,
+				08A57598C29F44DF6D5CB076 /* Pods_Rudder_watchOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED99902A2A69102400031B06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED9990312A69102400031B06 /* Rudder.framework in Frameworks */,
+				6DB3BD081647783C9B97771E /* Pods_RudderTests_tvOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990382A69103A00031B06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED99903F2A69103B00031B06 /* Rudder.framework in Frameworks */,
+				D8136C46F41CB7406E2156D6 /* Pods_RudderTests_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990462A69104B00031B06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED99904D2A69104B00031B06 /* Rudder.framework in Frameworks */,
+				71E66B03ECF863DAAB2CA160 /* Pods_RudderTests_watchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,7 +1062,11 @@
 			isa = PBXGroup;
 			children = (
 				06CABB842630C3CA0097BEFF /* Rudder.framework */,
-				ED04A23C29839DCC0080A88D /* RudderTests.xctest */,
+				ED998F152A69003600031B06 /* Rudder.framework */,
+				ED998FE52A69024E00031B06 /* Rudder.framework */,
+				ED99902D2A69102400031B06 /* RudderTests-tvOS.xctest */,
+				ED99903B2A69103A00031B06 /* RudderTests-iOS.xctest */,
+				ED9990492A69104B00031B06 /* RudderTests-watchOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -531,6 +1076,12 @@
 			children = (
 				06CABC322630C6B00097BEFF /* Foundation.framework */,
 				06CABC2E2630C6660097BEFF /* UIKit.framework */,
+				92376093A7AB0A950356855C /* Pods_Rudder_iOS.framework */,
+				83628C3B0AAA0159A77BB1E2 /* Pods_Rudder_tvOS.framework */,
+				74B8AB85B4017C33168434D8 /* Pods_Rudder_watchOS.framework */,
+				33967B63671F3B7ABD4C07FB /* Pods_RudderTests_iOS.framework */,
+				46B9B433BF78120425FDD044 /* Pods_RudderTests_tvOS.framework */,
+				77FBCE1D792856B5F932C85C /* Pods_RudderTests_watchOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -538,6 +1089,18 @@
 		DFB2363B6EC8D146934DE8DD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				213BC00A66C5F3BDAFBBC6E8 /* Pods-Rudder-iOS.debug.xcconfig */,
+				3BA8A14544D859D1C41EB023 /* Pods-Rudder-iOS.release.xcconfig */,
+				071767445D8AD743D9B3DFD9 /* Pods-Rudder-tvOS.debug.xcconfig */,
+				E6ED16F6B8A073330D5A2575 /* Pods-Rudder-tvOS.release.xcconfig */,
+				B26FF528258A9950DF7C1A35 /* Pods-Rudder-watchOS.debug.xcconfig */,
+				E6F95B44339BF8BA28984C66 /* Pods-Rudder-watchOS.release.xcconfig */,
+				0A4223191D07F684127056ED /* Pods-RudderTests-iOS.debug.xcconfig */,
+				80A0A3FAF689603109E56DF2 /* Pods-RudderTests-iOS.release.xcconfig */,
+				2AA80AD88DF698FFA4B1A2A0 /* Pods-RudderTests-tvOS.debug.xcconfig */,
+				9253625CD197A51D6AF83BDF /* Pods-RudderTests-tvOS.release.xcconfig */,
+				D574FC75189EA1FD0AE91F82 /* Pods-RudderTests-watchOS.debug.xcconfig */,
+				B1F70A9E2E67B3A1245606BA /* Pods-RudderTests-watchOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -554,7 +1117,11 @@
 			isa = PBXGroup;
 			children = (
 				F6113D2A29EFD25400A05261 /* Fixtures */,
+				ED99908A2A69112100031B06 /* Rudder-iOS.xctestplan */,
+				ED9990892A6910CE00031B06 /* Rudder-tvOS.xctestplan */,
+				ED99908B2A69117600031B06 /* Rudder-watchOS.xctestplan */,
 				ED38D36D29CB01A0003A7544 /* ConserFilterHandlerTests.swift */,
+				F64F9D7529BF171D009D963F /* ContextTests.swift */,
 				ED38D36C29CB01A0003A7544 /* DataResidencyTests.swift */,
 				ED38D36F29CB01A0003A7544 /* DBPersistentManagerTests.swift */,
 				ED38D36E29CB01A0003A7544 /* EventRepositoryTests.swift */,
@@ -562,7 +1129,6 @@
 				ED38D37129CB01A0003A7544 /* RudderUtilsTest.swift */,
 				ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */,
 				ED38D37D29CB01A0003A7544 /* TestUtils.swift */,
-				F64F9D7529BF171D009D963F /* ContextTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -598,6 +1164,7 @@
 				ED7DFE33298C091800ED5A8E /* RSMessage.m */,
 				ED7DFDC9298C091800ED5A8E /* RSMessageBuilder.m */,
 				ED7DFD99298C091800ED5A8E /* RSMessageType.m */,
+				ED99908D2A6926E000031B06 /* RSMetricsReporter.m */,
 				ED7DFD8A298C091800ED5A8E /* RSNetwork.m */,
 				F6B4B53429C8237D00344864 /* RSNetworkManager.m */,
 				F6B4B53129C8237D00344864 /* RSNetworkResponse.m */,
@@ -660,6 +1227,7 @@
 				ED7DFDB0298C091800ED5A8E /* RSMessage.h */,
 				ED7DFD9F298C091800ED5A8E /* RSMessageBuilder.h */,
 				ED7DFD9B298C091800ED5A8E /* RSMessageType.h */,
+				ED99908C2A6926E000031B06 /* RSMetricsReporter.h */,
 				ED7DFDB3298C091800ED5A8E /* RSNetwork.h */,
 				F6B4B52129C8236100344864 /* RSNetworkManager.h */,
 				F6B4B52229C8236100344864 /* RSNetworkResponse.h */,
@@ -677,14 +1245,14 @@
 				ED7DFDC0298C091800ED5A8E /* RSTrackPropertyBuilder.h */,
 				ED7DFDB8298C091800ED5A8E /* RSTraits.h */,
 				ED7DFDBA298C091800ED5A8E /* RSTraitsBuilder.h */,
+				F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */,
+				F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */,
+				F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */,
 				ED7DFDAB298C091800ED5A8E /* RSUserSession.h */,
 				ED7DFDC2298C091800ED5A8E /* RSUtils.h */,
 				ED7DFDA2298C091800ED5A8E /* Rudder.h */,
 				ED7DFDC4298C091800ED5A8E /* UIViewController+RSScreen.h */,
 				ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */,
-				F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */,
-				F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */,
-				F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -764,7 +1332,9 @@
 		ED83FF0C27310B44006F27B3 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				ED83FF0D27310B44006F27B3 /* Info.plist */,
+				ED83FF0D27310B44006F27B3 /* iOS-Info.plist */,
+				ED998FE82A69034E00031B06 /* tvOS-Info.plist */,
+				ED998FE72A69034E00031B06 /* watchOS-Info.plist */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -920,6 +1490,7 @@
 				ED7DFE70298C091800ED5A8E /* RSServerDestination.h in Headers */,
 				ED7DFED9298C091800ED5A8E /* RSProductClickedEvent.h in Headers */,
 				ED7DFE82298C091800ED5A8E /* RSECommerceCartBuilder.h in Headers */,
+				ED99908E2A6926E000031B06 /* RSMetricsReporter.h in Headers */,
 				ED7DFE58298C091800ED5A8E /* RSPreferenceManager.h in Headers */,
 				ED7DFEB7298C091800ED5A8E /* RSPaymentInfoEnteredEvent.h in Headers */,
 				ED7DFECA298C091800ED5A8E /* RSCartSharedEvent.h in Headers */,
@@ -992,13 +1563,238 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED998E482A69003600031B06 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED998E492A69003600031B06 /* RSECommerceCart.h in Headers */,
+				ED998E4A2A69003600031B06 /* RSProperty.h in Headers */,
+				ED998E4B2A69003600031B06 /* RSCheckoutStepCompletedEvent.h in Headers */,
+				ED998E4C2A69003600031B06 /* WKInterfaceController+RSScreen.h in Headers */,
+				ED998E4D2A69003600031B06 /* RSMessageType.h in Headers */,
+				ED998E4E2A69003600031B06 /* RSECommerceParamNames.h in Headers */,
+				ED998E4F2A69003600031B06 /* RSECommerceProductBuilder.h in Headers */,
+				ED998E502A69003600031B06 /* RSElementCache.h in Headers */,
+				ED998E512A69003600031B06 /* RSProductRemovedEvent.h in Headers */,
+				ED998E522A69003600031B06 /* RSScreenPropertyBuilder.h in Headers */,
+				ED998E532A69003600031B06 /* RSECommerceCheckoutBuilder.h in Headers */,
+				ED998E542A69003600031B06 /* RSECommerceWishListBuilder.h in Headers */,
+				ED998E552A69003600031B06 /* RSCheckoutStepViewedEvent.h in Headers */,
+				ED998E562A69003600031B06 /* RSTraits.h in Headers */,
+				ED998E572A69003600031B06 /* RSOption.h in Headers */,
+				ED998E582A69003600031B06 /* RSECommerceSortBuilder.h in Headers */,
+				ED998E592A69003600031B06 /* RSDeviceInfo.h in Headers */,
+				ED998E5A2A69003600031B06 /* RSECommerceFilterBuilder.h in Headers */,
+				ED998E5B2A69003600031B06 /* Rudder.h in Headers */,
+				ED998E5C2A69003600031B06 /* RSLogger.h in Headers */,
+				ED998E5D2A69003600031B06 /* RSOrderRefundedEvent.h in Headers */,
+				ED998E5E2A69003600031B06 /* RSECommerceOrderBuilder.h in Headers */,
+				ED998E5F2A69003600031B06 /* RSECommerceProduct.h in Headers */,
+				ED998E602A69003600031B06 /* RSOSInfo.h in Headers */,
+				ED998E612A69003600031B06 /* RSServerConfigSource.h in Headers */,
+				ED998E622A69003600031B06 /* RSProductSharedEvent.h in Headers */,
+				ED0CA6ED2A7D08D800899C1C /* RSTransformationMetadata.h in Headers */,
+				ED998E632A69003600031B06 /* RSTraitsBuilder.h in Headers */,
+				ED998E642A69003600031B06 /* RSUtils.h in Headers */,
+				ED998E652A69003600031B06 /* RSProductAddedToCartEvent.h in Headers */,
+				ED998E662A69003600031B06 /* RSServerDestination.h in Headers */,
+				ED998E672A69003600031B06 /* RSProductClickedEvent.h in Headers */,
+				ED998E682A69003600031B06 /* RSECommerceCartBuilder.h in Headers */,
+				ED99908F2A6926E000031B06 /* RSMetricsReporter.h in Headers */,
+				ED998E692A69003600031B06 /* RSPreferenceManager.h in Headers */,
+				ED998E6A2A69003600031B06 /* RSPaymentInfoEnteredEvent.h in Headers */,
+				ED998E6B2A69003600031B06 /* RSCartSharedEvent.h in Headers */,
+				ED998E6C2A69003600031B06 /* RSECommerceEvents.h in Headers */,
+				ED998E6D2A69003600031B06 /* RSECommerceCoupon.h in Headers */,
+				ED998E6E2A69003600031B06 /* RSECommerceWishList.h in Headers */,
+				ED998E6F2A69003600031B06 /* RSMessageBuilder.h in Headers */,
+				ED998E702A69003600031B06 /* UIViewController+RSScreen.h in Headers */,
+				ED998E712A69003600031B06 /* RSOrderCancelledEvent.h in Headers */,
+				ED998E722A69003600031B06 /* RSCouponAppliedEvent.h in Headers */,
+				ED998E732A69003600031B06 /* RSMessage.h in Headers */,
+				ED998E742A69003600031B06 /* RSScreenInfo.h in Headers */,
+				ED998E752A69003600031B06 /* RSCouponEnteredEvent.h in Headers */,
+				ED998E762A69003600031B06 /* RSECommerceOrder.h in Headers */,
+				ED998E772A69003600031B06 /* RSIntegrationFactory.h in Headers */,
+				ED998E782A69003600031B06 /* RSECommercePromotionBuilder.h in Headers */,
+				ED998E792A69003600031B06 /* RSPagePropertyBuilder.h in Headers */,
+				ED998E7A2A69003600031B06 /* RSProductReviewedEvent.h in Headers */,
+				ED998E7B2A69003600031B06 /* RSCouponDeniedEvent.h in Headers */,
+				ED998E7C2A69003600031B06 /* RSNetwork.h in Headers */,
+				ED998E7D2A69003600031B06 /* RSECommerceFilter.h in Headers */,
+				ED998E7E2A69003600031B06 /* RSConfigBuilder.h in Headers */,
+				ED998E7F2A69003600031B06 /* RSProductAddedToWishListEvent.h in Headers */,
+				ED998E802A69003600031B06 /* RSPromotionClickedEvent.h in Headers */,
+				ED998E812A69003600031B06 /* RSEventRepository.h in Headers */,
+				ED998E822A69003600031B06 /* RSProductListFilteredEvent.h in Headers */,
+				ED998E832A69003600031B06 /* RSProductListViewedEvent.h in Headers */,
+				ED0CA6EC2A7D08D800899C1C /* RSTransformationRequest.h in Headers */,
+				ED998E842A69003600031B06 /* RSConsentFilter.h in Headers */,
+				ED998E852A69003600031B06 /* RSEnums.h in Headers */,
+				ED0CA6EA2A7D08B900899C1C /* RSTransformationEvent.h in Headers */,
+				ED998E862A69003600031B06 /* RSApp.h in Headers */,
+				ED998E872A69003600031B06 /* RSCouponRemovedEvent.h in Headers */,
+				ED998E882A69003600031B06 /* RSUserSession.h in Headers */,
+				ED998E892A69003600031B06 /* RSCheckoutStartedEvent.h in Headers */,
+				ED998E8A2A69003600031B06 /* RSOrderUpdatedEvent.h in Headers */,
+				ED998E8B2A69003600031B06 /* RSPromotionViewedEvent.h in Headers */,
+				ED998E8C2A69003600031B06 /* RSProductViewedEvent.h in Headers */,
+				ED998E8D2A69003600031B06 /* RSServerDestinationDefinition.h in Headers */,
+				ED998E8E2A69003600031B06 /* RSConstants.h in Headers */,
+				ED998E8F2A69003600031B06 /* RSEventFilteringPlugin.h in Headers */,
+				ED998E902A69003600031B06 /* RSECommerceSort.h in Headers */,
+				ED998E912A69003600031B06 /* RSCartViewedEvent.h in Headers */,
+				ED998E922A69003600031B06 /* RSClient.h in Headers */,
+				ED998E932A69003600031B06 /* RSIntegration.h in Headers */,
+				ED998E942A69003600031B06 /* RSDBMessage.h in Headers */,
+				ED998E952A69003600031B06 /* RSWishListProductAddedToCartEvent.h in Headers */,
+				ED998E962A69003600031B06 /* RSLibraryInfo.h in Headers */,
+				ED998E972A69003600031B06 /* RSECommerceCouponBuilder.h in Headers */,
+				ED998E982A69003600031B06 /* RSNetworkResponse.h in Headers */,
+				ED998E992A69003600031B06 /* RSApplicationLifeCycleManager.h in Headers */,
+				ED998E9A2A69003600031B06 /* RSConfig.h in Headers */,
+				ED998E9B2A69003600031B06 /* RSDeviceModeTransformationManager.h in Headers */,
+				ED998E9C2A69003600031B06 /* RSProductRemovedFromWishListEvent.h in Headers */,
+				ED998E9D2A69003600031B06 /* RSCloudModeManager.h in Headers */,
+				ED998E9E2A69003600031B06 /* NSData+GZIP.h in Headers */,
+				ED998E9F2A69003600031B06 /* RSDataResidencyManager.h in Headers */,
+				ED998EA02A69003600031B06 /* RSECommerceCheckout.h in Headers */,
+				ED998EA12A69003600031B06 /* RSDeviceModeManager.h in Headers */,
+				ED998EA22A69003600031B06 /* RSFlushManager.h in Headers */,
+				ED998EA32A69003600031B06 /* RSNetworkManager.h in Headers */,
+				ED998EA42A69003600031B06 /* RSTrackPropertyBuilder.h in Headers */,
+				ED998EA52A69003600031B06 /* RSBackGroundModeManager.h in Headers */,
+				ED998EA62A69003600031B06 /* RSVersion.h in Headers */,
+				ED998EA72A69003600031B06 /* RSServerConfigManager.h in Headers */,
+				ED998EA82A69003600031B06 /* RSOrderCompletedEvent.h in Headers */,
+				ED998EA92A69003600031B06 /* RSECommercePromotion.h in Headers */,
+				ED998EAA2A69003600031B06 /* RSDBPersistentManager.h in Headers */,
+				ED998EAB2A69003600031B06 /* RSConsentFilterHandler.h in Headers */,
+				ED998EAC2A69003600031B06 /* RSContext.h in Headers */,
+				ED998EAD2A69003600031B06 /* RSProductSearchedEvent.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED998F182A69024E00031B06 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED998F192A69024E00031B06 /* RSECommerceCart.h in Headers */,
+				ED998F1A2A69024E00031B06 /* RSProperty.h in Headers */,
+				ED998F1B2A69024E00031B06 /* RSCheckoutStepCompletedEvent.h in Headers */,
+				ED998F1C2A69024E00031B06 /* WKInterfaceController+RSScreen.h in Headers */,
+				ED998F1D2A69024E00031B06 /* RSMessageType.h in Headers */,
+				ED998F1E2A69024E00031B06 /* RSECommerceParamNames.h in Headers */,
+				ED998F1F2A69024E00031B06 /* RSECommerceProductBuilder.h in Headers */,
+				ED998F202A69024E00031B06 /* RSElementCache.h in Headers */,
+				ED998F212A69024E00031B06 /* RSProductRemovedEvent.h in Headers */,
+				ED998F222A69024E00031B06 /* RSScreenPropertyBuilder.h in Headers */,
+				ED998F232A69024E00031B06 /* RSECommerceCheckoutBuilder.h in Headers */,
+				ED998F242A69024E00031B06 /* RSECommerceWishListBuilder.h in Headers */,
+				ED998F252A69024E00031B06 /* RSCheckoutStepViewedEvent.h in Headers */,
+				ED998F262A69024E00031B06 /* RSTraits.h in Headers */,
+				ED998F272A69024E00031B06 /* RSOption.h in Headers */,
+				ED998F282A69024E00031B06 /* RSECommerceSortBuilder.h in Headers */,
+				ED998F292A69024E00031B06 /* RSDeviceInfo.h in Headers */,
+				ED998F2A2A69024E00031B06 /* RSECommerceFilterBuilder.h in Headers */,
+				ED998F2B2A69024E00031B06 /* Rudder.h in Headers */,
+				ED998F2C2A69024E00031B06 /* RSLogger.h in Headers */,
+				ED998F2D2A69024E00031B06 /* RSOrderRefundedEvent.h in Headers */,
+				ED998F2E2A69024E00031B06 /* RSECommerceOrderBuilder.h in Headers */,
+				ED998F2F2A69024E00031B06 /* RSECommerceProduct.h in Headers */,
+				ED998F302A69024E00031B06 /* RSOSInfo.h in Headers */,
+				ED998F312A69024E00031B06 /* RSServerConfigSource.h in Headers */,
+				ED998F322A69024E00031B06 /* RSProductSharedEvent.h in Headers */,
+				ED0CA6EF2A7D08D900899C1C /* RSTransformationMetadata.h in Headers */,
+				ED998F332A69024E00031B06 /* RSTraitsBuilder.h in Headers */,
+				ED998F342A69024E00031B06 /* RSUtils.h in Headers */,
+				ED998F352A69024E00031B06 /* RSProductAddedToCartEvent.h in Headers */,
+				ED998F362A69024E00031B06 /* RSServerDestination.h in Headers */,
+				ED998F372A69024E00031B06 /* RSProductClickedEvent.h in Headers */,
+				ED998F382A69024E00031B06 /* RSECommerceCartBuilder.h in Headers */,
+				ED9990902A6926E000031B06 /* RSMetricsReporter.h in Headers */,
+				ED998F392A69024E00031B06 /* RSPreferenceManager.h in Headers */,
+				ED998F3A2A69024E00031B06 /* RSPaymentInfoEnteredEvent.h in Headers */,
+				ED998F3B2A69024E00031B06 /* RSCartSharedEvent.h in Headers */,
+				ED998F3C2A69024E00031B06 /* RSECommerceEvents.h in Headers */,
+				ED998F3D2A69024E00031B06 /* RSECommerceCoupon.h in Headers */,
+				ED998F3E2A69024E00031B06 /* RSECommerceWishList.h in Headers */,
+				ED998F3F2A69024E00031B06 /* RSMessageBuilder.h in Headers */,
+				ED998F402A69024E00031B06 /* UIViewController+RSScreen.h in Headers */,
+				ED998F412A69024E00031B06 /* RSOrderCancelledEvent.h in Headers */,
+				ED998F422A69024E00031B06 /* RSCouponAppliedEvent.h in Headers */,
+				ED998F432A69024E00031B06 /* RSMessage.h in Headers */,
+				ED998F442A69024E00031B06 /* RSScreenInfo.h in Headers */,
+				ED998F452A69024E00031B06 /* RSCouponEnteredEvent.h in Headers */,
+				ED998F462A69024E00031B06 /* RSECommerceOrder.h in Headers */,
+				ED998F472A69024E00031B06 /* RSIntegrationFactory.h in Headers */,
+				ED998F482A69024E00031B06 /* RSECommercePromotionBuilder.h in Headers */,
+				ED998F492A69024E00031B06 /* RSPagePropertyBuilder.h in Headers */,
+				ED998F4A2A69024E00031B06 /* RSProductReviewedEvent.h in Headers */,
+				ED998F4B2A69024E00031B06 /* RSCouponDeniedEvent.h in Headers */,
+				ED998F4C2A69024E00031B06 /* RSNetwork.h in Headers */,
+				ED998F4D2A69024E00031B06 /* RSECommerceFilter.h in Headers */,
+				ED998F4E2A69024E00031B06 /* RSConfigBuilder.h in Headers */,
+				ED998F4F2A69024E00031B06 /* RSProductAddedToWishListEvent.h in Headers */,
+				ED998F502A69024E00031B06 /* RSPromotionClickedEvent.h in Headers */,
+				ED998F512A69024E00031B06 /* RSEventRepository.h in Headers */,
+				ED998F522A69024E00031B06 /* RSProductListFilteredEvent.h in Headers */,
+				ED998F532A69024E00031B06 /* RSProductListViewedEvent.h in Headers */,
+				ED0CA6EE2A7D08D900899C1C /* RSTransformationRequest.h in Headers */,
+				ED998F542A69024E00031B06 /* RSConsentFilter.h in Headers */,
+				ED998F552A69024E00031B06 /* RSEnums.h in Headers */,
+				ED0CA6EB2A7D08B900899C1C /* RSTransformationEvent.h in Headers */,
+				ED998F562A69024E00031B06 /* RSApp.h in Headers */,
+				ED998F572A69024E00031B06 /* RSCouponRemovedEvent.h in Headers */,
+				ED998F582A69024E00031B06 /* RSUserSession.h in Headers */,
+				ED998F592A69024E00031B06 /* RSCheckoutStartedEvent.h in Headers */,
+				ED998F5A2A69024E00031B06 /* RSOrderUpdatedEvent.h in Headers */,
+				ED998F5B2A69024E00031B06 /* RSPromotionViewedEvent.h in Headers */,
+				ED998F5C2A69024E00031B06 /* RSProductViewedEvent.h in Headers */,
+				ED998F5D2A69024E00031B06 /* RSServerDestinationDefinition.h in Headers */,
+				ED998F5E2A69024E00031B06 /* RSConstants.h in Headers */,
+				ED998F5F2A69024E00031B06 /* RSEventFilteringPlugin.h in Headers */,
+				ED998F602A69024E00031B06 /* RSECommerceSort.h in Headers */,
+				ED998F612A69024E00031B06 /* RSCartViewedEvent.h in Headers */,
+				ED998F622A69024E00031B06 /* RSClient.h in Headers */,
+				ED998F632A69024E00031B06 /* RSIntegration.h in Headers */,
+				ED998F642A69024E00031B06 /* RSDBMessage.h in Headers */,
+				ED998F652A69024E00031B06 /* RSWishListProductAddedToCartEvent.h in Headers */,
+				ED998F662A69024E00031B06 /* RSLibraryInfo.h in Headers */,
+				ED998F672A69024E00031B06 /* RSECommerceCouponBuilder.h in Headers */,
+				ED998F682A69024E00031B06 /* RSNetworkResponse.h in Headers */,
+				ED998F692A69024E00031B06 /* RSApplicationLifeCycleManager.h in Headers */,
+				ED998F6A2A69024E00031B06 /* RSConfig.h in Headers */,
+				ED998F6B2A69024E00031B06 /* RSDeviceModeTransformationManager.h in Headers */,
+				ED998F6C2A69024E00031B06 /* RSProductRemovedFromWishListEvent.h in Headers */,
+				ED998F6D2A69024E00031B06 /* RSCloudModeManager.h in Headers */,
+				ED998F6E2A69024E00031B06 /* NSData+GZIP.h in Headers */,
+				ED998F6F2A69024E00031B06 /* RSDataResidencyManager.h in Headers */,
+				ED998F702A69024E00031B06 /* RSECommerceCheckout.h in Headers */,
+				ED998F712A69024E00031B06 /* RSDeviceModeManager.h in Headers */,
+				ED998F722A69024E00031B06 /* RSFlushManager.h in Headers */,
+				ED998F732A69024E00031B06 /* RSNetworkManager.h in Headers */,
+				ED998F742A69024E00031B06 /* RSTrackPropertyBuilder.h in Headers */,
+				ED998F752A69024E00031B06 /* RSBackGroundModeManager.h in Headers */,
+				ED998F762A69024E00031B06 /* RSVersion.h in Headers */,
+				ED998F772A69024E00031B06 /* RSServerConfigManager.h in Headers */,
+				ED998F782A69024E00031B06 /* RSOrderCompletedEvent.h in Headers */,
+				ED998F792A69024E00031B06 /* RSECommercePromotion.h in Headers */,
+				ED998F7A2A69024E00031B06 /* RSDBPersistentManager.h in Headers */,
+				ED998F7B2A69024E00031B06 /* RSConsentFilterHandler.h in Headers */,
+				ED998F7C2A69024E00031B06 /* RSContext.h in Headers */,
+				ED998F7D2A69024E00031B06 /* RSProductSearchedEvent.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		06CABB832630C3CA0097BEFF /* Rudder */ = {
+		06CABB832630C3CA0097BEFF /* Rudder-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */;
+			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder-iOS" */;
 			buildPhases = (
+				774B6380822CE11D35DB417E /* [CP] Check Pods Manifest.lock */,
 				06CABB7F2630C3CA0097BEFF /* Headers */,
 				06CABB802630C3CA0097BEFF /* Sources */,
 				06CABB812630C3CA0097BEFF /* Frameworks */,
@@ -1008,27 +1804,104 @@
 			);
 			dependencies = (
 			);
-			name = Rudder;
+			name = "Rudder-iOS";
 			productName = Rudder;
 			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		ED04A23B29839DCC0080A88D /* RudderTests */ = {
+		ED998E472A69003600031B06 /* Rudder-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED04A24529839DCC0080A88D /* Build configuration list for PBXNativeTarget "RudderTests" */;
+			buildConfigurationList = ED998F122A69003600031B06 /* Build configuration list for PBXNativeTarget "Rudder-tvOS" */;
 			buildPhases = (
-				ED04A23829839DCC0080A88D /* Sources */,
-				ED04A23929839DCC0080A88D /* Frameworks */,
-				ED04A23A29839DCC0080A88D /* Resources */,
+				314E78449F94D8258A5251D0 /* [CP] Check Pods Manifest.lock */,
+				ED998E482A69003600031B06 /* Headers */,
+				ED998EAE2A69003600031B06 /* Sources */,
+				ED998F0E2A69003600031B06 /* Frameworks */,
+				ED998F112A69003600031B06 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				ED04A24229839DCC0080A88D /* PBXTargetDependency */,
 			);
-			name = RudderTests;
-			productName = RudderTests;
-			productReference = ED04A23C29839DCC0080A88D /* RudderTests.xctest */;
+			name = "Rudder-tvOS";
+			productName = Rudder;
+			productReference = ED998F152A69003600031B06 /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		ED998F172A69024E00031B06 /* Rudder-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED998FE22A69024E00031B06 /* Build configuration list for PBXNativeTarget "Rudder-watchOS" */;
+			buildPhases = (
+				8C0D0D043927DC3D702AF9D6 /* [CP] Check Pods Manifest.lock */,
+				ED998F182A69024E00031B06 /* Headers */,
+				ED998F7E2A69024E00031B06 /* Sources */,
+				ED998FDE2A69024E00031B06 /* Frameworks */,
+				ED998FE12A69024E00031B06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rudder-watchOS";
+			productName = Rudder;
+			productReference = ED998FE52A69024E00031B06 /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		ED99902C2A69102400031B06 /* RudderTests-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED9990342A69102400031B06 /* Build configuration list for PBXNativeTarget "RudderTests-tvOS" */;
+			buildPhases = (
+				404F02D375766322C72DECD4 /* [CP] Check Pods Manifest.lock */,
+				ED9990292A69102400031B06 /* Sources */,
+				ED99902A2A69102400031B06 /* Frameworks */,
+				ED99902B2A69102400031B06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED9990332A69102400031B06 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-tvOS";
+			productName = "RudderTests-tvOS";
+			productReference = ED99902D2A69102400031B06 /* RudderTests-tvOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ED99903A2A69103A00031B06 /* RudderTests-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED9990422A69103B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-iOS" */;
+			buildPhases = (
+				AB8089B2803E05948B887435 /* [CP] Check Pods Manifest.lock */,
+				ED9990372A69103A00031B06 /* Sources */,
+				ED9990382A69103A00031B06 /* Frameworks */,
+				ED9990392A69103A00031B06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED9990412A69103B00031B06 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-iOS";
+			productName = "RudderTests-iOS";
+			productReference = ED99903B2A69103A00031B06 /* RudderTests-iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ED9990482A69104B00031B06 /* RudderTests-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED9990502A69104B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-watchOS" */;
+			buildPhases = (
+				93D2FF7EE1F47BD9E094F945 /* [CP] Check Pods Manifest.lock */,
+				ED9990452A69104B00031B06 /* Sources */,
+				ED9990462A69104B00031B06 /* Frameworks */,
+				ED9990472A69104B00031B06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED99904F2A69104B00031B06 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-watchOS";
+			productName = "RudderTests-watchOS";
+			productReference = ED9990492A69104B00031B06 /* RudderTests-watchOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1037,15 +1910,21 @@
 		06CABB7B2630C3CA0097BEFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					06CABB832630C3CA0097BEFF = {
 						CreatedOnToolsVersion = 12.3;
 						LastSwiftMigration = 1310;
 					};
-					ED04A23B29839DCC0080A88D = {
-						CreatedOnToolsVersion = 14.2;
+					ED99902C2A69102400031B06 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					ED99903A2A69103A00031B06 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					ED9990482A69104B00031B06 = {
+						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
 			};
@@ -1062,8 +1941,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				06CABB832630C3CA0097BEFF /* Rudder */,
-				ED04A23B29839DCC0080A88D /* RudderTests */,
+				06CABB832630C3CA0097BEFF /* Rudder-iOS */,
+				ED998E472A69003600031B06 /* Rudder-tvOS */,
+				ED998F172A69024E00031B06 /* Rudder-watchOS */,
+				ED99902C2A69102400031B06 /* RudderTests-tvOS */,
+				ED99903A2A69103A00031B06 /* RudderTests-iOS */,
+				ED9990482A69104B00031B06 /* RudderTests-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -1076,23 +1959,204 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ED04A23A29839DCC0080A88D /* Resources */ = {
+		ED998F112A69003600031B06 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6113D3A29EFD25500A05261 /* eu-dataresidency-default-true.json in Resources */,
-				F6113D3829EFD25500A05261 /* no-dataresidency.json in Resources */,
-				F6113D3529EFD25500A05261 /* eu-dataresidency-default-false.json in Resources */,
-				F6113D3929EFD25500A05261 /* multi-dataresidency-eu-true.json in Resources */,
-				F6113D3629EFD25500A05261 /* multi-dataresidency-default-false.json in Resources */,
-				F6113D3429EFD25500A05261 /* multi-dataresidency-us-true.json in Resources */,
-				F6113D3B29EFD25500A05261 /* us-dataresidency-default-true.json in Resources */,
-				F6113D3C29EFD25500A05261 /* us-dataresidency-default-false.json in Resources */,
-				F6113D3729EFD25500A05261 /* multi-dataresidency-default-true.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED998FE12A69024E00031B06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED99902B2A69102400031B06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED99905A2A69108B00031B06 /* multi-dataresidency-eu-true.json in Resources */,
+				ED99905B2A69108B00031B06 /* us-dataresidency-default-true.json in Resources */,
+				ED9990562A69108B00031B06 /* multi-dataresidency-default-false.json in Resources */,
+				ED9990542A69108B00031B06 /* eu-dataresidency-default-true.json in Resources */,
+				ED9990582A69108B00031B06 /* eu-dataresidency-default-false.json in Resources */,
+				ED9990532A69108B00031B06 /* no-dataresidency.json in Resources */,
+				ED9990552A69108B00031B06 /* us-dataresidency-default-false.json in Resources */,
+				ED9990572A69108B00031B06 /* multi-dataresidency-us-true.json in Resources */,
+				ED9990592A69108B00031B06 /* multi-dataresidency-default-true.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990392A69103A00031B06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED9990632A69108C00031B06 /* multi-dataresidency-eu-true.json in Resources */,
+				ED9990642A69108C00031B06 /* us-dataresidency-default-true.json in Resources */,
+				ED99905F2A69108C00031B06 /* multi-dataresidency-default-false.json in Resources */,
+				ED99905D2A69108C00031B06 /* eu-dataresidency-default-true.json in Resources */,
+				ED9990612A69108C00031B06 /* eu-dataresidency-default-false.json in Resources */,
+				ED99905C2A69108C00031B06 /* no-dataresidency.json in Resources */,
+				ED99905E2A69108C00031B06 /* us-dataresidency-default-false.json in Resources */,
+				ED9990602A69108C00031B06 /* multi-dataresidency-us-true.json in Resources */,
+				ED9990622A69108C00031B06 /* multi-dataresidency-default-true.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990472A69104B00031B06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED99906C2A69108C00031B06 /* multi-dataresidency-eu-true.json in Resources */,
+				ED99906D2A69108C00031B06 /* us-dataresidency-default-true.json in Resources */,
+				ED9990682A69108C00031B06 /* multi-dataresidency-default-false.json in Resources */,
+				ED9990662A69108C00031B06 /* eu-dataresidency-default-true.json in Resources */,
+				ED99906A2A69108C00031B06 /* eu-dataresidency-default-false.json in Resources */,
+				ED9990652A69108C00031B06 /* no-dataresidency.json in Resources */,
+				ED9990672A69108C00031B06 /* us-dataresidency-default-false.json in Resources */,
+				ED9990692A69108C00031B06 /* multi-dataresidency-us-true.json in Resources */,
+				ED99906B2A69108C00031B06 /* multi-dataresidency-default-true.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		314E78449F94D8258A5251D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		404F02D375766322C72DECD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderTests-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		774B6380822CE11D35DB417E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C0D0D043927DC3D702AF9D6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-watchOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		93D2FF7EE1F47BD9E094F945 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderTests-watchOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB8089B2803E05948B887435 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderTests-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		06CABB802630C3CA0097BEFF /* Sources */ = {
@@ -1129,6 +2193,7 @@
 				ED8DB01E298E206900907EC4 /* RSConsentFilterHandler.m in Sources */,
 				ED7DFE3A298C091800ED5A8E /* RSLibraryInfo.m in Sources */,
 				ED7DFE9B298C091800ED5A8E /* RSECommerceParamNames.m in Sources */,
+				ED9990912A6926E000031B06 /* RSMetricsReporter.m in Sources */,
 				ED7DFEA8298C091800ED5A8E /* RSCartSharedEvent.m in Sources */,
 				ED7DFEAE298C091800ED5A8E /* RSPromotionViewedEvent.m in Sources */,
 				ED7DFECE298C091800ED5A8E /* RSOrderCancelledEvent.m in Sources */,
@@ -1200,30 +2265,284 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ED04A23829839DCC0080A88D /* Sources */ = {
+		ED998EAE2A69003600031B06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED38D39D29CB04C7003A7544 /* EventRepositoryTests.swift in Sources */,
-				ED38D39A29CB04C7003A7544 /* DataResidencyTests.swift in Sources */,
-				ED38D39929CB04C7003A7544 /* DBPersistentManagerTests.swift in Sources */,
-				ED38D39F29CB04C7003A7544 /* Extensions.swift in Sources */,
-				ED38D39C29CB04C7003A7544 /* ServerConfigManagerTests.swift in Sources */,
-				ED38D39E29CB04C7003A7544 /* TestUtils.swift in Sources */,
-				ED38D39829CB04C7003A7544 /* ConserFilterHandlerTests.swift in Sources */,
-				ED38D39B29CB04C7003A7544 /* RudderUtilsTest.swift in Sources */,
-				F64F9D7629BF171D009D963F /* ContextTests.swift in Sources */,
+				ED998EAF2A69003600031B06 /* RSClient.m in Sources */,
+				ED998EB02A69003600031B06 /* RSDeviceModeTransformationManager.m in Sources */,
+				ED0CA6F12A7D09B000899C1C /* RSTransformationMetadata.m in Sources */,
+				ED998EB12A69003600031B06 /* RSECommercePromotion.m in Sources */,
+				ED998EB22A69003600031B06 /* RSProductReviewedEvent.m in Sources */,
+				ED998EB32A69003600031B06 /* RSECommercePromotionBuilder.m in Sources */,
+				ED998EB42A69003600031B06 /* RSDeviceInfo.m in Sources */,
+				ED998EB52A69003600031B06 /* RSOption.m in Sources */,
+				ED998EB62A69003600031B06 /* RSFlushManager.m in Sources */,
+				ED998EB72A69003600031B06 /* RSPagePropertyBuilder.m in Sources */,
+				ED998EB82A69003600031B06 /* RSECommerceCoupon.m in Sources */,
+				ED998EB92A69003600031B06 /* RSConfig.m in Sources */,
+				ED998EBA2A69003600031B06 /* RSServerConfigSource.m in Sources */,
+				ED998EBB2A69003600031B06 /* RSTrackPropertyBuilder.m in Sources */,
+				ED998EBC2A69003600031B06 /* RSProductListFilteredEvent.m in Sources */,
+				ED998EBD2A69003600031B06 /* RSProductListViewedEvent.m in Sources */,
+				ED998EBE2A69003600031B06 /* RSDeviceModeManager.m in Sources */,
+				ED0CA6F22A7D09B000899C1C /* RSTransformationRequest.m in Sources */,
+				ED998EBF2A69003600031B06 /* RSScreenPropertyBuilder.m in Sources */,
+				ED998EC02A69003600031B06 /* RSElementCache.m in Sources */,
+				ED998EC12A69003600031B06 /* RSProductClickedEvent.m in Sources */,
+				ED998EC22A69003600031B06 /* RSProductSharedEvent.m in Sources */,
+				ED998EC32A69003600031B06 /* RSDBPersistentManager.m in Sources */,
+				ED998EC42A69003600031B06 /* RSCloudModeManager.m in Sources */,
+				ED998EC52A69003600031B06 /* RSProductRemovedFromWishListEvent.m in Sources */,
+				ED998EC62A69003600031B06 /* RSECommerceCart.m in Sources */,
+				ED998EC72A69003600031B06 /* RSPromotionClickedEvent.m in Sources */,
+				ED998EC82A69003600031B06 /* RSECommerceWishList.m in Sources */,
+				ED998EC92A69003600031B06 /* RSConsentFilterHandler.m in Sources */,
+				ED998ECA2A69003600031B06 /* RSLibraryInfo.m in Sources */,
+				ED998ECB2A69003600031B06 /* RSECommerceParamNames.m in Sources */,
+				ED9990922A6926E000031B06 /* RSMetricsReporter.m in Sources */,
+				ED998ECC2A69003600031B06 /* RSCartSharedEvent.m in Sources */,
+				ED998ECD2A69003600031B06 /* RSPromotionViewedEvent.m in Sources */,
+				ED998ECE2A69003600031B06 /* RSOrderCancelledEvent.m in Sources */,
+				ED998ECF2A69003600031B06 /* RSECommerceCartBuilder.m in Sources */,
+				ED998ED02A69003600031B06 /* RSECommerceWishListBuilder.m in Sources */,
+				ED998ED12A69003600031B06 /* RSOrderUpdatedEvent.m in Sources */,
+				ED998ED22A69003600031B06 /* RSECommerceOrderBuilder.m in Sources */,
+				ED998ED32A69003600031B06 /* RSNetworkResponse.m in Sources */,
+				ED998ED42A69003600031B06 /* RSContext.m in Sources */,
+				ED998ED52A69003600031B06 /* RSDBMessage.m in Sources */,
+				ED998ED62A69003600031B06 /* RSLogger.m in Sources */,
+				ED998ED72A69003600031B06 /* RSProperty.m in Sources */,
+				ED998ED82A69003600031B06 /* RSNetworkManager.m in Sources */,
+				ED998ED92A69003600031B06 /* RSCartViewedEvent.m in Sources */,
+				ED998EDA2A69003600031B06 /* RSConfigBuilder.m in Sources */,
+				ED998EDB2A69003600031B06 /* RSECommerceProduct.m in Sources */,
+				ED998EDC2A69003600031B06 /* RSEventRepository.m in Sources */,
+				ED998EDD2A69003600031B06 /* RSPreferenceManager.m in Sources */,
+				ED998EDE2A69003600031B06 /* RSPaymentInfoEnteredEvent.m in Sources */,
+				ED998EDF2A69003600031B06 /* RSBackGroundModeManager.m in Sources */,
+				ED0CA6F02A7D09B000899C1C /* RSTransformationEvent.m in Sources */,
+				ED998EE02A69003600031B06 /* RSProductAddedToCartEvent.m in Sources */,
+				ED998EE12A69003600031B06 /* RSECommerceCheckoutBuilder.m in Sources */,
+				ED998EE22A69003600031B06 /* RSConstants.m in Sources */,
+				ED998EE32A69003600031B06 /* RSECommerceEvents.m in Sources */,
+				ED998EE42A69003600031B06 /* RSECommerceProductBuilder.m in Sources */,
+				ED998EE52A69003600031B06 /* RSOrderCompletedEvent.m in Sources */,
+				ED998EE62A69003600031B06 /* RSECommerceCheckout.m in Sources */,
+				ED998EE72A69003600031B06 /* RSECommerceFilter.m in Sources */,
+				ED998EE82A69003600031B06 /* RSTraits.m in Sources */,
+				ED998EE92A69003600031B06 /* RSProductRemovedEvent.m in Sources */,
+				ED998EEA2A69003600031B06 /* RSNetwork.m in Sources */,
+				ED998EEB2A69003600031B06 /* RSTraitsBuilder.m in Sources */,
+				ED998EEC2A69003600031B06 /* RSCouponDeniedEvent.m in Sources */,
+				ED998EED2A69003600031B06 /* RSCouponRemovedEvent.m in Sources */,
+				ED998EEE2A69003600031B06 /* RSCheckoutStepViewedEvent.m in Sources */,
+				ED998EEF2A69003600031B06 /* WKInterfaceController+RSScreen.m in Sources */,
+				ED998EF02A69003600031B06 /* RSECommerceSortBuilder.m in Sources */,
+				ED998EF12A69003600031B06 /* RSServerDestination.m in Sources */,
+				ED998EF22A69003600031B06 /* RSOrderRefundedEvent.m in Sources */,
+				ED998EF32A69003600031B06 /* RSCouponEnteredEvent.m in Sources */,
+				ED998EF42A69003600031B06 /* RSApp.m in Sources */,
+				ED998EF52A69003600031B06 /* RSUserSession.m in Sources */,
+				ED998EF62A69003600031B06 /* RSOSInfo.m in Sources */,
+				ED998EF72A69003600031B06 /* RSECommerceCouponBuilder.m in Sources */,
+				ED998EF82A69003600031B06 /* RSECommerceSort.m in Sources */,
+				ED998EF92A69003600031B06 /* RSCheckoutStepCompletedEvent.m in Sources */,
+				ED998EFA2A69003600031B06 /* RSDataResidencyManager.m in Sources */,
+				ED998EFB2A69003600031B06 /* RSServerDestinationDefinition.m in Sources */,
+				ED998EFC2A69003600031B06 /* RSMessage.m in Sources */,
+				ED998EFD2A69003600031B06 /* RSECommerceFilterBuilder.m in Sources */,
+				ED998EFE2A69003600031B06 /* RSECommerceOrder.m in Sources */,
+				ED998EFF2A69003600031B06 /* RSServerConfigManager.m in Sources */,
+				ED998F002A69003600031B06 /* RSCheckoutStartedEvent.m in Sources */,
+				ED998F012A69003600031B06 /* RSCouponAppliedEvent.m in Sources */,
+				ED998F022A69003600031B06 /* UIViewController+RSScreen.m in Sources */,
+				ED998F032A69003600031B06 /* RSMessageType.m in Sources */,
+				ED998F042A69003600031B06 /* RSProductAddedToWishListEvent.m in Sources */,
+				ED998F052A69003600031B06 /* RSProductViewedEvent.m in Sources */,
+				ED998F062A69003600031B06 /* NSData+GZIP.m in Sources */,
+				ED998F072A69003600031B06 /* RSEventFilteringPlugin.m in Sources */,
+				ED998F082A69003600031B06 /* RSApplicationLifeCycleManager.m in Sources */,
+				ED998F092A69003600031B06 /* RSProductSearchedEvent.m in Sources */,
+				ED998F0A2A69003600031B06 /* RSWishListProductAddedToCartEvent.m in Sources */,
+				ED998F0B2A69003600031B06 /* RSUtils.m in Sources */,
+				ED998F0C2A69003600031B06 /* RSScreenInfo.m in Sources */,
+				ED998F0D2A69003600031B06 /* RSMessageBuilder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED998F7E2A69024E00031B06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED998F7F2A69024E00031B06 /* RSClient.m in Sources */,
+				ED998F802A69024E00031B06 /* RSDeviceModeTransformationManager.m in Sources */,
+				ED0CA6F42A7D09B100899C1C /* RSTransformationMetadata.m in Sources */,
+				ED998F812A69024E00031B06 /* RSECommercePromotion.m in Sources */,
+				ED998F822A69024E00031B06 /* RSProductReviewedEvent.m in Sources */,
+				ED998F832A69024E00031B06 /* RSECommercePromotionBuilder.m in Sources */,
+				ED998F842A69024E00031B06 /* RSDeviceInfo.m in Sources */,
+				ED998F852A69024E00031B06 /* RSOption.m in Sources */,
+				ED998F862A69024E00031B06 /* RSFlushManager.m in Sources */,
+				ED998F872A69024E00031B06 /* RSPagePropertyBuilder.m in Sources */,
+				ED998F882A69024E00031B06 /* RSECommerceCoupon.m in Sources */,
+				ED998F892A69024E00031B06 /* RSConfig.m in Sources */,
+				ED998F8A2A69024E00031B06 /* RSServerConfigSource.m in Sources */,
+				ED998F8B2A69024E00031B06 /* RSTrackPropertyBuilder.m in Sources */,
+				ED998F8C2A69024E00031B06 /* RSProductListFilteredEvent.m in Sources */,
+				ED998F8D2A69024E00031B06 /* RSProductListViewedEvent.m in Sources */,
+				ED998F8E2A69024E00031B06 /* RSDeviceModeManager.m in Sources */,
+				ED0CA6F52A7D09B100899C1C /* RSTransformationRequest.m in Sources */,
+				ED998F8F2A69024E00031B06 /* RSScreenPropertyBuilder.m in Sources */,
+				ED998F902A69024E00031B06 /* RSElementCache.m in Sources */,
+				ED998F912A69024E00031B06 /* RSProductClickedEvent.m in Sources */,
+				ED998F922A69024E00031B06 /* RSProductSharedEvent.m in Sources */,
+				ED998F932A69024E00031B06 /* RSDBPersistentManager.m in Sources */,
+				ED998F942A69024E00031B06 /* RSCloudModeManager.m in Sources */,
+				ED998F952A69024E00031B06 /* RSProductRemovedFromWishListEvent.m in Sources */,
+				ED998F962A69024E00031B06 /* RSECommerceCart.m in Sources */,
+				ED998F972A69024E00031B06 /* RSPromotionClickedEvent.m in Sources */,
+				ED998F982A69024E00031B06 /* RSECommerceWishList.m in Sources */,
+				ED998F992A69024E00031B06 /* RSConsentFilterHandler.m in Sources */,
+				ED998F9A2A69024E00031B06 /* RSLibraryInfo.m in Sources */,
+				ED998F9B2A69024E00031B06 /* RSECommerceParamNames.m in Sources */,
+				ED9990932A6926E000031B06 /* RSMetricsReporter.m in Sources */,
+				ED998F9C2A69024E00031B06 /* RSCartSharedEvent.m in Sources */,
+				ED998F9D2A69024E00031B06 /* RSPromotionViewedEvent.m in Sources */,
+				ED998F9E2A69024E00031B06 /* RSOrderCancelledEvent.m in Sources */,
+				ED998F9F2A69024E00031B06 /* RSECommerceCartBuilder.m in Sources */,
+				ED998FA02A69024E00031B06 /* RSECommerceWishListBuilder.m in Sources */,
+				ED998FA12A69024E00031B06 /* RSOrderUpdatedEvent.m in Sources */,
+				ED998FA22A69024E00031B06 /* RSECommerceOrderBuilder.m in Sources */,
+				ED998FA32A69024E00031B06 /* RSNetworkResponse.m in Sources */,
+				ED998FA42A69024E00031B06 /* RSContext.m in Sources */,
+				ED998FA52A69024E00031B06 /* RSDBMessage.m in Sources */,
+				ED998FA62A69024E00031B06 /* RSLogger.m in Sources */,
+				ED998FA72A69024E00031B06 /* RSProperty.m in Sources */,
+				ED998FA82A69024E00031B06 /* RSNetworkManager.m in Sources */,
+				ED998FA92A69024E00031B06 /* RSCartViewedEvent.m in Sources */,
+				ED998FAA2A69024E00031B06 /* RSConfigBuilder.m in Sources */,
+				ED998FAB2A69024E00031B06 /* RSECommerceProduct.m in Sources */,
+				ED998FAC2A69024E00031B06 /* RSEventRepository.m in Sources */,
+				ED998FAD2A69024E00031B06 /* RSPreferenceManager.m in Sources */,
+				ED998FAE2A69024E00031B06 /* RSPaymentInfoEnteredEvent.m in Sources */,
+				ED998FAF2A69024E00031B06 /* RSBackGroundModeManager.m in Sources */,
+				ED0CA6F32A7D09B100899C1C /* RSTransformationEvent.m in Sources */,
+				ED998FB02A69024E00031B06 /* RSProductAddedToCartEvent.m in Sources */,
+				ED998FB12A69024E00031B06 /* RSECommerceCheckoutBuilder.m in Sources */,
+				ED998FB22A69024E00031B06 /* RSConstants.m in Sources */,
+				ED998FB32A69024E00031B06 /* RSECommerceEvents.m in Sources */,
+				ED998FB42A69024E00031B06 /* RSECommerceProductBuilder.m in Sources */,
+				ED998FB52A69024E00031B06 /* RSOrderCompletedEvent.m in Sources */,
+				ED998FB62A69024E00031B06 /* RSECommerceCheckout.m in Sources */,
+				ED998FB72A69024E00031B06 /* RSECommerceFilter.m in Sources */,
+				ED998FB82A69024E00031B06 /* RSTraits.m in Sources */,
+				ED998FB92A69024E00031B06 /* RSProductRemovedEvent.m in Sources */,
+				ED998FBA2A69024E00031B06 /* RSNetwork.m in Sources */,
+				ED998FBB2A69024E00031B06 /* RSTraitsBuilder.m in Sources */,
+				ED998FBC2A69024E00031B06 /* RSCouponDeniedEvent.m in Sources */,
+				ED998FBD2A69024E00031B06 /* RSCouponRemovedEvent.m in Sources */,
+				ED998FBE2A69024E00031B06 /* RSCheckoutStepViewedEvent.m in Sources */,
+				ED998FBF2A69024E00031B06 /* WKInterfaceController+RSScreen.m in Sources */,
+				ED998FC02A69024E00031B06 /* RSECommerceSortBuilder.m in Sources */,
+				ED998FC12A69024E00031B06 /* RSServerDestination.m in Sources */,
+				ED998FC22A69024E00031B06 /* RSOrderRefundedEvent.m in Sources */,
+				ED998FC32A69024E00031B06 /* RSCouponEnteredEvent.m in Sources */,
+				ED998FC42A69024E00031B06 /* RSApp.m in Sources */,
+				ED998FC52A69024E00031B06 /* RSUserSession.m in Sources */,
+				ED998FC62A69024E00031B06 /* RSOSInfo.m in Sources */,
+				ED998FC72A69024E00031B06 /* RSECommerceCouponBuilder.m in Sources */,
+				ED998FC82A69024E00031B06 /* RSECommerceSort.m in Sources */,
+				ED998FC92A69024E00031B06 /* RSCheckoutStepCompletedEvent.m in Sources */,
+				ED998FCA2A69024E00031B06 /* RSDataResidencyManager.m in Sources */,
+				ED998FCB2A69024E00031B06 /* RSServerDestinationDefinition.m in Sources */,
+				ED998FCC2A69024E00031B06 /* RSMessage.m in Sources */,
+				ED998FCD2A69024E00031B06 /* RSECommerceFilterBuilder.m in Sources */,
+				ED998FCE2A69024E00031B06 /* RSECommerceOrder.m in Sources */,
+				ED998FCF2A69024E00031B06 /* RSServerConfigManager.m in Sources */,
+				ED998FD02A69024E00031B06 /* RSCheckoutStartedEvent.m in Sources */,
+				ED998FD12A69024E00031B06 /* RSCouponAppliedEvent.m in Sources */,
+				ED998FD22A69024E00031B06 /* UIViewController+RSScreen.m in Sources */,
+				ED998FD32A69024E00031B06 /* RSMessageType.m in Sources */,
+				ED998FD42A69024E00031B06 /* RSProductAddedToWishListEvent.m in Sources */,
+				ED998FD52A69024E00031B06 /* RSProductViewedEvent.m in Sources */,
+				ED998FD62A69024E00031B06 /* NSData+GZIP.m in Sources */,
+				ED998FD72A69024E00031B06 /* RSEventFilteringPlugin.m in Sources */,
+				ED998FD82A69024E00031B06 /* RSApplicationLifeCycleManager.m in Sources */,
+				ED998FD92A69024E00031B06 /* RSProductSearchedEvent.m in Sources */,
+				ED998FDA2A69024E00031B06 /* RSWishListProductAddedToCartEvent.m in Sources */,
+				ED998FDB2A69024E00031B06 /* RSUtils.m in Sources */,
+				ED998FDC2A69024E00031B06 /* RSScreenInfo.m in Sources */,
+				ED998FDD2A69024E00031B06 /* RSMessageBuilder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990292A69102400031B06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED9990752A69109000031B06 /* EventRepositoryTests.swift in Sources */,
+				ED99906E2A69109000031B06 /* ConserFilterHandlerTests.swift in Sources */,
+				ED9990732A69109000031B06 /* DataResidencyTests.swift in Sources */,
+				ED9990762A69109000031B06 /* TestUtils.swift in Sources */,
+				ED9990722A69109000031B06 /* Extensions.swift in Sources */,
+				ED9990712A69109000031B06 /* ServerConfigManagerTests.swift in Sources */,
+				ED9990702A69109000031B06 /* DBPersistentManagerTests.swift in Sources */,
+				ED99906F2A69109000031B06 /* ContextTests.swift in Sources */,
+				ED9990742A69109000031B06 /* RudderUtilsTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990372A69103A00031B06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED99907E2A69109100031B06 /* EventRepositoryTests.swift in Sources */,
+				ED9990772A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */,
+				ED99907C2A69109100031B06 /* DataResidencyTests.swift in Sources */,
+				ED99907F2A69109100031B06 /* TestUtils.swift in Sources */,
+				ED99907B2A69109100031B06 /* Extensions.swift in Sources */,
+				ED99907A2A69109100031B06 /* ServerConfigManagerTests.swift in Sources */,
+				ED9990792A69109100031B06 /* DBPersistentManagerTests.swift in Sources */,
+				ED9990782A69109100031B06 /* ContextTests.swift in Sources */,
+				ED99907D2A69109100031B06 /* RudderUtilsTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED9990452A69104B00031B06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED9990872A69109100031B06 /* EventRepositoryTests.swift in Sources */,
+				ED9990802A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */,
+				ED9990852A69109100031B06 /* DataResidencyTests.swift in Sources */,
+				ED9990882A69109100031B06 /* TestUtils.swift in Sources */,
+				ED9990842A69109100031B06 /* Extensions.swift in Sources */,
+				ED9990832A69109100031B06 /* ServerConfigManagerTests.swift in Sources */,
+				ED9990822A69109100031B06 /* DBPersistentManagerTests.swift in Sources */,
+				ED9990812A69109100031B06 /* ContextTests.swift in Sources */,
+				ED9990862A69109100031B06 /* RudderUtilsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		ED04A24229839DCC0080A88D /* PBXTargetDependency */ = {
+		ED9990332A69102400031B06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED998E472A69003600031B06 /* Rudder-tvOS */;
+			targetProxy = ED9990322A69102400031B06 /* PBXContainerItemProxy */;
+		};
+		ED9990412A69103B00031B06 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
-			target = 06CABB832630C3CA0097BEFF /* Rudder */;
-			targetProxy = ED04A24129839DCC0080A88D /* PBXContainerItemProxy */;
+			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
+			targetProxy = ED9990402A69103B00031B06 /* PBXContainerItemProxy */;
+		};
+		ED99904F2A69104B00031B06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED998F172A69024E00031B06 /* Rudder-watchOS */;
+			targetProxy = ED99904E2A69104B00031B06 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1280,14 +2599,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,3,4";
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Debug;
 		};
@@ -1337,24 +2658,27 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,3,4";
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Release;
 		};
 		06CABB992630C3CA0097BEFF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 213BC00A66C5F3BDAFBBC6E8 /* Pods-Rudder-iOS.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
@@ -1362,9 +2686,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/iOS-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1372,13 +2696,13 @@
 				);
 				MARKETING_VERSION = 1.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Rudder;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos macosx iphonesimulator iphoneos appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
@@ -1386,11 +2710,12 @@
 		};
 		06CABB9A2630C3CA0097BEFF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BA8A14544D859D1C41EB023 /* Pods-Rudder-iOS.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
@@ -1398,9 +2723,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/iOS-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1408,27 +2733,223 @@
 				);
 				MARKETING_VERSION = 1.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Rudder;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos macosx iphonesimulator iphoneos appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Release;
 		};
-		ED04A24329839DCC0080A88D /* Debug */ = {
+		ED998F132A69003600031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 071767445D8AD743D9B3DFD9 /* Pods-Rudder-tvOS.debug.xcconfig */;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = Rudder;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		ED998F142A69003600031B06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6ED16F6B8A073330D5A2575 /* Pods-Rudder-tvOS.release.xcconfig */;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = Rudder;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
+		ED998FE32A69024E00031B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B26FF528258A9950DF7C1A35 /* Pods-Rudder-watchOS.debug.xcconfig */;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/watchOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = Rudder;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		ED998FE42A69024E00031B06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6F95B44339BF8BA28984C66 /* Pods-Rudder-watchOS.release.xcconfig */;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info/watchOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.Rudder;
+				PRODUCT_NAME = Rudder;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
+		ED9990352A69102400031B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AA80AD88DF698FFA4B1A2A0 /* Pods-RudderTests-tvOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		ED9990362A69102400031B06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9253625CD197A51D6AF83BDF /* Pods-RudderTests-tvOS.release.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+		ED9990432A69103B00031B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A4223191D07F684127056ED /* Pods-RudderTests-iOS.debug.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1438,22 +2959,68 @@
 			};
 			name = Debug;
 		};
-		ED04A24429839DCC0080A88D /* Release */ = {
+		ED9990442A69103B00031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80A0A3FAF689603109E56DF2 /* Pods-RudderTests-iOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ED9990512A69104B00031B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D574FC75189EA1FD0AE91F82 /* Pods-RudderTests-watchOS.debug.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		ED9990522A69104B00031B06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1F70A9E2E67B3A1245606BA /* Pods-RudderTests-watchOS.release.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rudderstack.RudderTests-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Release;
 		};
@@ -1469,7 +3036,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */ = {
+		06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06CABB992630C3CA0097BEFF /* Debug */,
@@ -1478,11 +3045,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED04A24529839DCC0080A88D /* Build configuration list for PBXNativeTarget "RudderTests" */ = {
+		ED998F122A69003600031B06 /* Build configuration list for PBXNativeTarget "Rudder-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED04A24329839DCC0080A88D /* Debug */,
-				ED04A24429839DCC0080A88D /* Release */,
+				ED998F132A69003600031B06 /* Debug */,
+				ED998F142A69003600031B06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED998FE22A69024E00031B06 /* Build configuration list for PBXNativeTarget "Rudder-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED998FE32A69024E00031B06 /* Debug */,
+				ED998FE42A69024E00031B06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED9990342A69102400031B06 /* Build configuration list for PBXNativeTarget "RudderTests-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED9990352A69102400031B06 /* Debug */,
+				ED9990362A69102400031B06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED9990422A69103B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED9990432A69103B00031B06 /* Debug */,
+				ED9990442A69103B00031B06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED9990502A69104B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED9990512A69104B00031B06 /* Debug */,
+				ED9990522A69104B00031B06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

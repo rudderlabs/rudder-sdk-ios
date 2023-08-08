@@ -11,7 +11,7 @@
 #import "RSCloudModeManager.h"
 #import "RSNetworkManager.h"
 #import "RSNetworkResponse.h"
-
+#import "RSMetricsReporter.h"
 
 @implementation RSCloudModeManager
 
@@ -45,9 +45,11 @@
                 NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                [RSMetricsReporter report:CM_EVENT forMetricType:COUNT withProperties:@{TYPE: MESSAGES} andValue:(float)dbMessage.messages.count];
                 response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
                 if (response.state == NETWORK_SUCCESS) {
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                    [RSMetricsReporter report:CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                     sleepCount = 0;
@@ -63,10 +65,12 @@
                 break;
             } else if (response.state == INVALID_URL) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
+                [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: DATA_PLANE_URL_INVALID} andValue:1];
                 break;
             }
             else if (response.state == NETWORK_ERROR) {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+                [RSMetricsReporter report:CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
                 usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
             }
         }
@@ -96,6 +100,7 @@
         // check totalBatchSize
         if(totalBatchSize > MAX_BATCH_SIZE) {
             [RSLogger logDebug:[NSString stringWithFormat:@"RSCloudModeManager: getPayloadFromMessages: MAX_BATCH_SIZE reached at index: %i | Total: %i",index, totalBatchSize]];
+            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: BATCH_SIZE_INVALID} andValue:1];
             break;
         }
         [json appendString:message];

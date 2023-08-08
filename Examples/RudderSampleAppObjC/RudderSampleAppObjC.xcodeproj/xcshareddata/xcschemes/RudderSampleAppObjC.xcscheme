@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F63CBCAC2846422900A3F71D"
-               BuildableName = "RudderTests.xctest"
-               BlueprintName = "RudderTests"
+               BlueprintIdentifier = "ED04A23B29839DCC0080A88D"
+               BuildableName = "RudderTests-iOS.xctest"
+               BlueprintName = "RudderTests-iOS"
                ReferencedContainer = "container:../../Rudder.xcodeproj">
             </BuildableReference>
          </TestableReference>

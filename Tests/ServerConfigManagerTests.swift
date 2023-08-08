@@ -75,7 +75,6 @@ class ServerConfigManagerTests: XCTestCase {
           ],
           "eventFilteringOption": "disable"
         },
-        "areTransformationsConnected" : true,
         "id": "23VDGOseYM8ymh2iIjsSErewmMW",
         "name": "Firebase Devv",
         "enabled": true,
@@ -84,7 +83,9 @@ class ServerConfigManagerTests: XCTestCase {
           "name": "FIREBASE",
           "displayName": "Firebase",
           "updatedAt": "2022-05-13T09:31:26.459Z"
-        }
+        },
+        "shouldApplyDeviceModeTransformation": true,
+        "propagateEventsUntransformedOnError": false
       },
        {
         "config": {
@@ -100,7 +101,6 @@ class ServerConfigManagerTests: XCTestCase {
           ],
           "eventFilteringOption": "disable"
         },
-        "areTransformationsConnected" : true,
         "id": "23VDGOseYM8ymh2iIjsSEreapd",
         "name": "AppCenter Dev",
         "enabled": true,
@@ -109,7 +109,9 @@ class ServerConfigManagerTests: XCTestCase {
           "name": "APPCENTER",
           "displayName": "App Center",
           "updatedAt": "2022-05-13T09:31:26.459Z"
-        }
+        },
+        "shouldApplyDeviceModeTransformation": true,
+        "propagateEventsUntransformedOnError": false
       }
     ]
   }
