@@ -58,18 +58,26 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                 [RSLogger logDebug:@"RSDBPersistentManager: createDB: please provide the key"];
             } else {
                 [self openEncryptedDB:dbEncryption.key];
-                [self decryptDB:dbEncryption.key];
-                [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                [self openUnencryptedDB];
+                int code = [self decryptDB:dbEncryption.key];
+                if (code == SQLITE_OK) {
+                    [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                    [self openUnencryptedDB];
+                } else {
+                    [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
+                }
             }
         }
     } else {
         if (isEncryptionNeeded) {
             // Encyprt database; then open encrypted database
             [self openUnencryptedDB];
-            [self encryptDB:dbEncryption.key];
-            [RSUtils removeFile:UNENCRYPTED_DB_NAME];
-            [self openEncryptedDB:dbEncryption.key];
+            int code = [self encryptDB:dbEncryption.key];
+            if (code == SQLITE_OK) {
+                [RSUtils removeFile:UNENCRYPTED_DB_NAME];
+                [self openEncryptedDB:dbEncryption.key];
+            } else {
+                [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt, error code: %d", code]];
+            }
         } else {
             // Open unencrypted database
             [self openUnencryptedDB];
@@ -107,7 +115,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     }
 }
 
-- (void)encryptDB:(NSString *)key {
+- (int)encryptDB:(NSString *)key {
     const char* attachDBSQL = [[NSString stringWithFormat:@"ATTACH DATABASE '%@' AS rl_persistence_encrypted KEY '%@';", [self getEncryptedDBPath], key] UTF8String];
     
     // Attach empty encrypted database to unencrypted database
@@ -123,9 +131,10 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: DETACH DATABASE execution code: %d", code]];
     
     sqlite3_close(self->_database);
+    return code;
 }
 
-- (void)decryptDB:(NSString *)key {
+- (int)decryptDB:(NSString *)key {
     const char* pragmaKeySQL = [[NSString stringWithFormat:@"PRAGMA key = '%@';", key] UTF8String];
 
     // Set pragma key
@@ -147,6 +156,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: DETACH DATABASE execution code: %d", code]];
     
     sqlite3_close(self->_database);
+    return code;
 }
 
 - (NSString *)getEncryptedDBPath {
