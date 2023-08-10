@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .withSleepTimeOut(4)
             .withSessionTimeoutMillis(30000)
             .withConsentFilter(CustomFilter())
+            .withDBEncryption(RSDBEncryption(key: "test1234", enable: true))
         RSClient.getInstance(rudderConfig.WRITE_KEY, config: builder.build())
         
         return true

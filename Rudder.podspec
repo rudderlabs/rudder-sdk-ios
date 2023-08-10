@@ -21,7 +21,10 @@ Pod::Spec.new do |s|
   
   s.swift_versions = ['5.0']
   
-  s.source_files = 'Sources/**/*.{h,m}'
+  s.compiler_flags = '-DSQLITE_HAS_CODEC', '-DSQLITE_TEMP_STORE=3', '-DSQLCIPHER_CRYPTO_CC', '-DNDEBUG'
+  s.frameworks = 'Security', 'Foundation'
+  
+  s.source_files = 'Sources/**/*.{c,h,m}'
   
   s.dependency 'MetricsReporter', '1.0.0'
 end

@@ -1,4 +1,4 @@
-source 'https://github.com/rudderlabs/Specs.git'
+source 'https://github.com/cocoapods/Specs.git'
 workspace 'Rudder.xcworkspace'
 use_frameworks!
 inhibit_all_warnings!
