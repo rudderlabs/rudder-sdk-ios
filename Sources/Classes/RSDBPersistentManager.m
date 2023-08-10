@@ -85,19 +85,21 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 - (void)openUnencryptedDB {
     int executeCode = sqlite3_open_v2([[self getUnencryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
     if (executeCode == SQLITE_OK) {
-        
+        [RSLogger logDebug:@"RSDBPersistentManager: openUnencryptedDB: DB opened successfully"];
     } else {
-        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createUnencryptedDB: Failed to create DB, SQLite error code: %d", executeCode]];
+        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: openUnencryptedDB: Failed to open DB, SQLite error code: %d", executeCode]];
     }
 }
 
 - (void)openEncryptedDB:(NSString *)encryptionKey {
     int executeCode = sqlite3_open_v2([[self getEncryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
     if (executeCode == SQLITE_OK) {
+        [RSLogger logDebug:@"RSDBPersistentManager: openEncryptedDB: DB opened successfully"];
         const char* key = [encryptionKey UTF8String];
-        sqlite3_key(self->_database, key, (int)strlen(key));
+        executeCode = sqlite3_key(self->_database, key, (int)strlen(key));
+        [RSLogger logDebug:@"RSDBPersistentManager: openEncryptedDB: DB opened successfully with key"];
     } else {
-        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createUnencryptedDB: Failed to create DB, SQLite error code: %d", executeCode]];
+        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: Failed to open DB, SQLite error code: %d", executeCode]];
     }
 }
 

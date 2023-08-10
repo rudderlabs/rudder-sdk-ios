@@ -103,6 +103,8 @@
 #import "RSWishListProductAddedToCartEvent.h"
 #import "UIViewController+RSScreen.h"
 #import "WKInterfaceController+RSScreen.h"
+#import "NSData+GZIP.h"
+#import "sqlite3.h"
 
 //! Project version number for RS.
 FOUNDATION_EXPORT double RSVersionNumber;

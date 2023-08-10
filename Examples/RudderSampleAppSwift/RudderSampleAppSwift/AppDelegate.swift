@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .withControlPlaneUrl(rudderConfig.DEV_CONTROL_PLANE_URL)
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
-            .withSleepTimeOut(4)
+            .withSleepTimeOut(3600)
             .withSessionTimeoutMillis(30000)
             .withConsentFilter(CustomFilter())
             .withDBEncryption(RSDBEncryption(key: "test1234", enable: true))
