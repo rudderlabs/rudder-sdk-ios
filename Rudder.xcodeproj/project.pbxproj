@@ -1158,7 +1158,6 @@
 			children = (
 				ED7DFDD0298C091800ED5A8E /* Ecomm */,
 				EDA2C5B129C0EB9500B7FF42 /* Headers */,
-				EDEF1B272A835999002B3E57 /* SQLCipher */,
 				ED3CC19E2A14A78200F34082 /* NSData+GZIP.m */,
 				ED7DFD8B298C091800ED5A8E /* RSApp.m */,
 				F6B4B53729C8237D00344864 /* RSApplicationLifeCycleManager.m */,
@@ -1209,6 +1208,7 @@
 				F6F2FA712A53CD200025D510 /* RSTransformationRequest.m */,
 				ED7DFE36298C091800ED5A8E /* RSUserSession.m */,
 				ED7DFD91298C091800ED5A8E /* RSUtils.m */,
+				EDEF1B282A835999002B3E57 /* sqlite3.c */,
 				ED7DFD96298C091800ED5A8E /* UIViewController+RSScreen.m */,
 				ED7DFD92298C091800ED5A8E /* WKInterfaceController+RSScreen.m */,
 			);
@@ -1274,6 +1274,7 @@
 				ED7DFDAB298C091800ED5A8E /* RSUserSession.h */,
 				ED7DFDC2298C091800ED5A8E /* RSUtils.h */,
 				ED7DFDA2298C091800ED5A8E /* Rudder.h */,
+				EDEF1B292A835999002B3E57 /* sqlite3.h */,
 				ED7DFDC4298C091800ED5A8E /* UIViewController+RSScreen.h */,
 				ED7DFDC1298C091800ED5A8E /* WKInterfaceController+RSScreen.h */,
 			);
@@ -1387,7 +1388,6 @@
 			isa = PBXGroup;
 			children = (
 				ED7DFD9A298C091800ED5A8E /* Public */,
-				EDEF1B292A835999002B3E57 /* sqlite3.h */,
 				ED7DFDA3298C091800ED5A8E /* RSVersion.h */,
 			);
 			path = Headers;
@@ -1454,14 +1454,6 @@
 				ED7DFE24298C091800ED5A8E /* RSWishListProductAddedToCartEvent.h */,
 			);
 			name = Events;
-			sourceTree = "<group>";
-		};
-		EDEF1B272A835999002B3E57 /* SQLCipher */ = {
-			isa = PBXGroup;
-			children = (
-				EDEF1B282A835999002B3E57 /* sqlite3.c */,
-			);
-			path = SQLCipher;
 			sourceTree = "<group>";
 		};
 		F6113D2A29EFD25400A05261 /* Fixtures */ = {
