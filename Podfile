@@ -46,6 +46,7 @@ end
 target 'RudderSampleAppObjC' do
     project 'Examples/RudderSampleAppObjC/RudderSampleAppObjC.xcodeproj'
     platform :ios, '12.0'
+#    pod 'Rudder'
     shared_pods
     shared_utility_pods
 end

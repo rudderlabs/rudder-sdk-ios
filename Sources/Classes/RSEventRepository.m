@@ -55,18 +55,24 @@ static RSEventRepository* _instance;
         self->config = _config;
         
         self->authToken = [RSUtils getBase64EncodedString: [[NSString alloc] initWithFormat:@"%@:", self->writeKey]];
-
+        
+        [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
+        self->preferenceManager = [RSPreferenceManager getInstance];
+        [self->preferenceManager performMigration];
+        
+        [self clearAnonymousIdIfRequired];
+        
         [RSLogger logVerbose:@"EventRepository: Creating EventRepository Internal Queue"];
         repositoryQueue = dispatch_queue_create("com.rudder.EventRepository", NULL);
-
+        
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: authToken: %@", authToken]];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSElementCache"];
-        [RSElementCache initiate];
+        [RSElementCache initiateWithConfig:self->config];
         
         [RSLogger logDebug:@"EventRepository: Setting AnonymousId Token"];
         [self setAnonymousIdToken];
-
+        
         [RSLogger logDebug:@"EventRepository: Initiating RSDataResidencyManager"];
         self->dataResidencyManager = [[RSDataResidencyManager alloc] initWithRSConfig:_config];
         
@@ -75,10 +81,6 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Initiating RSServerConfigManager"];
         self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config andNetworkManager:self->networkManager];
-        
-        [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
-        self->preferenceManager = [RSPreferenceManager getInstance];
-        [self->preferenceManager performMigration];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSMetricsReporter"];
         [RSMetricsReporter initiateWithWriteKey:_writeKey preferenceManager:self->preferenceManager andConfig:_config];
@@ -135,6 +137,16 @@ static RSEventRepository* _instance;
         }
     }
     return self;
+}
+
+// If the collectDeviceId flag is set to false, then check if deviceId is being used as anonymousId, if yes then clear it
+-(void) clearAnonymousIdIfRequired {
+    if(config.collectDeviceId) return;
+    NSString* currentAnonymousId = [self->preferenceManager getAnonymousId];
+    NSString* deviceId = [RSUtils getDeviceId];
+    if([currentAnonymousId isEqualToString:deviceId]) {
+        [self->preferenceManager clearCurrentAnonymousIdValue];
+    }
 }
 
 - (void) setAnonymousIdToken {

@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "RSDBMessage.h"
 #import "RSServerConfigSource.h"
-#import "RSConfig.h"
+
+@class RSConfig;
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) appendSlashToUrl:(NSString*) url;
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
 + (BOOL) isApplicationUpdated;
++ (NSString *) getDeviceId;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

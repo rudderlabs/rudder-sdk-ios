@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "RSConfig.h"
 #import "RSApp.h"
 #import "RSLibraryInfo.h"
 #import "RSOSInfo.h"
@@ -44,6 +45,7 @@ extern int const RSATTAuthorize;
 @property (nonatomic, readwrite) BOOL sessionStart;
 @property (nonatomic, readwrite) NSMutableArray<NSMutableDictionary<NSString*, NSObject*>*>* externalIds;
 
+- (instancetype) initWithConfig:(RSConfig *) config;
 - (instancetype) initWithDict:(NSDictionary*) dict;
 + (dispatch_queue_t) getQueue;
 - (NSDictionary<NSString* , NSObject *>*) dict;

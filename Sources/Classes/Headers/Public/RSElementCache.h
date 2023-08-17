@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSElementCache : NSObject
 
-+ (void) initiate;
++ (void)initiateWithConfig:(RSConfig *) config;
 
 + (RSContext*) getContext;
 
