@@ -206,7 +206,7 @@ extension RSDestinationPlugin {
             }
         }
         
-        return customerDisabled == false || (hasSettings == true && customerDisabled == false)
+        return !customerDisabled || (hasSettings && !customerDisabled)
     }
     
     // swiftlint:disable inclusive_language
