@@ -33,8 +33,8 @@ static int screenCount = 1;
             [builder withTrackLifecycleEvens:YES];
             [builder withCollectDeviceId:NO];
             [builder withRecordScreenViews:YES];
-            [builder withDataPlaneUrl:@"https://rudderstachvf.dataplane.rudderstack.com"];
-            [RSClient getInstance:@"1pTxG1Tqxr7FCrqIy7j0p28AENV" config:[builder build]];
+            [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
+            [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
         }
     }
     return YES;
@@ -83,7 +83,7 @@ static int screenCount = 1;
 }
 
 + (void) sendReset {
-    [[RSClient sharedInstance] reset];
+    [[RSClient sharedInstance] reset:YES];
 }
 
 @end

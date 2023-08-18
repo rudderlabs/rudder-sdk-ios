@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSConfig.h"
 #import "RSConfigBuilder.h"
 #import "RSOption.h"
 #import "RSTraits.h"
@@ -58,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) identify:(NSString *_Nullable)userId;
 
 - (void)reset;
+- (void) reset:(BOOL) clearAnonymousId;
 - (void)flush;
 
 - (void) optOut: (BOOL) optOut;
