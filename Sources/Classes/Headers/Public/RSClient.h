@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits;
 - (void) identify:(NSString *_Nullable)userId;
 
-- (void)reset;
+- (void)reset __attribute((deprecated("Discontinuing support. Use [[RSClient sharedInstance] reset: false] instead")));
 - (void) reset:(BOOL) clearAnonymousId;
 - (void)flush;
 
