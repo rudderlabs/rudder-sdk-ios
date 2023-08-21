@@ -144,6 +144,7 @@ static RSEventRepository* _instance;
     if(config.collectDeviceId) return;
     NSString* currentAnonymousId = [self->preferenceManager getAnonymousId];
     NSString* deviceId = [RSUtils getDeviceId];
+    if(currentAnonymousId == nil || deviceId == nil) return;
     if([currentAnonymousId isEqualToString:deviceId]) {
         [self->preferenceManager clearCurrentAnonymousIdValue];
     }
