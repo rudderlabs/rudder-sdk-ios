@@ -93,7 +93,7 @@ final class ConserFilterHandlerTests: XCTestCase {
     func test_applyConsents() {
         let expected = ["CAT03", "CAT05", "CAT08"]
                         
-        RSElementCache.initiate()
+        RSElementCache.initiate(with:RSConfig())
         let message = RSMessageBuilder()
             .setEventName("Test Track")
             .build()
