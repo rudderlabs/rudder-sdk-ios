@@ -47,7 +47,7 @@ class DBPersistentManagerTests: XCTestCase {
     let COL_DM_PROCESSED = "dm_processed";
     
     override func setUpWithError() throws {
-        dbPersistentManager = RSDBPersistentManager()
+        dbPersistentManager = RSDBPersistentManager(dbEncryption: nil)
         deleteEventsTable()
         deleteEventsToDestinationIdMappingTable()
     }
@@ -312,7 +312,7 @@ class DBPersistentManagerTests: XCTestCase {
     
     func executeSQL(sqlString: String) {
         var db: OpaquePointer?
-        if sqlite3_open(RSUtils.getDBPath(), &db) == SQLITE_OK {
+        if sqlite3_open(RSUtils.getFilePath("rl_persistence.sqlite"), &db) == SQLITE_OK {
             var sqlStatement: OpaquePointer?
             if sqlite3_prepare_v2(db, sqlString, -1, &sqlStatement, nil) ==
                 SQLITE_OK {
@@ -331,7 +331,7 @@ class DBPersistentManagerTests: XCTestCase {
     func getCount(sqlString: String) -> Int {
         var count:Int = -1
         var db: OpaquePointer?
-        if sqlite3_open(RSUtils.getDBPath(), &db) == SQLITE_OK {
+        if sqlite3_open(RSUtils.getFilePath("rl_persistence.sqlite"), &db) == SQLITE_OK {
             var sqlStatement: OpaquePointer?
             if sqlite3_prepare_v2(db, sqlString, -1, &sqlStatement, nil) ==
                 SQLITE_OK {

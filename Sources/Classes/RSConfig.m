@@ -31,6 +31,7 @@
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];
         _gzip = RSGzipStatus;
+        _dbEncryption = nil;
     }
     return self;
 }
