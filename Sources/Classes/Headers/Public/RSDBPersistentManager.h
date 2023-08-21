@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <sqlite3.h>
+#import "sqlite3.h"
 #import "RSDBMessage.h"
 #import "RSUtils.h"
 #import "RSEnums.h"
-
+#import "RSDBEncryption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSLock* lock;
 }
 
--(void) createDB;
+- (instancetype)init NS_UNAVAILABLE NS_SWIFT_UNAVAILABLE("Use `RSDBPersistentManager.init(dbEncryption:)` to initialise.");
+
+- (instancetype)initWithDBEncryption:(RSDBEncryption * __nullable)dbEncryption;
 -(void) createTables;
 -(void) createEventsTableWithVersion:(int) version;
 -(void) checkForMigrations;

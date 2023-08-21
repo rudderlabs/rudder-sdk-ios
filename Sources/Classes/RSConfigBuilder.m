@@ -217,6 +217,14 @@
     return self;
 }
 
+- (instancetype)withDBEncryption:(RSDBEncryption *)dbEncryption {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.dbEncryption = dbEncryption;
+    return self;
+}
+
 - (RSConfig*) build {
     if (config == nil) {
         config = [[RSConfig alloc] init];
