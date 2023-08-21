@@ -31,14 +31,26 @@ jobs:
         with:
           node-version: 16
 
-      - name: Create Github Release
+      # In order to make a commit, we need to initialize a user.
+      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "GitHub actions"
+          git config user.email noreply@github.com
+
+      - name: Create Github Release & Tag
         id: create_release
         env:
           HUSKY: 0
           GITHUB_TOKEN: ${{ secrets.PAT }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
         run: |
-          npx conventional-github-releaser -p angular
+          git for-each-ref refs/tags
+          ./Scripts/find-tag.sh ${{ steps.extract-version.outputs.release_version }} && git tag --delete ${{ steps.extract-version.outputs.release_version }} && git push --delete origin ${{ steps.extract-version.outputs.release_version }}
+          git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
+          git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
+          git for-each-ref refs/tags
+          DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2

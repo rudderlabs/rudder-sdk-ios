@@ -150,8 +150,8 @@ extension RSClient {
             
             switch result {
             case .success(let serverConfig):
-                self.update(serverConfig: serverConfig, type: .refresh)
                 self.serverConfig = serverConfig
+                self.update(serverConfig: serverConfig, type: .refresh)
                 RSUserDefaults.saveServerConfig(serverConfig)
                 RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
                 self.log(message: "server config download successful", logLevel: .debug)

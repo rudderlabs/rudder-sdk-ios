@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.4.0...v2.4.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* no events recorded for dm destinations on the first launch ([#360](https://github.com/rudderlabs/rudder-sdk-ios/issues/360)) ([f49398c](https://github.com/rudderlabs/rudder-sdk-ios/commit/f49398c58ad25d4a149928341afefe74a673201f))
+
 ## [2.4.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.3.1...v2.4.0) (2023-06-02)
 
 
