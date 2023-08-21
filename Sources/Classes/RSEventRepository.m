@@ -86,7 +86,7 @@ static RSEventRepository* _instance;
         [RSMetricsReporter initiateWithWriteKey:_writeKey preferenceManager:self->preferenceManager andConfig:_config];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSDBPersistentManager"];
-        self->dbpersistenceManager = [[RSDBPersistentManager alloc] init];
+        self->dbpersistenceManager = [[RSDBPersistentManager alloc] initWithDBEncryption:_config.dbEncryption];
         [self->dbpersistenceManager createTables];
         [self->dbpersistenceManager checkForMigrations];
         

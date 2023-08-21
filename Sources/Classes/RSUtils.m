@@ -37,10 +37,20 @@
     return [self getDateString:[[NSDate alloc] init]];
 }
 
-+ (const char *)getDBPath {
-    NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
-    NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
-    return [[fileUrl path] UTF8String];
++ (NSString *)getFilePath:(NSString *)fileName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths objectAtIndex:0];
+    return [directory stringByAppendingPathComponent:fileName];
+}
+
++ (BOOL)isFileExists:(NSString *)fileName {
+    NSString *path = [self getFilePath:fileName];
+    return [[NSFileManager defaultManager] fileExistsAtPath:path];
+}
+
++ (BOOL)removeFile:(NSString *)fileName {
+    NSString *path = [self getFilePath:fileName];
+    return [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 
 // returns number of seconds elapsed since 1970
