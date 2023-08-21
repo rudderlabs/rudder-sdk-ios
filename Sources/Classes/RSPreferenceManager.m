@@ -145,9 +145,9 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     NSMutableDictionary* traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     if(error == nil && traitsDict != nil) {
         [traitsDict removeObjectForKey:@"anonymousId"];
+        NSString* finalTraitsStr = [RSUtils getStringFromDict:traitsDict];
+        [self saveTraits:finalTraitsStr];
     }
-    NSString* finalTraitsStr = [RSUtils getStringFromDict:traitsDict];
-    [self saveTraits:finalTraitsStr];
 }
 
 - (void) clearCurrentAnonymousIdValue {

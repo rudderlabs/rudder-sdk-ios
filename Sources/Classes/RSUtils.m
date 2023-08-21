@@ -213,7 +213,7 @@
     return [url stringByAppendingString:@"/"];
 }
 
-+ (NSString *) getDeviceId {
++ (NSString* _Nullable) getDeviceId {
     NSString * deviceId;
 #if !TARGET_OS_WATCH
     deviceId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
