@@ -54,6 +54,7 @@ static dispatch_queue_t queue;
             if (error == nil) {
                 _traits = [traitsDict mutableCopy];
                 _traits[@"anonymousId"] = _anonymousId;
+                [self persistTraits];
             } else {
                 // persisted traits persing error. initiate blank
                 [self createAndPersistTraits];
