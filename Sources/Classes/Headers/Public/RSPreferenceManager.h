@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,6 +55,8 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (NSString* __nullable) getAnonymousId;
 - (void) saveAnonymousId: (NSString* __nullable) anonymousId;
 - (void) clearAnonymousId;
+- (void) clearCurrentAnonymousIdValue;
+- (void) refreshAnonymousId;
 
 - (NSString* __nullable) getAuthToken;
 - (void) saveAuthToken: (NSString* __nonnull) authToken;

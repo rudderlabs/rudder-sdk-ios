@@ -10,6 +10,7 @@
 #import "RSIntegrationFactory.h"
 #import "RSEnums.h"
 #import "RSConsentFilter.h"
+#import "RSDBEncryption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,11 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool recordScreenViews;
 @property (nonatomic) bool enableBackgroundMode;
 @property (nonatomic) bool automaticSessionTracking;
+@property (nonatomic) bool collectDeviceId;
 @property (nonatomic, nonnull) NSString *controlPlaneUrl;
 @property (nonatomic, readwrite) NSMutableArray* factories;
 @property (nonatomic, readwrite) NSMutableArray* customFactories;
 @property (nonatomic, readwrite, nullable) id<RSConsentFilter> consentFilter;
 @property (nonatomic) bool gzip;
+@property (nonatomic, nullable) RSDBEncryption *dbEncryption;
 
 @end
 

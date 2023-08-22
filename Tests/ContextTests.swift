@@ -61,7 +61,7 @@ class ContextTests: XCTestCase {
         preferenceManager.clearSessionId()
         preferenceManager.clearLastEventTimeStamp()
         preferenceManager.saveAnonymousId("testAnonymousId")
-        context = RSContext()
+        context = RSContext(config: RSConfig())
         testUtils = TestUtils()
     }
     

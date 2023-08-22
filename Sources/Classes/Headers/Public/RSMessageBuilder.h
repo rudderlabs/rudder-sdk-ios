@@ -10,6 +10,7 @@
 #import "RSMessage.h"
 #import "RSProperty.h"
 #import "RSOption.h"
+#import "RSTraits.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

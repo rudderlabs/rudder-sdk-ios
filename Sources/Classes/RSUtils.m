@@ -10,6 +10,9 @@
 #import "RSContext.h"
 #import "RSLogger.h"
 #import "RSDBMessage.h"
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
 
 @implementation RSUtils
 
@@ -34,10 +37,20 @@
     return [self getDateString:[[NSDate alloc] init]];
 }
 
-+ (const char *)getDBPath {
-    NSURL *urlDirectory = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
-    NSURL *fileUrl = [urlDirectory URLByAppendingPathComponent:@"rl_persistence.sqlite"];
-    return [[fileUrl path] UTF8String];
++ (NSString *)getFilePath:(NSString *)fileName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths objectAtIndex:0];
+    return [directory stringByAppendingPathComponent:fileName];
+}
+
++ (BOOL)isFileExists:(NSString *)fileName {
+    NSString *path = [self getFilePath:fileName];
+    return [[NSFileManager defaultManager] fileExistsAtPath:path];
+}
+
++ (BOOL)removeFile:(NSString *)fileName {
+    NSString *path = [self getFilePath:fileName];
+    return [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 
 // returns number of seconds elapsed since 1970
@@ -174,7 +187,7 @@
 + (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
-    }    
+    }
     return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
 }
 
@@ -198,6 +211,16 @@
         return url;
     }
     return [url stringByAppendingString:@"/"];
+}
+
++ (NSString* _Nullable) getDeviceId {
+    NSString * deviceId;
+#if !TARGET_OS_WATCH
+    deviceId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
+#else
+    deviceId = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
+#endif
+    return deviceId;
 }
 
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString {

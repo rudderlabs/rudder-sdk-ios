@@ -37,6 +37,8 @@ extern bool const RSRecordScreenViews;
 extern bool const RSEnableBackgroundMode;
 // default for automatic session tracking
 extern bool const RSAutomaticSessionTracking;
+// default for collection of Device Id i.e IDFV by the SDK
+extern bool const RSCollectDeviceId;
 // default for gzip request payload
 extern bool const RSGzipStatus;
 // SDK Version

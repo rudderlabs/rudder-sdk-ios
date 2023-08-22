@@ -10,6 +10,7 @@
 #import "RSConfig.h"
 #import "RSEnums.h"
 #import "RSConsentFilter.h"
+#import "RSDBEncryption.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,7 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)withFactory:(id <RSIntegrationFactory> _Nonnull)factory;
 - (instancetype)withCustomFactory:(id <RSIntegrationFactory> _Nonnull)customFactory;
 - (instancetype)withConsentFilter:(id <RSConsentFilter> _Nonnull)consentFilter;
+- (instancetype) withCollectDeviceId: (BOOL) collectDeviceId;
 - (instancetype)withGzip:(BOOL)status;
+- (instancetype)withDBEncryption:(RSDBEncryption *)dbEncryption;
 - (RSConfig*)build;
 
 @end
