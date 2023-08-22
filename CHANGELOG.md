@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.18.0...v1.19.0) (2023-08-22)
+
+
+### Features
+
+* encrypt database ([#359](https://github.com/rudderlabs/rudder-sdk-ios/issues/359)) ([db17361](https://github.com/rudderlabs/rudder-sdk-ios/commit/db1736171bb3746f8ac33e321e92f0637d358871))
+* made deviceId collection configurable and de-coupled anonymousId and deviceId ([#361](https://github.com/rudderlabs/rudder-sdk-ios/issues/361)) ([fbd434a](https://github.com/rudderlabs/rudder-sdk-ios/commit/fbd434a6d39eb5f15b62c0975edd3b5ccc5d732b))
+
 ## [1.18.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.17.0...v1.18.0) (2023-08-08)
 
 
