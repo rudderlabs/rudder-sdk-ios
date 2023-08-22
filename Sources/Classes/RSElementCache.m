@@ -12,9 +12,9 @@ static RSContext* cachedContext;
 
 @implementation RSElementCache
 
-+ (void)initiate {
++ (void)initiateWithConfig:(RSConfig *) config {
     if (cachedContext == nil) {
-        cachedContext = [[RSContext alloc] init];
+        cachedContext = [[RSContext alloc] initWithConfig:config];
     }
 }
 

@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
-		10830EA4C513B06215DB6794 /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2107939BA2F54DC917ED2C6 /* Pods_RudderTests_iOS.framework */; };
-		8429036A87F8FC66D175C085 /* Pods_RudderTests_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3197FE94E7BEDA0C5DD6D7 /* Pods_RudderTests_watchOS.framework */; };
-		887124FBF460546C7E206E57 /* Pods_Rudder_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C486EC058EAE56767DCA60 /* Pods_Rudder_tvOS.framework */; };
-		AB4D2DE2DFB3767135EDE54C /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291AF8699F49EED493F61DDB /* Pods_Rudder_iOS.framework */; };
-		C3DC83AF5D0A7A17C5589C11 /* Pods_RudderTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE734613899634D2F67AB15 /* Pods_RudderTests_tvOS.framework */; };
-		CE9DC8D4A87364E9D8E6B559 /* Pods_Rudder_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBCF0C851E1CAF33900C2B2 /* Pods_Rudder_watchOS.framework */; };
+		0BD3AE3E47B6346427202986 /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46ACBCC13217DF44545DA229 /* Pods_RudderTests_iOS.framework */; };
+		0BE16570F757A3B587C84737 /* Pods_RudderTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1356A163852AF3ACB622568C /* Pods_RudderTests_tvOS.framework */; };
+		55CE1CFA46561F097181356F /* Pods_RudderTests_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED9EC09C4BFCF05404E8920 /* Pods_RudderTests_watchOS.framework */; };
+		8F2AEE2664F5DE40014F230F /* Pods_Rudder_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F582551DABDF563ED33BEF5 /* Pods_Rudder_watchOS.framework */; };
+		955885F76D86E0F291BD84F2 /* Pods_Rudder_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFA6B672E40214B7F00DF68 /* Pods_Rudder_tvOS.framework */; };
+		EBADE5B98CF0190B946C53B5 /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 477DCB49913BA0E0D6638685 /* Pods_Rudder_iOS.framework */; };
 		ED0CA6EA2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED0CA6EB2A7D08B900899C1C /* RSTransformationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA752A53D8310025D510 /* RSTransformationEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED0CA6EC2A7D08D800899C1C /* RSTransformationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F2FA732A53CD9F0025D510 /* RSTransformationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -731,22 +731,23 @@
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CABC2E2630C6660097BEFF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06CABC322630C6B00097BEFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		1024CF24149E5A0FF8ACF8E2 /* Pods-RudderTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		291AF8699F49EED493F61DDB /* Pods_Rudder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C45EA2B4E33FAD46983E8F0 /* Pods-Rudder-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.release.xcconfig"; sourceTree = "<group>"; };
-		4CE734613899634D2F67AB15 /* Pods_RudderTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50D606E59205CF9AAD493579 /* Pods-Rudder-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		583CCEB1E0866C11515373C0 /* Pods-RudderTests-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.release.xcconfig"; sourceTree = "<group>"; };
-		5DA4262568589AE1555B66A0 /* Pods-RudderTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		6AF4684FABF2020A1DEE6EC3 /* Pods-RudderTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		8C3197FE94E7BEDA0C5DD6D7 /* Pods_RudderTests_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E60AC33D37C6457477D9335 /* Pods-RudderTests-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
-		8FBCF0C851E1CAF33900C2B2 /* Pods_Rudder_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F385DCBD59F7E646D5BE7E7 /* Pods-Rudder-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		B2107939BA2F54DC917ED2C6 /* Pods_RudderTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B39C2249E9ADAE223E5A6B24 /* Pods-Rudder-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		BDB8A183678B9B86A4BEE7AB /* Pods-Rudder-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
-		BE0B41D04715B52C5200BFC6 /* Pods-RudderTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		079F04CF687D5D36E46EC937 /* Pods-Rudder-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		1356A163852AF3ACB622568C /* Pods_RudderTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13A141AAC229CC20C0C9AEE9 /* Pods-RudderTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		1CC69D39BDA1B459F0E05063 /* Pods-RudderTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		2F582551DABDF563ED33BEF5 /* Pods_Rudder_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		347DFE09884A52A303B56401 /* Pods-RudderTests-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		374F90CCEA88BC0431CE837B /* Pods-RudderTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-iOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		3BAB4B9C0A141D547F1DF69E /* Pods-RudderTests-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.release.xcconfig"; sourceTree = "<group>"; };
+		44DB6F1EDE252D1E693CC079 /* Pods-Rudder-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		46ACBCC13217DF44545DA229 /* Pods_RudderTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46EA7C7396F815F1E16EFF1C /* Pods-Rudder-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		477DCB49913BA0E0D6638685 /* Pods_Rudder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9ED9EC09C4BFCF05404E8920 /* Pods_RudderTests_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0084431DC5D1E4C06EF2778 /* Pods-Rudder-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C7E487D9F0BEF4302408A007 /* Pods-Rudder-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		DB390E0EC2B6915060EB0C22 /* Pods-Rudder-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.release.xcconfig"; sourceTree = "<group>"; };
+		ECD49A07EFD3565C120AA71E /* Pods-RudderTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-tvOS.release.xcconfig"; path = "Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		ED04A2482986C1750080A88D /* xccov-to-generic.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "xccov-to-generic.sh"; sourceTree = "<group>"; };
 		ED056314291AABFD00BAEE65 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sonar-project.properties"; sourceTree = "<group>"; };
 		ED1C4C8829E6CCC7007007C9 /* find-tag.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "find-tag.sh"; sourceTree = "<group>"; };
@@ -999,8 +1000,7 @@
 		F6F2FA772A53D8520025D510 /* RSTransformationEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTransformationEvent.m; sourceTree = "<group>"; };
 		F6F2FA792A53D8BF0025D510 /* RSTransformationMetadata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTransformationMetadata.h; sourceTree = "<group>"; };
 		F6F2FA7B2A53D8E50025D510 /* RSTransformationMetadata.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTransformationMetadata.m; sourceTree = "<group>"; };
-		F9C486EC058EAE56767DCA60 /* Pods_Rudder_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF8DA2332583B26AF72F26BF /* Pods-Rudder-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		FBFA6B672E40214B7F00DF68 /* Pods_Rudder_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1011,7 +1011,7 @@
 				06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */,
 				06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */,
 				EDEF1B312A835A90002B3E57 /* Security.framework in Frameworks */,
-				AB4D2DE2DFB3767135EDE54C /* Pods_Rudder_iOS.framework in Frameworks */,
+				EBADE5B98CF0190B946C53B5 /* Pods_Rudder_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,7 +1021,7 @@
 			files = (
 				ED998F0F2A69003600031B06 /* Foundation.framework in Frameworks */,
 				ED998F102A69003600031B06 /* UIKit.framework in Frameworks */,
-				887124FBF460546C7E206E57 /* Pods_Rudder_tvOS.framework in Frameworks */,
+				955885F76D86E0F291BD84F2 /* Pods_Rudder_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,7 +1031,7 @@
 			files = (
 				ED998FDF2A69024E00031B06 /* Foundation.framework in Frameworks */,
 				ED998FE02A69024E00031B06 /* UIKit.framework in Frameworks */,
-				CE9DC8D4A87364E9D8E6B559 /* Pods_Rudder_watchOS.framework in Frameworks */,
+				8F2AEE2664F5DE40014F230F /* Pods_Rudder_watchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,7 +1040,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED9990312A69102400031B06 /* Rudder.framework in Frameworks */,
-				C3DC83AF5D0A7A17C5589C11 /* Pods_RudderTests_tvOS.framework in Frameworks */,
+				0BE16570F757A3B587C84737 /* Pods_RudderTests_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,7 +1049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED99903F2A69103B00031B06 /* Rudder.framework in Frameworks */,
-				10830EA4C513B06215DB6794 /* Pods_RudderTests_iOS.framework in Frameworks */,
+				0BD3AE3E47B6346427202986 /* Pods_RudderTests_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1058,7 +1058,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED99904D2A69104B00031B06 /* Rudder.framework in Frameworks */,
-				8429036A87F8FC66D175C085 /* Pods_RudderTests_watchOS.framework in Frameworks */,
+				55CE1CFA46561F097181356F /* Pods_RudderTests_watchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,12 +1096,12 @@
 				EDEF1B302A835A90002B3E57 /* Security.framework */,
 				06CABC322630C6B00097BEFF /* Foundation.framework */,
 				06CABC2E2630C6660097BEFF /* UIKit.framework */,
-				291AF8699F49EED493F61DDB /* Pods_Rudder_iOS.framework */,
-				F9C486EC058EAE56767DCA60 /* Pods_Rudder_tvOS.framework */,
-				8FBCF0C851E1CAF33900C2B2 /* Pods_Rudder_watchOS.framework */,
-				B2107939BA2F54DC917ED2C6 /* Pods_RudderTests_iOS.framework */,
-				4CE734613899634D2F67AB15 /* Pods_RudderTests_tvOS.framework */,
-				8C3197FE94E7BEDA0C5DD6D7 /* Pods_RudderTests_watchOS.framework */,
+				477DCB49913BA0E0D6638685 /* Pods_Rudder_iOS.framework */,
+				FBFA6B672E40214B7F00DF68 /* Pods_Rudder_tvOS.framework */,
+				2F582551DABDF563ED33BEF5 /* Pods_Rudder_watchOS.framework */,
+				46ACBCC13217DF44545DA229 /* Pods_RudderTests_iOS.framework */,
+				1356A163852AF3ACB622568C /* Pods_RudderTests_tvOS.framework */,
+				9ED9EC09C4BFCF05404E8920 /* Pods_RudderTests_watchOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1109,18 +1109,18 @@
 		DFB2363B6EC8D146934DE8DD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9F385DCBD59F7E646D5BE7E7 /* Pods-Rudder-iOS.debug.xcconfig */,
-				50D606E59205CF9AAD493579 /* Pods-Rudder-iOS.release.xcconfig */,
-				B39C2249E9ADAE223E5A6B24 /* Pods-Rudder-tvOS.debug.xcconfig */,
-				FF8DA2332583B26AF72F26BF /* Pods-Rudder-tvOS.release.xcconfig */,
-				BDB8A183678B9B86A4BEE7AB /* Pods-Rudder-watchOS.debug.xcconfig */,
-				2C45EA2B4E33FAD46983E8F0 /* Pods-Rudder-watchOS.release.xcconfig */,
-				6AF4684FABF2020A1DEE6EC3 /* Pods-RudderTests-iOS.debug.xcconfig */,
-				BE0B41D04715B52C5200BFC6 /* Pods-RudderTests-iOS.release.xcconfig */,
-				1024CF24149E5A0FF8ACF8E2 /* Pods-RudderTests-tvOS.debug.xcconfig */,
-				5DA4262568589AE1555B66A0 /* Pods-RudderTests-tvOS.release.xcconfig */,
-				8E60AC33D37C6457477D9335 /* Pods-RudderTests-watchOS.debug.xcconfig */,
-				583CCEB1E0866C11515373C0 /* Pods-RudderTests-watchOS.release.xcconfig */,
+				C0084431DC5D1E4C06EF2778 /* Pods-Rudder-iOS.debug.xcconfig */,
+				44DB6F1EDE252D1E693CC079 /* Pods-Rudder-iOS.release.xcconfig */,
+				C7E487D9F0BEF4302408A007 /* Pods-Rudder-tvOS.debug.xcconfig */,
+				46EA7C7396F815F1E16EFF1C /* Pods-Rudder-tvOS.release.xcconfig */,
+				079F04CF687D5D36E46EC937 /* Pods-Rudder-watchOS.debug.xcconfig */,
+				DB390E0EC2B6915060EB0C22 /* Pods-Rudder-watchOS.release.xcconfig */,
+				13A141AAC229CC20C0C9AEE9 /* Pods-RudderTests-iOS.debug.xcconfig */,
+				374F90CCEA88BC0431CE837B /* Pods-RudderTests-iOS.release.xcconfig */,
+				1CC69D39BDA1B459F0E05063 /* Pods-RudderTests-tvOS.debug.xcconfig */,
+				ECD49A07EFD3565C120AA71E /* Pods-RudderTests-tvOS.release.xcconfig */,
+				347DFE09884A52A303B56401 /* Pods-RudderTests-watchOS.debug.xcconfig */,
+				3BAB4B9C0A141D547F1DF69E /* Pods-RudderTests-watchOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1824,7 +1824,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder-iOS" */;
 			buildPhases = (
-				A2A705E0FE2D9E45812B32A8 /* [CP] Check Pods Manifest.lock */,
+				224A44437A2A96A25F820E6E /* [CP] Check Pods Manifest.lock */,
 				06CABB7F2630C3CA0097BEFF /* Headers */,
 				06CABB802630C3CA0097BEFF /* Sources */,
 				06CABB812630C3CA0097BEFF /* Frameworks */,
@@ -1843,7 +1843,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED998F122A69003600031B06 /* Build configuration list for PBXNativeTarget "Rudder-tvOS" */;
 			buildPhases = (
-				93D730892AB565C3A0E34396 /* [CP] Check Pods Manifest.lock */,
+				9EF276FF11FECA3BEB1B8E5F /* [CP] Check Pods Manifest.lock */,
 				ED998E482A69003600031B06 /* Headers */,
 				ED998EAE2A69003600031B06 /* Sources */,
 				ED998F0E2A69003600031B06 /* Frameworks */,
@@ -1862,7 +1862,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED998FE22A69024E00031B06 /* Build configuration list for PBXNativeTarget "Rudder-watchOS" */;
 			buildPhases = (
-				1C2FC47FDCB8DC0E257E4EF0 /* [CP] Check Pods Manifest.lock */,
+				FC44F5CC205D89584F128641 /* [CP] Check Pods Manifest.lock */,
 				ED998F182A69024E00031B06 /* Headers */,
 				ED998F7E2A69024E00031B06 /* Sources */,
 				ED998FDE2A69024E00031B06 /* Frameworks */,
@@ -1881,11 +1881,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED9990342A69102400031B06 /* Build configuration list for PBXNativeTarget "RudderTests-tvOS" */;
 			buildPhases = (
-				E1DDCBAE31E7FE06AFC5D5D5 /* [CP] Check Pods Manifest.lock */,
+				3E0BD7BD737C64CB3B128C22 /* [CP] Check Pods Manifest.lock */,
 				ED9990292A69102400031B06 /* Sources */,
 				ED99902A2A69102400031B06 /* Frameworks */,
 				ED99902B2A69102400031B06 /* Resources */,
-				9E814452DF5D4D0A12BE9489 /* [CP] Embed Pods Frameworks */,
+				FD7DE8AF3F48028D3515DDB1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1901,11 +1901,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED9990422A69103B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-iOS" */;
 			buildPhases = (
-				0B3B4F63F976C1AAECE4B9BE /* [CP] Check Pods Manifest.lock */,
+				8CEAF3231A75EE85E69E8447 /* [CP] Check Pods Manifest.lock */,
 				ED9990372A69103A00031B06 /* Sources */,
 				ED9990382A69103A00031B06 /* Frameworks */,
 				ED9990392A69103A00031B06 /* Resources */,
-				BC461E03F00978D9DD2EDF3B /* [CP] Embed Pods Frameworks */,
+				51E4A97CFE5F7D0AAC55C766 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1921,11 +1921,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED9990502A69104B00031B06 /* Build configuration list for PBXNativeTarget "RudderTests-watchOS" */;
 			buildPhases = (
-				CD7A87F800B3FB8C4FC3EFEF /* [CP] Check Pods Manifest.lock */,
+				57506C10EC35B0EAB6C8BF20 /* [CP] Check Pods Manifest.lock */,
 				ED9990452A69104B00031B06 /* Sources */,
 				ED9990462A69104B00031B06 /* Frameworks */,
 				ED9990472A69104B00031B06 /* Resources */,
-				F5FA53F82B726FB83E855C97 /* [CP] Embed Pods Frameworks */,
+				C2BB747E6F2E5EFE2351E904 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2057,90 +2057,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B3B4F63F976C1AAECE4B9BE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RudderTests-iOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1C2FC47FDCB8DC0E257E4EF0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Rudder-watchOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93D730892AB565C3A0E34396 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Rudder-tvOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9E814452DF5D4D0A12BE9489 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A2A705E0FE2D9E45812B32A8 /* [CP] Check Pods Manifest.lock */ = {
+		224A44437A2A96A25F820E6E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2162,46 +2079,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BC461E03F00978D9DD2EDF3B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CD7A87F800B3FB8C4FC3EFEF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RudderTests-watchOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1DDCBAE31E7FE06AFC5D5D5 /* [CP] Check Pods Manifest.lock */ = {
+		3E0BD7BD737C64CB3B128C22 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2223,7 +2101,90 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F5FA53F82B726FB83E855C97 /* [CP] Embed Pods Frameworks */ = {
+		51E4A97CFE5F7D0AAC55C766 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests-iOS/Pods-RudderTests-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57506C10EC35B0EAB6C8BF20 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderTests-watchOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8CEAF3231A75EE85E69E8447 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderTests-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EF276FF11FECA3BEB1B8E5F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2BB747E6F2E5EFE2351E904 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2238,6 +2199,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC44F5CC205D89584F128641 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rudder-watchOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD7DE8AF3F48028D3515DDB1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderTests-tvOS/Pods-RudderTests-tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2763,7 +2763,7 @@
 		};
 		06CABB992630C3CA0097BEFF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F385DCBD59F7E646D5BE7E7 /* Pods-Rudder-iOS.debug.xcconfig */;
+			baseConfigurationReference = C0084431DC5D1E4C06EF2778 /* Pods-Rudder-iOS.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2807,7 +2807,7 @@
 		};
 		06CABB9A2630C3CA0097BEFF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50D606E59205CF9AAD493579 /* Pods-Rudder-iOS.release.xcconfig */;
+			baseConfigurationReference = 44DB6F1EDE252D1E693CC079 /* Pods-Rudder-iOS.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2850,7 +2850,7 @@
 		};
 		ED998F132A69003600031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B39C2249E9ADAE223E5A6B24 /* Pods-Rudder-tvOS.debug.xcconfig */;
+			baseConfigurationReference = C7E487D9F0BEF4302408A007 /* Pods-Rudder-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2895,7 +2895,7 @@
 		};
 		ED998F142A69003600031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF8DA2332583B26AF72F26BF /* Pods-Rudder-tvOS.release.xcconfig */;
+			baseConfigurationReference = 46EA7C7396F815F1E16EFF1C /* Pods-Rudder-tvOS.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2939,7 +2939,7 @@
 		};
 		ED998FE32A69024E00031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDB8A183678B9B86A4BEE7AB /* Pods-Rudder-watchOS.debug.xcconfig */;
+			baseConfigurationReference = 079F04CF687D5D36E46EC937 /* Pods-Rudder-watchOS.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2984,7 +2984,7 @@
 		};
 		ED998FE42A69024E00031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C45EA2B4E33FAD46983E8F0 /* Pods-Rudder-watchOS.release.xcconfig */;
+			baseConfigurationReference = DB390E0EC2B6915060EB0C22 /* Pods-Rudder-watchOS.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -3028,7 +3028,7 @@
 		};
 		ED9990352A69102400031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1024CF24149E5A0FF8ACF8E2 /* Pods-RudderTests-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 1CC69D39BDA1B459F0E05063 /* Pods-RudderTests-tvOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
@@ -3050,7 +3050,7 @@
 		};
 		ED9990362A69102400031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5DA4262568589AE1555B66A0 /* Pods-RudderTests-tvOS.release.xcconfig */;
+			baseConfigurationReference = ECD49A07EFD3565C120AA71E /* Pods-RudderTests-tvOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
@@ -3072,7 +3072,7 @@
 		};
 		ED9990432A69103B00031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6AF4684FABF2020A1DEE6EC3 /* Pods-RudderTests-iOS.debug.xcconfig */;
+			baseConfigurationReference = 13A141AAC229CC20C0C9AEE9 /* Pods-RudderTests-iOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
@@ -3104,7 +3104,7 @@
 		};
 		ED9990442A69103B00031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE0B41D04715B52C5200BFC6 /* Pods-RudderTests-iOS.release.xcconfig */;
+			baseConfigurationReference = 374F90CCEA88BC0431CE837B /* Pods-RudderTests-iOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
@@ -3136,7 +3136,7 @@
 		};
 		ED9990512A69104B00031B06 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E60AC33D37C6457477D9335 /* Pods-RudderTests-watchOS.debug.xcconfig */;
+			baseConfigurationReference = 347DFE09884A52A303B56401 /* Pods-RudderTests-watchOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
@@ -3158,7 +3158,7 @@
 		};
 		ED9990522A69104B00031B06 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 583CCEB1E0866C11515373C0 /* Pods-RudderTests-watchOS.release.xcconfig */;
+			baseConfigurationReference = 3BAB4B9C0A141D547F1DF69E /* Pods-RudderTests-watchOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;

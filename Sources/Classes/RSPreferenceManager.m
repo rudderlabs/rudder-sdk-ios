@@ -8,9 +8,7 @@
 #import "RSPreferenceManager.h"
 #import "RSLogger.h"
 #import "RSServerConfigSource.h"
-#if TARGET_OS_WATCH
-#import <WatchKit/WKInterfaceDevice.h>
-#endif
+#import "RSUtils.h"
 
 static RSPreferenceManager *instance;
 
@@ -128,17 +126,7 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (NSString *)getAnonymousId {
-    NSString *anonymousId = [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
-    if (anonymousId == nil) {
-#if !TARGET_OS_WATCH
-        anonymousId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
-#else
-        anonymousId = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
-#endif
-    }
-    [self saveAnonymousId:anonymousId];
-    
-    return anonymousId;
+    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
 }
 
 - (void)saveAnonymousId:(NSString *)anonymousId {
@@ -149,6 +137,27 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 - (void)clearAnonymousId {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) clearAnonymousIdFromTraits {
+    NSString* traitsStr = [self getTraits];
+    NSError *error;
+    NSMutableDictionary* traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if(error == nil && traitsDict != nil) {
+        [traitsDict removeObjectForKey:@"anonymousId"];
+        NSString* finalTraitsStr = [RSUtils getStringFromDict:traitsDict];
+        [self saveTraits:finalTraitsStr];
+    }
+}
+
+- (void) clearCurrentAnonymousIdValue {
+    [self clearAnonymousId];
+    [self clearAnonymousIdFromTraits];
+}
+
+- (void) refreshAnonymousId {
+    [self clearAnonymousId];
+    [self saveAnonymousId:[RSUtils getUniqueId]];
 }
 
 - (NSString* __nullable) getAuthToken {

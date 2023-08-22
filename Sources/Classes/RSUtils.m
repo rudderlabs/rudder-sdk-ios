@@ -10,6 +10,9 @@
 #import "RSContext.h"
 #import "RSLogger.h"
 #import "RSDBMessage.h"
+#if TARGET_OS_WATCH
+#import <WatchKit/WKInterfaceDevice.h>
+#endif
 
 @implementation RSUtils
 
@@ -184,7 +187,7 @@
 + (NSArray*) getBatch:(NSArray*) messageDetails withQueueSize: (int) queueSize {
     if(messageDetails.count<=queueSize) {
         return messageDetails;
-    }    
+    }
     return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
 }
 
@@ -208,6 +211,16 @@
         return url;
     }
     return [url stringByAppendingString:@"/"];
+}
+
++ (NSString* _Nullable) getDeviceId {
+    NSString * deviceId;
+#if !TARGET_OS_WATCH
+    deviceId = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
+#else
+    deviceId = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
+#endif
+    return deviceId;
 }
 
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString {

@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+@class RSConfig;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RSDeviceInfo : NSObject
 
+- (instancetype) initWithConfig: (RSConfig *) config;
 - (instancetype) initWithDict:(NSDictionary*) dict;
 - (NSDictionary<NSString* , NSObject *>*) dict;
 
-@property (nonatomic, readwrite) NSString* identifier;
+@property (nonatomic, readwrite, nullable) NSString* identifier;
 @property (nonatomic, readwrite) NSString* manufacturer;
 @property (nonatomic, readwrite) NSString* model;
 @property (nonatomic, readwrite) NSString* name;

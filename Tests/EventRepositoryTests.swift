@@ -58,9 +58,10 @@ final class EventRepositoryTests: XCTestCase {
     }
     
     func testApplySession() {
-        RSElementCache.initiate()
+        
         let internalRudderConfig = RSConfigBuilder()
             .build()
+        RSElementCache.initiate(with: internalRudderConfig)
         
         let userSession = RSUserSession.initiate(internalRudderConfig.sessionInActivityTimeOut, with: RSPreferenceManager.getInstance())
         userSession.start()

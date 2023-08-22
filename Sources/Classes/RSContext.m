@@ -16,7 +16,7 @@
 
 static dispatch_queue_t queue;
 
-- (instancetype)init {
+- (instancetype)initWithConfig:(RSConfig *) config {
     self = [super init];
     if (self) {
         
@@ -26,8 +26,14 @@ static dispatch_queue_t queue;
         
         self->preferenceManager = [RSPreferenceManager getInstance];
         
+        NSString* _anonymousId = [self->preferenceManager getAnonymousId];
+        if(_anonymousId == nil) {
+            _anonymousId = [RSUtils getUniqueId];
+        }
+        [self->preferenceManager saveAnonymousId:_anonymousId];
+        
         _app = [[RSApp alloc] init];
-        _device = [[RSDeviceInfo alloc] init];
+        _device = [[RSDeviceInfo alloc] initWithConfig:config];
         _library = [[RSLibraryInfo alloc] init];
         _os = [[RSOSInfo alloc] init];
         _screen = [[RSScreenInfo alloc] init];
@@ -47,6 +53,8 @@ static dispatch_queue_t queue;
             NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
             if (error == nil) {
                 _traits = [traitsDict mutableCopy];
+                _traits[@"anonymousId"] = _anonymousId;
+                [self persistTraits];
             } else {
                 // persisted traits persing error. initiate blank
                 [self createAndPersistTraits];

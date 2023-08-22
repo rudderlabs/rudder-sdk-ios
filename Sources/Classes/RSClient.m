@@ -328,6 +328,13 @@ static NSString* _deviceToken = nil;
     }
 }
 
+- (void) reset:(BOOL) clearAnonymousId {
+    if(clearAnonymousId) {
+        [[RSPreferenceManager getInstance] refreshAnonymousId];
+    }
+    [self reset];
+}
+
 - (void)flush {
     if ([RSClient getOptStatus]) {
         return;

@@ -7,11 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSConfig.h"
 #import "RSConfigBuilder.h"
-#import "RSMessage.h"
 #import "RSOption.h"
-#import "RSMessageBuilder.h"
 #import "RSTraits.h"
 #import "RSContext.h"
 
@@ -59,7 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) identify:(NSString *_Nullable)userId traits:(NSDictionary<NSString*, id>*)traits;
 - (void) identify:(NSString *_Nullable)userId;
 
-- (void)reset;
+- (void)reset __attribute((deprecated("Discontinuing support. Implement reset: instead")));
+- (void) reset:(BOOL) clearAnonymousId;
 - (void)flush;
 
 - (void) optOut: (BOOL) optOut;

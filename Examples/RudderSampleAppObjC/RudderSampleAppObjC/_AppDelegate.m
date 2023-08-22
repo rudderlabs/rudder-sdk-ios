@@ -31,6 +31,7 @@ static int screenCount = 1;
             RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
             [builder withLoglevel:RSLogLevelVerbose];
             [builder withTrackLifecycleEvens:YES];
+            [builder withCollectDeviceId:NO];
             [builder withRecordScreenViews:YES];
             [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
             [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:YES]];
@@ -83,7 +84,7 @@ static int screenCount = 1;
 }
 
 + (void) sendReset {
-    [[RSClient sharedInstance] reset];
+    [[RSClient sharedInstance] reset:YES];
 }
 
 @end

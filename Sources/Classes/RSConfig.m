@@ -27,6 +27,7 @@
         _recordScreenViews = RSRecordScreenViews;
         _enableBackgroundMode = RSEnableBackgroundMode;
         _automaticSessionTracking = RSAutomaticSessionTracking;
+        _collectDeviceId = RSCollectDeviceId;
         _controlPlaneUrl = RSControlPlaneUrl;
         _factories = [[NSMutableArray alloc] init];
         _customFactories = [[NSMutableArray alloc] init];

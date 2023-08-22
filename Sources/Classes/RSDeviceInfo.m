@@ -17,18 +17,16 @@
 
 @implementation RSDeviceInfo
 
-- (instancetype)init
-{
+- (instancetype) initWithConfig: (RSConfig *) config {
     self = [super init];
-
     if (self) {
 #if !TARGET_OS_WATCH
-        _identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString];
+        _identifier = config.collectDeviceId ? [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString] : nil;
         _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
         _type = [[UIDevice currentDevice] systemName];
 #else
-        _identifier = [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString];
+        _identifier = config.collectDeviceId ? [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString] : nil;
         _model = [[WKInterfaceDevice currentDevice]model];
         _name = [[WKInterfaceDevice currentDevice]name];
         _type = [[WKInterfaceDevice currentDevice]systemName];
@@ -36,7 +34,6 @@
         _manufacturer = @"Apple";
         _attTrackingStatus = RSATTNotDetermined;
     }
-
     return self;
 }
 

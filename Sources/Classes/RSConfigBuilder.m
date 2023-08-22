@@ -217,6 +217,14 @@
     return self;
 }
 
+- (instancetype) withCollectDeviceId: (BOOL) collectDeviceId {
+    if (config == nil) {
+        config = [[RSConfig alloc] init];
+    }
+    config.collectDeviceId = collectDeviceId;
+    return self;
+}
+
 - (instancetype)withDBEncryption:(RSDBEncryption *)dbEncryption {
     if (config == nil) {
         config = [[RSConfig alloc] init];
