@@ -36,7 +36,7 @@ internal class RSReplayQueuePlugin: RSPlugin {
     }
     
     func update(serverConfig: RSServerConfig, type: UpdateType) {
-        if type == .initial { return }
+        guard client?.checkServerConfigInProgress == true else { return }
         running = false
         replayEvents()
     }

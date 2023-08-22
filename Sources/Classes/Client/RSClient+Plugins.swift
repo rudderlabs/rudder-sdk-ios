@@ -145,13 +145,15 @@ extension RSClient {
             return
         }
         
+        let updateType: UpdateType = self.serverConfig == nil ? .initial : .refresh
+        
         fetchServerConfig { result in
             assert(Thread.isMainThread)
             
             switch result {
             case .success(let serverConfig):
                 self.serverConfig = serverConfig
-                self.update(serverConfig: serverConfig, type: .refresh)
+                self.update(serverConfig: serverConfig, type: updateType)
                 RSUserDefaults.saveServerConfig(serverConfig)
                 RSUserDefaults.updateLastUpdatedTime(RSUtils.getTimeStamp())
                 self.log(message: "server config download successful", logLevel: .debug)
