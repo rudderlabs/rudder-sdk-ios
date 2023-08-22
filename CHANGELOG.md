@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.4.1...v2.4.2) (2023-08-22)
+
+
+### Bug Fixes
+
+* device mode not initializing on first launch ([d82760c](https://github.com/rudderlabs/rudder-sdk-ios/commit/d82760c7371b24a1baf0935730225c93ae973bdf))
+
 ### [2.4.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.4.0...v2.4.1) (2023-08-21)
 
 
