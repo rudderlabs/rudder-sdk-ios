@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.0...v1.19.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* header not found issue on cross platforms ([#369](https://github.com/rudderlabs/rudder-sdk-ios/issues/369)) ([b9ba353](https://github.com/rudderlabs/rudder-sdk-ios/commit/b9ba353b81744962fd3f2321127c9db636549d6f))
+
 ## [1.19.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.18.0...v1.19.0) (2023-08-22)
 
 
