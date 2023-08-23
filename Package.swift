@@ -26,7 +26,8 @@ let package = Package(
             sources: ["Classes/"],
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
-                .headerSearchPath("Classes/Headers/")
+                .headerSearchPath("Classes/Headers/"),
+                .unsafeFlags(["-DSQLITE_HAS_CODEC", "-DSQLITE_TEMP_STORE=3", "-DSQLCIPHER_CRYPTO_CC", "-DNDEBUG"])
             ]
         ),
         .testTarget(
