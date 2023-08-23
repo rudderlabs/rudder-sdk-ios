@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS(.v9), .tvOS(.v10)
+        .iOS(.v12), .tvOS(.v11), .watchOS("7.0")
     ],
     products: [
         .library(
