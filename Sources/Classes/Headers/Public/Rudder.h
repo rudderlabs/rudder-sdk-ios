@@ -105,6 +105,7 @@
 #import "WKInterfaceController+RSScreen.h"
 #import "NSData+GZIP.h"
 #import "sqlite3.h"
+#import "RSDBEncryption.h"
 
 //! Project version number for RS.
 FOUNDATION_EXPORT double RSVersionNumber;
