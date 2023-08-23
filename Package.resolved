@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MetricsReporter",
+        "repositoryURL": "https://github.com/rudderlabs/metrics-reporter-ios",
+        "state": {
+          "branch": null,
+          "revision": "2f57ea3c893fd313484f82adf4adfe8d24deacab",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "RudderKit",
+        "repositoryURL": "https://github.com/rudderlabs/rudder-ios-kit",
+        "state": {
+          "branch": null,
+          "revision": "8a557a80cc1b0e0bc948c2b17fe0fd3809bcfd61",
+          "version": "1.4.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
