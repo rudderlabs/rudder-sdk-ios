@@ -51,11 +51,18 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     } else if (isEncryptedDBExists) {
         if (isEncryptionNeeded) {
             // Open encrypted database with key
-            [self openEncryptedDB:dbEncryption.key];
+            int code = [self openEncryptedDB:dbEncryption.key];
+            if (code == SQLITE_NOTADB) {
+                [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                [self openUnencryptedDB];
+            }
         } else {
             // Decyprt database; then open unencrypted database
             if (dbEncryption == nil) {
-                [RSLogger logDebug:@"RSDBPersistentManager: createDB: please provide the key"];
+                [RSLogger logError:@"RSDBPersistentManager: createDB: No key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                [self openUnencryptedDB];
             } else {
                 [self openEncryptedDB:dbEncryption.key];
                 int code = [self decryptDB:dbEncryption.key];
@@ -103,16 +110,20 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     }
 }
 
-- (void)openEncryptedDB:(NSString *)encryptionKey {
+- (int)openEncryptedDB:(NSString *)encryptionKey {
     int executeCode = sqlite3_open_v2([[self getEncryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
     if (executeCode == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: openEncryptedDB: DB opened successfully"];
         const char* key = [encryptionKey UTF8String];
         executeCode = sqlite3_key(self->_database, key, (int)strlen(key));
+        // if wrong key is provided, there is no error provided from `sqlite3_key` API.
+        // so we are calling `sqlite3_exec` to get the code.
+        executeCode = sqlite3_exec(self->_database, (const char*) "SELECT count(*) FROM sqlite_master;", NULL, NULL, NULL);
         [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: DB opened with key code: %d", executeCode]];
     } else {
         [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: Failed to open DB, SQLite error code: %d", executeCode]];
     }
+    return executeCode;
 }
 
 - (int)encryptDB:(NSString *)key {
