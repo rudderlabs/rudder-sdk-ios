@@ -54,6 +54,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             int code = [self openEncryptedDB:dbEncryption.key];
             if (code == SQLITE_NOTADB) {
                 [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                [self closeDB];
                 [RSUtils removeFile:ENCRYPTED_DB_NAME];
                 [self openUnencryptedDB];
             }
@@ -67,6 +68,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                 [self openEncryptedDB:dbEncryption.key];
                 int code = [self decryptDB:dbEncryption.key];
                 if (code == SQLITE_OK) {
+                    [self closeDB];
                     [RSUtils removeFile:ENCRYPTED_DB_NAME];
                     [self openUnencryptedDB];
                 } else {
@@ -80,6 +82,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             [self openUnencryptedDB];
             int code = [self encryptDB:dbEncryption.key];
             if (code == SQLITE_OK) {
+                [self closeDB];
                 [RSUtils removeFile:UNENCRYPTED_DB_NAME];
                 [self openEncryptedDB:dbEncryption.key];
             } else {
@@ -141,7 +144,6 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence_encrypted;", NULL, NULL, NULL);
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: DETACH DATABASE execution code: %d", code]];
     
-    sqlite3_close(self->_database);
     return code;
 }
 
@@ -166,7 +168,6 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence;", NULL, NULL, NULL);
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: DETACH DATABASE execution code: %d", code]];
     
-    sqlite3_close(self->_database);
     return code;
 }
 
@@ -176,6 +177,10 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (NSString *)getUnencryptedDBPath {
     return [RSUtils getFilePath:UNENCRYPTED_DB_NAME];
+}
+
+- (void)closeDB {
+    sqlite3_close(self->_database);
 }
 
 // checks the events table for status column and would add the column, if missing.
