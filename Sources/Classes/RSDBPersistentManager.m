@@ -57,6 +57,8 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                 [self closeDB];
                 [RSUtils removeFile:ENCRYPTED_DB_NAME];
                 [self openUnencryptedDB];
+            } else {
+                [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to open DB, error code: %d", code]];
             }
         } else {
             // Decyprt database; then open unencrypted database
