@@ -71,7 +71,7 @@ static dispatch_queue_t queue;
         dispatch_sync(queue, ^{
             if (consentedIntegrationsDict[factoryKey] && ![consentedIntegrationsDict[factoryKey] boolValue]) {
                 [filteredList removeObject:destination];
-                [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISSENTED, INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
+                [RSMetricsReporter report:SDKMETRICS_DM_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DM_DISSENTED, SDKMETRICS_INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
             }
         });
     }

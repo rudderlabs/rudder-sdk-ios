@@ -300,7 +300,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
-            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OUT_OF_MEMORY} andValue:(float)messageIds.count];
+            [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_OUT_OF_MEMORY} andValue:(float)messageIds.count];
             return;
         }
         [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];
