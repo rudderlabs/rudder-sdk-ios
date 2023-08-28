@@ -62,7 +62,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                 [self openUnencryptedDB];
             }
         } else {
-            if (dbEncryption == nil) {
+            if (dbEncryption == nil || dbEncryption.key == nil) {
                 // no key is provided
                 // delete encrypted database; then open unencrypted database
                 // all previous events will be deleted
