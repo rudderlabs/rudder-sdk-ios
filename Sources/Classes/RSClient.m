@@ -367,7 +367,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void)reportDiscardedEvent {
-    [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OPT_OUT} andValue:1];
+    [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_OPT_OUT} andValue:1];
 }
 
 - (void)shutdown {
