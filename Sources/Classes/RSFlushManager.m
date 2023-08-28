@@ -75,7 +75,7 @@
         }
         if(lastBatchFailed) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Failed to send %d/%d batch after 3 retries, dropping the remaining batches as well", i, numberOfBatches]];
-            [RSMetricsReporter report:CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: REQUEST_TIMEOUT} andValue:1];
+            [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_REQUEST_TIMEOUT} andValue:1];
             break;
         }
     }
