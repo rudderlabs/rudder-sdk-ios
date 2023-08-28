@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.1...v1.19.2) (2023-08-28)
+
+
+### Bug Fixes
+
+* db encryption improvements ([#375](https://github.com/rudderlabs/rudder-sdk-ios/issues/375)) ([18ba785](https://github.com/rudderlabs/rudder-sdk-ios/commit/18ba7856d918b15d36f0e7c8916dd4d57f15b51b))
+* renamed extern string of metrics ([#376](https://github.com/rudderlabs/rudder-sdk-ios/issues/376)) ([902d77f](https://github.com/rudderlabs/rudder-sdk-ios/commit/902d77fe34d99e0e7792804b8d3a28bcbfc27378))
+* spm build is failing for missing dependency ([#373](https://github.com/rudderlabs/rudder-sdk-ios/issues/373)) ([d478c23](https://github.com/rudderlabs/rudder-sdk-ios/commit/d478c23de1e671d2d112ab1ab8181d55064ed427))
+
 ### [1.19.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.0...v1.19.1) (2023-08-23)
 
 
