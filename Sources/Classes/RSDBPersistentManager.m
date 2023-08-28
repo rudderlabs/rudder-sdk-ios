@@ -40,46 +40,81 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     BOOL isEncryptionNeeded = [self isEncryptionNeeded:dbEncryption];
     
     if (!isEncryptedDBExists && !isUnencryptedDBExists) {
-        // Fresh Install
+        // fresh Install
         if (isEncryptionNeeded) {
-            // Create encrypted database with key
+            // open encrypted database with key
             [self openEncryptedDB:dbEncryption.key];
         } else {
-            // Open unencrypted database
+            // open unencrypted database
             [self openUnencryptedDB];
         }
     } else if (isEncryptedDBExists) {
         if (isEncryptionNeeded) {
-            // Open encrypted database with key
-            [self openEncryptedDB:dbEncryption.key];
+            // open encrypted database with key
+            int code = [self openEncryptedDB:dbEncryption.key];
+            if (code == SQLITE_NOTADB) {
+                // when key is wrong
+                // delete encrypted database; then open unencrypted database
+                // all previous events will be deleted
+                [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                [self closeDB];
+                [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                [self openUnencryptedDB];
+            }
         } else {
-            // Decyprt database; then open unencrypted database
-            if (dbEncryption == nil) {
-                [RSLogger logDebug:@"RSDBPersistentManager: createDB: please provide the key"];
+            if (dbEncryption == nil || dbEncryption.key == nil) {
+                // no key is provided
+                // delete encrypted database; then open unencrypted database
+                // all previous events will be deleted
+                [RSLogger logError:@"RSDBPersistentManager: createDB: No key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                [self openUnencryptedDB];
             } else {
-                [self openEncryptedDB:dbEncryption.key];
-                int code = [self decryptDB:dbEncryption.key];
-                if (code == SQLITE_OK) {
-                    [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                    [self openUnencryptedDB];
-                } else {
-                    [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
+                int code = [self openEncryptedDB:dbEncryption.key];
+                switch (code) {
+                        // when key is correct
+                        // decyprt database; then open unencrypted database
+                    case SQLITE_OK: {
+                        code = [self decryptDB:dbEncryption.key];
+                        if (code == SQLITE_OK) {
+                            [self closeDB];
+                            [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                            [self openUnencryptedDB];
+                        } else {
+                            [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
+                        }
+                    }
+                        break;
+                        // when key is wrong
+                        // delete encrypted database; then open unencrypted database
+                        // all previous events will be deleted
+                    case SQLITE_NOTADB: {
+                        [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+                        [self closeDB];
+                        [RSUtils removeFile:ENCRYPTED_DB_NAME];
+                        [self openUnencryptedDB];
+                    }
+                        break;
+                    default:
+                        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
+                        break;
                 }
             }
         }
     } else {
         if (isEncryptionNeeded) {
-            // Encyprt database; then open encrypted database
+            // encyprt database; then open encrypted database
             [self openUnencryptedDB];
             int code = [self encryptDB:dbEncryption.key];
             if (code == SQLITE_OK) {
+                [self closeDB];
                 [RSUtils removeFile:UNENCRYPTED_DB_NAME];
                 [self openEncryptedDB:dbEncryption.key];
             } else {
                 [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt, error code: %d", code]];
             }
         } else {
-            // Open unencrypted database
+            // open unencrypted database
             [self openUnencryptedDB];
         }
     }
@@ -103,16 +138,20 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     }
 }
 
-- (void)openEncryptedDB:(NSString *)encryptionKey {
+- (int)openEncryptedDB:(NSString *)encryptionKey {
     int executeCode = sqlite3_open_v2([[self getEncryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
     if (executeCode == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: openEncryptedDB: DB opened successfully"];
         const char* key = [encryptionKey UTF8String];
         executeCode = sqlite3_key(self->_database, key, (int)strlen(key));
+        // if wrong key is provided, there is no error provided from `sqlite3_key` API.
+        // so we are calling `sqlite3_exec` to get the code.
+        executeCode = sqlite3_exec(self->_database, (const char*) "SELECT count(*) FROM sqlite_master;", NULL, NULL, NULL);
         [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: DB opened with key code: %d", executeCode]];
     } else {
         [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: Failed to open DB, SQLite error code: %d", executeCode]];
     }
+    return executeCode;
 }
 
 - (int)encryptDB:(NSString *)key {
@@ -130,7 +169,6 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence_encrypted;", NULL, NULL, NULL);
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: DETACH DATABASE execution code: %d", code]];
     
-    sqlite3_close(self->_database);
     return code;
 }
 
@@ -155,7 +193,6 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence;", NULL, NULL, NULL);
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: DETACH DATABASE execution code: %d", code]];
     
-    sqlite3_close(self->_database);
     return code;
 }
 
@@ -165,6 +202,10 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (NSString *)getUnencryptedDBPath {
     return [RSUtils getFilePath:UNENCRYPTED_DB_NAME];
+}
+
+- (void)closeDB {
+    sqlite3_close(self->_database);
 }
 
 // checks the events table for status column and would add the column, if missing.
@@ -300,7 +341,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
-            [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: OUT_OF_MEMORY} andValue:(float)messageIds.count];
+            [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_OUT_OF_MEMORY} andValue:(float)messageIds.count];
             return;
         }
         [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];

@@ -197,10 +197,10 @@ static RSEventRepository* _instance;
                         [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
-                    [RSMetricsReporter report:SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
+                    [RSMetricsReporter report:SDKMETRICS_SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
-                    [RSMetricsReporter report:SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{TYPE: SOURCE_DISABLED} andValue:1];
+                    [RSMetricsReporter report:SDKMETRICS_SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_SOURCE_DISABLED} andValue:1];
                     [strongSelf->dbpersistenceManager flushEventsFromDB];
                 }
                 strongSelf->isSDKInitialized = YES;
@@ -217,11 +217,11 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
-    [RSMetricsReporter report:SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{TYPE: message.type} andValue:1];
+    [RSMetricsReporter report:SDKMETRICS_SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: message.type} andValue:1];
     dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             if (!self->isSDKEnabled)
-                [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: SDK_DISABLED} andValue:1];
+                [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_SDK_DISABLED} andValue:1];
             return;
         }
     });
@@ -235,7 +235,7 @@ static RSEventRepository* _instance;
     unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
-        [RSMetricsReporter report:EVENTS_DISCARDED forMetricType:COUNT withProperties:@{TYPE: MSG_SIZE_INVALID} andValue:1];
+        [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MSG_SIZE_INVALID} andValue:1];
         return;
     }
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];

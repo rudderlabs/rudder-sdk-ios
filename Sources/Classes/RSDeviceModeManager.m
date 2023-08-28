@@ -120,7 +120,7 @@
             }
         } else {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: %@ factory is disabled", factory.key]];
-            [RSMetricsReporter report:DM_DISCARD forMetricType:COUNT withProperties:@{TYPE: DM_DISABLED, INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
+            [RSMetricsReporter report:SDKMETRICS_DM_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DM_DISABLED, SDKMETRICS_INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
         }
     }
 }
@@ -275,7 +275,7 @@
             @try {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: dumping event %@ to factory %@", logTag, message.event, destination]];
                 [integration dump:message];
-                [RSMetricsReporter report:DM_EVENT forMetricType:COUNT withProperties:@{TYPE: message.type, INTEGRATION: destination} andValue:1];
+                [RSMetricsReporter report:SDKMETRICS_DM_EVENT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: message.type, SDKMETRICS_INTEGRATION: destination} andValue:1];
             } @catch(NSException *e) {
                 [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: Exception while dumping %@ to factory %@ due to %@", logTag, message.event, destination, e.reason]];
             }
