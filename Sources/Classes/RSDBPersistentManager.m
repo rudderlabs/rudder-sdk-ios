@@ -54,12 +54,12 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             int code = [self openEncryptedDB:dbEncryption.key];
             if (code == SQLITE_NOTADB) {
                 // when key is wrong
-                // delete encrypted database; then open unencrypted database
+                // delete encrypted database; then open new encrypted database
                 // all previous events will be deleted
                 [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
                 [self closeDB];
                 [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                [self openUnencryptedDB];
+                [self openEncryptedDB:dbEncryption.key];
             }
         } else {
             if (dbEncryption == nil || dbEncryption.key == nil) {
