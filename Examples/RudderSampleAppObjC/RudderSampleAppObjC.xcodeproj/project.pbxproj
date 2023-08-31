@@ -233,6 +233,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MetricsReporter-iOS12.0/MetricsReporter.framework",
+				"${BUILT_PRODUCTS_DIR}/RSCrashReporter-iOS12.0/RSCrashReporter.framework",
 				"${BUILT_PRODUCTS_DIR}/RudderKit-iOS12.0/RudderKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
@@ -240,6 +241,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MetricsReporter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSCrashReporter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RudderKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",

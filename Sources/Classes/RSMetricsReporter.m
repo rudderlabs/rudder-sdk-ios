@@ -31,6 +31,7 @@ RSMetricsClient * _Nullable _metricsClient;
     self = [super init];
     if (self) {
         RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
+        [configuration dbCountThreshold:config.dbCountThreshold];
         _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
         _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
         _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;

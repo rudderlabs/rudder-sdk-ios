@@ -9,8 +9,9 @@ def shared_pods
 end
 
 def shared_utility_pods
-    pod 'MetricsReporter'
+    pod 'MetricsReporter', :path => '/Users/pallabmaiti/Documents/Rudder/metrics-reporter-ios'
     pod 'RudderKit'
+    pod 'RSCrashReporter', :path => '/Users/pallabmaiti/Documents/Rudder/crash-reporter-ios'
 end
 
 target 'Rudder-iOS' do
