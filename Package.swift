@@ -27,7 +27,10 @@ let package = Package(
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
                 .headerSearchPath("Classes/Headers/"),
-                .unsafeFlags(["-DSQLITE_HAS_CODEC", "-DSQLITE_TEMP_STORE=3", "-DSQLCIPHER_CRYPTO_CC", "-DNDEBUG"])
+                .define("SQLITE_HAS_CODEC"),
+                .define("SQLITE_TEMP_STORE", to: "3"),
+                .define("SQLCIPHER_CRYPTO_CC"),
+                .define("NDEBUG")
             ]
         ),
         .testTarget(
