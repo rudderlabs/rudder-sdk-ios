@@ -349,5 +349,8 @@ static RSEventRepository* _instance;
     [self->userSession clearSession];
 }
 
+- (NSNumber * _Nullable)getSessionId {
+    return [self->userSession getSessionId];
+}
 
 @end

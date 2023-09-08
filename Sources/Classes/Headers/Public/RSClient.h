@@ -86,6 +86,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startSession:(long)sessionId;
 - (void)endSession;
 
+@property (strong, nonatomic, readonly) NSNumber* _Nullable sessionId;
+
 @end
 
 NS_ASSUME_NONNULL_END

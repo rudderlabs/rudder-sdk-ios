@@ -486,4 +486,8 @@ static NSString* _deviceToken = nil;
     }
 }
 
+- (NSNumber * _Nullable)sessionId {
+    return (_repository != nil) ? [_repository getSessionId] : nil;
+}
+
 @end

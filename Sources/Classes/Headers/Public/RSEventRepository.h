@@ -69,6 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) startSession:(long) sessionId;
 - (void) endSession;
+- (NSNumber * _Nullable)getSessionId;
 
 - (RSConfig* _Nullable) getConfig;
 - (void)applicationDidFinishLaunchingWithOptions:(NSDictionary *) launchOptions;
