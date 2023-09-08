@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class RSMessageBuilder;
 
 @interface RSClient : NSObject
+
+- (instancetype)init NS_UNAVAILABLE NS_SWIFT_UNAVAILABLE("Use `RSClient.getInstance(writeKey:)` to initialise.");
+
 + (instancetype) getInstance;
 + (instancetype) getInstance:(NSString*) writeKey;
 + (instancetype) getInstance:(NSString*) writeKey config:(RSConfig*) config;
@@ -64,17 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) shutdown;
 
-- (NSString* _Nullable)getAnonymousId;
-
-- (RSConfig* _Nullable)configuration;
-
 + (instancetype _Nullable) sharedInstance;
 
-+ (RSOption*) getDefaultOptions;
-
 - (void)trackLifecycleEvents:(NSDictionary *)launchOptions;
-
-- (RSContext *) getContext;
 
 + (void) putAnonymousId: (NSString *_Nonnull) anonymousId;
 + (void) putDeviceToken: (NSString *_Nonnull) deviceToken;
@@ -86,7 +81,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startSession:(long)sessionId;
 - (void)endSession;
 
+- (NSString* _Nullable)getAnonymousId __attribute((deprecated("This method will be deprecated soon. Use instance property(anonymousId) instead.")));
+- (RSConfig* _Nullable)configuration __attribute((deprecated("This method will be deprecated soon. Use instance property(config) instead.")));
++ (RSOption*) getDefaultOptions __attribute((deprecated("This method will be deprecated soon. Use instance property(defaultOptions) instead.")));
+- (RSContext *) getContext __attribute((deprecated("This method will be deprecated soon. Use instance property(context) instead.")));
+
 @property (strong, nonatomic, readonly) NSNumber* _Nullable sessionId;
+@property (strong, nonatomic, readonly) NSString* _Nullable anonymousId;
+@property (strong, nonatomic, readonly) RSConfig* _Nullable config;
+@property (strong, nonatomic, readonly) RSOption* defaultOptions;
+@property (strong, nonatomic, readonly) RSContext* context;
 
 @end
 

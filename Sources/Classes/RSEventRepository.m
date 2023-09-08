@@ -225,7 +225,7 @@ static RSEventRepository* _instance;
             return;
         }
     });
-    [self applyIntegrations:message withDefaultOption:RSClient.getDefaultOptions];
+    [self applyIntegrations:message withDefaultOption:self->client.defaultOptions];
     message = [self applyConsents:message];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     

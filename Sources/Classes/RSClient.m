@@ -52,7 +52,7 @@ static NSString* _deviceToken = nil;
             RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
-                [[_instance getContext] putDeviceToken:_deviceToken];
+                [_instance.context putDeviceToken:_deviceToken];
             }
         });
     }
@@ -322,17 +322,17 @@ static NSString* _deviceToken = nil;
 }
 
 - (void)reset {
-    [RSElementCache reset];
-    if (_repository != nil) {
-        [_repository reset];
-    }
+    [self reset:NO];
 }
 
 - (void) reset:(BOOL) clearAnonymousId {
     if(clearAnonymousId) {
         [[RSPreferenceManager getInstance] refreshAnonymousId];
     }
-    [self reset];
+    [RSElementCache reset];
+    if (_repository != nil) {
+        [_repository reset];
+    }
 }
 
 - (void)flush {
@@ -375,21 +375,28 @@ static NSString* _deviceToken = nil;
 }
 
 - (NSString*)getAnonymousId {
+    return self.anonymousId;
+}
+
+- (NSString *)anonymousId {
     if ([RSClient getOptStatus]) {
         return nil;
     }
-    // returns anonymousId
     return [RSElementCache getAnonymousId];
 }
 
-- (RSContext*) getContext {
+- (RSContext *)context {
     if ([RSClient getOptStatus]) {
         return nil;
     }
     return [RSElementCache getContext];
 }
 
-- (RSConfig*)configuration {
+- (RSContext*) getContext {
+    return self.context;
+}
+
+- (RSConfig *)config {
     if (_repository == nil) {
         return nil;
     }
@@ -397,6 +404,10 @@ static NSString* _deviceToken = nil;
         return nil;
     }
     return [_repository getConfig];
+}
+
+- (RSConfig*)configuration {
+    return self.config;
 }
 
 - (void)trackLifecycleEvents:(NSDictionary *)launchOptions {
@@ -412,6 +423,10 @@ static NSString* _deviceToken = nil;
 
 + (RSOption*) getDefaultOptions {
     return _defaultOptions;
+}
+
+- (RSOption *)defaultOptions {
+    return _instance.defaultOptions;
 }
 
 + (void)setAnonymousId: (NSString *__nullable) anonymousId {
@@ -446,7 +461,7 @@ static NSString* _deviceToken = nil;
             _deviceToken = deviceToken;
             return;
         }
-        [[_instance getContext] putDeviceToken:deviceToken];
+        [_instance.context putDeviceToken:deviceToken];
     }
 }
 
