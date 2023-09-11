@@ -56,9 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
     dispatch_source_t source;
     dispatch_queue_t repositoryQueue;
     RSClient *client;
+    RSOption *defaultOptions;
 }
 
-+ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client;
++ (instancetype)initiate:(NSString*)writeKey config:(RSConfig*)config client:(RSClient *)client options:(RSOption * __nullable)options;
 + (instancetype) getInstance;
 - (void) setAnonymousIdToken;
 - (void) dump:(RSMessage*) message;

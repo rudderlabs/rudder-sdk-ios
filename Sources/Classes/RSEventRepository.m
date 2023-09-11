@@ -12,11 +12,11 @@
 static RSEventRepository* _instance;
 @implementation RSEventRepository
 
-+ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client {
++ (instancetype)initiate:(NSString *)writeKey config:(RSConfig *)config client:(RSClient *)client options:(RSOption * __nullable)options {
     if (_instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init:writeKey config:config client:client];
+            _instance = [[self alloc] init:writeKey config:config client:client options:options];
         });
     }
     return _instance;
@@ -42,7 +42,7 @@ static RSEventRepository* _instance;
  * 11.Initiate RSBackGroundModeManager
  * 12.Initiate RSApplicationLifeCycleManager
  * */
-- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client {
+- (instancetype)init:(NSString*)_writeKey config:(RSConfig*)_config client:(RSClient *)_client options:(RSOption * __nullable)_options {
     self = [super init];
     if (self) {
         [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: writeKey: %@", _writeKey]];
@@ -53,6 +53,7 @@ static RSEventRepository* _instance;
         
         self->writeKey = _writeKey;
         self->config = _config;
+        self->defaultOptions = _options;
         
         self->authToken = [RSUtils getBase64EncodedString: [[NSString alloc] initWithFormat:@"%@:", self->writeKey]];
         
@@ -225,7 +226,7 @@ static RSEventRepository* _instance;
             return;
         }
     });
-    [self applyIntegrations:message withDefaultOption:self->client.defaultOptions];
+    [self applyIntegrations:message withDefaultOption:self->defaultOptions];
     message = [self applyConsents:message];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
