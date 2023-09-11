@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class RSMessageBuilder;
 
 @interface RSClient : NSObject {
-    RSOption *options;
+    RSOption *_options;
 }
 
 - (instancetype)init NS_UNAVAILABLE NS_SWIFT_UNAVAILABLE("Use `RSClient.getInstance(writeKey:)` to initialise.");

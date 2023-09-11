@@ -48,7 +48,7 @@ static NSString* _deviceToken = nil;
             _instance = [[self alloc] init];
             if (options != nil) {
                 _defaultOptions = options;
-                _instance->options = options;
+                _instance->_options = options;
             }
             RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance options:options];
@@ -427,7 +427,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (RSOption *)defaultOptions {
-    return self->options;
+    return self->_options;
 }
 
 + (void)setAnonymousId: (NSString *__nullable) anonymousId {
