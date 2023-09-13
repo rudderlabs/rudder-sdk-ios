@@ -12,7 +12,6 @@
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		ED0CA6DD2A7D049E00899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6DA2A7D049E00899C1C /* RudderConfig.plist */; };
 		ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */; };
 		ED0CA6DF2A7D049E00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */; };
 		ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED7619ED2727E28700B086F4 /* InfoPlist.strings */; };
@@ -36,7 +35,6 @@
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		ED0CA6D62A7D048D00899C1C /* RudderSampleAppObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppObjC-Bridging-Header.h"; sourceTree = "<group>"; };
-		ED0CA6DA2A7D049E00899C1C /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		ED3B022F272A67AB000893AA /* RudderSampleAppObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RudderSampleAppObjC.entitlements; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 		ED0CA6D92A7D049E00899C1C /* RudderConfig */ = {
 			isa = PBXGroup;
 			children = (
-				ED0CA6DA2A7D049E00899C1C /* RudderConfig.plist */,
 				ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */,
 				ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */,
 			);
@@ -213,7 +210,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */,
-				ED0CA6DD2A7D049E00899C1C /* RudderConfig.plist in Resources */,
 				ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */,
 				ED761A052727E28800B086F4 /* Images.xcassets in Resources */,
 				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
