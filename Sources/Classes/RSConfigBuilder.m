@@ -60,6 +60,9 @@
     if (config == nil) {
         config = [[RSConfig alloc] init];
     }
+    if (flushQueueSize < 1 || flushQueueSize > 100) {
+        return self;
+    }
     config.flushQueueSize = flushQueueSize;
     return self;
 }
