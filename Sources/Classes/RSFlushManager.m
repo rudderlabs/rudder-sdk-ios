@@ -60,16 +60,18 @@
             batchDBMessage.messageIds = messageIds;
             batchDBMessage.messages = messages;
             NSString* payload = [RSCloudModeManager getPayloadFromMessages:batchDBMessage];
-            RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
-            if( response.state == NETWORK_SUCCESS){
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Successfully sent batch %d/%d", i, numberOfBatches]];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Clearing events of batch %d from DB", i]];
-                [self->dbPersistentManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
-                [self->dbPersistentManager clearProcessedEventsFromDB];
-                [_dbMessage.messages removeObjectsInArray:messages];
-                [_dbMessage.messageIds removeObjectsInArray:messageIds];
-                lastBatchFailed = NO;
-                break;
+            if (payload != nil) {
+                RSNetworkResponse* response = [self->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+                if( response.state == NETWORK_SUCCESS){
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Successfully sent batch %d/%d", i, numberOfBatches]];
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Clearing events of batch %d from DB", i]];
+                    [self->dbPersistentManager updateEventsWithIds:batchDBMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
+                    [self->dbPersistentManager clearProcessedEventsFromDB];
+                    [_dbMessage.messages removeObjectsInArray:messages];
+                    [_dbMessage.messageIds removeObjectsInArray:messageIds];
+                    lastBatchFailed = NO;
+                    break;
+                }
             }
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSFlushUtils: flushSync: Failed to send %d/%d, retrying again, %d retries left", i, numberOfBatches, retries]];
         }
