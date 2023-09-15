@@ -10,7 +10,6 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 #import "RudderSampleAppObjC-Swift.h"
-#import "sqlite3.h"
 #import "EncryptedDatabaseProvider.h"
 
 static int userCount = 1;

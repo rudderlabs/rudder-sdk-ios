@@ -1,6 +1,6 @@
 PODS:
   - MetricsReporter (1.0.0):
-    - RudderKit (~> 1.4.0)
+    - RudderKit
   - Rudder (1.19.2):
     - MetricsReporter (= 1.0.0)
   - RudderKit (1.4.0)
@@ -17,7 +17,7 @@ DEPENDENCIES:
   - SQLCipher (~> 4.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/rudderlabs/Specs.git:
     - MetricsReporter
     - RudderKit
     - SQLCipher
@@ -27,9 +27,9 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  MetricsReporter: 35d1a8e62cd99e1434bc8fdd06bf2baf7cb23e42
+  MetricsReporter: 97a54d0af909edc6804823a008b63bd568a42a35
   Rudder: 0210ccd4ee632a780b8669ac5b6440d5fd52e40a
-  RudderKit: f272f9872183946452ac94cd7bb2244a71e6ca8f
+  RudderKit: d9d6997696e1642b753d8bdf94e57af643a68f03
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
 
 PODFILE CHECKSUM: 799e2be1c19caac49a14db2f15e20e189c476219
