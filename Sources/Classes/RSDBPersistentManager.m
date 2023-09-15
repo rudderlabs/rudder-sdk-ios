@@ -26,7 +26,6 @@ NSString* _Nonnull const ENCRYPTED_DB_NAME = @"rl_persistence_encrypted.sqlite";
 NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 @implementation RSDBPersistentManager {
-    sqlite3 *db;
     NSLock* lock;
     id<RSDatabase> database;
 }
@@ -147,7 +146,6 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (void)openUnencryptedDB {
     int executeCode = [database open_v2:[[self getUnencryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL];
-//    int executeCode = sqlite3_open_v2([[self getUnencryptedDBPath] UTF8String], &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
     if (executeCode == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: openUnencryptedDB: DB opened successfully"];
     } else {

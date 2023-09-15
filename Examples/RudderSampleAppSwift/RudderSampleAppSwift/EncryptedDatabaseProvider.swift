@@ -21,7 +21,7 @@ class EncryptedDatabase: RSDatabase {
         return sqlite3_exec(db, zSql, xCallback, pArg, pzErrMsg)
     }
         
-    func prepare_v2(_ zSql: UnsafePointer<CChar>, nBytes: Int32, ppStmt: UnsafeMutablePointer<UnsafeMutableRawPointer?>?, pzTail: UnsafeMutablePointer<UnsafePointer<CChar>?>?) -> Int32 {
+    func prepare_v2(_ zSql: UnsafePointer<CChar>?, nBytes: Int32, ppStmt: UnsafeMutablePointer<UnsafeMutableRawPointer?>?, pzTail: UnsafeMutablePointer<UnsafePointer<CChar>?>?) -> Int32 {
         return sqlite3_prepare_v2(db, zSql, nBytes, UnsafeMutablePointer(OpaquePointer(ppStmt)), pzTail)
     }
     
