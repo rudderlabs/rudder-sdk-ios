@@ -1,14 +1,18 @@
 //
-//  RSDefaultDatabase.m
-//  Rudder
+//  EncryptedDatabaseProvider.m
+//  RudderDatabaseEncryption
 //
-//  Created by Pallab Maiti on 13/09/23.
+//  Created by Pallab Maiti on 14/09/23.
 //
 
-#import "RSDefaultDatabase.h"
-#import <sqlite3.h>
+#import "EncryptedDatabaseProvider.h"
+#import "sqlite3.h"
 
-@implementation RSDefaultDatabase {
+@interface RSEncryptedDatabase : NSObject <RSDatabase>
+
+@end
+
+@implementation RSEncryptedDatabase {
     sqlite3 *db;
 }
 
@@ -16,7 +20,8 @@
     return sqlite3_open_v2(filename, &db, flags, zVfs);
 }
 
-- (int)exec:(const char *)zSql xCallback:(callback)xCallback pArg:(void *)pArg pzErrMsg:(char **)pzErrMsg {
+
+- (int)exec:(const char *)zSql xCallback:(callback)xCallback pArg:(void *)pArg pzErrMsg:(char * _Nullable *)pzErrMsg {
     return sqlite3_exec(db, zSql, xCallback, pArg, pzErrMsg);
 }
 
@@ -45,7 +50,15 @@
 }
 
 - (int)key:(const void *)pKey nKey:(int)nKey {
-    return -1;
+    return sqlite3_key(db, pKey, nKey);
+}
+
+@end
+
+@implementation EncryptedDatabaseProvider
+
+- (id<RSDatabase>)getDatabase {
+    return [RSEncryptedDatabase new];
 }
 
 @end

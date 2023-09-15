@@ -11,18 +11,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol RSDatabase
 
-- (int)sqlite3_open_v2:(const char *)filename flags:(int)flags zVfs:(const char * __nullable)zVfs;
-- (int)sqlite3_exec:(const char *)zSql xCallback:(void * __nullable)xCallback pArg:(void * __nullable)pArg pzErrMsg:(char ** __nullable)pzErrMsg;
-- (int)sqlite3_prepare_v2:(const char *)zSql nBytes:(int)nBytes ppStmt:(void **)ppStmt pzTail:(const char **)pzTail;
+typedef int (*callback)(void * _Nullable, int, char * _Nullable * _Nullable, char * _Nullable * _Nullable);
 
-- (int)sqlite3_close;
-- (int)sqlite3_step:(void *)pStmt;
-- (int)sqlite3_finalize:(void *)pStmt;
+- (int)open_v2:(const char * _Nullable)filename flags:(int)flags zVfs:(const char * _Nullable)zVfs;
+- (int)exec:(const char * _Nullable)zSql xCallback:(callback _Nullable)xCallback pArg:(void * _Nullable)pArg pzErrMsg:(char * _Nullable * _Nullable)pzErrMsg;
+- (int)prepare_v2:(const char *)zSql nBytes:(int)nBytes ppStmt:(void * _Nullable * _Nullable)ppStmt pzTail:(const char * _Nullable * _Nullable)pzTail;
 
-- (int)sqlite3_column_int:(void *)pStmt i:(int)i;
-- (const unsigned char *)sqlite3_column_text:(void *)pStmt i:(int)i;
+- (int)close;
+- (int)step:(void * _Nullable)pStmt;
+- (int)finalize:(void * _Nullable)pStmt;
 
-- (int)sqlite3_key:(const void *)pKey nKey:(int)nKey;
+- (int)column_int:(void * _Nullable)pStmt i:(int)i;
+- (const unsigned char *)column_text:(void * _Nullable)pStmt i:(int)i;
+
+- (int)key:(const void * _Nullable)pKey nKey:(int)nKey;
 
 @end
 

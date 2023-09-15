@@ -156,7 +156,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             case 8:
                 RSClient.sharedInstance()?.screen("ViewController", properties: ["key_1": "value_1"])
             case 9:
-                RSClient.sharedInstance()?.reset()
+                RSClient.sharedInstance()?.reset(false)
             case 10:
                 RSClient.sharedInstance()?.group("test_group_id")
             case 11:

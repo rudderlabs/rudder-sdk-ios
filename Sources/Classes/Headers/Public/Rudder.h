@@ -105,9 +105,7 @@
 #import "WKInterfaceController+RSScreen.h"
 #import "NSData+GZIP.h"
 #import "RSDBEncryption.h"
-#import "RSDefaultDatabase.h"
 #import "RSDatabase.h"
-#import "RSDefaultDatabaseProvider.h"
 #import "RSDatabaseProvider.h"
 
 //! Project version number for RS.
