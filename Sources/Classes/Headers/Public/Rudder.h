@@ -107,6 +107,9 @@
 #import "RSDBEncryption.h"
 #import "RSDatabase.h"
 #import "RSDatabaseProvider.h"
+#import "RSDefaultDatabase.h"
+#import "RSDefaultDatabaseProvider.h"
+#import "RSMetricsReporter.h"
 
 //! Project version number for RS.
 FOUNDATION_EXPORT double RSVersionNumber;
