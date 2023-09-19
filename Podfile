@@ -11,6 +11,7 @@ end
 def shared_utility_pods
     pod 'MetricsReporter'
     pod 'RudderKit'
+    pod 'RSCrashReporter'
 end
 
 target 'Rudder-iOS' do
