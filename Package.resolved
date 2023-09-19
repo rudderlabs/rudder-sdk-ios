@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "RSCrashReporter",
+        "repositoryURL": "https://github.com/rudderlabs/crash-reporter-ios",
+        "state": {
+          "branch": null,
+          "revision": "5b7cf9025d126c4a0b363a8ba6eb1aebd11137ec",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "MetricsReporter",
         "repositoryURL": "https://github.com/rudderlabs/metrics-reporter-ios",
         "state": {
           "branch": null,
-          "revision": "2f57ea3c893fd313484f82adf4adfe8d24deacab",
-          "version": "1.0.0"
+          "revision": "c0cf7734cf7befcab0cf8a9f5569ec6da1c4c35c",
+          "version": "1.1.0"
         }
       },
       {
