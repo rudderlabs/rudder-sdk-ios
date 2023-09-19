@@ -19,6 +19,7 @@
 		ED0CA7042A7D0B2B00899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */; };
 		ED0CA7052A7D0B2B00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */; };
 		ED0CA7062A7D0B2B00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */; };
+		ED8738D02AB36C230076D24A /* EncryptedDatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8738CF2AB36C230076D24A /* EncryptedDatabaseProvider.swift */; };
 		EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,8 @@
 		ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
+		ED8738CF2AB36C230076D24A /* EncryptedDatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedDatabaseProvider.swift; sourceTree = "<group>"; };
+		ED8738D82AB41F520076D24A /* RudderSampleAppSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		FD4DAD4049ABA2A60254AD71 /* Pods-RudderSampleAppSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,10 +85,12 @@
 				06EABC8724665E470043D720 /* SceneDelegate.swift */,
 				ED00467128A64DE50007206F /* SessionViewController.swift */,
 				06EABC8924665E470043D720 /* ViewController.swift */,
+				ED8738CF2AB36C230076D24A /* EncryptedDatabaseProvider.swift */,
 				06EABC8B24665E470043D720 /* Main.storyboard */,
 				06EABC8E24665E480043D720 /* Assets.xcassets */,
 				06EABC9024665E480043D720 /* LaunchScreen.storyboard */,
 				06EABC9324665E480043D720 /* Info.plist */,
+				ED8738D82AB41F520076D24A /* RudderSampleAppSwift-Bridging-Header.h */,
 			);
 			path = RudderSampleAppSwift;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED8738D02AB36C230076D24A /* EncryptedDatabaseProvider.swift in Sources */,
 				06EABC8A24665E470043D720 /* ViewController.swift in Sources */,
 				ED00467228A64DE50007206F /* SessionViewController.swift in Sources */,
 				06EABC8624665E470043D720 /* AppDelegate.swift in Sources */,
@@ -398,8 +404,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RudderSampleAppSwift/RudderSampleAppSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -417,8 +425,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RudderSampleAppSwift/RudderSampleAppSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = "$(inherited)";
 			};
 			name = Release;
 		};

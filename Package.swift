@@ -26,11 +26,7 @@ let package = Package(
             sources: ["Classes/"],
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
-                .headerSearchPath("Classes/Headers/"),
-                .define("SQLITE_HAS_CODEC"),
-                .define("SQLITE_TEMP_STORE", to: "3"),
-                .define("SQLCIPHER_CRYPTO_CC"),
-                .define("NDEBUG")
+                .headerSearchPath("Classes/Headers/")
             ]
         ),
         .testTarget(

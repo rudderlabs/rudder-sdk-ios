@@ -10,7 +10,7 @@
 #import <Rudder/Rudder.h>
 #import <AdSupport/ASIdentifierManager.h>
 #import "RudderSampleAppObjC-Swift.h"
-
+#import "EncryptedDatabaseProvider.h"
 
 static int userCount = 1;
 static int eventCount = 1;
@@ -27,6 +27,7 @@ static int screenCount = 1;
     if (path != nil) {
         NSURL *url = [NSURL fileURLWithPath:path];
         RudderConfig *rudderConfig = [RudderConfig createFrom:url];
+        NSLog(@"------%@------", NSHomeDirectory());
         if (rudderConfig != nil) {
             RSConfigBuilder *builder = [[RSConfigBuilder alloc] init];
             [builder withLoglevel:RSLogLevelVerbose];
@@ -34,7 +35,9 @@ static int screenCount = 1;
             [builder withCollectDeviceId:NO];
             [builder withRecordScreenViews:YES];
             [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
-            [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:YES]];
+            [builder withControlPlaneUrl:rudderConfig.DEV_CONTROL_PLANE_URL];
+            [builder withSleepTimeOut:3000];
+            [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:NO databaseProvider:[EncryptedDatabaseProvider new]]];
             [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
         }
     }

@@ -48,6 +48,7 @@ target 'RudderSampleAppObjC' do
     platform :ios, '12.0'
     shared_pods
     shared_utility_pods
+    pod 'SQLCipher', '~> 4.0'
 end
 
 target 'RudderSampleAppSwift' do
@@ -55,6 +56,7 @@ target 'RudderSampleAppSwift' do
     platform :ios, '12.0'
     shared_pods
     shared_utility_pods
+    pod 'SQLCipher', '~> 4.0'
 end
 
 target 'RudderSampleApptvOSObjC' do

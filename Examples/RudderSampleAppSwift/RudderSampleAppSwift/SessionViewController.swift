@@ -60,7 +60,7 @@ extension SessionViewController: UITableViewDataSource, UITableViewDelegate {
         case 2:
             RSClient.sharedInstance()?.startSession(1234567890)
         case 3:
-            RSClient.sharedInstance()?.reset()
+            RSClient.sharedInstance()?.reset(false)
         case 4:
             count += 1
             RSClient.sharedInstance()?.track("track_\(count)")
@@ -132,7 +132,7 @@ extension SessionViewController: UITableViewDataSource, UITableViewDelegate {
             } else if index % 9 == 7 {
                 RSClient.sharedInstance()?.endSession()
             } else if index % 9 == 8 {
-                RSClient.sharedInstance()?.reset()
+                RSClient.sharedInstance()?.reset(false)
             }
         }
     }

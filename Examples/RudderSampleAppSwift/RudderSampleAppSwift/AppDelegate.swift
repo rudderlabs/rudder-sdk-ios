@@ -21,16 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
+        print(NSHomeDirectory())
+        
         let builder: RSConfigBuilder = RSConfigBuilder()
             .withLoglevel(RSLogLevelDebug)
             .withDataPlaneUrl(rudderConfig.DEV_DATA_PLANE_URL)
             .withControlPlaneUrl(rudderConfig.DEV_CONTROL_PLANE_URL)
             .withTrackLifecycleEvens(false)
             .withRecordScreenViews(false)
-            .withSleepTimeOut(3600)
+            .withSleepTimeOut(10)
             .withSessionTimeoutMillis(30000)
             .withConsentFilter(CustomFilter())
-            .withDBEncryption(RSDBEncryption(key: "test1234", enable: true))
+            .withDBEncryption(RSDBEncryption(key: "test1234", enable: true, databaseProvider: EncryptedDatabaseProvider()))
         RSClient.getInstance(rudderConfig.WRITE_KEY, config: builder.build())
         
         return true
