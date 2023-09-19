@@ -23,6 +23,7 @@
 		ED761A052727E28800B086F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED7619FA2727E28800B086F4 /* Images.xcassets */; };
 		ED761A062727E28800B086F4 /* CustomFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FC2727E28800B086F4 /* CustomFactory.m */; };
 		ED761A072727E28800B086F4 /* _AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FD2727E28800B086F4 /* _AppDelegate.m */; };
+		ED8738CE2AB363A80076D24A /* EncryptedDatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,8 @@
 		ED7619FB2727E28800B086F4 /* CustomIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIntegration.h; sourceTree = "<group>"; };
 		ED7619FC2727E28800B086F4 /* CustomFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomFactory.m; sourceTree = "<group>"; };
 		ED7619FD2727E28800B086F4 /* _AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AppDelegate.m; sourceTree = "<group>"; };
+		ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptedDatabaseProvider.h; sourceTree = "<group>"; };
+		ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptedDatabaseProvider.m; sourceTree = "<group>"; };
 		F928F8A942558010CC7088BF /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +139,8 @@
 				ED7619FC2727E28800B086F4 /* CustomFactory.m */,
 				ED7619FB2727E28800B086F4 /* CustomIntegration.h */,
 				ED7619EF2727E28700B086F4 /* CustomIntegration.m */,
+				ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */,
+				ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */,
 				ED7619FA2727E28800B086F4 /* Images.xcassets */,
 				ED7619ED2727E28700B086F4 /* InfoPlist.strings */,
 				ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */,
@@ -230,12 +235,14 @@
 				"${BUILT_PRODUCTS_DIR}/MetricsReporter-iOS12.0/MetricsReporter.framework",
 				"${BUILT_PRODUCTS_DIR}/RudderKit-iOS12.0/RudderKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Rudder-iOS/Rudder.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MetricsReporter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RudderKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rudder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -273,6 +280,7 @@
 			files = (
 				ED0CA6DF2A7D049E00899C1C /* RudderConfig.swift in Sources */,
 				ED761A032727E28800B086F4 /* main.m in Sources */,
+				ED8738CE2AB363A80076D24A /* EncryptedDatabaseProvider.m in Sources */,
 				ED761A062727E28800B086F4 /* CustomFactory.m in Sources */,
 				ED761A002727E28800B086F4 /* CustomIntegration.m in Sources */,
 				ED761A072727E28800B086F4 /* _AppDelegate.m in Sources */,

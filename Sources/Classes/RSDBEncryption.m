@@ -9,11 +9,12 @@
 
 @implementation RSDBEncryption
 
-- (instancetype)initWithKey:(NSString *)key enable:(BOOL)enable {
+- (instancetype)initWithKey:(NSString *)key enable:(BOOL)enable databaseProvider:(id<RSDatabaseProvider>)databaseProvider {
     self = [super init];
     if (self) {
         self.key = key;
         self.enable = enable;
+        self.databaseProvider = databaseProvider;
     }
     return self;
 }
