@@ -11,7 +11,7 @@ jobs:
     
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Install xcpretty
         run: gem install xcpretty

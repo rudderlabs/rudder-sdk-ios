@@ -9,7 +9,10 @@
 #import "RSDBPersistentManager.h"
 #import "RSLogger.h"
 #import "RSMetricsReporter.h"
-#import "sqlite3.h"
+#import <sqlite3.h>
+#import "RSDatabase.h"
+#import "RSDatabaseProvider.h"
+#import "RSDefaultDatabaseProvider.h"
 
 int const RS_DB_Version = 3;
 int const DEFAULT_STATUS_VALUE = 0;
@@ -22,15 +25,27 @@ NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
 NSString* _Nonnull const ENCRYPTED_DB_NAME = @"rl_persistence_encrypted.sqlite";
 NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
-@implementation RSDBPersistentManager
+@implementation RSDBPersistentManager {
+    NSLock* lock;
+    id<RSDatabase> database;
+}
 
 - (instancetype)initWithDBEncryption:(RSDBEncryption * __nullable)dbEncryption {
     self = [super init];
     if (self) {
         self->lock = [[NSLock alloc] init];
+        self->database = [[self getDatabaseProvider:dbEncryption] getDatabase];
         [self createDB:dbEncryption];
     }
     return self;
+}
+
+- (id<RSDatabaseProvider>)getDatabaseProvider:(RSDBEncryption * __nullable)dbEncryption {
+    if (dbEncryption == nil) {
+        return [RSDefaultDatabaseProvider new];
+    } else {
+        return dbEncryption.databaseProvider;
+    }
 }
 
 - (void)createDB:(RSDBEncryption * __nullable)dbEncryption {
@@ -54,12 +69,12 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             int code = [self openEncryptedDB:dbEncryption.key];
             if (code == SQLITE_NOTADB) {
                 // when key is wrong
-                // delete encrypted database; then open unencrypted database
+                // delete encrypted database; then open new encrypted database
                 // all previous events will be deleted
                 [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
                 [self closeDB];
                 [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                [self openUnencryptedDB];
+                [self openEncryptedDB:dbEncryption.key];
             }
         } else {
             if (dbEncryption == nil || dbEncryption.key == nil) {
@@ -130,7 +145,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 }
 
 - (void)openUnencryptedDB {
-    int executeCode = sqlite3_open_v2([[self getUnencryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
+    int executeCode = [database open_v2:[[self getUnencryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL];
     if (executeCode == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: openUnencryptedDB: DB opened successfully"];
     } else {
@@ -139,14 +154,14 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 }
 
 - (int)openEncryptedDB:(NSString *)encryptionKey {
-    int executeCode = sqlite3_open_v2([[self getEncryptedDBPath] UTF8String], &(self->_database), SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil);
+    int executeCode = [database open_v2:[[self getEncryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL];
     if (executeCode == SQLITE_OK) {
         [RSLogger logDebug:@"RSDBPersistentManager: openEncryptedDB: DB opened successfully"];
         const char* key = [encryptionKey UTF8String];
-        executeCode = sqlite3_key(self->_database, key, (int)strlen(key));
+        executeCode = [database key:key nKey:(int)strlen(key)];
         // if wrong key is provided, there is no error provided from `sqlite3_key` API.
         // so we are calling `sqlite3_exec` to get the code.
-        executeCode = sqlite3_exec(self->_database, (const char*) "SELECT count(*) FROM sqlite_master;", NULL, NULL, NULL);
+        executeCode = [database exec:(const char*) "SELECT count(*) FROM sqlite_master;" xCallback:NULL pArg:NULL pzErrMsg:NULL];
         [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: DB opened with key code: %d", executeCode]];
     } else {
         [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: openEncryptedDB: Failed to open DB, SQLite error code: %d", executeCode]];
@@ -158,15 +173,15 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     const char* attachDBSQL = [[NSString stringWithFormat:@"ATTACH DATABASE '%@' AS rl_persistence_encrypted KEY '%@';", [self getEncryptedDBPath], key] UTF8String];
     
     // Attach empty encrypted database to unencrypted database
-    int code = sqlite3_exec(self->_database, attachDBSQL, NULL, NULL, NULL);
+    int code = [database exec:attachDBSQL xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: ATTACH DATABASE execution code: %d", code]];
     
     // Export database
-    code = sqlite3_exec(self->_database, "SELECT sqlcipher_export('rl_persistence_encrypted');", NULL, NULL, NULL);
+    code = [database exec:"SELECT sqlcipher_export('rl_persistence_encrypted');" xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: SELECT sqlcipher_export execution code: %d", code]];
     
     // Detach encrypted database
-    code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence_encrypted;", NULL, NULL, NULL);
+    code = [database exec:"DETACH DATABASE rl_persistence_encrypted;" xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: encryptDB: DETACH DATABASE execution code: %d", code]];
     
     return code;
@@ -176,21 +191,21 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     const char* pragmaKeySQL = [[NSString stringWithFormat:@"PRAGMA key = '%@';", key] UTF8String];
 
     // Set pragma key
-    int code = sqlite3_exec(self->_database, pragmaKeySQL, NULL, NULL, NULL);
+    int code = [database exec:pragmaKeySQL xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: PRAGMA key execution code: %d", code]];
     
     const char* attachDBSQL = [[NSString stringWithFormat:@"ATTACH DATABASE '%@' AS rl_persistence KEY '';", [self getUnencryptedDBPath]] UTF8String];
 
     // Disable encryption
-    code = sqlite3_exec(self->_database, attachDBSQL, NULL, NULL, NULL);
+    code = [database exec:attachDBSQL xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: ATTACH DATABASE execution code: %d", code]];
     
     // Export database
-    code = sqlite3_exec(self->_database, "SELECT sqlcipher_export('rl_persistence');", NULL, NULL, NULL);
+    code = [database exec:"SELECT sqlcipher_export('rl_persistence');" xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: SELECT sqlcipher_export execution code: %d", code]];
     
     // Detach encrypted database
-    code = sqlite3_exec(self->_database, "DETACH DATABASE rl_persistence;", NULL, NULL, NULL);
+    code = [database exec:"DETACH DATABASE rl_persistence;" xCallback:NULL pArg:NULL pzErrMsg:NULL];
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: DETACH DATABASE execution code: %d", code]];
     
     return code;
@@ -205,7 +220,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 }
 
 - (void)closeDB {
-    sqlite3_close(self->_database);
+    [database close];
 }
 
 // checks the events table for status column and would add the column, if missing.
@@ -231,11 +246,11 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 - (BOOL) checkIfColumnExists:(NSString *) newColumn {
     NSString* checkIfNewColumnExistsSQLString = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) from pragma_table_info(\"%@\") where name=\"%@\";", TABLE_EVENTS, newColumn];
     const char* newColumnCheckSQL = [checkIfNewColumnExistsSQLString UTF8String];
-    sqlite3_stmt *newColumnCheckStmt = nil;
+    void *newColumnCheckStmt = nil;
     BOOL newColumnExists = NO;
-    if (sqlite3_prepare_v2(self->_database, newColumnCheckSQL, -1, &newColumnCheckStmt, nil) == SQLITE_OK) {
-        if(sqlite3_step(newColumnCheckStmt) == SQLITE_ROW) {
-            int count = sqlite3_column_int(newColumnCheckStmt, 0);
+    if ([database prepare_v2:newColumnCheckSQL nBytes:-1 ppStmt:&newColumnCheckStmt pzTail:NULL] == SQLITE_OK) {
+        if([database step:newColumnCheckStmt] == SQLITE_ROW) {
+            int count = [database column_int:newColumnCheckStmt i:0];
             if(count > 0) {
                 newColumnExists = YES;
             }
@@ -247,7 +262,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     else {
         [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: checkIfStatusColumnExists: SQLite Command Preparation Failed: %@", checkIfNewColumnExistsSQLString]];
     }
-    sqlite3_finalize(newColumnCheckStmt);
+    [database finalize:newColumnCheckStmt];
     return newColumnExists;
 }
 
@@ -304,17 +319,17 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     
     const char* insertSQL = [insertSQLString UTF8String];
     int rowId = -1;
-    sqlite3_stmt *insertStmt = nil;
+    void *insertStmt = nil;
     [self->lock lock];
-    if (sqlite3_prepare_v2(self->_database, insertSQL, -1, &insertStmt, nil) == SQLITE_OK) {
-        if (sqlite3_step(insertStmt) == SQLITE_ROW) {
+    if ([database prepare_v2:insertSQL nBytes:-1 ppStmt:&insertStmt pzTail:NULL] == SQLITE_OK) {
+        if ([database step:insertStmt] == SQLITE_ROW) {
             // table created
             [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
-            rowId = sqlite3_column_int(insertStmt, 0);
+            rowId = [database column_int:insertStmt i:0];
         } else {
             [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
         }
-        sqlite3_finalize(insertStmt);
+        [database finalize:insertStmt];
     } else {
         [RSLogger logError:@"RSDBPersistentManager: saveEvent: SQLite Command Preparation Failed"];
     }
@@ -387,15 +402,15 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     NSMutableArray<NSNumber *>* dmProcessedList = [[NSMutableArray alloc] init];
     
     @synchronized (self) {
-        sqlite3_stmt *queryStmt = nil;
-        if (sqlite3_prepare_v2(self->_database, querySQL, -1, &queryStmt, nil) == SQLITE_OK) {
+        void *queryStmt = nil;
+        if ([database prepare_v2:querySQL nBytes:-1 ppStmt:&queryStmt pzTail:NULL] == SQLITE_OK) {
             [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: Successfully fetched events from DB"];
-            while (sqlite3_step(queryStmt) == SQLITE_ROW) {
-                int messageId = sqlite3_column_int(queryStmt, 0);
-                const unsigned char* queryResultCol1 = sqlite3_column_text(queryStmt, 1);
+            while ([database step:queryStmt] == SQLITE_ROW) {
+                int messageId = [database column_int:queryStmt i:0];
+                const unsigned char* queryResultCol1 = [database column_text:queryStmt i:1];
                 NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
-                int status = sqlite3_column_int(queryStmt,3);
-                int dmProcessed = sqlite3_column_int(queryStmt, 4);
+                int status = [database column_int:queryStmt i:3];
+                int dmProcessed = [database column_int:queryStmt i:4];
                 [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
                 [messages addObject:message];
                 [statusList addObject:[NSNumber numberWithInt:status]];
@@ -435,11 +450,11 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     int count = 0;
     const char* countSQL = [countSQLString UTF8String];
     @synchronized (self) {
-        sqlite3_stmt *countStmt = nil;
-        if (sqlite3_prepare_v2(self->_database, countSQL, -1, &countStmt, nil) == SQLITE_OK) {
+        void *countStmt = nil;
+        if ([database prepare_v2:countSQL nBytes:-1 ppStmt:&countStmt pzTail:NULL] == SQLITE_OK) {
             [RSLogger logDebug:@"RSDBPersistentManager: getDBRecordCount: Successfully fetched events count from DB"];
-            while (sqlite3_step(countStmt) == SQLITE_ROW) {
-                count = sqlite3_column_int(countStmt, 0);
+            while ([database step:countStmt] == SQLITE_ROW) {
+                count = [database column_int:countStmt i:0];
             }
         } else {
             [RSLogger logError:@"RSDBPersistentManager: getDBRecordCount: Failed to fetch events count from DB"];
@@ -490,9 +505,10 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 -(BOOL) execSQL: (NSString*) sqlCommand {
     BOOL executionStatus = NO;
     const char* sqlCommandUTF = [sqlCommand UTF8String];
-    sqlite3_stmt *SqlStatement = nil;
-    if (sqlite3_prepare_v2(self->_database, sqlCommandUTF, -1, &SqlStatement, nil) == SQLITE_OK) {
-        if (sqlite3_step(SqlStatement) == SQLITE_DONE) {
+    void *sqlStatement = nil;
+    int code = [database prepare_v2:sqlCommandUTF nBytes:-1 ppStmt:&sqlStatement pzTail:NULL];
+    if (code == SQLITE_OK) {
+        if ([database step:sqlStatement] == SQLITE_DONE) {
             executionStatus = YES;
         }
         else {
@@ -501,7 +517,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     } else {
         [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: execSQL: SQLite Command Preparation Failed: %@", sqlCommand]];
     }
-    sqlite3_finalize(SqlStatement);
+    [database finalize:sqlStatement];
     return executionStatus;
 }
 
@@ -522,18 +538,18 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (NSString *) getSQLiteVersion {
     NSString * sqliteVersion;
-    sqlite3_stmt *sqlStatement;
+    void *sqlStatement;
     NSString *versionSqlQueryString = @"SELECT sqlite_version()";
     
-    if (sqlite3_prepare_v2(self->_database, [versionSqlQueryString UTF8String], -1, &sqlStatement, NULL) == SQLITE_OK) {
-        if (sqlite3_step(sqlStatement) == SQLITE_ROW) {
-            const unsigned char *versionCString = sqlite3_column_text(sqlStatement, 0);
+    if ([database prepare_v2:[versionSqlQueryString UTF8String] nBytes:-1 ppStmt:&sqlStatement pzTail:NULL] == SQLITE_OK) {
+        if ([database step:sqlStatement] == SQLITE_ROW) {
+            const unsigned char *versionCString = [database column_text:sqlStatement i:0];
             sqliteVersion = [NSString stringWithUTF8String:(const char *)versionCString];
             [RSLogger logVerbose:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: Running on SQLiteVersion: %@", sqliteVersion]];
         } else {
             [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: SQLite Command Execution Failed: %@", versionSqlQueryString]];
         }
-        sqlite3_finalize(sqlStatement);
+        [database finalize:sqlStatement];
     } else {
         [RSLogger logError:[[NSString alloc] initWithFormat: @"RSDBPersistentManager: getSQLiteVersion: SQLite Command Preparation Failed: %@", versionSqlQueryString]];
     }

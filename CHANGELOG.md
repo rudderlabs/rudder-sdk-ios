@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.2...v1.20.0) (2023-09-19)
+
+
+### Features
+
+* error reporter ([#380](https://github.com/rudderlabs/rudder-sdk-ios/issues/380)) ([5683ccb](https://github.com/rudderlabs/rudder-sdk-ios/commit/5683ccb42eb9d5445efa69ad8cf1e52ca8dad195))
+* get session_id ([#385](https://github.com/rudderlabs/rudder-sdk-ios/issues/385)) ([7a590f0](https://github.com/rudderlabs/rudder-sdk-ios/commit/7a590f05fd50e48155e0e2bc50ef44e491ca9475))
+* revamped db encryption ([#388](https://github.com/rudderlabs/rudder-sdk-ios/issues/388)) ([0efaffa](https://github.com/rudderlabs/rudder-sdk-ios/commit/0efaffa750656eff6f589184e2fc6052d134ed50))
+
+
+### Bug Fixes
+
+* db encryption improvements ([#381](https://github.com/rudderlabs/rudder-sdk-ios/issues/381)) ([82504dd](https://github.com/rudderlabs/rudder-sdk-ios/commit/82504ddc6f56a7009d94bd4a28e672bd63f10ebc))
+* ensure batch array in the request payload is never empty ([#387](https://github.com/rudderlabs/rudder-sdk-ios/issues/387)) ([7e7a92a](https://github.com/rudderlabs/rudder-sdk-ios/commit/7e7a92a4f362dd757be4ca033af863f1aaa1c0bf))
+* SPM build error due to use of unsafe flags ([#384](https://github.com/rudderlabs/rudder-sdk-ios/issues/384)) ([d5edb2e](https://github.com/rudderlabs/rudder-sdk-ios/commit/d5edb2e380483666c66243ad576f7c2a05402697))
+
 ### [1.19.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.1...v1.19.2) (2023-08-28)
 
 

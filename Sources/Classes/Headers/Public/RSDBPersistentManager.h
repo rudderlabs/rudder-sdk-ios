@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "sqlite3.h"
 #import "RSDBMessage.h"
 #import "RSUtils.h"
 #import "RSEnums.h"
@@ -15,10 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSDBPersistentManager : NSObject {
-    sqlite3 *_database;
-    NSLock* lock;
-}
+@interface RSDBPersistentManager : NSObject
 
 - (instancetype)init NS_UNAVAILABLE NS_SWIFT_UNAVAILABLE("Use `RSDBPersistentManager.init(dbEncryption:)` to initialise.");
 

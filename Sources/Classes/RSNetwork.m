@@ -25,8 +25,7 @@
         CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
         if(@available(iOS 16.0, *)) {
             [RSLogger logWarn:@"RSNetwork: init: cannot retrieve carrier names on iOS 16 and above as CTCarrier is deprecated"];
-        }
-        else if (@available(iOS 12.0, *)) {
+        } else {
             NSDictionary *serviceProviders = [networkInfo serviceSubscriberCellularProviders];
             for (NSString *rat in serviceProviders) {
                 CTCarrier *carrier = [serviceProviders objectForKey:rat];
@@ -37,12 +36,6 @@
                 if (carrierName && ![carrierName isEqualToString:@"--"]) {
                     [_carrier addObject:carrierName];
                 }
-            }
-        } else {
-            CTCarrier *carrier = [networkInfo subscriberCellularProvider];
-            NSString *carrierName = [carrier carrierName];
-            if (carrierName) {
-                [_carrier addObject:carrierName];
             }
         }
         

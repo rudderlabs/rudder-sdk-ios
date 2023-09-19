@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Rudder
+import SQLite3
 
 class DBPersistentManagerTests: XCTestCase {
     

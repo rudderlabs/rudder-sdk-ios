@@ -104,8 +104,12 @@
 #import "UIViewController+RSScreen.h"
 #import "WKInterfaceController+RSScreen.h"
 #import "NSData+GZIP.h"
-#import "sqlite3.h"
 #import "RSDBEncryption.h"
+#import "RSDatabase.h"
+#import "RSDatabaseProvider.h"
+#import "RSDefaultDatabase.h"
+#import "RSDefaultDatabaseProvider.h"
+#import "RSMetricsReporter.h"
 
 //! Project version number for RS.
 FOUNDATION_EXPORT double RSVersionNumber;

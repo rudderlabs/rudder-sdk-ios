@@ -11,6 +11,7 @@ end
 def shared_utility_pods
     pod 'MetricsReporter'
     pod 'RudderKit'
+    pod 'RSCrashReporter'
 end
 
 target 'Rudder-iOS' do
@@ -48,6 +49,7 @@ target 'RudderSampleAppObjC' do
     platform :ios, '12.0'
     shared_pods
     shared_utility_pods
+    pod 'SQLCipher', '~> 4.0'
 end
 
 target 'RudderSampleAppSwift' do
@@ -55,6 +57,7 @@ target 'RudderSampleAppSwift' do
     platform :ios, '12.0'
     shared_pods
     shared_utility_pods
+    pod 'SQLCipher', '~> 4.0'
 end
 
 target 'RudderSampleApptvOSObjC' do

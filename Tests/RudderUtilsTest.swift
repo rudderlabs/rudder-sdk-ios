@@ -65,7 +65,7 @@ class RudderUtilsTest: XCTestCase {
             "company" : "RudderStack",
             "city" : "Hyderabad"]
         
-        let response:Any = RSUtils.deSerializeJSONString(jsonString)
+        let response = RSUtils.deSerializeJSONString(jsonString)
         let parsedDict:[String:String]? = response as? [String:String] ?? nil
         XCTAssert(parsedDict == dictObj)
         

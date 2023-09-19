@@ -14,7 +14,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "MetricsReporter", url: "https://github.com/rudderlabs/metrics-reporter-ios", from: "1.0.0"),
+        .package(name: "MetricsReporter", url: "https://github.com/rudderlabs/metrics-reporter-ios", from: "1.1.0"),
     ],
     targets: [
         .target(
@@ -26,8 +26,7 @@ let package = Package(
             sources: ["Classes/"],
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
-                .headerSearchPath("Classes/Headers/"),
-                .unsafeFlags(["-DSQLITE_HAS_CODEC", "-DSQLITE_TEMP_STORE=3", "-DSQLCIPHER_CRYPTO_CC", "-DNDEBUG"])
+                .headerSearchPath("Classes/Headers/")
             ]
         ),
         .testTarget(
