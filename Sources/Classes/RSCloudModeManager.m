@@ -46,13 +46,15 @@
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 [RSMetricsReporter report:SDKMETRICS_CM_EVENT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MESSAGES} andValue:(float)dbMessage.messages.count];
-                response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
-                if (response.state == NETWORK_SUCCESS) {
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
-                    [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
-                    [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
-                    [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
-                    sleepCount = 0;
+                if (payload != nil) {
+                    response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+                    if (response.state == NETWORK_SUCCESS) {
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                        [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
+                        [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
+                        [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
+                        sleepCount = 0;
+                    }
                 }
             }
             [strongSelf->lock unlock];
@@ -78,6 +80,10 @@
 }
 
 + (NSString*) getPayloadFromMessages: (RSDBMessage*)dbMessage{
+    if ([RSUtils isDBMessageEmpty:dbMessage]) {
+        [RSLogger logDebug:@"Payload construction aborted because the dbMessage is empty."];
+        return nil;
+    }
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     NSMutableArray<NSString *> *batchMessageIds = [[NSMutableArray alloc] init];
@@ -90,6 +96,7 @@
     [json appendFormat:@"\"sentAt\":\"%@\",", sentAt];
     [json appendString:@"\"batch\":["];
     unsigned int totalBatchSize = [RSUtils getUTF8Length:json] + 2; // we add 2 characters at the end
+    NSMutableString* batchMessage = [[NSMutableString alloc] init];
     for (int index = 0; index < messages.count; index++) {
         NSMutableString* message = [[NSMutableString alloc] initWithString:messages[index]];
         long length = message.length;
@@ -103,9 +110,15 @@
             [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_BATCH_SIZE_INVALID} andValue:1];
             break;
         }
-        [json appendString:message];
+        [batchMessage appendString:message];
         [batchMessageIds addObject:messageIds[index]];
     }
+    // When empty batch is sent to the server it trigger Invalid JSON error. Hence it is necessary to ensure that batch is not empty.
+    if ([RSUtils isEmptyString:batchMessage]) {
+        [RSLogger logDebug:@"Payload construction aborted because the batch message is empty."];
+        return nil;
+    }
+    [json appendString:batchMessage];
     if([json characterAtIndex:[json length]-1] == ',') {
         // remove trailing ','
         [json deleteCharactersInRange:NSMakeRange([json length]-1, 1)];

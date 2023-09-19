@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString* _Nullable) getDeviceId;
 + (BOOL)isFileExists:(NSString *)fileName;
 + (BOOL)removeFile:(NSString *)fileName;
++ (BOOL) isDBMessageEmpty:(RSDBMessage*)dbMessage;
++ (BOOL) isEmptyString:(NSString *)value;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

@@ -240,6 +240,14 @@
     return (previousVersion && ![previousVersion isEqualToString:currentVersion]);
 }
 
++ (BOOL) isDBMessageEmpty:(RSDBMessage*)dbMessage {
+    return ([dbMessage.messages count] == 0 || [dbMessage.messageIds count] == 0);
+}
+
++ (BOOL) isEmptyString:(NSString*)value {
+    return (value == nil || value.length == 0);
+}
+
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 
