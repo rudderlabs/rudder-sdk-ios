@@ -38,20 +38,15 @@ jobs:
           git config user.name "GitHub actions"
           git config user.email noreply@github.com
 
-      - name: Create Github Release & Tag
+      - name: Create Github Release
         id: create_release
         env:
           HUSKY: 0
           GITHUB_TOKEN: ${{ secrets.PAT }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
         run: |
-          git for-each-ref refs/tags
-          ./Scripts/find-tag.sh ${{ steps.extract-version.outputs.release_version }} && git tag --delete ${{ steps.extract-version.outputs.release_version }} && git push --delete origin ${{ steps.extract-version.outputs.release_version }}
-          git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
-          git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
-          git for-each-ref refs/tags
-          DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
-
+          DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular
+          
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
         with:
@@ -60,6 +55,7 @@ jobs:
           github_token: ${{ secrets.PAT }}
           pr_title: "chore(release): pulling master into develop post release v${{ steps.extract-version.outputs.release_version }}"
           pr_body: ':crown: *An automated PR*'
+          pr_reviewer: 'pallabmaiti'
 
       - name: Delete hotfix release branch
         uses: koj-co/delete-merged-action@master
