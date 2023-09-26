@@ -1,18 +1,19 @@
 name: Deploy to Private Pod
 
 on:
-  workflow_run:
-    workflows: ['Draft new release']
-    types: ['completed']
+  repository_dispatch:
+    types: [private-release]
   
 jobs:
   deploy_private_pod:
     name: Deploy to Private Pod
     runs-on: macOS-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: (startsWith(github.event.client_payload.branch_name, 'release/') || startsWith(github.event.client_payload.branch_name, 'hotfix-release/'))
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: '${{ github.event.client_payload.branch_name }}'
     
       - name: Install Cocoapods
         run: gem install cocoapods

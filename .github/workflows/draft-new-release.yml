@@ -89,3 +89,10 @@ jobs:
           pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into master"
           pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
           pr_reviewer: 'pallabmaiti'
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          event-type: private-release
+          client-payload: '{"branch_name": "${{ steps.create-release.outputs.branch_name }}"}'

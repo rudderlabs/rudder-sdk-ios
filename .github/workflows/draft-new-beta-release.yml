@@ -81,3 +81,10 @@ jobs:
       - name: Push new version in release branch & tag
         run: |
           git push
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          event-type: beta-private-release
+          client-payload: '{"branch_name": "${{ steps.create-release.outputs.branch_name }}"}'

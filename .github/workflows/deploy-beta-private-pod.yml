@@ -1,18 +1,19 @@
-name: Deploy Beta to Private Pod
+name: Beta deploy to Private Pod
 
 on:
-  workflow_run:
-    workflows: ['Draft new Beta release']
-    types: ['completed']
+  repository_dispatch:
+    types: [beta-private-release]
   
 jobs:
   deploy_private_pod:
-    name: Deploy Beta to Private Pod
+    name: Beta deploy to Private Pod
     runs-on: macOS-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: (startsWith(github.event.client_payload.branch_name, 'beta-release/'))
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: '${{ github.event.client_payload.branch_name }}'
     
       - name: Install Cocoapods
         run: gem install cocoapods
