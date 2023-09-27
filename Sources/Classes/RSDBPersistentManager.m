@@ -53,7 +53,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     BOOL isEncryptedDBExists = [RSUtils isFileExists:ENCRYPTED_DB_NAME];
     BOOL isUnencryptedDBExists = [RSUtils isFileExists:UNENCRYPTED_DB_NAME];
     BOOL isEncryptionNeeded = [self isEncryptionNeeded:dbEncryption];
-    if (isEncryptionNeeded && [self isSQLCipherAvailable]) {
+    if (isEncryptionNeeded && ![self isSQLCipherAvailable]) {
         [RSLogger logError:@"RSDBPersistentManager: createDB: Cannot encrypt the Database as SQLCipher wasn't linked correctly"];
         isEncryptionNeeded = NO;
     }
@@ -100,6 +100,8 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                             [RSUtils removeFile:ENCRYPTED_DB_NAME];
                             [self openUnencryptedDB];
                         } else {
+                            // we are missing a case here
+                            // what if the key is correct and you were able to open the database but you were unable to decrypt it, then what database are we creating
                             [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
                         }
                     }
@@ -150,8 +152,8 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (BOOL) isSQLCipherAvailable {
     BOOL isSQLCipherAvailable = NO;
-    void *stmt;
-    if ([database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
+    void *stmt = nil;
+    if ([database open_v2:[[self getEncryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL] == SQLITE_OK && [database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
         if ([database step:stmt] == SQLITE_ROW) {
             const unsigned char *ver = [database column_text:stmt i:0];
             if(ver != NULL) {
@@ -160,6 +162,8 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
         }
         [database finalize:stmt];
     }
+    [self closeDB];
+    [RSUtils removeFile:ENCRYPTED_DB_NAME];
     return isSQLCipherAvailable;
 }
 
