@@ -53,7 +53,11 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     BOOL isEncryptedDBExists = [RSUtils isFileExists:ENCRYPTED_DB_NAME];
     BOOL isUnencryptedDBExists = [RSUtils isFileExists:UNENCRYPTED_DB_NAME];
     BOOL isEncryptionNeeded = [self isEncryptionNeeded:dbEncryption];
-    
+    if (isEncryptionNeeded && [self isSQLCipherAvailable]) {
+        [RSLogger logError:@"RSDBPersistentManager: createDB: Cannot encrypt the Database as SQLCipher wasn't linked correctly"];
+        isEncryptionNeeded = NO;
+    }
+
     if (!isEncryptedDBExists && !isUnencryptedDBExists) {
         // fresh Install
         if (isEncryptionNeeded) {
@@ -142,6 +146,21 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     if (dbEncryption.enable && [dbEncryption.key length] > 0)
         return YES;
     return NO;
+}
+
+- (BOOL) isSQLCipherAvailable {
+    BOOL isSQLCipherAvailable = NO;
+    void *stmt;
+    if ([database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
+        if ([database step:stmt] == SQLITE_ROW) {
+            const unsigned char *ver = [database column_text:stmt i:0];
+            if(ver != NULL) {
+                isSQLCipherAvailable = YES;
+            }
+        }
+        [database finalize:stmt];
+    }
+    return isSQLCipherAvailable;
 }
 
 - (void)openUnencryptedDB {
