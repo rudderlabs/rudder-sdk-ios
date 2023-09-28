@@ -1,13 +1,15 @@
 name: Deploy to Cocoapods
 
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: ['Publish new github release']
+    types: ['completed']
     
 jobs:
   build:
     name: Deploy to Cocoapods
     runs-on: macOS-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout source branch
       uses: actions/checkout@v4

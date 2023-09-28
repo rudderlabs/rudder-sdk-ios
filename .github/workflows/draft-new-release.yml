@@ -74,11 +74,11 @@ jobs:
           git add README.md Sources/Classes/Headers/RSVersion.h sonar-project.properties
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          npx standard-version -a --skip.tag
+          npx standard-version -a
 
       - name: Push new version in release branch & tag
         run: |
-          git push
+          git push --follow-tags
 
       - name: Create pull request into master
         uses: repo-sync/pull-request@v2
