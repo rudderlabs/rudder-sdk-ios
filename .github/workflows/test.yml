@@ -9,6 +9,7 @@ on:
 
 jobs:
   cancel_previous:
+    name: 'Cancel previous Tests & Coverage'
     runs-on: ubuntu-latest
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
