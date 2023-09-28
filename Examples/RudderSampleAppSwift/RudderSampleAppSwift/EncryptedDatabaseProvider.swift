@@ -48,6 +48,10 @@ class EncryptedDatabase: RSDatabase {
     func key(_ pKey: UnsafeRawPointer?, nKey: Int32) -> Int32 {
         return sqlite3_key(db, pKey, nKey)
     }
+    
+    func last_insert_rowid() -> Int32 {
+        return Int32(sqlite3_last_insert_rowid(db))
+    }
 }
 
 class EncryptedDatabaseProvider: RSDatabaseProvider {

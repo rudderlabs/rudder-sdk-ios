@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.20.0...v1.21.0) (2023-09-28)
+
+
+### Features
+
+* improvements of SQLite RETURNING clause ([00e5032](https://github.com/rudderlabs/rudder-sdk-ios/commit/00e5032f68bde1fe171278c979a080a21a8efa12))
+
 ## [1.20.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.19.2...v1.20.0) (2023-09-19)
 
 
