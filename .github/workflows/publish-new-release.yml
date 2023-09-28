@@ -46,7 +46,7 @@ jobs:
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
         run: |
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
-          
+
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
         with:
