@@ -337,7 +337,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             if ([database step:insertStmt] == SQLITE_ROW) {
                 // table created
                 [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
-                rowId = sqlite3_column_int(insertStmt, 0);
+                rowId = [database column_int:insertStmt i:0];
             } else {
                 [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
             }
