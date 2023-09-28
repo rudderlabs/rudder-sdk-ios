@@ -25,6 +25,7 @@ typedef int (*callback)(void * _Nullable, int, char * _Nullable * _Nullable, cha
 - (const unsigned char *)column_text:(void * _Nullable)pStmt i:(int)i;
 
 - (int)key:(const void * _Nullable)pKey nKey:(int)nKey;
+- (int)last_insert_rowid;
 
 @end
 

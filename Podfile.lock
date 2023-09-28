@@ -1,10 +1,10 @@
 PODS:
-  - MetricsReporter (1.1.0):
-    - RSCrashReporter (~> 1.0.0)
-    - RudderKit (~> 1.4.0)
+  - MetricsReporter (1.1.1):
+    - RSCrashReporter (= 1.0.0)
+    - RudderKit (= 1.4.0)
   - RSCrashReporter (1.0.0)
   - Rudder (1.20.0):
-    - MetricsReporter (= 1.1.0)
+    - MetricsReporter (= 1.1.1)
   - RudderKit (1.4.0)
   - SQLCipher (4.5.4):
     - SQLCipher/standard (= 4.5.4)
@@ -31,12 +31,12 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  MetricsReporter: d7f4da199ecceefb2e3a49a0b45b288fbadaca1f
+  MetricsReporter: d4265e0ac833e2c0078bbe044b3f9dbe29f53a48
   RSCrashReporter: 7e26b51ac816e967acb58fa458040946a93a9e65
-  Rudder: 6d1dc8dd6901d503666002ecc9973c2c11d29a89
+  Rudder: d9e8730c891325da05ac4c454db09bc449d3b9ff
   RudderKit: d9d6997696e1642b753d8bdf94e57af643a68f03
   SQLCipher: 905b145f65f349f26da9e60a19901ad24adcd381
 
 PODFILE CHECKSUM: b6937cee06e0633464427ff0d975d40e17419e9f
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.13.0

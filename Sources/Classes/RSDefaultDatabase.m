@@ -48,4 +48,9 @@
     return -1;
 }
 
+- (int)last_insert_rowid {
+    int64_t lastRowId = sqlite3_last_insert_rowid(db);
+    return (int)lastRowId;
+}
+
 @end
