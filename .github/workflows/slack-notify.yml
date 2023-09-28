@@ -1,9 +1,8 @@
 name: Notify Slack Channel
 
 on:
-  workflow_run:
-    workflows: ['Deploy to Cocoapods']
-    types: ['completed']
+  release:
+    types: [created]
 
 jobs:
   deploy-tag:

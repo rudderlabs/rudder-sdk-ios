@@ -1,9 +1,8 @@
 name: Deploy to Cocoapods
 
 on:
-  workflow_run:
-    workflows: ['Publish new github release']
-    types: ['completed']
+  release:
+    types: [created]
     
 jobs:
   build:
