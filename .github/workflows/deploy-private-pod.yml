@@ -13,18 +13,22 @@ jobs:
     runs-on: macOS-latest
     if: (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/'))
     steps:
-      - name: Checkout
+      - name: 'Checkout'
         uses: actions/checkout@v4
         with:
           ref: '${{ github.event.pull_request.head.ref }}'
     
-      - name: Install Cocoapods
+      - name: 'Install Cocoapods'
         run: gem install cocoapods
-
-      - name: Add Private Spec Repo to CocoaPods installation
-        run: |
-          pod repo add Rudder https://${{secrets.PAT_USERNAME}}:${{secrets.PAT}}@github.com/rudderlabs/Specs.git
         
-      - name: Add Podspec to repo
+      - name: 'Convert podspec to podspec.json'
         run: |
-          pod repo push Rudder Rudder.podspec
+          pod ipc spec Rudder.podspec > Rudder.podspec.json
+
+      - name: 'Add Private Spec Repo to CocoaPods installation'
+        run: |
+          pod repo add rudderlabs https://${{secrets.PAT_USERNAME}}:${{secrets.PAT}}@github.com/rudderlabs/Specs.git
+        
+      - name: 'Add Podspec to repo'
+        run: |
+          pod repo push rudderlabs Rudder.podspec.json
