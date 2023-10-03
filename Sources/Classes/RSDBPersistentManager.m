@@ -33,15 +33,18 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 - (instancetype)initWithDBEncryption:(RSDBEncryption * __nullable)dbEncryption {
     self = [super init];
     if (self) {
-        self->lock = [[NSLock alloc] init];
         self->database = [[self getDatabaseProvider:dbEncryption] getDatabase];
+
+        self->lock = [[NSLock alloc] init];
+        [self->lock lock];
         [self createDB:dbEncryption];
+        [self->lock unlock];
     }
     return self;
 }
 
 - (id<RSDatabaseProvider>)getDatabaseProvider:(RSDBEncryption * __nullable)dbEncryption {
-    if (dbEncryption == nil) {
+    if (dbEncryption == nil || !dbEncryption.enable) {
         return [RSDefaultDatabaseProvider new];
     } else {
         return dbEncryption.databaseProvider;
@@ -49,15 +52,16 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 }
 
 - (void)createDB:(RSDBEncryption * __nullable)dbEncryption {
-    [self->lock lock];
     BOOL isEncryptedDBExists = [RSUtils isFileExists:ENCRYPTED_DB_NAME];
     BOOL isUnencryptedDBExists = [RSUtils isFileExists:UNENCRYPTED_DB_NAME];
     BOOL isEncryptionNeeded = [self isEncryptionNeeded:dbEncryption];
+
     if (isEncryptionNeeded && ![self isSQLCipherAvailable]) {
         [RSLogger logError:@"RSDBPersistentManager: createDB: Cannot encrypt the Database as SQLCipher wasn't linked correctly"];
         isEncryptionNeeded = NO;
     }
 
+    // when both encrypted and unencrypted db doesn't exists
     if (!isEncryptedDBExists && !isUnencryptedDBExists) {
         // fresh Install
         if (isEncryptionNeeded) {
@@ -67,79 +71,17 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             // open unencrypted database
             [self openUnencryptedDB];
         }
-    } else if (isEncryptedDBExists) {
-        if (isEncryptionNeeded) {
-            // open encrypted database with key
-            int code = [self openEncryptedDB:dbEncryption.key];
-            if (code == SQLITE_NOTADB) {
-                // when key is wrong
-                // delete encrypted database; then open new encrypted database
-                // all previous events will be deleted
-                [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
-                [self closeDB];
-                [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                [self openEncryptedDB:dbEncryption.key];
-            }
-        } else {
-            if (dbEncryption == nil || dbEncryption.key == nil) {
-                // no key is provided
-                // delete encrypted database; then open unencrypted database
-                // all previous events will be deleted
-                [RSLogger logError:@"RSDBPersistentManager: createDB: No key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
-                [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                [self openUnencryptedDB];
-            } else {
-                int code = [self openEncryptedDB:dbEncryption.key];
-                switch (code) {
-                        // when key is correct
-                        // decyprt database; then open unencrypted database
-                    case SQLITE_OK: {
-                        code = [self decryptDB:dbEncryption.key];
-                        if (code == SQLITE_OK) {
-                            [self closeDB];
-                            [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                            [self openUnencryptedDB];
-                        } else {
-                            // we are missing a case here
-                            // what if the key is correct and you were able to open the database but you were unable to decrypt it, then what database are we creating
-                            [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
-                        }
-                    }
-                        break;
-                        // when key is wrong
-                        // delete encrypted database; then open unencrypted database
-                        // all previous events will be deleted
-                    case SQLITE_NOTADB: {
-                        [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
-                        [self closeDB];
-                        [RSUtils removeFile:ENCRYPTED_DB_NAME];
-                        [self openUnencryptedDB];
-                    }
-                        break;
-                    default:
-                        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
-                        break;
-                }
-            }
-        }
-    } else {
-        if (isEncryptionNeeded) {
-            // encyprt database; then open encrypted database
-            [self openUnencryptedDB];
-            int code = [self encryptDB:dbEncryption.key];
-            if (code == SQLITE_OK) {
-                [self closeDB];
-                [RSUtils removeFile:UNENCRYPTED_DB_NAME];
-                [self openEncryptedDB:dbEncryption.key];
-            } else {
-                [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt, error code: %d", code]];
-            }
-        } else {
-            // open unencrypted database
-            [self openUnencryptedDB];
-        }
+        return;
     }
-    [self->lock unlock];
+
+    // when only encrypted db exists
+    if (isEncryptedDBExists) {
+        [self handleWhenEncryptedDBExists:dbEncryption isEncryptionNeeded:isEncryptionNeeded];
+        return;
+    }
+    
+    // when only unencrypted db exists
+    [self handleWhenUnencryptedDBExists:dbEncryption isEncryptionNeeded:isEncryptionNeeded];
 }
 
 - (BOOL)isEncryptionNeeded:(RSDBEncryption * __nullable)dbEncryption {
@@ -152,18 +94,24 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 
 - (BOOL) isSQLCipherAvailable {
     BOOL isSQLCipherAvailable = NO;
-    void *stmt = nil;
-    if ([database open_v2:[[self getEncryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL] == SQLITE_OK && [database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
-        if ([database step:stmt] == SQLITE_ROW) {
-            const unsigned char *ver = [database column_text:stmt i:0];
-            if(ver != NULL) {
-                isSQLCipherAvailable = YES;
+    @try {
+        void *stmt = nil;
+        if ([database open_v2:[[self getEncryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL] == SQLITE_OK && [database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
+            if ([database step:stmt] == SQLITE_ROW) {
+                const unsigned char *ver = [database column_text:stmt i:0];
+                if(ver != NULL) {
+                    isSQLCipherAvailable = YES;
+                }
             }
+            [database finalize:stmt];
         }
-        [database finalize:stmt];
+        [self closeDB];
+        [RSUtils removeFile:ENCRYPTED_DB_NAME];
     }
-    [self closeDB];
-    [RSUtils removeFile:ENCRYPTED_DB_NAME];
+    @catch (NSException *exception) {
+        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: isSQLCipherAvailable: Failed to check if SQLCipher is available, reason: %@", exception.reason]];
+        [RSUtils removeFile:ENCRYPTED_DB_NAME];
+    }
     return isSQLCipherAvailable;
 }
 
@@ -191,6 +139,105 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     }
     return executeCode;
 }
+
+- (void)handleWhenEncryptedDBExists:(RSDBEncryption * _Nullable)dbEncryption isEncryptionNeeded:(BOOL)isEncryptionNeeded {
+    if (isEncryptionNeeded) {
+        // open encrypted database with key
+        int code = [self openEncryptedDB:dbEncryption.key];
+        if (code == SQLITE_NOTADB) {
+            // when key is wrong
+            // delete encrypted database; then open new encrypted database
+            // all previous events will be deleted
+            [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting previous encrypted DB and creating a new encrypted DB"];
+            [self closeDB];
+            [RSUtils removeFile:ENCRYPTED_DB_NAME];
+            [self openEncryptedDB:dbEncryption.key];
+        }
+        return;
+    }
+    
+    // when encryption is disabled and no key is provided
+    // delete encrypted database; then open unencrypted database
+    // all previous events will be deleted
+    if (dbEncryption == nil || dbEncryption.key == nil) {
+        [RSLogger logError:@"RSDBPersistentManager: createDB: No key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+        [RSUtils removeFile:ENCRYPTED_DB_NAME];
+        [self openUnencryptedDB];
+        return;
+    }
+    
+    // when encryption is disabled and a key is provided
+    int code = [self openEncryptedDB:dbEncryption.key];
+    switch (code) {
+            // when key is correct
+            // decyprt database; then open unencrypted database
+        case SQLITE_OK: {
+            code = [self decryptDB:dbEncryption.key];
+            if (code == SQLITE_OK) {
+                [self deleteEncryptedAndOpenUnEncryptedDB];
+            } else {
+                // when decryption of encrypted database failed
+                // delete encrypted database; then open unencrypted database
+                // all previous events will be deleted
+                [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt the existing encrypted db, creating a new unencrypted db, error code: %d", code]];
+                [self deleteEncryptedAndOpenUnEncryptedDB];
+            }
+        }
+            break;
+            
+            // when key is wrong
+            // delete encrypted database; then open unencrypted database
+            // all previous events will be deleted
+        case SQLITE_NOTADB: {
+            [RSLogger logError:@"RSDBPersistentManager: createDB: Wrong key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
+            [self deleteEncryptedAndOpenUnEncryptedDB];
+        }
+            break;
+            
+        default:
+            // when failed to open encrypted database due to any reason
+            // delete encrypted database; then open unencrypted database
+            // all previous events will be deleted
+            [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to open the existing encrypted DB, creating a new unencrypted db, error code: %d", code]];
+            [self deleteEncryptedAndOpenUnEncryptedDB];
+            break;
+    }
+    
+}
+
+- (void)handleWhenUnencryptedDBExists:(RSDBEncryption * _Nullable)dbEncryption isEncryptionNeeded:(BOOL)isEncryptionNeeded {
+    if (isEncryptionNeeded) {
+        // encrypt database; then open encrypted database
+        [self openUnencryptedDB];
+        int code = [self encryptDB:dbEncryption.key];
+        if (code == SQLITE_OK) {
+            [self deleteUnEncryptedAndOpenEncryptedDB:dbEncryption];
+        } else {
+            // when encryption failed
+            // delete unencrypted database; then create new encrypted database
+            // all previous events will be deleted
+            [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt the existing unecnrypted db, creating a new encrypted db, error code: %d", code]];
+            // desu [self deleteUnEncryptedAndOpenEncryptedDB:dbEncryption];
+        }
+    } else {
+        // open unencrypted database
+        [self openUnencryptedDB];
+    }
+}
+
+
+- (void)deleteEncryptedAndOpenUnEncryptedDB {
+    [self closeDB];
+    [RSUtils removeFile:ENCRYPTED_DB_NAME];
+    [self openUnencryptedDB];
+}
+
+- (void)deleteUnEncryptedAndOpenEncryptedDB:(RSDBEncryption * _Nullable)dbEncryption {
+    [self closeDB];
+    [RSUtils removeFile:UNENCRYPTED_DB_NAME];
+    [self openEncryptedDB:dbEncryption.key];
+}
+
 
 - (int)encryptDB:(NSString *)key {
     const char* attachDBSQL = [[NSString stringWithFormat:@"ATTACH DATABASE '%@' AS rl_persistence_encrypted KEY '%@';", [self getEncryptedDBPath], key] UTF8String];
