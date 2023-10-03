@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -396,13 +396,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
 				INFOPLIST_FILE = "$(SRCROOT)/RudderSampleAppSwift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.swift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RudderSampleAppSwift/RudderSampleAppSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -417,13 +417,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GTGKNDBD23;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
 				INFOPLIST_FILE = "$(SRCROOT)/RudderSampleAppSwift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.test.swift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.ios.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RudderSampleAppSwift/RudderSampleAppSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

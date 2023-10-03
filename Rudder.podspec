@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.homepage         = "https://github.com/rudderlabs/rudder-sdk-ios"
   s.license          = { :type => "Apache", :file => "LICENSE" }
-  s.author           = { "RudderStack" => "arnab@rudderlabs.com" }
+  s.author           = { "RudderStack" => "sdk@rudderstack.com" }
   s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :tag => "v#{s.version}" }
 
   s.ios.deployment_target = '12.0'
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   
   s.source_files = 'Sources/**/*.{h,m}'
   
-  s.dependency 'MetricsReporter', '1.1.0'
+  s.dependency 'MetricsReporter', '1.1.1'
 end

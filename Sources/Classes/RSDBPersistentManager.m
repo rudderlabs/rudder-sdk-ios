@@ -28,6 +28,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 @implementation RSDBPersistentManager {
     NSLock* lock;
     id<RSDatabase> database;
+    BOOL isReturnClauseSupported;
 }
 
 - (instancetype)initWithDBEncryption:(RSDBEncryption * __nullable)dbEncryption {
@@ -39,6 +40,13 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
         [self->lock lock];
         [self createDB:dbEncryption];
         [self->lock unlock];
+
+        isReturnClauseSupported = [self doesReturnClauseExists];
+        if(isReturnClauseSupported) {
+            [RSLogger logVerbose:@"RSDBPersistentManager: init: SQLiteVersion is >=3.35.0, hence return clause can be used"];
+        } else {
+            [RSLogger logVerbose:@"RSDBPersistentManager: init: SQLiteVersion is <3.35.0, hence return clause cannot be used"];
+        }
     }
     return self;
 }
@@ -383,8 +391,12 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
 }
 
 - (NSNumber*)saveEvent:(NSString *)message {
-    NSString *insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld) RETURNING %@;", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong], COL_ID];
-    
+    NSString *insertSQLString;
+    if(isReturnClauseSupported) {
+        insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld) RETURNING %@;", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong], COL_ID];
+    } else {
+        insertSQLString = [[NSString alloc] initWithFormat:@"INSERT INTO %@ (%@, %@) VALUES ('%@', %ld);", TABLE_EVENTS, COL_MESSAGE, COL_UPDATED, [message stringByReplacingOccurrencesOfString:@"'" withString:@"''"], [RSUtils getTimeStampLong]];
+    }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: saveEventSQL: %@", insertSQLString]];
     
     const char* insertSQL = [insertSQLString UTF8String];
@@ -392,14 +404,21 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     void *insertStmt = nil;
     [self->lock lock];
     if ([database prepare_v2:insertSQL nBytes:-1 ppStmt:&insertStmt pzTail:NULL] == SQLITE_OK) {
-        if ([database step:insertStmt] == SQLITE_ROW) {
-            // table created
-            [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
-            rowId = [database column_int:insertStmt i:0];
+        if(isReturnClauseSupported) {
+            if ([database step:insertStmt] == SQLITE_ROW) {
+                // table created
+                [RSLogger logDebug:@"RSDBPersistentManager: saveEvent: Successfully inserted event to table"];
+                rowId = [database column_int:insertStmt i:0];
+            } else {
+                [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
+            }
+            [database finalize:insertStmt];
         } else {
-            [RSLogger logError:@"RSDBPersistentManager: saveEvent: Failed to insert the event"];
+            if([database step:insertStmt] == SQLITE_DONE) {
+                [database finalize:insertStmt];
+                rowId = [database last_insert_rowid];
+            }
         }
-        [database finalize:insertStmt];
     } else {
         [RSLogger logError:@"RSDBPersistentManager: saveEvent: SQLite Command Preparation Failed"];
     }
