@@ -79,17 +79,13 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             // open unencrypted database
             [self openUnencryptedDB];
         }
-        return;
-    }
-
+    } else if (isEncryptedDBExists) {
     // when only encrypted db exists
-    if (isEncryptedDBExists) {
         [self handleWhenEncryptedDBExists:dbEncryption isEncryptionNeeded:isEncryptionNeeded];
-        return;
+    } else {
+        // when only unencrypted db exists
+        [self handleWhenUnencryptedDBExists:dbEncryption isEncryptionNeeded:isEncryptionNeeded];
     }
-    
-    // when only unencrypted db exists
-    [self handleWhenUnencryptedDBExists:dbEncryption isEncryptionNeeded:isEncryptionNeeded];
 }
 
 - (BOOL)isEncryptionNeeded:(RSDBEncryption * __nullable)dbEncryption {
