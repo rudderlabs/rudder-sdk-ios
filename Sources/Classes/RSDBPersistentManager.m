@@ -51,6 +51,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     if (dbEncryption == nil) {
         return [RSDefaultDatabaseProvider new];
     } else {
+        [RSMetricsReporter report:SDKMETRICS_DB_ENCRYPT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_CREATED} andValue:1];
         return dbEncryption.databaseProvider;
     }
 }
@@ -102,6 +103,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                             [self closeDB];
                             [RSUtils removeFile:ENCRYPTED_DB_NAME];
                             [self openUnencryptedDB];
+                            [RSMetricsReporter report:SDKMETRICS_DB_ENCRYPT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MIGRATE_TO_DECRYPT} andValue:1];
                         } else {
                             [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to decrypt, error code: %d", code]];
                         }
@@ -132,6 +134,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
                 [self closeDB];
                 [RSUtils removeFile:UNENCRYPTED_DB_NAME];
                 [self openEncryptedDB:dbEncryption.key];
+                [RSMetricsReporter report:SDKMETRICS_DB_ENCRYPT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MIGRATE_TO_ENCRYPT} andValue:1];
             } else {
                 [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt, error code: %d", code]];
             }
