@@ -111,12 +111,11 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
             [database finalize:stmt];
         }
         [self closeDB];
-        [RSUtils removeFile:SQLCIPHER_TEST_DB_NAME];
     }
     @catch (NSException *exception) {
-        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: isSQLCipherAvailable: Failed to check if SQLCipher is available, reason: %@", exception.reason]];
-        [RSUtils removeFile:SQLCIPHER_TEST_DB_NAME];
+        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: isSQLCipherAvailable: Failed to check if SQLCipher is available, reason: %@", exception.reason]];   
     }
+    [RSUtils removeFile:SQLCIPHER_TEST_DB_NAME];
     return isSQLCipherAvailable;
 }
 
@@ -222,7 +221,7 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
             // delete unencrypted database; then create new encrypted database
             // all previous events will be deleted
             [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: createDB: Failed to encrypt the existing unecnrypted db, creating a new encrypted db, error code: %d", code]];
-            // desu [self deleteUnEncryptedAndOpenEncryptedDB:dbEncryption];
+            [self deleteUnEncryptedAndOpenEncryptedDB:dbEncryption];
         }
     } else {
         // open unencrypted database
