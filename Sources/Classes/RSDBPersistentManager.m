@@ -24,6 +24,7 @@ NSString* _Nonnull const COL_STATUS = @"status";
 NSString* _Nonnull const COL_DM_PROCESSED = @"dm_processed";
 NSString* _Nonnull const ENCRYPTED_DB_NAME = @"rl_persistence_encrypted.sqlite";
 NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
+NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite";
 
 @implementation RSDBPersistentManager {
     NSLock* lock;
@@ -100,7 +101,7 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     BOOL isSQLCipherAvailable = NO;
     @try {
         void *stmt = nil;
-        if ([database open_v2:[[self getEncryptedDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL] == SQLITE_OK && [database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
+        if ([database open_v2:[[self getSQLCipherTestDBPath] UTF8String] flags:SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX zVfs:NULL] == SQLITE_OK && [database prepare_v2:"PRAGMA cipher_version;" nBytes:-1 ppStmt:&stmt pzTail:NULL] == SQLITE_OK) {
             if ([database step:stmt] == SQLITE_ROW) {
                 const unsigned char *ver = [database column_text:stmt i:0];
                 if(ver != NULL) {
@@ -110,11 +111,11 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
             [database finalize:stmt];
         }
         [self closeDB];
-        [RSUtils removeFile:ENCRYPTED_DB_NAME];
+        [RSUtils removeFile:SQLCIPHER_TEST_DB_NAME];
     }
     @catch (NSException *exception) {
         [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: isSQLCipherAvailable: Failed to check if SQLCipher is available, reason: %@", exception.reason]];
-        [RSUtils removeFile:ENCRYPTED_DB_NAME];
+        [RSUtils removeFile:SQLCIPHER_TEST_DB_NAME];
     }
     return isSQLCipherAvailable;
 }
@@ -283,6 +284,10 @@ NSString* _Nonnull const UNENCRYPTED_DB_NAME = @"rl_persistence.sqlite";
     [RSLogger logDebug:[NSString stringWithFormat:@"RSDBPersistentManager: decryptDB: DETACH DATABASE execution code: %d", code]];
     
     return code;
+}
+
+- (NSString *)getSQLCipherTestDBPath {
+    return [RSUtils getFilePath:SQLCIPHER_TEST_DB_NAME];
 }
 
 - (NSString *)getEncryptedDBPath {
