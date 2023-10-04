@@ -92,9 +92,15 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
 - (BOOL)isEncryptionNeeded:(RSDBEncryption * __nullable)dbEncryption {
     if (dbEncryption == nil)
         return NO;
-    if (dbEncryption.enable && [dbEncryption.key length] > 0)
+    if (dbEncryption.enable && [self doesEncryptionKeyExists:dbEncryption])
         return YES;
     return NO;
+}
+
+- (BOOL)doesEncryptionKeyExists:(RSDBEncryption * __nullable)dbEncryption {
+    if (dbEncryption == nil || dbEncryption.key == nil || [dbEncryption.key length] == 0)
+        return NO;
+    return YES;
 }
 
 - (BOOL) isSQLCipherAvailable {
@@ -160,17 +166,17 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
         return;
     }
     
-    // when encryption is disabled and no key is provided
+    // when encryption is not needed and no key is provided
     // delete encrypted database; then open unencrypted database
     // all previous events will be deleted
-    if (dbEncryption == nil || dbEncryption.key == nil) {
+    if (![self doesEncryptionKeyExists:dbEncryption]) {
         [RSLogger logError:@"RSDBPersistentManager: createDB: No key is provided. Deleting encrypted DB and creating a new unencrypted DB"];
         [RSUtils removeFile:ENCRYPTED_DB_NAME];
         [self openUnencryptedDB];
         return;
     }
     
-    // when encryption is disabled and a key is provided
+    // when encryption is not needed and a key is provided
     int code = [self openEncryptedDB:dbEncryption.key];
     switch (code) {
             // when key is correct
