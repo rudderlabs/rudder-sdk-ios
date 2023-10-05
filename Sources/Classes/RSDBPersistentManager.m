@@ -53,7 +53,7 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
 }
 
 - (id<RSDatabaseProvider>)getDatabaseProvider:(RSDBEncryption * __nullable)dbEncryption {
-    if (dbEncryption == nil || !dbEncryption.enable) {
+    if (dbEncryption == nil) {
         return [RSDefaultDatabaseProvider new];
     } else {
         return dbEncryption.databaseProvider;
