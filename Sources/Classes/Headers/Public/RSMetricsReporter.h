@@ -32,6 +32,11 @@ extern NSString *const SDKMETRICS_SC_ATTEMPT_ABORT;
 extern NSString *const SDKMETRICS_CM_ATTEMPT_SUCCESS;
 extern NSString *const SDKMETRICS_CM_ATTEMPT_RETRY;
 extern NSString *const SDKMETRICS_CM_ATTEMPT_ABORT;
+extern NSString *const SDKMETRICS_DMT_SUBMITTED;
+extern NSString *const SDKMETRICS_DMT_SUCCESS;
+extern NSString *const SDKMETRICS_DMT_DISCARD;
+extern NSString *const SDKMETRICS_DMT_RETRY;
+extern NSString *const SDKMETRICS_DB_ENCRYPT;
 
 extern NSString *const SDKMETRICS_TYPE;
 extern NSString *const SDKMETRICS_OPT_OUT;
@@ -50,6 +55,12 @@ extern NSString *const SDKMETRICS_SOURCE_DISABLED;
 extern NSString *const SDKMETRICS_WRITEKEY_INVALID;
 extern NSString *const SDKMETRICS_INTEGRATION;
 extern NSString *const SDKMETRICS_REQUEST_TIMEOUT;
+extern NSString *const SDKMETRICS_CREATED;
+extern NSString *const SDKMETRICS_MIGRATE_TO_ENCRYPT;
+extern NSString *const SDKMETRICS_MIGRATE_TO_DECRYPT;
+extern NSString *const SDKMETRICS_RESOURCE_NOT_FOUND;
+extern NSString *const SDKMETRICS_BAD_REQUEST;
+extern NSString *const SDKMETRICS_MAX_RETRIES_EXHAUSTED;
 
 @end
 
