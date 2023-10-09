@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '7.0'
   
   s.swift_versions = ['5.0']
-  
+  s.static_framework = true
   s.frameworks = 'Foundation'
   
   s.source_files = 'Sources/**/*.{h,m}'
