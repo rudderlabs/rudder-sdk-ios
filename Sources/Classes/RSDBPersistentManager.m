@@ -56,6 +56,7 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
     if (dbEncryption == nil) {
         return [RSDefaultDatabaseProvider new];
     } else {
+        [RSMetricsReporter report:SDKMETRICS_DB_ENCRYPT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_CREATED} andValue:1];
         return dbEncryption.databaseProvider;
     }
 }

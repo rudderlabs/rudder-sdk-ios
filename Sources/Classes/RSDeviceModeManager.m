@@ -252,6 +252,7 @@
             }
             RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
             [self dumpEvent:transformedMessage toDestinations:@[destinationName] withLogTag:@"dumpTransformedEvents"];
+            [RSMetricsReporter report: SDKMETRICS_DMT_SUCCESS forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: transformedMessage.type} andValue:1];
             continue;
         }
         NSNumber* orderNo = [NSNumber numberWithInt:[transformedPayload[@"orderNo"] intValue]];
