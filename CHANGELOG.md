@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.22.0...v1.23.0) (2023-10-09)
+
+
+### Features
+
+* metrics for DMT and DBEncryption ([#404](https://github.com/rudderlabs/rudder-sdk-ios/issues/404)) ([e863f72](https://github.com/rudderlabs/rudder-sdk-ios/commit/e863f72f9f53e4600d1de074bbb9591c2337153a))
+
+
+### Bug Fixes
+
+* fixed issues related to DBEncryption in RSDBPersistentManager and enhanced error handling ([#403](https://github.com/rudderlabs/rudder-sdk-ios/issues/403)) ([2e9c2cf](https://github.com/rudderlabs/rudder-sdk-ios/commit/2e9c2cf0bbac631bfa960adc778c044b3368d709))
+
 ## [1.22.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.20.0...v1.22.0) (2023-09-28)
 
 
