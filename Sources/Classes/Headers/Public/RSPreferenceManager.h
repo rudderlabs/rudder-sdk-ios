@@ -73,7 +73,7 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (NSNumber * __nullable) getSessionId;
 - (void) clearSessionId;
 
-- (void) saveLastActiveTimestamp: (NSNumber *) lastEventTimeStamp;
+- (void) saveLastActiveTimestamp: (NSNumber *) lastActiveTimestamp;
 - (NSNumber * __nullable) getLastActiveTimestamp;
 - (void) clearLastActiveTimestamp;
 

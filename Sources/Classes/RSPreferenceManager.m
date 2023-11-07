@@ -238,8 +238,8 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void) saveLastActiveTimestamp:(NSNumber *) lastEventTimeStamp {
-    [[NSUserDefaults standardUserDefaults] setValue:lastEventTimeStamp forKey:RSLastActiveTimestamp];
+- (void) saveLastActiveTimestamp:(NSNumber *) lastActiveTimestamp {
+    [[NSUserDefaults standardUserDefaults] setValue:lastActiveTimestamp forKey:RSLastActiveTimestamp];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
