@@ -28,7 +28,7 @@ NSString *const RSOptStatus = @"rl_opt_status";
 NSString *const RSOptInTimeKey = @"rl_opt_in_time";
 NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 NSString *const RSSessionIdKey = @"rl_session_id";
-NSString *const RSLastEventTimeStamp = @"rl_last_event_time_stamp";
+NSString *const RSLastActiveTimestamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
@@ -238,21 +238,21 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void) saveLastEventTimeStamp:(NSNumber *) lastEventTimeStamp {
-    [[NSUserDefaults standardUserDefaults] setValue:lastEventTimeStamp forKey:RSLastEventTimeStamp];
+- (void) saveLastActiveTimestamp:(NSNumber *) lastEventTimeStamp {
+    [[NSUserDefaults standardUserDefaults] setValue:lastEventTimeStamp forKey:RSLastActiveTimestamp];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSNumber * __nullable) getLastEventTimeStamp {
-    NSNumber *lastEventTimeStamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSLastEventTimeStamp];
-    if(lastEventTimeStamp == nil) {
+- (NSNumber * __nullable) getLastActiveTimestamp {
+    NSNumber *lastActiveTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSLastActiveTimestamp];
+    if(lastActiveTimestamp == nil) {
         return nil;
     }
-    return lastEventTimeStamp;
+    return lastActiveTimestamp;
 }
 
-- (void) clearLastEventTimeStamp {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSLastEventTimeStamp];
+- (void) clearLastActiveTimestamp {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSLastActiveTimestamp];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

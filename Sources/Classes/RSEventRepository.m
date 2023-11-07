@@ -273,7 +273,7 @@ static RSEventRepository* _instance;
         [message setSessionData: _userSession];
     }
     if(rudderConfig.trackLifecycleEvents && rudderConfig.automaticSessionTracking) {
-        [_userSession updateLastEventTimeStamp];
+        [_userSession updateLastActiveTimestamp];
     }
 }
 
