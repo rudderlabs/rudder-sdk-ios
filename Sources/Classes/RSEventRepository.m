@@ -281,6 +281,9 @@ static RSEventRepository* _instance;
     if([self->userSession getSessionId] != nil) {
         [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
+        if(self->config.trackLifecycleEvents && self->config.automaticSessionTracking) {
+            [self->userSession updateLastActiveTimestamp];
+        }
     }
     
     [RSLogger logDebug: @"EventRepository: reset: clearing the CTS Auth token as the reset is triggered"];
