@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
     long sessionInActivityTimeOut;
     NSNumber *sessionId;
     BOOL sessionStart;
-    NSNumber *lastEventTimeStamp;
+    NSNumber *lastActiveTimestamp;
     RSPreferenceManager* preferenceManager;
 }
 
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startSessionIfExpired;
 - (void)refreshSession;
 - (void)clearSession;
-- (void)updateLastEventTimeStamp;
+- (void)updateLastActiveTimestamp;
 - (NSNumber * __nullable)getSessionId;
 - (BOOL)getSessionStart;
 
