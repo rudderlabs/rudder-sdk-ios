@@ -36,7 +36,6 @@ static int screenCount = 1;
             [builder withRecordScreenViews:YES];
             [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
             [builder withControlPlaneUrl:rudderConfig.DEV_CONTROL_PLANE_URL];
-            [builder withSleepTimeOut:3000];
             [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:NO databaseProvider:[EncryptedDatabaseProvider new]]];
             [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
         }

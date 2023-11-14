@@ -33,7 +33,7 @@ static dispatch_queue_t queue;
         self->sessionInActivityTimeOut = sessionInActivityTimeOut;
         self->preferenceManager = preferenceManager;
         self->sessionId = [self->preferenceManager getSessionId];
-        self->lastEventTimeStamp = [self->preferenceManager getLastEventTimeStamp];
+        self->lastActiveTimestamp = [self->preferenceManager getLastActiveTimestamp];
     }
     return self;
 }
@@ -61,11 +61,11 @@ static dispatch_queue_t queue;
 }
 
 - (BOOL) isSessionExpired {
-    if(self->lastEventTimeStamp == nil)
+    if(self->lastActiveTimestamp == nil)
         return YES;
     __block NSTimeInterval timeDifference;
     dispatch_sync(queue, ^{
-        timeDifference = labs([RSUtils getTimeStampLong] - [self->lastEventTimeStamp longValue]);
+        timeDifference = labs([RSUtils getTimeStampLong] - [self->lastActiveTimestamp longValue]);
     });
     if (timeDifference > (self->sessionInActivityTimeOut / 1000)) {
         return YES;
@@ -83,9 +83,9 @@ static dispatch_queue_t queue;
     dispatch_sync(queue, ^{
         self->sessionId = nil;
         self->sessionStart = NO;
-        self->lastEventTimeStamp = nil;
+        self->lastActiveTimestamp = nil;
         [self->preferenceManager clearSessionId];
-        [self->preferenceManager clearLastEventTimeStamp];
+        [self->preferenceManager clearLastActiveTimestamp];
     });
 }
 
@@ -113,10 +113,10 @@ static dispatch_queue_t queue;
     });
 }
 
-- (void) updateLastEventTimeStamp {
+- (void) updateLastActiveTimestamp {
     dispatch_sync(queue, ^{
-        self->lastEventTimeStamp = [[NSNumber alloc] initWithLong:[RSUtils getTimeStampLong]];
-        [self->preferenceManager saveLastEventTimeStamp:lastEventTimeStamp];
+        self->lastActiveTimestamp = [[NSNumber alloc] initWithLong:[RSUtils getTimeStampLong]];
+        [self->preferenceManager saveLastActiveTimestamp:lastActiveTimestamp];
     });
 }
 @end
