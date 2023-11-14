@@ -74,6 +74,10 @@
     }
 }
 
++ (BOOL) isAppExtension {
+    return [[NSBundle mainBundle].bundlePath hasSuffix:@".appex"];
+}
+
 + (unsigned int) getUTF8LengthForDict:(NSDictionary *)message {
     NSString* msgString = [self getStringFromDict:message];
     if(msgString == nil)

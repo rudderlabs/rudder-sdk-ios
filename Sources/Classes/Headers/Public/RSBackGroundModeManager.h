@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RSConfig.h"
 #import "RSLogger.h"
+#import "RSUtils.h"
 
 @interface RSBackGroundModeManager : NSObject {
     RSConfig* config;

@@ -39,20 +39,35 @@
  Methods useful for registering for Background Run Time after the app has been backgrounded for the platforms iOS, tvOS
  */
 - (void) registerBackGroundTask {
-    if(backgroundTask != UIBackgroundTaskInvalid) {
-        [self endBackGroundTask];
+    if (![RSUtils isAppExtension]) {
+        static Class applicationClass = nil;
+        Class cls = NSClassFromString(@"UIApplication");
+        if (cls && [cls respondsToSelector:NSSelectorFromString(@"sharedApplication")]) {
+            applicationClass = cls;
+        }
+        
+        if(backgroundTask != UIBackgroundTaskInvalid) {
+            [self endBackGroundTask];
+        }
+        [RSLogger logDebug:@"RSBackGroundModeManager: registerBackGroundTask: Registering for Background Mode"];
+        __weak RSBackGroundModeManager *weakSelf = self;
+        backgroundTask = [[applicationClass sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            RSBackGroundModeManager *strongSelf = weakSelf;
+            [strongSelf endBackGroundTask];
+        }];
     }
-    [RSLogger logDebug:@"RSBackGroundModeManager: registerBackGroundTask: Registering for Background Mode"];
-    __weak RSBackGroundModeManager *weakSelf = self;
-    backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        RSBackGroundModeManager *strongSelf = weakSelf;
-        [strongSelf endBackGroundTask];
-    }];
 }
 
 - (void) endBackGroundTask {
-    [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
-    backgroundTask = UIBackgroundTaskInvalid;
+    if (![RSUtils isAppExtension]) {
+        static Class applicationClass = nil;
+        Class cls = NSClassFromString(@"UIApplication");
+        if (cls && [cls respondsToSelector:NSSelectorFromString(@"sharedApplication")]) {
+            applicationClass = cls;
+        }
+        [[applicationClass sharedApplication] endBackgroundTask:backgroundTask];
+        backgroundTask = UIBackgroundTaskInvalid;
+    }
 }
 
 #else

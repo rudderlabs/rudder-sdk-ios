@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) appendSlashToUrl:(NSString*) url;
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
 + (BOOL) isApplicationUpdated;
++ (BOOL) isAppExtension;
 + (NSString* _Nullable) getDeviceId;
 + (BOOL)isFileExists:(NSString *)fileName;
 + (BOOL)removeFile:(NSString *)fileName;

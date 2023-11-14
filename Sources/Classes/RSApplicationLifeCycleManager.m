@@ -35,7 +35,7 @@
                               UIApplicationWillTerminateNotification,
                               UIApplicationWillResignActiveNotification,
                               UIApplicationDidBecomeActiveNotification ]) {
-        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:UIApplication.sharedApplication];
+        [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:nil];
     }
 }
 
