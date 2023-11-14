@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.23.0...v1.23.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* update lastActiveTimestamp value when reset call is made ([#412](https://github.com/rudderlabs/rudder-sdk-ios/issues/412)) ([6f229ad](https://github.com/rudderlabs/rudder-sdk-ios/commit/6f229adb89c9a2f347c99cbc99324f07d241d2ae))
+
 ## [1.23.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.22.0...v1.23.0) (2023-10-09)
 
 
