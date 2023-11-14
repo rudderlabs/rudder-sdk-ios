@@ -1,0 +1,648 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		685FE5CA1DF8946B51E7AE8F /* Pods_RudderSampleAppExtensioniOSSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95A86153B02628D9B72733B0 /* Pods_RudderSampleAppExtensioniOSSwift.framework */; };
+		72ED7437C19D0B22685F3647 /* Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516F4ABFE47CDD343C1502B8 /* Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework */; };
+		F6DE107E2B03D18700F3104E /* RudderSampleAppExtensioniOSSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DE107D2B03D18700F3104E /* RudderSampleAppExtensioniOSSwiftApp.swift */; };
+		F6DE10802B03D18700F3104E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DE107F2B03D18700F3104E /* ContentView.swift */; };
+		F6DE10822B03D18800F3104E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6DE10812B03D18800F3104E /* Assets.xcassets */; };
+		F6DE10852B03D18800F3104E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6DE10842B03D18800F3104E /* Preview Assets.xcassets */; };
+		F6DE10922B03D3E800F3104E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DE10912B03D3E800F3104E /* ShareViewController.swift */; };
+		F6DE10952B03D3E800F3104E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6DE10932B03D3E800F3104E /* MainInterface.storyboard */; };
+		F6DE10992B03D3E800F3104E /* SampleShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F6DE108F2B03D3E800F3104E /* SampleShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F6DE10A02B03DA7E00F3104E /* GetURL.js in Resources */ = {isa = PBXBuildFile; fileRef = F6DE109F2B03DA7E00F3104E /* GetURL.js */; };
+		F6DE10A22B03DD6700F3104E /* ShareSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DE10A12B03DD6700F3104E /* ShareSelectViewController.swift */; };
+		F6DE10A62B04115100F3104E /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6DE10A52B04115100F3104E /* SampleRudderConfig.plist */; };
+		F6DE10A82B04116300F3104E /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DE10A72B04116300F3104E /* RudderConfig.swift */; };
+		F6DE10AA2B04119600F3104E /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6DE10A92B04119600F3104E /* RudderConfig.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F6DE10972B03D3E800F3104E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6DE10722B03D18700F3104E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6DE108E2B03D3E800F3104E;
+			remoteInfo = SampleShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F6DE109D2B03D3E800F3104E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F6DE10992B03D3E800F3104E /* SampleShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		09405FC6A103FFBE54FF972B /* Pods-RudderSampleAppExtensioniOSSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppExtensioniOSSwift.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppExtensioniOSSwift/Pods-RudderSampleAppExtensioniOSSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		516F4ABFE47CDD343C1502B8 /* Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6F203DCA2327CC9D266910 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension/Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		8C1DC738166EFB64D7169ED1 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension/Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		95A86153B02628D9B72733B0 /* Pods_RudderSampleAppExtensioniOSSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppExtensioniOSSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3D69E00601B358DC25278D6 /* Pods-RudderSampleAppExtensioniOSSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppExtensioniOSSwift.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppExtensioniOSSwift/Pods-RudderSampleAppExtensioniOSSwift.release.xcconfig"; sourceTree = "<group>"; };
+		F6DE107A2B03D18700F3104E /* RudderSampleAppExtensioniOSSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RudderSampleAppExtensioniOSSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6DE107D2B03D18700F3104E /* RudderSampleAppExtensioniOSSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RudderSampleAppExtensioniOSSwiftApp.swift; sourceTree = "<group>"; };
+		F6DE107F2B03D18700F3104E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F6DE10812B03D18800F3104E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6DE10842B03D18800F3104E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F6DE108F2B03D3E800F3104E /* SampleShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SampleShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6DE10912B03D3E800F3104E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		F6DE10942B03D3E800F3104E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		F6DE10962B03D3E800F3104E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6DE109F2B03DA7E00F3104E /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
+		F6DE10A12B03DD6700F3104E /* ShareSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSelectViewController.swift; sourceTree = "<group>"; };
+		F6DE10A52B04115100F3104E /* SampleRudderConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
+		F6DE10A72B04116300F3104E /* RudderConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
+		F6DE10A92B04119600F3104E /* RudderConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F6DE10772B03D18700F3104E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				685FE5CA1DF8946B51E7AE8F /* Pods_RudderSampleAppExtensioniOSSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6DE108C2B03D3E800F3104E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72ED7437C19D0B22685F3647 /* Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B3BA98B65057CF6E9D16EC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				95A86153B02628D9B72733B0 /* Pods_RudderSampleAppExtensioniOSSwift.framework */,
+				516F4ABFE47CDD343C1502B8 /* Pods_RudderSampleAppExtensioniOSSwift_SampleShareExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B4B8463B46D04E6D7F106EF0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				09405FC6A103FFBE54FF972B /* Pods-RudderSampleAppExtensioniOSSwift.debug.xcconfig */,
+				A3D69E00601B358DC25278D6 /* Pods-RudderSampleAppExtensioniOSSwift.release.xcconfig */,
+				8C1DC738166EFB64D7169ED1 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.debug.xcconfig */,
+				8A6F203DCA2327CC9D266910 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../../Pods;
+			sourceTree = "<group>";
+		};
+		F6DE10712B03D18700F3104E = {
+			isa = PBXGroup;
+			children = (
+				F6DE107C2B03D18700F3104E /* RudderSampleAppExtensioniOSSwift */,
+				F6DE10902B03D3E800F3104E /* SampleShareExtension */,
+				F6DE107B2B03D18700F3104E /* Products */,
+				B4B8463B46D04E6D7F106EF0 /* Pods */,
+				1B3BA98B65057CF6E9D16EC4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F6DE107B2B03D18700F3104E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F6DE107A2B03D18700F3104E /* RudderSampleAppExtensioniOSSwift.app */,
+				F6DE108F2B03D3E800F3104E /* SampleShareExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F6DE107C2B03D18700F3104E /* RudderSampleAppExtensioniOSSwift */ = {
+			isa = PBXGroup;
+			children = (
+				F6DE107D2B03D18700F3104E /* RudderSampleAppExtensioniOSSwiftApp.swift */,
+				F6DE107F2B03D18700F3104E /* ContentView.swift */,
+				F6DE10812B03D18800F3104E /* Assets.xcassets */,
+				F6DE10832B03D18800F3104E /* Preview Content */,
+			);
+			path = RudderSampleAppExtensioniOSSwift;
+			sourceTree = "<group>";
+		};
+		F6DE10832B03D18800F3104E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F6DE10842B03D18800F3104E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F6DE10902B03D3E800F3104E /* SampleShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				F6DE10A42B04113800F3104E /* RudderConfig */,
+				F6DE10912B03D3E800F3104E /* ShareViewController.swift */,
+				F6DE10932B03D3E800F3104E /* MainInterface.storyboard */,
+				F6DE10962B03D3E800F3104E /* Info.plist */,
+				F6DE109F2B03DA7E00F3104E /* GetURL.js */,
+				F6DE10A12B03DD6700F3104E /* ShareSelectViewController.swift */,
+				F6DE10A92B04119600F3104E /* RudderConfig.plist */,
+			);
+			path = SampleShareExtension;
+			sourceTree = "<group>";
+		};
+		F6DE10A42B04113800F3104E /* RudderConfig */ = {
+			isa = PBXGroup;
+			children = (
+				F6DE10A52B04115100F3104E /* SampleRudderConfig.plist */,
+				F6DE10A72B04116300F3104E /* RudderConfig.swift */,
+			);
+			path = RudderConfig;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F6DE10792B03D18700F3104E /* RudderSampleAppExtensioniOSSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6DE10882B03D18800F3104E /* Build configuration list for PBXNativeTarget "RudderSampleAppExtensioniOSSwift" */;
+			buildPhases = (
+				DBE67A73F70AD8E19B87CABF /* [CP] Check Pods Manifest.lock */,
+				F6DE10762B03D18700F3104E /* Sources */,
+				F6DE10772B03D18700F3104E /* Frameworks */,
+				F6DE10782B03D18700F3104E /* Resources */,
+				F6DE109D2B03D3E800F3104E /* Embed Foundation Extensions */,
+				AFDACC4A419B7D741DDCDC95 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6DE10982B03D3E800F3104E /* PBXTargetDependency */,
+			);
+			name = RudderSampleAppExtensioniOSSwift;
+			productName = RudderSampleAppExtensioniOSSwift;
+			productReference = F6DE107A2B03D18700F3104E /* RudderSampleAppExtensioniOSSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F6DE108E2B03D3E800F3104E /* SampleShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6DE109A2B03D3E800F3104E /* Build configuration list for PBXNativeTarget "SampleShareExtension" */;
+			buildPhases = (
+				8E41285A53F14D357FD4CEEF /* [CP] Check Pods Manifest.lock */,
+				F6DE108B2B03D3E800F3104E /* Sources */,
+				F6DE108C2B03D3E800F3104E /* Frameworks */,
+				F6DE108D2B03D3E800F3104E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SampleShareExtension;
+			productName = SampleShareExtension;
+			productReference = F6DE108F2B03D3E800F3104E /* SampleShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F6DE10722B03D18700F3104E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F6DE10792B03D18700F3104E = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					F6DE108E2B03D3E800F3104E = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+				};
+			};
+			buildConfigurationList = F6DE10752B03D18700F3104E /* Build configuration list for PBXProject "RudderSampleAppExtensioniOSSwift" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F6DE10712B03D18700F3104E;
+			productRefGroup = F6DE107B2B03D18700F3104E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F6DE10792B03D18700F3104E /* RudderSampleAppExtensioniOSSwift */,
+				F6DE108E2B03D3E800F3104E /* SampleShareExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F6DE10782B03D18700F3104E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DE10852B03D18800F3104E /* Preview Assets.xcassets in Resources */,
+				F6DE10822B03D18800F3104E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6DE108D2B03D3E800F3104E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DE10AA2B04119600F3104E /* RudderConfig.plist in Resources */,
+				F6DE10952B03D3E800F3104E /* MainInterface.storyboard in Resources */,
+				F6DE10A02B03DA7E00F3104E /* GetURL.js in Resources */,
+				F6DE10A62B04115100F3104E /* SampleRudderConfig.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E41285A53F14D357FD4CEEF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFDACC4A419B7D741DDCDC95 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppExtensioniOSSwift/Pods-RudderSampleAppExtensioniOSSwift-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppExtensioniOSSwift/Pods-RudderSampleAppExtensioniOSSwift-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderSampleAppExtensioniOSSwift/Pods-RudderSampleAppExtensioniOSSwift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBE67A73F70AD8E19B87CABF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RudderSampleAppExtensioniOSSwift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F6DE10762B03D18700F3104E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DE10802B03D18700F3104E /* ContentView.swift in Sources */,
+				F6DE107E2B03D18700F3104E /* RudderSampleAppExtensioniOSSwiftApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6DE108B2B03D3E800F3104E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DE10A82B04116300F3104E /* RudderConfig.swift in Sources */,
+				F6DE10A22B03DD6700F3104E /* ShareSelectViewController.swift in Sources */,
+				F6DE10922B03D3E800F3104E /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F6DE10982B03D3E800F3104E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6DE108E2B03D3E800F3104E /* SampleShareExtension */;
+			targetProxy = F6DE10972B03D3E800F3104E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F6DE10932B03D3E800F3104E /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6DE10942B03D3E800F3104E /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F6DE10862B03D18800F3104E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F6DE10872B03D18800F3104E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F6DE10892B03D18800F3104E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09405FC6A103FFBE54FF972B /* Pods-RudderSampleAppExtensioniOSSwift.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RudderSampleAppExtensioniOSSwift/Preview Content\"";
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderSampleAppExtensioniOSSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F6DE108A2B03D18800F3104E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3D69E00601B358DC25278D6 /* Pods-RudderSampleAppExtensioniOSSwift.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RudderSampleAppExtensioniOSSwift/Preview Content\"";
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderSampleAppExtensioniOSSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F6DE109B2B03D3E800F3104E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C1DC738166EFB64D7169ED1 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SampleShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderSampleAppExtensioniOSSwift.SampleShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F6DE109C2B03D3E800F3104E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A6F203DCA2327CC9D266910 /* Pods-RudderSampleAppExtensioniOSSwift-SampleShareExtension.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WPX9KRKA8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SampleShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderSampleAppExtensioniOSSwift.SampleShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F6DE10752B03D18700F3104E /* Build configuration list for PBXProject "RudderSampleAppExtensioniOSSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6DE10862B03D18800F3104E /* Debug */,
+				F6DE10872B03D18800F3104E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6DE10882B03D18800F3104E /* Build configuration list for PBXNativeTarget "RudderSampleAppExtensioniOSSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6DE10892B03D18800F3104E /* Debug */,
+				F6DE108A2B03D18800F3104E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6DE109A2B03D3E800F3104E /* Build configuration list for PBXNativeTarget "SampleShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6DE109B2B03D3E800F3104E /* Debug */,
+				F6DE109C2B03D3E800F3104E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F6DE10722B03D18700F3104E /* Project object */;
+}

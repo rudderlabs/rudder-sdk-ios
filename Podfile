@@ -73,3 +73,13 @@ target 'RudderSampleAppwatchOSObjC WatchKit Extension' do
   shared_pods
   shared_utility_pods
 end
+
+target 'RudderSampleAppExtensioniOSSwift' do
+    project 'Examples/RudderSampleAppExtensioniOSSwift/RudderSampleAppExtensioniOSSwift.xcodeproj'
+    platform :ios, '12.0'
+    shared_pods
+    shared_utility_pods
+    target 'SampleShareExtension' do
+        shared_pods
+    end  
+end

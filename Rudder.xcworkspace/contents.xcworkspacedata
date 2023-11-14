@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Examples/RudderSampleAppExtensioniOSSwift/RudderSampleAppExtensioniOSSwift.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Rudder.xcodeproj">
    </FileRef>
    <FileRef
