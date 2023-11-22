@@ -76,8 +76,8 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
         if didFinishLaunching == false {
             didFinishLaunching = true
             
-            let previousVersion = RSUserDefaults.getApplicationVersion()
-            let previousBuild = RSUserDefaults.getApplicationBuild()
+            let previousVersion: String? = userDefaults?.read(application: .version)
+            let previousBuild: String? = userDefaults?.read(application: .build)
                         
             if previousVersion == nil {
                 client?.track("Application Installed", properties: RSUtils.getLifeCycleProperties(
@@ -93,8 +93,12 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
                 ))
             }
             
-            RSUserDefaults.saveApplicationVersion(currentVersion)
-            RSUserDefaults.saveApplicationBuild(currentBuild)
+            userDefaults?.write(application: .version, value: currentVersion)
+            userDefaults?.write(application: .build, value: currentBuild)
+        }
+        
+        if fromBackground {
+            client?.refreshSessionIfNeeded()
         }
         
         client?.track("Application Opened", properties: RSUtils.getLifeCycleProperties(

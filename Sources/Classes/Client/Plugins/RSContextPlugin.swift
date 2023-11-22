@@ -31,6 +31,7 @@ class RSContextPlugin: RSPlatformPlugin {
         insertDynamicPlatformContextData(context: &context)
         insertDynamicOptionData(message: workingMessage, context: &context)
         insertDynamicDeviceInfoData(eventContext: workingMessage.context, context: &context)
+        insertSessionData(message: workingMessage, context: &context)
         if let eventContext = workingMessage.context {
             context.merge(eventContext) { (new, _) in new }
         }
@@ -152,6 +153,15 @@ class RSContextPlugin: RSPlatformPlugin {
             // Fetch `externalIds` set using identify API.
             if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
                 context["externalId"] = externalIds
+            }
+        }
+    }
+    
+    func insertSessionData(message: RSMessage, context: inout [String: Any]) {
+        if let sessionId = message.sessionId {
+            context["sessionId"] = sessionId
+            if let sessionStart = message.sessionStart, sessionStart {
+                context["sessionStart"] = sessionStart
             }
         }
     }

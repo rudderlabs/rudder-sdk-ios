@@ -20,6 +20,11 @@ class RSUserDefaults {
         case optOutTime
         case context
         case externalId
+        case sessionId
+        case lastEventTimeStamp
+        case automaticSessionTrackingStatus
+        case manualSessionTrackingStatus
+        case sessionStoppedStatus
     }
     
     enum ApplicationKeys: String {
@@ -52,6 +57,13 @@ class RSUserDefaults {
             }
         }
         return result
+    }
+    
+    func remove(_ key: RSUserDefaults.Keys) {
+        syncQueue.sync {
+            userDefaults.removeObject(forKey: key.rawValue)
+            userDefaults.synchronize()
+        }
     }
     
     func write(application key: RSUserDefaults.ApplicationKeys, value: String?) {

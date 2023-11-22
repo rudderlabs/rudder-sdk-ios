@@ -19,6 +19,8 @@ public protocol RSMessage {
     var option: RSOption? { get set }
     var channel: String? { get set }
     var dictionaryValue: [String: Any] { get }
+    var sessionId: Int? { get set }
+    var sessionStart: Bool? { get set }
 }
 
 public struct TrackMessage: RSMessage {
@@ -31,6 +33,8 @@ public struct TrackMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
+    public var sessionId: Int?
+    public var sessionStart: Bool?
     
     public let event: String
     public let properties: TrackProperties?
@@ -63,6 +67,8 @@ public struct IdentifyMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
+    public var sessionId: Int?
+    public var sessionStart: Bool?
     
     public var traits: IdentifyTraits?
     
@@ -93,7 +99,9 @@ public struct ScreenMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public let name: String
     public let category: String?
     public let properties: ScreenProperties?
@@ -128,7 +136,9 @@ public struct GroupMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public let groupId: String
     public let traits: GroupTraits?
     
@@ -160,7 +170,9 @@ public struct AliasMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public var previousId: String?
     
     public var dictionaryValue: [String: Any] {

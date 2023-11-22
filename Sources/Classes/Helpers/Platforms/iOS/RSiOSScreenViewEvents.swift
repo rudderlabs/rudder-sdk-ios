@@ -26,6 +26,8 @@ class RSiOSScreenViewEvents: RSPlatformPlugin {
 }
 
 extension UIViewController {
+    static var client: RSClient?
+
     static func rudderSwizzleView() {
         let originalSelector = #selector(viewDidAppear(_:))
         let swizzledSelector = #selector(rsViewDidAppear(_:))
@@ -47,23 +49,6 @@ extension UIViewController {
         let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name]).applyRawEventData(userInfo: UIViewController.client?.userInfo)
         UIViewController.client?.process(message: screenMessage)
         rsViewDidAppear(animated)
-    }
-}
-
-extension UIViewController {
-    private struct AssociatedKey {
-        static var client: RSClient?
-    }
-    
-    static var client: RSClient? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKey.client) as? RSClient
-        }
-        set {
-            if let value = newValue {
-                objc_setAssociatedObject(self, &AssociatedKey.client, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            }
-        }
     }
 }
 

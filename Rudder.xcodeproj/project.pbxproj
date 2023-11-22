@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C6EA4432A0BDADF0049569A /* RSUserSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */; };
 		ED05631F291BEB0400BAEE65 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
 		ED157C3727CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */; };
 		ED157C4527CFD99700F22202 /* RSIntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */; };
@@ -93,6 +94,7 @@
 
 /* Begin PBXFileReference section */
 		06CABB842630C3CA0097BEFF /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSUserSessionPlugin.swift; sourceTree = "<group>"; };
 		ED056315291BB03900BAEE65 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
 		ED056316291BB03900BAEE65 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		ED056317291BB03900BAEE65 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */,
 				ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */,
 				ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */,
+				8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */,
 				ED3D227B27A3F0C100EC8366 /* RudderDestinationPlugin.swift */,
 			);
 			path = Plugins;
@@ -560,7 +563,7 @@
 		06CABB7B2630C3CA0097BEFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = RS;
+				CLASSPREFIX = "";
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "Rudder Labs India Pvt Ltd.";
@@ -636,6 +639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C6EA4432A0BDADF0049569A /* RSUserSessionPlugin.swift in Sources */,
 				EDC132A227D7D61D00AFD833 /* JSON.swift in Sources */,
 				ED3D229B27A3F0C100EC8366 /* RSiOSLifecycleEvents.swift in Sources */,
 				EDA7EFA22739119600E73142 /* RSServiceType.swift in Sources */,

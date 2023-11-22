@@ -68,6 +68,8 @@ class RSwatchOSLifecycleEvents: RSPlatformPlugin, RSwatchOSLifecycle {
             return
         }
         
+        client?.refreshSessionIfNeeded()
+        
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
