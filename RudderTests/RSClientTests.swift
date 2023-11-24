@@ -17,16 +17,228 @@ class RSClientTests: XCTestCase {
     var client: RSClient!
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
+        let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
+        userDefaults.removePersistentDomain(forName: #file)
+        client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
+//        client = RSClient.sharedInstance()
+//        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
     
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         client = nil
     }
     
     func testBaseEventCreation() {
         client.track("Track 1")
+    }
+    
+    func testAlias() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.alias("user_id")
+        
+        let aliasEvent1 = resultPlugin.lastMessage as? AliasMessage
+        
+        XCTAssertTrue(aliasEvent1?.userId == "user_id")
+        XCTAssertTrue(aliasEvent1?.type == .alias)
+        XCTAssertNil(aliasEvent1?.option)
+        XCTAssertNil(aliasEvent1?.previousId)
+        
+        client.alias("new_user_id")
+        
+        let aliasEvent2 = resultPlugin.lastMessage as? AliasMessage
+        
+        XCTAssertTrue(aliasEvent2?.userId == "new_user_id")
+        XCTAssertTrue(aliasEvent2?.previousId == "user_id")
+        XCTAssertTrue(aliasEvent2?.type == .alias)
+        XCTAssertNil(aliasEvent2?.option)
+    }
+    
+    func testGroup() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.group("sample_group_id")
+        
+        let groupEvent = resultPlugin.lastMessage as? GroupMessage
+        
+        XCTAssertTrue(groupEvent?.groupId == "sample_group_id")
+        XCTAssertTrue(groupEvent?.type == .group)
+        XCTAssertNil(groupEvent?.traits)
+        XCTAssertNil(groupEvent?.option)
+    }
+    
+    func testGroupWithTraits() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.group("sample_group_id", traits: ["key_1": "value_1", "key_2": "value_2"])
+        
+        let groupEvent = resultPlugin.lastMessage as? GroupMessage
+        
+        XCTAssertTrue(groupEvent?.groupId == "sample_group_id")
+        XCTAssertTrue(groupEvent?.type == .group)
+        XCTAssertNotNil(groupEvent?.traits)
+        XCTAssertNil(groupEvent?.option)
+        
+        let traits = groupEvent?.traits
+        
+        XCTAssertTrue(traits?["key_1"] == "value_1")
+        XCTAssertTrue(traits?["key_2"] == "value_2")
+    }
+    
+    func testIdentify() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.identify("user_id")
+        
+        let identifyEvent = resultPlugin.lastMessage as? IdentifyMessage
+        
+        XCTAssertTrue(identifyEvent?.userId == "user_id")
+        XCTAssertTrue(identifyEvent?.type == .identify)
+    }
+    
+    func testIdentifyWithTraits() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.identify("user_id", traits: ["email": "abc@def.com"])
+        
+        let identifyEvent = resultPlugin.lastMessage as? IdentifyMessage
+        
+        XCTAssertTrue(identifyEvent?.userId == "user_id")
+        XCTAssertTrue(identifyEvent?.type == .identify)
+        
+        let traits = identifyEvent?.traits
+        
+        XCTAssertTrue(traits?["email"] as? String == "abc@def.com")
+        XCTAssertFalse(traits?["name"] as? String == "name")
+    }
+    
+    func testUserIdAndTraitsPersistCorrectly() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.identify("user_id", traits: ["email": "abc@def.com"])
+        
+        let identifyEvent = resultPlugin.lastMessage as? IdentifyMessage
+        
+        XCTAssertTrue(identifyEvent?.userId == "user_id")
+        XCTAssertTrue(identifyEvent?.type == .identify)
+        
+        let traits = identifyEvent?.traits
+        
+        XCTAssertTrue(traits?["email"] as? String == "abc@def.com")
+        XCTAssertFalse(traits?["name"] as? String == "name")
+        
+        client.track("simple_track")
+        
+        let trackEvent = resultPlugin.lastMessage as? TrackMessage
+        
+        XCTAssertTrue(trackEvent?.userId == "user_id")
+        let trackTraits = trackEvent?.context?["traits"] as? [String: Any]
+        XCTAssertNotNil(trackTraits)
+        XCTAssertTrue(trackTraits?["email"] as? String == "abc@def.com")
+        XCTAssertTrue(trackTraits?["userId"] as? String == "user_id")
+    }
+    
+    func testScreen() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.screen("ViewController")
+        
+        let screenEvent = resultPlugin.lastMessage as? ScreenMessage
+        XCTAssertTrue(screenEvent?.name == "ViewController")
+        XCTAssertTrue(screenEvent?.type == .screen)
+    }
+    
+    func testScreenWithProperties() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.screen("ViewController", properties: ["key_1": "value_1", "key_2": "value_2"])
+        
+        let screenEvent = resultPlugin.lastMessage as? ScreenMessage
+        
+        XCTAssertTrue(screenEvent?.name == "ViewController")
+        XCTAssertTrue(screenEvent?.type == .screen)
+        XCTAssertNotNil(screenEvent?.properties)
+        XCTAssertNil(screenEvent?.option)
+        
+        let properties = screenEvent?.properties
+        
+        XCTAssertTrue(properties?["key_1"] as? String == "value_1")
+        XCTAssertTrue(properties?["key_2"] as? String == "value_2")
+    }
+    
+    func testTrack() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.track("simple_track")
+        
+        let trackEvent = resultPlugin.lastMessage as? TrackMessage
+        
+        XCTAssertTrue(trackEvent?.event == "simple_track")
+        XCTAssertTrue(trackEvent?.type == .track)
+        XCTAssertNil(trackEvent?.properties)
+        XCTAssertNil(trackEvent?.option)
+    }
+    
+    func testTrackWithProperties() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
+        
+        client.track("simple_track_with_props", properties: ["key_1": "value_1", "key_2": "value_2"])
+        
+        let trackEvent = resultPlugin.lastMessage as? TrackMessage
+        
+        XCTAssertTrue(trackEvent?.event == "simple_track_with_props")
+        XCTAssertTrue(trackEvent?.type == .track)
+        XCTAssertNotNil(trackEvent?.properties)
+        XCTAssertNil(trackEvent?.option)
+        
+        let properties = trackEvent?.properties
+        
+        XCTAssertTrue(properties?["key_1"] as? String == "value_1")
+        XCTAssertTrue(properties?["key_2"] as? String == "value_2")
     }
     
     // make sure you have Firebase added & enabled to the source in your RudderStack A/C
@@ -149,10 +361,10 @@ func waitUntilStarted(client: RSClient?) {
 }
 
 func waitUntilServerConfigDownloaded(client: RSClient?) {
-    guard let client = client else { return }
-    while client.serverConfig == nil {
-        RunLoop.main.run(until: Date.distantPast)
-    }
+//    guard let client = client else { return }
+//    while client.serverConfig == nil {
+//        RunLoop.main.run(until: Date.distantPast)
+//    }
 }
 
 class FirebaseDestinationPlugin: RSDestinationPlugin {

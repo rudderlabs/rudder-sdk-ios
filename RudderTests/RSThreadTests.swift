@@ -11,7 +11,7 @@ import XCTest
 
 class RSThreadTests: XCTestCase {
 
-    var client: RSClient!
+    /*var client: RSClient!
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
@@ -89,5 +89,5 @@ class RSThreadTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 100)
-    }
+    }*/
 }

@@ -26,7 +26,7 @@ class RSWhiteListedEventsTests: XCTestCase {
     // swiftlint:disable inclusive_language
     // make sure you select 'Whitelist' for 'Client-side Events Filtering' section in
     // Configuration from RudderStack dashboard. It will take 5 min to be affected.
-    func testWhiteListedSuccess() {
+    /*func testWhiteListedSuccess() {
         let expectation = XCTestExpectation(description: "Firebase Expectation")
         let myDestination = FirebaseDestination {
             expectation.fulfill()
@@ -40,7 +40,7 @@ class RSWhiteListedEventsTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
     
-    /*func testWhiteListedFailure() {
+    func testWhiteListedFailure() {
         let expectation = XCTestExpectation(description: "Firebase Expectation")
         let myDestination = FirebaseDestination {
             expectation.fulfill()

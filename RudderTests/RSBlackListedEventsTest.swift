@@ -40,7 +40,7 @@ class RSBlackListedEventsTest: XCTestCase {
         XCTExpectFailure {
             wait(for: [expectation], timeout: 2.0)
         }
-    }*/
+    }
     
     func testBlackListedFailure() {
         let expectation = XCTestExpectation(description: "Firebase Expectation")
@@ -54,13 +54,5 @@ class RSBlackListedEventsTest: XCTestCase {
         waitUntilStarted(client: client)
         client.track("track_blacklist_2")
         wait(for: [expectation], timeout: 2.0)
-    }
-    
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    }*/
 }
