@@ -70,6 +70,183 @@
 		EDC132AE27D9104700AFD833 /* RSBlackListedEventsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AD27D9104700AFD833 /* RSBlackListedEventsTest.swift */; };
 		EDC132B027D9106500AFD833 /* RSWhiteListedEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */; };
 		EDC14DDE2859C7DB00E2E6FE /* RSRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */; };
+		EDC1BBCB2B0DD87D00211F24 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA7EF4F2739119600E73142 /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDC1BBCD2B0DD87D00211F24 /* RSUserSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */; };
+		EDC1BBCE2B0DD87D00211F24 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132A127D7D61D00AFD833 /* JSON.swift */; };
+		EDC1BBCF2B0DD87D00211F24 /* RSiOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226E27A3F0C100EC8366 /* RSiOSLifecycleEvents.swift */; };
+		EDC1BBD02B0DD87D00211F24 /* RSServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF6B2739119600E73142 /* RSServiceType.swift */; };
+		EDC1BBD12B0DD87D00211F24 /* NSError+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF492739119600E73142 /* NSError+Ext.swift */; };
+		EDC1BBD22B0DD87D00211F24 /* RSLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF562739119600E73142 /* RSLogLevel.swift */; };
+		EDC1BBD32B0DD87D00211F24 /* RSDestinationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF622739119600E73142 /* RSDestinationConfig.swift */; };
+		EDC1BBD42B0DD87D00211F24 /* RSMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF532739119600E73142 /* RSMessageType.swift */; };
+		EDC1BBD52B0DD87D00211F24 /* RudderDestinationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227B27A3F0C100EC8366 /* RudderDestinationPlugin.swift */; };
+		EDC1BBD62B0DD87D00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226B27A3F0C100EC8366 /* RSwatchOSLifecycleEvents.swift */; };
+		EDC1BBD72B0DD87D00211F24 /* RSErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF552739119600E73142 /* RSErrorCode.swift */; };
+		EDC1BBD82B0DD87D00211F24 /* RSSessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */; };
+		EDC1BBD92B0DD87D00211F24 /* RSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D229227A3F0C100EC8366 /* RSMessage.swift */; };
+		EDC1BBDA2B0DD87D00211F24 /* RSwatchOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226A27A3F0C100EC8366 /* RSwatchOSDelegation.swift */; };
+		EDC1BBDB2B0DD87D00211F24 /* RSConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF462739119600E73142 /* RSConstants.swift */; };
+		EDC1BBDC2B0DD87D00211F24 /* RSAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA3527C659C80048E61E /* RSAtomic.swift */; };
+		EDC1BBDD2B0DD87D00211F24 /* RSReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */; };
+		EDC1BBDE2B0DD87D00211F24 /* RSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF5D2739119600E73142 /* RSOption.swift */; };
+		EDC1BBDF2B0DD87D00211F24 /* RSEventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */; };
+		EDC1BBE02B0DD87D00211F24 /* RSIntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */; };
+		EDC1BBE12B0DD87D00211F24 /* RSRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */; };
+		EDC1BBE22B0DD87D00211F24 /* RSmacOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */; };
+		EDC1BBE32B0DD87D00211F24 /* RSAppTrackingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4A27CFE86100F22202 /* RSAppTrackingConsent.swift */; };
+		EDC1BBE42B0DD87D00211F24 /* RSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* RSConfig.swift */; };
+		EDC1BBE52B0DD87D00211F24 /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
+		EDC1BBE62B0DD87D00211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
+		EDC1BBE72B0DD87D00211F24 /* RSDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF402739119600E73142 /* RSDatabaseManager.swift */; };
+		EDC1BBE82B0DD87D00211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
+		EDC1BBE92B0DD87D00211F24 /* RSServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF612739119600E73142 /* RSServerConfig.swift */; };
+		EDC1BBEA2B0DD87D00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227227A3F0C100EC8366 /* RSmacOSLifecycleMonitor.swift */; };
+		EDC1BBEB2B0DD87D00211F24 /* RSiOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227027A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift */; };
+		EDC1BBEC2B0DD87D00211F24 /* RSUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603842881C691004B5BEC /* RSUserInfo.swift */; };
+		EDC1BBED2B0DD87D00211F24 /* RSConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227927A3F0C100EC8366 /* RSConsoleLogger.swift */; };
+		EDC1BBEE2B0DD87D00211F24 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
+		EDC1BBEF2B0DD87D00211F24 /* RSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227E27A3F0C100EC8366 /* RSController.swift */; };
+		EDC1BBF02B0DD87D00211F24 /* RSLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */; };
+		EDC1BBF12B0DD87D00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4E27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift */; };
+		EDC1BBF22B0DD87D00211F24 /* RSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227727A3F0C100EC8366 /* RSLogger.swift */; };
+		EDC1BBF32B0DD87D00211F24 /* RSTypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */; };
+		EDC1BBF42B0DD87D00211F24 /* RSiOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4C27D0A63A00F22202 /* RSiOSScreenViewEvents.swift */; };
+		EDC1BBF52B0DD87D00211F24 /* RSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF452739119600E73142 /* RSUserDefaults.swift */; };
+		EDC1BBF62B0DD87D00211F24 /* RSmacOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5527D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift */; };
+		EDC1BBF72B0DD87D00211F24 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226627A3F0C100EC8366 /* Vendor.swift */; };
+		EDC1BBF82B0DD87D00211F24 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
+		EDC1BBF92B0DD87D00211F24 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF482739119600E73142 /* String+Ext.swift */; };
+		EDC1BBFA2B0DD87D00211F24 /* RSPlugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228127A3F0C100EC8366 /* RSPlugins.swift */; };
+		EDC1BBFB2B0DD87D00211F24 /* RSDestinationDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF632739119600E73142 /* RSDestinationDefinition.swift */; };
+		EDC1BBFC2B0DD87D00211F24 /* RSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226227A3F0C100EC8366 /* RSClient.swift */; };
+		EDC1BBFD2B0DD87D00211F24 /* AppleUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226727A3F0C100EC8366 /* AppleUtils.swift */; };
+		EDC1BBFE2B0DD87D00211F24 /* RSClient+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */; };
+		EDC1BBFF2B0DD87D00211F24 /* RSContextPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227C27A3F0C100EC8366 /* RSContextPlugin.swift */; };
+		EDC1BC002B0DD87D00211F24 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560388288316C2004B5BEC /* Data+Ext.swift */; };
+		EDC1BC012B0DD87D00211F24 /* RSServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF342739119600E73142 /* RSServiceManager.swift */; };
+		EDC1BC022B0DD87D00211F24 /* RSDBMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF582739119600E73142 /* RSDBMessage.swift */; };
+		EDC1BC032B0DD87D00211F24 /* RSDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF642739119600E73142 /* RSDestination.swift */; };
+		EDC1BC042B0DD87D00211F24 /* RSiOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226F27A3F0C100EC8366 /* RSiOSDelegation.swift */; };
+		EDC1BC052B0DD87D00211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226C27A3F0C100EC8366 /* RSwatchOSLifecycleMonitor.swift */; };
+		EDC1BC062B0DD87D00211F24 /* RSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF4D2739119600E73142 /* RSUtils.swift */; };
+		EDC1BC102B0DD88A00211F24 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA7EF4F2739119600E73142 /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDC1BC122B0DD88A00211F24 /* RSUserSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */; };
+		EDC1BC132B0DD88A00211F24 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132A127D7D61D00AFD833 /* JSON.swift */; };
+		EDC1BC142B0DD88A00211F24 /* RSiOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226E27A3F0C100EC8366 /* RSiOSLifecycleEvents.swift */; };
+		EDC1BC152B0DD88A00211F24 /* RSServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF6B2739119600E73142 /* RSServiceType.swift */; };
+		EDC1BC162B0DD88A00211F24 /* NSError+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF492739119600E73142 /* NSError+Ext.swift */; };
+		EDC1BC172B0DD88A00211F24 /* RSLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF562739119600E73142 /* RSLogLevel.swift */; };
+		EDC1BC182B0DD88A00211F24 /* RSDestinationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF622739119600E73142 /* RSDestinationConfig.swift */; };
+		EDC1BC192B0DD88A00211F24 /* RSMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF532739119600E73142 /* RSMessageType.swift */; };
+		EDC1BC1A2B0DD88A00211F24 /* RudderDestinationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227B27A3F0C100EC8366 /* RudderDestinationPlugin.swift */; };
+		EDC1BC1B2B0DD88A00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226B27A3F0C100EC8366 /* RSwatchOSLifecycleEvents.swift */; };
+		EDC1BC1C2B0DD88A00211F24 /* RSErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF552739119600E73142 /* RSErrorCode.swift */; };
+		EDC1BC1D2B0DD88A00211F24 /* RSSessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */; };
+		EDC1BC1E2B0DD88A00211F24 /* RSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D229227A3F0C100EC8366 /* RSMessage.swift */; };
+		EDC1BC1F2B0DD88A00211F24 /* RSwatchOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226A27A3F0C100EC8366 /* RSwatchOSDelegation.swift */; };
+		EDC1BC202B0DD88A00211F24 /* RSConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF462739119600E73142 /* RSConstants.swift */; };
+		EDC1BC212B0DD88A00211F24 /* RSAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA3527C659C80048E61E /* RSAtomic.swift */; };
+		EDC1BC222B0DD88A00211F24 /* RSReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */; };
+		EDC1BC232B0DD88A00211F24 /* RSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF5D2739119600E73142 /* RSOption.swift */; };
+		EDC1BC242B0DD88A00211F24 /* RSEventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */; };
+		EDC1BC252B0DD88A00211F24 /* RSIntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */; };
+		EDC1BC262B0DD88A00211F24 /* RSRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */; };
+		EDC1BC272B0DD88A00211F24 /* RSmacOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */; };
+		EDC1BC282B0DD88A00211F24 /* RSAppTrackingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4A27CFE86100F22202 /* RSAppTrackingConsent.swift */; };
+		EDC1BC292B0DD88A00211F24 /* RSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* RSConfig.swift */; };
+		EDC1BC2A2B0DD88A00211F24 /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
+		EDC1BC2B2B0DD88A00211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
+		EDC1BC2C2B0DD88A00211F24 /* RSDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF402739119600E73142 /* RSDatabaseManager.swift */; };
+		EDC1BC2D2B0DD88A00211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
+		EDC1BC2E2B0DD88A00211F24 /* RSServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF612739119600E73142 /* RSServerConfig.swift */; };
+		EDC1BC2F2B0DD88A00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227227A3F0C100EC8366 /* RSmacOSLifecycleMonitor.swift */; };
+		EDC1BC302B0DD88A00211F24 /* RSiOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227027A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift */; };
+		EDC1BC312B0DD88A00211F24 /* RSUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603842881C691004B5BEC /* RSUserInfo.swift */; };
+		EDC1BC322B0DD88A00211F24 /* RSConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227927A3F0C100EC8366 /* RSConsoleLogger.swift */; };
+		EDC1BC332B0DD88A00211F24 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
+		EDC1BC342B0DD88A00211F24 /* RSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227E27A3F0C100EC8366 /* RSController.swift */; };
+		EDC1BC352B0DD88A00211F24 /* RSLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */; };
+		EDC1BC362B0DD88A00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4E27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift */; };
+		EDC1BC372B0DD88A00211F24 /* RSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227727A3F0C100EC8366 /* RSLogger.swift */; };
+		EDC1BC382B0DD88A00211F24 /* RSTypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */; };
+		EDC1BC392B0DD88A00211F24 /* RSiOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4C27D0A63A00F22202 /* RSiOSScreenViewEvents.swift */; };
+		EDC1BC3A2B0DD88A00211F24 /* RSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF452739119600E73142 /* RSUserDefaults.swift */; };
+		EDC1BC3B2B0DD88A00211F24 /* RSmacOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5527D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift */; };
+		EDC1BC3C2B0DD88A00211F24 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226627A3F0C100EC8366 /* Vendor.swift */; };
+		EDC1BC3D2B0DD88A00211F24 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
+		EDC1BC3E2B0DD88A00211F24 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF482739119600E73142 /* String+Ext.swift */; };
+		EDC1BC3F2B0DD88A00211F24 /* RSPlugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228127A3F0C100EC8366 /* RSPlugins.swift */; };
+		EDC1BC402B0DD88A00211F24 /* RSDestinationDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF632739119600E73142 /* RSDestinationDefinition.swift */; };
+		EDC1BC412B0DD88A00211F24 /* RSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226227A3F0C100EC8366 /* RSClient.swift */; };
+		EDC1BC422B0DD88A00211F24 /* AppleUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226727A3F0C100EC8366 /* AppleUtils.swift */; };
+		EDC1BC432B0DD88A00211F24 /* RSClient+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */; };
+		EDC1BC442B0DD88A00211F24 /* RSContextPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227C27A3F0C100EC8366 /* RSContextPlugin.swift */; };
+		EDC1BC452B0DD88A00211F24 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560388288316C2004B5BEC /* Data+Ext.swift */; };
+		EDC1BC462B0DD88A00211F24 /* RSServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF342739119600E73142 /* RSServiceManager.swift */; };
+		EDC1BC472B0DD88A00211F24 /* RSDBMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF582739119600E73142 /* RSDBMessage.swift */; };
+		EDC1BC482B0DD88A00211F24 /* RSDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF642739119600E73142 /* RSDestination.swift */; };
+		EDC1BC492B0DD88A00211F24 /* RSiOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226F27A3F0C100EC8366 /* RSiOSDelegation.swift */; };
+		EDC1BC4A2B0DD88A00211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226C27A3F0C100EC8366 /* RSwatchOSLifecycleMonitor.swift */; };
+		EDC1BC4B2B0DD88A00211F24 /* RSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF4D2739119600E73142 /* RSUtils.swift */; };
+		EDC1BC552B0DD89400211F24 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA7EF4F2739119600E73142 /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDC1BC572B0DD89400211F24 /* RSUserSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */; };
+		EDC1BC582B0DD89400211F24 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132A127D7D61D00AFD833 /* JSON.swift */; };
+		EDC1BC592B0DD89400211F24 /* RSiOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226E27A3F0C100EC8366 /* RSiOSLifecycleEvents.swift */; };
+		EDC1BC5A2B0DD89400211F24 /* RSServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF6B2739119600E73142 /* RSServiceType.swift */; };
+		EDC1BC5B2B0DD89400211F24 /* NSError+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF492739119600E73142 /* NSError+Ext.swift */; };
+		EDC1BC5C2B0DD89400211F24 /* RSLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF562739119600E73142 /* RSLogLevel.swift */; };
+		EDC1BC5D2B0DD89400211F24 /* RSDestinationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF622739119600E73142 /* RSDestinationConfig.swift */; };
+		EDC1BC5E2B0DD89400211F24 /* RSMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF532739119600E73142 /* RSMessageType.swift */; };
+		EDC1BC5F2B0DD89400211F24 /* RudderDestinationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227B27A3F0C100EC8366 /* RudderDestinationPlugin.swift */; };
+		EDC1BC602B0DD89400211F24 /* RSwatchOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226B27A3F0C100EC8366 /* RSwatchOSLifecycleEvents.swift */; };
+		EDC1BC612B0DD89400211F24 /* RSErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF552739119600E73142 /* RSErrorCode.swift */; };
+		EDC1BC622B0DD89400211F24 /* RSSessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */; };
+		EDC1BC632B0DD89400211F24 /* RSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D229227A3F0C100EC8366 /* RSMessage.swift */; };
+		EDC1BC642B0DD89400211F24 /* RSwatchOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226A27A3F0C100EC8366 /* RSwatchOSDelegation.swift */; };
+		EDC1BC652B0DD89400211F24 /* RSConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF462739119600E73142 /* RSConstants.swift */; };
+		EDC1BC662B0DD89400211F24 /* RSAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA3527C659C80048E61E /* RSAtomic.swift */; };
+		EDC1BC672B0DD89400211F24 /* RSReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */; };
+		EDC1BC682B0DD89400211F24 /* RSOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF5D2739119600E73142 /* RSOption.swift */; };
+		EDC1BC692B0DD89400211F24 /* RSEventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */; };
+		EDC1BC6A2B0DD89400211F24 /* RSIntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */; };
+		EDC1BC6B2B0DD89400211F24 /* RSRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */; };
+		EDC1BC6C2B0DD89400211F24 /* RSmacOSLifecycleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C3627CE0EEA00F22202 /* RSmacOSLifecycleEvents.swift */; };
+		EDC1BC6D2B0DD89400211F24 /* RSAppTrackingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4A27CFE86100F22202 /* RSAppTrackingConsent.swift */; };
+		EDC1BC6E2B0DD89400211F24 /* RSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* RSConfig.swift */; };
+		EDC1BC6F2B0DD89400211F24 /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
+		EDC1BC702B0DD89400211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
+		EDC1BC712B0DD89400211F24 /* RSDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF402739119600E73142 /* RSDatabaseManager.swift */; };
+		EDC1BC722B0DD89400211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
+		EDC1BC732B0DD89400211F24 /* RSServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF612739119600E73142 /* RSServerConfig.swift */; };
+		EDC1BC742B0DD89400211F24 /* RSmacOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227227A3F0C100EC8366 /* RSmacOSLifecycleMonitor.swift */; };
+		EDC1BC752B0DD89400211F24 /* RSiOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227027A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift */; };
+		EDC1BC762B0DD89400211F24 /* RSUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603842881C691004B5BEC /* RSUserInfo.swift */; };
+		EDC1BC772B0DD89400211F24 /* RSConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227927A3F0C100EC8366 /* RSConsoleLogger.swift */; };
+		EDC1BC782B0DD89400211F24 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
+		EDC1BC792B0DD89400211F24 /* RSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227E27A3F0C100EC8366 /* RSController.swift */; };
+		EDC1BC7A2B0DD89400211F24 /* RSLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227827A3F0C100EC8366 /* RSLoggerPlugin.swift */; };
+		EDC1BC7B2B0DD89400211F24 /* RSwatchOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4E27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift */; };
+		EDC1BC7C2B0DD89400211F24 /* RSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227727A3F0C100EC8366 /* RSLogger.swift */; };
+		EDC1BC7D2B0DD89400211F24 /* RSTypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */; };
+		EDC1BC7E2B0DD89400211F24 /* RSiOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4C27D0A63A00F22202 /* RSiOSScreenViewEvents.swift */; };
+		EDC1BC7F2B0DD89400211F24 /* RSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF452739119600E73142 /* RSUserDefaults.swift */; };
+		EDC1BC802B0DD89400211F24 /* RSmacOSScreenViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5527D0FCDC00F22202 /* RSmacOSScreenViewEvents.swift */; };
+		EDC1BC812B0DD89400211F24 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226627A3F0C100EC8366 /* Vendor.swift */; };
+		EDC1BC822B0DD89400211F24 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
+		EDC1BC832B0DD89400211F24 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF482739119600E73142 /* String+Ext.swift */; };
+		EDC1BC842B0DD89400211F24 /* RSPlugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228127A3F0C100EC8366 /* RSPlugins.swift */; };
+		EDC1BC852B0DD89400211F24 /* RSDestinationDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF632739119600E73142 /* RSDestinationDefinition.swift */; };
+		EDC1BC862B0DD89400211F24 /* RSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226227A3F0C100EC8366 /* RSClient.swift */; };
+		EDC1BC872B0DD89400211F24 /* AppleUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226727A3F0C100EC8366 /* AppleUtils.swift */; };
+		EDC1BC882B0DD89400211F24 /* RSClient+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */; };
+		EDC1BC892B0DD89400211F24 /* RSContextPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227C27A3F0C100EC8366 /* RSContextPlugin.swift */; };
+		EDC1BC8A2B0DD89400211F24 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560388288316C2004B5BEC /* Data+Ext.swift */; };
+		EDC1BC8B2B0DD89400211F24 /* RSServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF342739119600E73142 /* RSServiceManager.swift */; };
+		EDC1BC8C2B0DD89400211F24 /* RSDBMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF582739119600E73142 /* RSDBMessage.swift */; };
+		EDC1BC8D2B0DD89400211F24 /* RSDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF642739119600E73142 /* RSDestination.swift */; };
+		EDC1BC8E2B0DD89400211F24 /* RSiOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226F27A3F0C100EC8366 /* RSiOSDelegation.swift */; };
+		EDC1BC8F2B0DD89400211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226C27A3F0C100EC8366 /* RSwatchOSLifecycleMonitor.swift */; };
+		EDC1BC902B0DD89400211F24 /* RSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF4D2739119600E73142 /* RSUtils.swift */; };
 		EDD0C96528225BFB00470E88 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
 		EDD0C9672829199200470E88 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
 		EDD3AA1327C64B430048E61E /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
@@ -152,7 +329,6 @@
 		EDA7EF492739119600E73142 /* NSError+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Ext.swift"; sourceTree = "<group>"; };
 		EDA7EF4D2739119600E73142 /* RSUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUtils.swift; sourceTree = "<group>"; };
 		EDA7EF4F2739119600E73142 /* Rudder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rudder.h; sourceTree = "<group>"; };
-		EDA7EF502739119600E73142 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDA7EF532739119600E73142 /* RSMessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMessageType.swift; sourceTree = "<group>"; };
 		EDA7EF552739119600E73142 /* RSErrorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSErrorCode.swift; sourceTree = "<group>"; };
 		EDA7EF562739119600E73142 /* RSLogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSLogLevel.swift; sourceTree = "<group>"; };
@@ -174,6 +350,9 @@
 		EDC132AD27D9104700AFD833 /* RSBlackListedEventsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSBlackListedEventsTest.swift; sourceTree = "<group>"; };
 		EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWhiteListedEventsTests.swift; sourceTree = "<group>"; };
 		EDC14DDD2859C7DB00E2E6FE /* RSRepeatingTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSRepeatingTimer.swift; path = Sources/Classes/Helpers/RSRepeatingTimer.swift; sourceTree = SOURCE_ROOT; };
+		EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDC1BC522B0DD88A00211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDC1BC972B0DD89400211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDD0C96428225BFB00470E88 /* RSThreadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSThreadTests.swift; sourceTree = "<group>"; };
 		EDD0C9662829199200470E88 /* RSDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDatabaseTests.swift; sourceTree = "<group>"; };
 		EDD3AA1227C64B430048E61E /* RSKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSKeyPath.swift; sourceTree = "<group>"; };
@@ -200,6 +379,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BC072B0DD87D00211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC4C2B0DD88A00211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC912B0DD89400211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -208,6 +408,7 @@
 			children = (
 				ED056319291BB06C00BAEE65 /* Others */,
 				EDA7EF2D2739119600E73142 /* Sources */,
+				EDC1325B27D612B600AFD833 /* RudderTests */,
 				EDC1325A27D612B600AFD833 /* Tests */,
 				06CABB852630C3CA0097BEFF /* Products */,
 			);
@@ -218,6 +419,9 @@
 			children = (
 				06CABB842630C3CA0097BEFF /* Rudder.framework */,
 				ED3D2257279EAC2800EC8366 /* RudderTests.xctest */,
+				EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */,
+				EDC1BC522B0DD88A00211F24 /* Rudder.framework */,
+				EDC1BC972B0DD89400211F24 /* Rudder.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,7 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				ED3D22BC27A4565A00EC8366 /* Classes */,
-				EDA7EF4E2739119600E73142 /* SDKInfo */,
+				EDA7EF4F2739119600E73142 /* Rudder.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -366,15 +570,6 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		EDA7EF4E2739119600E73142 /* SDKInfo */ = {
-			isa = PBXGroup;
-			children = (
-				EDA7EF4F2739119600E73142 /* Rudder.h */,
-				EDA7EF502739119600E73142 /* Info.plist */,
-			);
-			path = SDKInfo;
-			sourceTree = "<group>";
-		};
 		EDA7EF522739119600E73142 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,7 +596,6 @@
 		EDC1325A27D612B600AFD833 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EDC1325B27D612B600AFD833 /* RudderTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -517,12 +711,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BBCA2B0DD87D00211F24 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BBCB2B0DD87D00211F24 /* Rudder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC0F2B0DD88A00211F24 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BC102B0DD88A00211F24 /* Rudder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC542B0DD89400211F24 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BC552B0DD89400211F24 /* Rudder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		06CABB832630C3CA0097BEFF /* Rudder */ = {
+		06CABB832630C3CA0097BEFF /* Rudder-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */;
+			buildConfigurationList = 06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder-iOS" */;
 			buildPhases = (
 				06CABB7F2630C3CA0097BEFF /* Headers */,
 				06CABB802630C3CA0097BEFF /* Sources */,
@@ -534,7 +752,7 @@
 			);
 			dependencies = (
 			);
-			name = Rudder;
+			name = "Rudder-iOS";
 			productName = Rudder;
 			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
@@ -556,6 +774,63 @@
 			productName = RudderTests;
 			productReference = ED3D2257279EAC2800EC8366 /* RudderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDC1BBC92B0DD87D00211F24 /* Rudder-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BC0A2B0DD87D00211F24 /* Build configuration list for PBXNativeTarget "Rudder-macOS" */;
+			buildPhases = (
+				EDC1BBCA2B0DD87D00211F24 /* Headers */,
+				EDC1BBCC2B0DD87D00211F24 /* Sources */,
+				EDC1BC072B0DD87D00211F24 /* Frameworks */,
+				EDC1BC082B0DD87D00211F24 /* Resources */,
+				EDC1BC092B0DD87D00211F24 /* SwiftLint Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rudder-macOS";
+			productName = Rudder;
+			productReference = EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EDC1BC0E2B0DD88A00211F24 /* Rudder-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BC4F2B0DD88A00211F24 /* Build configuration list for PBXNativeTarget "Rudder-tvOS" */;
+			buildPhases = (
+				EDC1BC0F2B0DD88A00211F24 /* Headers */,
+				EDC1BC112B0DD88A00211F24 /* Sources */,
+				EDC1BC4C2B0DD88A00211F24 /* Frameworks */,
+				EDC1BC4D2B0DD88A00211F24 /* Resources */,
+				EDC1BC4E2B0DD88A00211F24 /* SwiftLint Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rudder-tvOS";
+			productName = Rudder;
+			productReference = EDC1BC522B0DD88A00211F24 /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EDC1BC532B0DD89400211F24 /* Rudder-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BC942B0DD89400211F24 /* Build configuration list for PBXNativeTarget "Rudder-watchOS" */;
+			buildPhases = (
+				EDC1BC542B0DD89400211F24 /* Headers */,
+				EDC1BC562B0DD89400211F24 /* Sources */,
+				EDC1BC912B0DD89400211F24 /* Frameworks */,
+				EDC1BC922B0DD89400211F24 /* Resources */,
+				EDC1BC932B0DD89400211F24 /* SwiftLint Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rudder-watchOS";
+			productName = Rudder;
+			productReference = EDC1BC972B0DD89400211F24 /* Rudder.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -590,7 +865,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				06CABB832630C3CA0097BEFF /* Rudder */,
+				06CABB832630C3CA0097BEFF /* Rudder-iOS */,
+				EDC1BBC92B0DD87D00211F24 /* Rudder-macOS */,
+				EDC1BC0E2B0DD88A00211F24 /* Rudder-tvOS */,
+				EDC1BC532B0DD89400211F24 /* Rudder-watchOS */,
 				ED3D2256279EAC2800EC8366 /* RudderTests */,
 			);
 		};
@@ -611,10 +889,85 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BC082B0DD87D00211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC4D2B0DD88A00211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC922B0DD89400211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		ED1DEAE626C6463000C09CAA /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		EDC1BC092B0DD87D00211F24 /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		EDC1BC4E2B0DD88A00211F24 /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		EDC1BC932B0DD89400211F24 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -720,12 +1073,207 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BBCC2B0DD87D00211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BBCD2B0DD87D00211F24 /* RSUserSessionPlugin.swift in Sources */,
+				EDC1BBCE2B0DD87D00211F24 /* JSON.swift in Sources */,
+				EDC1BBCF2B0DD87D00211F24 /* RSiOSLifecycleEvents.swift in Sources */,
+				EDC1BBD02B0DD87D00211F24 /* RSServiceType.swift in Sources */,
+				EDC1BBD12B0DD87D00211F24 /* NSError+Ext.swift in Sources */,
+				EDC1BBD22B0DD87D00211F24 /* RSLogLevel.swift in Sources */,
+				EDC1BBD32B0DD87D00211F24 /* RSDestinationConfig.swift in Sources */,
+				EDC1BBD42B0DD87D00211F24 /* RSMessageType.swift in Sources */,
+				EDC1BBD52B0DD87D00211F24 /* RudderDestinationPlugin.swift in Sources */,
+				EDC1BBD62B0DD87D00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
+				EDC1BBD72B0DD87D00211F24 /* RSErrorCode.swift in Sources */,
+				EDC1BBD82B0DD87D00211F24 /* RSSessionStorage.swift in Sources */,
+				EDC1BBD92B0DD87D00211F24 /* RSMessage.swift in Sources */,
+				EDC1BBDA2B0DD87D00211F24 /* RSwatchOSDelegation.swift in Sources */,
+				EDC1BBDB2B0DD87D00211F24 /* RSConstants.swift in Sources */,
+				EDC1BBDC2B0DD87D00211F24 /* RSAtomic.swift in Sources */,
+				EDC1BBDD2B0DD87D00211F24 /* RSReplayQueuePlugin.swift in Sources */,
+				EDC1BBDE2B0DD87D00211F24 /* RSOption.swift in Sources */,
+				EDC1BBDF2B0DD87D00211F24 /* RSEventsAndKeys.swift in Sources */,
+				EDC1BBE02B0DD87D00211F24 /* RSIntegrationPlugin.swift in Sources */,
+				EDC1BBE12B0DD87D00211F24 /* RSRepeatingTimer.swift in Sources */,
+				EDC1BBE22B0DD87D00211F24 /* RSmacOSLifecycleEvents.swift in Sources */,
+				EDC1BBE32B0DD87D00211F24 /* RSAppTrackingConsent.swift in Sources */,
+				EDC1BBE42B0DD87D00211F24 /* RSConfig.swift in Sources */,
+				EDC1BBE52B0DD87D00211F24 /* RSKeyPath.swift in Sources */,
+				EDC1BBE62B0DD87D00211F24 /* API.swift in Sources */,
+				EDC1BBE72B0DD87D00211F24 /* RSDatabaseManager.swift in Sources */,
+				EDC1BBE82B0DD87D00211F24 /* RSVersion.swift in Sources */,
+				EDC1BBE92B0DD87D00211F24 /* RSServerConfig.swift in Sources */,
+				EDC1BBEA2B0DD87D00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BBEB2B0DD87D00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
+				EDC1BBEC2B0DD87D00211F24 /* RSUserInfo.swift in Sources */,
+				EDC1BBED2B0DD87D00211F24 /* RSConsoleLogger.swift in Sources */,
+				EDC1BBEE2B0DD87D00211F24 /* RSPushNotifications.swift in Sources */,
+				EDC1BBEF2B0DD87D00211F24 /* RSController.swift in Sources */,
+				EDC1BBF02B0DD87D00211F24 /* RSLoggerPlugin.swift in Sources */,
+				EDC1BBF12B0DD87D00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
+				EDC1BBF22B0DD87D00211F24 /* RSLogger.swift in Sources */,
+				EDC1BBF32B0DD87D00211F24 /* RSTypeAlias.swift in Sources */,
+				EDC1BBF42B0DD87D00211F24 /* RSiOSScreenViewEvents.swift in Sources */,
+				EDC1BBF52B0DD87D00211F24 /* RSUserDefaults.swift in Sources */,
+				EDC1BBF62B0DD87D00211F24 /* RSmacOSScreenViewEvents.swift in Sources */,
+				EDC1BBF72B0DD87D00211F24 /* Vendor.swift in Sources */,
+				EDC1BBF82B0DD87D00211F24 /* RSLifeCycle.swift in Sources */,
+				EDC1BBF92B0DD87D00211F24 /* String+Ext.swift in Sources */,
+				EDC1BBFA2B0DD87D00211F24 /* RSPlugins.swift in Sources */,
+				EDC1BBFB2B0DD87D00211F24 /* RSDestinationDefinition.swift in Sources */,
+				EDC1BBFC2B0DD87D00211F24 /* RSClient.swift in Sources */,
+				EDC1BBFD2B0DD87D00211F24 /* AppleUtils.swift in Sources */,
+				EDC1BBFE2B0DD87D00211F24 /* RSClient+Plugins.swift in Sources */,
+				EDC1BBFF2B0DD87D00211F24 /* RSContextPlugin.swift in Sources */,
+				EDC1BC002B0DD87D00211F24 /* Data+Ext.swift in Sources */,
+				EDC1BC012B0DD87D00211F24 /* RSServiceManager.swift in Sources */,
+				EDC1BC022B0DD87D00211F24 /* RSDBMessage.swift in Sources */,
+				EDC1BC032B0DD87D00211F24 /* RSDestination.swift in Sources */,
+				EDC1BC042B0DD87D00211F24 /* RSiOSDelegation.swift in Sources */,
+				EDC1BC052B0DD87D00211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */,
+				EDC1BC062B0DD87D00211F24 /* RSUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC112B0DD88A00211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BC122B0DD88A00211F24 /* RSUserSessionPlugin.swift in Sources */,
+				EDC1BC132B0DD88A00211F24 /* JSON.swift in Sources */,
+				EDC1BC142B0DD88A00211F24 /* RSiOSLifecycleEvents.swift in Sources */,
+				EDC1BC152B0DD88A00211F24 /* RSServiceType.swift in Sources */,
+				EDC1BC162B0DD88A00211F24 /* NSError+Ext.swift in Sources */,
+				EDC1BC172B0DD88A00211F24 /* RSLogLevel.swift in Sources */,
+				EDC1BC182B0DD88A00211F24 /* RSDestinationConfig.swift in Sources */,
+				EDC1BC192B0DD88A00211F24 /* RSMessageType.swift in Sources */,
+				EDC1BC1A2B0DD88A00211F24 /* RudderDestinationPlugin.swift in Sources */,
+				EDC1BC1B2B0DD88A00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
+				EDC1BC1C2B0DD88A00211F24 /* RSErrorCode.swift in Sources */,
+				EDC1BC1D2B0DD88A00211F24 /* RSSessionStorage.swift in Sources */,
+				EDC1BC1E2B0DD88A00211F24 /* RSMessage.swift in Sources */,
+				EDC1BC1F2B0DD88A00211F24 /* RSwatchOSDelegation.swift in Sources */,
+				EDC1BC202B0DD88A00211F24 /* RSConstants.swift in Sources */,
+				EDC1BC212B0DD88A00211F24 /* RSAtomic.swift in Sources */,
+				EDC1BC222B0DD88A00211F24 /* RSReplayQueuePlugin.swift in Sources */,
+				EDC1BC232B0DD88A00211F24 /* RSOption.swift in Sources */,
+				EDC1BC242B0DD88A00211F24 /* RSEventsAndKeys.swift in Sources */,
+				EDC1BC252B0DD88A00211F24 /* RSIntegrationPlugin.swift in Sources */,
+				EDC1BC262B0DD88A00211F24 /* RSRepeatingTimer.swift in Sources */,
+				EDC1BC272B0DD88A00211F24 /* RSmacOSLifecycleEvents.swift in Sources */,
+				EDC1BC282B0DD88A00211F24 /* RSAppTrackingConsent.swift in Sources */,
+				EDC1BC292B0DD88A00211F24 /* RSConfig.swift in Sources */,
+				EDC1BC2A2B0DD88A00211F24 /* RSKeyPath.swift in Sources */,
+				EDC1BC2B2B0DD88A00211F24 /* API.swift in Sources */,
+				EDC1BC2C2B0DD88A00211F24 /* RSDatabaseManager.swift in Sources */,
+				EDC1BC2D2B0DD88A00211F24 /* RSVersion.swift in Sources */,
+				EDC1BC2E2B0DD88A00211F24 /* RSServerConfig.swift in Sources */,
+				EDC1BC2F2B0DD88A00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BC302B0DD88A00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
+				EDC1BC312B0DD88A00211F24 /* RSUserInfo.swift in Sources */,
+				EDC1BC322B0DD88A00211F24 /* RSConsoleLogger.swift in Sources */,
+				EDC1BC332B0DD88A00211F24 /* RSPushNotifications.swift in Sources */,
+				EDC1BC342B0DD88A00211F24 /* RSController.swift in Sources */,
+				EDC1BC352B0DD88A00211F24 /* RSLoggerPlugin.swift in Sources */,
+				EDC1BC362B0DD88A00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
+				EDC1BC372B0DD88A00211F24 /* RSLogger.swift in Sources */,
+				EDC1BC382B0DD88A00211F24 /* RSTypeAlias.swift in Sources */,
+				EDC1BC392B0DD88A00211F24 /* RSiOSScreenViewEvents.swift in Sources */,
+				EDC1BC3A2B0DD88A00211F24 /* RSUserDefaults.swift in Sources */,
+				EDC1BC3B2B0DD88A00211F24 /* RSmacOSScreenViewEvents.swift in Sources */,
+				EDC1BC3C2B0DD88A00211F24 /* Vendor.swift in Sources */,
+				EDC1BC3D2B0DD88A00211F24 /* RSLifeCycle.swift in Sources */,
+				EDC1BC3E2B0DD88A00211F24 /* String+Ext.swift in Sources */,
+				EDC1BC3F2B0DD88A00211F24 /* RSPlugins.swift in Sources */,
+				EDC1BC402B0DD88A00211F24 /* RSDestinationDefinition.swift in Sources */,
+				EDC1BC412B0DD88A00211F24 /* RSClient.swift in Sources */,
+				EDC1BC422B0DD88A00211F24 /* AppleUtils.swift in Sources */,
+				EDC1BC432B0DD88A00211F24 /* RSClient+Plugins.swift in Sources */,
+				EDC1BC442B0DD88A00211F24 /* RSContextPlugin.swift in Sources */,
+				EDC1BC452B0DD88A00211F24 /* Data+Ext.swift in Sources */,
+				EDC1BC462B0DD88A00211F24 /* RSServiceManager.swift in Sources */,
+				EDC1BC472B0DD88A00211F24 /* RSDBMessage.swift in Sources */,
+				EDC1BC482B0DD88A00211F24 /* RSDestination.swift in Sources */,
+				EDC1BC492B0DD88A00211F24 /* RSiOSDelegation.swift in Sources */,
+				EDC1BC4A2B0DD88A00211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */,
+				EDC1BC4B2B0DD88A00211F24 /* RSUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BC562B0DD89400211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BC572B0DD89400211F24 /* RSUserSessionPlugin.swift in Sources */,
+				EDC1BC582B0DD89400211F24 /* JSON.swift in Sources */,
+				EDC1BC592B0DD89400211F24 /* RSiOSLifecycleEvents.swift in Sources */,
+				EDC1BC5A2B0DD89400211F24 /* RSServiceType.swift in Sources */,
+				EDC1BC5B2B0DD89400211F24 /* NSError+Ext.swift in Sources */,
+				EDC1BC5C2B0DD89400211F24 /* RSLogLevel.swift in Sources */,
+				EDC1BC5D2B0DD89400211F24 /* RSDestinationConfig.swift in Sources */,
+				EDC1BC5E2B0DD89400211F24 /* RSMessageType.swift in Sources */,
+				EDC1BC5F2B0DD89400211F24 /* RudderDestinationPlugin.swift in Sources */,
+				EDC1BC602B0DD89400211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
+				EDC1BC612B0DD89400211F24 /* RSErrorCode.swift in Sources */,
+				EDC1BC622B0DD89400211F24 /* RSSessionStorage.swift in Sources */,
+				EDC1BC632B0DD89400211F24 /* RSMessage.swift in Sources */,
+				EDC1BC642B0DD89400211F24 /* RSwatchOSDelegation.swift in Sources */,
+				EDC1BC652B0DD89400211F24 /* RSConstants.swift in Sources */,
+				EDC1BC662B0DD89400211F24 /* RSAtomic.swift in Sources */,
+				EDC1BC672B0DD89400211F24 /* RSReplayQueuePlugin.swift in Sources */,
+				EDC1BC682B0DD89400211F24 /* RSOption.swift in Sources */,
+				EDC1BC692B0DD89400211F24 /* RSEventsAndKeys.swift in Sources */,
+				EDC1BC6A2B0DD89400211F24 /* RSIntegrationPlugin.swift in Sources */,
+				EDC1BC6B2B0DD89400211F24 /* RSRepeatingTimer.swift in Sources */,
+				EDC1BC6C2B0DD89400211F24 /* RSmacOSLifecycleEvents.swift in Sources */,
+				EDC1BC6D2B0DD89400211F24 /* RSAppTrackingConsent.swift in Sources */,
+				EDC1BC6E2B0DD89400211F24 /* RSConfig.swift in Sources */,
+				EDC1BC6F2B0DD89400211F24 /* RSKeyPath.swift in Sources */,
+				EDC1BC702B0DD89400211F24 /* API.swift in Sources */,
+				EDC1BC712B0DD89400211F24 /* RSDatabaseManager.swift in Sources */,
+				EDC1BC722B0DD89400211F24 /* RSVersion.swift in Sources */,
+				EDC1BC732B0DD89400211F24 /* RSServerConfig.swift in Sources */,
+				EDC1BC742B0DD89400211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BC752B0DD89400211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
+				EDC1BC762B0DD89400211F24 /* RSUserInfo.swift in Sources */,
+				EDC1BC772B0DD89400211F24 /* RSConsoleLogger.swift in Sources */,
+				EDC1BC782B0DD89400211F24 /* RSPushNotifications.swift in Sources */,
+				EDC1BC792B0DD89400211F24 /* RSController.swift in Sources */,
+				EDC1BC7A2B0DD89400211F24 /* RSLoggerPlugin.swift in Sources */,
+				EDC1BC7B2B0DD89400211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
+				EDC1BC7C2B0DD89400211F24 /* RSLogger.swift in Sources */,
+				EDC1BC7D2B0DD89400211F24 /* RSTypeAlias.swift in Sources */,
+				EDC1BC7E2B0DD89400211F24 /* RSiOSScreenViewEvents.swift in Sources */,
+				EDC1BC7F2B0DD89400211F24 /* RSUserDefaults.swift in Sources */,
+				EDC1BC802B0DD89400211F24 /* RSmacOSScreenViewEvents.swift in Sources */,
+				EDC1BC812B0DD89400211F24 /* Vendor.swift in Sources */,
+				EDC1BC822B0DD89400211F24 /* RSLifeCycle.swift in Sources */,
+				EDC1BC832B0DD89400211F24 /* String+Ext.swift in Sources */,
+				EDC1BC842B0DD89400211F24 /* RSPlugins.swift in Sources */,
+				EDC1BC852B0DD89400211F24 /* RSDestinationDefinition.swift in Sources */,
+				EDC1BC862B0DD89400211F24 /* RSClient.swift in Sources */,
+				EDC1BC872B0DD89400211F24 /* AppleUtils.swift in Sources */,
+				EDC1BC882B0DD89400211F24 /* RSClient+Plugins.swift in Sources */,
+				EDC1BC892B0DD89400211F24 /* RSContextPlugin.swift in Sources */,
+				EDC1BC8A2B0DD89400211F24 /* Data+Ext.swift in Sources */,
+				EDC1BC8B2B0DD89400211F24 /* RSServiceManager.swift in Sources */,
+				EDC1BC8C2B0DD89400211F24 /* RSDBMessage.swift in Sources */,
+				EDC1BC8D2B0DD89400211F24 /* RSDestination.swift in Sources */,
+				EDC1BC8E2B0DD89400211F24 /* RSiOSDelegation.swift in Sources */,
+				EDC1BC8F2B0DD89400211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */,
+				EDC1BC902B0DD89400211F24 /* RSUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		ED3D225D279EAC2800EC8366 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 06CABB832630C3CA0097BEFF /* Rudder */;
+			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
 			targetProxy = ED3D225C279EAC2800EC8366 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -869,7 +1417,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SDKInfo/Info.plist";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -879,14 +1428,14 @@
 				);
 				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Rudder;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
@@ -905,7 +1454,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_TESTABILITY = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SDKInfo/Info.plist";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -915,13 +1465,13 @@
 				);
 				MARKETING_VERSION = 2.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Rudder;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
@@ -967,6 +1517,228 @@
 			};
 			name = Release;
 		};
+		EDC1BC0B2B0DD87D00211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		EDC1BC0C2B0DD87D00211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
+		};
+		EDC1BC502B0DD88A00211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		EDC1BC512B0DD88A00211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
+		};
+		EDC1BC952B0DD89400211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		EDC1BC962B0DD89400211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderStack;
+				PRODUCT_NAME = Rudder;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -979,7 +1751,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder" */ = {
+		06CABB982630C3CA0097BEFF /* Build configuration list for PBXNativeTarget "Rudder-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06CABB992630C3CA0097BEFF /* Debug */,
@@ -993,6 +1765,33 @@
 			buildConfigurations = (
 				ED3D225F279EAC2800EC8366 /* Debug */,
 				ED3D2260279EAC2800EC8366 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BC0A2B0DD87D00211F24 /* Build configuration list for PBXNativeTarget "Rudder-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BC0B2B0DD87D00211F24 /* Debug */,
+				EDC1BC0C2B0DD87D00211F24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BC4F2B0DD88A00211F24 /* Build configuration list for PBXNativeTarget "Rudder-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BC502B0DD88A00211F24 /* Debug */,
+				EDC1BC512B0DD88A00211F24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BC942B0DD89400211F24 /* Build configuration list for PBXNativeTarget "Rudder-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BC952B0DD89400211F24 /* Debug */,
+				EDC1BC962B0DD89400211F24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

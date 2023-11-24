@@ -14,15 +14,20 @@ class RSAliasTests: XCTestCase {
     var client: RSClient!
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
+        let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
+        userDefaults.removePersistentDomain(forName: #file)
+        client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
     
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         client = nil
     }
     
-    func testAlias() {
+    func testAlias() {        
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
 

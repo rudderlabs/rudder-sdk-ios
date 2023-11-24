@@ -15,7 +15,10 @@ class RSIdentifyTests: XCTestCase {
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
+        let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
+        userDefaults.removePersistentDomain(forName: #file)
+        client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
 
     override func tearDownWithError() throws {
@@ -82,6 +85,8 @@ class RSIdentifyTests: XCTestCase {
         
         XCTAssertTrue(trackEvent?.userId == "user_id")
         let trackTraits = trackEvent?.context?["traits"] as? [String: Any]
-        XCTAssertNil(trackTraits)
+        XCTAssertNotNil(trackTraits)
+        XCTAssertTrue(trackTraits?["email"] as? String == "abc@def.com")
+        XCTAssertTrue(trackTraits?["userId"] as? String == "user_id")
     }
 }

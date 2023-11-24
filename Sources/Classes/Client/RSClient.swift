@@ -16,7 +16,7 @@ open class RSClient: NSObject {
     var serverConfig: RSServerConfig?
 	internal var checkServerConfigInProgress = false
     static let shared = RSClient()
-    internal let userDefaults = RSUserDefaults()
+    internal var userDefaults = RSUserDefaults()
     internal var userInfo: RSUserInfo? {
         let userId: String? = userDefaults.read(.userId)
         let traits: JSON? = userDefaults.read(.traits)
@@ -304,7 +304,8 @@ extension RSClient {
             log(message: "userId can not be empty", logLevel: .warning)
             return
         }
-        if let traits = traits {
+        if var traits = traits {
+            traits["userId"] = userId
             userDefaults.write(.traits, value: try? JSON(traits))
         }
         userDefaults.write(.userId, value: userId)

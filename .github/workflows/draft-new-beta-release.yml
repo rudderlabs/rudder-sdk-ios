@@ -1,13 +1,17 @@
-name: Draft new release(v2)
+name: Draft new Beta release
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      beta_version:
+        description: "Beta version(Only single digit, example: 1)"
+        required: true
 
 jobs:
-  draft-new-release:
-    name: Draft a new release(v2)
+  draft-new-beta-release:
+    name: Draft a new Beta release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/develop-v2') || startsWith(github.ref, 'refs/heads/hotfix-v2/')
+    if: startsWith(github.ref, 'refs/heads/fix/') || startsWith(github.ref, 'refs/heads/feat/')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v4
@@ -18,7 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
+          
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
       - name: Initialize mandatory git config
@@ -33,15 +37,14 @@ jobs:
           HUSKY: 0
         run: |
           source_branch_name=${GITHUB_REF##*/}
-          release_type=release
-          grep -q "hotfix/" <<< "${GITHUB_REF}" && release_type=hotfix-release
+          release_type=beta-release
           git fetch origin master-v2
           git fetch --tags origin
           git merge origin/master-v2
           current_version=$(jq -r .version package.json)
           
           npx standard-version --skip.commit --skip.tag --skip.changelog
-          new_version=$(jq -r .version package.json)
+          new_version="$(jq -r .version package.json).beta.${{ github.event.inputs.beta_version }}"
           git reset --hard
 
           branch_name="${release_type}/${new_version}"
@@ -60,32 +63,41 @@ jobs:
           echo "CURRENT_VERSION_VALUE=$current_version" >> $GITHUB_ENV
           echo "NEW_VERSION_VALUE=$new_version" >> $GITHUB_ENV
 
-      - name: Update changelog & bump version
+      - name: Bump version
         id: finish-release
         env:
           HUSKY: 0
         run: |
-          npm i -g conventional-changelog-cli
-          SUMMARY=$(((npx conventional-changelog -u) 2>&1) | sed "s/*/<br> */g" | sed "s/#/ /g" | tr -d '\n' || true)
-          echo $SUMMARY
           echo "Current version: $CURRENT_VERSION_VALUE"
           echo "New version: $NEW_VERSION_VALUE"
-          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md Sources/Classes/Common/Constants/RSVersion.swift sonar-project.properties
-          git add README.md Sources/Classes/Common/Constants/RSVersion.swift sonar-project.properties
+          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE package.json
+          git add package.json
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          npx standard-version -a --skip.tag
+          git commit -m "chore(beta-relase): $NEW_VERSION_VALUE"
+          git tag -a "v$NEW_VERSION_VALUE" -m "chore: release v$NEW_VERSION_VALUE"
+          git push origin "v$NEW_VERSION_VALUE"
 
       - name: Push new version in release branch & tag
         run: |
           git push
 
-      - name: Create pull request into master
-        uses: repo-sync/pull-request@v2
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          source_branch: ${{ steps.create-release.outputs.branch_name }}
-          destination_branch: 'master-v2'
-          github_token: ${{ secrets.PAT }}
-          pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into master"
-          pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
-          pr_reviewer: 'pallabmaiti'
+          ref: '${{ steps.create-release.outputs.branch_name }}'
+
+      - name: Install Cocoapods
+        run: gem install cocoapods
+        
+      - name: 'Convert podspec to podspec.json'
+        run: |
+          pod ipc spec Rudder.podspec > Rudder.podspec.json
+
+      - name: Add Private Spec Repo to CocoaPods installation
+        run: |
+          pod repo add rudderlabs https://${{secrets.PAT_USERNAME}}:${{secrets.PAT}}@github.com/rudderlabs/Specs.git
+
+      - name: Add Podspec to repo
+        run: |
+          pod repo push rudderlabs Rudder.podspec.json

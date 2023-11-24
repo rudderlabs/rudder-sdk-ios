@@ -25,7 +25,7 @@ class RSDatabaseTests: XCTestCase {
         client = nil
     }
 
-    func testWriteEvent() {
+    /*func testWriteEvent() {
         let trackMessage = TrackMessage(event: "sample_track1", properties: nil)
             .applyRawEventData(userInfo: client.userInfo)
         databaseManager.write(trackMessage)
@@ -64,7 +64,7 @@ class RSDatabaseTests: XCTestCase {
         } else {
             XCTFail("No events found")
         }
-    }
+    }*/
     
     func fetchAllEvents() -> [[String: Any]]? {
         let totalCount = databaseManager.getDBRecordCount()

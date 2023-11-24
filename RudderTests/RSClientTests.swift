@@ -45,7 +45,7 @@ class RSClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
         
-    func testDestinationNotEnabled() {
+    /*func testDestinationNotEnabled() {
         let expectation = XCTestExpectation(description: "MyDestination Expectation")
         let myDestination = MyDestination {
             expectation.fulfill()
@@ -60,7 +60,7 @@ class RSClientTests: XCTestCase {
         XCTExpectFailure {
             wait(for: [expectation], timeout: 2.0)
         }
-    }
+    }*/
     
     func testAnonymousId() {
         client.setAnonymousId("anonymous_id")

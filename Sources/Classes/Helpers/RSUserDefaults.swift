@@ -33,7 +33,11 @@ class RSUserDefaults {
     }
     
     let syncQueue = DispatchQueue(label: "userDefaults.rudder.com")
-    let userDefaults = UserDefaults.standard
+    let userDefaults: UserDefaults
+    
+    init(userDefaults: UserDefaults = UserDefaults.standard) {
+        self.userDefaults = userDefaults
+    }
         
     func write<T: Codable>(_ key: RSUserDefaults.Keys, value: T?) {
         syncQueue.sync {

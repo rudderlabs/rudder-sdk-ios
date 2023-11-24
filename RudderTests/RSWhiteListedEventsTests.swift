@@ -1,5 +1,5 @@
 //
-//  RSBlackListedEventsTest.swift
+//  RSWhiteListedEventsTests.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 09/03/22.
@@ -10,8 +10,8 @@ import XCTest
 @testable import Rudder
 
 // swiftlint:disable inclusive_language
-class RSBlackListedEventsTest: XCTestCase {
-
+class RSWhiteListedEventsTests: XCTestCase {
+    
     var client: RSClient!
     
     override func setUpWithError() throws {
@@ -22,27 +22,11 @@ class RSBlackListedEventsTest: XCTestCase {
     override func tearDownWithError() throws {
         client = nil
     }
-
-    // swiftlint:disable inclusive_language
-    // make sure you select 'Blacklist' for 'Client-side Events Filtering' section in
-    // Configuration from RudderStack dashboard. It will take 5 min to be affected.
-    func testBlackListedSuccess() {
-        let expectation = XCTestExpectation(description: "Firebase Expectation")
-        let myDestination = FirebaseDestination {
-            expectation.fulfill()
-            return true
-        }
-        
-        client.addDestination(myDestination)
-        waitUntilServerConfigDownloaded(client: client)
-        waitUntilStarted(client: client)
-        client.track("track_blacklist_1")
-        XCTExpectFailure {
-            wait(for: [expectation], timeout: 2.0)
-        }
-    }
     
-    func testBlackListedFailure() {
+    // swiftlint:disable inclusive_language
+    // make sure you select 'Whitelist' for 'Client-side Events Filtering' section in
+    // Configuration from RudderStack dashboard. It will take 5 min to be affected.
+    func testWhiteListedSuccess() {
         let expectation = XCTestExpectation(description: "Firebase Expectation")
         let myDestination = FirebaseDestination {
             expectation.fulfill()
@@ -52,15 +36,23 @@ class RSBlackListedEventsTest: XCTestCase {
         client.addDestination(myDestination)
         waitUntilServerConfigDownloaded(client: client)
         waitUntilStarted(client: client)
-        client.track("track_blacklist_2")
+        client.track("track_whitelist_1")
         wait(for: [expectation], timeout: 2.0)
     }
     
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    /*func testWhiteListedFailure() {
+        let expectation = XCTestExpectation(description: "Firebase Expectation")
+        let myDestination = FirebaseDestination {
+            expectation.fulfill()
+            return true
         }
-    }
-
+        
+        client.addDestination(myDestination)
+        waitUntilServerConfigDownloaded(client: client)
+        waitUntilStarted(client: client)
+        client.track("track_whitelist_2")
+        XCTExpectFailure {
+            wait(for: [expectation], timeout: 2.0)
+        }
+    }*/
 }

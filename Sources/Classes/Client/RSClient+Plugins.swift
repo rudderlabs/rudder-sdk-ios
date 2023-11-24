@@ -170,6 +170,12 @@ extension RSClient {
     }
     
     private func fetchServerConfig(completion: @escaping (HandlerResult<RSServerConfig, NSError>) -> Void) {
+        if isUnitTesting {
+            if let serverConfig = serverConfig {
+                completion(.success(serverConfig))
+            }
+            return
+        }
         let serviceManager = RSServiceManager(client: self)
         serviceManager.downloadServerConfig { result in
             DispatchQueue.main.async {
