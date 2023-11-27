@@ -9,9 +9,6 @@
 import XCTest
 @testable import Rudder
 
-let WRITE_KEY = "1wvsoF3Kx2SczQNlx1dvcqW9ODW"
-let DATA_PLANE_URL = "https://rudderstacz.dataplane.rudderstack.com"
-
 class RSClientTests: XCTestCase {
     
     var client: RSClient!
@@ -22,9 +19,14 @@ class RSClientTests: XCTestCase {
         let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
         userDefaults.removePersistentDomain(forName: #file)
         client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
+//        let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
+//        do {
+//            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+//            let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+//            client.serverConfig = serverConfig
+//        }
+        
         client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
-//        client = RSClient.sharedInstance()
-//        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
     
     override func tearDownWithError() throws {
@@ -361,10 +363,10 @@ func waitUntilStarted(client: RSClient?) {
 }
 
 func waitUntilServerConfigDownloaded(client: RSClient?) {
-//    guard let client = client else { return }
-//    while client.serverConfig == nil {
-//        RunLoop.main.run(until: Date.distantPast)
-//    }
+    guard let client = client else { return }
+    while client.serverConfig == nil {
+        RunLoop.main.run(until: Date.distantPast)
+    }
 }
 
 class FirebaseDestinationPlugin: RSDestinationPlugin {

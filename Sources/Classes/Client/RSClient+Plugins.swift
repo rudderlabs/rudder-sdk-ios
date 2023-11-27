@@ -173,6 +173,15 @@ extension RSClient {
         if isUnitTesting {
             if let serverConfig = serverConfig {
                 completion(.success(serverConfig))
+            } else {
+                let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
+                do {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                    let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+                    completion(.success(serverConfig))
+                } catch {
+                    completion(.failure(NSError(code: .SERVER_ERROR)))
+                }
             }
             return
         }

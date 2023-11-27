@@ -16,7 +16,7 @@ class RSmacOSLifeCycleEventTests: XCTestCase {
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
 
     override func tearDownWithError() throws {

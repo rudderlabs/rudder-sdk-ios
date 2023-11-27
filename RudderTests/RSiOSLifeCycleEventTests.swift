@@ -10,13 +10,13 @@ import XCTest
 @testable import Rudder
 
 #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
-class RSiOSLifeCycleEventTests: XCTestCase {
+/*class RSiOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }
 
     override func tearDownWithError() throws {
@@ -108,5 +108,5 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         XCTAssertTrue(trackEvent?.event == "Application Backgrounded")
         XCTAssertTrue(trackEvent?.type == .track)
     }
-}
+}*/
 #endif

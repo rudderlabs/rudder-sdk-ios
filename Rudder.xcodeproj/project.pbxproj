@@ -242,6 +242,11 @@
 		EDC1BC8E2B0DD89400211F24 /* RSiOSDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226F27A3F0C100EC8366 /* RSiOSDelegation.swift */; };
 		EDC1BC8F2B0DD89400211F24 /* RSwatchOSLifecycleMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226C27A3F0C100EC8366 /* RSwatchOSLifecycleMonitor.swift */; };
 		EDC1BC902B0DD89400211F24 /* RSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF4D2739119600E73142 /* RSUtils.swift */; };
+		EDC1BC9C2B10A5DA00211F24 /* ServerConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */; };
+		EDC1BC9D2B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
+		EDC1BC9E2B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
+		EDC1BC9F2B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
+		EDC1BCA02B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
 		EDD0C96528225BFB00470E88 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
 		EDD0C9672829199200470E88 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
 		EDD3AA1327C64B430048E61E /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
@@ -343,6 +348,8 @@
 		EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC1BC522B0DD88A00211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC1BC972B0DD89400211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDC1BC992B10A31C00211F24 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServerConfig.json; sourceTree = "<group>"; };
 		EDD0C96428225BFB00470E88 /* RSThreadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSThreadTests.swift; sourceTree = "<group>"; };
 		EDD0C9662829199200470E88 /* RSDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDatabaseTests.swift; sourceTree = "<group>"; };
 		EDD3AA1227C64B430048E61E /* RSKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSKeyPath.swift; sourceTree = "<group>"; };
@@ -399,7 +406,6 @@
 				ED056319291BB06C00BAEE65 /* Others */,
 				EDA7EF2D2739119600E73142 /* Sources */,
 				EDC1325B27D612B600AFD833 /* RudderTests */,
-				EDC1325A27D612B600AFD833 /* Tests */,
 				06CABB852630C3CA0097BEFF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -556,6 +562,8 @@
 			isa = PBXGroup;
 			children = (
 				EDA7EF4D2739119600E73142 /* RSUtils.swift */,
+				EDC1BC992B10A31C00211F24 /* TestUtils.swift */,
+				EDC1BC982B10A26700211F24 /* Fixtures */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -583,13 +591,6 @@
 			path = Attributes;
 			sourceTree = "<group>";
 		};
-		EDC1325A27D612B600AFD833 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
 		EDC1325B27D612B600AFD833 /* RudderTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,6 +604,14 @@
 				EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */,
 			);
 			path = RudderTests;
+			sourceTree = "<group>";
+		};
+		EDC1BC982B10A26700211F24 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		EDD3AA1727C656F90048E61E /* Domain */ = {
@@ -871,6 +880,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDC1BC9C2B10A5DA00211F24 /* ServerConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1017,7 @@
 				ED05631F291BEB0400BAEE65 /* RSVersion.swift in Sources */,
 				EDA7EF992739119600E73142 /* RSServerConfig.swift in Sources */,
 				ED3D229E27A3F0C100EC8366 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BCA02B1465AC00211F24 /* TestUtils.swift in Sources */,
 				ED3D229D27A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift in Sources */,
 				ED5603852881C691004B5BEC /* RSUserInfo.swift in Sources */,
 				EDD3AA4C27C8DABD0048E61E /* RSConsoleLogger.swift in Sources */,
@@ -1087,6 +1098,7 @@
 				EDC1BBE82B0DD87D00211F24 /* RSVersion.swift in Sources */,
 				EDC1BBE92B0DD87D00211F24 /* RSServerConfig.swift in Sources */,
 				EDC1BBEA2B0DD87D00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BC9D2B1465AC00211F24 /* TestUtils.swift in Sources */,
 				EDC1BBEB2B0DD87D00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BBEC2B0DD87D00211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BBED2B0DD87D00211F24 /* RSConsoleLogger.swift in Sources */,
@@ -1152,6 +1164,7 @@
 				EDC1BC2D2B0DD88A00211F24 /* RSVersion.swift in Sources */,
 				EDC1BC2E2B0DD88A00211F24 /* RSServerConfig.swift in Sources */,
 				EDC1BC2F2B0DD88A00211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BC9E2B1465AC00211F24 /* TestUtils.swift in Sources */,
 				EDC1BC302B0DD88A00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BC312B0DD88A00211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BC322B0DD88A00211F24 /* RSConsoleLogger.swift in Sources */,
@@ -1217,6 +1230,7 @@
 				EDC1BC722B0DD89400211F24 /* RSVersion.swift in Sources */,
 				EDC1BC732B0DD89400211F24 /* RSServerConfig.swift in Sources */,
 				EDC1BC742B0DD89400211F24 /* RSmacOSLifecycleMonitor.swift in Sources */,
+				EDC1BC9F2B1465AC00211F24 /* TestUtils.swift in Sources */,
 				EDC1BC752B0DD89400211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BC762B0DD89400211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BC772B0DD89400211F24 /* RSConsoleLogger.swift in Sources */,

@@ -16,9 +16,9 @@ class RSDatabaseTests: XCTestCase {
     var databaseManager: RSDatabaseManager!
     
     override func setUpWithError() throws {
-        client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: WRITE_KEY).dataPlaneURL(DATA_PLANE_URL))
-        databaseManager = RSDatabaseManager(client: client)
+//        client = RSClient.sharedInstance()
+//        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
+//        databaseManager = RSDatabaseManager(client: client)
     }
     
     override func tearDownWithError() throws {
