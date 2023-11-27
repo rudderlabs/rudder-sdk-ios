@@ -247,6 +247,36 @@
 		EDC1BC9E2B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
 		EDC1BC9F2B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
 		EDC1BCA02B1465AC00211F24 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BC992B10A31C00211F24 /* TestUtils.swift */; };
+		EDC1BCA52B146A2D00211F24 /* RSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* RSClientTests.swift */; };
+		EDC1BCA62B146A2D00211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */; };
+		EDC1BCA72B146A2D00211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */; };
+		EDC1BCA82B146A2D00211F24 /* RSWhiteListedEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */; };
+		EDC1BCA92B146A2D00211F24 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
+		EDC1BCAA2B146A2D00211F24 /* RSiOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */; };
+		EDC1BCAB2B146A2D00211F24 /* RSBlackListedEventsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AD27D9104700AFD833 /* RSBlackListedEventsTest.swift */; };
+		EDC1BCAC2B146A2D00211F24 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
+		EDC1BCAE2B146A2D00211F24 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; };
+		EDC1BCB02B146A2D00211F24 /* ServerConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */; };
+		EDC1BCB92B146A3800211F24 /* RSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* RSClientTests.swift */; };
+		EDC1BCBA2B146A3800211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */; };
+		EDC1BCBB2B146A3800211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */; };
+		EDC1BCBC2B146A3800211F24 /* RSWhiteListedEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */; };
+		EDC1BCBD2B146A3800211F24 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
+		EDC1BCBE2B146A3800211F24 /* RSiOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */; };
+		EDC1BCBF2B146A3800211F24 /* RSBlackListedEventsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AD27D9104700AFD833 /* RSBlackListedEventsTest.swift */; };
+		EDC1BCC02B146A3800211F24 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
+		EDC1BCC22B146A3800211F24 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; };
+		EDC1BCC42B146A3800211F24 /* ServerConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */; };
+		EDC1BCCD2B146A4E00211F24 /* RSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* RSClientTests.swift */; };
+		EDC1BCCE2B146A4E00211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5728489E2C002B2D46 /* RSmacOSLifeCycleEventTests.swift */; };
+		EDC1BCCF2B146A4E00211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF5628489E2C002B2D46 /* RSwatchOSLifeCycleEventTests.swift */; };
+		EDC1BCD02B146A4E00211F24 /* RSWhiteListedEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AF27D9106500AFD833 /* RSWhiteListedEventsTests.swift */; };
+		EDC1BCD12B146A4E00211F24 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
+		EDC1BCD22B146A4E00211F24 /* RSiOSLifeCycleEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF3FF54284895F9002B2D46 /* RSiOSLifeCycleEventTests.swift */; };
+		EDC1BCD32B146A4E00211F24 /* RSBlackListedEventsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132AD27D9104700AFD833 /* RSBlackListedEventsTest.swift */; };
+		EDC1BCD42B146A4E00211F24 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
+		EDC1BCD62B146A4E00211F24 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; };
+		EDC1BCD82B146A4E00211F24 /* ServerConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */; };
 		EDD0C96528225BFB00470E88 /* RSThreadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C96428225BFB00470E88 /* RSThreadTests.swift */; };
 		EDD0C9672829199200470E88 /* RSDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* RSDatabaseTests.swift */; };
 		EDD3AA1327C64B430048E61E /* RSKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA1227C64B430048E61E /* RSKeyPath.swift */; };
@@ -261,6 +291,27 @@
 
 /* Begin PBXContainerItemProxy section */
 		ED3D225C279EAC2800EC8366 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CABB832630C3CA0097BEFF;
+			remoteInfo = Rudder;
+		};
+		EDC1BCA32B146A2D00211F24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CABB832630C3CA0097BEFF;
+			remoteInfo = Rudder;
+		};
+		EDC1BCB72B146A3800211F24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CABB832630C3CA0097BEFF;
+			remoteInfo = Rudder;
+		};
+		EDC1BCCB2B146A4E00211F24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06CABB7B2630C3CA0097BEFF /* Project object */;
 			proxyType = 1;
@@ -289,7 +340,7 @@
 		ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLifeCycle.swift; sourceTree = "<group>"; };
 		ED157C5927D1010D00F22202 /* RSPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPushNotifications.swift; sourceTree = "<group>"; };
 		ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventsAndKeys.swift; sourceTree = "<group>"; };
-		ED3D2257279EAC2800EC8366 /* RudderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RudderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED3D2257279EAC2800EC8366 /* RudderTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3D226227A3F0C100EC8366 /* RSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSClient.swift; sourceTree = "<group>"; };
 		ED3D226627A3F0C100EC8366 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 		ED3D226727A3F0C100EC8366 /* AppleUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleUtils.swift; sourceTree = "<group>"; };
@@ -350,6 +401,9 @@
 		EDC1BC972B0DD89400211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC1BC992B10A31C00211F24 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		EDC1BC9B2B10A5DA00211F24 /* ServerConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServerConfig.json; sourceTree = "<group>"; };
+		EDC1BCB42B146A2D00211F24 /* RudderTests-watchOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-watchOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDC1BCC82B146A3800211F24 /* RudderTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDC1BCDC2B146A4E00211F24 /* RudderTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDD0C96428225BFB00470E88 /* RSThreadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSThreadTests.swift; sourceTree = "<group>"; };
 		EDD0C9662829199200470E88 /* RSDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDatabaseTests.swift; sourceTree = "<group>"; };
 		EDD3AA1227C64B430048E61E /* RSKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSKeyPath.swift; sourceTree = "<group>"; };
@@ -397,6 +451,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BCAD2B146A2D00211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCAE2B146A2D00211F24 /* Rudder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCC12B146A3800211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCC22B146A3800211F24 /* Rudder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCD52B146A4E00211F24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCD62B146A4E00211F24 /* Rudder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -414,10 +492,13 @@
 			isa = PBXGroup;
 			children = (
 				06CABB842630C3CA0097BEFF /* Rudder.framework */,
-				ED3D2257279EAC2800EC8366 /* RudderTests.xctest */,
+				ED3D2257279EAC2800EC8366 /* RudderTests-iOS.xctest */,
 				EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */,
 				EDC1BC522B0DD88A00211F24 /* Rudder.framework */,
 				EDC1BC972B0DD89400211F24 /* Rudder.framework */,
+				EDC1BCB42B146A2D00211F24 /* RudderTests-watchOS.xctest */,
+				EDC1BCC82B146A3800211F24 /* RudderTests-tvOS.xctest */,
+				EDC1BCDC2B146A4E00211F24 /* RudderTests-macOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -751,9 +832,9 @@
 			productReference = 06CABB842630C3CA0097BEFF /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		ED3D2256279EAC2800EC8366 /* RudderTests */ = {
+		ED3D2256279EAC2800EC8366 /* RudderTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED3D225E279EAC2800EC8366 /* Build configuration list for PBXNativeTarget "RudderTests" */;
+			buildConfigurationList = ED3D225E279EAC2800EC8366 /* Build configuration list for PBXNativeTarget "RudderTests-iOS" */;
 			buildPhases = (
 				ED3D2253279EAC2800EC8366 /* Sources */,
 				ED3D2254279EAC2800EC8366 /* Frameworks */,
@@ -764,9 +845,9 @@
 			dependencies = (
 				ED3D225D279EAC2800EC8366 /* PBXTargetDependency */,
 			);
-			name = RudderTests;
+			name = "RudderTests-iOS";
 			productName = RudderTests;
-			productReference = ED3D2257279EAC2800EC8366 /* RudderTests.xctest */;
+			productReference = ED3D2257279EAC2800EC8366 /* RudderTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EDC1BBC92B0DD87D00211F24 /* Rudder-macOS */ = {
@@ -826,6 +907,60 @@
 			productReference = EDC1BC972B0DD89400211F24 /* Rudder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		EDC1BCA12B146A2D00211F24 /* RudderTests-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BCB12B146A2D00211F24 /* Build configuration list for PBXNativeTarget "RudderTests-watchOS" */;
+			buildPhases = (
+				EDC1BCA42B146A2D00211F24 /* Sources */,
+				EDC1BCAD2B146A2D00211F24 /* Frameworks */,
+				EDC1BCAF2B146A2D00211F24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDC1BCA22B146A2D00211F24 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-watchOS";
+			productName = RudderTests;
+			productReference = EDC1BCB42B146A2D00211F24 /* RudderTests-watchOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDC1BCB52B146A3800211F24 /* RudderTests-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BCC52B146A3800211F24 /* Build configuration list for PBXNativeTarget "RudderTests-tvOS" */;
+			buildPhases = (
+				EDC1BCB82B146A3800211F24 /* Sources */,
+				EDC1BCC12B146A3800211F24 /* Frameworks */,
+				EDC1BCC32B146A3800211F24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDC1BCB62B146A3800211F24 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-tvOS";
+			productName = RudderTests;
+			productReference = EDC1BCC82B146A3800211F24 /* RudderTests-tvOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDC1BCC92B146A4E00211F24 /* RudderTests-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC1BCD92B146A4E00211F24 /* Build configuration list for PBXNativeTarget "RudderTests-macOS" */;
+			buildPhases = (
+				EDC1BCCC2B146A4E00211F24 /* Sources */,
+				EDC1BCD52B146A4E00211F24 /* Frameworks */,
+				EDC1BCD72B146A4E00211F24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDC1BCCA2B146A4E00211F24 /* PBXTargetDependency */,
+			);
+			name = "RudderTests-macOS";
+			productName = RudderTests;
+			productReference = EDC1BCDC2B146A4E00211F24 /* RudderTests-macOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -860,10 +995,13 @@
 			projectRoot = "";
 			targets = (
 				06CABB832630C3CA0097BEFF /* Rudder-iOS */,
-				EDC1BBC92B0DD87D00211F24 /* Rudder-macOS */,
 				EDC1BC0E2B0DD88A00211F24 /* Rudder-tvOS */,
 				EDC1BC532B0DD89400211F24 /* Rudder-watchOS */,
-				ED3D2256279EAC2800EC8366 /* RudderTests */,
+				EDC1BBC92B0DD87D00211F24 /* Rudder-macOS */,
+				ED3D2256279EAC2800EC8366 /* RudderTests-iOS */,
+				EDC1BCB52B146A3800211F24 /* RudderTests-tvOS */,
+				EDC1BCA12B146A2D00211F24 /* RudderTests-watchOS */,
+				EDC1BCC92B146A4E00211F24 /* RudderTests-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -902,6 +1040,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCAF2B146A2D00211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCB02B146A2D00211F24 /* ServerConfig.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCC32B146A3800211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCC42B146A3800211F24 /* ServerConfig.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCD72B146A4E00211F24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCD82B146A4E00211F24 /* ServerConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1262,6 +1424,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDC1BCA42B146A2D00211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCA52B146A2D00211F24 /* RSClientTests.swift in Sources */,
+				EDC1BCA62B146A2D00211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCA72B146A2D00211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCA82B146A2D00211F24 /* RSWhiteListedEventsTests.swift in Sources */,
+				EDC1BCA92B146A2D00211F24 /* RSThreadTests.swift in Sources */,
+				EDC1BCAA2B146A2D00211F24 /* RSiOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCAB2B146A2D00211F24 /* RSBlackListedEventsTest.swift in Sources */,
+				EDC1BCAC2B146A2D00211F24 /* RSDatabaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCB82B146A3800211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCB92B146A3800211F24 /* RSClientTests.swift in Sources */,
+				EDC1BCBA2B146A3800211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCBB2B146A3800211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCBC2B146A3800211F24 /* RSWhiteListedEventsTests.swift in Sources */,
+				EDC1BCBD2B146A3800211F24 /* RSThreadTests.swift in Sources */,
+				EDC1BCBE2B146A3800211F24 /* RSiOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCBF2B146A3800211F24 /* RSBlackListedEventsTest.swift in Sources */,
+				EDC1BCC02B146A3800211F24 /* RSDatabaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC1BCCC2B146A4E00211F24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDC1BCCD2B146A4E00211F24 /* RSClientTests.swift in Sources */,
+				EDC1BCCE2B146A4E00211F24 /* RSmacOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCCF2B146A4E00211F24 /* RSwatchOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCD02B146A4E00211F24 /* RSWhiteListedEventsTests.swift in Sources */,
+				EDC1BCD12B146A4E00211F24 /* RSThreadTests.swift in Sources */,
+				EDC1BCD22B146A4E00211F24 /* RSiOSLifeCycleEventTests.swift in Sources */,
+				EDC1BCD32B146A4E00211F24 /* RSBlackListedEventsTest.swift in Sources */,
+				EDC1BCD42B146A4E00211F24 /* RSDatabaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1269,6 +1476,21 @@
 			isa = PBXTargetDependency;
 			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
 			targetProxy = ED3D225C279EAC2800EC8366 /* PBXContainerItemProxy */;
+		};
+		EDC1BCA22B146A2D00211F24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
+			targetProxy = EDC1BCA32B146A2D00211F24 /* PBXContainerItemProxy */;
+		};
+		EDC1BCB62B146A3800211F24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
+			targetProxy = EDC1BCB72B146A3800211F24 /* PBXContainerItemProxy */;
+		};
+		EDC1BCCA2B146A4E00211F24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06CABB832630C3CA0097BEFF /* Rudder-iOS */;
+			targetProxy = EDC1BCCB2B146A4E00211F24 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1478,16 +1700,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GTGKNDBD23;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1499,15 +1721,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GTGKNDBD23;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1733,6 +1955,135 @@
 			};
 			name = Release;
 		};
+		EDC1BCB22B146A2D00211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		EDC1BCB32B146A2D00211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		EDC1BCC62B146A3800211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		EDC1BCC72B146A3800211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		EDC1BCDA2B146A4E00211F24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+			};
+			name = Debug;
+		};
+		EDC1BCDB2B146A4E00211F24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GTGKNDBD23;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.RudderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1754,7 +2105,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED3D225E279EAC2800EC8366 /* Build configuration list for PBXNativeTarget "RudderTests" */ = {
+		ED3D225E279EAC2800EC8366 /* Build configuration list for PBXNativeTarget "RudderTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED3D225F279EAC2800EC8366 /* Debug */,
@@ -1786,6 +2137,33 @@
 			buildConfigurations = (
 				EDC1BC952B0DD89400211F24 /* Debug */,
 				EDC1BC962B0DD89400211F24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BCB12B146A2D00211F24 /* Build configuration list for PBXNativeTarget "RudderTests-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BCB22B146A2D00211F24 /* Debug */,
+				EDC1BCB32B146A2D00211F24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BCC52B146A3800211F24 /* Build configuration list for PBXNativeTarget "RudderTests-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BCC62B146A3800211F24 /* Debug */,
+				EDC1BCC72B146A3800211F24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC1BCD92B146A4E00211F24 /* Build configuration list for PBXNativeTarget "RudderTests-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDC1BCDA2B146A4E00211F24 /* Debug */,
+				EDC1BCDB2B146A4E00211F24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

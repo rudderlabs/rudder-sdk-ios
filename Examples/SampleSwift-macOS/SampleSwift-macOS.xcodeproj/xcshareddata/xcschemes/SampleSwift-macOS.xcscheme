@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDC1BC532B0DD89400211F24"
-               BuildableName = "Rudder.framework"
-               BlueprintName = "Rudder-watchOS"
-               ReferencedContainer = "container:Rudder.xcodeproj">
+               BlueprintIdentifier = "EDF3FF41284643E2002B2D46"
+               BuildableName = "SampleSwift-macOS.app"
+               BlueprintName = "SampleSwift-macOS"
+               ReferencedContainer = "container:SampleSwift-macOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -39,6 +39,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EDF3FF41284643E2002B2D46"
+            BuildableName = "SampleSwift-macOS.app"
+            BlueprintName = "SampleSwift-macOS"
+            ReferencedContainer = "container:SampleSwift-macOS.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -46,15 +56,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EDC1BC532B0DD89400211F24"
-            BuildableName = "Rudder.framework"
-            BlueprintName = "Rudder-watchOS"
-            ReferencedContainer = "container:Rudder.xcodeproj">
+            BlueprintIdentifier = "EDF3FF41284643E2002B2D46"
+            BuildableName = "SampleSwift-macOS.app"
+            BlueprintName = "SampleSwift-macOS"
+            ReferencedContainer = "container:SampleSwift-macOS.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

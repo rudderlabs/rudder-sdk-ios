@@ -19,12 +19,6 @@ class RSClientTests: XCTestCase {
         let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
         userDefaults.removePersistentDomain(forName: #file)
         client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
-//        let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
-//        do {
-//            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-//            let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
-//            client.serverConfig = serverConfig
-//        }
         
         client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
     }

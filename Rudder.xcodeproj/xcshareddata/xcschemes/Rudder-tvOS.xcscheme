@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EDC1BC0E2B0DD88A00211F24"
-               BuildableName = "Rudder-tvOS.framework"
+               BuildableName = "Rudder.framework"
                BlueprintName = "Rudder-tvOS"
                ReferencedContainer = "container:Rudder.xcodeproj">
             </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EDC1BC0E2B0DD88A00211F24"
-            BuildableName = "Rudder-tvOS.framework"
+            BuildableName = "Rudder.framework"
             BlueprintName = "Rudder-tvOS"
             ReferencedContainer = "container:Rudder.xcodeproj">
          </BuildableReference>
