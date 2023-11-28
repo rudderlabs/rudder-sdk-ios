@@ -231,7 +231,7 @@ open class RSClient: NSObject {
 
 extension RSClient {
     internal func _track(_ eventName: String, properties: TrackProperties? = nil, option: RSOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out, hence dropping the event", logLevel: .debug)
             return
         }
@@ -245,7 +245,7 @@ extension RSClient {
     }
     
     internal func _screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: RSOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out, hence dropping the event", logLevel: .debug)
             return
         }
@@ -264,7 +264,7 @@ extension RSClient {
     }
     
     internal func _group(_ groupId: String, traits: [String: String]? = nil, option: RSOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out, hence dropping the event", logLevel: .debug)
             return
         }
@@ -278,7 +278,7 @@ extension RSClient {
     }
     
     internal func _alias(_ newId: String, option: RSOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out, hence dropping the event", logLevel: .debug)
             return
         }
@@ -299,7 +299,7 @@ extension RSClient {
     }
     
     internal func _identify(_ userId: String, traits: IdentifyTraits? = nil, option: RSOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out, hence dropping the event", logLevel: .debug)
             return
         }
@@ -329,7 +329,7 @@ extension RSClient {
      */
     @objc
     public var anonymousId: String? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return nil
         }
@@ -341,7 +341,7 @@ extension RSClient {
      */
     @objc
     public var userId: String? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return nil
         }
@@ -353,7 +353,7 @@ extension RSClient {
      */
     @objc
     public var context: MessageContext? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return nil
         }
@@ -366,7 +366,7 @@ extension RSClient {
      */
     @objc
     public var traits: MessageTraits? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return nil
         }
@@ -413,7 +413,7 @@ extension RSClient {
      */
     @objc
     public var configuration: RSConfig? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return nil
         }
@@ -479,7 +479,7 @@ extension RSClient {
      */
     @objc
     public func setAnonymousId(_ anonymousId: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return
         }
@@ -504,7 +504,7 @@ extension RSClient {
      */
     @objc
     public func setOption(_ option: RSOption) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return
         }
@@ -522,7 +522,7 @@ extension RSClient {
      */
     @objc
     public func setDeviceToken(_ token: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return
         }
@@ -544,7 +544,7 @@ extension RSClient {
      */
     @objc
     public func setAdvertisingId(_ advertisingId: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return
         }
@@ -568,7 +568,7 @@ extension RSClient {
      */
     @objc
     public func setAppTrackingConsent(_ appTrackingConsent: RSAppTrackingConsent) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus == true {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: "User has been Opted out", logLevel: .debug)
             return
         }

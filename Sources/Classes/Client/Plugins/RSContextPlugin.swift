@@ -143,11 +143,9 @@ class RSContextPlugin: RSPlatformPlugin {
             }
         } else {
             // Fetch `customContexts` set using setOption API.
-            if let globalOption: RSOption = RSSessionStorage.shared.read(.option) {
-                if let customContexts = globalOption.customContexts {
-                    for (key, value) in customContexts {
-                        context[key] = value
-                    }
+            if let globalOption: RSOption = RSSessionStorage.shared.read(.option), let customContexts = globalOption.customContexts {
+                for (key, value) in customContexts {
+                    context[key] = value
                 }
             }
             // Fetch `externalIds` set using identify API.

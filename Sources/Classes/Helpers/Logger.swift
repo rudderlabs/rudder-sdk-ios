@@ -14,7 +14,7 @@ import Foundation
     case info = 3
     case warning = 2
     case error = 1
-    case `none` = 0
+    case none = 0
     
     public func toString() -> String {
         switch self {
