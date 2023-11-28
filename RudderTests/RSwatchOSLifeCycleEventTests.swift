@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 #if os(watchOS)
-/*class RSwatchOSLifeCycleEventTests: XCTestCase {
+class RSwatchOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
@@ -88,5 +88,5 @@ import XCTest
         XCTAssertTrue(trackEvent?.event == "Application Opened")
         XCTAssertTrue(trackEvent?.type == .track)
     }
-}*/
+}
 #endif

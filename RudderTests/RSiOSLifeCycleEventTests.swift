@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
-/*class RSiOSLifeCycleEventTests: XCTestCase {
+class RSiOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
@@ -31,7 +31,7 @@ import XCTest
         client.add(plugin: iOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         client.userDefaults.write(application: .version, value: nil)
         client.userDefaults.write(application: .build, value: nil)
@@ -57,7 +57,7 @@ import XCTest
         client.add(plugin: iOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         client.userDefaults.write(application: .version, value: "2.0.0")
         client.userDefaults.write(application: .build, value: "2")
@@ -83,7 +83,7 @@ import XCTest
         client.add(plugin: iOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
         
@@ -100,7 +100,7 @@ import XCTest
         client.add(plugin: iOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         iOSLifeCyclePlugin.applicationDidEnterBackground(application: nil)
         
@@ -108,5 +108,5 @@ import XCTest
         XCTAssertTrue(trackEvent?.event == "Application Backgrounded")
         XCTAssertTrue(trackEvent?.type == .track)
     }
-}*/
+}
 #endif
