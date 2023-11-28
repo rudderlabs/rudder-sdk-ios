@@ -23,11 +23,11 @@ open class RSOption: NSObject {
     @objc
     public func putExternalId(_ type: String, withId id: String) {
         guard type.isNotEmpty else {
-            RSClient.rsLog(message: "ExternalId type can not be empty", logLevel: .warning)
+            Logger.log(message: "ExternalId type can not be empty", logLevel: .warning)
             return
         }
         guard id.isNotEmpty else {
-            RSClient.rsLog(message: "External id can not be empty", logLevel: .warning)
+            Logger.log(message: "External id can not be empty", logLevel: .warning)
             return
         }
         if externalIds == nil {
@@ -46,7 +46,7 @@ open class RSOption: NSObject {
     @objc
     public func putIntegration(_ type: String, isEnabled enabled: Bool) {
         guard type.isNotEmpty else {
-            RSClient.rsLog(message: "Integration type can not be empty", logLevel: .warning)
+            Logger.log(message: "Integration type can not be empty", logLevel: .warning)
             return
         }
         integrations?[type] = enabled
@@ -55,7 +55,7 @@ open class RSOption: NSObject {
     @objc
     public func putCustomContext(_ context: [String: Any], withKey key: String) {
         guard key.isNotEmpty else {
-            RSClient.rsLog(message: "CustomContext key can not be empty", logLevel: .warning)
+            Logger.log(message: "CustomContext key can not be empty", logLevel: .warning)
             return
         }
         if customContexts == nil {

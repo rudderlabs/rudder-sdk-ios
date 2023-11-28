@@ -95,7 +95,7 @@ internal class PhoneVendor: Vendor {
             let majorVersion = versionComponents[0]
             
             if majorVersion >= 16 {
-                RSClient.rsLog(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
+                Logger.log(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
                 return nil
             } else if majorVersion >= 12 && majorVersion < 16 {
                 let networkInfo = CTTelephonyNetworkInfo()

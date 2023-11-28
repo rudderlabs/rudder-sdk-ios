@@ -113,21 +113,21 @@ extension RudderDestinationPlugin {
             let numberOfBatch = RSUtils.getNumberOfBatch(from: databaseManager.getDBRecordCount(), and: config.flushQueueSize)
             for i in 0..<numberOfBatch {
                 uploadGroup.enter()
-                self.client?.log(message: "Flushing batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
+                Logger.log(message: "Flushing batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
                 var isLastBatchFailed = false
                 for count in 1...RETRY_FLUSH_COUNT {
                     let errorCode = self.prepareEventsToFlush()
                     if errorCode == nil {
-                        self.client?.log(message: "Successful to flush batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
+                        Logger.log(message: "Successful to flush batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
                         break
                     }
-                    self.client?.log(message: "Failed to flush batch \(i + 1)/\(numberOfBatch), \(3 - count) retries left", logLevel: .debug)
+                    Logger.log(message: "Failed to flush batch \(i + 1)/\(numberOfBatch), \(3 - count) retries left", logLevel: .debug)
                     if count == RETRY_FLUSH_COUNT {
                         isLastBatchFailed = true
                     }
                 }
                 if isLastBatchFailed {
-                    self.client?.log(message: "Failed to send \(i + 1)/\(numberOfBatch) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
+                    Logger.log(message: "Failed to send \(i + 1)/\(numberOfBatch) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
                     break
                 }
                 uploadGroup.leave()
@@ -151,31 +151,31 @@ extension RudderDestinationPlugin {
         }
         var errorCode: RSErrorCode?
         let recordCount = databaseManager.getDBRecordCount()
-        client?.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
+        Logger.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
         if recordCount > config.dbCountThreshold {
-            client?.log(message: "Old DBRecordCount \(recordCount - config.dbCountThreshold)", logLevel: .debug)
+            Logger.log(message: "Old DBRecordCount \(recordCount - config.dbCountThreshold)", logLevel: .debug)
             let dbMessage = databaseManager.getEvents(recordCount - config.dbCountThreshold)
             if let messageIds = dbMessage?.messageIds {
                 databaseManager.removeEvents(messageIds)
             }
         }
-        client?.log(message: "Fetching events to flush to sever", logLevel: .debug)
+        Logger.log(message: "Fetching events to flush to sever", logLevel: .debug)
         guard let dbMessage = databaseManager.getEvents(config.flushQueueSize) else {
             return .UNKNOWN
         }
         if dbMessage.messages.isEmpty == false {
             let params = RSUtils.getJSON(from: dbMessage)
-            client?.log(message: "Payload: \(params)", logLevel: .debug)
-            client?.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
+            Logger.log(message: "Payload: \(params)", logLevel: .debug)
+            Logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
             if !params.isEmpty {
                 errorCode = self.flushEventsToServer(params: params)
                 if errorCode == nil {
-                    client?.log(message: "clearing events from DB", logLevel: .debug)
+                    Logger.log(message: "clearing events from DB", logLevel: .debug)
                     databaseManager.removeEvents(dbMessage.messageIds)
                 } else if errorCode == .WRONG_WRITE_KEY {
-                    client?.log(message: "Wrong WriteKey. Aborting.", logLevel: .error)
+                    Logger.log(message: "Wrong WriteKey. Aborting.", logLevel: .error)
                 } else if errorCode == .SERVER_ERROR {
-                    client?.log(message: "Server error. Aborting.", logLevel: .error)
+                    Logger.log(message: "Server error. Aborting.", logLevel: .error)
                 }
             }
         }

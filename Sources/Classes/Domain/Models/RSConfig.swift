@@ -105,7 +105,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func sleepTimeOut(_ sleepTimeOut: Int) -> RSConfig {
         guard sleepTimeOut > 0 else {
-            RSClient.rsLog(message: "sleepTimeOut can not be less than 1 second", logLevel: .warning)
+            Logger.log(message: "sleepTimeOut can not be less than 1 second", logLevel: .warning)
             return self
         }
         _sleepTimeOut = sleepTimeOut
@@ -147,7 +147,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func sessionTimeout(_ sessionTimeout: Int) -> RSConfig {
         guard sessionTimeout >= RSSessionInActivityMinimumTimeOut else {
-            RSClient.rsLog(message: "sessionTimeout can not be less than 0 second", logLevel: .warning)
+            Logger.log(message: "sessionTimeout can not be less than 0 second", logLevel: .warning)
             return self
         }
         _sessionTimeout = sessionTimeout

@@ -92,7 +92,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     
     func startNewSession(_ newSessionId: Int?) {
         let sessionId: Int = newSessionId ?? RSUtils.getTimeStamp()
-        client?.log(message: "New session is started", logLevel: .verbose)
+        Logger.log(message: "New session is started", logLevel: .verbose)
         isNewSessionStarted = true
         userDefaults?.write(.sessionId, value: sessionId)
         self.sessionId = sessionId
@@ -155,20 +155,20 @@ extension RSClient {
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
             userSessionPlugin.startManualSession(nil)
         } else {
-            log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
+            Logger.log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
         }
     }
     
     @objc
     public func startSession(_ sessionId: Int) {
         guard String(sessionId).count >= 10 else {
-            log(message: "RSClient: startSession: Length of the sessionId should be at least 10: \(sessionId)", logLevel: .error)
+            Logger.log(message: "RSClient: startSession: Length of the sessionId should be at least 10: \(sessionId)", logLevel: .error)
             return
         }
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
             userSessionPlugin.startManualSession(sessionId)
         } else {
-            log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
+            Logger.log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
         }
     }
     

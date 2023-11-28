@@ -12,11 +12,6 @@ extension RSClient {
         
     internal func addPlugins() {
         add(plugin: RSReplayQueuePlugin())
-        
-        let logPlugin = RSLoggerPlugin()
-        logPlugin.loggingEnabled(config?.logLevel != RSLogLevel.none)
-        add(plugin: logPlugin)
-        
         add(plugin: RSIntegrationPlugin())
         add(plugin: RudderDestinationPlugin())
         
@@ -117,79 +112,106 @@ extension RSClient {
     }
     
     func checkServerConfig() {
-        assert(Thread.isMainThread)
-        guard !self.checkServerConfigInProgress else { return }
-        
-        self.checkServerConfigInProgress = true
-        self.checkServerConfig(retryCount: 0) {
-            assert(Thread.isMainThread)
-            self.checkServerConfigInProgress = false
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, !self.checkServerConfigInProgress else { return }
+            
+            self.checkServerConfigInProgress = true
+            self.checkServerConfig(retryCount: 0) {
+                self.checkServerConfigInProgress = false
+            }
         }
     }
     
     private func checkServerConfig(retryCount: Int, completion: @escaping ( ) -> Void) {
-        assert(Thread.isMainThread)
+        if isUnitTesting {
+            var configFileName = ""
+            switch RSClient.sourceConfigType {
+                default:
+                    configFileName = "ServerConfig"
+            }
+            
+            let path = TestUtils.shared.getPath(forResource: configFileName, ofType: "json")
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+                self.serverConfig = serverConfig
+                self.update(serverConfig: serverConfig, type: .initial)
+                self.userDefaults.write(.serverConfig, value: serverConfig)
+                self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
+            } catch {
+            }
+            completion()
+            return
+        }
         let maxRetryCount = 4
         
         guard retryCount < maxRetryCount else {
             if let serverConfig = serverConfig {
                 update(serverConfig: serverConfig, type: .refresh)
             }
-            log(message: "Server config download failed. Using last stored config from storage", logLevel: .debug)
+            Logger.log(message: "Server config download failed. Using last stored config from storage", logLevel: .debug)
             completion()
             return
         }
         
         let updateType: UpdateType = self.serverConfig == nil ? .initial : .refresh
-        
-        fetchServerConfig { result in
-            assert(Thread.isMainThread)
-            
+        serviceManager?.downloadServerConfig({ [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let serverConfig):
                 self.serverConfig = serverConfig
                 self.update(serverConfig: serverConfig, type: updateType)
                 self.userDefaults.write(.serverConfig, value: serverConfig)
                 self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
-                self.log(message: "server config download successful", logLevel: .debug)
+                Logger.log(message: "server config download successful", logLevel: .debug)
                 completion()
-                
+                    
             case .failure(let error):
                 if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    self.log(message: "Wrong write key", logLevel: .error)
+                    Logger.log(message: "Wrong write key", logLevel: .error)
                     self.checkServerConfig(retryCount: maxRetryCount, completion: completion)
                 } else {
-                    self.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
+                    Logger.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
                         self.checkServerConfig(retryCount: retryCount + 1, completion: completion)
                     }
                 }
             }
-        }
+        })
     }
     
-    private func fetchServerConfig(completion: @escaping (HandlerResult<RSServerConfig, NSError>) -> Void) {
-        if isUnitTesting {
-            if let serverConfig = serverConfig {
-                completion(.success(serverConfig))
-            } else {
-                let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
-                do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                    let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
-                    completion(.success(serverConfig))
-                } catch {
-                    completion(.failure(NSError(code: .SERVER_ERROR)))
-                }
-            }
-            return
-        }
-        let serviceManager = RSServiceManager(client: self)
-        serviceManager.downloadServerConfig { result in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
+//    private func fetchServerConfig(completion: @escaping (HandlerResult<RSServerConfig, NSError>) -> Void) {
+//        if isUnitTesting {
+//            if let serverConfig = serverConfig {
+//                completion(.success(serverConfig))
+//            } else {
+//                let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
+//                do {
+//                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+//                    let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+//                    completion(.success(serverConfig))
+//                } catch {
+//                    completion(.failure(NSError(code: .SERVER_ERROR)))
+//                }
+//            }
+//            return
+//        }
+//        let serviceManager = RSServiceManager(client: self)
+//        serviceManager.downloadServerConfig { result in
+//            DispatchQueue.main.async {
+//                completion(result)
+//            }
+//        }
+//    }
+}
+
+extension RSClient {
+    static var sourceConfigType: SourceConfigType = .standard
+}
+
+enum SourceConfigType {
+    case whiteList
+    case blackList
+    case standard
 }

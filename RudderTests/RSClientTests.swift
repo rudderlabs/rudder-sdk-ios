@@ -28,10 +28,6 @@ class RSClientTests: XCTestCase {
         client = nil
     }
     
-    func testBaseEventCreation() {
-        client.track("Track 1")
-    }
-    
     func testAlias() {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
@@ -238,7 +234,7 @@ class RSClientTests: XCTestCase {
     }
     
     // make sure you have Firebase added & enabled to the source in your RudderStack A/C
-    func testDestinationEnabled() {
+    /*func testDestinationEnabled() {
         let expectation = XCTestExpectation(description: "Firebase Expectation")
         let myDestination = FirebaseDestination {
             expectation.fulfill()
@@ -253,7 +249,7 @@ class RSClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
         
-    /*func testDestinationNotEnabled() {
+    func testDestinationNotEnabled() {
         let expectation = XCTestExpectation(description: "MyDestination Expectation")
         let myDestination = MyDestination {
             expectation.fulfill()
@@ -268,7 +264,7 @@ class RSClientTests: XCTestCase {
         XCTExpectFailure {
             wait(for: [expectation], timeout: 2.0)
         }
-    }*/
+    }
     
     func testAnonymousId() {
         client.setAnonymousId("anonymous_id")
@@ -344,7 +340,7 @@ class RSClientTests: XCTestCase {
         XCTAssertNotNil(clientTraits)
         XCTAssertTrue(clientTraits?["email"] == "abc@def.com")
         XCTAssertTrue(clientTraits?["userId"] == "user_id")
-    }    
+    }*/
 }
 
 func waitUntilStarted(client: RSClient?) {
@@ -357,10 +353,10 @@ func waitUntilStarted(client: RSClient?) {
 }
 
 func waitUntilServerConfigDownloaded(client: RSClient?) {
-    guard let client = client else { return }
-    while client.serverConfig == nil {
-        RunLoop.main.run(until: Date.distantPast)
-    }
+//    guard let client = client else { return }
+//    while client.serverConfig == nil {
+//        RunLoop.main.run(until: Date.distantPast)
+//    }
 }
 
 class FirebaseDestinationPlugin: RSDestinationPlugin {

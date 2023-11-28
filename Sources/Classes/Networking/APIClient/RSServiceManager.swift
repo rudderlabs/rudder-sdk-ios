@@ -46,16 +46,16 @@ struct RSServiceManager: RSServiceType {
 extension RSServiceManager {
     func request<T: Codable>(_ API: API, _ completion: @escaping Handler<T>) {
         let urlString = [baseURL(API), path(API)].joined().addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-        client.log(message: "URL: \(urlString ?? "")", logLevel: .debug)
+        Logger.log(message: "URL: \(urlString ?? "")", logLevel: .debug)
         var request = URLRequest(url: URL(string: urlString ?? "")!)
         request.httpMethod = method(API).value
         if let headers = headers(API) {
             request.allHTTPHeaderFields = headers
-            client.log(message: "HTTPHeaderFields: \(headers)", logLevel: .debug)
+            Logger.log(message: "HTTPHeaderFields: \(headers)", logLevel: .debug)
         }
         if let httpBody = httpBody(API) {
             request.httpBody = httpBody
-            client.log(message: "HTTPBody: \(httpBody)", logLevel: .debug)
+            Logger.log(message: "HTTPBody: \(httpBody)", logLevel: .debug)
         }
         let dataTask = RSServiceManager.sharedSession.dataTask(with: request, completionHandler: { (data, response, error) in
             if error != nil {
@@ -73,7 +73,7 @@ extension RSServiceManager {
                     default:
                         do {
                             if let data = data, let jsonString = String(data: data, encoding: .utf8) {
-                                client.log(message: jsonString, logLevel: .debug)
+                                Logger.log(message: jsonString, logLevel: .debug)
                             }
                             let object = try JSONDecoder().decode(T.self, from: data ?? Data())
                             completion(.success(object))
