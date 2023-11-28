@@ -232,8 +232,9 @@ class RSClientTests: XCTestCase {
         }
         
         client.addDestination(myDestination)
-        waitUntilServerConfigDownloaded(client: client)
+        
         waitUntilStarted(client: client)
+        
         client.track("testDestinationEnabled")
         
         wait(for: [expectation], timeout: 2.0)
@@ -247,22 +248,34 @@ class RSClientTests: XCTestCase {
         }
 
         client.addDestination(myDestination)
-        waitUntilServerConfigDownloaded(client: client)
+        
         waitUntilStarted(client: client)
         client.track("testDestinationEnabled")
 
         XCTExpectFailure {
             wait(for: [expectation], timeout: 2.0)
         }
-    }
+    }*/
     
     func testAnonymousId() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
         client.setAnonymousId("anonymous_id")
+        
+        waitUntilStarted(client: client)
+        
+        client.track("test_anonymous_id")
         
         let anonId = client.anonymousId
         
         XCTAssertTrue(anonId != "")
         XCTAssertTrue(anonId == "anonymous_id")
+        
+        let anonymousId = resultPlugin.lastMessage?.anonymousId
+        
+        XCTAssertTrue(anonymousId != "")
+        XCTAssertTrue(anonymousId == "anonymous_id")
     }
     
     func testContext() {
@@ -270,7 +283,7 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
 
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         client.track("context check")
         
@@ -291,7 +304,7 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
 
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
 
         client.setDeviceToken("device_token")
         client.track("device token check")
@@ -308,7 +321,7 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
+        
         
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
@@ -330,7 +343,7 @@ class RSClientTests: XCTestCase {
         XCTAssertNotNil(clientTraits)
         XCTAssertTrue(clientTraits?["email"] == "abc@def.com")
         XCTAssertTrue(clientTraits?["userId"] == "user_id")
-    }*/
+    }
 }
 
 func waitUntilStarted(client: RSClient?) {
