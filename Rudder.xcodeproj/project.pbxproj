@@ -40,6 +40,10 @@
 		ED53723C2B15C32000D794EB /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC1BC972B0DD89400211F24 /* Rudder.framework */; };
 		ED53723D2B15C32900D794EB /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC1BC522B0DD88A00211F24 /* Rudder.framework */; };
 		ED53723E2B15C33300D794EB /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */; };
+		ED5372462B1613CE00D794EB /* LogMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5372452B1613CE00D794EB /* LogMessages.swift */; };
+		ED5372472B1613CE00D794EB /* LogMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5372452B1613CE00D794EB /* LogMessages.swift */; };
+		ED5372482B1613CE00D794EB /* LogMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5372452B1613CE00D794EB /* LogMessages.swift */; };
+		ED5372492B1613CE00D794EB /* LogMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5372452B1613CE00D794EB /* LogMessages.swift */; };
 		ED5603852881C691004B5BEC /* RSUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603842881C691004B5BEC /* RSUserInfo.swift */; };
 		ED5603872882CE6D004B5BEC /* RSSessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */; };
 		ED560389288316C2004B5BEC /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560388288316C2004B5BEC /* Data+Ext.swift */; };
@@ -347,6 +351,7 @@
 		ED3D228227A3F0C100EC8366 /* RSClient+Plugins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSClient+Plugins.swift"; sourceTree = "<group>"; };
 		ED3D229227A3F0C100EC8366 /* RSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMessage.swift; sourceTree = "<group>"; };
 		ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSTypeAlias.swift; sourceTree = "<group>"; };
+		ED5372452B1613CE00D794EB /* LogMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMessages.swift; sourceTree = "<group>"; };
 		ED5603842881C691004B5BEC /* RSUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSUserInfo.swift; sourceTree = "<group>"; };
 		ED5603862882CE6D004B5BEC /* RSSessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSessionStorage.swift; sourceTree = "<group>"; };
 		ED560388288316C2004B5BEC /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
@@ -627,6 +632,7 @@
 				ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */,
 				ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */,
 				ED05631E291BEB0400BAEE65 /* RSVersion.swift */,
+				ED5372452B1613CE00D794EB /* LogMessages.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1147,6 +1153,7 @@
 				EDA7EF9A2739119600E73142 /* RSDestinationConfig.swift in Sources */,
 				EDA7EF8D2739119600E73142 /* RSMessageType.swift in Sources */,
 				ED3D22A527A3F0C100EC8366 /* RudderDestinationPlugin.swift in Sources */,
+				ED5372462B1613CE00D794EB /* LogMessages.swift in Sources */,
 				ED3D229927A3F0C100EC8366 /* RSwatchOSLifecycleEvents.swift in Sources */,
 				EDA7EF8F2739119600E73142 /* RSErrorCode.swift in Sources */,
 				ED5603872882CE6D004B5BEC /* RSSessionStorage.swift in Sources */,
@@ -1225,6 +1232,7 @@
 				EDC1BBD32B0DD87D00211F24 /* RSDestinationConfig.swift in Sources */,
 				EDC1BBD42B0DD87D00211F24 /* RSMessageType.swift in Sources */,
 				EDC1BBD52B0DD87D00211F24 /* RudderDestinationPlugin.swift in Sources */,
+				ED5372492B1613CE00D794EB /* LogMessages.swift in Sources */,
 				EDC1BBD62B0DD87D00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
 				EDC1BBD72B0DD87D00211F24 /* RSErrorCode.swift in Sources */,
 				EDC1BBD82B0DD87D00211F24 /* RSSessionStorage.swift in Sources */,
@@ -1288,6 +1296,7 @@
 				EDC1BC182B0DD88A00211F24 /* RSDestinationConfig.swift in Sources */,
 				EDC1BC192B0DD88A00211F24 /* RSMessageType.swift in Sources */,
 				EDC1BC1A2B0DD88A00211F24 /* RudderDestinationPlugin.swift in Sources */,
+				ED5372472B1613CE00D794EB /* LogMessages.swift in Sources */,
 				EDC1BC1B2B0DD88A00211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
 				EDC1BC1C2B0DD88A00211F24 /* RSErrorCode.swift in Sources */,
 				EDC1BC1D2B0DD88A00211F24 /* RSSessionStorage.swift in Sources */,
@@ -1351,6 +1360,7 @@
 				EDC1BC5D2B0DD89400211F24 /* RSDestinationConfig.swift in Sources */,
 				EDC1BC5E2B0DD89400211F24 /* RSMessageType.swift in Sources */,
 				EDC1BC5F2B0DD89400211F24 /* RudderDestinationPlugin.swift in Sources */,
+				ED5372482B1613CE00D794EB /* LogMessages.swift in Sources */,
 				EDC1BC602B0DD89400211F24 /* RSwatchOSLifecycleEvents.swift in Sources */,
 				EDC1BC612B0DD89400211F24 /* RSErrorCode.swift in Sources */,
 				EDC1BC622B0DD89400211F24 /* RSSessionStorage.swift in Sources */,

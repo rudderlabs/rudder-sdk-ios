@@ -64,6 +64,6 @@ class Logger {
     }
 
     static func log(message: String, logLevel: RSLogLevel, function: String = #function, line: Int = #line) {
-        rsLog(message: message, logLevel: logLevel)
+        rsLog(message: message, logLevel: logLevel, function: function, line: line)
     }
 }
