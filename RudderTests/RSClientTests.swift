@@ -33,7 +33,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.alias("user_id")
         
@@ -59,7 +58,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.group("sample_group_id")
         
@@ -76,7 +74,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.group("sample_group_id", traits: ["key_1": "value_1", "key_2": "value_2"])
         
@@ -98,7 +95,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.identify("user_id")
         
@@ -113,7 +109,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
@@ -133,7 +128,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
@@ -163,7 +157,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.screen("ViewController")
         
@@ -177,7 +170,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.screen("ViewController", properties: ["key_1": "value_1", "key_2": "value_2"])
         
@@ -199,7 +191,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.track("simple_track")
         
@@ -216,7 +207,6 @@ class RSClientTests: XCTestCase {
         client.add(plugin: resultPlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.track("simple_track_with_props", properties: ["key_1": "value_1", "key_2": "value_2"])
         
@@ -350,13 +340,6 @@ func waitUntilStarted(client: RSClient?) {
             RunLoop.main.run(until: Date.distantPast)
         }
     }
-}
-
-func waitUntilServerConfigDownloaded(client: RSClient?) {
-//    guard let client = client else { return }
-//    while client.serverConfig == nil {
-//        RunLoop.main.run(until: Date.distantPast)
-//    }
 }
 
 class FirebaseDestinationPlugin: RSDestinationPlugin {

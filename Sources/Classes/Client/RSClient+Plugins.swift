@@ -122,25 +122,9 @@ extension RSClient {
         }
     }
     
-    private func checkServerConfig(retryCount: Int, completion: @escaping ( ) -> Void) {
+    private func checkServerConfig(retryCount: Int, completion: @escaping () -> Void) {
         if isUnitTesting {
-            var configFileName = ""
-            switch RSClient.sourceConfigType {
-                default:
-                    configFileName = "ServerConfig"
-            }
-            
-            let path = TestUtils.shared.getPath(forResource: configFileName, ofType: "json")
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
-                self.serverConfig = serverConfig
-                self.update(serverConfig: serverConfig, type: .initial)
-                self.userDefaults.write(.serverConfig, value: serverConfig)
-                self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
-            } catch {
-            }
-            completion()
+            checkServerConfigForUnitTesting(completion: completion)
             return
         }
         let maxRetryCount = 4
@@ -181,29 +165,25 @@ extension RSClient {
         })
     }
     
-//    private func fetchServerConfig(completion: @escaping (HandlerResult<RSServerConfig, NSError>) -> Void) {
-//        if isUnitTesting {
-//            if let serverConfig = serverConfig {
-//                completion(.success(serverConfig))
-//            } else {
-//                let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
-//                do {
-//                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-//                    let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
-//                    completion(.success(serverConfig))
-//                } catch {
-//                    completion(.failure(NSError(code: .SERVER_ERROR)))
-//                }
-//            }
-//            return
-//        }
-//        let serviceManager = RSServiceManager(client: self)
-//        serviceManager.downloadServerConfig { result in
-//            DispatchQueue.main.async {
-//                completion(result)
-//            }
-//        }
-//    }
+    private func checkServerConfigForUnitTesting(completion: @escaping () -> Void) {
+        var configFileName = ""
+        switch RSClient.sourceConfigType {
+        default:
+            configFileName = "ServerConfig"
+        }
+        
+        let path = TestUtils.shared.getPath(forResource: configFileName, ofType: "json")
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+            self.serverConfig = serverConfig
+            self.update(serverConfig: serverConfig, type: .initial)
+            self.userDefaults.write(.serverConfig, value: serverConfig)
+            self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
+        } catch { }
+        
+        completion()
+    }
 }
 
 extension RSClient {

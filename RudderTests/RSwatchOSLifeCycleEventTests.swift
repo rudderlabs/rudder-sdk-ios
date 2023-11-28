@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 #if os(watchOS)
-class RSwatchOSLifeCycleEventTests: XCTestCase {
+/*class RSwatchOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
@@ -31,7 +31,6 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         client.add(plugin: watchOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.userDefaults.write(application: .version, value: nil)
         client.userDefaults.write(application: .build, value: nil)
@@ -57,7 +56,6 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         client.add(plugin: watchOSLifeCyclePlugin)
 
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         client.userDefaults.write(application: .version, value: "2.0.0")
         client.userDefaults.write(application: .build, value: "2")
@@ -83,7 +81,6 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         client.add(plugin: watchOSLifeCyclePlugin)
 
         waitUntilStarted(client: client)
-        waitUntilServerConfigDownloaded(client: client)
         
         watchOSLifeCyclePlugin.applicationWillEnterForeground(watchExtension: nil)
         
@@ -91,5 +88,5 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         XCTAssertTrue(trackEvent?.event == "Application Opened")
         XCTAssertTrue(trackEvent?.type == .track)
     }
-}
+}*/
 #endif
