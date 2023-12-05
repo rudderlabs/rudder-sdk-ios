@@ -12,5 +12,7 @@ enum RSErrorCode: Int {
     case UNKNOWN = -1
     case WRONG_WRITE_KEY = 0
     case DECODING_FAILED = 1
+    case RESOURCE_NOT_FOUND = 2
+    case BAD_REQUEST = 3
     case SERVER_ERROR = 500
 }

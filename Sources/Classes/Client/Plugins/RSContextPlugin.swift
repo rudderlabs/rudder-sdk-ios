@@ -86,8 +86,10 @@ class RSContextPlugin: RSPlatformPlugin {
             "density": screen.density
         ]
         // locale
-        if !Locale.preferredLanguages.isEmpty {
-            context["locale"] = "\(Locale.preferredLanguages[0])-\(Locale.current.regionCode ?? "")"
+        if #available(iOS 16, *) {
+            context["locale"] = "\(Locale.current.language.languageCode?.identifier ?? "")-\(Locale.current.region?.identifier ?? "")"
+        } else {
+            context["locale"] = "\(Locale.current.languageCode ?? "")-\(Locale.current.regionCode ?? "")"
         }
         // timezone
         context["timezone"] = TimeZone.current.identifier

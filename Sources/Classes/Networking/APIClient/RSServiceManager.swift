@@ -24,13 +24,15 @@ struct RSServiceManager: RSServiceType {
         return URLSession(configuration: configuration)
     }()
     
+    let urlSession: URLSession
     let client: RSClient
     
     var version: String {
         return "v1"
     }
     
-    init(client: RSClient) {
+    init(urlSession: URLSession = RSServiceManager.sharedSession, client: RSClient) {
+        self.urlSession = urlSession
         self.client = client
     }
     
@@ -57,7 +59,7 @@ extension RSServiceManager {
             request.httpBody = httpBody
             Logger.log(message: "HTTPBody: \(httpBody)", logLevel: .debug)
         }
-        let dataTask = RSServiceManager.sharedSession.dataTask(with: request, completionHandler: { (data, response, error) in
+        let dataTask = urlSession.dataTask(with: request, completionHandler: { (data, response, error) in
             if error != nil {
                 completion(.failure(NSError(code: .SERVER_ERROR)))
                 return
@@ -82,7 +84,7 @@ extension RSServiceManager {
                         }
                     }
                 default:
-                    let errorCode = handleCustomError(data: data ?? Data())
+                    let errorCode = handleCustomError(data: data ?? Data(), statusCode: statusCode)
                     completion(.failure(NSError(code: errorCode)))
                 }
             } else {
@@ -92,17 +94,24 @@ extension RSServiceManager {
         dataTask.resume()
     }
     
-    func handleCustomError(data: Data) -> RSErrorCode {
-        do {
-            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] else {
+    func handleCustomError(data: Data, statusCode: Int) -> RSErrorCode {
+        switch statusCode {
+        case 404:
+            return .RESOURCE_NOT_FOUND
+        case 400:
+            return .BAD_REQUEST
+        default:
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] else {
+                    return .SERVER_ERROR
+                }
+                if let message = json["message"], message.lowercased() == "invalid write key" {
+                    return .WRONG_WRITE_KEY
+                }
+                return .SERVER_ERROR
+            } catch {
                 return .SERVER_ERROR
             }
-            if let message = json["message"], message == "Invalid write key" {
-                return .WRONG_WRITE_KEY
-            }
-            return .SERVER_ERROR
-        } catch {
-            return .SERVER_ERROR
         }
     }
 }

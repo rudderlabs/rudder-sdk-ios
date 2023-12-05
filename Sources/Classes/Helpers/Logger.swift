@@ -36,34 +36,27 @@ import Foundation
 
 class Logger {
     static var logLevel: RSLogLevel = .error
-    
-    static func logDebug(_ message: String, function: String? = #function, line: Int? = #line) {
-        rsLog(message: message, logLevel: .debug, function: function, line: line)
+
+    static func logDebug(_ message: String, function: String = #function, line: Int = #line) {
+        log(message: message, logLevel: .debug, function: function, line: line)
     }
     
-    static func logInfo(_ message: String, function: String? = #function, line: Int? = #line) {
-        rsLog(message: message, logLevel: .info, function: function, line: line)
+    static func logInfo(_ message: String, function: String = #function, line: Int = #line) {
+        log(message: message, logLevel: .info, function: function, line: line)
     }
     
-    static func logWarning(_ message: String, function: String? = #function, line: Int? = #line) {
-        rsLog(message: message, logLevel: .warning, function: function, line: line)
+    static func logWarning(_ message: String, function: String = #function, line: Int = #line) {
+        log(message: message, logLevel: .warning, function: function, line: line)
     }
     
-    static func logError(_ message: String, function: String? = #function, line: Int? = #line) {
-        rsLog(message: message, logLevel: .error, function: function, line: line)
-    }
-    
-    static func rsLog(message: String, logLevel: RSLogLevel, function: String? = #function, line: Int? = #line) {
-        if self.logLevel == .verbose || self.logLevel == logLevel {
-            var metadata = ""
-            if let function = function, let line = line {
-                metadata = " - \(function):\(line):"
-            }
-            print("RudderStack:\(logLevel.toString()):\(metadata)\(message)")
-        }
+    static func logError(_ message: String, function: String = #function, line: Int = #line) {
+        log(message: message, logLevel: .error, function: function, line: line)
     }
 
     static func log(message: String, logLevel: RSLogLevel, function: String = #function, line: Int = #line) {
-        rsLog(message: message, logLevel: logLevel, function: function, line: line)
+        if self.logLevel == .verbose || self.logLevel == logLevel {
+            let metadata = " - \(function):\(line):"
+            print("RudderStack:\(logLevel.toString()):\(metadata)\(message)")
+        }
     }
 }

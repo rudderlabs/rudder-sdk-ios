@@ -61,6 +61,13 @@ public enum JSON: Equatable {
             self = .object(try object.mapValues(JSON.init))
         case let json as JSON:
             self = json
+        case let date as Date:
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+            self = .string(dateFormatter.string(from: date))
         // we don't work with whatever is being supplied
         default:
             throw JSONError.nonJSONType(type: "\(value.self)")

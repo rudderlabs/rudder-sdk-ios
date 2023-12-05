@@ -9,7 +9,7 @@
 import Foundation
 
 struct RSUserInfo {
-    let anonymousId: String?
-    let userId: String?
-    let traits: JSON?    
+    var anonymousId: String?
+    var userId: String?
+    var traits: JSON?
 }

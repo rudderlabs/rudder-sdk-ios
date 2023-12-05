@@ -22,24 +22,33 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let taskList: [Task] = [Task(name: "Identify"),
-                            Task(name: "Single Track"),
-                            Task(name: "Multiple Track"),
-                            Task(name: "Single Flush"),
-                            Task(name: "Multiple Flush From Background"),
-                            Task(name: "Alias"),
-                            Task(name: "Multiple Flush and Multiple Track"),
-                            Task(name: "Screen without properties"),
-                            Task(name: "Screen with properties"),
-                            Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
-                            Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent"),
-                            Task(name: "Opt In"),
-                            Task(name: "Opt Out"),
-                            Task(name: "Set AnonymousId"),
-                            Task(name: "Set Device Token"),
-                            Task(name: "Set AdvertisingId"),
-                            Task(name: "Set Option"),
-                            Task(name: "Reset")]
+    let taskList: [Task] = [
+        Task(name: "Identify with traits"),
+        Task(name: "Identify without traits"),
+        Task(name: "Single Track with properties"),
+        Task(name: "Single Track without properties"),
+        Task(name: "Alias"),
+        Task(name: "Screen with properties"),
+        Task(name: "Screen without properties"),
+        Task(name: "Group with traits"),
+        Task(name: "Group without traits"),
+        Task(name: "Set AnonymousId"),
+        Task(name: "Set Device Token"),
+        Task(name: "Set AdvertisingId"),
+        Task(name: "Opt In"),
+        Task(name: "Opt Out"),
+        Task(name: "Reset"),
+        Task(name: "Single Flush"),
+        Task(name: "Update AnonymousId"),
+        Task(name: "Update Device Token"),
+        Task(name: "Update AdvertisingId"),
+        Task(name: "Multiple Track"),
+        Task(name: "Multiple Flush From Background"),
+        Task(name: "Multiple Flush and Multiple Track"),
+        Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
+        Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent"),
+        Task(name: "Set Option")
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,18 +73,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0:
-            RSClient.sharedInstance().identify("test_user_id", traits: [
-                "integerValue": 42,
-                "stringValue": "Hello, World!",
-                "boolValue": true,
-                "doubleValue": 3.14159,
-                "arrayValue": [1, 2, 3, 4, 5],
-                "dictionaryValue": ["key1": "value1", "key2": "value2"],
-                "urlValue": URL(string: "https://www.example.com")!,
-                "dateValue": Date()
-            ])
-        case 1:
+            case 0:
+                RSClient.sharedInstance().identify("test_user_id", traits: [
+                    "integerValue": 42,
+                    "stringValue": "Hello, World!",
+                    "boolValue": true,
+                    "doubleValue": 3.14159,
+                    "arrayValue": [1, 2, 3, 4, 5],
+                    "dictionaryValue": ["key1": "value1", "key2": "value2"],
+                    "urlValue": URL(string: "https://www.example.com")!,
+                    "dateValue": Date()
+                ])
+            case 1:
+                RSClient.sharedInstance().identify("test_user_id")
+                
+            case 2:
                 RSClient.sharedInstance().track("single_track_call", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
@@ -86,13 +98,44 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "urlValue": URL(string: "https://www.example.com")!,
                     "dateValue": Date()
                 ])
-        case 2:
+            case 3:
+                RSClient.sharedInstance().track("single_track_call")
+            case 4:
+                RSClient.sharedInstance().alias("new_user_id")
+            case 5:
+                RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
+            case 6:
+                RSClient.sharedInstance().screen("ViewController")
+            case 7:
+                RSClient.sharedInstance().group("test_group_id", traits: ["key_1": "value_1"])
+            case 8:
+                RSClient.sharedInstance().group("test_group_id")
+            case 9:
+                RSClient.sharedInstance().setAnonymousId("anonymous_id_1")
+            case 10:
+                RSClient.sharedInstance().setDeviceToken("device_token_1")
+            case 11:
+                RSClient.sharedInstance().setAdvertisingId("advertising_id_1")
+            case 12:
+                RSClient.sharedInstance().setOptOutStatus(true)
+            case 13:
+                RSClient.sharedInstance().setOptOutStatus(false)
+            case 14:
+                RSClient.sharedInstance().reset()
+            case 15:
+                RSClient.sharedInstance().flush()
+            case 16:
+                RSClient.sharedInstance().setAnonymousId("anonymous_id_2")
+            case 17:
+                RSClient.sharedInstance().setDeviceToken("device_token_2")
+            case 18:
+                RSClient.sharedInstance().setAdvertisingId("advertising_id_2")
+
+        /*case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
             }
-        case 3:
-            RSClient.sharedInstance().flush()
-        /*case 4:
+        case 4:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1, Flush No. \(i)")
@@ -113,8 +156,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     RSClient.sharedInstance().flush()
                 }
             }*/
-        case 5:
-            RSClient.sharedInstance().alias("new_user_id")
         /*case 6:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
@@ -156,12 +197,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     print("From Thread 3, Flush No. \(i)")
                     RSClient.sharedInstance().flush()
                 }
-            }*/
-        case 7:
-            RSClient.sharedInstance().screen("ViewController")
-        case 8:
-            RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
-        /*case 9:
+            }
+        case 9:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
@@ -195,7 +232,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     print("From Thread 5A, Identify No. \(i)")
                     RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
                 }
-            }*/
+            }
         case 10:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
@@ -252,16 +289,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
-        case 11:
-            RSClient.sharedInstance().setOptOutStatus(false)
-        case 12:
-            RSClient.sharedInstance().setOptOutStatus(true)
-        case 13:
-            RSClient.sharedInstance().setAnonymousId("anonymous_id_1")
-        case 14:
-            RSClient.sharedInstance().setDeviceToken("device_token_1")
-        case 15:
-            RSClient.sharedInstance().setAdvertisingId("advertising_id_1")
         case 16:
             let option = RSOption()
                         option.putExternalId("key-1", withId: "value-1")
@@ -278,9 +305,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                         option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
                         option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
                         option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")            
-            RSClient.sharedInstance().setOption(option)
-        case 9:
-            RSClient.sharedInstance().reset()
+            RSClient.sharedInstance().setOption(option)*/
         default:
             break
         }

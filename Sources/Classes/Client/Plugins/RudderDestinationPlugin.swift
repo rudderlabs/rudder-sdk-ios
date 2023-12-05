@@ -33,18 +33,53 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         config = client.config
         userDefaults = client.userDefaults
         databaseManager = RSDatabaseManager(client: client)
-        serviceManager = RSServiceManager(client: client)
-        flushTimer = RSRepeatingTimer(interval: TimeInterval(config?.sleepTimeOut ?? RSSleepTimeout)) { [weak self] in
+        if isUnitTesting {
+            let configuration = URLSessionConfiguration.default
+            configuration.protocolClasses = [MockURLProtocol.self]
+            let urlSession = URLSession.init(configuration: configuration)
+            serviceManager = RSServiceManager(urlSession: urlSession, client: client)
+            
+            let data = """
+            {
+            
+            }
+            """.data(using: .utf8)
+            
+            MockURLProtocol.requestHandler = { request in
+                let response = HTTPURLResponse(url: URL(string: "https://some.rudderstack.com.url")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
+                return (response, data)
+            }
+        } else {
+            serviceManager = RSServiceManager(client: client)
+        }
+        var sleepCount = 0
+        flushTimer = RSRepeatingTimer(interval: TimeInterval(1)) { [weak self] in
             guard let self = self else { return }
-            self.periodicFlush()
+            uploadsQueue.async {
+                guard let recordCount = self.databaseManager?.getDBRecordCount(), let config = self.config else {
+                    return
+                }
+                if recordCount >= config.dbCountThreshold || sleepCount >= config.sleepTimeOut {
+                    if recordCount > 0 {
+                        self.flushTimer?.suspend()
+                        self.flush(sleepCount: 0) { _ in
+                            sleepCount = 0
+                            self.flushTimer?.resume()
+                        }
+                    } else {
+                        sleepCount = 0
+                    }
+                } else {
+                    sleepCount += 1
+                }
+            }
         }
     }
         
     func execute<T: RSMessage>(message: T?) -> T? {
         let result: T? = message
         if let r = result {
-//            let modified = configureCloudDestinations(message: r)
-            queueEvent(message: r)
+            saveEvent(message: r)
         }
         return result
     }
@@ -62,7 +97,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         enterBackground()
     }
     
-    private func queueEvent<T: RSMessage>(message: T) {
+    private func saveEvent<T: RSMessage>(message: T) {
         guard let databaseManager = self.databaseManager else { return }
         databaseManager.write(message)
         if let context = message.context {
@@ -71,37 +106,6 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     }
 }
 
-/*extension RudderDestinationPlugin {
-    internal func configureCloudDestinations<T: RSMessage>(message: T) -> T {
-        guard let serverConfig = client?.serverConfig else { return message }
-        guard let plugins = client?.controller.plugins[.destination]?.plugins as? [RSDestinationPlugin] else { return message }
-        guard let customerValues = message.integrations else { return message }
-
-        var merged = [String: Bool]()
-
-        for plugin in plugins {
-            var hasSettings = false
-            if let destinations = serverConfig.destinations {
-                if let destination = destinations.first(where: { $0.destinationDefinition?.displayName == plugin.key }), destination.enabled {
-                    hasSettings = true
-                }
-            }
-            if hasSettings {
-                merged[plugin.key] = false
-            }
-        }
-
-        for (key, value) in customerValues {
-            merged[key] = value
-        }
-
-        var modified = message
-        modified.integrations = merged
-
-        return modified
-    }
-}*/
-
 extension RudderDestinationPlugin {
     
     func flush() {
@@ -109,47 +113,87 @@ extension RudderDestinationPlugin {
             guard let self = self, let databaseManager = self.databaseManager, let config = self.config else {
                 return
             }
-            let uploadGroup = DispatchGroup()
-            let numberOfBatch = RSUtils.getNumberOfBatch(from: databaseManager.getDBRecordCount(), and: config.flushQueueSize)
-            for i in 0..<numberOfBatch {
-                uploadGroup.enter()
-                Logger.log(message: "Flushing batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
-                var isLastBatchFailed = false
-                for count in 1...RETRY_FLUSH_COUNT {
-                    let errorCode = self.prepareEventsToFlush()
-                    if errorCode == nil {
-                        Logger.log(message: "Successful to flush batch \(i + 1)/\(numberOfBatch)", logLevel: .debug)
-                        break
-                    }
-                    Logger.log(message: "Failed to flush batch \(i + 1)/\(numberOfBatch), \(3 - count) retries left", logLevel: .debug)
-                    if count == RETRY_FLUSH_COUNT {
-                        isLastBatchFailed = true
-                    }
-                }
-                if isLastBatchFailed {
-                    Logger.log(message: "Failed to send \(i + 1)/\(numberOfBatch) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
-                    break
-                }
-                uploadGroup.leave()
+            let totalBatchCount = RSUtils.getNumberOfBatch(from: databaseManager.getDBRecordCount(), and: config.flushQueueSize)
+            flushBatch(index: 0, totalBatchCount: totalBatchCount)
+        }
+    }
+    
+    private func flushBatch(index: Int, totalBatchCount: Int) {
+        guard index < totalBatchCount else {
+            Logger.logDebug("All batches have been flushed successfully")
+            return
+        }
+        Logger.log(message: "Flushing batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
+        flush(retryCount: 0) { [weak self] result in
+            guard let self = self else {
+                return
             }
-            uploadGroup.wait()
+            switch result {
+            case .success:
+                Logger.log(message: "Successful to flush batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
+                DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
+                    self.flushBatch(index: index + 1, totalBatchCount: totalBatchCount)
+                }
+            case .failure:
+                Logger.log(message: "Failed to send \(index + 1)/\(totalBatchCount) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
+            }
+        }
+        
+        func flush(retryCount: Int, completion: @escaping Handler<Bool>) {
+            let maxRetryCount = 3
+            
+            guard retryCount < maxRetryCount else {
+                completion(.failure(NSError(code: .SERVER_ERROR)))
+                return
+            }
+            
+            flushEventsToServer { result in
+                self.lock.unlock()
+                switch result {
+                case .success:
+                    completion(.success(true))
+                case .failure(let error):
+                    if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
+                        Logger.log(message: "Wrong write key", logLevel: .error)
+                        completion(.failure(error))
+                    } else {
+                        Logger.log(message: "Failed to flush batch \(index + 1)/\(totalBatchCount), \(3 - retryCount) retries left", logLevel: .debug)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
+                            flush(retryCount: retryCount + 1, completion: completion)
+                        }
+                    }
+                }
+            }
         }
     }
     
-    func periodicFlush() {
-        uploadsQueue.async { [weak self] in
-            guard let self = self else { return }
-            self.prepareEventsToFlush()
+    private func flush(sleepCount: Int, completion: @escaping Handler<Bool>) {
+        flushEventsToServer { result in
+            self.lock.unlock()
+            switch result {
+            case .success:
+                completion(.success(true))
+            case .failure(let error):
+                let errorCode = RSErrorCode(rawValue: error.code)
+                switch errorCode {
+                case .SERVER_ERROR:
+                    DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(sleepCount + 1)) {
+                        self.flush(sleepCount: sleepCount + 1, completion: completion)
+                    }
+                default:
+                    Logger.logError("Aborting flush. Error code: \((errorCode ?? RSErrorCode.UNKNOWN).rawValue)")
+                    completion(.failure(NSError(code: .UNKNOWN)))
+                }
+            }
         }
     }
-    
-    @discardableResult
-    func prepareEventsToFlush() -> RSErrorCode? {
+
+    private func flushEventsToServer(_ completion: Handler<Bool>? = nil) {
         lock.lock()
         guard let databaseManager = databaseManager, let config = config else {
-            return .UNKNOWN
+            completion?(.failure(NSError(code: .UNKNOWN)))
+            return
         }
-        var errorCode: RSErrorCode?
         let recordCount = databaseManager.getDBRecordCount()
         Logger.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
         if recordCount > config.dbCountThreshold {
@@ -161,41 +205,38 @@ extension RudderDestinationPlugin {
         }
         Logger.log(message: "Fetching events to flush to sever", logLevel: .debug)
         guard let dbMessage = databaseManager.getEvents(config.flushQueueSize) else {
-            return .UNKNOWN
+            completion?(.failure(NSError(code: .UNKNOWN)))
+            return
         }
-        if dbMessage.messages.isEmpty == false {
+        if !dbMessage.messages.isEmpty {
             let params = RSUtils.getJSON(from: dbMessage)
             Logger.log(message: "Payload: \(params)", logLevel: .debug)
             Logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
             if !params.isEmpty {
-                errorCode = self.flushEventsToServer(params: params)
-                if errorCode == nil {
-                    Logger.log(message: "clearing events from DB", logLevel: .debug)
-                    databaseManager.removeEvents(dbMessage.messageIds)
-                } else if errorCode == .WRONG_WRITE_KEY {
-                    Logger.log(message: "Wrong WriteKey. Aborting.", logLevel: .error)
-                } else if errorCode == .SERVER_ERROR {
-                    Logger.log(message: "Server error. Aborting.", logLevel: .error)
-                }
+                serviceManager?.flushEvents(params: params, { result in
+                    switch result {
+                    case .success:
+                        Logger.log(message: "clearing events from DB", logLevel: .debug)
+                        databaseManager.removeEvents(dbMessage.messageIds)
+                        completion?(.success(true))
+                    case .failure(let error):
+                        completion?(.failure(error))
+                    }
+                })
+            } else {
+                completion?(.failure(NSError(code: .UNKNOWN)))
             }
+        } else {
+            completion?(.failure(NSError(code: .UNKNOWN)))
         }
-        lock.unlock()
-        return errorCode
     }
     
-    func flushEventsToServer(params: String) -> RSErrorCode? {
-        var errorCode: RSErrorCode?
-        let semaphore = DispatchSemaphore(value: 0)
-        serviceManager?.flushEvents(params: params) { result in
-            switch result {
-            case .success:
-                errorCode = nil
-            case .failure(let error):
-                errorCode = RSErrorCode(rawValue: error.code)
+    private func periodicFlush() {
+        uploadsQueue.async { [weak self] in
+            guard let self = self else { return }
+            self.flushEventsToServer { _ in
+                self.lock.unlock()
             }
-            semaphore.signal()
         }
-        semaphore.wait()
-        return errorCode
     }
 }

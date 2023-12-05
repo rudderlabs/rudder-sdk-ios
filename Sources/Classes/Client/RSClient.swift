@@ -307,11 +307,13 @@ extension RSClient {
             Logger.log(message: "userId can not be empty", logLevel: .warning)
             return
         }
-        if var traits = traits {
-            traits["userId"] = userId
+        userDefaults.write(.userId, value: userId)
+        
+        if let traits = traits {
+            let dt = try? JSON(traits)
             userDefaults.write(.traits, value: try? JSON(traits))
         }
-        userDefaults.write(.userId, value: userId)
+        
         if let externalIds = option?.externalIds {
             userDefaults.write(.externalId, value: try? JSON(externalIds))
         }

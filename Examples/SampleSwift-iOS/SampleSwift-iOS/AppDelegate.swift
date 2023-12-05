@@ -31,13 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let configuration = try JSONDecoder().decode(Configuration.self, from: jsonData)
             
             let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
-                .dataPlaneURL(configuration.DATA_PLANE_URL_PROD)
+                .dataPlaneURL(configuration.DATA_PLANE_URL_DEV)
                 .controlPlaneURL(configuration.CONTROL_PLANE_URL)
                 .loglevel(.verbose)
                 .trackLifecycleEvents(false)
                 .recordScreenViews(true)
-                .flushQueueSize(8)
-//                .sleepTimeOut(1)
+
             RSClient.sharedInstance().configure(with: config)
             RSClient.sharedInstance().addDestination(CustomDestination())
             
@@ -128,5 +127,6 @@ struct Configuration: Codable {
     let WRITE_KEY: String
     let DATA_PLANE_URL_LOCAL: String
     let DATA_PLANE_URL_PROD: String
+    let DATA_PLANE_URL_DEV: String
     let CONTROL_PLANE_URL: String
 }

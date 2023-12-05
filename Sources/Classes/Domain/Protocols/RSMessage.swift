@@ -223,7 +223,7 @@ extension RSMessage {
         }
         result.userId = userInfo?.userId
         result.anonymousId = userInfo?.anonymousId
-        result.messageId = "\(RSUtils.getTimeStamp())-\(RSUtils.getUniqueId())"
+        result.messageId = RSUtils.getUniqueId()
         result.timestamp = RSUtils.getTimestampString()
         result.channel = "mobile"
         return result
