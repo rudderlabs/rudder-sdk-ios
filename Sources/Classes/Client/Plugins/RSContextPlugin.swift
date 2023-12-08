@@ -42,10 +42,8 @@ class RSContextPlugin: RSPlatformPlugin {
     
     internal static func staticContextData() -> [String: Any] {
         var staticContext = [String: Any]()
-        
         // library name
         staticContext["library"] = RSContext.LibraryInfo().dictionary
-        
         // app info
         staticContext["app"] = RSContext.AppInfo().dictionary
         insertStaticPlatformContextData(context: &staticContext)

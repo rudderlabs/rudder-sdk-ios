@@ -55,7 +55,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         var sleepCount = 0
         flushTimer = RSRepeatingTimer(interval: TimeInterval(1)) { [weak self] in
             guard let self = self else { return }
-            uploadsQueue.async {
+            self.uploadsQueue.async {
                 guard let recordCount = self.databaseManager?.getDBRecordCount(), let config = self.config else {
                     return
                 }
@@ -114,7 +114,7 @@ extension RudderDestinationPlugin {
                 return
             }
             let totalBatchCount = RSUtils.getNumberOfBatch(from: databaseManager.getDBRecordCount(), and: config.flushQueueSize)
-            flushBatch(index: 0, totalBatchCount: totalBatchCount)
+            self.flushBatch(index: 0, totalBatchCount: totalBatchCount)
         }
     }
     

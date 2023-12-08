@@ -168,7 +168,7 @@ open class RSContext: NSObject, Codable {
     }
     
     static func locale() -> String {
-        if #available(iOS 16, *) {
+        if #available(macOS 13, iOS 16, tvOS 16, watchOS 9, *) {
             return "\(Locale.current.language.languageCode?.identifier ?? "")-\(Locale.current.region?.identifier ?? "")"
         } else {
             return "\(Locale.current.languageCode ?? "")-\(Locale.current.regionCode ?? "")"
