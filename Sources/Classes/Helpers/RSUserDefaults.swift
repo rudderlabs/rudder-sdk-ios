@@ -18,7 +18,6 @@ class RSUserDefaults {
         case optStatus
         case optInTime
         case optOutTime
-        case context
         case externalId
         case sessionId
         case lastEventTimeStamp

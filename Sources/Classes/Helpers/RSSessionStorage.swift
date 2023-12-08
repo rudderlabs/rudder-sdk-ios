@@ -14,6 +14,7 @@ class RSSessionStorage {
         case advertisingId
         case appTrackingConsent
         case option
+        case context
     }
     
     static let shared = RSSessionStorage()
@@ -22,6 +23,7 @@ class RSSessionStorage {
     private var advertisingId: String?
     private var appTrackingConsent: RSAppTrackingConsent?
     private var option: RSOption?
+    private var context: RSContext?
 
     func write<T: Any>(_ key: RSSessionStorage.Keys, value: T?) {
         syncQueue.sync {
@@ -34,6 +36,12 @@ class RSSessionStorage {
                 appTrackingConsent = value as? RSAppTrackingConsent
             case .option:
                 option = value as? RSOption
+            case .context:
+                if let value = value as? MessageContext {
+                    if let data = try? JSONSerialization.data(withJSONObject: value) {
+                        context = try? JSONDecoder().decode(RSContext.self, from: data)
+                    }
+                }
             }
         }
     }
@@ -50,6 +58,8 @@ class RSSessionStorage {
                 result = appTrackingConsent as? T
             case .option:
                 result = option as? T
+            case .context:
+                result = context as? T
             }
         }
         return result
@@ -57,7 +67,7 @@ class RSSessionStorage {
     
     func reset() {
         syncQueue.sync {
-            option = nil
+            
         }
     }
 }

@@ -18,6 +18,14 @@
 		ED157C5827D0FFA400F22202 /* RSLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */; };
 		ED157C5A27D1010D00F22202 /* RSPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C5927D1010D00F22202 /* RSPushNotifications.swift */; };
 		ED277FA127421B06002A8FEA /* RSEventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */; };
+		ED333EB72B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */; };
+		ED333EB82B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */; };
+		ED333EB92B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */; };
+		ED333EBA2B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */; };
+		ED333EBC2B22055D003EB0B3 /* RSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EBB2B22055D003EB0B3 /* RSContext.swift */; };
+		ED333EBD2B22055D003EB0B3 /* RSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EBB2B22055D003EB0B3 /* RSContext.swift */; };
+		ED333EBE2B22055D003EB0B3 /* RSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EBB2B22055D003EB0B3 /* RSContext.swift */; };
+		ED333EBF2B22055D003EB0B3 /* RSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EBB2B22055D003EB0B3 /* RSContext.swift */; };
 		ED3D225B279EAC2800EC8366 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABB842630C3CA0097BEFF /* Rudder.framework */; };
 		ED3D229427A3F0C100EC8366 /* RSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226227A3F0C100EC8366 /* RSClient.swift */; };
 		ED3D229527A3F0C100EC8366 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D226627A3F0C100EC8366 /* Vendor.swift */; };
@@ -336,6 +344,8 @@
 		ED157C5727D0FFA400F22202 /* RSLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSLifeCycle.swift; sourceTree = "<group>"; };
 		ED157C5927D1010D00F22202 /* RSPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSPushNotifications.swift; sourceTree = "<group>"; };
 		ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSEventsAndKeys.swift; sourceTree = "<group>"; };
+		ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSessionStoragePlugin.swift; sourceTree = "<group>"; };
+		ED333EBB2B22055D003EB0B3 /* RSContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSContext.swift; sourceTree = "<group>"; };
 		ED3D2257279EAC2800EC8366 /* RudderTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3D226227A3F0C100EC8366 /* RSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSClient.swift; sourceTree = "<group>"; };
 		ED3D226627A3F0C100EC8366 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
@@ -525,6 +535,7 @@
 				ED3D227C27A3F0C100EC8366 /* RSContextPlugin.swift */,
 				ED157C4427CFD99700F22202 /* RSIntegrationPlugin.swift */,
 				ED3D227A27A3F0C100EC8366 /* RSReplayQueuePlugin.swift */,
+				ED333EB62B21F324003EB0B3 /* RSSessionStoragePlugin.swift */,
 				8C6EA4422A0BDADF0049569A /* RSUserSessionPlugin.swift */,
 				ED3D227B27A3F0C100EC8366 /* RudderDestinationPlugin.swift */,
 			);
@@ -748,6 +759,7 @@
 				EDA7EF602739119600E73142 /* Attributes */,
 				EDD3AA3527C659C80048E61E /* RSAtomic.swift */,
 				EDA7EF592739119600E73142 /* RSConfig.swift */,
+				ED333EBB2B22055D003EB0B3 /* RSContext.swift */,
 				EDA7EF582739119600E73142 /* RSDBMessage.swift */,
 				EDD3AA1227C64B430048E61E /* RSKeyPath.swift */,
 				EDA7EF5D2739119600E73142 /* RSOption.swift */,
@@ -1167,6 +1179,7 @@
 				ED3D229827A3F0C100EC8366 /* RSwatchOSDelegation.swift in Sources */,
 				EDA7EF852739119600E73142 /* RSConstants.swift in Sources */,
 				EDD3AA3627C659C80048E61E /* RSAtomic.swift in Sources */,
+				ED333EBC2B22055D003EB0B3 /* RSContext.swift in Sources */,
 				ED3D22A427A3F0C100EC8366 /* RSReplayQueuePlugin.swift in Sources */,
 				EDA7EF962739119600E73142 /* RSOption.swift in Sources */,
 				ED277FA127421B06002A8FEA /* RSEventsAndKeys.swift in Sources */,
@@ -1186,6 +1199,7 @@
 				ED3D229D27A3F0C100EC8366 /* RSiOSLifecycleMonitor.swift in Sources */,
 				ED5603852881C691004B5BEC /* RSUserInfo.swift in Sources */,
 				ED157C5A27D1010D00F22202 /* RSPushNotifications.swift in Sources */,
+				ED333EB72B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */,
 				ED3D22A827A3F0C100EC8366 /* RSController.swift in Sources */,
 				ED157C4F27D0AC0E00F22202 /* RSwatchOSScreenViewEvents.swift in Sources */,
 				ED3D22BE27A45B6500EC8366 /* RSTypeAlias.swift in Sources */,
@@ -1247,6 +1261,7 @@
 				EDC1BBDA2B0DD87D00211F24 /* RSwatchOSDelegation.swift in Sources */,
 				EDC1BBDB2B0DD87D00211F24 /* RSConstants.swift in Sources */,
 				EDC1BBDC2B0DD87D00211F24 /* RSAtomic.swift in Sources */,
+				ED333EBF2B22055D003EB0B3 /* RSContext.swift in Sources */,
 				EDC1BBDD2B0DD87D00211F24 /* RSReplayQueuePlugin.swift in Sources */,
 				EDC1BBDE2B0DD87D00211F24 /* RSOption.swift in Sources */,
 				EDC1BBDF2B0DD87D00211F24 /* RSEventsAndKeys.swift in Sources */,
@@ -1266,6 +1281,7 @@
 				EDC1BBEB2B0DD87D00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BBEC2B0DD87D00211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BBEE2B0DD87D00211F24 /* RSPushNotifications.swift in Sources */,
+				ED333EBA2B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */,
 				EDC1BBEF2B0DD87D00211F24 /* RSController.swift in Sources */,
 				EDC1BBF12B0DD87D00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
 				EDC1BBF32B0DD87D00211F24 /* RSTypeAlias.swift in Sources */,
@@ -1312,6 +1328,7 @@
 				EDC1BC1F2B0DD88A00211F24 /* RSwatchOSDelegation.swift in Sources */,
 				EDC1BC202B0DD88A00211F24 /* RSConstants.swift in Sources */,
 				EDC1BC212B0DD88A00211F24 /* RSAtomic.swift in Sources */,
+				ED333EBD2B22055D003EB0B3 /* RSContext.swift in Sources */,
 				EDC1BC222B0DD88A00211F24 /* RSReplayQueuePlugin.swift in Sources */,
 				EDC1BC232B0DD88A00211F24 /* RSOption.swift in Sources */,
 				EDC1BC242B0DD88A00211F24 /* RSEventsAndKeys.swift in Sources */,
@@ -1331,6 +1348,7 @@
 				EDC1BC302B0DD88A00211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BC312B0DD88A00211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BC332B0DD88A00211F24 /* RSPushNotifications.swift in Sources */,
+				ED333EB82B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */,
 				EDC1BC342B0DD88A00211F24 /* RSController.swift in Sources */,
 				EDC1BC362B0DD88A00211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
 				EDC1BC382B0DD88A00211F24 /* RSTypeAlias.swift in Sources */,
@@ -1377,6 +1395,7 @@
 				EDC1BC642B0DD89400211F24 /* RSwatchOSDelegation.swift in Sources */,
 				EDC1BC652B0DD89400211F24 /* RSConstants.swift in Sources */,
 				EDC1BC662B0DD89400211F24 /* RSAtomic.swift in Sources */,
+				ED333EBE2B22055D003EB0B3 /* RSContext.swift in Sources */,
 				EDC1BC672B0DD89400211F24 /* RSReplayQueuePlugin.swift in Sources */,
 				EDC1BC682B0DD89400211F24 /* RSOption.swift in Sources */,
 				EDC1BC692B0DD89400211F24 /* RSEventsAndKeys.swift in Sources */,
@@ -1396,6 +1415,7 @@
 				EDC1BC752B0DD89400211F24 /* RSiOSLifecycleMonitor.swift in Sources */,
 				EDC1BC762B0DD89400211F24 /* RSUserInfo.swift in Sources */,
 				EDC1BC782B0DD89400211F24 /* RSPushNotifications.swift in Sources */,
+				ED333EB92B21F324003EB0B3 /* RSSessionStoragePlugin.swift in Sources */,
 				EDC1BC792B0DD89400211F24 /* RSController.swift in Sources */,
 				EDC1BC7B2B0DD89400211F24 /* RSwatchOSScreenViewEvents.swift in Sources */,
 				EDC1BC7D2B0DD89400211F24 /* RSTypeAlias.swift in Sources */,

@@ -42,12 +42,18 @@ class ViewController: UIViewController {
         Task(name: "Update AnonymousId"),
         Task(name: "Update Device Token"),
         Task(name: "Update AdvertisingId"),
+        Task(name: "Set Option at root level"),
+        Task(name: "Set Option at identify"),
+        Task(name: "Set Option at track"),
+        Task(name: "Start session"),
+        Task(name: "End session"),
+        Task(name: "Start session with id"),
+        Task(name: "Get Context"),
         Task(name: "Multiple Track"),
         Task(name: "Multiple Flush From Background"),
         Task(name: "Multiple Flush and Multiple Track"),
         Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
-        Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent"),
-        Task(name: "Set Option")
+        Task(name: "Multiple Track, Screen, Alias, Group, Identify, Device Token, AnonymousId, AdvertisingId, AppTracking Consent")
     ]
     
     override func viewDidLoad() {
@@ -117,9 +123,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             case 11:
                 RSClient.sharedInstance().setAdvertisingId("advertising_id_1")
             case 12:
-                RSClient.sharedInstance().setOptOutStatus(true)
-            case 13:
                 RSClient.sharedInstance().setOptOutStatus(false)
+            case 13:
+                RSClient.sharedInstance().setOptOutStatus(true)
             case 14:
                 RSClient.sharedInstance().reset()
             case 15:
@@ -130,7 +136,53 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 RSClient.sharedInstance().setDeviceToken("device_token_2")
             case 18:
                 RSClient.sharedInstance().setAdvertisingId("advertising_id_2")
-
+            case 19:
+                let option = RSOption()
+                
+                option.putIntegration("key-5", isEnabled: true)
+                option.putIntegration("key-6", isEnabled: true)
+                option.putIntegration("key-7", isEnabled: true)
+                option.putIntegration("key-8", isEnabled: false)
+                
+                RSClient.sharedInstance().setOption(option)
+            case 20:
+                let option = RSOption()
+                option.putExternalId("key-1", withId: "value-1")
+                option.putExternalId("key-2", withId: "value-2")
+                
+                option.putIntegration("key-5", isEnabled: true)
+                option.putIntegration("key-6", isEnabled: true)
+                option.putIntegration("key-7", isEnabled: false)
+                option.putIntegration("key-8", isEnabled: false)
+                
+                option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
+                option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
+                option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
+                option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")
+                RSClient.sharedInstance().identify("test_user_id", option: option)
+            case 21:
+                let option = RSOption()
+                option.putExternalId("key-3", withId: "value-3")
+                option.putExternalId("key-4", withId: "value-4")
+                
+                option.putIntegration("key-5", isEnabled: false)
+                option.putIntegration("key-6", isEnabled: true)
+                option.putIntegration("key-7", isEnabled: false)
+                option.putIntegration("key-8", isEnabled: true)
+                
+                option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
+                option.putCustomContext(["Key-02": "value-2"], withKey: "key-10")
+                RSClient.sharedInstance().track("single_track_call", option: option)
+            case 22:
+                RSClient.sharedInstance().startSession()
+            case 23:
+                RSClient.sharedInstance().endSession()
+            case 24:
+                RSClient.sharedInstance().startSession(1234567890)
+            case 25:
+                if let context = RSClient.sharedInstance().context {
+                    print(context.dictionaryValue)
+                }
         /*case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
@@ -289,23 +341,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
-        case 16:
-            let option = RSOption()
-                        option.putExternalId("key-1", withId: "value-1")
-                        option.putExternalId("key-2", withId: "value-2")
-                        option.putExternalId("key-3", withId: "value-3")
-                        option.putExternalId("key-4", withId: "value-4")
-
-                        option.putIntegration("key-5", isEnabled: true)
-                        option.putIntegration("key-6", isEnabled: true)
-                        option.putIntegration("key-7", isEnabled: true)
-                        option.putIntegration("key-8", isEnabled: false)
-
-                        option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
-                        option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
-                        option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
-                        option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")            
-            RSClient.sharedInstance().setOption(option)*/
+        */
         default:
             break
         }

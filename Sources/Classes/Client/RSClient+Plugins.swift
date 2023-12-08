@@ -14,6 +14,7 @@ extension RSClient {
         add(plugin: RSReplayQueuePlugin())
         add(plugin: RSIntegrationPlugin())
         add(plugin: RudderDestinationPlugin())
+        add(plugin: RSUserSessionPlugin())
         
         if let platformPlugins = platformPlugins() {
             for plugin in platformPlugins {
@@ -28,6 +29,7 @@ extension RSClient {
         var plugins = [RSPlatformPlugin]()
         
         plugins.append(RSContextPlugin())
+//        plugins.append(RSUserSessionPlugin())
 
         plugins += Vendor.current.requiredPlugins
 

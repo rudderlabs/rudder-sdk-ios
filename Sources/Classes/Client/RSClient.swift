@@ -15,15 +15,15 @@ open class RSClient: NSObject {
     var controller: RSController
     var serverConfig: RSServerConfig?
     var serviceManager: RSServiceManager?
-	internal var checkServerConfigInProgress = false
+    var checkServerConfigInProgress = false
     static let shared = RSClient()
-    internal var userDefaults = RSUserDefaults()
-    internal var userInfo: RSUserInfo? {
+    var userDefaults = RSUserDefaults()
+    var userInfo: RSUserInfo? {
         let userId: String? = userDefaults.read(.userId)
         let traits: JSON? = userDefaults.read(.traits)
         var anonymousId: String? = userDefaults.read(.anonymousId)
         if anonymousId == nil {
-            anonymousId = Vendor.current.identifierForVendor
+            anonymousId = RSUtils.getUniqueId()
             userDefaults.write(.anonymousId, value: anonymousId)
         }
         return RSUserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
@@ -60,6 +60,9 @@ open class RSClient: NSObject {
         guard self.config == nil else { return }
         self.config = config
         Logger.logLevel = config.logLevel
+        if config.writeKey.isEmpty {
+            Logger.logError("Invalid writeKey: Provided writeKey is empty")
+        }
         serviceManager = RSServiceManager(client: self)
         addPlugins()
     }
@@ -240,8 +243,7 @@ extension RSClient {
             return
         }
         let message = TrackMessage(event: eventName, properties: properties, option: option)
-            .applyRawEventData(userInfo: userInfo)
-        process(message: message)
+        process(incomingMessage: message)
     }
     
     internal func _screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: RSOption? = nil) {
@@ -259,8 +261,7 @@ extension RSClient {
         }
         screenProperties["name"] = screenName
         let message = ScreenMessage(title: screenName, category: category, properties: screenProperties, option: option)
-            .applyRawEventData(userInfo: userInfo)
-        process(message: message)
+        process(incomingMessage: message)
     }
     
     internal func _group(_ groupId: String, traits: [String: String]? = nil, option: RSOption? = nil) {
@@ -273,8 +274,7 @@ extension RSClient {
             return
         }
         let message = GroupMessage(groupId: groupId, traits: traits, option: option)
-            .applyRawEventData(userInfo: userInfo)
-        process(message: message)
+        process(incomingMessage: message)
     }
     
     internal func _alias(_ newId: String, option: RSOption? = nil) {
@@ -294,8 +294,7 @@ extension RSClient {
         }
         userDefaults.write(.traits, value: try? JSON(dict))
         let message = AliasMessage(newId: newId, previousId: previousId, option: option)
-            .applyRawEventData(userInfo: userInfo)
-        process(message: message)
+        process(incomingMessage: message)
     }
     
     internal func _identify(_ userId: String, traits: IdentifyTraits? = nil, option: RSOption? = nil) {
@@ -310,7 +309,6 @@ extension RSClient {
         userDefaults.write(.userId, value: userId)
         
         if let traits = traits {
-            let dt = try? JSON(traits)
             userDefaults.write(.traits, value: try? JSON(traits))
         }
         
@@ -318,8 +316,7 @@ extension RSClient {
             userDefaults.write(.externalId, value: try? JSON(externalIds))
         }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
-            .applyRawEventData(userInfo: userInfo)
-        process(message: message)
+        process(incomingMessage: message)
     }
 }
 
@@ -354,26 +351,28 @@ extension RSClient {
      Returns the context that were specified in the last call.
      */
     @objc
-    public var context: MessageContext? {
+    public var context: RSContext? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
-        let context: JSON? = userDefaults.read(.context)
-        return context?.dictionaryValue
+        if let currentContext: RSContext = RSSessionStorage.shared.read(.context) {
+            return currentContext
+        }
+        return RSContext(userDefaults: userDefaults)
     }
     
     /**
      Returns the traits that were specified in the last identify call.
      */
     @objc
-    public var traits: MessageTraits? {
+    public var traits: IdentifyTraits? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
             Logger.log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
-        let traits: MessageTraits? = userDefaults.read(.traits)
-        return traits
+        let traits: JSON? = userDefaults.read(.traits)
+        return traits?.dictionaryValue
     }
     
     /**
@@ -386,6 +385,17 @@ extension RSClient {
                 p.flush()
             }
         }
+    }
+    
+    /**
+     API for reset current slate.  Traits, UserID's, anonymousId, etc are all cleared or reset.  This command will also be sent to each destination present in the system.
+     */
+    @objc
+    public func reset(and refreshAnonymousId: Bool) {
+        if refreshAnonymousId {
+            userDefaults.write(.anonymousId, value: RSUtils.getUniqueId())
+        }
+        reset()
     }
     
     /**
@@ -421,6 +431,21 @@ extension RSClient {
         }
         return config
     }
+    
+    /**
+     Returns id of an active session.
+     */
+    @objc
+    public var sessionId: String? {
+        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            return nil
+        }
+        if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self), let sessionId = userSessionPlugin.sessionId {
+            return "\(sessionId)"
+        }
+        return nil
+    }
 }
 
 extension RSClient {
@@ -451,6 +476,11 @@ extension RSClient {
 }
 
 extension RSClient {
+    func process(incomingMessage: RSMessage) {
+        let message = incomingMessage.applyRawEventData(userInfo: userInfo)
+        process(message: message)
+    }
+    
     func process(message: RSMessage) {
         switch message {
         case let e as TrackMessage:

@@ -132,12 +132,12 @@ extension RSServiceManager {
     func baseURL(_ API: API) -> String {
         switch API {
         case .flushEvents:
-            return "\(client.config?.dataPlaneUrl ?? RSDataPlaneUrl)/\(version)/"
+            return "\(client.config?.dataPlaneUrl ?? DEFAULT_DATA_PLANE_URL)/\(version)/"
         case .downloadConfig:
             if client.config?.controlPlaneUrl.hasSuffix("/") == true {
-                return "\(client.config?.controlPlaneUrl ?? RSControlPlaneUrl)"
+                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)"
             } else {
-                return "\(client.config?.controlPlaneUrl ?? RSControlPlaneUrl)/"
+                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)/"
             }
         }
     }

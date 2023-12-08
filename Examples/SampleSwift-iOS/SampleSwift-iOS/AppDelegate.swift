@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .controlPlaneURL(configuration.CONTROL_PLANE_URL)
                 .loglevel(.verbose)
                 .trackLifecycleEvents(false)
-                .recordScreenViews(true)
+                .recordScreenViews(false)
 
             RSClient.sharedInstance().configure(with: config)
             RSClient.sharedInstance().addDestination(CustomDestination())

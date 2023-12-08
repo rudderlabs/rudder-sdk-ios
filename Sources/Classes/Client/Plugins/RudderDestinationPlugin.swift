@@ -100,9 +100,9 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private func saveEvent<T: RSMessage>(message: T) {
         guard let databaseManager = self.databaseManager else { return }
         databaseManager.write(message)
-        if let context = message.context {
-            userDefaults?.write(.context, value: try? JSON(context))
-        }
+//        if let context = message.context {
+//            userDefaults?.write(.context, value: try? JSON(context))
+//        }
     }
 }
 

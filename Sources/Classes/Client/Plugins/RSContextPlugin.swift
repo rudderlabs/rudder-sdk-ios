@@ -30,13 +30,13 @@ class RSContextPlugin: RSPlatformPlugin {
         var context = staticContext
         insertDynamicPlatformContextData(context: &context)
         insertDynamicOptionData(message: workingMessage, context: &context)
-        insertDynamicDeviceInfoData(eventContext: workingMessage.context, context: &context)
+        insertDynamicDeviceInfoData(context: &context)
         insertSessionData(message: workingMessage, context: &context)
         if let eventContext = workingMessage.context {
             context.merge(eventContext) { (new, _) in new }
         }
         workingMessage.context = context
-        
+        RSSessionStorage.shared.write(.context, value: context)
         return workingMessage
     }
     
@@ -44,116 +44,65 @@ class RSContextPlugin: RSPlatformPlugin {
         var staticContext = [String: Any]()
         
         // library name
-        staticContext["library"] = [
-            "name": "rudder-ios-library",
-            "version": RSVersion
-        ]
+        staticContext["library"] = RSContext.LibraryInfo().dictionary
         
         // app info
-        let info = Bundle.main.infoDictionary
-        staticContext["app"] = [
-            "name": info?["CFBundleDisplayName"] ?? (info?["CFBundleName"] ?? ""),
-            "version": info?["CFBundleShortVersionString"] ?? "",
-            "build": info?["CFBundleVersion"] ?? "",
-            "namespace": Bundle.main.bundleIdentifier ?? ""
-        ]
+        staticContext["app"] = RSContext.AppInfo().dictionary
         insertStaticPlatformContextData(context: &staticContext)
         return staticContext
     }
     
     internal static func insertStaticPlatformContextData(context: inout [String: Any]) {
         // device
-        let device = Self.device
-        
-        let deviceInfo: [String: Any] = [
-            "manufacturer": device.manufacturer,
-            "type": device.type,
-            "model": device.model,
-            "name": device.name,
-            "id": device.identifierForVendor ?? ""
-        ]
-        context["device"] = deviceInfo
+        context["device"] = RSContext.DeviceInfo().dictionary
         // os
-        context["os"] = [
-            "name": device.systemName,
-            "version": device.systemVersion
-        ]
+        context["os"] = RSContext.OSInfo().dictionary
         // screen
-        let screen = device.screenSize
-        context["screen"] = [
-            "width": screen.width,
-            "height": screen.height,
-            "density": screen.density
-        ]
+        context["screen"] = RSContext.ScreenInfo().dictionary
         // locale
-        if #available(iOS 16, *) {
-            context["locale"] = "\(Locale.current.language.languageCode?.identifier ?? "")-\(Locale.current.region?.identifier ?? "")"
-        } else {
-            context["locale"] = "\(Locale.current.languageCode ?? "")-\(Locale.current.regionCode ?? "")"
-        }
+        context["locale"] = RSContext.locale()
         // timezone
-        context["timezone"] = TimeZone.current.identifier
+        context["timezone"] = RSContext.timezone()
     }
 
     internal func insertDynamicPlatformContextData(context: inout [String: Any]) {
-        let device = Self.device
-        
-        // network
-        let status = device.connection
-        
-        var cellular = false
-        var wifi = false
-        var bluetooth = false
-        
-        switch status {
-        case .online(.cellular):
-            cellular = true
-        case .online(.wifi):
-            wifi = true
-        case .online(.bluetooth):
-            bluetooth = true
-        default:
-            break
-        }
-        
         // network connectivity
-        context["network"] = [
-            "bluetooth": bluetooth,
-            "cellular": cellular,
-            "wifi": wifi,
-            "carrier": device.carrier
-        ] as [String: Any]
+        context["network"] = RSContext.NetworkInfo().dictionary
     }
     
-    internal func insertDynamicDeviceInfoData(eventContext: [String: Any]?, context: inout [String: Any]) {
-        if let eventDeviceInfo = eventContext?["device"] as? [String: Any], var existingDeviceInfo = context["device"] as? [String: Any] {
-            existingDeviceInfo.merge(eventDeviceInfo) { (new, _) in new }
-            context["device"] = existingDeviceInfo
+    internal func insertDynamicDeviceInfoData(context: inout [String: Any]) {
+        if let deviceToken: String = RSSessionStorage.shared.read(.deviceToken) {
+            context[keyPath: "device.token"] = deviceToken
+        }
+        if let advertisingId: String = RSSessionStorage.shared.read(.advertisingId), advertisingId.isNotEmpty {
+            context[keyPath: "device.advertisingId"] = advertisingId
+            context[keyPath: "device.adTrackingEnabled"] = true
+            let appTrackingConsent: RSAppTrackingConsent = RSSessionStorage.shared.read(.appTrackingConsent) ?? .notDetermined
+            context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
         }
     }
     
     func insertDynamicOptionData(message: RSMessage, context: inout [String: Any]) {
         // First priority will given to the `option` passed along with the event
+        var contextExternalIds = [[String: String]]()
+        // Fetch `externalIds` set using identify API.
+        if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
+            contextExternalIds.append(contentsOf: externalIds)
+        }
+        
         if let option = message.option {
-            if let externalIds = option.externalIds {
-                context["externalId"] = externalIds
+            // We will merge the external ids for other event calls
+            if let externalIds = option.externalIds, message.type != .identify {
+                contextExternalIds.append(contentsOf: externalIds)
             }
             if let customContexts = option.customContexts {
                 for (key, value) in customContexts {
                     context[key] = value
                 }
             }
-        } else {
-            // Fetch `customContexts` set using setOption API.
-            if let globalOption: RSOption = RSSessionStorage.shared.read(.option), let customContexts = globalOption.customContexts {
-                for (key, value) in customContexts {
-                    context[key] = value
-                }
-            }
-            // Fetch `externalIds` set using identify API.
-            if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
-                context["externalId"] = externalIds
-            }
+        }
+        if !contextExternalIds.isEmpty {
+            context["externalId"] = contextExternalIds
         }
     }
     

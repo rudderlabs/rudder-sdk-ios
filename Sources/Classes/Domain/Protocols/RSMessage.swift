@@ -208,7 +208,7 @@ extension RSMessage {
         if let anonymousId = userInfo?.anonymousId {
             result.context?[keyPath: "traits.anonymousId"] = anonymousId
         }
-        var device = [String: Any]()
+        /*var device = [String: Any]()
         if let deviceToken: String = RSSessionStorage.shared.read(.deviceToken) {
             device["token"] = deviceToken
         }
@@ -220,7 +220,7 @@ extension RSMessage {
         }
         if !device.isEmpty {
             result.context?["device"] = device
-        }
+        }*/
         result.userId = userInfo?.userId
         result.anonymousId = userInfo?.anonymousId
         result.messageId = RSUtils.getUniqueId()

@@ -15,52 +15,52 @@ open class RSConfig: NSObject {
         return _writeKey
     }
     
-    private var _dataPlaneUrl: String = RSDataPlaneUrl
+    private var _dataPlaneUrl: String = DEFAULT_DATA_PLANE_URL
     public var dataPlaneUrl: String {
         return _dataPlaneUrl
     }
     
-    private var _flushQueueSize: Int = RSFlushQueueSize
+    private var _flushQueueSize: Int = DEFAULT_FLUSH_QUEUE_SIZE
     public var flushQueueSize: Int {
         return _flushQueueSize
     }
     
-    private var _dbCountThreshold: Int = RSDBCountThreshold
+    private var _dbCountThreshold: Int = DEFAULT_DB_COUNT_THRESHOLD
     public var dbCountThreshold: Int {
         return _dbCountThreshold
     }
     
-    private var _sleepTimeOut: Int = RSSleepTimeout
+    private var _sleepTimeOut: Int = DEFAULT_SLEEP_TIMEOUT
     public var sleepTimeOut: Int {
         return _sleepTimeOut
     }
     
-    private var _logLevel: RSLogLevel = RSLogLevel.none
+    private var _logLevel: RSLogLevel = .error
     public var logLevel: RSLogLevel {
         return _logLevel
     }
         
-    private var _trackLifecycleEvents: Bool = RSTrackLifeCycleEvents
+    private var _trackLifecycleEvents: Bool = DEFAULT_TRACK_LIFE_CYCLE_EVENTS_STATUS
     public var trackLifecycleEvents: Bool {
         return _trackLifecycleEvents
     }
     
-    private var _recordScreenViews: Bool = RSRecordScreenViews
+    private var _recordScreenViews: Bool = DEFAULT_RECORD_SCREEN_VIEWS_STATUS
     public var recordScreenViews: Bool {
         return _recordScreenViews
     }
     
-    private var _controlPlaneUrl: String = RSControlPlaneUrl
+    private var _controlPlaneUrl: String = DEFAULT_CONTROL_PLANE_URL
     public var controlPlaneUrl: String {
         return _controlPlaneUrl
     }
     
-    private var _autoSessionTracking: Bool = RSAutoSessionTracking
+    private var _autoSessionTracking: Bool = DEFAULT_AUTO_SESSION_TRACKING_STATUS
     public var automaticSessionTracking: Bool {
         return _autoSessionTracking
     }
     
-    private var _sessionTimeout: Int = RSSessionTimeout
+    private var _sessionTimeout: Int = DEFAULT_SESSION_TIMEOUT
     public var sessionTimeout: Int {
         return _sessionTimeout
     }
@@ -72,20 +72,24 @@ open class RSConfig: NSObject {
     
     @discardableResult @objc
     public func dataPlaneURL(_ dataPlaneUrl: String) -> RSConfig {
-        if let url = URL(string: dataPlaneUrl) {
-            if let scheme = url.scheme, let host = url.host {
-                if let port = url.port {
-                    _dataPlaneUrl = "\(scheme)://\(host):\(port)"
-                } else {
-                    _dataPlaneUrl = "\(scheme)://\(host)"
-                }
-            }
+        guard let url = URL(string: dataPlaneUrl), let scheme = url.scheme, let host = url.host else {
+            Logger.logError("dataPlaneUrl is invalid")
+            return self
+        }
+        if let port = url.port {
+            _dataPlaneUrl = "\(scheme)://\(host):\(port)"
+        } else {
+            _dataPlaneUrl = "\(scheme)://\(host)"
         }
         return self
     }
     
     @discardableResult @objc
     public func flushQueueSize(_ flushQueueSize: Int) -> RSConfig {
+        guard flushQueueSize >= MIN_FLUSH_QUEUE_SIZE && flushQueueSize <= MAX_FLUSH_QUEUE_SIZE else {
+            Logger.logError("flushQueueSize is out of range. Min: 1, Max: 100. Set to default")
+            return self
+        }
         _flushQueueSize = flushQueueSize
         return self
     }
@@ -98,14 +102,18 @@ open class RSConfig: NSObject {
     
     @discardableResult @objc
     public func dbCountThreshold(_ dbCountThreshold: Int) -> RSConfig {
+        guard dbCountThreshold >= MIN_DB_COUNT_THRESHOLD else {
+            Logger.logError("dbCountThreshold is invalid. Min: 1. Set to default")
+            return self
+        }
         _dbCountThreshold = dbCountThreshold
         return self
     }
     
     @discardableResult @objc
     public func sleepTimeOut(_ sleepTimeOut: Int) -> RSConfig {
-        guard sleepTimeOut > 0 else {
-            Logger.log(message: "sleepTimeOut can not be less than 1 second", logLevel: .warning)
+        guard sleepTimeOut >= MIN_SLEEP_TIMEOUT else {
+            Logger.logError("sleepTimeOut is invalid. Min: 10. Set to default")
             return self
         }
         _sleepTimeOut = sleepTimeOut
@@ -126,14 +134,14 @@ open class RSConfig: NSObject {
     
     @discardableResult @objc
     public func controlPlaneURL(_ controlPlaneUrl: String) -> RSConfig {
-        if let url = URL(string: controlPlaneUrl) {
-            if let scheme = url.scheme, let host = url.host {
-                if let port = url.port {
-                    _controlPlaneUrl = "\(scheme)://\(host):\(port)"
-                } else {
-                    _controlPlaneUrl = "\(scheme)://\(host)"
-                }
-            }
+        guard let url = URL(string: controlPlaneUrl), let scheme = url.scheme, let host = url.host else {
+            Logger.logError("controlPlaneUrl is invalid")
+            return self
+        }
+        if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+            _controlPlaneUrl = "\(scheme)://\(host)\(url.path())"
+        } else {
+            _controlPlaneUrl = "\(scheme)://\(host)\(url.path)"
         }
         return self
     }
@@ -146,8 +154,8 @@ open class RSConfig: NSObject {
     
     @discardableResult @objc
     public func sessionTimeout(_ sessionTimeout: Int) -> RSConfig {
-        guard sessionTimeout >= RSSessionInActivityMinimumTimeOut else {
-            Logger.log(message: "sessionTimeout can not be less than 0 second", logLevel: .warning)
+        guard sessionTimeout >= MIN_SESSION_TIMEOUT else {
+            Logger.logError("sessionTimeout is invalid. Min: 0. Set to default")
             return self
         }
         _sessionTimeout = sessionTimeout
