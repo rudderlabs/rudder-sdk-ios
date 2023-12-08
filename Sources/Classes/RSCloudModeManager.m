@@ -70,6 +70,10 @@
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DATA_PLANE_URL_INVALID} andValue:1];
                 break;
             }
+            else if (response.state == MISSING_ANONYMOUSID_AND_USERID) {
+                [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Request Failed as the batch payload contains events without anonymousId and userId, hence deleting those events from DB"];
+                [self deleteEventsWithoutAnonymousId:dbMessage];
+            }
             else if (response.state == NETWORK_ERROR) {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
@@ -77,6 +81,26 @@
             }
         }
     });
+}
+
+- (void) deleteEventsWithoutAnonymousId: (RSDBMessage*) dbMessage {
+    NSMutableArray<NSString *>* messages = dbMessage.messages;
+    NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
+    NSMutableArray<NSString *>* messagesToBeDeleted = [[NSMutableArray alloc] init];
+    
+    for(int i=0; i<messages.count; i++) {
+        id object = [RSUtils deSerializeJSONString:messages[i]];
+        if (object && [object isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = (NSDictionary *)object;
+            if ([dict objectForKey:@"anonymousId"] == nil ) {
+                [messagesToBeDeleted addObject:messageIds[i]];
+            }
+        }
+    }
+    if (messagesToBeDeleted.count > 0) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Deleting events without anonymousId: %@", [RSUtils getCSVString:messagesToBeDeleted]]];
+        [self->dbPersistentManager clearEventsFromDB:messagesToBeDeleted];
+    }
 }
 
 + (NSString*) getPayloadFromMessages: (RSDBMessage*)dbMessage{

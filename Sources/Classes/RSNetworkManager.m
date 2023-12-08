@@ -85,6 +85,9 @@ NSString* const RESPONSE = @"RESPONSE";
                     weakResult.state = RESOURCE_NOT_FOUND;
                 } else if (weakResult.statusCode == 400) {
                     weakResult.state = BAD_REQUEST;
+                } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"request neither has anonymousid nor userid"].location != NSNotFound) {
+                    [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to events missing anonymousId or userId",requestEndPoint, weakResult.statusCode]];
+                    weakResult.state = MISSING_ANONYMOUSID_AND_USERID;
                 } else if (![weakResult.errorPayload isEqualToString:@""] && [[weakResult.errorPayload lowercaseString] rangeOfString:@"invalid write key"].location != NSNotFound) {
                     [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to invalid write key",requestEndPoint, weakResult.statusCode ]];
                     weakResult.state = WRONG_WRITE_KEY;
