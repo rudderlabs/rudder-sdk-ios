@@ -19,11 +19,19 @@ static RSEventRepository *_repository = nil;
 static RSUserSession *_userSession = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
+static NSRecursiveLock* recursiveLock = nil;
 
 @implementation RSClient
 
 + (instancetype) getInstance {
-    return _instance;
+    if (recursiveLock == nil) {
+        recursiveLock = [[NSRecursiveLock alloc] init];
+    }
+    RSClient* client;
+    [recursiveLock lock];
+    client = _instance;
+    [recursiveLock unlock];
+    return client;
 }
 
 + (instancetype)getInstance:(NSString *)writeKey {
@@ -42,20 +50,26 @@ static NSString* _deviceToken = nil;
     if ([writeKey length] == 0) {
         [RSLogger logError:WRITE_KEY_ERROR];
     }
-    if (_instance == nil) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init];
-            if (options != nil) {
-                _defaultOptions = options;
-                _instance->_options = options;
-            }
-            RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
-            _repository = [RSEventRepository initiate:writeKey config:_config client:_instance options:options];
-            if(_deviceToken != nil && [_deviceToken length] != 0) {
-                [_instance.context putDeviceToken:_deviceToken];
-            }
-        });
+    [recursiveLock lock];
+    @try {
+        if (_instance == nil) {
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                _instance = [[self alloc] init];
+                if (options != nil) {
+                    _defaultOptions = options;
+                    _instance->_options = options;
+                }
+                RSConfig *_config = (config != nil) ? config : [[RSConfig alloc] init];
+                _repository = [RSEventRepository initiate:writeKey config:_config client:_instance options:options];
+                if(_deviceToken != nil && [_deviceToken length] != 0) {
+                    [_instance.context putDeviceToken:_deviceToken];
+                }
+            });
+        }
+    }
+    @finally {
+        [recursiveLock unlock];
     }
     return _instance;
 }
