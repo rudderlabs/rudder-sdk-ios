@@ -60,3 +60,9 @@ class Logger {
         }
     }
 }
+
+extension RSClient {
+    public func log(message: String, logLevel: RSLogLevel) {
+        Logger.log(message: message, logLevel: logLevel)
+    }
+}

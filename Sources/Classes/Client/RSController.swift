@@ -215,8 +215,6 @@ extension RSDestinationPlugin {
             switch message {
             case let e as TrackMessage:
                 return list.contains(e.event)                
-            case let e as ScreenMessage:
-                return list.contains(e.name)
             default:
                 break
             }

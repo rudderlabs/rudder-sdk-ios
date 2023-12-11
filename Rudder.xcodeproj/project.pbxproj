@@ -490,7 +490,6 @@
 				EDA7EF2D2739119600E73142 /* Sources */,
 				EDC1325B27D612B600AFD833 /* RudderTests */,
 				06CABB852630C3CA0097BEFF /* Products */,
-				ED53723A2B15C30F00D794EB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -607,13 +606,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		ED53723A2B15C30F00D794EB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		EDA7EF2D2739119600E73142 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,11 +636,11 @@
 		EDA7EF442739119600E73142 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				ED5372452B1613CE00D794EB /* LogMessages.swift */,
 				EDA7EF462739119600E73142 /* RSConstants.swift */,
 				ED277FA027421B06002A8FEA /* RSEventsAndKeys.swift */,
 				ED3D22BD27A45B6500EC8366 /* RSTypeAlias.swift */,
 				ED05631E291BEB0400BAEE65 /* RSVersion.swift */,
-				ED5372452B1613CE00D794EB /* LogMessages.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -656,10 +648,10 @@
 		EDA7EF4C2739119600E73142 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				EDC1BC982B10A26700211F24 /* Fixtures */,
 				ED53724A2B18ED8E00D794EB /* MockURLProtocol.swift */,
 				EDA7EF4D2739119600E73142 /* RSUtils.swift */,
 				EDC1BC992B10A31C00211F24 /* TestUtils.swift */,
-				EDC1BC982B10A26700211F24 /* Fixtures */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

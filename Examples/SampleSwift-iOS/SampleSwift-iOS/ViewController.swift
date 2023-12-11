@@ -49,6 +49,9 @@ class ViewController: UIViewController {
         Task(name: "End session"),
         Task(name: "Start session with id"),
         Task(name: "Get Context"),
+        Task(name: "Allowlist track"),
+        Task(name: "Denylist track"),
+        Task(name: "Order done"),
         Task(name: "Multiple Track"),
         Task(name: "Multiple Flush From Background"),
         Task(name: "Multiple Flush and Multiple Track"),
@@ -183,6 +186,32 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 if let context = RSClient.sharedInstance().context {
                     print(context.dictionaryValue)
                 }
+            case 26:
+                RSClient.sharedInstance().track("allow_list_track", properties: [
+                    "integerValue": 42,
+                    "stringValue": "Hello, World!",
+                    "boolValue": true,
+                    "doubleValue": 3.14159,
+                    "arrayValue": [1, 2, 3, 4, 5],
+                    "dictionaryValue": ["key1": "value1", "key2": Date(), "key-3": ["key1": URL(string: "https://www.example.com")!, "key2": Date()] as [String : Any]] as [String : Any],
+                    "urlValue": URL(string: "https://www.example.com")!,
+                    "dateValue": Date()
+                ])
+            case 27:
+                RSClient.sharedInstance().track("deny_list_track", properties: [
+                    "integerValue": 42,
+                    "stringValue": "Hello, World!",
+                    "boolValue": true,
+                    "doubleValue": 3.14159,
+                    "arrayValue": [1, 2, 3, 4, 5],
+                    "dictionaryValue": ["key1": "value1", "key2": Date(), "key-3": ["key1": URL(string: "https://www.example.com")!, "key2": Date()] as [String : Any]] as [String : Any],
+                    "urlValue": URL(string: "https://www.example.com")!,
+                    "dateValue": Date()
+                ])
+            case 28:
+                RSClient.sharedInstance().track("Order Done", properties: getProperties())
+            case 29:
+                RSClient.sharedInstance().track("Order Completed", properties: getProperties())
         /*case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
@@ -345,5 +374,32 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             break
         }
+    }
+    
+    func getProperties() -> [String: Any] {
+        let products: [String: Any] = [
+            RSKeys.Ecommerce.productId: "1001",
+            RSKeys.Ecommerce.productName: "Books-1",
+            RSKeys.Ecommerce.category: "Books",
+            RSKeys.Ecommerce.sku: "Books-sku",
+            RSKeys.Ecommerce.quantity: 2,
+            RSKeys.Ecommerce.price: 1203.2
+        ]
+        let fullPath = getDocumentsDirectory().appendingPathComponent("randomFilename")
+        func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
+        let properties: [String: Any] = [
+            RSKeys.Ecommerce.products: [products],
+            "optOutOfSession": true,
+            RSKeys.Ecommerce.revenue: 1203,
+            RSKeys.Ecommerce.quantity: 10,
+            RSKeys.Ecommerce.price: 101.34,
+            RSKeys.Ecommerce.productId: "123",
+            "revenue_type": "revenue_type_value",
+            "receipt": fullPath
+        ]
+        return properties
     }
 }
