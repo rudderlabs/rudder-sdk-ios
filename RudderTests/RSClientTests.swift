@@ -341,8 +341,8 @@ class RSClientTests: XCTestCase {
         
         let clientTraits = client.traits
         XCTAssertNotNil(clientTraits)
-        XCTAssertTrue(clientTraits?["email"] == "abc@def.com")
-        XCTAssertTrue(clientTraits?["userId"] == "user_id")
+        XCTAssertTrue(clientTraits?["email"] as? String == "abc@def.com")
+        XCTAssertTrue(clientTraits?["userId"] as? String == "user_id")
     }
 }
 

@@ -45,7 +45,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
             }
             """.data(using: .utf8)
             
-            MockURLProtocol.requestHandler = { request in
+            MockURLProtocol.requestHandler = { _ in
                 let response = HTTPURLResponse(url: URL(string: "https://some.rudderstack.com.url")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
                 return (response, data)
             }

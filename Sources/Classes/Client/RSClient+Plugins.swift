@@ -192,6 +192,7 @@ extension RSClient {
     static var sourceConfigType: SourceConfigType = .standard
 }
 
+// swiftlint:disable inclusive_language
 enum SourceConfigType {
     case whiteList
     case blackList

@@ -371,7 +371,7 @@ extension RSClient {
             Logger.log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
-        let traits: JSON? = userDefaults.read(.traits)
+        let traits: JSON? = RSContext.traits(userDefaults: userDefaults)
         return traits?.dictionaryValue
     }
     
