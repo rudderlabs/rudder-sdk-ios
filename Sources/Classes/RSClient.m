@@ -50,6 +50,9 @@ static NSRecursiveLock* recursiveLock = nil;
     if ([writeKey length] == 0) {
         [RSLogger logError:WRITE_KEY_ERROR];
     }
+    if (recursiveLock == nil) {
+        recursiveLock = [[NSRecursiveLock alloc] init];
+    }
     [recursiveLock lock];
     @try {
         if (_instance == nil) {
