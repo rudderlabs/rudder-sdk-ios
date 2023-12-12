@@ -433,7 +433,14 @@ static NSRecursiveLock* recursiveLock = nil;
 }
 
 + (instancetype)sharedInstance {
-    return _instance;
+    if (recursiveLock == nil) {
+        recursiveLock = [[NSRecursiveLock alloc] init];
+    }
+    RSClient* client;
+    [recursiveLock lock];
+    client = _instance;
+    [recursiveLock unlock];
+    return client;
 }
 
 + (RSOption*) getDefaultOptions {
@@ -472,11 +479,11 @@ static NSRecursiveLock* recursiveLock = nil;
             [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the device token"];
             return;
         }
-        if(_instance == nil) {
+        if([RSClient sharedInstance] == nil) {
             _deviceToken = deviceToken;
             return;
         }
-        [_instance.context putDeviceToken:deviceToken];
+        [[RSClient sharedInstance].context putDeviceToken:deviceToken];
     }
 }
 
