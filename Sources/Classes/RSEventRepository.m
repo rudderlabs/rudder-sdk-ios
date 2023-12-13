@@ -357,4 +357,8 @@ static RSEventRepository* _instance;
     return [self->userSession getSessionId];
 }
 
+- (void) onIntegrationReady:(NSString *)key withCallback:(Callback)callback {
+    [self->deviceModeManager onIntegrationReady:key withCallback:callback];
+}
+
 @end

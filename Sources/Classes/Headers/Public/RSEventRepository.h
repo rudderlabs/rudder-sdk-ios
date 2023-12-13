@@ -77,6 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)applyIntegrations:(RSMessage *)message withDefaultOption:(RSOption *)defaultOption; // Added this method in header for testing purpose
 - (RSMessage *)applyConsents:(RSMessage *)message; // Added this method in header for testing purpose
 - (void)applySession:(RSMessage *)message withUserSession:(RSUserSession *)userSession andRudderConfig:(RSConfig *)rudderConfig; // Added this method in header for testing purpose
+- (void)onIntegrationReady:(NSString *)key withCallback:(Callback)callback;
 @end
 
 NS_ASSUME_NONNULL_END

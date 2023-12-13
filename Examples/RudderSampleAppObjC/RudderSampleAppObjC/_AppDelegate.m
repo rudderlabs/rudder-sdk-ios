@@ -39,6 +39,10 @@ static int screenCount = 1;
             [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:NO databaseProvider:[EncryptedDatabaseProvider new]]];
             [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
         }
+        
+        [[RSClient getInstance] onIntegrationReady:@"Braze" withCallback:^(NSObject *integrationInstance) {
+            // Handle integrationInstance
+        }];
     }
     return YES;
 }

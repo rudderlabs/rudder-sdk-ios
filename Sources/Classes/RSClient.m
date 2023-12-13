@@ -506,4 +506,13 @@ static NSString* _deviceToken = nil;
     return (_repository != nil) ? [_repository getSessionId] : nil;
 }
 
+- (void) onIntegrationReady:(NSString*)key withCallback:(Callback)callback {
+    if ([RSClient getOptStatus]) {
+        return;
+    }
+    if (_repository != nil) {
+        [_repository onIntegrationReady:key withCallback:callback];
+    }
+}
+
 @end
