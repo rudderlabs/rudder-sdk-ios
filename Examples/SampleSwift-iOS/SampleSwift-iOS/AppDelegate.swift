@@ -23,15 +23,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
             return true
         }
-                    
+        
+        print(NSHomeDirectory())
+        
         let config: RSConfig = RSConfig(writeKey: rudderConfig.WRITE_KEY)
             .dataPlaneURL(rudderConfig.DEV_DATA_PLANE_URL)
-            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+//            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
+//            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
             .loglevel(.verbose)
             .trackLifecycleEvents(true)
             .recordScreenViews(true)
+            .sleepTimeOut(20)
         
         RSClient.sharedInstance().configure(with: config)
+        
+        
         RSClient.sharedInstance().addDestination(RudderAmplitudeDestination())
         RSClient.sharedInstance().addDestination(RudderFirebaseDestination())
             

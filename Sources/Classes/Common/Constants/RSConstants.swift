@@ -9,6 +9,7 @@
 import Foundation
 
 let TAG = "RudderStack"
+let RUDDER_DESTINATION_KEY = "RudderStack"
 let RSServerConfigKey = "rs_server_config"
 let RSServerLastUpdatedKey = "rs_server_last_updated"
 let RSTraitsKey = "rs_traits"

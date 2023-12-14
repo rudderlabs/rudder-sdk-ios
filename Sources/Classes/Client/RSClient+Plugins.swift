@@ -29,7 +29,6 @@ extension RSClient {
         var plugins = [RSPlatformPlugin]()
         
         plugins.append(RSContextPlugin())
-//        plugins.append(RSUserSessionPlugin())
 
         plugins += Vendor.current.requiredPlugins
 
@@ -65,33 +64,22 @@ extension RSClient {
     }
 }
 
-#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst) || os(watchOS)
 import UIKit
 extension RSClient {
     internal func setupServerConfigCheck() {
-        checkServerConfig()
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
-            guard let self = self, let app = notification.object as? UIApplication else { return }
-            if app.applicationState == .background {
-                self.checkServerConfig()
-            }
-        }
+        setupDownloadServerConfig()
     }
 }
-#elseif os(watchOS)
-extension RSClient {
-    internal func setupServerConfigCheck() {
-        checkServerConfig()
-    }
-}
+
 #elseif os(macOS)
 import Cocoa
 extension RSClient {
     internal func setupServerConfigCheck() {
-        checkServerConfig()
+        setupDownloadServerConfig()
         RSRepeatingTimer.schedule(interval: .days(1), queue: .main) { [weak self] in
             guard let self = self else { return }
-            self.checkServerConfig()
+            self.setupDownloadServerConfig()
         }
     }
 }
@@ -105,26 +93,28 @@ extension RSClient {
     }
     
     func update(plugin: RSPlugin, serverConfig: RSServerConfig, type: UpdateType) {
-        plugin.update(serverConfig: serverConfig, type: type)
+        // if the server config is not cached. we send the updateType to external destination as initial
+        var updateType = type
+        if !isServerConfigCached, type == .refresh, let destination = plugin as? RSDestinationPlugin, destination.key != RUDDER_DESTINATION_KEY {
+            updateType = .initial
+        }
+        plugin.update(serverConfig: serverConfig, type: updateType)
         if let dest = plugin as? RSDestinationPlugin {
-            dest.apply { (subPlugin) in
-                subPlugin.update(serverConfig: serverConfig, type: type)
+            dest.apply { subPlugin in
+                subPlugin.update(serverConfig: serverConfig, type: updateType)
             }
         }
     }
     
-    func checkServerConfig() {
+    func setupDownloadServerConfig() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self, !self.checkServerConfigInProgress else { return }
-            
-            self.checkServerConfigInProgress = true
-            self.checkServerConfig(retryCount: 0) {
-                self.checkServerConfigInProgress = false
-            }
+            guard let self = self else { return }
+
+            self.downloadServerConfig(retryCount: 0) { }
         }
     }
     
-    private func checkServerConfig(retryCount: Int, completion: @escaping () -> Void) {
+    private func downloadServerConfig(retryCount: Int, completion: @escaping () -> Void) {
         if isUnitTesting {
             checkServerConfigForUnitTesting(completion: completion)
             return
@@ -132,35 +122,31 @@ extension RSClient {
         let maxRetryCount = 4
         
         guard retryCount < maxRetryCount else {
-            if let serverConfig = serverConfig {
-                update(serverConfig: serverConfig, type: .refresh)
-            }
-            Logger.log(message: "Server config download failed. Using last stored config from storage", logLevel: .debug)
+            Logger.log(message: "Server config download failed.", logLevel: .debug)
             completion()
             return
         }
         
-        let updateType: UpdateType = self.serverConfig == nil ? .initial : .refresh
         serviceManager?.downloadServerConfig({ [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let serverConfig):
+                Logger.log(message: "Server config download successful.", logLevel: .debug)
                 self.serverConfig = serverConfig
-                self.update(serverConfig: serverConfig, type: updateType)
+                self.update(serverConfig: serverConfig, type: .refresh)
                 self.userDefaults.write(.serverConfig, value: serverConfig)
-                self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
-                Logger.log(message: "server config download successful", logLevel: .debug)
+                self.isServerConfigCached = true
                 completion()
                     
             case .failure(let error):
                 if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
                     Logger.log(message: "Wrong write key", logLevel: .error)
-                    self.checkServerConfig(retryCount: maxRetryCount, completion: completion)
+                    self.downloadServerConfig(retryCount: maxRetryCount, completion: completion)
                 } else {
                     Logger.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
-                        self.checkServerConfig(retryCount: retryCount + 1, completion: completion)
+                        self.downloadServerConfig(retryCount: retryCount + 1, completion: completion)
                     }
                 }
             }
@@ -181,7 +167,6 @@ extension RSClient {
             self.serverConfig = serverConfig
             self.update(serverConfig: serverConfig, type: .initial)
             self.userDefaults.write(.serverConfig, value: serverConfig)
-            self.userDefaults.write(.lastUpdateTime, value: RSUtils.getTimeStamp())
         } catch { }
         
         completion()

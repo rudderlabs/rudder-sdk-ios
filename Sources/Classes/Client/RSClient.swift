@@ -15,7 +15,7 @@ open class RSClient: NSObject {
     var controller: RSController
     var serverConfig: RSServerConfig?
     var serviceManager: RSServiceManager?
-    var checkServerConfigInProgress = false
+    @RSAtomic var isServerConfigCached = false
     static let shared = RSClient()
     var userDefaults = RSUserDefaults()
     var userInfo: RSUserInfo? {
@@ -31,6 +31,7 @@ open class RSClient: NSObject {
     
     private override init() {
         serverConfig = userDefaults.read(.serverConfig)
+        isServerConfigCached = serverConfig != nil
         controller = RSController()
     }
     
@@ -482,6 +483,11 @@ extension RSClient {
     }
     
     func process(message: RSMessage) {
+        if let serverConfig = serverConfig, !serverConfig.enabled {
+            Logger.logDebug("Source is disabled in your dashboard. Hence event is dropped.")
+            return
+        }
+        
         switch message {
         case let e as TrackMessage:
             controller.process(incomingEvent: e)

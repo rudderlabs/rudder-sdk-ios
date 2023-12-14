@@ -10,7 +10,7 @@ import Foundation
 
 class RudderDestinationPlugin: RSDestinationPlugin {
     let type = PluginType.destination
-    let key: String = "RudderStack"
+    let key: String = RUDDER_DESTINATION_KEY
     let controller = RSController()
     weak var client: RSClient? {
         didSet {
@@ -25,6 +25,9 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private var serviceManager: RSServiceManager?
     private var config: RSConfig?
     private var userDefaults: RSUserDefaults?
+    
+    @RSAtomic var isSourceEnabled = false
+    @RSAtomic var isFlushingStarted = false
     
     private let lock = NSLock()
     
@@ -52,10 +55,54 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         } else {
             serviceManager = RSServiceManager(client: client)
         }
+    }
+        
+    func execute<T: RSMessage>(message: T?) -> T? {
+        let result: T? = message
+        if let r = result {
+            saveEvent(message: r)
+        }
+        return result
+    }
+    
+    func update(serverConfig: RSServerConfig, type: UpdateType) {
+        if type == .refresh {
+            if isSourceEnabled, !serverConfig.enabled {
+                // if source was enabled before, but it has been disabled now; then cancel flushing
+                Logger.logDebug("Source has been disabled in your dashboard. Flushing canceled.")
+                flushTimer?.cancel()
+            } else if !isSourceEnabled {
+                if serverConfig.enabled {
+                    // if source was disabled before, but it has been enabled now; then resume flushing
+                    Logger.logDebug("Source has been enabled in your dashboard. Flushing resumed.")
+                    flushTimer?.resume()
+                } else {
+                    // if source was disabled before, still it has been disabled now; then cancel flushing
+                    Logger.logDebug("Source is still disabled in your dashboard. Flushing canceled.")
+                    flushTimer?.cancel()
+                }
+            }
+        }
+        isSourceEnabled = serverConfig.enabled
+        startFlushing()
+    }
+    
+    func startFlushing() {
+        guard !isFlushingStarted else {
+            return
+        }
+        isFlushingStarted = true
+        Logger.logDebug("Flushing started.")
         var sleepCount = 0
         flushTimer = RSRepeatingTimer(interval: TimeInterval(1)) { [weak self] in
             guard let self = self else { return }
             self.uploadsQueue.async {
+                guard self.isSourceEnabled else {
+                    // if source is disabled; then suspend flushing
+                    Logger.logDebug("Source is disabled in your dashboard. Flushing suspended.")
+                    self.flushTimer?.suspend()
+                    return
+                }
                 guard let recordCount = self.databaseManager?.getDBRecordCount(), let config = self.config else {
                     return
                 }
@@ -75,14 +122,6 @@ class RudderDestinationPlugin: RSDestinationPlugin {
             }
         }
     }
-        
-    func execute<T: RSMessage>(message: T?) -> T? {
-        let result: T? = message
-        if let r = result {
-            saveEvent(message: r)
-        }
-        return result
-    }
     
     internal func enterForeground() {
         flushTimer?.resume()
@@ -100,9 +139,6 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private func saveEvent<T: RSMessage>(message: T) {
         guard let databaseManager = self.databaseManager else { return }
         databaseManager.write(message)
-//        if let context = message.context {
-//            userDefaults?.write(.context, value: try? JSON(context))
-//        }
     }
 }
 

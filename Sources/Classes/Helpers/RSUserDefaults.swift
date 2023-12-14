@@ -13,7 +13,6 @@ class RSUserDefaults {
         case userId
         case traits
         case anonymousId
-        case lastUpdateTime
         case serverConfig
         case optStatus
         case optInTime
