@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class RSMessage;
 @class RSContext;
 @class RSMessageBuilder;
-typedef void (^Callback)(NSObject *);
+typedef void (^Callback)(NSObject *_Nullable);
 
 @interface RSClient : NSObject {
     RSOption *_options;
