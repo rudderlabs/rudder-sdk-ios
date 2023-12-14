@@ -152,16 +152,15 @@
 }
 
 - (void) handleCallbacks:(NSString*)key withIntegration:(id<RSIntegration>)nativeOp {
-    if ([self->integrationCallbacks objectForKey:key]) {
-        if ([nativeOp respondsToSelector:@selector(getUnderlyingInstance)]) {
-            NSObject *nativeInstance = [nativeOp getUnderlyingInstance];
-            Callback callback = [self->integrationCallbacks objectForKey:key];
-            if (nativeInstance != nil && callback != nil) {
-                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Callback for %@ factory is being invoked", key]];
-                callback(nativeInstance);
-            } else {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Either underlying instance or callback for %@ factory is null", key]];
-            }
+    if ([self->integrationCallbacks objectForKey:key] &&
+        [nativeOp respondsToSelector:@selector(getUnderlyingInstance)]) {
+        NSObject *nativeInstance = [nativeOp getUnderlyingInstance];
+        Callback callback = [self->integrationCallbacks objectForKey:key];
+        if (nativeInstance != nil && callback != nil) {
+            [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Callback for %@ factory is being invoked", key]];
+            callback(nativeInstance);
+        } else {
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Either underlying instance or callback for %@ factory is null", key]];
         }
     }
 }
