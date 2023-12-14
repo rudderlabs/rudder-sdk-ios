@@ -89,7 +89,7 @@ typedef void (^Callback)(NSObject *);
 + (RSOption*) getDefaultOptions __attribute((deprecated("This method will be deprecated soon. Use instance property(defaultOptions) instead.")));
 - (RSContext *) getContext __attribute((deprecated("This method will be deprecated soon. Use instance property(context) instead.")));
 
-- (void) onIntegrationReady:(NSString *)key withCallback:(Callback)callback;
+- (void) onIntegrationReady:(NSString *)integrationName withCallback:(Callback)callback;
 
 @property (strong, nonatomic, readonly) NSNumber* _Nullable sessionId;
 @property (strong, nonatomic, readonly) NSString* _Nullable anonymousId;

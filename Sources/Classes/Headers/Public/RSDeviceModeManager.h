@@ -40,5 +40,5 @@
 - (void) reset;
 - (void) flush;
 - (void) handleCaseWhenNoDeviceModeFactoryIsPresent;
-- (void) onIntegrationReady:(NSString*)key withCallback:(Callback)callback;
+- (void) addCallBackForIntegration:(NSString*)integrationName withCallback:(Callback)callback;
 @end
