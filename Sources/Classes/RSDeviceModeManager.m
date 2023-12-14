@@ -161,7 +161,6 @@
                 callback(nativeInstance);
             } else {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Either underlying instance or callback for %@ factory is nil", key]];
-                callback(nil);
             }
         } else {
             [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: getUnderlyingInstance for %@ factory is not found", key]];
