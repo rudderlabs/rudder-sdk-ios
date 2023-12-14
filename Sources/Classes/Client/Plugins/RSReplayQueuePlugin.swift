@@ -9,46 +9,66 @@
 import Foundation
 
 internal class RSReplayQueuePlugin: RSPlugin {
-    static let maxSize = 1000
-
-    @RSAtomic var running: Bool = true
-    
     let type: PluginType = .before
+    weak var client: RSClient?
     
-    var client: RSClient?
-    
-    let syncQueue = DispatchQueue(label: "replayQueue.rudder.com")
-    var queuedEvents = [RSMessage]()
+    private let syncQueue = DispatchQueue(label: "replayQueue.rudder.com")
+    private var queuedEvents = [RSMessage]()
+    @RSAtomic var running = true
+    static let maxSize = 1000
     
     required init() { }
     
     func execute<T: RSMessage>(message: T?) -> T? {
-        if running == true, let e = message {
-            syncQueue.sync {
-                if queuedEvents.count >= Self.maxSize {
-                    queuedEvents.removeFirst()
+        if running, let e = message {
+            syncQueue.async { [weak self] in
+                guard let self = self else { return }
+                if self.queuedEvents.count >= Self.maxSize {
+                    self.queuedEvents.removeFirst()
                 }
-                queuedEvents.append(e)
+                self.queuedEvents.append(e)
             }
-            return nil
         }
         return message
     }
     
     func update(serverConfig: RSServerConfig, type: UpdateType) {
-        guard client?.checkServerConfigInProgress == true else { return }
-        running = false
-        replayEvents()
+        if type == .refresh {
+            replayEvents(isSourceEnabled: serverConfig.enabled)
+        } else if type == .initial, serverConfig.enabled {
+            // if source config is cached and source is enabled. we no longer need to add the events to queue.
+            running = false
+        }
     }
 }
 
 extension RSReplayQueuePlugin {
-    internal func replayEvents() {
-        syncQueue.sync {
-            for event in queuedEvents {
-                client?.process(message: event)
+    internal func replayEvents(isSourceEnabled: Bool) {
+        syncQueue.async { [weak self] in
+            guard let self = self else { return }
+            // send events to device mode destinations only.
+            // we will wait for 2 seconds to finish the destinations to be initialized.
+            DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(2)) { [weak self] in
+                guard let self = self else { return }
+                self.running = false
+                if isSourceEnabled {
+                    if let destinationPlugins = self.getExternalDestinationPlugins() {
+                        for event in self.queuedEvents {
+                            destinationPlugins.forEach { plugin in
+                                _ = plugin.execute(message: event)
+                            }
+                        }
+                    }
+                }
+                self.queuedEvents.removeAll()
             }
-            queuedEvents.removeAll()
+            
         }
+    }
+    
+    private func getExternalDestinationPlugins() -> [RSDestinationPlugin]? {
+        return (self.client?.controller.plugins[.destination]?.plugins as? [RSDestinationPlugin])?.filter({ plugin in
+            return plugin.key != RUDDER_DESTINATION_KEY
+        })
     }
 }

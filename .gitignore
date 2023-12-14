@@ -88,6 +88,12 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-Configuration.json
 .DS_Store
 .scannerwork
+
+# Sonar
+relative_or_absolute_path_to_cache_location
+compile_commands.json
+GoogleService-Info.plist
+RudderConfig.plist
+configuration.json

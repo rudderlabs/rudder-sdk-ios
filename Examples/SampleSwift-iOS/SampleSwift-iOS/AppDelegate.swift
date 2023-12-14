@@ -10,54 +10,38 @@ import UIKit
 import Rudder
 import AdSupport
 import Network
+import RudderFirebase
+import RudderAmplitude
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        /// Create a `Configuration.json` file on root directory. The JSON should be look like:
-        /// {
-        ///    "WRITE_KEY": "WRITE_KEY_VALUE",
-        ///    "DATA_PLANE_URL": "DATA_PLANE_URL_VALUE",
-        ///    "CONTROL_PLANE_URL": "CONTROL_PLANE_URL_VALUE"
-        /// }
+        guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
+              let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+              let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
+            return true
+        }
         
-        let filePath = URL(fileURLWithPath: #file).pathComponents.dropLast().dropLast().dropLast().dropLast().joined(separator: "/").replacingOccurrences(of: "//", with: "/") + "/Configuration.json"
-        do {
-            let jsonString = try String(contentsOfFile: filePath, encoding: .utf8)
-            let jsonData = Data(jsonString.utf8)
-            let configuration = try JSONDecoder().decode(Configuration.self, from: jsonData)
+        print(NSHomeDirectory())
+        
+        let config: RSConfig = RSConfig(writeKey: rudderConfig.WRITE_KEY)
+            .dataPlaneURL(rudderConfig.DEV_DATA_PLANE_URL)
+//            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
+//            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
+            .loglevel(.verbose)
+            .trackLifecycleEvents(true)
+            .recordScreenViews(true)
+            .sleepTimeOut(20)
+        
+        RSClient.sharedInstance().configure(with: config)
+        
+        
+        RSClient.sharedInstance().addDestination(RudderAmplitudeDestination())
+        RSClient.sharedInstance().addDestination(RudderFirebaseDestination())
             
-            let config: RSConfig = RSConfig(writeKey: configuration.WRITE_KEY)
-                .dataPlaneURL(configuration.DATA_PLANE_URL)
-                .loglevel(.verbose)
-                .trackLifecycleEvents(false)
-                .recordScreenViews(true)
-                .flushQueueSize(8)
-//                .sleepTimeOut(1)
-            RSClient.sharedInstance().configure(with: config)
-        
-        /*client?.addDestination(CustomDestination())
-        
-        client?.setAppTrackingConsent(.authorize)
-        client?.setAnonymousId("example_anonymous_id")
-        client?.setAdvertisingId(getIDFA())
-        client?.setDeviceToken("example_device_token")*/
-        
-        /*client?.setOptOutStatus(true)
-        client?.reset()
-                
-        let traits = client?.traits
-        let defaultOption = RSOption()
-        defaultOption.putIntegration("Amplitude", isEnabled: true)
-        client?.setOption(defaultOption)
-        
-        let messageOption = RSOption()
-        messageOption.putIntegration("MoEngage", isEnabled: true)
-        messageOption.putExternalId("", withId: "")
-        client?.identify("Track 2", traits: ["email": "abc@def.com"], option: messageOption)*/
-        } catch { }
         return true
     }
 
@@ -78,10 +62,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getIDFA() -> String {
         return ASIdentifierManager.shared().advertisingIdentifier.uuidString
     }
-}
-
-struct Configuration: Codable {
-    let DATA_PLANE_URL: String
-    let CONTROL_PLANE_URL: String
-    let WRITE_KEY: String
 }

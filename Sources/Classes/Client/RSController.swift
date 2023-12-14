@@ -67,8 +67,7 @@ class Mediator {
         
         plugins.forEach { (plugin) in
             if let r = result {
-                // Drop the event return because we don't care about the
-                // final result.
+                // Drop the event return because we don't care about the final result.
                 if plugin is RSDestinationPlugin {
                     _ = plugin.execute(message: r)
                 } else {
@@ -191,7 +190,7 @@ extension RSDestinationPlugin {
     }
     
     func isDestinationEnabled(message: RSMessage) -> Bool {
-        var customerDisabled = false
+        var customerDisabled: Bool?
         
         if let integration = message.integrations?.first(where: { key, _ in
             return key == self.key
@@ -199,14 +198,23 @@ extension RSDestinationPlugin {
             customerDisabled = true
         }
         
-        var hasSettings = false        
+        var hasSettings: Bool?
         if let destinations = client?.serverConfig?.destinations {
             if let destination = destinations.first(where: { $0.destinationDefinition?.displayName == self.key }), destination.enabled {
                 hasSettings = true
             }
         }
         
-        return (hasSettings == true && customerDisabled == false)
+        if customerDisabled == nil, hasSettings == nil {
+            return false
+        }
+        if customerDisabled == true {
+            return false
+        }
+        if hasSettings == true {
+            return true
+        }
+        return false
     }
     
     // swiftlint:disable inclusive_language
@@ -215,8 +223,6 @@ extension RSDestinationPlugin {
             switch message {
             case let e as TrackMessage:
                 return list.contains(e.event)                
-            case let e as ScreenMessage:
-                return list.contains(e.name)
             default:
                 break
             }
@@ -244,41 +250,32 @@ extension RSDestinationPlugin {
     }
 
     func process<E: RSMessage>(incomingEvent: E) -> E? {
-        // This will process plugins (think destination middleware) that are tied
-        // to this destination.
-        
-        var result: E?
-        
-        if isDestinationEnabled(message: incomingEvent) {
-            // check event is allowed
-            if isEventAllowed(message: incomingEvent) {
-                // apply .before and .enrichment types first ...
-                let beforeResult = controller.applyPlugins(type: .before, event: incomingEvent)
-                let enrichmentResult = controller.applyPlugins(type: .enrichment, event: beforeResult)
-                
-                // now we execute any overrides we may have made.  basically, the idea is to take an
-                // incoming event, like identify, and map it to whatever is appropriate for this destination.
-                var destinationResult: E?
-                switch enrichmentResult {
-                case let e as IdentifyMessage:
-                    destinationResult = identify(message: e) as? E
-                case let e as TrackMessage:
-                    destinationResult = track(message: e) as? E
-                case let e as ScreenMessage:
-                    destinationResult = screen(message: e) as? E
-                case let e as GroupMessage:
-                    destinationResult = group(message: e) as? E
-                case let e as AliasMessage:
-                    destinationResult = alias(message: e) as? E
-                default:
-                    break
-                }
-                
-                // apply .after plugins ...
-                result = controller.applyPlugins(type: .after, event: destinationResult)
-            }
+        guard isDestinationEnabled(message: incomingEvent) else {
+            Logger.logDebug("Destination is not enabled.")
+            return nil
         }
         
-        return result
+        guard isEventAllowed(message: incomingEvent) else {
+            Logger.logDebug("Event is filtered by Client-side event filtering.")
+            return nil
+        }
+                
+        var destinationResult: E?
+        switch incomingEvent {
+        case let e as IdentifyMessage:
+            destinationResult = identify(message: e) as? E
+        case let e as TrackMessage:
+            destinationResult = track(message: e) as? E
+        case let e as ScreenMessage:
+            destinationResult = screen(message: e) as? E
+        case let e as GroupMessage:
+            destinationResult = group(message: e) as? E
+        case let e as AliasMessage:
+            destinationResult = alias(message: e) as? E
+        default:
+            break
+        }
+        
+        return destinationResult
     }
 }

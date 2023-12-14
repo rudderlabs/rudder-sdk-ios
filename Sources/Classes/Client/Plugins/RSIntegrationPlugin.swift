@@ -10,7 +10,7 @@ import Foundation
 
 class RSIntegrationPlugin: RSPlatformPlugin {
     let type: PluginType = .before
-    var client: RSClient?
+    weak var client: RSClient?
         
     func execute<T: RSMessage>(message: T?) -> T? {
         guard var workingMessage = message else { return message }
@@ -19,8 +19,8 @@ class RSIntegrationPlugin: RSPlatformPlugin {
             if messageIntegrations["All"] == nil {
                 workingMessage.integrations?["All"] = true
             }
-        } else if let optionPlugin = client?.find(pluginType: RSOptionPlugin.self) {
-            if let integrations = optionPlugin.option?.integrations {
+        } else if let globalOption: RSOption = RSSessionStorage.shared.read(.option) {
+            if let integrations = globalOption.integrations {
                 workingMessage.integrations = integrations
                 if integrations["All"] == nil {
                     workingMessage.integrations?["All"] = true

@@ -13,15 +13,28 @@ import WatchKit
 
 class RSwatchOSLifecycleEvents: RSPlatformPlugin, RSwatchOSLifecycle {    
     let type = PluginType.before
-    var client: RSClient?
+    var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
+    
+    private var userDefaults: RSUserDefaults?
+    private var config: RSConfig?
+    
+    internal func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+        config = client.config
+    }
     
     func applicationDidFinishLaunching(watchExtension: WKExtension?) {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         
-        let previousVersion = RSUserDefaults.getApplicationVersion()
-        let previousBuild = RSUserDefaults.getApplicationBuild()
+        let previousVersion: String? = userDefaults?.read(application: .version)
+        let previousBuild: String? = userDefaults?.read(application: .build)
 
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
@@ -46,12 +59,12 @@ class RSwatchOSLifecycleEvents: RSPlatformPlugin, RSwatchOSLifecycle {
             fromBackground: false
         ))
         
-        RSUserDefaults.saveApplicationVersion(currentVersion)
-        RSUserDefaults.saveApplicationBuild(currentBuild)        
+        userDefaults?.write(application: .version, value: currentVersion)
+        userDefaults?.write(application: .build, value: currentBuild)
     }
     
     func applicationWillEnterForeground(watchExtension: WKExtension?) {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         

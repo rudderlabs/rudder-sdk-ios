@@ -14,20 +14,32 @@ import UIKit
 
 class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
     let type = PluginType.before
-    var client: RSClient?
-    var isFirstTimeLaunch: Bool = true
+    var client: RSClient? {
+        didSet {
+            initialSetup()
+        }
+    }
     
+    var isFirstTimeLaunch: Bool = true    
     @RSAtomic private var didFinishLaunching = false
+    private var userDefaults: RSUserDefaults?
+    private var config: RSConfig?
+    
+    internal func initialSetup() {
+        guard let client = self.client else { return }
+        userDefaults = client.userDefaults
+        config = client.config
+    }
     
     func application(_ application: UIApplication?, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         didFinishLaunching = true
         
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         
-        let previousVersion = RSUserDefaults.getApplicationVersion()
-        let previousBuild = RSUserDefaults.getApplicationBuild()
+        let previousVersion: String? = userDefaults?.read(application: .version)
+        let previousBuild: String? = userDefaults?.read(application: .build)
         
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
@@ -54,12 +66,12 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
             url: launchOptions?[UIApplication.LaunchOptionsKey.url]
         ))
         
-        RSUserDefaults.saveApplicationVersion(currentVersion)
-        RSUserDefaults.saveApplicationBuild(currentBuild)
+        userDefaults?.write(application: .version, value: currentVersion)
+        userDefaults?.write(application: .build, value: currentBuild)
     }
     
     func applicationWillEnterForeground(application: UIApplication?) {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         #if !os(tvOS)
@@ -83,7 +95,7 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
     }
     
     func applicationDidEnterBackground(application: UIApplication?) {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         
@@ -91,7 +103,7 @@ class RSiOSLifecycleEvents: RSPlatformPlugin, RSiOSLifecycle {
     }
     
     func applicationDidBecomeActive(application: UIApplication?) {
-        if client?.config?.trackLifecycleEvents == false {
+        if config?.trackLifecycleEvents == false {
             return
         }
         

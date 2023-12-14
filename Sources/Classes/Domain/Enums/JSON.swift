@@ -35,7 +35,8 @@ public enum JSON: Equatable {
     }
     
     // For primitives??
-    public init(_ value: Any) throws { 
+    // swiftlint:disable cyclomatic_complexity
+    public init(_ value: Any) throws {
         switch value {
         // handle NS values
         case _ as NSNull:
@@ -61,10 +62,21 @@ public enum JSON: Equatable {
             self = .object(try object.mapValues(JSON.init))
         case let json as JSON:
             self = json
+        case let date as Date:
+            self = .string(Self.dateString(from: date))
         // we don't work with whatever is being supplied
         default:
             throw JSONError.nonJSONType(type: "\(value.self)")
         }
+    }
+    
+    static func dateString(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        return dateFormatter.string(from: date)
     }
 }
 
