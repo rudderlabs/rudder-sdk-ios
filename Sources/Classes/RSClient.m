@@ -506,7 +506,7 @@ static NSString* _deviceToken = nil;
     return (_repository != nil) ? [_repository getSessionId] : nil;
 }
 
-- (void) onIntegrationReadyWithString:(NSString*)integrationName withCallback:(Callback)callback {
+- (void) onIntegrationReady:(NSString*)integrationName withCallback:(Callback)callback {
     if ([RSClient getOptStatus]) {
         return;
     }
@@ -516,7 +516,7 @@ static NSString* _deviceToken = nil;
 }
 
 - (void) onIntegrationReadyWithFactory:(id<RSIntegrationFactory>)factory withCallback:(Callback)callback {
-    [self onIntegrationReadyWithString:factory.key withCallback:callback];
+    [self onIntegrationReady:factory.key withCallback:callback];
 }
 
 @end
