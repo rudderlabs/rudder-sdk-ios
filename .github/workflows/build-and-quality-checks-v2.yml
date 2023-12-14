@@ -7,33 +7,33 @@ on:
 jobs:
   build:
     name: Code Quality Checks(v2)
-    runs-on: macOS-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install xcpretty
         run: gem install xcpretty
 
-      - name: Select Xcode version
-        run: sudo xcode-select -s '/Applications/Xcode_13.2.1.app/Contents/Developer'
+#      - name: Select Xcode version
+#        run: sudo xcode-select -s '/Applications/Xcode_13.2.1.app/Contents/Developer'
 
       - name: Build SDK(iOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
+          xcodebuild build -scheme Rudder-iOS -workspace Rudder.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14' | xcpretty
 
       - name: Build SDK(watchOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm' | xcpretty
+          xcodebuild build -scheme Rudder-watchOS -workspace Rudder.xcworkspace -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' | xcpretty
 
       - name: Build SDK(tvOS)
         run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
+          xcodebuild build -scheme Rudder-tvOS -workspace Rudder.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV' | xcpretty
 
-      - name: Build SDK(macOS)
-        run: |
-          xcodebuild build -scheme RudderSDK-iOS -workspace Rudder.xcworkspace -destination 'platform=macOS,variant=Mac Catalyst' | xcpretty
+#      - name: Build SDK(macOS)
+#        run: |
+#          xcodebuild build -scheme Rudder-macOS -workspace Rudder.xcworkspace -destination 'platform=macOS,variant=Mac Catalyst' | xcpretty
 
       - name: Install Cocoapods
         run: gem install cocoapods

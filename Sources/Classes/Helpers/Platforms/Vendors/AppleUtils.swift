@@ -28,15 +28,19 @@ internal class PhoneVendor: Vendor {
     }
     
     override var type: String {
-#if os(iOS)
-        return "ios"
-#elseif os(tvOS)
-        return "tvos"
-#elseif targetEnvironment(macCatalyst)
-        return "macos"
-#else
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return "iPadOS"
+        } else {
+            return "iOS"
+        }
+        #elseif os(tvOS)
+        return "tvOS"
+        #elseif targetEnvironment(macCatalyst)
+        return "macOS"
+        #else
         return "unknown"
-#endif
+        #endif
     }
     
     override var model: String {
@@ -46,11 +50,11 @@ internal class PhoneVendor: Vendor {
     
     override var name: String {
         // eg. "iPod Touch"
-        return device.model
+        return device.name
     }
     
     override var identifierForVendor: String? {
-        return device.identifierForVendor?.uuidString
+        return device.identifierForVendor?.uuidString.lowercased()
     }
     
     override var systemName: String {
@@ -71,12 +75,12 @@ internal class PhoneVendor: Vendor {
     }
     
     override var requiredPlugins: [RSPlatformPlugin] {
-        return [RSiOSLifecycleMonitor(), RSDeviceTokenPlugin()]
+        return [RSiOSLifecycleMonitor()]
     }
     
     override var carrier: String {
 #if os(iOS)
-        return retrieveCarrierNames() ?? "unavailable";
+        return retrieveCarrierNames() ?? "unavailable"
 #else
         return "unavailable"
 #endif
@@ -85,34 +89,23 @@ internal class PhoneVendor: Vendor {
     
 #if os(iOS)
     func retrieveCarrierNames() -> String? {
-        let systemVersion = UIDevice.current.systemVersion
-        let versionComponents = systemVersion.split(separator: ".").compactMap { Int($0) }
-        if versionComponents.count > 0 {
-            let majorVersion = versionComponents[0]
+        if #available(iOS 16, *) {
+            Logger.log(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
+            return nil
+        } else {
+            let networkInfo = CTTelephonyNetworkInfo()
+            var carrierNames: [String] = []
             
-            if majorVersion >= 16 {
-                RSClient.rsLog(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
-                return nil
-            } else if majorVersion >= 12 && majorVersion < 16 {
-                let networkInfo = CTTelephonyNetworkInfo()
-                var carrierNames: [String] = []
-                
-                if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
-                    for carrierObj in carriers {
-                        if let carrierName = carrierObj.carrierName, carrierName != "--" {
-                            carrierNames.append(carrierName)
-                        }
+            if let carriers = networkInfo.serviceSubscriberCellularProviders?.values {
+                for carrierObj in carriers {
+                    if let carrierName = carrierObj.carrierName, carrierName != "--" {
+                        carrierNames.append(carrierName)
                     }
                 }
-                if(!carrierNames.isEmpty) {
-                    let formattedCarrierNames = carrierNames.joined(separator: ", ")
-                    return formattedCarrierNames
-                }
-            } else {
-                let networkInfo = CTTelephonyNetworkInfo()
-                if let carrier = networkInfo.subscriberCellularProvider?.carrierName, carrier != "--" {
-                    return carrier
-                }
+            }
+            if !carrierNames.isEmpty {
+                let formattedCarrierNames = carrierNames.joined(separator: ", ")
+                return formattedCarrierNames
             }
         }
         return nil
@@ -147,7 +140,7 @@ internal class WatchVendor: Vendor {
     }
     
     override var type: String {
-        return "watchos"
+        return "watchOS"
     }
     
     override var model: String {
@@ -155,11 +148,11 @@ internal class WatchVendor: Vendor {
     }
     
     override var name: String {
-        return device.model
+        return device.name
     }
     
     override var identifierForVendor: String? {
-        return device.identifierForVendor?.uuidString
+        return device.identifierForVendor?.uuidString.lowercased()
     }
     
     override var systemName: String {
@@ -229,7 +222,7 @@ internal class MacVendor: Vendor {
     }
     
     override var type: String {
-        return "macos"
+        return "macOS"
     }
     
     override var model: String {
@@ -241,9 +234,7 @@ internal class MacVendor: Vendor {
     }
     
     override var identifierForVendor: String? {
-        // apple suggested to use this for receipt validation
-        // in MAS, works for this too.
-        return macAddress(bsd: "en0")
+        return macAddress(bsd: "en0")?.lowercased()
     }
     
     override var systemName: String {
@@ -267,7 +258,7 @@ internal class MacVendor: Vendor {
     }
     
     override var requiredPlugins: [RSPlatformPlugin] {
-        return [RSmacOSLifecycleMonitor(), RSDeviceTokenPlugin()]
+        return [RSmacOSLifecycleMonitor()]
     }
     
     private func deviceModel() -> String {
