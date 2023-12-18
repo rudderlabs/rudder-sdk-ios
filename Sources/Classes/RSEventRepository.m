@@ -357,4 +357,9 @@ static RSEventRepository* _instance;
     return [self->userSession getSessionId];
 }
 
+- (void) onIntegrationReady:(NSString *)integrationName withCallback:(Callback)callback {
+    [self->deviceModeManager addCallBackForIntegration:integrationName withCallback:callback];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"EventRepository: onIntegrationReady: callback registered for %@", integrationName]];
+}
+
 @end
