@@ -27,6 +27,7 @@
     NSMutableArray<NSString*>* destinationsAcceptingEventsOnTransformationError;
     BOOL areFactoriesInitialized;
     BOOL isDeviceModeFactoriesNotPresent;
+    NSMutableDictionary<NSString*, Callback>* integrationCallbacks;
 }
 
 - (instancetype) initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *)dbPersistentManager andNetworkManager:(RSNetworkManager *)networkManager;
@@ -39,5 +40,5 @@
 - (void) reset;
 - (void) flush;
 - (void) handleCaseWhenNoDeviceModeFactoryIsPresent;
-
+- (void) addCallBackForIntegration:(NSString*)integrationName withCallback:(Callback)callback;
 @end
