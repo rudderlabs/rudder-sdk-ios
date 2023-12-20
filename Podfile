@@ -1,4 +1,3 @@
-source 'https://github.com/rudderlabs/Specs.git'
 workspace 'Rudder.xcworkspace'
 use_frameworks!
 inhibit_all_warnings!
