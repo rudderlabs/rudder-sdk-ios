@@ -57,7 +57,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     
     func initialSetup() {
         guard let client = self.client else { return }
-        sessionTimeOut = client.config?.sessionTimeout
+        sessionTimeOut = client.config.sessionTimeout
         userDefaults = client.userDefaults
         
         if isAutomaticSessionTrackingAllowed {
@@ -101,7 +101,7 @@ class RSUserSessionPlugin: RSPlatformPlugin, RSEventPlugin {
     func startNewSession(_ sessionId: Int? = nil) {
         isNewSessionStarted = true
         userDefaults?.write(.sessionId, value: sessionId ?? RSUtils.getTimeStamp())
-        Logger.log(message: "New session is started", logLevel: .verbose)
+        client?.logger.log(message: "New session is started", logLevel: .verbose)
     }
 }
     
@@ -152,20 +152,20 @@ extension RSClient {
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
             userSessionPlugin.startManualSession()
         } else {
-            Logger.log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
+            log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
         }
     }
     
     @objc
     public func startSession(_ sessionId: Int) {
         guard String(sessionId).count >= 10 else {
-            Logger.log(message: "RSClient: startSession: Length of the sessionId should be at least 10: \(sessionId)", logLevel: .error)
+            log(message: "RSClient: startSession: Length of the sessionId should be at least 10: \(sessionId)", logLevel: .error)
             return
         }
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self) {
             userSessionPlugin.startManualSession(sessionId)
         } else {
-            Logger.log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
+            log(message: "SDK is not yet initialised. Hence manual session cannot be started", logLevel: .debug)
         }
     }
     

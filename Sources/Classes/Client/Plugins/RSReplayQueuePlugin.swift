@@ -12,12 +12,16 @@ internal class RSReplayQueuePlugin: RSPlugin {
     let type: PluginType = .before
     weak var client: RSClient?
     
-    private let syncQueue = DispatchQueue(label: "replayQueue.rudder.com")
+    private let instanceName: String
+    private let syncQueue: DispatchQueue
     private var queuedEvents = [RSMessage]()
     @RSAtomic var running = true
     static let maxSize = 1000
     
-    required init() { }
+    init(instanceName: String) {
+        self.instanceName = instanceName
+        self.syncQueue = DispatchQueue(label: "replayQueue.rudder.\(instanceName).com")
+    }
     
     func execute<T: RSMessage>(message: T?) -> T? {
         if running, let e = message {

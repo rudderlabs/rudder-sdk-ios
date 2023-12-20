@@ -82,7 +82,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-            case 0:
+            /*case 0:
                 RSClient.sharedInstance().identify("test_user_id", traits: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
@@ -211,7 +211,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             case 28:
                 RSClient.sharedInstance().track("Order Done", properties: getProperties())
             case 29:
-                RSClient.sharedInstance().track("Order Completed", properties: getProperties())
+                RSClient.sharedInstance().track("Order Completed", properties: getProperties())*/
         /*case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])

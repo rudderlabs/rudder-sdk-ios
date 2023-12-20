@@ -30,11 +30,12 @@ class RSUserDefaults {
         case build
     }
     
-    let syncQueue = DispatchQueue(label: "userDefaults.rudder.com")
     let userDefaults: UserDefaults
+    let syncQueue: DispatchQueue
     
-    init(userDefaults: UserDefaults = UserDefaults.standard) {
-        self.userDefaults = userDefaults
+    init(instanceName: String) {
+        userDefaults = UserDefaults(suiteName: "userDefaults.rudder.\(instanceName)") ?? UserDefaults.standard
+        syncQueue = DispatchQueue(label: "userDefaultsQueue.rudder.\(instanceName).com")
     }
         
     func write<T: Codable>(_ key: RSUserDefaults.Keys, value: T?) {

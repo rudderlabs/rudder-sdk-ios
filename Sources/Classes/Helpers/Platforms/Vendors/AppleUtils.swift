@@ -90,7 +90,8 @@ internal class PhoneVendor: Vendor {
 #if os(iOS)
     func retrieveCarrierNames() -> String? {
         if #available(iOS 16, *) {
-            Logger.log(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
+            // TODO:
+//            Logger.log(message: "Unable to retrieve carrier name as the iOS version is >= 16", logLevel: .warning)
             return nil
         } else {
             let networkInfo = CTTelephonyNetworkInfo()

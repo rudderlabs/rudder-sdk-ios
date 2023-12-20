@@ -11,9 +11,9 @@ import Foundation
 extension RSClient {
         
     internal func addPlugins() {
-        add(plugin: RSReplayQueuePlugin())
+        add(plugin: RSReplayQueuePlugin(instanceName: instanceName))
         add(plugin: RSIntegrationPlugin())
-        add(plugin: RudderDestinationPlugin())
+        add(plugin: RudderDestinationPlugin(instanceName: instanceName))
         add(plugin: RSUserSessionPlugin())
         
         if let platformPlugins = platformPlugins() {
@@ -32,7 +32,7 @@ extension RSClient {
 
         plugins += Vendor.current.requiredPlugins
 
-        if config?.trackLifecycleEvents == true {
+        if config.trackLifecycleEvents {
             #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
             plugins.append(RSiOSLifecycleEvents())
             #endif
@@ -44,7 +44,7 @@ extension RSClient {
             #endif
         }
         
-        if config?.recordScreenViews == true {
+        if config.recordScreenViews {
             #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
             plugins.append(RSiOSScreenViewEvents())
             #endif
@@ -124,16 +124,16 @@ extension RSClient {
         let maxRetryCount = 4
         
         guard retryCount < maxRetryCount else {
-            Logger.log(message: "Server config download failed.", logLevel: .debug)
+            log(message: "Server config download failed.", logLevel: .debug)
             completion()
             return
         }
         
-        serviceManager?.downloadServerConfig({ [weak self] result in
+        serviceManager.downloadServerConfig({ [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let serverConfig):
-                Logger.log(message: "Server config download successful.", logLevel: .debug)
+                log(message: "Server config download successful.", logLevel: .debug)
                 self.serverConfig = serverConfig
                 self.update(serverConfig: serverConfig, type: .refresh)
                 self.userDefaults.write(.serverConfig, value: serverConfig)
@@ -142,10 +142,10 @@ extension RSClient {
                     
             case .failure(let error):
                 if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    Logger.log(message: "Wrong write key", logLevel: .error)
+                    log(message: "Wrong write key", logLevel: .error)
                     self.downloadServerConfig(retryCount: maxRetryCount, completion: completion)
                 } else {
-                    Logger.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
+                    log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
                         self.downloadServerConfig(retryCount: retryCount + 1, completion: completion)

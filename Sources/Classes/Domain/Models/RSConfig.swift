@@ -73,7 +73,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func dataPlaneURL(_ dataPlaneUrl: String) -> RSConfig {
         guard let url = URL(string: dataPlaneUrl), let scheme = url.scheme, let host = url.host else {
-            Logger.logError("dataPlaneUrl is invalid")
+//            Logger.logError("dataPlaneUrl is invalid")
             return self
         }
         if let port = url.port {
@@ -87,7 +87,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func flushQueueSize(_ flushQueueSize: Int) -> RSConfig {
         guard flushQueueSize >= MIN_FLUSH_QUEUE_SIZE && flushQueueSize <= MAX_FLUSH_QUEUE_SIZE else {
-            Logger.logError("flushQueueSize is out of range. Min: 1, Max: 100. Set to default")
+//            Logger.logError("flushQueueSize is out of range. Min: 1, Max: 100. Set to default")
             return self
         }
         _flushQueueSize = flushQueueSize
@@ -103,7 +103,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func dbCountThreshold(_ dbCountThreshold: Int) -> RSConfig {
         guard dbCountThreshold >= MIN_DB_COUNT_THRESHOLD else {
-            Logger.logError("dbCountThreshold is invalid. Min: 1. Set to default")
+//            Logger.logError("dbCountThreshold is invalid. Min: 1. Set to default")
             return self
         }
         _dbCountThreshold = dbCountThreshold
@@ -113,7 +113,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func sleepTimeOut(_ sleepTimeOut: Int) -> RSConfig {
         guard sleepTimeOut >= MIN_SLEEP_TIMEOUT else {
-            Logger.logError("sleepTimeOut is invalid. Min: 10. Set to default")
+//            Logger.logError("sleepTimeOut is invalid. Min: 10. Set to default")
             return self
         }
         _sleepTimeOut = sleepTimeOut
@@ -135,7 +135,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func controlPlaneURL(_ controlPlaneUrl: String) -> RSConfig {
         guard let url = URL(string: controlPlaneUrl), let scheme = url.scheme, let host = url.host else {
-            Logger.logError("controlPlaneUrl is invalid")
+//            Logger.logError("controlPlaneUrl is invalid")
             return self
         }
         if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
@@ -155,7 +155,7 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func sessionTimeout(_ sessionTimeout: Int) -> RSConfig {
         guard sessionTimeout >= MIN_SESSION_TIMEOUT else {
-            Logger.logError("sessionTimeout is invalid. Min: 0. Set to default")
+//            Logger.logError("sessionTimeout is invalid. Min: 0. Set to default")
             return self
         }
         _sessionTimeout = sessionTimeout

@@ -35,34 +35,44 @@ import Foundation
 }
 
 class Logger {
-    static var logLevel: RSLogLevel = .error
-
-    static func logDebug(_ message: String, function: String = #function, line: Int = #line) {
-        log(message: message, logLevel: .debug, function: function, line: line)
-    }
+    let logLevel: RSLogLevel
+    let instanceName: String
     
-    static func logInfo(_ message: String, function: String = #function, line: Int = #line) {
-        log(message: message, logLevel: .info, function: function, line: line)
-    }
-    
-    static func logWarning(_ message: String, function: String = #function, line: Int = #line) {
-        log(message: message, logLevel: .warning, function: function, line: line)
-    }
-    
-    static func logError(_ message: String, function: String = #function, line: Int = #line) {
-        log(message: message, logLevel: .error, function: function, line: line)
+    init(instanceName: String, logLevel: RSLogLevel = .error) {
+        self.instanceName = instanceName
+        self.logLevel = logLevel
     }
 
-    static func log(message: String, logLevel: RSLogLevel, function: String = #function, line: Int = #line) {
+    func logDebug(_ message: String, function: String = #function, line: Int = #line, file: String = #file) {
+        log(message: message, logLevel: .debug, function: function, line: line, file: file)
+    }
+    
+    func logInfo(_ message: String, function: String = #function, line: Int = #line, file: String = #file) {
+        log(message: message, logLevel: .info, function: function, line: line, file: file)
+    }
+    
+    func logWarning(_ message: String, function: String = #function, line: Int = #line, file: String = #file) {
+        log(message: message, logLevel: .warning, function: function, line: line, file: file)
+    }
+    
+    func logError(_ message: String, function: String = #function, line: Int = #line, file: String = #file) {
+        log(message: message, logLevel: .error, function: function, line: line, file: file)
+    }
+
+    func log(message: String, logLevel: RSLogLevel, function: String = #function, line: Int = #line, file: String = #file) {
         if self.logLevel == .verbose || self.logLevel == logLevel {
             let metadata = " - \(function):\(line):"
-            print("RudderStack:\(logLevel.toString()):\(metadata)\(message)")
+            if let filePath = URL(string: file) {
+                print("RudderStack:\(instanceName):\(logLevel.toString()):\(filePath.lastPathComponent):\(metadata)\(message)")
+            } else {
+                print("RudderStack:\(instanceName):\(logLevel.toString()):\(metadata)\(message)")
+            }
         }
     }
 }
 
 extension RSClient {
     public func log(message: String, logLevel: RSLogLevel) {
-        Logger.log(message: message, logLevel: logLevel)
+        logger.log(message: message, logLevel: logLevel)
     }
 }

@@ -25,15 +25,19 @@ struct RSServiceManager: RSServiceType {
     }()
     
     let urlSession: URLSession
-    let client: RSClient
+    let userDefaults: RSUserDefaults
+    let config: RSConfig
+    let logger: Logger
     
     var version: String {
         return "v1"
     }
     
-    init(urlSession: URLSession = RSServiceManager.sharedSession, client: RSClient) {
+    init(urlSession: URLSession = RSServiceManager.sharedSession, userDefaults: RSUserDefaults, config: RSConfig, logger: Logger) {
         self.urlSession = urlSession
-        self.client = client
+        self.userDefaults = userDefaults
+        self.config = config
+        self.logger = logger
     }
     
     func downloadServerConfig(_ completion: @escaping Handler<RSServerConfig>) {
@@ -48,16 +52,16 @@ struct RSServiceManager: RSServiceType {
 extension RSServiceManager {
     func request<T: Codable>(_ API: API, _ completion: @escaping Handler<T>) {
         let urlString = [baseURL(API), path(API)].joined().addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-        Logger.log(message: "URL: \(urlString ?? "")", logLevel: .debug)
+        logger.log(message: "URL: \(urlString ?? "")", logLevel: .debug)
         var request = URLRequest(url: URL(string: urlString ?? "")!)
         request.httpMethod = method(API).value
         if let headers = headers(API) {
             request.allHTTPHeaderFields = headers
-            Logger.log(message: "HTTPHeaderFields: \(headers)", logLevel: .debug)
+            logger.log(message: "HTTPHeaderFields: \(headers)", logLevel: .debug)
         }
         if let httpBody = httpBody(API) {
             request.httpBody = httpBody
-            Logger.log(message: "HTTPBody: \(httpBody)", logLevel: .debug)
+            logger.log(message: "HTTPBody: \(httpBody)", logLevel: .debug)
         }
         let dataTask = urlSession.dataTask(with: request, completionHandler: { (data, response, error) in
             if error != nil {
@@ -75,7 +79,7 @@ extension RSServiceManager {
                     default:
                         do {
                             if let data = data, let jsonString = String(data: data, encoding: .utf8) {
-                                Logger.log(message: jsonString, logLevel: .debug)
+                                logger.log(message: jsonString, logLevel: .debug)
                             }
                             let object = try JSONDecoder().decode(T.self, from: data ?? Data())
                             completion(.success(object))
@@ -119,10 +123,12 @@ extension RSServiceManager {
 extension RSServiceManager {
     func headers(_ API: API) -> [String: String]? {
         var headers = ["Content-Type": "Application/json",
-                       "Authorization": "Basic \(client.config?.writeKey.computeAuthToken() ?? "")"]
+                       "Authorization": "Basic \(config.writeKey.computeAuthToken() ?? "")"]
         switch API {
         case .flushEvents:
-            headers["AnonymousId"] = client.anonymousId ?? ""
+            if let anonymousId: String = userDefaults.read(.anonymousId) {
+                headers["AnonymousId"] = anonymousId
+            }
         default:
             break
         }
@@ -132,12 +138,12 @@ extension RSServiceManager {
     func baseURL(_ API: API) -> String {
         switch API {
         case .flushEvents:
-            return "\(client.config?.dataPlaneUrl ?? DEFAULT_DATA_PLANE_URL)/\(version)/"
+            return "\(config.dataPlaneUrl)/\(version)/"
         case .downloadConfig:
-            if client.config?.controlPlaneUrl.hasSuffix("/") == true {
-                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)"
+            if config.controlPlaneUrl.hasSuffix("/") == true {
+                return "\(config.controlPlaneUrl)"
             } else {
-                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)/"
+                return "\(config.controlPlaneUrl)/"
             }
         }
     }

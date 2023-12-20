@@ -248,12 +248,12 @@ extension RSDestinationPlugin {
 
     func process<E: RSMessage>(incomingEvent: E) -> E? {
         guard isDestinationEnabled(message: incomingEvent) else {
-            Logger.logDebug("Destination is not enabled.")
+            client?.logger.logDebug("Destination is not enabled.")
             return nil
         }
         
         guard isEventAllowed(message: incomingEvent) else {
-            Logger.logDebug("Event is filtered by Client-side event filtering.")
+            client?.logger.logDebug("Event is filtered by Client-side event filtering.")
             return nil
         }
                 

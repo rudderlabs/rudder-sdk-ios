@@ -112,7 +112,7 @@ class RSmacOSLifecycleEvents: RSPlatformPlugin, RSmacOSLifecycle {
     func applicationDidResignActive() {
         fromBackground = true
 
-        if client?.config?.trackLifecycleEvents == false {
+        if client?.config.trackLifecycleEvents == false {
             return
         }
         

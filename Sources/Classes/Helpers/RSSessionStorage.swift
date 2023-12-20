@@ -17,13 +17,18 @@ class RSSessionStorage {
         case context
     }
     
-    static let shared = RSSessionStorage()
-    private let syncQueue = DispatchQueue(label: "sessionStorage.rudder.com")
+    private let instanceName: String
+    private let syncQueue: DispatchQueue
     private var deviceToken: String?
     private var advertisingId: String?
     private var appTrackingConsent: RSAppTrackingConsent?
     private var option: RSOption?
     private var context: RSContext?
+    
+    init(instanceName: String) {
+        self.instanceName = instanceName
+        self.syncQueue = DispatchQueue(label: "sessionStorageQueue.rudder.\(instanceName).com")
+    }
 
     func write<T: Any>(_ key: RSSessionStorage.Keys, value: T?) {
         syncQueue.sync {

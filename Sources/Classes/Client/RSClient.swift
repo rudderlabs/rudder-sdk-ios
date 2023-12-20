@@ -11,14 +11,17 @@ import Foundation
 // swiftlint:disable file_length
 @objc
 open class RSClient: NSObject {
-    var config: RSConfig?
-    var controller: RSController
+    let instanceName: String
+    let config: RSConfig
+    let controller: RSController
+    let userDefaults: RSUserDefaults
+    let serviceManager: RSServiceType
+    let sessionStorage: RSSessionStorage
+    let databaseManager: RSDatabaseManager
+    let logger: Logger
+    
     var serverConfig: RSServerConfig?
-    var serviceManager: RSServiceManager?
-    @RSAtomic var isServerConfigCached = false
-    static let shared = RSClient()
-    var userDefaults = RSUserDefaults()
-    var userInfo: RSUserInfo? {
+    var userInfo: RSUserInfo {
         let userId: String? = userDefaults.read(.userId)
         let traits: JSON? = userDefaults.read(.traits)
         var anonymousId: String? = userDefaults.read(.anonymousId)
@@ -29,42 +32,21 @@ open class RSClient: NSObject {
         return RSUserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
     }
     
-    private override init() {
-        serverConfig = userDefaults.read(.serverConfig)
-        isServerConfigCached = serverConfig != nil
-        controller = RSController()
-    }
+    @RSAtomic var isServerConfigCached = false
     
-    /**
-     Returns the instance of RSClient.
-     */
-    @objc
-    public static func sharedInstance() -> RSClient {
-        return shared
-    }
-    
-    /**
-     Initialize this instance of RSClient with a given configuration setup.
-     - Parameters:
-        - config: The configuration to use
-     # Example #
-     ```
-     let config: RSConfig = RSConfig(writeKey: WRITE_KEY)
-                 .dataPlaneURL(DATA_PLANE_URL)
-            
-     RSClient.sharedInstance().configure(with: config)
-     ```
-     */
-    @objc
-    public func configure(with config: RSConfig) {
-        // Config can be set only one time per session.
-        guard self.config == nil else { return }
+    init(instanceName: String, config: RSConfig) {
+        self.instanceName = instanceName
         self.config = config
-        Logger.logLevel = config.logLevel
+        logger = Logger(instanceName: instanceName, logLevel: config.logLevel)
         if config.writeKey.isEmpty {
-            Logger.logError("Invalid writeKey: Provided writeKey is empty")
+            logger.logError("Invalid writeKey: Provided writeKey is empty")
         }
-        serviceManager = RSServiceManager(client: self)
+        controller = RSController()
+        userDefaults = RSUserDefaults(instanceName: instanceName)
+        serviceManager = RSServiceManager(userDefaults: userDefaults, config: config, logger: logger)
+        sessionStorage = RSSessionStorage(instanceName: instanceName)
+        databaseManager = RSDatabaseManager(instanceName: instanceName, logger: logger)
+        super.init()
         addPlugins()
     }
     
@@ -236,11 +218,11 @@ open class RSClient: NSObject {
 extension RSClient {
     internal func _track(_ eventName: String, properties: TrackProperties? = nil, option: RSOption? = nil) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
+            log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
             return
         }
         guard eventName.isNotEmpty else {
-            Logger.log(message: "eventName can not be empty", logLevel: .warning)
+            log(message: "eventName can not be empty", logLevel: .warning)
             return
         }
         let message = TrackMessage(event: eventName, properties: properties, option: option)
@@ -249,11 +231,11 @@ extension RSClient {
     
     internal func _screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: RSOption? = nil) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
+            log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
             return
         }
         guard screenName.isNotEmpty else {
-            Logger.log(message: "screenName can not be empty", logLevel: .warning)
+            log(message: "screenName can not be empty", logLevel: .warning)
             return
         }
         var screenProperties = ScreenProperties()
@@ -267,11 +249,11 @@ extension RSClient {
     
     internal func _group(_ groupId: String, traits: [String: String]? = nil, option: RSOption? = nil) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
+            log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
             return
         }
         guard groupId.isNotEmpty else {
-            Logger.log(message: "groupId can not be empty", logLevel: .warning)
+            log(message: "groupId can not be empty", logLevel: .warning)
             return
         }
         let message = GroupMessage(groupId: groupId, traits: traits, option: option)
@@ -280,11 +262,11 @@ extension RSClient {
     
     internal func _alias(_ newId: String, option: RSOption? = nil) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
+            log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
             return
         }
         guard newId.isNotEmpty else {
-            Logger.log(message: "newId can not be empty", logLevel: .warning)
+            log(message: "newId can not be empty", logLevel: .warning)
             return
         }
         let previousId: String? = userDefaults.read(.userId)
@@ -300,11 +282,11 @@ extension RSClient {
     
     internal func _identify(_ userId: String, traits: IdentifyTraits? = nil, option: RSOption? = nil) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
+            log(message: LogMessages.optOutAndEventDrop, logLevel: .debug)
             return
         }
         guard userId.isNotEmpty else {
-            Logger.log(message: "userId can not be empty", logLevel: .warning)
+            log(message: "userId can not be empty", logLevel: .warning)
             return
         }
         userDefaults.write(.userId, value: userId)
@@ -330,7 +312,7 @@ extension RSClient {
     @objc
     public var anonymousId: String? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
         return userDefaults.read(.anonymousId)
@@ -342,7 +324,7 @@ extension RSClient {
     @objc
     public var userId: String? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
         return userDefaults.read(.userId)
@@ -354,10 +336,10 @@ extension RSClient {
     @objc
     public var context: RSContext? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
-        if let currentContext: RSContext = RSSessionStorage.shared.read(.context) {
+        if let currentContext: RSContext = sessionStorage.read(.context) {
             return currentContext
         }
         return RSContext(userDefaults: userDefaults)
@@ -369,7 +351,7 @@ extension RSClient {
     @objc
     public var traits: IdentifyTraits? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
         let traitsJSON: JSON? = RSContext.traits(userDefaults: userDefaults)
@@ -405,7 +387,7 @@ extension RSClient {
     @objc
     public func reset() {
         userDefaults.reset()
-        RSSessionStorage.shared.reset()
+        sessionStorage.reset()
         apply { plugin in
             if let p = plugin as? RSEventPlugin {
                 p.reset()
@@ -427,7 +409,7 @@ extension RSClient {
     @objc
     public var configuration: RSConfig? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
         return config
@@ -439,7 +421,7 @@ extension RSClient {
     @objc
     public var sessionId: String? {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return nil
         }
         if let userSessionPlugin = self.find(pluginType: RSUserSessionPlugin.self), let sessionId = userSessionPlugin.sessionId {
@@ -484,7 +466,7 @@ extension RSClient {
     
     func process(message: RSMessage) {
         if let serverConfig = serverConfig, !serverConfig.enabled {
-            Logger.logDebug("Source is disabled in your dashboard. Hence event is dropped.")
+            logger.logDebug("Source is disabled in your dashboard. Hence event is dropped.")
             return
         }
         
@@ -518,11 +500,11 @@ extension RSClient {
     @objc
     public func setAnonymousId(_ anonymousId: String) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return
         }
         guard anonymousId.isNotEmpty else {
-            Logger.log(message: "anonymousId can not be empty", logLevel: .warning)
+            log(message: "AnonymousId can not be empty", logLevel: .warning)
             return
         }
         userDefaults.write(.anonymousId, value: anonymousId)
@@ -543,10 +525,10 @@ extension RSClient {
     @objc
     public func setOption(_ option: RSOption) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return
         }
-        RSSessionStorage.shared.write(.option, value: option)
+        sessionStorage.write(.option, value: option)
     }
 
     /**
@@ -561,14 +543,14 @@ extension RSClient {
     @objc
     public func setDeviceToken(_ token: String) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return
         }
         guard token.isNotEmpty else {
-            Logger.log(message: "token can not be empty", logLevel: .warning)
+            log(message: "Device token can not be empty", logLevel: .warning)
             return
         }
-        RSSessionStorage.shared.write(.deviceToken, value: token)
+        sessionStorage.write(.deviceToken, value: token)
     }
 
     /**
@@ -583,15 +565,15 @@ extension RSClient {
     @objc
     public func setAdvertisingId(_ advertisingId: String) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return
         }
         guard advertisingId.isNotEmpty else {
-            Logger.log(message: "advertisingId can not be empty", logLevel: .warning)
+            log(message: "AdvertisingId can not be empty", logLevel: .warning)
             return
         }
         if advertisingId != "00000000-0000-0000-0000-000000000000" {
-            RSSessionStorage.shared.write(.advertisingId, value: advertisingId)
+            sessionStorage.write(.advertisingId, value: advertisingId)
         }
     }
 
@@ -607,10 +589,10 @@ extension RSClient {
     @objc
     public func setAppTrackingConsent(_ appTrackingConsent: RSAppTrackingConsent) {
         if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            Logger.log(message: LogMessages.optOut, logLevel: .debug)
+            log(message: LogMessages.optOut, logLevel: .debug)
             return
         }
-        RSSessionStorage.shared.write(.appTrackingConsent, value: appTrackingConsent)
+        sessionStorage.write(.appTrackingConsent, value: appTrackingConsent)
     }
     
     /**
@@ -625,6 +607,6 @@ extension RSClient {
     @objc
     public func setOptOutStatus(_ status: Bool) {
         userDefaults.write(.optStatus, value: status)
-        Logger.log(message: "User has been Opted \(status ? "out" : "in")", logLevel: .debug)
+        log(message: "User has been Opted \(status ? "out" : "in")", logLevel: .debug)
     }
 }

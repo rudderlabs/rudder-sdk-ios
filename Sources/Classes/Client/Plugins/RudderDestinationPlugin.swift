@@ -18,11 +18,12 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         }
     }
 
-    private let uploadsQueue = DispatchQueue(label: "uploadsQueue.rudder.com")
+    private let uploadsQueue: DispatchQueue
+    private let instanceName: String
     private var flushTimer: RSRepeatingTimer?
     
     private var databaseManager: RSDatabaseManager?
-    private var serviceManager: RSServiceManager?
+    private var serviceManager: RSServiceType?
     private var config: RSConfig?
     private var userDefaults: RSUserDefaults?
     
@@ -35,28 +36,15 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         guard let client = self.client else { return }
         config = client.config
         userDefaults = client.userDefaults
-        databaseManager = RSDatabaseManager(client: client)
-        if isUnitTesting {
-            let configuration = URLSessionConfiguration.default
-            configuration.protocolClasses = [MockURLProtocol.self]
-            let urlSession = URLSession.init(configuration: configuration)
-            serviceManager = RSServiceManager(urlSession: urlSession, client: client)
-            
-            let data = """
-            {
-            
-            }
-            """.data(using: .utf8)
-            
-            MockURLProtocol.requestHandler = { _ in
-                let response = HTTPURLResponse(url: URL(string: "https://some.rudderstack.com.url")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
-                return (response, data)
-            }
-        } else {
-            serviceManager = RSServiceManager(client: client)
-        }
+        databaseManager = client.databaseManager
+        serviceManager = client.serviceManager
     }
         
+    init(instanceName: String) {
+        self.instanceName = instanceName
+        self.uploadsQueue = DispatchQueue(label: "uploadsQueue.rudder.\(instanceName).com")
+    }
+    
     func execute<T: RSMessage>(message: T?) -> T? {
         let result: T? = message
         if let r = result {
@@ -69,16 +57,16 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         if type == .refresh {
             if isSourceEnabled, !serverConfig.enabled {
                 // if source was enabled before, but it has been disabled now; then cancel flushing
-                Logger.logDebug("Source has been disabled in your dashboard. Flushing canceled.")
+                client?.logger.logDebug("Source has been disabled in your dashboard. Flushing canceled.")
                 flushTimer?.cancel()
             } else if !isSourceEnabled {
                 if serverConfig.enabled {
                     // if source was disabled before, but it has been enabled now; then resume flushing
-                    Logger.logDebug("Source has been enabled in your dashboard. Flushing resumed.")
+                    client?.logger.logDebug("Source has been enabled in your dashboard. Flushing resumed.")
                     flushTimer?.resume()
                 } else {
                     // if source was disabled before, still it has been disabled now; then cancel flushing
-                    Logger.logDebug("Source is still disabled in your dashboard. Flushing canceled.")
+                    client?.logger.logDebug("Source is still disabled in your dashboard. Flushing canceled.")
                     flushTimer?.cancel()
                 }
             }
@@ -92,14 +80,14 @@ class RudderDestinationPlugin: RSDestinationPlugin {
             return
         }
         isFlushingStarted = true
-        Logger.logDebug("Flushing started.")
+        client?.logger.logDebug("Flushing started.")
         var sleepCount = 0
         flushTimer = RSRepeatingTimer(interval: TimeInterval(1)) { [weak self] in
             guard let self = self else { return }
             self.uploadsQueue.async {
                 guard self.isSourceEnabled else {
                     // if source is disabled; then suspend flushing
-                    Logger.logDebug("Source is disabled in your dashboard. Flushing suspended.")
+                    self.client?.logger.logDebug("Source is disabled in your dashboard. Flushing suspended.")
                     self.flushTimer?.suspend()
                     return
                 }
@@ -156,22 +144,22 @@ extension RudderDestinationPlugin {
     
     private func flushBatch(index: Int, totalBatchCount: Int) {
         guard index < totalBatchCount else {
-            Logger.logDebug("All batches have been flushed successfully")
+            client?.logger.logDebug("All batches have been flushed successfully")
             return
         }
-        Logger.log(message: "Flushing batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
+        client?.logger.log(message: "Flushing batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
         flush(retryCount: 0) { [weak self] result in
             guard let self = self else {
                 return
             }
             switch result {
             case .success:
-                Logger.log(message: "Successful to flush batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
+                client?.logger.log(message: "Successful to flush batch \(index + 1)/\(totalBatchCount)", logLevel: .debug)
                 DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
                     self.flushBatch(index: index + 1, totalBatchCount: totalBatchCount)
                 }
             case .failure:
-                Logger.log(message: "Failed to send \(index + 1)/\(totalBatchCount) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
+                client?.logger.log(message: "Failed to send \(index + 1)/\(totalBatchCount) batch after 3 retries, dropping the remaining batches as well", logLevel: .debug)
             }
         }
         
@@ -190,10 +178,10 @@ extension RudderDestinationPlugin {
                     completion(.success(true))
                 case .failure(let error):
                     if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                        Logger.log(message: "Wrong write key", logLevel: .error)
+                        self.client?.logger.log(message: "Wrong write key", logLevel: .error)
                         completion(.failure(error))
                     } else {
-                        Logger.log(message: "Failed to flush batch \(index + 1)/\(totalBatchCount), \(3 - retryCount) retries left", logLevel: .debug)
+                        self.client?.logger.log(message: "Failed to flush batch \(index + 1)/\(totalBatchCount), \(3 - retryCount) retries left", logLevel: .debug)
                         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
                             flush(retryCount: retryCount + 1, completion: completion)
                         }
@@ -217,7 +205,7 @@ extension RudderDestinationPlugin {
                         self.flush(sleepCount: sleepCount + 1, completion: completion)
                     }
                 default:
-                    Logger.logError("Aborting flush. Error code: \((errorCode ?? RSErrorCode.UNKNOWN).rawValue)")
+                        self.client?.logger.logError("Aborting flush. Error code: \((errorCode ?? RSErrorCode.UNKNOWN).rawValue)")
                     completion(.failure(NSError(code: .UNKNOWN)))
                 }
             }
@@ -231,28 +219,28 @@ extension RudderDestinationPlugin {
             return
         }
         let recordCount = databaseManager.getDBRecordCount()
-        Logger.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
+        client?.logger.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
         if recordCount > config.dbCountThreshold {
-            Logger.log(message: "Old DBRecordCount \(recordCount - config.dbCountThreshold)", logLevel: .debug)
+            client?.logger.log(message: "Old DBRecordCount \(recordCount - config.dbCountThreshold)", logLevel: .debug)
             let dbMessage = databaseManager.getEvents(recordCount - config.dbCountThreshold)
             if let messageIds = dbMessage?.messageIds {
                 databaseManager.removeEvents(messageIds)
             }
         }
-        Logger.log(message: "Fetching events to flush to sever", logLevel: .debug)
+        client?.logger.log(message: "Fetching events to flush to sever", logLevel: .debug)
         guard let dbMessage = databaseManager.getEvents(config.flushQueueSize) else {
             completion?(.failure(NSError(code: .UNKNOWN)))
             return
         }
         if !dbMessage.messages.isEmpty {
-            let params = RSUtils.getJSON(from: dbMessage)
-            Logger.log(message: "Payload: \(params)", logLevel: .debug)
-            Logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
+            let params = dbMessage.toJSONString()
+            client?.logger.log(message: "Payload: \(params)", logLevel: .debug)
+            client?.logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
             if !params.isEmpty {
                 serviceManager?.flushEvents(params: params, { result in
                     switch result {
                     case .success:
-                        Logger.log(message: "clearing events from DB", logLevel: .debug)
+                        self.client?.logger.log(message: "clearing events from DB", logLevel: .debug)
                         databaseManager.removeEvents(dbMessage.messageIds)
                         completion?(.success(true))
                     case .failure(let error):
