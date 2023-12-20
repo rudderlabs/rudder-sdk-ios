@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8CE97D1C16042976E94E6A18 /* Pods_RudderSampleApptvOSObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B103F7B8AA850379C7AC30 /* Pods_RudderSampleApptvOSObjC.framework */; };
+		601AB269529B9CADA5EC9AC8 /* Pods_RudderSampleApptvOSObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38BCBDFF738EC338B5CA07E0 /* Pods_RudderSampleApptvOSObjC.framework */; };
 		ED0CA6E72A7D058100899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6E42A7D058100899C1C /* RudderConfig.plist */; };
 		ED0CA6E82A7D058100899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6E52A7D058100899C1C /* SampleRudderConfig.plist */; };
 		ED0CA6E92A7D058100899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA6E62A7D058100899C1C /* RudderConfig.swift */; };
@@ -22,7 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		35B103F7B8AA850379C7AC30 /* Pods_RudderSampleApptvOSObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleApptvOSObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38BCBDFF738EC338B5CA07E0 /* Pods_RudderSampleApptvOSObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleApptvOSObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B292BF359E4526CC983C4B1 /* Pods-RudderSampleApptvOSObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleApptvOSObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		D3066D19C139C74D40518844 /* Pods-RudderSampleApptvOSObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleApptvOSObjC.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC.release.xcconfig"; sourceTree = "<group>"; };
 		ED0CA6E02A7D057800899C1C /* RudderSampleApptvOSObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleApptvOSObjC-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CE97D1C16042976E94E6A18 /* Pods_RudderSampleApptvOSObjC.framework in Frameworks */,
+				601AB269529B9CADA5EC9AC8 /* Pods_RudderSampleApptvOSObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 				F636325F27291EBC0086D05A /* Rudder.framework */,
 				F636325B27291D4A0086D05A /* Rudder.framework */,
 				F636325727291C640086D05A /* Rudder.framework */,
-				35B103F7B8AA850379C7AC30 /* Pods_RudderSampleApptvOSObjC.framework */,
+				38BCBDFF738EC338B5CA07E0 /* Pods_RudderSampleApptvOSObjC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,7 +141,7 @@
 				F636323A27291C0D0086D05A /* Sources */,
 				F636323B27291C0D0086D05A /* Frameworks */,
 				F636323C27291C0D0086D05A /* Resources */,
-				C2CD044E2949A7C08835237A /* [CP] Embed Pods Frameworks */,
+				8CA6EFD3AF81FECCD0DBEC63 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,6 +201,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8CA6EFD3AF81FECCD0DBEC63 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9E09ED415032221F15D4A6CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,23 +238,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C2CD044E2949A7C08835237A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RudderSampleApptvOSObjC/Pods-RudderSampleApptvOSObjC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
