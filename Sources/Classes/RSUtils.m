@@ -38,7 +38,11 @@
 }
 
 + (NSString *)getFilePath:(NSString *)fileName {
+#if TARGET_OS_TV
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+#else
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+#endif
     NSString *directory = [paths objectAtIndex:0];
     return [directory stringByAppendingPathComponent:fileName];
 }

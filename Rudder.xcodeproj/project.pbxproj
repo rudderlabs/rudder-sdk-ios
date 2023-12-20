@@ -692,6 +692,7 @@
 		ED9990922A6926E000031B06 /* RSMetricsReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99908D2A6926E000031B06 /* RSMetricsReporter.m */; };
 		ED9990932A6926E000031B06 /* RSMetricsReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99908D2A6926E000031B06 /* RSMetricsReporter.m */; };
 		EDEF1B312A835A90002B3E57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDEF1B302A835A90002B3E57 /* Security.framework */; };
+		EE0DFE4EAE35E8445128DDEB /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD482BF023CD34D068C0C685 /* Pods_RudderTests_iOS.framework */; };
 		F6B4B52729C8236100344864 /* RSCloudModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51D29C8236100344864 /* RSCloudModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52829C8236100344864 /* RSBackGroundModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6B4B52A29C8236100344864 /* RSDeviceModeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F6B4B52029C8236100344864 /* RSDeviceModeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
