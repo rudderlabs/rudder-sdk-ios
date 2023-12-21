@@ -67,7 +67,7 @@ jobs:
           gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
           gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
