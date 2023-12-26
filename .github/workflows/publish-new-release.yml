@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      
+
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
       - name: Initialize mandatory git config
@@ -47,21 +47,43 @@ jobs:
         run: |
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
+      - name: Install xcpretty
+        run: gem install xcpretty
+
+      - name: Install Cocoapods
+        run: gem install cocoapods
+
+      - name: Pod install
+        run: pod install --repo-update
+
+      - name: Generate XCFramework
+        run: |
+          sh ./scripts/generate-xcframework.sh
+
+      - name: Upload Release Artifact
+        run: |
+          zip -r Rudder-xcframeworks.zip xcframeworks
+          shasum -a 256 Rudder-xcframeworks.zip >Rudder-xcframeworks.sha256
+          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
+          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: 'master'
-          destination_branch: 'develop'
+          source_branch: "master"
+          destination_branch: "develop"
           github_token: ${{ secrets.PAT }}
           pr_title: "chore(release): pulling master into develop post release v${{ steps.extract-version.outputs.release_version }}"
-          pr_body: ':crown: *An automated PR*'
-          pr_reviewer: 'pallabmaiti'
+          pr_body: ":crown: *An automated PR*"
+          pr_reviewer: "pallabmaiti"
 
       - name: Delete hotfix release branch
         uses: koj-co/delete-merged-action@master
         if: startsWith(github.event.pull_request.head.ref, 'hotfix-release/')
         with:
-          branches: 'hotfix-release/*'
+          branches: "hotfix-release/*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,6 +91,6 @@ jobs:
         uses: koj-co/delete-merged-action@master
         if: startsWith(github.event.pull_request.head.ref, 'release/')
         with:
-          branches: 'release/*'
+          branches: "release/*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
