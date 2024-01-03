@@ -33,7 +33,7 @@ struct RSServiceManager: RSServiceType {
         return "v1"
     }
     
-    init(urlSession: URLSession = RSServiceManager.sharedSession, userDefaults: RSUserDefaults, config: RSConfig, logger: Logger) {
+    init(urlSession: URLSession = Self.sharedSession, userDefaults: RSUserDefaults, config: RSConfig, logger: Logger) {
         self.urlSession = urlSession
         self.userDefaults = userDefaults
         self.config = config

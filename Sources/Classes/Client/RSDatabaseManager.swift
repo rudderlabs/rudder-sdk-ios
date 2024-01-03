@@ -8,6 +8,8 @@
 
 import Foundation
 import SQLite3
+import CryptoKit
+import CommonCrypto
 
 class RSDatabaseManager {
     
@@ -16,10 +18,12 @@ class RSDatabaseManager {
     private let logger: Logger
     private let database: OpaquePointer?
     private let lock = NSLock()
+    private let tableName: String
     
     init(instanceName: String, logger: Logger) {
         self.instanceName = instanceName
         self.logger = logger
+        self.tableName = "events" + "\(instanceName == DEFAULT_INSTANCE_NAME ? "" : "_\(instanceName)")"
         syncQueue = DispatchQueue(label: "databaseQueue.rudder.\(instanceName).com")
         database = Self.openDatabase(from: instanceName)
         createTable()
@@ -27,7 +31,7 @@ class RSDatabaseManager {
     
     static func getDBPath(from instanceName: String) -> String {
         let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-        let dbName = "rl_persistence" + "\(instanceName == DEFAULT_INSTANCE_NAME ? "" : "_\(instanceName)")"
+        let dbName = "rl_persistence"// + "\(instanceName == DEFAULT_INSTANCE_NAME ? "" : "_\(instanceName)")"
         let fileUrl = urlDirectory.appendingPathComponent("\(dbName).sqlite")
         return fileUrl.path
     }
@@ -43,7 +47,7 @@ class RSDatabaseManager {
     
     func createTable() {
         var createTableStatement: OpaquePointer?
-        let createTableString = "CREATE TABLE IF NOT EXISTS events( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);"
+        let createTableString = "CREATE TABLE IF NOT EXISTS \(tableName)( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);"
         logger.log(message: "createTableSQL: \(createTableString)", logLevel: .debug)
         if sqlite3_prepare_v2(database, createTableString, -1, &createTableStatement, nil) ==
             SQLITE_OK {
@@ -60,7 +64,7 @@ class RSDatabaseManager {
     }
     
     private func saveEvent(_ message: String) {
-        let insertStatementString = "INSERT INTO events (message, updated) VALUES (?, ?);"
+        let insertStatementString = "INSERT INTO \(tableName) (message, updated) VALUES (?, ?);"
         var insertStatement: OpaquePointer?
         if sqlite3_prepare_v2(database, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(insertStatement, 1, ((message.replacingOccurrences(of: "'", with: "''")) as NSString).utf8String, -1, nil)
@@ -80,7 +84,7 @@ class RSDatabaseManager {
     
     private func clearEvents(_ messageIds: [String]) {
         var deleteStatement: OpaquePointer?
-        let deleteStatementString = "DELETE FROM events WHERE id IN (\((messageIds as NSArray).componentsJoined(by: ",") as NSString));"
+        let deleteStatementString = "DELETE FROM \(tableName) WHERE id IN (\((messageIds as NSArray).componentsJoined(by: ",") as NSString));"
         logger.log(message: "deleteEventSQL: \(deleteStatementString)", logLevel: .debug)
         if sqlite3_prepare_v2(database, deleteStatementString, -1, &deleteStatement, nil) == SQLITE_OK {
             if sqlite3_step(deleteStatement) == SQLITE_DONE {
@@ -98,7 +102,7 @@ class RSDatabaseManager {
     private func fetchEvents(_ count: Int) -> RSDBMessage? {
         var queryStatement: OpaquePointer?
         var message: RSDBMessage?
-        let queryStatementString = "SELECT * FROM events ORDER BY updated ASC LIMIT \(count);"
+        let queryStatementString = "SELECT * FROM \(tableName) ORDER BY updated ASC LIMIT \(count);"
         logger.log(message: "countSQL: \(queryStatementString)", logLevel: .debug)
         if sqlite3_prepare_v2(database, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             var messages = [String]()
@@ -122,7 +126,7 @@ class RSDatabaseManager {
     
     private func fetchDBRecordCount() -> Int {
         var queryStatement: OpaquePointer?
-        let queryStatementString = "SELECT COUNT(*) FROM 'events'"
+        let queryStatementString = "SELECT COUNT(*) FROM \(tableName)"
         logger.log(message: "countSQL: \(queryStatementString)", logLevel: .debug)
         var count = 0
         if sqlite3_prepare_v2(database, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
@@ -140,7 +144,7 @@ class RSDatabaseManager {
     
     private func clearAllEvents() {
         var deleteStatement: OpaquePointer?
-        let deleteStatementString = "DELETE FROM 'events';"
+        let deleteStatementString = "DELETE FROM \(tableName)"
         if sqlite3_prepare_v2(database, deleteStatementString, -1, &deleteStatement, nil) == SQLITE_OK {
             logger.log(message: "deleteEventSQL: \(deleteStatementString)", logLevel: .debug)
             if sqlite3_step(deleteStatement) == SQLITE_DONE {

@@ -18,14 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
+        /*guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
               let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
               let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
             return true
         }
-        
+        */
         print(NSHomeDirectory())
-        
+        /*
         let config: RSConfig = RSConfig(writeKey: rudderConfig.WRITE_KEY)
             .dataPlaneURL(rudderConfig.DEV_DATA_PLANE_URL)
 //            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
@@ -57,8 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .sleepTimeOut(20)
         
         let instance2 = RudderClient.initialize(config: config2, instanceName: "instance_2")
-        RudderClient.track("sample_track_2", for: instance2)
-        
+        instance2.track("sample_track_2")*/
             
         return true
     }

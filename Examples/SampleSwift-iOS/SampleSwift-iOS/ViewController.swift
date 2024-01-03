@@ -21,6 +21,8 @@ struct Task {
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    var instance1: RSClient!
+    var instance2: RSClient!
     
     let taskList: [Task] = [
         Task(name: "Identify with traits"),
@@ -52,7 +54,9 @@ class ViewController: UIViewController {
         Task(name: "Allowlist track"),
         Task(name: "Denylist track"),
         Task(name: "Order done"),
-        Task(name: "Multiple Track"),
+        Task(name: "Multiple Track for Instance 1"),
+        Task(name: "Multiple Track for Instance 2"),
+        Task(name: "Multiple Track for Instance 1 & 2"),
         Task(name: "Multiple Flush From Background"),
         Task(name: "Multiple Flush and Multiple Track"),
         Task(name: "Multiple Track, Screen, Alias, Group, Identify"),
@@ -64,6 +68,34 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
+              let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+              let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
+            return
+        }
+        
+        let config: RSConfig = RSConfig(writeKey: rudderConfig.WRITE_KEY)
+            .dataPlaneURL(rudderConfig.DEV_DATA_PLANE_URL)
+            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+            .loglevel(.verbose)
+            .trackLifecycleEvents(false)
+            .flushQueueSize(100)
+            .sleepTimeOut(100)
+            .dbCountThreshold(100000)
+        
+        instance1 = RudderClient.initialize(config: config)
+        
+        let config2 = RSConfig(writeKey: "2CYw61Oy8Wsrkh0ZHf65QDLYpDJ")
+            .dataPlaneURL(rudderConfig.DEV_DATA_PLANE_URL)
+            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+            .loglevel(.verbose)
+            .trackLifecycleEvents(false)
+            .flushQueueSize(100)
+            .sleepTimeOut(100)
+            .dbCountThreshold(100000)
+        
+        instance2 = RudderClient.initialize(config: config2, instanceName: "instance_2")
     }
 }
 
@@ -209,9 +241,20 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 28:
-                RSClient.sharedInstance().track("Order Done", properties: getProperties())
+                RSClient.sharedInstance().track("Order Done", properties: getProperties())*/
             case 29:
-                RSClient.sharedInstance().track("Order Completed", properties: getProperties())*/
+                for i in 1...5000 {
+                    instance1.track("track_\(i)")
+                }
+            case 30:
+                for i in 5000...10000 {
+                    instance2.track("track_\(i)")
+                }
+            case 31:
+                for i in 1...5000 {
+                    instance1.track("track_\(i)")
+                    instance2.track("track_\(i)")
+                }
         /*case 2:
             for i in 1...50 {
                 RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
