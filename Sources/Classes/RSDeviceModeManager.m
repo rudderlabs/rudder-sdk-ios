@@ -25,6 +25,7 @@
         self->destinationsWithTransformationsEnabled = [[NSMutableDictionary alloc] init];
         self->destinationsAcceptingEventsOnTransformationError = [[NSMutableArray alloc] init];
         self->consentedDestinationNames = [[NSMutableArray alloc] init];
+        self->integrationCallbacks = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -113,6 +114,7 @@
                     id<RSIntegration> nativeOp = [factory initiate:destinationConfig client:client rudderConfig:self->config];
                     [integrationOperationMap setValue:nativeOp forKey:factory.key];
                     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Initiated native SDK factory %@", factory.key]];
+                    [self handleCallbacks:factory.key withIntegration:nativeOp];
                 }
                 @catch(NSException* e){
                     [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: Exception while initiating native SDK Factory %@ due to %@", factory.key,e.reason]];
@@ -141,9 +143,28 @@
             id<RSIntegration> nativeOp = [factory initiate:@{} client:client rudderConfig:self->config];
             [self->integrationOperationMap setValue:nativeOp forKey:factory.key];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateCustomFactories: Initiated custom SDK factory %@", factory.key]];
+            [self handleCallbacks:factory.key withIntegration:nativeOp];
         }
         @catch(NSException* e){
             [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateCustomFactories: Exception while initiating custom Factory %@ due to %@", factory.key,e.reason]];
+        }
+    }
+}
+
+- (void) handleCallbacks:(NSString*)key withIntegration:(id<RSIntegration>)nativeOp {
+    if ([self->integrationCallbacks objectForKey:key]) {
+        Callback callback = [self->integrationCallbacks objectForKey:key];
+        if ([nativeOp respondsToSelector:@selector(getUnderlyingInstance)]) {
+            NSObject *nativeInstance = [nativeOp getUnderlyingInstance];
+            if (nativeInstance != nil && callback != nil) {
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Callback for %@ factory is being invoked", key]];
+                callback(nativeInstance);
+            } else {
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: Either underlying instance or callback for %@ factory is nil", key]];
+            }
+        } else {
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: handleCallbacks: getUnderlyingInstance for %@ factory is not found", key]];
+            callback(nil);
         }
     }
 }
@@ -404,6 +425,11 @@
     if(self->config == nil || self->config.customFactories == nil || self->config.customFactories.count == 0)
         return NO;
     return YES;
+}
+
+- (void) addCallBackForIntegration:(NSString*)integrationName withCallback:(Callback)callback {
+    [integrationCallbacks setValue:callback forKey:integrationName];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: addCallBackForIntegration: callback registered for %@", integrationName]];
 }
 
 @end

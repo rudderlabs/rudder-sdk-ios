@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04C1C0033B54001D55B7C3FD /* Pods_RudderSampleAppObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4736EB78924F61CD264548C5 /* Pods_RudderSampleAppObjC.framework */; };
 		0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0651F10C24C9C46400A43CAC /* iAd.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
+		D7658499F5E99A9FFCBCFD5E /* Pods_RudderSampleAppObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D86F781FF516ED3B29744C /* Pods_RudderSampleAppObjC.framework */; };
 		ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */; };
 		ED0CA6DF2A7D049E00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */; };
 		ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED7619ED2727E28700B086F4 /* InfoPlist.strings */; };
@@ -24,17 +24,18 @@
 		ED761A062727E28800B086F4 /* CustomFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FC2727E28800B086F4 /* CustomFactory.m */; };
 		ED761A072727E28800B086F4 /* _AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FD2727E28800B086F4 /* _AppDelegate.m */; };
 		ED8738CE2AB363A80076D24A /* EncryptedDatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */; };
+		F6149CC52B32FBC2006995B7 /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6149CC42B32FBC2006995B7 /* RudderConfig.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0651F10C24C9C46400A43CAC /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		226F4438CB73B84E0D75B6F3 /* Pods-RudderSampleAppObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.release.xcconfig"; sourceTree = "<group>"; };
-		4736EB78924F61CD264548C5 /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* RudderSampleAppObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RudderSampleAppObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		B7D86F781FF516ED3B29744C /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0CA6D62A7D048D00899C1C /* RudderSampleAppObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppObjC-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
@@ -56,6 +57,7 @@
 		ED7619FD2727E28800B086F4 /* _AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AppDelegate.m; sourceTree = "<group>"; };
 		ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptedDatabaseProvider.h; sourceTree = "<group>"; };
 		ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptedDatabaseProvider.m; sourceTree = "<group>"; };
+		F6149CC42B32FBC2006995B7 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
 		F928F8A942558010CC7088BF /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +70,7 @@
 				0651F10D24C9C46400A43CAC /* iAd.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				04C1C0033B54001D55B7C3FD /* Pods_RudderSampleAppObjC.framework in Frameworks */,
+				D7658499F5E99A9FFCBCFD5E /* Pods_RudderSampleAppObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +103,7 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				4736EB78924F61CD264548C5 /* Pods_RudderSampleAppObjC.framework */,
+				B7D86F781FF516ED3B29744C /* Pods_RudderSampleAppObjC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -135,6 +137,7 @@
 				ED7619FD2727E28800B086F4 /* _AppDelegate.m */,
 				ED7619F02727E28700B086F4 /* _ViewController.h */,
 				ED7619F92727E28800B086F4 /* _ViewController.m */,
+				F6149CC42B32FBC2006995B7 /* RudderConfig.plist */,
 				ED7619F22727E28700B086F4 /* CustomFactory.h */,
 				ED7619FC2727E28800B086F4 /* CustomFactory.m */,
 				ED7619FB2727E28800B086F4 /* CustomIntegration.h */,
@@ -164,7 +167,7 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				2A3C363F298D97733D23D3DF /* [CP] Embed Pods Frameworks */,
+				A0B53AF643318E06749D575A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -216,6 +219,7 @@
 			files = (
 				ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */,
 				ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */,
+				F6149CC52B32FBC2006995B7 /* RudderConfig.plist in Resources */,
 				ED761A052727E28800B086F4 /* Images.xcassets in Resources */,
 				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
 				ED761A022727E28800B086F4 /* Main.storyboard in Resources */,
@@ -225,7 +229,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2A3C363F298D97733D23D3DF /* [CP] Embed Pods Frameworks */ = {
+		A0B53AF643318E06749D575A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

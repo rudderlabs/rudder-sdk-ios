@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.24.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.0...v1.24.1) (2023-12-20)
+
+## [1.24.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.23.1...v1.24.0) (2023-12-18)
+
+
+### Features
+
+* provide onIntegrationReady API support ([#421](https://github.com/rudderlabs/rudder-sdk-ios/issues/421)) ([7349207](https://github.com/rudderlabs/rudder-sdk-ios/commit/73492073d0ccf4baa89c8a39a15a0831f2eb80dc))
+
+
+### Bug Fixes
+
+* fixed sqlite db path on the tvos device ([#414](https://github.com/rudderlabs/rudder-sdk-ios/issues/414)) ([b622745](https://github.com/rudderlabs/rudder-sdk-ios/commit/b622745e3c7b329d75f64cd99bb2baaafa11163d))
+
+### [1.23.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.23.0...v1.23.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* update lastActiveTimestamp value when reset call is made ([#412](https://github.com/rudderlabs/rudder-sdk-ios/issues/412)) ([6f229ad](https://github.com/rudderlabs/rudder-sdk-ios/commit/6f229adb89c9a2f347c99cbc99324f07d241d2ae))
+
 ## [1.23.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.22.0...v1.23.0) (2023-10-09)
 
 
