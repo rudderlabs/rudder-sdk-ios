@@ -1,5 +1,5 @@
 //
-//  RSiOSLifeCycleEventTests.swift
+//  MacOSLifeCycleEventTests.swift
 //  RudderTests
 //
 //  Created by Pallab Maiti on 02/06/22.
@@ -9,14 +9,15 @@
 import XCTest
 @testable import Rudder
 
-#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
-class RSiOSLifeCycleEventTests: XCTestCase {
+#if os(macOS)
+class MacOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY", dataPlaneURL: "DATA_PLANE_URL")
+            .downloadServerConfig(TestDownloadServerConfig()))
     }
 
     override func tearDownWithError() throws {
@@ -27,19 +28,19 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
-        client.add(plugin: iOSLifeCyclePlugin)
+        let macOSLifeCyclePlugin = RSmacOSLifecycleEvents()
+        client.add(plugin: macOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
         
-        
-        client.userDefaults.write(application: .version, value: nil)
-        client.userDefaults.write(application: .build, value: nil)
+        client.userDefaults?.write(application: .version, value: nil)
+        client.userDefaults?.write(application: .build, value: nil)
                 
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
-        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
+        macOSLifeCyclePlugin.application(didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.trackList.first { message in
             message.event == "Application Installed"
@@ -53,19 +54,19 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
-        client.add(plugin: iOSLifeCyclePlugin)
-        
+        let macOSLifeCyclePlugin = RSmacOSLifecycleEvents()
+        client.add(plugin: macOSLifeCyclePlugin)
+
         waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
         
-        
-        client.userDefaults.write(application: .version, value: "2.0.0")
-        client.userDefaults.write(application: .build, value: "2")
+        client.userDefaults?.write(application: .version, value: "2.0.0")
+        client.userDefaults?.write(application: .build, value: "2")
         
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
-        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
+        macOSLifeCyclePlugin.application(didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.trackList.first { message in
             message.event == "Application Updated"
@@ -79,33 +80,33 @@ class RSiOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
-        client.add(plugin: iOSLifeCyclePlugin)
-        
+        let macOSLifeCyclePlugin = RSmacOSLifecycleEvents()
+        client.add(plugin: macOSLifeCyclePlugin)
+
         waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
         
-        
-        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
+        macOSLifeCyclePlugin.application(didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.lastMessage as? TrackMessage
         XCTAssertTrue(trackEvent?.event == "Application Opened")
         XCTAssertTrue(trackEvent?.type == .track)
     }
     
-    func testApplicationBackgrounded() {
+    func testApplicationTerminated() {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
-        client.add(plugin: iOSLifeCyclePlugin)
-        
+        let macOSLifeCyclePlugin = RSmacOSLifecycleEvents()
+        client.add(plugin: macOSLifeCyclePlugin)
+
         waitUntilStarted(client: client)
+        waitUntilServerConfigDownloaded(client: client)
         
-        
-        iOSLifeCyclePlugin.applicationDidEnterBackground(application: nil)
+        macOSLifeCyclePlugin.applicationWillTerminate()
         
         let trackEvent = resultPlugin.lastMessage as? TrackMessage
-        XCTAssertTrue(trackEvent?.event == "Application Backgrounded")
+        XCTAssertTrue(trackEvent?.event == "Application Terminated")
         XCTAssertTrue(trackEvent?.type == .track)
     }
 }

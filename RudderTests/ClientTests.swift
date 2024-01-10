@@ -1,5 +1,5 @@
 //
-//  RSClientTests.swift
+//  ClientTests.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 07/03/22.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Rudder
 
-class RSClientTests: XCTestCase {
+class ClientTests: XCTestCase {
     
     var client: RSClient!
     
@@ -18,9 +18,10 @@ class RSClientTests: XCTestCase {
         client = RSClient.sharedInstance()
         let userDefaults = UserDefaults(suiteName: #file) ?? UserDefaults.standard
         userDefaults.removePersistentDomain(forName: #file)
-        client.userDefaults = RSUserDefaults(userDefaults: userDefaults)
         
-        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY", dataPlaneURL: "DATA_PLANE_URL")
+            .downloadServerConfig(TestDownloadServerConfig())
+            .userDefaults(RSUserDefaults(userDefaults: userDefaults)))
     }
     
     override func tearDownWithError() throws {
@@ -431,5 +432,18 @@ class ResultPlugin: RSPlugin {
             identifyList.append(message)
         }
         return message
+    }
+}
+
+class TestDownloadServerConfig: RSDownloadServerConfig {
+    func downloadServerConfig(retryCount: Int, completion: @escaping (Rudder.RSServerConfig?) -> Void) {
+        let path = TestUtils.shared.getPath(forResource: "ServerConfig", ofType: "json")
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
+            completion(serverConfig)
+        } catch {
+            completion(nil)
+        }
     }
 }

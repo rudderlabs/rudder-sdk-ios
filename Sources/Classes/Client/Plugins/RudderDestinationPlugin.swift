@@ -22,7 +22,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private var flushTimer: RSRepeatingTimer?
     
     private var databaseManager: RSDatabaseManager?
-    private var serviceManager: RSServiceManager?
+    private var serviceManager: RSServiceType?
     private var config: RSConfig?
     private var userDefaults: RSUserDefaults?
     
@@ -35,26 +35,8 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         guard let client = self.client else { return }
         config = client.config
         userDefaults = client.userDefaults
-        databaseManager = RSDatabaseManager(client: client)
-        if isUnitTesting {
-            let configuration = URLSessionConfiguration.default
-            configuration.protocolClasses = [MockURLProtocol.self]
-            let urlSession = URLSession.init(configuration: configuration)
-            serviceManager = RSServiceManager(urlSession: urlSession, client: client)
-            
-            let data = """
-            {
-            
-            }
-            """.data(using: .utf8)
-            
-            MockURLProtocol.requestHandler = { _ in
-                let response = HTTPURLResponse(url: URL(string: "https://some.rudderstack.com.url")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
-                return (response, data)
-            }
-        } else {
-            serviceManager = RSServiceManager(client: client)
-        }
+        databaseManager = client.databaseManager
+        serviceManager = client.serviceManager
     }
         
     func execute<T: RSMessage>(message: T?) -> T? {
@@ -245,7 +227,7 @@ extension RudderDestinationPlugin {
             return
         }
         if !dbMessage.messages.isEmpty {
-            let params = RSUtils.getJSON(from: dbMessage)
+            let params = dbMessage.toJSONString()
             Logger.log(message: "Payload: \(params)", logLevel: .debug)
             Logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
             if !params.isEmpty {

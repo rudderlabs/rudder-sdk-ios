@@ -1,5 +1,5 @@
 //
-//  RSBlackListedEventsTest.swift
+//  BlackListedEventsTest.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 09/03/22.
@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 
-class RSBlackListedEventsTest: XCTestCase {
+class BlackListedEventsTest: XCTestCase {
 
     var client: RSClient!
     

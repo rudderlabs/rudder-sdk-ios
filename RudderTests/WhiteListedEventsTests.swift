@@ -1,5 +1,5 @@
 //
-//  RSWhiteListedEventsTests.swift
+//  WhiteListedEventsTests.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 09/03/22.
@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 // swiftlint:disable inclusive_language
-class RSWhiteListedEventsTests: XCTestCase {
+class WhiteListedEventsTests: XCTestCase {
     
     /*var client: RSClient!
     

@@ -7,22 +7,17 @@
 //
 
 import Foundation
-import SQLite3
 
 internal var isUnitTesting: Bool = {
-    // this will work on apple platforms, but fail on linux.
     if NSClassFromString("XCTestCase") != nil {
         return true
     }
-    // this will work on linux and apple platforms, but not in anything with a UI
-    // because XCTest doesn't come into the call stack till much later.
     let matches = Thread.callStackSymbols.filter { line in
         return line.contains("XCTest") || line.contains("xctest")
     }
     if !matches.isEmpty {
         return true
     }
-    // couldn't see anything that indicated we were testing.
     return false
 }()
 
@@ -41,21 +36,6 @@ struct RSUtils {
         return getDateString(date: Date())
     }
 
-    static func getDBPath() -> String {
-        let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-        let fileUrl = urlDirectory.appendingPathComponent("rl_persistence.sqlite")
-        return fileUrl.path
-    }
-    
-    static func openDatabase() -> OpaquePointer? {
-        var db: OpaquePointer?
-        if sqlite3_open_v2(getDBPath(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK {
-            return db
-        } else {
-            return nil
-        }
-    }
-
     static func getTimeStamp() -> Int {
         return Int(Date().timeIntervalSince1970)
     }
@@ -70,28 +50,6 @@ struct RSUtils {
             return String(format: "%@-%@", locale.languageCode!, locale.regionCode!)
         }
         return "NA"
-    }
-    
-    static func getJSON(from message: RSDBMessage) -> String {
-        let sentAt = RSUtils.getTimestampString()
-        var jsonString = "{\"sentAt\":\"\(sentAt)\",\"batch\":["
-        var totalBatchSize = jsonString.getUTF8Length() + 2
-        var index = 0
-        for message in message.messages {
-            var string = message[0..<message.count - 1]
-            string += ",\"sentAt\":\"\(sentAt)\"},"
-            totalBatchSize += string.getUTF8Length()
-            if totalBatchSize > MAX_BATCH_SIZE {
-                break
-            }
-            jsonString += string
-            index += 1
-        }
-        if jsonString.last == "," {
-            jsonString = String(jsonString.dropLast())
-        }
-        jsonString += "]}"
-        return jsonString
     }
     
     static func getNumberOfBatch(from totalEventsCount: Int, and flushQueueSize: Int) -> Int {
@@ -128,5 +86,24 @@ struct RSUtils {
             properties["url"] = url
         }
         return properties
+    }
+    
+    static func getDataPlaneUrls(from serverConfig: RSServerConfig, and config: RSConfig) -> [String]? {
+        var dataPlanes: [DataPlane]?
+        if config.dataResidencyServer == .EU {
+            dataPlanes = serverConfig.source?.dataPlanes?.eu
+        }
+        
+        if dataPlanes == nil {
+            dataPlanes = serverConfig.source?.dataPlanes?.us
+        }
+        
+        let dataPlane = dataPlanes?.filter({ dataplane in
+            return dataplane.default
+        })
+        
+        return dataPlane?.compactMap({ dataplane in
+            dataplane.url
+        })
     }
 }

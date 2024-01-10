@@ -1,4 +1,4 @@
-name: Check PR title(v2)
+name: 'Check PR title(v2)'
 on:
   pull_request:
     branches: ['master-v2', 'develop-v2']

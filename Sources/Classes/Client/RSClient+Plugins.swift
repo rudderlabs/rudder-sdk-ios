@@ -117,71 +117,18 @@ extension RSClient {
     }
     
     private func downloadServerConfig(retryCount: Int, completion: @escaping () -> Void) {
-        if isUnitTesting {
-            checkServerConfigForUnitTesting(completion: completion)
-            return
-        }
-        let maxRetryCount = 4
-        
-        guard retryCount < maxRetryCount else {
-            Logger.log(message: "Server config download failed.", logLevel: .debug)
-            completion()
-            return
-        }
-        
-        serviceManager?.downloadServerConfig({ [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let serverConfig):
-                Logger.log(message: "Server config download successful.", logLevel: .debug)
-                self.serverConfig = serverConfig
-                self.update(serverConfig: serverConfig, type: .refresh)
-                self.userDefaults.write(.serverConfig, value: serverConfig)
-                self.isServerConfigCached = true
+        downloadServerConfig?.downloadServerConfig(retryCount: retryCount, completion: { [weak self] serverConfig in
+            guard let self = self, let serverConfig = serverConfig else {
                 completion()
-                    
-            case .failure(let error):
-                if error.code == RSErrorCode.WRONG_WRITE_KEY.rawValue {
-                    Logger.log(message: "Wrong write key", logLevel: .error)
-                    self.downloadServerConfig(retryCount: maxRetryCount, completion: completion)
-                } else {
-                    Logger.log(message: "Retrying download in \(retryCount) seconds", logLevel: .debug)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(retryCount)) {
-                        self.downloadServerConfig(retryCount: retryCount + 1, completion: completion)
-                    }
-                }
+                return
             }
+            
+            Logger.log(message: "Server config download successful.", logLevel: .debug)
+            self.serverConfig = serverConfig
+            self.update(serverConfig: serverConfig, type: .refresh)
+            self.userDefaults?.write(.serverConfig, value: serverConfig)
+            self.isServerConfigCached = true
+            completion()
         })
     }
-    
-    private func checkServerConfigForUnitTesting(completion: @escaping () -> Void) {
-        var configFileName = ""
-        switch RSClient.sourceConfigType {
-        default:
-            configFileName = "ServerConfig"
-        }
-        
-        let path = TestUtils.shared.getPath(forResource: configFileName, ofType: "json")
-        do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-            let serverConfig = try JSONDecoder().decode(RSServerConfig.self, from: data)
-            self.serverConfig = serverConfig
-            self.update(serverConfig: serverConfig, type: .initial)
-            self.userDefaults.write(.serverConfig, value: serverConfig)
-        } catch { }
-        
-        completion()
-    }
-}
-
-extension RSClient {
-    static var sourceConfigType: SourceConfigType = .standard
-}
-
-// swiftlint:disable inclusive_language
-enum SourceConfigType {
-    case whiteList
-    case blackList
-    case standard
 }

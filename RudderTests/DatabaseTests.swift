@@ -1,5 +1,5 @@
 //
-//  RSDatabaseTests.swift
+//  DatabaseTests.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 09/05/22.
@@ -10,7 +10,7 @@ import XCTest
 @testable import Rudder
 
 // swiftlint:disable force_cast
-class RSDatabaseTests: XCTestCase {
+class DatabaseTests: XCTestCase {
 
     var client: RSClient!
     var databaseManager: RSDatabaseManager!
@@ -69,7 +69,7 @@ class RSDatabaseTests: XCTestCase {
     func fetchAllEvents() -> [[String: Any]]? {
         let totalCount = databaseManager.getDBRecordCount()
         if let dbMessage = databaseManager.getEvents(totalCount) {
-            let params = RSUtils.getJSON(from: dbMessage)
+            let params = dbMessage.toJSONString()
             if let data = params.data(using: .utf8) {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]

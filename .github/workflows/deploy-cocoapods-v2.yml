@@ -1,4 +1,4 @@
-name: Deploy to Cocoapods(v2)
+name: 'Deploy to Cocoapods(v2)'
 
 on:
   release:

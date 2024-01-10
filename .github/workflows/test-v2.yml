@@ -4,12 +4,20 @@ on:
   push:
     branches: ['master-v2', 'develop-v2']
   pull_request:
-    branches: ['master-v2', 'develop-v2']
     types: ['opened', 'reopened', 'synchronize']
 
 jobs:
+  cancel_previous:
+    name: 'Cancel previous Tests & Coverage(v2)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          workflow_id: ${{ github.event.workflow.id }}
+
   build:
     name: 'Tests & Coverage(v2)'
+    needs: cancel_previous
     runs-on: macos-latest
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
