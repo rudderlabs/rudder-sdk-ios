@@ -258,6 +258,7 @@
 				ED910CE1273BA25100A3EDFF /* Podfile */,
 				ED910CE4273BA25100A3EDFF /* README.md */,
 				ED910CE3273BA25100A3EDFF /* Rudder.podspec */,
+				EDF7B3F927A80320001C0688 /* SampleBatchPayload.json */,
 				ED05631C291BB35600BAEE65 /* sonar-project.properties */,
 			);
 			name = Others;
@@ -371,7 +372,6 @@
 			children = (
 				EDA7EF332739119600E73142 /* API.swift */,
 				EDA7EF342739119600E73142 /* RSServiceManager.swift */,
-				EDF7B3F927A80320001C0688 /* SampleBatchPayload.json */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
