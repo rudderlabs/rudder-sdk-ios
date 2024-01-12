@@ -15,8 +15,8 @@ open class RSClient: NSObject {
 
     let controller: RSController
     let sessionStorage: RSSessionStorage
-    let databaseManager: RSDatabaseManager
     
+    var storageWorker: StorageWorkerType?
     var userDefaults: RSUserDefaults?
     var config: RSConfig?
     var serverConfig: RSServerConfig? {
@@ -45,7 +45,6 @@ open class RSClient: NSObject {
     private override init() {
         controller = RSController()
         sessionStorage = RSSessionStorage()
-        databaseManager = RSDatabaseManager()
     }
     
     /**
@@ -78,6 +77,10 @@ open class RSClient: NSObject {
         self.downloadServerConfig = config.downloadServerConfig != nil ? config.downloadServerConfig : RSDownloadServerConfigImpl(serviceManager: serviceManager)
         self.serverConfig = config.userDefaults.read(.serverConfig)
         self.isServerConfigCached = serverConfig != nil
+        let database = config.database ?? DefaultDatabase(databasePath: RSUtils.getDatabasePath(from: Vendor.current.directory, and: "rl_persistence"))
+        let storage = config.storage ?? DefaultStorage(database: database)
+        self.storageWorker = config.storageWorker ?? StorageWorker(storage: storage)
+        self.storageWorker?.open()
         Logger.logLevel = config.logLevel
         if config.writeKey.isEmpty {
             Logger.logError("Invalid writeKey: Provided writeKey is empty")

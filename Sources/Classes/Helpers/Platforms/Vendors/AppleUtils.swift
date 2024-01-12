@@ -78,6 +78,14 @@ internal class PhoneVendor: Vendor {
         return [RSiOSLifecycleMonitor()]
     }
     
+    override var directory: FileManager.SearchPathDirectory {
+        #if os(tvOS)
+        return .cachesDirectory
+        #else
+        return .libraryDirectory
+        #endif
+    }
+    
     override var carrier: String {
 #if os(iOS)
         return retrieveCarrierNames() ?? "unavailable"

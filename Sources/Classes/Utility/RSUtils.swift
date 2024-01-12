@@ -98,12 +98,15 @@ struct RSUtils {
             dataPlanes = serverConfig.source?.dataPlanes?.us
         }
         
-        let dataPlane = dataPlanes?.filter({ dataplane in
-            return dataplane.default
-        })
+        let dataPlane = dataPlanes?.filter({ $0.default })
         
-        return dataPlane?.compactMap({ dataplane in
-            dataplane.url
-        })
+        return dataPlane?.compactMap({ $0.url })
     }
+    
+    static func getDatabasePath(from directory: FileManager.SearchPathDirectory, and name: String) -> String {
+        let urlDirectory = FileManager.default.urls(for: directory/*FileManager.SearchPathDirectory.libraryDirectory*/, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
+        let fileUrl = urlDirectory.appendingPathComponent("\(name).sqlite")
+        return fileUrl.path
+    }
+
 }
