@@ -19,6 +19,8 @@ public protocol RSMessage {
     var option: RSOption? { get set }
     var channel: String? { get set }
     var dictionaryValue: [String: Any] { get }
+    var sessionId: Int? { get set }
+    var sessionStart: Bool? { get set }
 }
 
 public struct TrackMessage: RSMessage {
@@ -31,6 +33,8 @@ public struct TrackMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
+    public var sessionId: Int?
+    public var sessionStart: Bool?
     
     public let event: String
     public let properties: TrackProperties?
@@ -63,6 +67,8 @@ public struct IdentifyMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
+    public var sessionId: Int?
+    public var sessionStart: Bool?
     
     public var traits: IdentifyTraits?
     
@@ -93,7 +99,9 @@ public struct ScreenMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public let name: String
     public let category: String?
     public let properties: ScreenProperties?
@@ -128,7 +136,9 @@ public struct GroupMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public let groupId: String
     public let traits: GroupTraits?
     
@@ -160,7 +170,9 @@ public struct AliasMessage: RSMessage {
     public var integrations: MessageIntegrations?
     public var option: RSOption?
     public var channel: String?
-
+    public var sessionId: Int?
+    public var sessionStart: Bool?
+    
     public var previousId: String?
     
     public var dictionaryValue: [String: Any] {
@@ -174,8 +186,9 @@ public struct AliasMessage: RSMessage {
         dictionary["previousId"] = previousId
     }
         
-    init(newId: String, option: RSOption? = nil) {
+    init(newId: String, previousId: String?, option: RSOption? = nil) {
         self.userId = newId
+        self.previousId = previousId
         self.option = option
     }    
 }
@@ -183,9 +196,21 @@ public struct AliasMessage: RSMessage {
 // MARK: - RawEvent data helpers
 
 extension RSMessage {
-    internal func applyRawEventData() -> Self {
+    internal func applyRawEventData(userInfo: RSUserInfo?) -> Self {
         var result: Self = self
-        result.messageId = String(format: "%ld-%@", RSUtils.getTimeStamp(), RSUtils.getUniqueId())
+        result.context = MessageContext()
+        if let traits = userInfo?.traits?.dictionaryValue {
+            result.context?[keyPath: "traits"] = traits
+        }
+        if let userId = userInfo?.userId {
+            result.context?[keyPath: "traits.userId"] = userId
+        }
+        if let anonymousId = userInfo?.anonymousId {
+            result.context?[keyPath: "traits.anonymousId"] = anonymousId
+        }
+        result.userId = userInfo?.userId
+        result.anonymousId = userInfo?.anonymousId
+        result.messageId = RSUtils.getUniqueId()
         result.timestamp = RSUtils.getTimestampString()
         result.channel = "mobile"
         return result

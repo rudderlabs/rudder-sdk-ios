@@ -10,36 +10,42 @@ on:
 jobs:
   build:
     name: 'Tests & Coverage(v2)'
-    runs-on: macOS-latest
-
+    runs-on: macos-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v2
       
       - name: Install xcpretty
         run: gem install xcpretty
 
-#      - name: Run tests(suite)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' | xcpretty
-
-#      - name: Run tests(1)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests" | xcpretty
-
-#      - name: Run tests(2)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests2" | xcpretty
-
-#      - name: Run tests(3)
-#        run: |
-#          xcodebuild -scheme RudderSDK-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 13' -only-testing "Tests/Tests3" | xcpretty
-            
-      - name: Install SonarCloud
-        run: npm install -g sonarqube-scanner
-        
+      - name: Run tests(iOS)
+        run: |
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+      
+      - name: Run tests(tvOS)
+        run: |
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-tvOS test -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+      
+      - name: Run tests(watchOS)
+        run: |
+          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+                      
+      - name: Collect coverage into one XML report
+        run: |
+          bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
+              
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           sonar-scanner -Dsonar.host.url=https://sonarcloud.io
+        
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

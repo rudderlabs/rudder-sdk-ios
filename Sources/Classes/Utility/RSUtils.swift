@@ -9,7 +9,25 @@
 import Foundation
 import SQLite3
 
+internal var isUnitTesting: Bool = {
+    // this will work on apple platforms, but fail on linux.
+    if NSClassFromString("XCTestCase") != nil {
+        return true
+    }
+    // this will work on linux and apple platforms, but not in anything with a UI
+    // because XCTest doesn't come into the call stack till much later.
+    let matches = Thread.callStackSymbols.filter { line in
+        return line.contains("XCTest") || line.contains("xctest")
+    }
+    if !matches.isEmpty {
+        return true
+    }
+    // couldn't see anything that indicated we were testing.
+    return false
+}()
+
 struct RSUtils {
+
     static func getDateString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -24,11 +42,7 @@ struct RSUtils {
     }
 
     static func getDBPath() -> String {
-#if os(tvOS)
-        let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-#else
         let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-#endif
         let fileUrl = urlDirectory.appendingPathComponent("rl_persistence.sqlite")
         return fileUrl.path
     }
