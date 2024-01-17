@@ -15,15 +15,16 @@ class RSSessionStorage {
         case appTrackingConsent
         case option
         case context
+        case dataPlaneUrl
     }
     
-    static let shared = RSSessionStorage()
     private let syncQueue = DispatchQueue(label: "sessionStorage.rudder.com")
     private var deviceToken: String?
     private var advertisingId: String?
     private var appTrackingConsent: RSAppTrackingConsent?
     private var option: RSOption?
     private var context: RSContext?
+    private var dataPlaneUrl: String?
 
     func write<T: Any>(_ key: RSSessionStorage.Keys, value: T?) {
         syncQueue.sync {
@@ -40,6 +41,8 @@ class RSSessionStorage {
                 if let value = value as? MessageContext, let data = try? JSONSerialization.data(withJSONObject: value) {
                     context = try? JSONDecoder().decode(RSContext.self, from: data)
                 }
+            case .dataPlaneUrl:
+                dataPlaneUrl = value as? String
             }
         }
     }
@@ -58,6 +61,8 @@ class RSSessionStorage {
                 result = option as? T
             case .context:
                 result = context as? T
+            case .dataPlaneUrl:
+                result = dataPlaneUrl as? T
             }
         }
         return result

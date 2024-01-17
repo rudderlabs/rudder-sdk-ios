@@ -8,6 +8,13 @@
 
 import Foundation
 
+@frozen 
+@objc
+public enum RSDataResidencyServer: Int {
+    case US
+    case EU
+}
+
 @objc
 open class RSConfig: NSObject {
     let _writeKey: String
@@ -15,9 +22,9 @@ open class RSConfig: NSObject {
         return _writeKey
     }
     
-    private var _dataPlaneUrl: String = DEFAULT_DATA_PLANE_URL
-    public var dataPlaneUrl: String {
-        return _dataPlaneUrl
+    let _dataPlaneURL: String
+    public var dataPlaneURL: String {
+        return _dataPlaneURL
     }
     
     private var _flushQueueSize: Int = DEFAULT_FLUSH_QUEUE_SIZE
@@ -50,9 +57,9 @@ open class RSConfig: NSObject {
         return _recordScreenViews
     }
     
-    private var _controlPlaneUrl: String = DEFAULT_CONTROL_PLANE_URL
-    public var controlPlaneUrl: String {
-        return _controlPlaneUrl
+    private var _controlPlaneURL: String = DEFAULT_CONTROL_PLANE_URL
+    public var controlPlaneURL: String {
+        return _controlPlaneURL
     }
     
     private var _autoSessionTracking: Bool = DEFAULT_AUTO_SESSION_TRACKING_STATUS
@@ -70,23 +77,30 @@ open class RSConfig: NSObject {
         return _gzipEnabled
     }
     
-    @objc
-    public init(writeKey: String) {
-        _writeKey = writeKey
+    private var _dataResidencyServer: RSDataResidencyServer = .US
+    public var dataResidencyServer: RSDataResidencyServer {
+        return _dataResidencyServer
     }
     
-    @discardableResult @objc
-    public func dataPlaneURL(_ dataPlaneUrl: String) -> RSConfig {
-        guard let url = URL(string: dataPlaneUrl), let scheme = url.scheme, let host = url.host else {
-            Logger.logError("dataPlaneUrl is invalid")
-            return self
-        }
-        if let port = url.port {
-            _dataPlaneUrl = "\(scheme)://\(host):\(port)"
+    private var _userDefaults: RSUserDefaults = RSUserDefaults()
+    internal var userDefaults: RSUserDefaults {
+        return _userDefaults
+    }
+    
+    private var _downloadServerConfig: RSDownloadServerConfig?
+    internal var downloadServerConfig: RSDownloadServerConfig? {
+        return _downloadServerConfig
+    }
+    
+    @objc
+    public init(writeKey: String, dataPlaneURL: String) {
+        _writeKey = writeKey
+        if let url = URL(string: dataPlaneURL), url.isValid {
+            _dataPlaneURL = url.absoluteString.rectified
         } else {
-            _dataPlaneUrl = "\(scheme)://\(host)"
+            Logger.logError("dataPlaneURL is invalid")
+            _dataPlaneURL = ""
         }
-        return self
     }
     
     @discardableResult @objc
@@ -138,16 +152,12 @@ open class RSConfig: NSObject {
     }
     
     @discardableResult @objc
-    public func controlPlaneURL(_ controlPlaneUrl: String) -> RSConfig {
-        guard let url = URL(string: controlPlaneUrl), let scheme = url.scheme, let host = url.host else {
-            Logger.logError("controlPlaneUrl is invalid")
+    public func controlPlaneURL(_ controlPlaneURL: String) -> RSConfig {
+        guard let url = URL(string: controlPlaneURL), url.isValid else {
+            Logger.logError("controlPlaneURL is invalid")
             return self
         }
-        if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
-            _controlPlaneUrl = "\(scheme)://\(host)\(url.path())"
-        } else {
-            _controlPlaneUrl = "\(scheme)://\(host)\(url.path)"
-        }
+        _controlPlaneURL = url.absoluteString.rectified
         return self
     }
     
@@ -171,5 +181,40 @@ open class RSConfig: NSObject {
     public func gzipEnabled(_ gzipEnabled: Bool) -> RSConfig {
         _gzipEnabled = gzipEnabled
         return self
+    }
+    
+    @discardableResult @objc
+    public func dataResidencyServer(_ dataResidencyServer: RSDataResidencyServer) -> RSConfig {
+        _dataResidencyServer = dataResidencyServer
+        return self
+    }
+    
+    internal func userDefaults(_ userDefaults: RSUserDefaults) -> RSConfig {
+        _userDefaults = userDefaults
+        return self
+    }
+    
+    internal func downloadServerConfig(_ downloadServerConfig: RSDownloadServerConfig) -> RSConfig {
+        _downloadServerConfig = downloadServerConfig
+        return self
+    }
+}
+
+extension URL {
+    var isValid: Bool {
+        if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+            return self.scheme != nil && self.host() != nil
+        } else {
+            return self.scheme != nil && self.host != nil
+        }
+    }
+}
+
+extension String {
+    var rectified: String {
+        if self.hasSuffix("/") {
+            return self
+        }
+        return "\(self)/"
     }
 }

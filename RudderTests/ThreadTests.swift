@@ -1,5 +1,5 @@
 //
-//  RSThreadTests.swift
+//  ThreadTests.swift
 //  RudderStackTests
 //
 //  Created by Pallab Maiti on 04/05/22.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Rudder
 
-class RSThreadTests: XCTestCase {
+class ThreadTests: XCTestCase {
 
     /*var client: RSClient!
 

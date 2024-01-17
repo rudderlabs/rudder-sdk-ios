@@ -1,4 +1,4 @@
-name: Draft new release(v2)
+name: 'Draft new release(v2)'
 
 on:
   workflow_dispatch

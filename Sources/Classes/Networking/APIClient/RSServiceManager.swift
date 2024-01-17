@@ -25,15 +25,19 @@ struct RSServiceManager: RSServiceType {
     }()
     
     let urlSession: URLSession
-    let client: RSClient
+    let config: RSConfig
+    let userDefaults: RSUserDefaults
+    let sessionStorage: RSSessionStorage
     
     var version: String {
         return "v1"
     }
     
-    init(urlSession: URLSession = RSServiceManager.sharedSession, client: RSClient) {
+    init(urlSession: URLSession = RSServiceManager.sharedSession, userDefaults: RSUserDefaults, config: RSConfig, sessionStorage: RSSessionStorage) {
         self.urlSession = urlSession
-        self.client = client
+        self.userDefaults = userDefaults
+        self.config = config
+        self.sessionStorage = sessionStorage
     }
     
     func downloadServerConfig(_ completion: @escaping Handler<RSServerConfig>) {
@@ -119,11 +123,11 @@ extension RSServiceManager {
 extension RSServiceManager {
     func headers(_ API: API) -> [String: String]? {
         var headers = ["Content-Type": "Application/json",
-                       "Authorization": "Basic \(client.config?.writeKey.computeAuthToken() ?? "")"]
+                       "Authorization": "Basic \(config.writeKey.computeAuthToken() ?? "")"]
         switch API {
         case .flushEvents:
-            headers["AnonymousId"] = client.anonymousId ?? ""
-            if let config = client.config, config.gzipEnabled {
+            headers["AnonymousId"] = userDefaults.read(.anonymousId) ?? ""
+            if config.gzipEnabled {
                 headers["Content-Encoding"] = "gzip"
             }
         default:
@@ -135,13 +139,10 @@ extension RSServiceManager {
     func baseURL(_ API: API) -> String {
         switch API {
         case .flushEvents:
-            return "\(client.config?.dataPlaneUrl ?? DEFAULT_DATA_PLANE_URL)/\(version)/"
+            let dataPlaneUrl: String? = sessionStorage.read(.dataPlaneUrl)
+                return "\(dataPlaneUrl?.rectified ?? config.dataPlaneURL)\(version)/"
         case .downloadConfig:
-            if client.config?.controlPlaneUrl.hasSuffix("/") == true {
-                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)"
-            } else {
-                return "\(client.config?.controlPlaneUrl ?? DEFAULT_CONTROL_PLANE_URL)/"
-            }
+                return config.controlPlaneURL
         }
     }
     
@@ -149,7 +150,7 @@ extension RSServiceManager {
         switch API {
         case .flushEvents(let params):
             var data = params.data(using: .utf8)
-            if let config = client.config, config.gzipEnabled {
+            if config.gzipEnabled {
                 data = try? data?.gzipped()
             }
             return data

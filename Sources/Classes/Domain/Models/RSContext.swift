@@ -179,13 +179,13 @@ open class RSContext: NSObject, Codable {
         return TimeZone.current.identifier
     }
     
-    static func traits(userDefaults: RSUserDefaults) -> JSON? {
-        let traitsJSON: JSON? = userDefaults.read(.traits)
+    static func traits(userDefaults: RSUserDefaults?) -> JSON? {
+        let traitsJSON: JSON? = userDefaults?.read(.traits)
         var traitsDict = traitsJSON?.dictionaryValue
-        if let userId: String = userDefaults.read(.userId) {
+        if let userId: String = userDefaults?.read(.userId) {
             traitsDict?["userId"] = userId
         }
-        if let anonymousId: String = userDefaults.read(.anonymousId) {
+        if let anonymousId: String = userDefaults?.read(.anonymousId) {
             traitsDict?["anonymousId"] = anonymousId
         }
         if let traits = traitsDict {
@@ -194,7 +194,7 @@ open class RSContext: NSObject, Codable {
         return nil
     }
     
-    internal init(userDefaults: RSUserDefaults) {
+    internal init(userDefaults: RSUserDefaults?) {
         _app = AppInfo()
         _device = DeviceInfo()
         _library = LibraryInfo()
@@ -204,7 +204,7 @@ open class RSContext: NSObject, Codable {
         _network = NetworkInfo()
         _timezone = Self.timezone()
         _traits = Self.traits(userDefaults: userDefaults)
-        _externalIds = userDefaults.read(.externalId)
+        _externalIds = userDefaults?.read(.externalId)
     }
 }
 

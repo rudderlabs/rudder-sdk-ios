@@ -1,5 +1,5 @@
 //
-//  RSwatchOSLifeCycleEventTests.swift
+//  iOSLifeCycleEventTests.swift
 //  RudderTests
 //
 //  Created by Pallab Maiti on 02/06/22.
@@ -9,14 +9,15 @@
 import XCTest
 @testable import Rudder
 
-#if os(watchOS)
-class RSwatchOSLifeCycleEventTests: XCTestCase {
+#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+class iOSLifeCycleEventTests: XCTestCase {
 
     var client: RSClient!
 
     override func setUpWithError() throws {
         client = RSClient.sharedInstance()
-        client.configure(with: RSConfig(writeKey: "WRITE_KEY").dataPlaneURL("DATA_PLANE_URL"))
+        client.configure(with: RSConfig(writeKey: "WRITE_KEY", dataPlaneURL: "DATA_PLANE_URL")
+            .downloadServerConfig(TestDownloadServerConfig()))
     }
 
     override func tearDownWithError() throws {
@@ -27,18 +28,19 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let watchOSLifeCyclePlugin = RSwatchOSLifecycleEvents()
-        client.add(plugin: watchOSLifeCyclePlugin)
+        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
+        client.add(plugin: iOSLifeCyclePlugin)
         
         waitUntilStarted(client: client)
         
-        client.userDefaults.write(application: .version, value: nil)
-        client.userDefaults.write(application: .build, value: nil)
         
+        client.userDefaults?.write(application: .version, value: nil)
+        client.userDefaults?.write(application: .build, value: nil)
+                
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
-        watchOSLifeCyclePlugin.applicationDidFinishLaunching(watchExtension: nil)
+        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.trackList.first { message in
             message.event == "Application Installed"
@@ -52,18 +54,19 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let watchOSLifeCyclePlugin = RSwatchOSLifecycleEvents()
-        client.add(plugin: watchOSLifeCyclePlugin)
-
+        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
+        client.add(plugin: iOSLifeCyclePlugin)
+        
         waitUntilStarted(client: client)
         
-        client.userDefaults.write(application: .version, value: "2.0.0")
-        client.userDefaults.write(application: .build, value: "2")
-
+        
+        client.userDefaults?.write(application: .version, value: "2.0.0")
+        client.userDefaults?.write(application: .build, value: "2")
+        
         // This is a hack that needs to be dealt with
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 2))
         
-        watchOSLifeCyclePlugin.applicationDidFinishLaunching(watchExtension: nil)
+        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.trackList.first { message in
             message.event == "Application Updated"
@@ -77,15 +80,33 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         let resultPlugin = ResultPlugin()
         client.add(plugin: resultPlugin)
         
-        let watchOSLifeCyclePlugin = RSwatchOSLifecycleEvents()
-        client.add(plugin: watchOSLifeCyclePlugin)
-
+        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
+        client.add(plugin: iOSLifeCyclePlugin)
+        
         waitUntilStarted(client: client)
         
-        watchOSLifeCyclePlugin.applicationWillEnterForeground(watchExtension: nil)
+        
+        iOSLifeCyclePlugin.application(nil, didFinishLaunchingWithOptions: nil)
         
         let trackEvent = resultPlugin.lastMessage as? TrackMessage
         XCTAssertTrue(trackEvent?.event == "Application Opened")
+        XCTAssertTrue(trackEvent?.type == .track)
+    }
+    
+    func testApplicationBackgrounded() {
+        let resultPlugin = ResultPlugin()
+        client.add(plugin: resultPlugin)
+        
+        let iOSLifeCyclePlugin = RSiOSLifecycleEvents()
+        client.add(plugin: iOSLifeCyclePlugin)
+        
+        waitUntilStarted(client: client)
+        
+        
+        iOSLifeCyclePlugin.applicationDidEnterBackground(application: nil)
+        
+        let trackEvent = resultPlugin.lastMessage as? TrackMessage
+        XCTAssertTrue(trackEvent?.event == "Application Backgrounded")
         XCTAssertTrue(trackEvent?.type == .track)
     }
 }

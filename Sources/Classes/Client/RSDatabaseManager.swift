@@ -12,14 +12,27 @@ import SQLite3
 class RSDatabaseManager {
     
     private let database: OpaquePointer?
-    private let client: RSClient
     private let syncQueue = DispatchQueue(label: "database.rudder.com")
     private let lock = NSLock()
     
-    init(client: RSClient) {
-        self.client = client
-        database = RSUtils.openDatabase()
+    init() {
+        database = Self.openDatabase()
         createTable()
+    }
+    
+    static func getDBPath() -> String {
+        let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
+        let fileUrl = urlDirectory.appendingPathComponent("rl_persistence.sqlite")
+        return fileUrl.path
+    }
+    
+    static func openDatabase() -> OpaquePointer? {
+        var db: OpaquePointer?
+        if sqlite3_open_v2(getDBPath(), &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK {
+            return db
+        } else {
+            return nil
+        }
     }
         
     func createTable() {

@@ -36,7 +36,7 @@ class RSContextPlugin: RSPlatformPlugin {
             context.merge(eventContext) { (new, _) in new }
         }
         workingMessage.context = context
-        RSSessionStorage.shared.write(.context, value: context)
+        client?.sessionStorage.write(.context, value: context)
         return workingMessage
     }
     
@@ -69,13 +69,13 @@ class RSContextPlugin: RSPlatformPlugin {
     }
     
     internal func insertDynamicDeviceInfoData(context: inout [String: Any]) {
-        if let deviceToken: String = RSSessionStorage.shared.read(.deviceToken) {
+        if let deviceToken: String = client?.sessionStorage.read(.deviceToken) {
             context[keyPath: "device.token"] = deviceToken
         }
-        if let advertisingId: String = RSSessionStorage.shared.read(.advertisingId), advertisingId.isNotEmpty {
+        if let advertisingId: String = client?.sessionStorage.read(.advertisingId), advertisingId.isNotEmpty {
             context[keyPath: "device.advertisingId"] = advertisingId
             context[keyPath: "device.adTrackingEnabled"] = true
-            let appTrackingConsent: RSAppTrackingConsent = RSSessionStorage.shared.read(.appTrackingConsent) ?? .notDetermined
+            let appTrackingConsent: RSAppTrackingConsent = client?.sessionStorage.read(.appTrackingConsent) ?? .notDetermined
             context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
         }
     }
