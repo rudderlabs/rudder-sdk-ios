@@ -23,7 +23,7 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
+    Config *config = [[Config alloc] initWithWriteKey:WRITE_KEY];
     [config dataPlaneURL:DATA_PLANE_URL];
     [config trackLifecycleEvents:YES];
     [config recordScreenViews:YES];
@@ -35,7 +35,7 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
 }
 
 - (void) identify {
-    RSOption *identifyOptions = [[RSOption alloc] init];
+    Option *identifyOptions = [[Option alloc] init];
     [identifyOptions putExternalId:@"brazeExternalId1" withId:@"some_external_id_1"];
     
     [client identify:@"test_user_id1" traits:@{@"foo1": @"bar1",

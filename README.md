@@ -137,7 +137,7 @@ To the initialize `RSClient`, place the following code in your `AppDelegate` fil
 #### Objective C
 
 ```objective-c
-RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
+Config *config = [[Config alloc] initWithWriteKey:WRITE_KEY];
 [config dataPlaneURL:DATA_PLANE_URL];
 [config recordScreenViews:YES];
 [[RSClient sharedInstance] configureWith:config];
@@ -145,7 +145,7 @@ RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
 #### Swift
 
 ```swift
-let config: RSConfig = RSConfig(writeKey: WRITE_KEY)
+let config: Config = Config(writeKey: WRITE_KEY)
             .dataPlaneURL(DATA_PLANE_URL)
             .loglevel(.debug)
             .trackLifecycleEvents(true)

@@ -17,8 +17,6 @@ end
 target 'SampleSwift-iOS' do
     project 'Examples/SampleSwift-iOS/SampleSwift-iOS.xcodeproj'
     platform :ios, '13.0'
-    pod 'RudderFirebase', '1.1.0'
-    pod 'RudderAmplitude', '1.1.0'
     shared_pods
 end
 
