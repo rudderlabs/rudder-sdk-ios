@@ -22,7 +22,7 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
+    Config *config = [[Config alloc] initWithWriteKey:WRITE_KEY];
     [config dataPlaneURL:DATA_PLANE_URL];
     [config loglevel:RSLogLevelDebug];
     [config trackLifecycleEvents:YES];
@@ -43,11 +43,11 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
     [client setAppTrackingConsent:RSAppTrackingConsentAuthorize];
     [client setAnonymousId:@"example_anonymous_id"];
     
-    RSOption *defaultOption = [[RSOption alloc] init];
+    Option *defaultOption = [[Option alloc] init];
     [defaultOption putIntegration:@"Amplitude" isEnabled:YES];
     [client setOption:defaultOption];
     
-    RSOption *eventOption = [[RSOption alloc] init];
+    Option *eventOption = [[Option alloc] init];
     [eventOption putIntegration:@"Amplitude" isEnabled:YES];
     [eventOption putExternalId:@"brazeExternalId" withId:@"some_external_id_1"];
     [client identify:@"user_id" traits:@{@"email": @"abc@def.com"} option:eventOption];
