@@ -65,6 +65,11 @@ open class RSConfig: NSObject {
         return _sessionTimeout
     }
     
+    private var _gzipEnabled: Bool = DEFAULT_GZIP_ENABLED_STATUS
+    public var gzipEnabled: Bool {
+        return _gzipEnabled
+    }
+    
     @objc
     public init(writeKey: String) {
         _writeKey = writeKey
@@ -159,6 +164,12 @@ open class RSConfig: NSObject {
             return self
         }
         _sessionTimeout = sessionTimeout
+        return self
+    }
+    
+    @discardableResult @objc
+    public func gzipEnabled(_ gzipEnabled: Bool) -> RSConfig {
+        _gzipEnabled = gzipEnabled
         return self
     }
 }

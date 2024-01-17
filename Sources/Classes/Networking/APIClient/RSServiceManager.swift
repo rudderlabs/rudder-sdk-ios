@@ -123,6 +123,9 @@ extension RSServiceManager {
         switch API {
         case .flushEvents:
             headers["AnonymousId"] = client.anonymousId ?? ""
+            if let config = client.config, config.gzipEnabled {
+                headers["Content-Encoding"] = "gzip"
+            }
         default:
             break
         }
@@ -145,7 +148,11 @@ extension RSServiceManager {
     func httpBody(_ API: API) -> Data? {
         switch API {
         case .flushEvents(let params):
-            return params.data(using: .utf8)
+            var data = params.data(using: .utf8)
+            if let config = client.config, config.gzipEnabled {
+                data = try? data?.gzipped()
+            }
+            return data
         case .downloadConfig:
             return nil
         }
