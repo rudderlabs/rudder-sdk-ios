@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.4.2...v2.4.3) (2024-01-18)
+
+
+### Bug Fixes
+
+* fixed sqlite db path on the tvos platforms ([#417](https://github.com/rudderlabs/rudder-sdk-ios/issues/417)) ([e8bfe4a](https://github.com/rudderlabs/rudder-sdk-ios/commit/e8bfe4aaf8464ca8e1623c382bde1b22a36dd63a))
+
 ### [2.4.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.4.1...v2.4.2) (2023-08-22)
 
 
