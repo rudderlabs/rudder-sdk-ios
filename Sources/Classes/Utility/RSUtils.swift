@@ -24,7 +24,11 @@ struct RSUtils {
     }
 
     static func getDBPath() -> String {
+#if os(tvOS)
+        let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
+#else
         let urlDirectory = FileManager.default.urls(for: FileManager.SearchPathDirectory.libraryDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
+#endif
         let fileUrl = urlDirectory.appendingPathComponent("rl_persistence.sqlite")
         return fileUrl.path
     }
