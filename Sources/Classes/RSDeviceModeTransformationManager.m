@@ -54,7 +54,7 @@ int deviceModeSleepCount = 0;
             do {
                 RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
                 RSTransformationRequest* request = [strongSelf __getDeviceModeTransformationRequest:dbMessage];
-                NSString* payload = [RSUtils getStringFromDict:[request toDict]];
+                NSString* payload = [RSUtils serialize:[request toDict]];
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 RSNetworkResponse* response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT withRequestMethod:POST];
@@ -96,7 +96,7 @@ int deviceModeSleepCount = 0;
                     [strongSelf completeDeviceModeEventProcessing:dbMessage];
                 } else {
                     deviceModeSleepCount = 0;
-                    id object = [RSUtils deSerializeJSONString:responsePayload];
+                    id object = [RSUtils deserialize:responsePayload];
                     if(object != nil && [object isKindOfClass:[NSDictionary class]]) {
                         NSArray* transformedBatch = object[@"transformedBatch"];
                         if(transformedBatch != nil && transformedBatch.count > 0) {
@@ -112,7 +112,7 @@ int deviceModeSleepCount = 0;
                             }
                         }
                     }
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVStringFromArray:dbMessage.messageIds]]];
                     [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
                     [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                 }
@@ -135,7 +135,7 @@ int deviceModeSleepCount = 0;
     NSMutableArray<NSString *>* messages = dbMessage.messages;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     for(int i=0; i<messages.count; i++) {
-        id object = [RSUtils deSerializeJSONString:messages[i]];
+        id object = [RSUtils deserialize:messages[i]];
         if (object && [object isKindOfClass:[NSDictionary class]]) {
             RSMessage* message = [[RSMessage alloc] initWithDict:object];
             NSArray<NSString *>* destinationIds = [self getDestinationIdsWithTransformationsForMessage:message];
@@ -157,7 +157,7 @@ int deviceModeSleepCount = 0;
 
 
 - (void)completeDeviceModeEventProcessing:(RSDBMessage *)dbMessage {
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Updating status as DEVICE_MODE_PROCESSING DONE for events (%@)",[RSUtils getCSVStringFromArray:dbMessage.messageIds]]];
     [self->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:DEVICE_MODE_PROCESSING_DONE];
     [self->dbPersistentManager clearProcessedEventsFromDB];
 }

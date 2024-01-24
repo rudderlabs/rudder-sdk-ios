@@ -66,11 +66,10 @@ int receivedError = NETWORK_SUCCESS;
 }
 
 - (RSServerConfigSource *_Nullable)_parseConfig:(NSString *)configStr {
-    NSError *error;
-    NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    NSDictionary *configDict = [RSUtils deserialize:configStr];
     
     RSServerConfigSource *source;
-    if (error == nil && configDict != nil) {
+    if (configDict != nil) {
         source = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
         for (RSServerDestination *destination in source.destinations) {
             if (destination.shouldApplyDeviceModeTransformation) {

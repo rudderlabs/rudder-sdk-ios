@@ -141,11 +141,10 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
 - (void) clearAnonymousIdFromTraits {
     NSString* traitsStr = [self getTraits];
-    NSError *error;
-    NSMutableDictionary* traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-    if(error == nil && traitsDict != nil) {
+    NSMutableDictionary* traitsDict = [RSUtils deserialize:traitsStr];
+    if(traitsDict != nil) {
         [traitsDict removeObjectForKey:@"anonymousId"];
-        NSString* finalTraitsStr = [RSUtils getStringFromDict:traitsDict];
+        NSString* finalTraitsStr = [RSUtils serialize:traitsDict];
         [self saveTraits:finalTraitsStr];
     }
 }
@@ -286,9 +285,8 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     if (configStr == nil) {
         return nil;
     }
-    NSError *error;
-    NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-    if (error == nil && configDict != nil) {
+    NSDictionary *configDict = [RSUtils deserialize:configStr];
+    if (configDict != nil) {
         RSServerConfigSource *config = [[RSServerConfigSource alloc] initWithConfigDict:configDict];
         return config;
     }

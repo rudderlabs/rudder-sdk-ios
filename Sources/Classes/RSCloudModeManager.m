@@ -49,7 +49,7 @@
                 if (payload != nil) {
                     response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
                     if (response.state == NETWORK_SUCCESS) {
-                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVString:dbMessage.messageIds]]];
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVStringFromArray:dbMessage.messageIds]]];
                         [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
                         [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                         [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
