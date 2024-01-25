@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)removeFile:(NSString *)fileName;
 + (BOOL) isDBMessageEmpty:(RSDBMessage*)dbMessage;
 + (BOOL) isEmptyString:(NSString *)value;
-+ (BOOL) isInvalidNumber:(NSNumber *)number;
++ (BOOL) isSpecialFloatingNumber:(NSNumber *)number;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

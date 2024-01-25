@@ -198,8 +198,8 @@
         return val;
     } else if ([val isKindOfClass:[NSNumber class]]) {
         // convert invalid numbers to strings
-        if ([self isInvalidNumber:(NSNumber *) val]) {
-            return [((NSNumber *) val) stringValue];
+        if ([self isSpecialFloatingNumber:(NSNumber *) val]) {
+            return [self serializeSpecialFloatingNumber:val];
         }
         return val;
     } else if ([val isKindOfClass:[NSDate class]]) {
@@ -240,9 +240,20 @@
     return [array copy];
 }
 
-+ (BOOL) isInvalidNumber:(NSNumber *)number {
++ (BOOL) isSpecialFloatingNumber:(NSNumber *)number {
     return ([number isEqualToNumber:[NSDecimalNumber notANumber]]
             || isinf([number doubleValue]));
+}
+
++ (NSString*) serializeSpecialFloatingNumber: (NSNumber *) number {
+    if ([number isEqualToNumber:[NSDecimalNumber notANumber]]) {
+        return @"NaN";
+    } else if ([number isEqualToNumber:[NSNumber numberWithDouble:INFINITY]]) {
+        return @"Infinity";
+    } else if ([number isEqualToNumber:[NSNumber numberWithDouble:-INFINITY]]) {
+        return @"-Infinity";
+    }
+    return [number stringValue];
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

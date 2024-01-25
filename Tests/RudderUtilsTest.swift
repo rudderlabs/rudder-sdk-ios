@@ -74,7 +74,7 @@ class RudderUtilsTest: XCTestCase {
     func testSanitizeDictionary() {
         let dirtyDict: [String:Any] = [
             "infinity": Double.infinity,
-            "nan": Double.nan,
+            "NaN": Double.nan,
             "negativeInfinity": -Double.infinity,
             "max": Double.greatestFiniteMagnitude,
             "min": Double.leastNormalMagnitude,
@@ -88,11 +88,11 @@ class RudderUtilsTest: XCTestCase {
         
         if let cleanDict  = RSUtils.sanitizeObject(dirtyDict) as? [String:Any] {
             XCTAssertTrue(cleanDict["infinity"] is String)
-            XCTAssertEqual(cleanDict["infinity"] as? String, "inf")
+            XCTAssertEqual(cleanDict["infinity"] as? String, "Infinity")
             XCTAssertTrue(cleanDict["negativeInfinity"] is String)
-            XCTAssertEqual(cleanDict["negativeInfinity"] as? String, "-inf")
-            XCTAssertTrue(cleanDict["nan"] is String)
-            XCTAssertEqual(cleanDict["nan"] as? String, "nan")
+            XCTAssertEqual(cleanDict["negativeInfinity"] as? String, "-Infinity")
+            XCTAssertTrue(cleanDict["NaN"] is String)
+            XCTAssertEqual(cleanDict["NaN"] as? String, "NaN")
             XCTAssertTrue(cleanDict["date"] is String)
             XCTAssertTrue(cleanDict["url"] is String)
             XCTAssertEqual(cleanDict["url"] as? String, "https://www.rudderstack.com")
@@ -130,11 +130,11 @@ class RudderUtilsTest: XCTestCase {
         
         if let cleanArray  = RSUtils.sanitizeObject(dirtyArray) as? [Any] {
             XCTAssertTrue(cleanArray[0] is String)
-            XCTAssertEqual(cleanArray[0] as? String, "inf")
+            XCTAssertEqual(cleanArray[0] as? String, "Infinity")
             XCTAssertTrue(cleanArray[1] is String)
-            XCTAssertEqual(cleanArray[1] as? String, "nan")
+            XCTAssertEqual(cleanArray[1] as? String, "NaN")
             XCTAssertTrue(cleanArray[2] is String)
-            XCTAssertEqual(cleanArray[2] as? String, "-inf")
+            XCTAssertEqual(cleanArray[2] as? String, "-Infinity")
             XCTAssertTrue(cleanArray[3] is Double)
             XCTAssertEqual(cleanArray[3] as? Double, Double.greatestFiniteMagnitude)
             XCTAssertTrue(cleanArray[4] is Double)
@@ -161,7 +161,7 @@ class RudderUtilsTest: XCTestCase {
             "url": URL(string: "https://www.rudderstack.com")!,
             "nestedDict": [
                 "infinity": Double.infinity,
-                "nan": Double.nan,
+                "NaN": Double.nan,
                 "negativeInfinity": -Double.infinity,
                 "max": Double.greatestFiniteMagnitude,
             ],
@@ -183,11 +183,11 @@ class RudderUtilsTest: XCTestCase {
             XCTAssertTrue(cleanDict["nestedDict"] is [String:Any])
             if let nestedDict = cleanDict["nestedDict"] as? [String:Any] {
                 XCTAssertTrue(nestedDict["infinity"] is String)
-                XCTAssertEqual(nestedDict["infinity"] as? String, "inf")
+                XCTAssertEqual(nestedDict["infinity"] as? String, "Infinity")
                 XCTAssertTrue(nestedDict["negativeInfinity"] is String)
-                XCTAssertEqual(nestedDict["negativeInfinity"] as? String, "-inf")
-                XCTAssertTrue(nestedDict["nan"] is String)
-                XCTAssertEqual(nestedDict["nan"] as? String, "nan")
+                XCTAssertEqual(nestedDict["negativeInfinity"] as? String, "-Infinity")
+                XCTAssertTrue(nestedDict["NaN"] is String)
+                XCTAssertEqual(nestedDict["NaN"] as? String, "NaN")
                 XCTAssertTrue(nestedDict["max"] is Double)
                 XCTAssertEqual(nestedDict["max"] as? Double, Double.greatestFiniteMagnitude)
             } else {
@@ -196,9 +196,9 @@ class RudderUtilsTest: XCTestCase {
             XCTAssertTrue(cleanDict["nestedArray"] is [Any])
             if let nestedArray = cleanDict["nestedArray"] as? [Any] {
                 XCTAssertTrue(nestedArray[0] is String)
-                XCTAssertEqual(nestedArray[0] as? String, "inf")
+                XCTAssertEqual(nestedArray[0] as? String, "Infinity")
                 XCTAssertTrue(nestedArray[1] is String)
-                XCTAssertEqual(nestedArray[1] as? String, "nan")
+                XCTAssertEqual(nestedArray[1] as? String, "NaN")
                 XCTAssertTrue(nestedArray[2] is Double)
                 XCTAssertEqual(nestedArray[2] as? Double, Double.greatestFiniteMagnitude)
                 XCTAssertTrue(nestedArray[3] is [String:Any])
@@ -233,7 +233,7 @@ class RudderUtilsTest: XCTestCase {
                 "url": URL(string: "https://www.rudderstack.com")!,
                 "nestedDict": [
                     "infinity": Double.infinity,
-                    "nan": Double.nan,
+                    "NaN": Double.nan,
                     "negativeInfinity": -Double.infinity,
                     "max": Double.greatestFiniteMagnitude,
                 ],
@@ -251,11 +251,11 @@ class RudderUtilsTest: XCTestCase {
         
         if let cleanArray  = RSUtils.sanitizeObject(dirtyArray) as? [Any] {
             XCTAssertTrue(cleanArray[0] is String)
-            XCTAssertEqual(cleanArray[0] as? String, "inf")
+            XCTAssertEqual(cleanArray[0] as? String, "Infinity")
             XCTAssertTrue(cleanArray[1] is String)
-            XCTAssertEqual(cleanArray[1] as? String, "nan")
+            XCTAssertEqual(cleanArray[1] as? String, "NaN")
             XCTAssertTrue(cleanArray[2] is String)
-            XCTAssertEqual(cleanArray[2] as? String, "-inf")
+            XCTAssertEqual(cleanArray[2] as? String, "-Infinity")
             XCTAssertTrue(cleanArray[3] is Double)
             XCTAssertEqual(cleanArray[3] as? Double, Double.greatestFiniteMagnitude)
             XCTAssertTrue(cleanArray[4] is Double)
@@ -279,11 +279,11 @@ class RudderUtilsTest: XCTestCase {
                 XCTAssertTrue(nestedDict["nestedDict"] is [String:Any])
                 if let nestedDict = nestedDict["nestedDict"] as? [String:Any] {
                     XCTAssertTrue(nestedDict["infinity"] is String)
-                    XCTAssertEqual(nestedDict["infinity"] as? String, "inf")
+                    XCTAssertEqual(nestedDict["infinity"] as? String, "Infinity")
                     XCTAssertTrue(nestedDict["negativeInfinity"] is String)
-                    XCTAssertEqual(nestedDict["negativeInfinity"] as? String, "-inf")
-                    XCTAssertTrue(nestedDict["nan"] is String)
-                    XCTAssertEqual(nestedDict["nan"] as? String, "nan")
+                    XCTAssertEqual(nestedDict["negativeInfinity"] as? String, "-Infinity")
+                    XCTAssertTrue(nestedDict["NaN"] is String)
+                    XCTAssertEqual(nestedDict["NaN"] as? String, "NaN")
                     XCTAssertTrue(nestedDict["max"] is Double)
                     XCTAssertEqual(nestedDict["max"] as? Double, Double.greatestFiniteMagnitude)
                 } else {
@@ -292,9 +292,9 @@ class RudderUtilsTest: XCTestCase {
                 XCTAssertTrue(nestedDict["nestedArray"] is [Any])
                 if let nestedArray = nestedDict["nestedArray"] as? [Any] {
                     XCTAssertTrue(nestedArray[0] is String)
-                    XCTAssertEqual(nestedArray[0] as? String, "inf")
+                    XCTAssertEqual(nestedArray[0] as? String, "Infinity")
                     XCTAssertTrue(nestedArray[1] is String)
-                    XCTAssertEqual(nestedArray[1] as? String, "nan")
+                    XCTAssertEqual(nestedArray[1] as? String, "NaN")
                     XCTAssertTrue(nestedArray[2] is Double)
                     XCTAssertEqual(nestedArray[2] as? Double, Double.greatestFiniteMagnitude)
                     XCTAssertTrue(nestedArray[3] is [String:Any])
@@ -315,15 +315,15 @@ class RudderUtilsTest: XCTestCase {
     }
     
     func testIsInvalidNumber() {
-        XCTAssertTrue(RSUtils.isInvalidNumber(Double.infinity as NSNumber))
-        XCTAssertTrue(RSUtils.isInvalidNumber(Double.nan as NSNumber))
-        XCTAssertTrue(RSUtils.isInvalidNumber(-Double.infinity as NSNumber))
-        XCTAssertFalse(RSUtils.isInvalidNumber(Double.greatestFiniteMagnitude as NSNumber))
-        XCTAssertFalse(RSUtils.isInvalidNumber(Double.leastNormalMagnitude as NSNumber))
-        XCTAssertFalse(RSUtils.isInvalidNumber(1.0))
-        XCTAssertFalse(RSUtils.isInvalidNumber(0.0))
-        XCTAssertFalse(RSUtils.isInvalidNumber(-1.0))
-        XCTAssertFalse(RSUtils.isInvalidNumber(35))
+        XCTAssertTrue(RSUtils.isSpecialFloating(Double.infinity as NSNumber))
+        XCTAssertTrue(RSUtils.isSpecialFloating(Double.nan as NSNumber))
+        XCTAssertTrue(RSUtils.isSpecialFloating(-Double.infinity as NSNumber))
+        XCTAssertFalse(RSUtils.isSpecialFloating(Double.greatestFiniteMagnitude as NSNumber))
+        XCTAssertFalse(RSUtils.isSpecialFloating(Double.leastNormalMagnitude as NSNumber))
+        XCTAssertFalse(RSUtils.isSpecialFloating(1.0))
+        XCTAssertFalse(RSUtils.isSpecialFloating(0.0))
+        XCTAssertFalse(RSUtils.isSpecialFloating(-1.0))
+        XCTAssertFalse(RSUtils.isSpecialFloating(35))
     }
 
     func testSerialize() {
@@ -333,15 +333,15 @@ class RudderUtilsTest: XCTestCase {
             "date": Date(),
             "infinity": Double.infinity,
             "url": URL(string: "https://www.rudderstack.com")!,
-            "nan": Double.nan,
+            "NaN": Double.nan,
             "city" : "Hyderabad"]
         let jsonString = RSUtils.serialize(dictObj)
         print(jsonString)
         XCTAssertNotNil(jsonString)
         // ensure that url, nan, date are sanitized in the string
         XCTAssertTrue(jsonString.contains("rudderstack.com"))
-        XCTAssertTrue(jsonString.contains("nan"))
+        XCTAssertTrue(jsonString.contains("NaN"))
         XCTAssertTrue(jsonString.contains("date"))
-        XCTAssertTrue(jsonString.contains("inf"))
+        XCTAssertTrue(jsonString.contains("Infinity"))
     }
 }
