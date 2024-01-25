@@ -141,11 +141,13 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 
 - (void) clearAnonymousIdFromTraits {
     NSString* traitsStr = [self getTraits];
-    NSMutableDictionary* traitsDict = [RSUtils deserialize:traitsStr];
-    if(traitsDict != nil) {
-        [traitsDict removeObjectForKey:@"anonymousId"];
-        NSString* finalTraitsStr = [RSUtils serialize:traitsDict];
-        [self saveTraits:finalTraitsStr];
+    if (traitsStr != nil) {
+        NSMutableDictionary* traitsDict = [RSUtils deserialize:traitsStr];
+        if(traitsDict != nil) {
+            [traitsDict removeObjectForKey:@"anonymousId"];
+            NSString* finalTraitsStr = [RSUtils serialize:traitsDict];
+            [self saveTraits:finalTraitsStr];
+        }
     }
 }
 

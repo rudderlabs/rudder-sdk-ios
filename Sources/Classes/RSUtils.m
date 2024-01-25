@@ -162,10 +162,12 @@
     @try {
         id sanitizedObject = [self sanitizeObject:object];
         NSData *objectData = [NSJSONSerialization dataWithJSONObject:sanitizedObject options:0 error:nil];
-        NSString *objectString = [[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding];
-        return objectString;
+        if (objectData != nil) {
+            NSString *objectString = [[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding];
+            return objectString;
+        }
     } @catch (NSException *exception) {
-        [RSLogger logError:@"RSUtils: serialize: Input dict is not a valid JSON object"];
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: serialize: Failed to serialize the given object due to %@", exception]];
     }
     return nil;
 }
@@ -181,7 +183,7 @@
         }
         return object;
     } @catch (NSException *exception) {
-        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: deserialize: Failed to de-serialize the given string back to an object %@", jsonString]];
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: deserialize: Failed to de-serialize the given string back to an object due to %@", exception]];
     }
     return nil;
 }
@@ -207,7 +209,8 @@
         return [self getDateString:val];
     } else if ([val isKindOfClass:[NSURL class]]) {
         // handle url
-        return [val absoluteString];
+        NSString* urlString = [val absoluteString];
+        return urlString !=nil ? urlString: @"";
     } else if ([val isKindOfClass:[NSArray class]]) {
         // handle array
         return [self sanitizeArray:val];
