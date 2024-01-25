@@ -53,7 +53,20 @@
     return self;
 }
 
-- (NSString *) getDeviceModel {
+- (NSString*) getDeviceModel {
+    NSString* platformString = [self getPlatformString];
+    if(platformString != nil) {
+        return platformString;
+    }
+#if !TARGET_OS_WATCH
+    return [[UIDevice currentDevice] model];
+#else
+    return [[WKInterfaceDevice currentDevice]model];
+#endif
+    
+}
+
+- (NSString *) getPlatformString {
     const char *sysctl_name = "hw.model";
 #if TARGET_OS_IOS
     BOOL isiOSAppOnMac = NO;
