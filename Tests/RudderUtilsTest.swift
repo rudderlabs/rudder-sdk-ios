@@ -336,12 +336,11 @@ class RudderUtilsTest: XCTestCase {
             "NaN": Double.nan,
             "city" : "Hyderabad"]
         let jsonString = RSUtils.serialize(dictObj)
-        print(jsonString)
         XCTAssertNotNil(jsonString)
         // ensure that url, nan, date are sanitized in the string
-        XCTAssertTrue(jsonString.contains("rudderstack.com"))
-        XCTAssertTrue(jsonString.contains("NaN"))
-        XCTAssertTrue(jsonString.contains("date"))
-        XCTAssertTrue(jsonString.contains("Infinity"))
+        XCTAssertTrue(jsonString!.contains("rudderstack.com"))
+        XCTAssertTrue(jsonString!.contains("NaN"))
+        XCTAssertTrue(jsonString!.contains("date"))
+        XCTAssertTrue(jsonString!.contains("Infinity"))
     }
 }
