@@ -158,7 +158,7 @@
     return (value == nil || value.length == 0);
 }
 
-+ (NSString*) serialize:(id) object {
++ (NSString* _Nullable) serialize:(id) object {
     @try {
         id sanitizedObject = [self sanitizeObject:object];
         NSData *objectData = [NSJSONSerialization dataWithJSONObject:sanitizedObject options:0 error:nil];

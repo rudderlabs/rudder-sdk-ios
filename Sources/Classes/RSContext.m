@@ -143,7 +143,11 @@ static dispatch_queue_t queue;
 
 -(void) persistTraits {
     NSString* traitsString = [RSUtils serialize:[self->_traits copy]];
-    [self->preferenceManager saveTraits:traitsString];
+    if (traitsString != nil) {
+        [self->preferenceManager saveTraits:traitsString];
+    } else {
+        [RSLogger logError:@"RSContext: persistTraits: Failed to serialize traits"];
+    }
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
@@ -213,7 +217,11 @@ static dispatch_queue_t queue;
         if (self->_externalIds != nil) {
             // update persistence storage
             NSString *externalIdJson = [RSUtils serialize: [self->_externalIds copy]];
-            [self->preferenceManager saveExternalIds:externalIdJson];
+            if(externalIdJson != nil) {
+                [self->preferenceManager saveExternalIds:externalIdJson];
+            } else {
+                [RSLogger logError:@"RSContext: persistExternalIds: Failed to serialize externalIds"];
+            }
         }
     });
 }

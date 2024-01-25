@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString;
 + (NSString*) getCSVStringFromArray:(NSArray*) inputStrings;
 + (id) sanitizeObject: (id) val;
-+ (NSString*) serialize:(id) object;
++ (NSString* _Nullable) serialize:(id) object;
 + (id _Nullable) deserialize:(NSString*) jsonString;
 + (BOOL) isValidURL:(NSURL*) url;
 + (NSString*) appendSlashToUrl:(NSString*) url;

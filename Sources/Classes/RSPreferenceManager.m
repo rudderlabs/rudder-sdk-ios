@@ -146,7 +146,11 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
         if(traitsDict != nil) {
             [traitsDict removeObjectForKey:@"anonymousId"];
             NSString* finalTraitsStr = [RSUtils serialize:traitsDict];
-            [self saveTraits:finalTraitsStr];
+            if (finalTraitsStr != nil) {
+                [self saveTraits:finalTraitsStr];
+            } else {
+                [RSLogger logError:@"RSPreferenceManager: clearAnonymousIdFromTraits: Failed to serialize traitsDict"];
+            }
         }
     }
 }

@@ -55,6 +55,10 @@ int deviceModeSleepCount = 0;
                 RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:DMT_BATCH_SIZE ForMode:DEVICEMODE];
                 RSTransformationRequest* request = [strongSelf __getDeviceModeTransformationRequest:dbMessage];
                 NSString* payload = [RSUtils serialize:[request toDict]];
+                if(payload == nil) {
+                    [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Payload is nil. Aborting the TransformationProcessor."];
+                    break;
+                }
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Payload: %@", payload]];
                 [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
                 RSNetworkResponse* response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:TRANSFORM_ENDPOINT withRequestMethod:POST];
