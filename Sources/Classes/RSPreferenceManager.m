@@ -11,6 +11,7 @@
 #import "RSUtils.h"
 
 static RSPreferenceManager *instance;
+static NSUserDefaults* userDefaults;
 
 @implementation RSPreferenceManager
 
@@ -31,21 +32,23 @@ NSString *const RSSessionIdKey = @"rl_session_id";
 NSString *const RSLastActiveTimestamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
+NSString *const suiteName = @"rudderstack";
 
 + (instancetype)getInstance {
     if (instance == nil) {
         instance = [[RSPreferenceManager alloc] init];
+        userDefaults = [[NSUserDefaults alloc] initWithSuiteName: suiteName];
     }
     return instance;
 }
 
 - (void)updateLastUpdatedTime:(long)updatedTime {
-    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSServerLastUpdatedKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSServerLastUpdatedKey];
+    [userDefaults synchronize];
 }
 
 - (long)getLastUpdatedTime {
-    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSServerLastUpdatedKey];
+    NSNumber *updatedTime = [userDefaults valueForKey:RSServerLastUpdatedKey];
     if(updatedTime == nil) {
         return -1;
     } else {
@@ -54,89 +57,89 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void)saveConfigJson:(NSString *)configJson {
-    [[NSUserDefaults standardUserDefaults] setValue:configJson forKey:RSServerConfigKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:configJson forKey:RSServerConfigKey];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getConfigJson {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSServerConfigKey];
+    return [userDefaults valueForKey:RSServerConfigKey];
 }
 
 - (void)saveTraits:(NSString *)traits {
-    [[NSUserDefaults standardUserDefaults] setValue:traits forKey:RSTraitsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:traits forKey:RSTraitsKey];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getTraits {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSTraitsKey];
+    return [userDefaults valueForKey:RSTraitsKey];
 }
 
 - (void)clearTraits {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSTraitsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSTraitsKey];
+    [userDefaults synchronize];
 }
 
 - (NSString* __nullable) getBuildNumber {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationBuildKey];
+    return [userDefaults valueForKey:RSApplicationBuildKey];
 }
 
 // saving the version number to the NSUserDefaults
 - (void)saveBuildVersionCode:(NSString *)versionCode {
-    [[NSUserDefaults standardUserDefaults] setValue:versionCode forKey:RSApplicationInfoKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:versionCode forKey:RSApplicationInfoKey];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getBuildVersionCode {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationInfoKey];
+    return [userDefaults valueForKey:RSApplicationInfoKey];
 }
 
 - (void) deleteBuildVersionCode {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:RSApplicationInfoKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults removeObjectForKey:RSApplicationInfoKey];
+    [userDefaults synchronize];
 }
 
 // saving the build number  to the NSUserDefaults
 - (void) saveBuildNumber: (NSString* __nonnull) buildNumber {
-    [[NSUserDefaults standardUserDefaults] setValue:buildNumber forKey:RSApplicationBuildKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:buildNumber forKey:RSApplicationBuildKey];
+    [userDefaults synchronize];
 }
 
 // saving the version number to the NSUserDefaults
 - (NSString* __nullable) getVersionNumber {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSApplicationVersionKey];
+    return [userDefaults valueForKey:RSApplicationVersionKey];
 }
 
 - (void) saveVersionNumber: (NSString* __nonnull) versionNumber {
-    [[NSUserDefaults standardUserDefaults] setValue:versionNumber forKey:RSApplicationVersionKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:versionNumber forKey:RSApplicationVersionKey];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getExternalIds {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSExternalIdKey];
+    return [userDefaults valueForKey:RSExternalIdKey];
 }
 
 - (void)saveExternalIds:(NSString *)externalIdsJson {
-    [[NSUserDefaults standardUserDefaults] setValue:externalIdsJson forKey:RSExternalIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:externalIdsJson forKey:RSExternalIdKey];
+    [userDefaults synchronize];
 }
 
 - (void)clearExternalIds {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSExternalIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSExternalIdKey];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getAnonymousId {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAnonymousIdKey];
+    return [userDefaults valueForKey:RSAnonymousIdKey];
 }
 
 - (void)saveAnonymousId:(NSString *)anonymousId {
-    [[NSUserDefaults standardUserDefaults] setValue:anonymousId forKey:RSAnonymousIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:anonymousId forKey:RSAnonymousIdKey];
+    [userDefaults synchronize];
 }
 
 - (void)clearAnonymousId {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAnonymousIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSAnonymousIdKey];
+    [userDefaults synchronize];
 }
 
 - (void) clearAnonymousIdFromTraits {
@@ -161,35 +164,35 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (NSString* __nullable) getAuthToken {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:RSAuthToken];
+    return [userDefaults valueForKey:RSAuthToken];
 }
 
 - (void) saveAuthToken: (NSString* __nonnull) authToken {
-    [[NSUserDefaults standardUserDefaults] setValue:authToken forKey:RSAuthToken];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:authToken forKey:RSAuthToken];
+    [userDefaults synchronize];
 }
 
 - (void) clearAuthToken {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSAuthToken];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSAuthToken];
+    [userDefaults synchronize];
 }
 
 - (BOOL)getOptStatus {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:RSOptStatus];
+    return [userDefaults boolForKey:RSOptStatus];
 }
 
 - (void)saveOptStatus:(BOOL) optStatus {
-    [[NSUserDefaults standardUserDefaults] setBool:optStatus forKey:RSOptStatus];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setBool:optStatus forKey:RSOptStatus];
+    [userDefaults synchronize];
 }
 
 - (void)updateOptInTime:(long)updatedTime {
-    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptInTimeKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptInTimeKey];
+    [userDefaults synchronize];
 }
 
 - (long)getOptInTime {
-    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSOptInTimeKey];
+    NSNumber *updatedTime = [userDefaults valueForKey:RSOptInTimeKey];
     if(updatedTime == nil) {
         return -1;
     } else {
@@ -198,12 +201,12 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void)updateOptOutTime:(long)updatedTime {
-    [[NSUserDefaults standardUserDefaults] setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptOutTimeKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:[[NSNumber alloc] initWithLong:updatedTime] forKey:RSOptOutTimeKey];
+    [userDefaults synchronize];
 }
 
 - (long)getOptOutTime {
-    NSNumber *updatedTime = [[NSUserDefaults standardUserDefaults] valueForKey:RSOptOutTimeKey];
+    NSNumber *updatedTime = [userDefaults valueForKey:RSOptOutTimeKey];
     if(updatedTime == nil) {
         return -1;
     } else {
@@ -211,22 +214,13 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     }
 }
 
-- (void) performMigration {
-    NSString* versionNumber = [self getBuildVersionCode];
-    if(versionNumber != nil) {
-        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSPreferenceManager: performMigration: buildNumber stored in %@ key, migrating it to %@", RSApplicationInfoKey, RSApplicationBuildKey]];
-        [self deleteBuildVersionCode];
-        [self saveVersionNumber:versionNumber];
-    }
-}
-
 - (void) saveSessionId: (NSNumber *) sessionId {
-    [[NSUserDefaults standardUserDefaults] setValue:sessionId forKey:RSSessionIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:sessionId forKey:RSSessionIdKey];
+    [userDefaults synchronize];
 }
 
 - (NSNumber * __nullable) getSessionId {
-    NSNumber* sessionId =  [[NSUserDefaults standardUserDefaults] valueForKey:RSSessionIdKey];
+    NSNumber* sessionId =  [userDefaults valueForKey:RSSessionIdKey];
     if(sessionId == nil) {
         return nil;
     }
@@ -234,17 +228,17 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void) clearSessionId {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSSessionIdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSSessionIdKey];
+    [userDefaults synchronize];
 }
 
 - (void) saveLastActiveTimestamp:(NSNumber *) lastActiveTimestamp {
-    [[NSUserDefaults standardUserDefaults] setValue:lastActiveTimestamp forKey:RSLastActiveTimestamp];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:lastActiveTimestamp forKey:RSLastActiveTimestamp];
+    [userDefaults synchronize];
 }
 
 - (NSNumber * __nullable) getLastActiveTimestamp {
-    NSNumber *lastActiveTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:RSLastActiveTimestamp];
+    NSNumber *lastActiveTimestamp = [userDefaults valueForKey:RSLastActiveTimestamp];
     if(lastActiveTimestamp == nil) {
         return nil;
     }
@@ -252,17 +246,17 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void) clearLastActiveTimestamp {
-    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:RSLastActiveTimestamp];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setValue:nil forKey:RSLastActiveTimestamp];
+    [userDefaults synchronize];
 }
 
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus {
-    [[NSUserDefaults standardUserDefaults] setBool:autoTrackingStatus forKey:RSSessionAutoTrackStatus];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults setBool:autoTrackingStatus forKey:RSSessionAutoTrackStatus];
+    [userDefaults synchronize];
 }
 
 - (BOOL) getAutoTrackingStatus {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:RSSessionAutoTrackStatus];
+    return [userDefaults boolForKey:RSSessionAutoTrackStatus];
 }
 
 - (BOOL)isErrorsCollectionEnabled {
@@ -293,6 +287,36 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
         return config;
     }
     return nil;
+}
+
+- (void) performMigration {
+    
+    // migration from standard defaults to defaults created with suiteName rudderstack
+    BOOL migrated = [userDefaults boolForKey:@"defaultsMigrated"];
+    // Perform the migration only if it hasn't been done before
+    if (!migrated) {
+        NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+        NSArray *keysToMigrate = @[RSPrefsKey, RSServerConfigKey, RSServerLastUpdatedKey, RSTraitsKey, RSApplicationBuildKey, RSApplicationVersionKey, RSApplicationInfoKey, RSExternalIdKey, RSAnonymousIdKey, RSAuthToken, RSOptStatus, RSOptInTimeKey, RSOptOutTimeKey, RSSessionIdKey, RSLastActiveTimestamp, RSSessionAutoTrackStatus, RSEventDeletionStatus];
+        
+        for (NSString *key in keysToMigrate) {
+            id valueToMigrate = [standardDefaults objectForKey:key];
+            if (valueToMigrate != nil) {
+                [userDefaults setObject:valueToMigrate forKey:key];
+            }
+        }
+        
+        // Set flag to indicate that migration has been completed
+        [userDefaults setBool:YES forKey:@"DefaultsMigrated"];
+        [userDefaults synchronize];
+    }
+    
+    // migration of buildVersionCode to versionNumber
+    NSString* versionNumber = [self getBuildVersionCode];
+    if(versionNumber != nil) {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSPreferenceManager: performMigration: buildNumber stored in %@ key, migrating it to %@", RSApplicationInfoKey, RSApplicationBuildKey]];
+        [self deleteBuildVersionCode];
+        [self saveVersionNumber:versionNumber];
+    }
 }
 
 @end
