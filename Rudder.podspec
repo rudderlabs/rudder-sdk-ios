@@ -14,8 +14,9 @@ Pod::Spec.new do |s|
   s.license          = { :type => "Apache", :file => "LICENSE" }
   s.author           = { "RudderStack" => "sdk@rudderstack.com" }
   s.source           = { :git => "https://github.com/rudderlabs/rudder-sdk-ios.git", :tag => "v#{s.version}" }
-  
-  s.resource_bundles = ["PrivacyInfo.xcprivacy"]
+
+  s.resource_bundles = { s.name => 'PrivacyInfo.xcprivacy' }
+
 
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '11.0'
