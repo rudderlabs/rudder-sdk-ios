@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString*) getTimestamp;
 + (NSString *)getFilePath:(NSString *)fileName;
++ (NSURL *)getFileURL:(NSString *) fileName;
 + (long) getTimeStampLong;
 + (NSString*) getUniqueId;
 + (NSString*) getLocale;
@@ -43,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL) isApplicationUpdated;
 + (NSString* _Nullable) getDeviceId;
 + (BOOL)isFileExists:(NSString *)fileName;
++ (BOOL)doesFileExistsAtURL:(NSURL *)fileURL;
 + (BOOL)removeFile:(NSString *)fileName;
 + (BOOL) isDBMessageEmpty:(RSDBMessage*)dbMessage;
 + (BOOL) isEmptyString:(NSString *)value;
