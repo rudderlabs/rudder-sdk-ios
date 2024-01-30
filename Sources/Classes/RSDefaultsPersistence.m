@@ -41,7 +41,7 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
     if ([RSUtils doesFileExistsAtURL:fileURL]) {
         NSError *error = nil;
         NSDictionary* dictFromFile = [NSMutableDictionary dictionaryWithContentsOfURL:fileURL error:&error];
-        if (error != nil && dictFromFile != nil) {
+        if (error == nil && dictFromFile != nil) {
             [data addEntriesFromDictionary:dictFromFile];
         }
     }
@@ -52,6 +52,7 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
 - (void) copyUserDefaultsToPersistenceIfNeeded {
     BOOL userDefaultsCopiedAlready = [self readObjectForKey:userDefaultsCopied];
     if(!userDefaultsCopiedAlready) {
+        [RSLogger logDebug:@"RSDefaultsPersistence: copyUserDefaultsToPersistenceIfNeeded: Copying user defaults to persistence layer"];
         NSArray* preferenceKeys = [RSPreferenceManager getPreferenceKeys];
         for(NSString* key in preferenceKeys) {
             id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
