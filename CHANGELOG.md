@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.2...v1.25.0) (2024-01-31)
+
+
+### Features
+
+* add privacy manifest file to ios sdk ([#453](https://github.com/rudderlabs/rudder-sdk-ios/issues/453)) ([0b1b207](https://github.com/rudderlabs/rudder-sdk-ios/commit/0b1b2077ffc00bdfa34082e1d4b5ac1b48569b15))
+
 ### [1.24.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.1...v1.24.2) (2024-01-03)
 
 
