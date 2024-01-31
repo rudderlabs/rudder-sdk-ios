@@ -11,7 +11,10 @@
     dispatch_queue_t dataAccessQueue;
 }
 
+- (instancetype)init NS_UNAVAILABLE NS_SWIFT_UNAVAILABLE("Use `RSDefaultsPersistence.sharedInstance()` instead.");
 + (instancetype)sharedInstance;
+- (void) copyStandardDefaultsToPersistenceIfNeeded;
+- (void) clearState;
 - (void)writeObject:(id)object forKey:(NSString *)key;
 - (id)readObjectForKey:(NSString *)key;
 - (void)removeObjectForKey:(NSString *)key;

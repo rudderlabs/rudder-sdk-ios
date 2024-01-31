@@ -52,6 +52,11 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     [[RSDefaultsPersistence sharedInstance] writeObject:object forKey:key];
 }
 
+- (void)writeBool:(BOOL)flag forKey:(NSString *) key {
+    NSNumber* flagAsNum = [[NSNumber alloc] initWithBool:flag];
+    [self writeObject:flagAsNum forKey:key];
+}
+
 - (id)readObjectForKey:(NSString *) key {
     // try reading from standard defaults, if it is a miss then read from persistence layer
     id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
@@ -59,6 +64,15 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
         return value;
     }
     return [[RSDefaultsPersistence sharedInstance] readObjectForKey:key];
+}
+
+- (BOOL)readBoolForKey:(NSString *) key {
+    id value = [self readObjectForKey:key];
+    if(value == nil) {
+        value = [[RSDefaultsPersistence sharedInstance] readObjectForKey:key];
+    }
+    NSNumber* valueAsNum = (NSNumber *) value;
+    return [valueAsNum boolValue];
 }
 
 - (void)removeObjectForKey:(NSString *)key {
@@ -191,11 +205,11 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (BOOL)getOptStatus {
-    return [self readObjectForKey:RSOptStatus];
+    return [self readBoolForKey:RSOptStatus];
 }
 
 - (void)saveOptStatus:(BOOL) optStatus {
-    [self writeObject:[[NSNumber alloc] initWithBool: optStatus] forKey:RSOptStatus];
+    [self writeBool:optStatus forKey:RSOptStatus];
 }
 
 - (void)updateOptInTime:(long)updatedTime {
@@ -249,11 +263,11 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus {
-    [self writeObject:[[NSNumber alloc] initWithBool:autoTrackingStatus] forKey:RSSessionAutoTrackStatus];
+    [self writeBool:autoTrackingStatus forKey:RSSessionAutoTrackStatus];
 }
 
 - (BOOL) getAutoTrackingStatus {
-    return [self readObjectForKey:RSSessionAutoTrackStatus];
+    return [self readBoolForKey:RSSessionAutoTrackStatus];
 }
 
 - (BOOL)isErrorsCollectionEnabled {

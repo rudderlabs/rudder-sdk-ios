@@ -58,7 +58,8 @@ static RSEventRepository* _instance;
         self->authToken = [RSUtils getBase64EncodedString: [[NSString alloc] initWithFormat:@"%@:", self->writeKey]];
         
         [RSLogger logDebug:@"EventRepository: Initiating DefaultsPersistence"];
-        self-> defaultsPersistence = [RSDefaultsPersistence sharedInstance];
+        self->defaultsPersistence = [RSDefaultsPersistence sharedInstance];
+        [self->defaultsPersistence copyStandardDefaultsToPersistenceIfNeeded];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];

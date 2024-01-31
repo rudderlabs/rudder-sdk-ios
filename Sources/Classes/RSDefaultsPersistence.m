@@ -11,7 +11,7 @@
 #import "RSDefaultsPersistence.h"
 
 static RSDefaultsPersistence *instance;
-static NSString * const userDefaultsCopied = @"userDefaultsCopied";
+static NSString * const standardDefaultsCopied = @"standardDefaultsCopied";
 
 @implementation RSDefaultsPersistence
 
@@ -19,9 +19,7 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
     if(instance == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            instance = [[RSDefaultsPersistence alloc] init];
-            [instance loadFromFile];
-            [instance copyUserDefaultsToPersistenceIfNeeded];
+            instance = [[self alloc] init];
         });
     }
     return instance;
@@ -33,6 +31,7 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
         data = [NSMutableDictionary dictionary];
         fileURL = [RSUtils getFileURL:@"rsDefaultsPersistence.plist"];
         dataAccessQueue = dispatch_queue_create("com.rudderstack.defaultspersistence", DISPATCH_QUEUE_SERIAL);
+        [self loadFromFile];
     }
     return self;
 }
@@ -47,12 +46,12 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
     }
 }
 
-// this should be invoked only once after the SDK has been updated from a version without DefaultsPersistence
-// to a version with DefaultsPersistence to ensure that the persistence layer and user defaults are in same state.
-- (void) copyUserDefaultsToPersistenceIfNeeded {
-    BOOL userDefaultsCopiedAlready = [self readObjectForKey:userDefaultsCopied];
+// this would be executed only once after the SDK has been updated from a version without DefaultsPersistence
+// to a version with DefaultsPersistence to ensure that the persistence layer and standard defaults are in same state.
+- (void)copyStandardDefaultsToPersistenceIfNeeded {
+    BOOL userDefaultsCopiedAlready = [self readObjectForKey:standardDefaultsCopied];
     if(!userDefaultsCopiedAlready) {
-        [RSLogger logDebug:@"RSDefaultsPersistence: copyUserDefaultsToPersistenceIfNeeded: Copying user defaults to persistence layer"];
+        [RSLogger logDebug:@"RSDefaultsPersistence: copyStandardDefaultsToPersistenceIfNeeded: Copying Standard Defaults to Persistence layer"];
         NSArray* preferenceKeys = [RSPreferenceManager getPreferenceKeys];
         for(NSString* key in preferenceKeys) {
             id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
@@ -60,8 +59,8 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
                 [self writeObject:value forKey:key];
             }
         }
-        // Set the flag to indicate that user defaults have been copied to the persistence layer
-        [self writeObject:@YES forKey:userDefaultsCopied];
+        // Set the flag to indicate that standard defaults have been copied to the persistence layer
+        [self writeObject:@YES forKey:standardDefaultsCopied];
     }
 }
 
@@ -70,7 +69,7 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
     NSError* error = nil;
     [data writeToURL:fileURL error:&error];
     if (error != nil) {
-        [RSLogger logError: [NSString stringWithFormat:@"Error writing to file: %@", error]];
+        [RSLogger logError: [NSString stringWithFormat:@"RSDefaultsPersistence: writeToFile: Error writing to file: %@", error]];
     }
 }
 
@@ -101,6 +100,14 @@ static NSString * const userDefaultsCopied = @"userDefaultsCopied";
 - (void)removeObjectForKey:(NSString *)key {
     dispatch_sync(dataAccessQueue, ^{
         [data removeObjectForKey:key];
+        [self writeToFile];
+    });
+}
+
+// for testing purpose only
+- (void) clearState {
+    dispatch_sync(dataAccessQueue, ^{
+        [data removeAllObjects];
         [self writeToFile];
     });
 }
