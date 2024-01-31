@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/rudderlabs/crash-reporter-ios",
         "state": {
           "branch": null,
-          "revision": "5b7cf9025d126c4a0b363a8ba6eb1aebd11137ec",
-          "version": "1.0.0"
+          "revision": "ee563535b64d9d5feacd0fa243663b2658033a19",
+          "version": "1.0.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/rudderlabs/metrics-reporter-ios",
         "state": {
           "branch": null,
-          "revision": "c0cf7734cf7befcab0cf8a9f5569ec6da1c4c35c",
-          "version": "1.1.0"
+          "revision": "c5fe7cc861a83ec75978a516c02398c2a2cb1f20",
+          "version": "1.2.1"
         }
       },
       {
