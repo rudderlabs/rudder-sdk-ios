@@ -58,7 +58,11 @@
 }
 
 + (BOOL)doesFileExistsAtURL:(NSURL *)fileURL {
-    return [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]];
+    NSString* filePath = [fileURL path];
+    if(filePath != nil) {
+        return [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    }
+    return NO;
 }
 
 + (BOOL)removeFile:(NSString *)fileName {

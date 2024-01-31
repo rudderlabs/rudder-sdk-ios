@@ -10,10 +10,10 @@
 #import "RSLogger.h"
 #import "RSDefaultsPersistence.h"
 
-@implementation RSDefaultsPersistence
-
 static RSDefaultsPersistence *instance;
 static NSString * const userDefaultsCopied = @"userDefaultsCopied";
+
+@implementation RSDefaultsPersistence
 
 + (instancetype)sharedInstance {
     if(instance == nil) {
