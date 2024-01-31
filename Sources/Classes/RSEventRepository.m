@@ -63,6 +63,7 @@ static RSEventRepository* _instance;
         [RSLogger logDebug:@"EventRepository: Initiating RSPreferenceManager"];
         self->preferenceManager = [RSPreferenceManager getInstance];
         [self->preferenceManager performMigration];
+        [self->preferenceManager restoreMissingKeysFromPersistence];
         
         [self clearAnonymousIdIfRequired];
         

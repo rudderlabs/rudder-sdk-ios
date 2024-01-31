@@ -43,6 +43,7 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) deleteBuildVersionCode;
 
 - (void) performMigration;
+- (void) restoreMissingKeysFromPersistence;
 
 - (NSString* __nullable) getBuildNumber;
 - (void) saveBuildNumber: (NSString* __nonnull) buildNumber;
