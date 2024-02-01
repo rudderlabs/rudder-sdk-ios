@@ -10,6 +10,7 @@
 #import "RSContext.h"
 #import <UIKit/UIKit.h>
 #import "RSConstants.h"
+#import <sys/sysctl.h>
 #if TARGET_OS_WATCH
 #import <WatchKit/WKInterfaceDevice.h>
 #endif
@@ -22,15 +23,14 @@
     if (self) {
 #if !TARGET_OS_WATCH
         _identifier = config.collectDeviceId ? [[[[UIDevice currentDevice] identifierForVendor] UUIDString]lowercaseString] : nil;
-        _model = [[UIDevice currentDevice] model];
         _name = [[UIDevice currentDevice] name];
         _type = [[UIDevice currentDevice] systemName];
 #else
         _identifier = config.collectDeviceId ? [[[[WKInterfaceDevice currentDevice] identifierForVendor]UUIDString] lowercaseString] : nil;
-        _model = [[WKInterfaceDevice currentDevice]model];
         _name = [[WKInterfaceDevice currentDevice]name];
         _type = [[WKInterfaceDevice currentDevice]systemName];
 #endif
+        _model = [self getDeviceModel];
         _manufacturer = @"Apple";
         _attTrackingStatus = RSATTNotDetermined;
     }
@@ -51,6 +51,41 @@
         _attTrackingStatus = [dict[@"attTrackingStatus"] intValue];
     }
     return self;
+}
+
+- (NSString*) getDeviceModel {
+    NSString* platformString = [self getPlatformString];
+    if(platformString != nil) {
+        return platformString;
+    }
+#if !TARGET_OS_WATCH
+    return [[UIDevice currentDevice] model];
+#else
+    return [[WKInterfaceDevice currentDevice]model];
+#endif
+    
+}
+
+- (NSString *) getPlatformString {
+    const char *sysctl_name = "hw.model";
+#if TARGET_OS_IOS
+    BOOL isiOSAppOnMac = NO;
+    if (@available(iOS 14.0, *)) {
+        isiOSAppOnMac = [NSProcessInfo processInfo].isiOSAppOnMac;
+    }
+    if (!isiOSAppOnMac){
+        sysctl_name = "hw.machine";
+    }
+#elif TARGET_OS_TV || TARGET_OS_WATCH
+    sysctl_name = "hw.machine";
+#endif
+    size_t size;
+    sysctlbyname(sysctl_name, NULL, &size, NULL, 0);
+    char *machine = calloc(1, size);
+    sysctlbyname(sysctl_name, machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    return platform;
 }
 
 - (NSDictionary<NSString *,NSObject *> *)dict {
