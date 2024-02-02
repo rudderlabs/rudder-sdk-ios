@@ -10,8 +10,8 @@ on:
 jobs:
   draft-new-beta-release:
     name: Draft a new Beta release
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/fix/') || startsWith(github.ref, 'refs/heads/feat/')
+    runs-on: macOS-latest
+    if: startsWith(github.ref, 'refs/heads/fix/') || startsWith(github.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feature/')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v4
