@@ -63,7 +63,11 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     if(value != nil) {
         return value;
     }
-    return [[RSDefaultsPersistence sharedInstance] readObjectForKey:key];
+    value = [[RSDefaultsPersistence sharedInstance] readObjectForKey:key];
+    if(value != nil) {
+        [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
+    }
+    return value;
 }
 
 - (BOOL)readBoolForKey:(NSString *) key {
@@ -310,8 +314,9 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
     }
 }
 
-- (void) restoreMissingKeysFromPersistence {
+- (void) restoreMissingDefaultsFromPersistence {
     // Check for missing keys and restore them from the persistent layer
+    [RSLogger logDebug:@"RSPreferenceManager: restoreMissingDefaultsFromPersistence: Restoring missing defaults from persistence layer"];
     NSArray* preferenceKeys = [RSPreferenceManager getPreferenceKeys];
     for (NSString *key in preferenceKeys) {
         if ([[NSUserDefaults standardUserDefaults] objectForKey:key] == nil) {

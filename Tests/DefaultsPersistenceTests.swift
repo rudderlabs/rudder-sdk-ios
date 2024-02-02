@@ -71,18 +71,20 @@ class DefaultsPersistenceTests: XCTestCase {
         
         clearDefaults()
         
-        // preference manager would return back the values from persistence layer but the value in user defaults should be nil now
+        // preference manager would return back the values from persistence layer and will also set the value in user defaults
         XCTAssertEqual(preferenceManager.getTraits() as String, "{\"name\": \"David\"}")
-        XCTAssertNil(UserDefaults.standard.value(forKey: RSTraitsKey))
+        XCTAssertEqual(UserDefaults.standard.value(forKey: RSTraitsKey) as? String, "{\"name\": \"David\"}")
         XCTAssertEqual(preferenceManager.getOptStatus(), true)
-        XCTAssertNil(UserDefaults.standard.value(forKey: RSOptStatus))
+        XCTAssertEqual(UserDefaults.standard.value(forKey: RSOptStatus) as? Bool, true)
         XCTAssertEqual(preferenceManager.getBuildVersionCode(), "1.4.6")
-        XCTAssertNil(UserDefaults.standard.value(forKey: RSApplicationInfoKey))
+        XCTAssertEqual(UserDefaults.standard.value(forKey: RSApplicationInfoKey) as? String, "1.4.6")
         XCTAssertEqual(preferenceManager.getLastActiveTimestamp(), 1706686543)
-        XCTAssertNil(UserDefaults.standard.value(forKey: RSLastActiveTimestamp))
+        XCTAssertEqual(UserDefaults.standard.value(forKey: RSLastActiveTimestamp) as? Int, 1706686543)
+        
+        clearDefaults()
         
         // now we are restoring the missing keys to defaults from persistence, post which defaults should contain the values
-        preferenceManager.restoreMissingKeysFromPersistence()
+        preferenceManager.restoreMissingDefaultsFromPersistence()
         
         XCTAssertEqual(UserDefaults.standard.value(forKey: RSTraitsKey) as? String, "{\"name\": \"David\"}")
         XCTAssertEqual(UserDefaults.standard.value(forKey: RSOptStatus) as? Bool, true)
