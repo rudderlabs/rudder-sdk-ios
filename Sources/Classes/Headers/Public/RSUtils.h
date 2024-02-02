@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "RSMessage.h"
 #import "RSDBMessage.h"
 #import "RSServerConfigSource.h"
 
@@ -26,17 +27,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) getLocale;
 + (NSString*) getDateString: (NSDate*) date;
 + (NSMutableArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) mutableArrayOfNumbers inOrder:(ORDER) order;
-+ (NSString*) getStringFromDict:(NSDictionary *) dict;
 + (unsigned int) getUTF8LengthForDict:(NSDictionary *)message;
 + (unsigned int) getUTF8Length: (NSString*) message;
-+ (NSDictionary<NSString*, id>*) serializeDict: (NSDictionary<NSString*, id>* _Nullable) dict;
-+ (NSArray*) serializeArray: (NSArray*) array;
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize;
 + (NSMutableArray<NSString *>*) getBatch:(NSMutableArray<NSString *>*) messageDetails withQueueSize: (int) queueSize;
 +(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString;
-+ (NSString*) getCSVString:(NSArray*) inputStrings;
-+ (NSString*) getJSONCSVString:(NSArray*) inputStrings;
-+ (id _Nullable) deSerializeJSONString:(NSString*) jsonString;
++ (NSString*) getCSVStringFromArray:(NSArray*) inputStrings;
++ (id) sanitizeObject: (id) val;
++ (NSString* _Nullable) serialize:(id) object;
++ (id _Nullable) deserialize:(NSString*) jsonString;
 + (BOOL) isValidURL:(NSURL*) url;
 + (NSString*) appendSlashToUrl:(NSString*) url;
 + (NSString* _Nullable) getBase64EncodedString:(NSString* __nonnull) inputString;
@@ -46,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)removeFile:(NSString *)fileName;
 + (BOOL) isDBMessageEmpty:(RSDBMessage*)dbMessage;
 + (BOOL) isEmptyString:(NSString *)value;
++ (BOOL) isSpecialFloatingNumber:(NSNumber *)number;
 
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;

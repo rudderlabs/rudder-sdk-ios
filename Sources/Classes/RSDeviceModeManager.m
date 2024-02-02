@@ -176,7 +176,7 @@
         NSArray *messageIds = dbMessage.messageIds;
         NSArray *messages = dbMessage.messages;
         for (int i=0; i<messageIds.count; i++) {
-            id object = [RSUtils deSerializeJSONString:messages[i]];
+            id object = [RSUtils deserialize:messages[i]];
             NSNumber *rowId = [NSNumber numberWithInt:[messageIds[i] intValue]];
             if (object && rowId) {
                 RSMessage* originalMessage = [[RSMessage alloc] initWithDict:object];

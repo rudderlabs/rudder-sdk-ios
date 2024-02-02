@@ -49,9 +49,8 @@ static dispatch_queue_t queue;
             // no persisted traits, create new and persist
             [self createAndPersistTraits];
         } else {
-            NSError *error;
-            NSDictionary *traitsDict = [NSJSONSerialization JSONObjectWithData:[traitsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
+            NSDictionary *traitsDict = [RSUtils deserialize:traitsJson];
+            if (traitsDict == nil) {
                 _traits = [traitsDict mutableCopy];
                 _traits[@"anonymousId"] = _anonymousId;
                 [self persistTraits];
@@ -64,9 +63,8 @@ static dispatch_queue_t queue;
         // get saved external Ids from prefs
         NSString *externalIdJson = [preferenceManager getExternalIds];
         if (externalIdJson != nil) {
-            NSError *error;
-            NSDictionary *externalIdDict = [NSJSONSerialization JSONObjectWithData:[externalIdJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-            if (error == nil) {
+            NSDictionary *externalIdDict = [RSUtils deserialize:externalIdJson];
+            if (externalIdDict == nil) {
                 _externalIds = [externalIdDict mutableCopy];
             }
         }
@@ -82,11 +80,11 @@ static dispatch_queue_t queue;
         _traits = dict[@"traits"];
         _library = [[RSLibraryInfo alloc] initWithDict:dict[@"library"]];
         _os = [[RSOSInfo alloc] initWithDict:dict[@"os"]];
-        _screen = [[RSScreenInfo alloc] initWithDict:dict[@"screen"]]; 
+        _screen = [[RSScreenInfo alloc] initWithDict:dict[@"screen"]];
         _userAgent = dict[@"userAgent"];
         _locale = dict[@"locale"];
         _device = [[RSDeviceInfo alloc] initWithDict:dict[@"device"]];
-        _network = [[RSNetwork alloc] initWithDict:dict[@"network"]]; 
+        _network = [[RSNetwork alloc] initWithDict:dict[@"network"]];
         _timezone = dict[@"timezone"];
         _sessionId = dict[@"sessionId"];
         if(dict[@"sessionStart"]) {
@@ -144,9 +142,12 @@ static dispatch_queue_t queue;
 }
 
 -(void) persistTraits {
-    NSData *traitsJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeDict:self->_traits] options:0 error:nil];
-    NSString *traitsString = [[NSString alloc] initWithData:traitsJsonData encoding:NSUTF8StringEncoding];
-    [self->preferenceManager saveTraits:traitsString];
+    NSString* traitsString = [RSUtils serialize:[self->_traits copy]];
+    if (traitsString != nil) {
+        [self->preferenceManager saveTraits:traitsString];
+    } else {
+        [RSLogger logError:@"RSContext: persistTraits: Failed to serialize traits"];
+    }
 }
 
 - (void)updateTraitsDict:(NSMutableDictionary<NSString *, NSObject *> *)traitsDict {
@@ -215,9 +216,12 @@ static dispatch_queue_t queue;
     dispatch_sync(queue, ^{
         if (self->_externalIds != nil) {
             // update persistence storage
-            NSData *externalIdJsonData = [NSJSONSerialization dataWithJSONObject:[RSUtils serializeArray:[self->_externalIds copy]] options:0 error:nil];
-            NSString *externalIdJson = [[NSString alloc] initWithData:externalIdJsonData encoding:NSUTF8StringEncoding];
-            [self->preferenceManager saveExternalIds:externalIdJson];
+            NSString *externalIdJson = [RSUtils serialize: [self->_externalIds copy]];
+            if(externalIdJson != nil) {
+                [self->preferenceManager saveExternalIds:externalIdJson];
+            } else {
+                [RSLogger logError:@"RSContext: persistExternalIds: Failed to serialize externalIds"];
+            }
         }
     });
 }
@@ -275,7 +279,7 @@ static dispatch_queue_t queue;
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     dispatch_sync(queue, ^{
         [tempDict setObject:[_app dict] forKey:@"app"];
-        [tempDict setObject:[RSUtils serializeDict:_traits] forKey:@"traits"];
+        [tempDict setObject:_traits forKey:@"traits"];
         [tempDict setObject:[_library dict] forKey:@"library"];
         [tempDict setObject:[_os dict] forKey:@"os"];
         [tempDict setObject:[_screen dict] forKey:@"screen"];
