@@ -1,6 +1,6 @@
 //
 //  CoreMocks.swift
-//  Rudder
+//  RudderStackTests
 //
 //  Created by Pallab Maiti on 24/01/24.
 //  Copyright © 2024 Rudder Labs India Pvt Ltd. All rights reserved.
@@ -9,8 +9,8 @@
 import Foundation
 @testable import Rudder
 
-extension Config {
-    static func mockAny() -> Config {
+extension Configuration {
+    static func mockAny() -> Configuration {
         .mockWith()
     }
     
@@ -25,13 +25,14 @@ extension Config {
         recordScreenViews: Bool = .random(),
         controlPlaneURL: String = .mockAnyURL(),
         autoSessionTracking: Bool = .random(),
-        sessionTimeout: Int = .mockRandom(),
+        sessionTimeOut: Int = .mockRandom(),
         gzipEnabled: Bool = .random(),
         dataResidencyServer: DataResidencyServer = .US,
         flushPolicies: [FlushPolicy] = [FlushPolicy](),
         dataUploadRetryPolicy: RetryPolicy? = nil,
-        sourceConfigDownloadRetryPolicy: RetryPolicy? = nil
-    ) -> Config {
+        sourceConfigDownloadRetryPolicy: RetryPolicy? = nil,
+        logger: LoggerProtocol? = NOLogger()
+    ) -> Configuration {
         .init(writeKey: writeKey, dataPlaneURL: dataPlaneURL)!
         .flushQueueSize(flushQueueSize)
         .dbCountThreshold(dbCountThreshold)
@@ -41,12 +42,13 @@ extension Config {
         .recordScreenViews(recordScreenViews)
         .controlPlaneURL(controlPlaneURL)
         .autoSessionTracking(autoSessionTracking)
-        .sessionTimeout(sessionTimeout)
+        .sessionTimeOut(sessionTimeOut)
         .gzipEnabled(gzipEnabled)
         .dataResidencyServer(dataResidencyServer)
         .flushPolicies(flushPolicies)
         .dataUploadRetryPolicy(dataUploadRetryPolicy)
         .sourceConfigDownloadRetryPolicy(sourceConfigDownloadRetryPolicy)
+        .logger(logger)
     }
 }
 
@@ -199,13 +201,14 @@ extension StorageMessage {
     
     static func mockWith(
         id: String = .mockRandom(among: .alphanumerics, length: 32),
-        message: String = .mockRandom(length: 20)
+        message: String = .mockRandom(length: 20),
+        updated: Int = .mockRandom(max: 10)
     ) -> Self {
-        .init(id: id, message: message)
+        .init(id: id, message: message, updated: updated)
     }
 }
 
-class UserDefaultsWorkerMock: UserDefaultsWorkerType {
+class UserDefaultsWorkerMock: UserDefaultsWorkerProtocol {
     var value: Codable?
     let queue: DispatchQueue
     
@@ -299,5 +302,57 @@ class ServerMock {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [URLProtocolMock.self]
         return URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
+    }
+}
+
+extension SQLiteStorage {
+    static func mockAny() -> Self {
+        .mockWith()
+    }
+    
+    static func mockWith(
+        path: URL = FileManager.default.urls(for: .cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0],
+        name: String = .mockRandom(),
+        logger: LoggerProtocol = NOLogger()
+    ) -> Self {
+        let path = path
+        let database = SQLiteDatabase(path: path, name: "\(name).sqlite")
+        return self.init(database: database, logger: Logger(logger: logger))
+    }
+}
+
+extension RSClient {
+    static func mockAny() -> RSClient {
+        .mockWith()
+    }
+    
+    static func mockWith(
+        configuration: Configuration = .mockAny(),
+        instanceName: String = ClientRegistry.defaultInstanceName,
+        database: Database? = SQLiteDatabaseMock(),
+        storage: Storage? = StorageMock(),
+        userDefaults: UserDefaults? = UserDefaults(suiteName: #file),
+        apiClient: APIClient? = URLSessionClient(session: .shared),
+        sourceConfigDownloader: SourceConfigDownloaderType? = SourceConfigDownloaderMock(downloadStatus: .mockWith(responseCode: 200)),
+        dataUploader: DataUploaderType? = DataUploaderMock(uploadStatus: .mockWith(responseCode: 200))
+    ) -> RSClient {
+        return initialize(
+            with: configuration,
+            instanceName: instanceName,
+            database: database,
+            storage: storage,
+            userDefaults: userDefaults,
+            apiClient: apiClient,
+            sourceConfigDownloader: sourceConfigDownloader,
+            dataUploader: dataUploader
+        )
+    }
+}
+
+class StorageMigratorMock: StorageMigrator {
+    var currentStorage: Storage = StorageMock()
+    
+    func migrate() throws {
+        
     }
 }

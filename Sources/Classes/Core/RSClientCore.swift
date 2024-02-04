@@ -8,132 +8,155 @@
 
 import Foundation
 
-class Controller {
-    let config: Config
-    let database: Database
+class RSClientCore {
+    let configuration: Configuration
     let storage: Storage
-    let storageWorker: StorageWorker
-    let userDefaults: UserDefaultsWorkerType
+    let storageWorker: StorageWorkerProtocol
+    let userDefaultsWorker: UserDefaultsWorkerProtocol
     let serviceManager: ServiceType
     let sourceConfigDownloader: SourceConfigDownloaderType
     let logger: Logger
+    let instanceName: String
     let downloadUploadBlockers: DownloadUploadBlockers = DownloadUploadBlockers()
-    let sessionStorage: SessionStorage = SessionStorage()
+    let sessionStorage: SessionStorageProtocol = SessionStorage()
+    var database: Database?
     var applicationSate: ApplicationState?
     var screenRecording: ScreenRecording?
     var dataUpload: DataUpload?
     var dataUploader: DataUploaderType?
     var sourceConfigDownload: SourceConfigDownload?
+    var storageMigration: StorageMigration?
+    var storageMigrator: StorageMigrator?
     var flushPolicies: [FlushPolicy]
-    var pluginList: [PluginType: [Plugin]] = [
+    @ReadWriteLock var pluginList: [PluginType: [Plugin]] = [
         .default: [Plugin](),
         .destination: [Plugin]()
     ]
     var userInfo: UserInfo {
-        let userId: String? = userDefaults.read(.userId)
-        let traits: JSON? = userDefaults.read(.traits)
-        var anonymousId: String? = userDefaults.read(.anonymousId)
+        let userId: String? = userDefaultsWorker.read(.userId)
+        let traits: JSON? = userDefaultsWorker.read(.traits)
+        var anonymousId: String? = userDefaultsWorker.read(.anonymousId)
         if anonymousId == nil {
             anonymousId = Utility.getUniqueId()
-            userDefaults.write(.anonymousId, value: anonymousId)
+            userDefaultsWorker.write(.anonymousId, value: anonymousId)
         }
         return UserInfo(anonymousId: anonymousId, userId: userId, traits: traits)
     }
     @ReadWriteLock var isEnable: Bool = true
     
     init(
-        config: Config,
-        database: Database? = nil, 
+        configuration: Configuration,
+        instanceName: String,
+        database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
         dataUploader: DataUploaderType? = nil,
         apiClient: APIClient? = nil,
-        logger: LoggerProtocol? = nil,
-        applicationState: ApplicationState? = nil
+        applicationState: ApplicationState? = nil,
+        storageMigrator: StorageMigrator? = nil
     ) {
-        self.config = config
-        self.logger = Logger(logger: logger ?? ConsoleLogger(logLevel: config.logLevel))
-        self.database = database ?? DefaultDatabase(path: Device.current.directoryPath, name: "rl_persistence.sqlite")
-        self.storage = storage ?? DefaultStorage(
-            database: self.database,
-            logger: self.logger
+        self.configuration = configuration
+        self.instanceName = instanceName
+        self.logger = Logger(
+            logger: configuration.logger ?? ConsoleLogger(
+                logLevel: configuration.logLevel,
+                instanceName: instanceName
+            )
         )
-        self.storageWorker = DefaultStorageWorker(
+        if let storage = storage {
+            self.storage = storage
+        } else {
+            let defaultDatabase = SQLiteDatabase(
+                path: Device.current.directoryPath,
+                name: "rl_persistence_\(instanceName).sqlite"
+            )
+            self.database = defaultDatabase
+            let defaultStorage = SQLiteStorage(
+                database: defaultDatabase,
+                logger: self.logger
+            )
+            self.storage = defaultStorage
+        }
+        
+        self.storageWorker = StorageWorker(
             storage: self.storage,
-            queue: DispatchQueue(label: "defaultStorageWorker".queueLabel())
+            queue: DispatchQueue(label: "defaultStorageWorker".queueLabel(instanceName))
         )
         self.storageWorker.open()
-        let userDefaultsQueue = DispatchQueue(label: "defaultUserDefaults".queueLabel())
+        let userDefaultsQueue = DispatchQueue(label: "defaultUserDefaults".queueLabel(instanceName))
         if let userDefaults = userDefaults {
-            self.userDefaults = UserDefaultsWorker(userDefaults: userDefaults, queue: userDefaultsQueue)
+            self.userDefaultsWorker = UserDefaultsWorker(userDefaults: userDefaults, queue: userDefaultsQueue)
         } else {
-            self.userDefaults = UserDefaultsWorker(suiteName: "defaultUserDefaults".userDefaultsSuitName(), queue: userDefaultsQueue)
+            self.userDefaultsWorker = UserDefaultsWorker(suiteName: "defaultUserDefaults".userDefaultsSuitName(instanceName), queue: userDefaultsQueue)
         }
         self.serviceManager = ServiceManager(
             apiClient: apiClient ?? URLSessionClient(
                 session: URLSession.defaultSession()
             ),
-            writeKey: config.writeKey
+            writeKey: configuration.writeKey
         )
         self.sourceConfigDownloader = sourceConfigDownloader ?? SourceConfigDownloader(
             serviceManager: self.serviceManager,
-            controlPlaneUrl: config.controlPlaneURL
+            controlPlaneUrl: configuration.controlPlaneURL
         )
         self.dataUploader = dataUploader
         self.flushPolicies = [
-            CountBasedFlushPolicy(config: config)
+            CountBasedFlushPolicy(config: configuration)
         ]
-        if !config.flushPolicies.isEmpty {
-            self.flushPolicies.append(contentsOf: config.flushPolicies)
+        if !configuration.flushPolicies.isEmpty {
+            self.flushPolicies.append(contentsOf: configuration.flushPolicies)
         }
+        self.storageMigrator = storageMigrator
         trackApplicationState()
         recordScreenViews()
         fetchSourceConfig()
+        logConfigValidationErrors()
     }
+    
 }
 
-extension Controller {
-    func trackApplicationState() {
+extension RSClientCore {
+    private func trackApplicationState() {
         applicationSate = ApplicationState.current(
             notificationCenter: NotificationCenter.default,
-            userDefaults: self.userDefaults
+            userDefaults: self.userDefaultsWorker
         )
         applicationSate?.observeNotifications()
         applicationSate?.trackApplicationStateMessage = { [weak self] applicationStateMessage in
-            guard let self = self, self.config.trackLifecycleEvents else { return }
+            guard let self = self, self.configuration.trackLifecycleEvents else { return }
             self.track(applicationStateMessage.state.eventName, properties: applicationStateMessage.properties)
         }
         applicationSate?.refreshSessionIfNeeded = { [weak self] in
-            guard let self = self, self.config.trackLifecycleEvents else { return }
+            guard let self = self, self.configuration.trackLifecycleEvents else { return }
             self.refreshSessionIfNeeded()
         }
     }
     
-    func recordScreenViews() {
+    private func recordScreenViews() {
         screenRecording = ScreenRecording()
         screenRecording?.capture = { [weak self] screenViewsMessage in
-            guard let self = self, self.config.recordScreenViews else { return }
+            guard let self = self, self.configuration.recordScreenViews else { return }
             self.screen(screenViewsMessage.screenName, properties: screenViewsMessage.properties)
         }
     }
     
-    func fetchSourceConfig() {
+    private func fetchSourceConfig() {
         let sourceConfigDownloadRetryFactors = RetryFactors(
             retryPreset: DownloadUploadRetryPreset.defaultDownload(),
             current: TimeInterval(1)
         )
         
-        let sourceConfigDownloadRetryPolicy = config.sourceConfigDownloadRetryPolicy ?? ExponentialRetryPolicy(
+        let sourceConfigDownloadRetryPolicy = configuration.sourceConfigDownloadRetryPolicy ?? ExponentialRetryPolicy(
             retryFactors: sourceConfigDownloadRetryFactors
         )
         
         let downloader = SourceConfigDownloadWorker(
             sourceConfigDownloader: sourceConfigDownloader,
             downloadBlockers: downloadUploadBlockers,
-            userDefaults: userDefaults,
+            userDefaults: userDefaultsWorker,
             queue: DispatchQueue(
-                label: "sourceConfigDownload".queueLabel(),
+                label: "sourceConfigDownload".queueLabel(instanceName),
                 autoreleaseFrequency: .workItem,
                 target: .global(qos: .utility)
             ),
@@ -145,42 +168,45 @@ extension Controller {
         
         sourceConfigDownload = SourceConfigDownload(downloader: downloader)
         
-        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig in
+        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig, needsDatabaseMigration in
             guard let self = self else { return }
+            if needsDatabaseMigration {
+                self.migrateStorage()
+            }
             self.isEnable = sourceConfig.enabled
             self.updateSourceConfig(sourceConfig)
-            self.userDefaults.write(.sourceConfig, value: sourceConfig)
+            self.userDefaultsWorker.write(.sourceConfig, value: sourceConfig)
             if self.dataUpload == nil {
                 let dataUploadRetryFactors = RetryFactors(
                     retryPreset: DownloadUploadRetryPreset.defaultUpload(
-                        minTimeout: TimeInterval(self.config.sleepTimeOut)
+                        minTimeout: TimeInterval(self.configuration.sleepTimeOut)
                     ),
-                    current: TimeInterval(self.config.sleepTimeOut)
+                    current: TimeInterval(self.configuration.sleepTimeOut)
                 )
                 
-                let dataUploadRetryPolicy = self.config.dataUploadRetryPolicy ?? ExponentialRetryPolicy(
+                let dataUploadRetryPolicy = self.configuration.dataUploadRetryPolicy ?? ExponentialRetryPolicy(
                     retryFactors: dataUploadRetryFactors
                 )
                 
                 let dataResidency = DataResidency(
-                    dataResidencyServer: self.config.dataResidencyServer,
+                    dataResidencyServer: self.configuration.dataResidencyServer,
                     sourceConfig: sourceConfig
                 )
                 
                 let dataUploader = self.dataUploader ?? DataUploader(
                     serviceManager: self.serviceManager,
-                    anonymousId: self.userDefaults.read(.anonymousId) ?? "",
-                    gzipEnabled: self.config.gzipEnabled,
-                    dataPlaneUrl: dataResidency.dataPlaneUrl ?? self.config.dataPlaneURL
+                    anonymousId: self.userDefaultsWorker.read(.anonymousId) ?? "",
+                    gzipEnabled: self.configuration.gzipEnabled,
+                    dataPlaneUrl: dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL
                 )
 
                 let uploader = DataUploadWorker(
                     dataUploader: dataUploader,
                     dataUploadBlockers: self.downloadUploadBlockers,
                     storageWorker: self.storageWorker,
-                    config: self.config,
+                    config: self.configuration,
                     queue: DispatchQueue(
-                        label: "dataUploadWorker".queueLabel(),
+                        label: "dataUploadWorker".queueLabel(self.instanceName),
                         autoreleaseFrequency: .workItem,
                         target: .global(qos: .utility)
                     ),
@@ -194,15 +220,44 @@ extension Controller {
                 if !sourceConfig.enabled {
                     self.dataUpload?.cancel()
                 } else {
-                    let dataResidency = DataResidency(dataResidencyServer: self.config.dataResidencyServer, sourceConfig: sourceConfig)
-                    self.dataUploader?.updateDataPlaneUrl(dataResidency.dataPlaneUrl ?? self.config.dataPlaneURL)
+                    let dataResidency = DataResidency(dataResidencyServer: self.configuration.dataResidencyServer, sourceConfig: sourceConfig)
+                    self.dataUploader?.updateDataPlaneUrl(dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL)
                 }
+            }
+        }
+    }
+    
+    private func logConfigValidationErrors() {
+        configuration.configValidationErrorList.forEach({ logger.logWarning(LogMessages.customMessage($0.description)) })
+    }
+    
+    private func migrateStorage() {
+        if let storageMigrator = storageMigrator {
+            storageMigration = StorageMigration(storageMigrator: storageMigrator)
+        } else {
+            let oldDatabase = SQLiteDatabase(path: Device.current.directoryPath, name: "rl_persistence.sqlite")
+            let oldSQLiteStorage = SQLiteStorage(database: oldDatabase, logger: logger)
+            let storageMigrator = StorageMigratorV1V2(oldSQLiteStorage: oldSQLiteStorage, currentStorage: storage)
+            storageMigration = StorageMigration(storageMigrator: storageMigrator)
+        }
+        do {
+            try storageMigration?.migrate()
+            logger.logDebug(.storageMigrationSuccess)
+        } catch {
+            if let error = error as? StorageError {
+                if error == .databaseNotExists {
+                    logger.logDebug(.customMessage(error.description))
+                } else {
+                    logger.logError(.storageMigrationFailed(error))
+                }
+            } else {
+                logger.logDebug(.customMessage(error.localizedDescription))
             }
         }
     }
 }
 
-extension Controller {
+extension RSClientCore {
     func updateSourceConfig(_ sourceConfig: SourceConfig) {
         pluginList.forEach { (_, value) in
             value.forEach { plugin in
@@ -210,7 +265,7 @@ extension Controller {
             }
         }
     }
-    
+    #warning("add sync queue")
     func addPlugin(_ plugin: Plugin) {
         if var list = pluginList[plugin.type] {
             list.addPlugin(plugin)
@@ -227,7 +282,21 @@ extension Controller {
         }
     }
     
-    func getPluginList(by pluginType: PluginType) -> [Plugin]? {
+    func getAllPlugins() -> [Plugin]? {
+        return pluginList.flatMap { (_, value) in
+            return value
+        }
+    }
+    
+    func getDestinationPlugins() -> [DestinationPlugin]? {
+        return getPluginList(by: .destination) as? [DestinationPlugin]
+    }
+    
+    func getDefaultPlugins() -> [Plugin]? {
+        return getPluginList(by: .default)
+    }
+    
+    private func getPluginList(by pluginType: PluginType) -> [Plugin]? {
         return pluginList[pluginType]
     }
     
@@ -255,9 +324,9 @@ extension Controller {
     }
 }
 
-extension Controller {
+extension RSClientCore {
     func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -270,7 +339,7 @@ extension Controller {
     }
     
     func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -288,7 +357,7 @@ extension Controller {
     }
     
     func group(_ groupId: String, traits: [String: String]? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -301,7 +370,7 @@ extension Controller {
     }
     
     func alias(_ newId: String, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -309,19 +378,19 @@ extension Controller {
             logger.logWarning(.newIdNotEmpty)
             return
         }
-        let previousId: String? = userDefaults.read(.userId)
-        userDefaults.write(.userId, value: newId)
+        let previousId: String? = userDefaultsWorker.read(.userId)
+        userDefaultsWorker.write(.userId, value: newId)
         var dict: [String: Any] = ["id": newId]
-        if let json: JSON = userDefaults.read(.traits), let traits = json.dictionaryValue {
+        if let json: JSON = userDefaultsWorker.read(.traits), let traits = json.dictionaryValue {
             dict.merge(traits) { (_, new) in new }
         }
-        userDefaults.write(.traits, value: try? JSON(dict))
+        userDefaultsWorker.write(.traits, value: try? JSON(dict))
         let message = AliasMessage(newId: newId, previousId: previousId, option: option)
         process(message: message)
     }
     
     func identify(_ userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -329,14 +398,14 @@ extension Controller {
             logger.logWarning(.userIdNotEmpty)
             return
         }
-        userDefaults.write(.userId, value: userId)
+        userDefaultsWorker.write(.userId, value: userId)
         
         if let traits = traits {
-            userDefaults.write(.traits, value: try? JSON(traits))
+            userDefaultsWorker.write(.traits, value: try? JSON(traits))
         }
         
         if let externalIds = option?.externalIds {
-            userDefaults.write(.externalId, value: try? JSON(externalIds))
+            userDefaultsWorker.write(.externalId, value: try? JSON(externalIds))
         }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
         process(message: message)
@@ -388,40 +457,40 @@ extension Controller {
     }
 }
 
-extension Controller {
+extension RSClientCore {
     var anonymousId: String? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return nil
         }
-        return userDefaults.read(.anonymousId)
+        return userDefaultsWorker.read(.anonymousId)
     }
     
     var userId: String? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return nil
         }
-        return userDefaults.read(.userId)
+        return userDefaultsWorker.read(.userId)
     }
     
     var context: Context? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return nil
         }
         if let currentContext: Context = sessionStorage.read(.context) {
             return currentContext
         }
-        return Context(userDefaults: userDefaults)
+        return Context(userDefaults: userDefaultsWorker)
     }
     
     var traits: IdentifyTraits? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return nil
         }
-        let traitsJSON: JSON? = Context.traits(userDefaults: userDefaults)
+        let traitsJSON: JSON? = Context.traits(userDefaults: userDefaultsWorker)
         return traitsJSON?.dictionaryValue
     }
     
@@ -429,27 +498,19 @@ extension Controller {
         return RSVersion
     }
     
-    var configuration: Config? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
-            logger.logDebug(.optOut)
-            return nil
-        }
-        return config
-    }
-    
-    var sessionId: String? {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+    var sessionId: Int? {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return nil
         }
         if let userSessionPlugin = getPlugin(type: UserSessionPlugin.self), let sessionId = userSessionPlugin.sessionId {
-            return "\(sessionId)"
+            return sessionId
         }
         return nil
     }
 }
 
-extension Controller {
+extension RSClientCore {
     func flush() {
         dataUpload?.flush()
         associatePlugins { plugin in
@@ -461,7 +522,7 @@ extension Controller {
     
     func reset(and refreshAnonymousId: Bool) {
         if refreshAnonymousId {
-            userDefaults.write(.anonymousId, value: Utility.getUniqueId())
+            userDefaultsWorker.write(.anonymousId, value: Utility.getUniqueId())
         }
         reset()
     }
@@ -476,9 +537,9 @@ extension Controller {
     }
 }
 
-extension Controller {
+extension RSClientCore {
     func setAnonymousId(_ anonymousId: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return
         }
@@ -486,11 +547,11 @@ extension Controller {
             logger.logWarning(.anonymousIdNotEmpty)
             return
         }
-        userDefaults.write(.anonymousId, value: anonymousId)
+        userDefaultsWorker.write(.anonymousId, value: anonymousId)
     }
     
     func setOption(_ option: Option) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return
         }
@@ -498,7 +559,7 @@ extension Controller {
     }
     
     func setDeviceToken(_ token: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return
         }
@@ -510,7 +571,7 @@ extension Controller {
     }
     
     func setAdvertisingId(_ advertisingId: String) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return
         }
@@ -524,7 +585,7 @@ extension Controller {
     }
     
     func setAppTrackingConsent(_ appTrackingConsent: AppTrackingConsent) {
-        if let optOutStatus: Bool = userDefaults.read(.optStatus), optOutStatus {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
             logger.logDebug(.optOut)
             return
         }
@@ -532,17 +593,17 @@ extension Controller {
     }
     
     func setOptOutStatus(_ status: Bool) {
-        userDefaults.write(.optStatus, value: status)
+        userDefaultsWorker.write(.optStatus, value: status)
         logger.logDebug(.userOptOut(status))
     }
 
 }
 
-extension Controller {
+extension RSClientCore {
     func resetUserDefaults() {
-        userDefaults.remove(.traits)
-        userDefaults.remove(.externalId)
-        userDefaults.remove(.userId)
+        userDefaultsWorker.remove(.traits)
+        userDefaultsWorker.remove(.externalId)
+        userDefaultsWorker.remove(.userId)
     }
 }
 
@@ -574,16 +635,22 @@ extension [Plugin] {
 
 extension String {
     func queueLabel(_ name: String? = nil) -> String {
-        if let name = name {
+        if let name = name, name.isNotEmpty {
             return "\(self).\(name).rudder.com"
         }
         return "\(self).rudder.com"
     }
     
     func userDefaultsSuitName(_ name: String? = nil) -> String {
-        if let name = name {
+        if let name = name, name.isNotEmpty {
             return "\(self).\(name).userDefaults.rudder.com"
         }
         return "\(self).userDefaults.rudder.com"
+    }
+}
+
+extension String {
+    var correctified: String {
+        return self.isEmpty ? ClientRegistry.defaultInstanceName : self
     }
 }

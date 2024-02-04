@@ -8,19 +8,23 @@
 
 import Foundation
 
+typealias NeedsDatabaseMigration = Bool
+
 protocol SourceConfigDownloadWorkerType {
-    var sourceConfig: ((SourceConfig) -> Void) { get set }
+    var sourceConfig: ((SourceConfig, NeedsDatabaseMigration) -> Void) { get set }
 }
 
 class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
-    var sourceConfig: ((SourceConfig) -> Void) = { _ in }
+    var sourceConfig: ((SourceConfig, NeedsDatabaseMigration) -> Void) = { _, _ in }
     
     let sourceConfigDownloader: SourceConfigDownloaderType
     let downloadBlockers: DownloadUploadBlockersProtocol
-    let userDefaults: UserDefaultsWorkerType
+    let userDefaults: UserDefaultsWorkerProtocol
     let queue: DispatchQueue
     let logger: Logger
     let retryStrategy: DownloadUploadRetryStrategy
+    
+    var cachedSourceConfig: SourceConfig?
     
     @ReadWriteLock
     var readWorkItem: DispatchWorkItem?
@@ -31,7 +35,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
     init(
         sourceConfigDownloader: SourceConfigDownloaderType,
         downloadBlockers: DownloadUploadBlockersProtocol,
-        userDefaults: UserDefaultsWorkerType,
+        userDefaults: UserDefaultsWorkerProtocol,
         queue: DispatchQueue,
         logger: Logger,
         retryStrategy: DownloadUploadRetryStrategy
@@ -45,7 +49,8 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
         self.readWorkItem = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             if let sourceConfig: SourceConfig = userDefaults.read(.sourceConfig) {
-                self.sourceConfig(sourceConfig)
+                self.cachedSourceConfig = sourceConfig
+                self.sourceConfig(sourceConfig, false)
             }
             let blockersForDownload = downloadBlockers.get()
             if blockersForDownload.isEmpty {
@@ -64,7 +69,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
             if let sourceConfig = response.sourceConfig {
                 self.retryStrategy.reset()
                 self.logger.logDebug(.sourceConfigDownloadSuccess)
-                self.sourceConfig(sourceConfig)
+                self.sourceConfig(sourceConfig, self.needsMigration(freshSourceConfig: sourceConfig))
             }
             let downloadStatus = response.status
             if downloadStatus.needsRetry {
@@ -78,14 +83,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
                 return
             }
             if let error = downloadStatus.error {
-                switch error {
-                case .httpError(let statusCode):
-                    self.logger.logError(.sourceConfigDownloadFailedWithStatusCode(statusCode))
-                case .networkError(let error):
-                    self.logger.logError(.sourceConfigDownloadFailedWithErrorDescription(error.localizedDescription))
-                case .noResponse:
-                    self.logger.logError(.noResponse)
-                }
+                self.logger.logError(.apiError(.sourceConfig, error))
             }
         }
         self.downloadWorkItem = workItem
@@ -97,5 +95,14 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
             return
         }
         queue.asyncAfter(deadline: .now() + retryStrategy.current, execute: readWorkItem)
+    }
+}
+
+extension SourceConfigDownloadWorker {
+    func needsMigration(freshSourceConfig: SourceConfig) -> Bool {
+        guard let cachedSourceConfig = cachedSourceConfig else {
+            return false
+        }
+        return freshSourceConfig.id == cachedSourceConfig.id
     }
 }

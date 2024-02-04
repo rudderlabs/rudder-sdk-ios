@@ -12,12 +12,12 @@ class IntegrationPlugin: Plugin {
     var type: PluginType = .default
     var sourceConfig: SourceConfig?
     
-    var client: RSClient?
+    var client: RSClientProtocol?
         
     func process<T>(message: T?) -> T? where T: Message {
         guard var workingMessage = message else { return message }
         let messageIntegrations = workingMessage.option?.integrations ?? [:]
-        let globalOption: Option? = client?.controller.sessionStorage.read(.defaultOption)
+        let globalOption: Option? = client?.sessionStorage.read(.defaultOption)
         let globalOptionIntegrations = globalOption?.integrations ?? [:]
         
         var integrations = messageIntegrations.merging(globalOptionIntegrations) { (current, _) in current }

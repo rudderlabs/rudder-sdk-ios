@@ -9,20 +9,14 @@
 import XCTest
 @testable import Rudder
 
-class StorageTests: XCTestCase {
+class StorageWorkerTests: XCTestCase {
 
-    var storageWorker: StorageWorker!
+    var storageWorker: StorageWorkerProtocol!
     
     override func setUp() {
         super.setUp()
-        let path = FileManager.default.urls(for: .cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-        let database = DefaultDatabase(path: path, name: "rl_persistence.sqlite")
-        let storage = DefaultStorage(
-            database: database,
-            logger: Logger(logger: NOLogger())
-        )
-        storageWorker = DefaultStorageWorker(
-            storage: storage,
+        storageWorker = StorageWorker(
+            storage: StorageMock(),
             queue: DispatchQueue(label: "testStorageWorker".queueLabel())
         )
         storageWorker.open()
@@ -114,7 +108,7 @@ class StorageTests: XCTestCase {
         var entityList = [StorageMessage]()
         for i in 1...count {
             let message = getMessage(index: i)
-            entityList.append(StorageMessage(id: UUID().uuidString, message: message))
+            entityList.append(StorageMessage(id: UUID().uuidString, message: message, updated: 1234567890))
         }
         return entityList
     }

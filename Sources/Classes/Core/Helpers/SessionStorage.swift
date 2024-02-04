@@ -8,22 +8,27 @@
 
 import Foundation
 
-class SessionStorage {
-    enum Keys: String {
-        case deviceToken
-        case advertisingId
-        case appTrackingConsent
-        case defaultOption
-        case context
-    }
-    
+public enum SessionStorageKeys: String {
+    case deviceToken
+    case advertisingId
+    case appTrackingConsent
+    case defaultOption
+    case context
+}
+
+public protocol SessionStorageProtocol {
+    func write<T: Any>(_ key: SessionStorageKeys, value: T?)
+    func read<T: Any>(_ key: SessionStorageKeys) -> T?
+}
+
+class SessionStorage: SessionStorageProtocol {
     @ReadWriteLock private var deviceToken: String?
     @ReadWriteLock private var advertisingId: String?
     @ReadWriteLock private var appTrackingConsent: AppTrackingConsent?
     @ReadWriteLock private var defaultOption: Option?
     @ReadWriteLock private var context: Context?
-
-    func write<T: Any>(_ key: SessionStorage.Keys, value: T?) {
+    
+    func write<T: Any>(_ key: SessionStorageKeys, value: T?) {
         switch key {
         case .deviceToken:
             deviceToken = value as? String
@@ -40,7 +45,7 @@ class SessionStorage {
         }
     }
     
-    func read<T: Any>(_ key: SessionStorage.Keys) -> T? {
+    func read<T: Any>(_ key: SessionStorageKeys) -> T? {
         var result: T?
         switch key {
         case .deviceToken:

@@ -15,7 +15,7 @@ public enum PluginType: CaseIterable {
 
 public protocol Plugin: AnyObject {
     var type: PluginType { get set }
-    var client: RSClient? { get set }
+    var client: RSClientProtocol? { get set }
     var sourceConfig: SourceConfig? { get set }
     func process<T: Message>(message: T?) -> T?
 }

@@ -11,7 +11,7 @@ import XCTest
 
 final class DataUploadWorkerTests: XCTestCase {
     
-    let storageWorker = DefaultStorageWorker(storage: StorageMock(), queue: DispatchQueue(label: "dataUploadWorkerTests.storageWorker".queueLabel()))
+    let storageWorker = StorageWorker(storage: StorageMock(), queue: DispatchQueue(label: "dataUploadWorkerTests.storageWorker".queueLabel()))
     let queue = DispatchQueue(
         label: "dataUploadWorkerTests".queueLabel(),
         target: .global(qos: .utility)
@@ -42,11 +42,11 @@ final class DataUploadWorkerTests: XCTestCase {
         )
         
         // Given
-        storageWorker.saveMessage(StorageMessage(id: "1", message: "message_1"))
-        storageWorker.saveMessage(StorageMessage(id: "2", message: "message_2"))
-        storageWorker.saveMessage(StorageMessage(id: "3", message: "message_3"))
-        storageWorker.saveMessage(StorageMessage(id: "4", message: "message_4"))
-        storageWorker.saveMessage(StorageMessage(id: "5", message: "message_5"))
+        storageWorker.saveMessage(StorageMessage(id: "1", message: "message_1", updated: 1234567890))
+        storageWorker.saveMessage(StorageMessage(id: "2", message: "message_2", updated: 1234567890))
+        storageWorker.saveMessage(StorageMessage(id: "3", message: "message_3", updated: 1234567890))
+        storageWorker.saveMessage(StorageMessage(id: "4", message: "message_4", updated: 1234567890))
+        storageWorker.saveMessage(StorageMessage(id: "5", message: "message_5", updated: 1234567890))
         
         // When
         let worker = DataUploadWorker(
@@ -101,7 +101,7 @@ final class DataUploadWorkerTests: XCTestCase {
             )
         )
         
-        storageWorker.saveMessage(StorageMessage(id: "1", message: "message_1"))
+        storageWorker.saveMessage(StorageMessage(id: "1", message: "message_1", updated: 1234567890))
         XCTAssertEqual(storageWorker.getMessageCount(), 1)
         
         // When

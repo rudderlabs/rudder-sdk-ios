@@ -30,6 +30,7 @@ final class URLSessionClientTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
     
+    #if !os(watchOS)
     func test_ReturnsError() {
         let server = ServerMock(serverResult: .failure(error: NSError(domain: "Mock Error", code: 500)))
         let client = URLSessionClient(session: server.getInterceptedURLSession())
@@ -39,7 +40,7 @@ final class URLSessionClientTests: XCTestCase {
         client.send(request: .mockAny()) { result in
             switch result {
             case .success:
-                    XCTFail("Server shouldn't return response")
+                XCTFail("Server shouldn't return response")
             case .failure(let error):
                 XCTAssertEqual((error as NSError).domain, "Mock Error")
                 XCTAssertEqual((error as NSError).code, 500)
@@ -49,5 +50,6 @@ final class URLSessionClientTests: XCTestCase {
         
         waitForExpectations(timeout: 1.0)
     }
+    #endif
 }
 

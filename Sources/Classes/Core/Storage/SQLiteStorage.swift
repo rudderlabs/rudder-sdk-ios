@@ -8,16 +8,17 @@
 
 import Foundation
 
-class DefaultStorage: Storage {
+class SQLiteStorage: Storage {
     
     let database: Database
     let logger: Logger
     
-    init(database: Database, logger: Logger) {
+    required init(database: Database, logger: Logger) {
         self.database = database
         self.logger = logger
     }
 
+    @discardableResult
     func open() -> Results<Bool> {
         if database.open() == DatabaseError.OK {
             return createTable()
@@ -26,9 +27,9 @@ class DefaultStorage: Storage {
         }
     }
     
-    func createTable() -> Results<Bool> {
+    private func createTable() -> Results<Bool> {
         var createTableStatement: OpaquePointer?
-        let createTableString = "CREATE TABLE IF NOT EXISTS events( id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);"
+        let createTableString = "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT NOT NULL, updated INTEGER NOT NULL);"
         let result: Results<Bool>
         logger.logDebug(.sqlStatement(createTableString))
         if database.prepare(createTableString, -1, &createTableStatement, nil) == DatabaseError.OK {
@@ -48,13 +49,14 @@ class DefaultStorage: Storage {
         return result
     }
     
+    @discardableResult
     func save(_ object: StorageMessage) -> Results<Bool> {
         let insertStatementString = "INSERT INTO events (message, updated) VALUES (?, ?);"
         var insertStatement: OpaquePointer?
         let result: Results<Bool>
         if database.prepare(insertStatementString, -1, &insertStatement, nil) == DatabaseError.OK {
             database.bind_text(insertStatement, 1, ((object.message.replacingOccurrences(of: "'", with: "''")) as NSString).utf8String, -1, nil)
-            database.bind_int(insertStatement, 2, Int32(Utility.getTimeStamp()))
+            database.bind_int(insertStatement, 2, Int32(object.updated))
             logger.logDebug(.sqlStatement(insertStatementString))
             if database.step(insertStatement) == DatabaseError.DONE {
                 result = .success(true)
@@ -72,6 +74,7 @@ class DefaultStorage: Storage {
         return result
     }
     
+    @discardableResult
     func objects(limit: Int) -> Results<[StorageMessage]> {
         var queryStatement: OpaquePointer?
         let result: Results<[StorageMessage]>
@@ -84,7 +87,8 @@ class DefaultStorage: Storage {
                 guard let message = database.column_text(queryStatement, 1) else {
                     continue
                 }
-                let messageEntity = StorageMessage(id: messageId, message: String(cString: message))
+                let updated = database.column_int(queryStatement, 2)
+                let messageEntity = StorageMessage(id: messageId, message: String(cString: message), updated: Int(updated))
                 messageList.append(messageEntity)
             }
             result = .success(messageList)
@@ -97,6 +101,7 @@ class DefaultStorage: Storage {
         return result
     }
     
+    @discardableResult
     func delete(_ objects: [StorageMessage]) -> Results<Bool> {
         var deleteStatement: OpaquePointer?
         let messageIds = objects.compactMap({ $0.id })
@@ -120,6 +125,7 @@ class DefaultStorage: Storage {
         return result
     }
     
+    @discardableResult
     func deleteAll() -> Results<Bool> {
         var deleteStatement: OpaquePointer?
         let deleteStatementString = "DELETE FROM 'events'"
@@ -161,5 +167,10 @@ class DefaultStorage: Storage {
         }
         database.finalize(queryStatement)
         return result
+    }
+    
+    @discardableResult
+    func close() -> Results<Bool> {
+        return .success(database.close() == DatabaseError.OK)
     }
 }

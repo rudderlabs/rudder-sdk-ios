@@ -11,14 +11,14 @@ import Foundation
 class StoragePlugin: Plugin {
     var type: PluginType = .default
     
-    var client: RSClient? {
+    var client: RSClientProtocol? {
         didSet {
-            storageWorker = client?.controller.storageWorker
+            storageWorker = client?.storageWorker
         }
     }
     
     var sourceConfig: SourceConfig?
-    var storageWorker: StorageWorker?
+    var storageWorker: StorageWorkerProtocol?
     
     func process<T>(message: T?) -> T? where T: Message {
         guard let message = message else { return message }
@@ -26,9 +26,9 @@ class StoragePlugin: Plugin {
             let messageString = try message.toString.get()
             // we are assigning random UUID string
             // for DefaultDatabase we don't need the id as the table is auto incremented
-            storageWorker?.saveMessage(StorageMessage(id: UUID().uuidString, message: messageString))
+            storageWorker?.saveMessage(StorageMessage(id: UUID().uuidString, message: messageString, updated: Utility.getTimeStamp()))
         } catch {
-            client?.logError(LogMessages.failedJSONConversion(error.localizedDescription).description)
+            client?.logger.logError(.failedJSONConversion(error.localizedDescription))
         }
         return message
     }

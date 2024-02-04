@@ -74,4 +74,17 @@ public protocol Database {
     
     @discardableResult
     func column_text(_: OpaquePointer!, _ iCol: Int32) -> UnsafePointer<UInt8>!
+    
+    @discardableResult
+    func exec(_ sql: UnsafePointer<CChar>!,
+              _ callback: (@convention(c) (UnsafeMutableRawPointer?, Int32,
+                                           UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?,
+                                           UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?
+                                          ) -> Int32)!,
+              _ arg: UnsafeMutableRawPointer!,
+              _ errmsg: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>!
+    ) -> Int32
+    
+    @discardableResult
+    func close() -> Int32
 }

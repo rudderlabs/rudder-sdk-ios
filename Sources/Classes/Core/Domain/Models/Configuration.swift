@@ -13,15 +13,30 @@ public enum DataResidencyServer {
     case EU
 }
 
-public enum ConfigError: Error {
+enum ConfigValidationError: Error {
     case flushQueueSize
     case dbCountThreshold
     case sleepTimeOut
     case controlPlaneURL
-    case sessionTimeout
+    case sessionTimeOut
+    
+    var description: String {
+        switch self {
+        case .flushQueueSize:
+            return "flushQueueSize is out of range. Min: 1, Max: 100. Set to default"
+        case .dbCountThreshold:
+            return "dbCountThreshold is invalid. Min: 1. Set to default"
+        case .sleepTimeOut:
+            return "sleepTimeOut is invalid. Min: 10. Set to default"
+        case .controlPlaneURL:
+            return "controlPlaneURL is invalid"
+        case .sessionTimeOut:
+            return "sessionTimeout is invalid. Min: 0. Set to default"
+        }
+    }
 }
 
-public class Config {
+public class Configuration {
     let _writeKey: String
     public var writeKey: String {
         return _writeKey
@@ -72,9 +87,9 @@ public class Config {
         return _autoSessionTracking
     }
     
-    private var _sessionTimeout: Int = Constants.sessionTimeOut.default
-    public var sessionTimeout: Int {
-        return _sessionTimeout
+    private var _sessionTimeOut: Int = Constants.sessionTimeOut.default
+    public var sessionTimeOut: Int {
+        return _sessionTimeOut
     }
     
     private var _gzipEnabled: Bool = Constants.gzipEnabled.default
@@ -102,6 +117,13 @@ public class Config {
         _sourceConfigDownloadRetryPolicy
     }
     
+    private var _logger: LoggerProtocol?
+    public var logger: LoggerProtocol? {
+        _logger
+    }
+    
+    var configValidationErrorList = [ConfigValidationError]()
+    
     required public init?(writeKey: String, dataPlaneURL: String) {
         guard writeKey.isNotEmpty, let url = URL(string: dataPlaneURL), url.isValid else {
             return nil
@@ -111,9 +133,9 @@ public class Config {
     }
     
     @discardableResult
-    public func flushQueueSize(_ flushQueueSize: Int) -> Config {
+    public func flushQueueSize(_ flushQueueSize: Int) -> Configuration {
         guard flushQueueSize >= Constants.queueSize.min && flushQueueSize <= Constants.queueSize.max else {
-//            Logger.logError("flushQueueSize is out of range. Min: 1, Max: 100. Set to default")
+            configValidationErrorList.append(.flushQueueSize)
             return self
         }
         _flushQueueSize = flushQueueSize
@@ -121,15 +143,15 @@ public class Config {
     }
         
     @discardableResult
-    public func logLevel(_ logLevel: LogLevel) -> Config {
+    public func logLevel(_ logLevel: LogLevel) -> Configuration {
         _logLevel = logLevel
         return self
     }
     
     @discardableResult
-    public func dbCountThreshold(_ dbCountThreshold: Int) -> Config {
+    public func dbCountThreshold(_ dbCountThreshold: Int) -> Configuration {
         guard dbCountThreshold >= Constants.storageCountThreshold.min else {
-//            Logger.logError("dbCountThreshold is invalid. Min: 1. Set to default")
+            configValidationErrorList.append(.dbCountThreshold)
             return self
         }
         _dbCountThreshold = dbCountThreshold
@@ -137,9 +159,9 @@ public class Config {
     }
     
     @discardableResult
-    public func sleepTimeOut(_ sleepTimeOut: Int) -> Config {
+    public func sleepTimeOut(_ sleepTimeOut: Int) -> Configuration {
         guard sleepTimeOut >= Constants.sleepTimeOut.min else {
-//            Logger.logError("sleepTimeOut is invalid. Min: 10. Set to default")
+            configValidationErrorList.append(.sleepTimeOut)
             return self
         }
         _sleepTimeOut = sleepTimeOut
@@ -147,21 +169,21 @@ public class Config {
     }
         
     @discardableResult
-    public func trackLifecycleEvents(_ trackLifecycleEvents: Bool) -> Config {
+    public func trackLifecycleEvents(_ trackLifecycleEvents: Bool) -> Configuration {
         _trackLifecycleEvents = trackLifecycleEvents
         return self
     }
     
     @discardableResult
-    public func recordScreenViews(_ recordScreenViews: Bool) -> Config {
+    public func recordScreenViews(_ recordScreenViews: Bool) -> Configuration {
         _recordScreenViews = recordScreenViews
         return self
     }
     
     @discardableResult
-    public func controlPlaneURL(_ controlPlaneURL: String) -> Config {
+    public func controlPlaneURL(_ controlPlaneURL: String) -> Configuration {
         guard let url = URL(string: controlPlaneURL), url.isValid else {
-//            Logger.logError("controlPlaneURL is invalid")
+            configValidationErrorList.append(.controlPlaneURL)
             return self
         }
         _controlPlaneURL = url.absoluteString.rectified
@@ -169,35 +191,35 @@ public class Config {
     }
     
     @discardableResult
-    public func autoSessionTracking(_ autoSessionTracking: Bool) -> Config {
+    public func autoSessionTracking(_ autoSessionTracking: Bool) -> Configuration {
         _autoSessionTracking = autoSessionTracking
         return self
     }
     
     @discardableResult
-    public func sessionTimeout(_ sessionTimeout: Int) -> Config {
-        guard sessionTimeout >= Constants.sessionTimeOut.min else {
-//            Logger.logError("sessionTimeout is invalid. Min: 0. Set to default")
+    public func sessionTimeOut(_ sessionTimeOut: Int) -> Configuration {
+        guard sessionTimeOut >= Constants.sessionTimeOut.min else {
+            configValidationErrorList.append(.sessionTimeOut)
             return self
         }
-        _sessionTimeout = sessionTimeout
+        _sessionTimeOut = sessionTimeOut
         return self
     }
     
     @discardableResult
-    public func gzipEnabled(_ gzipEnabled: Bool) -> Config {
+    public func gzipEnabled(_ gzipEnabled: Bool) -> Configuration {
         _gzipEnabled = gzipEnabled
         return self
     }
     
     @discardableResult
-    public func dataResidencyServer(_ dataResidencyServer: DataResidencyServer) -> Config {
+    public func dataResidencyServer(_ dataResidencyServer: DataResidencyServer) -> Configuration {
         _dataResidencyServer = dataResidencyServer
         return self
     }
     
     @discardableResult
-    public func flushPolicies(_ flushPolicies: [FlushPolicy]) -> Config {
+    public func flushPolicies(_ flushPolicies: [FlushPolicy]) -> Configuration {
         if !flushPolicies.isEmpty {
             _flushPolicies.append(contentsOf: flushPolicies)
         }
@@ -205,14 +227,20 @@ public class Config {
     }
     
     @discardableResult
-    public func dataUploadRetryPolicy(_ dataUploadRetryPolicy: RetryPolicy?) -> Config {
+    public func dataUploadRetryPolicy(_ dataUploadRetryPolicy: RetryPolicy?) -> Configuration {
         _dataUploadRetryPolicy = dataUploadRetryPolicy
         return self
     }
     
     @discardableResult
-    public func sourceConfigDownloadRetryPolicy(_ sourceConfigDownloadRetryPolicy: RetryPolicy?) -> Config {
+    public func sourceConfigDownloadRetryPolicy(_ sourceConfigDownloadRetryPolicy: RetryPolicy?) -> Configuration {
         _sourceConfigDownloadRetryPolicy = sourceConfigDownloadRetryPolicy
+        return self
+    }
+    
+    @discardableResult
+    public func logger(_ logger: LoggerProtocol?) -> Configuration {
+        _logger = logger
         return self
     }
 }

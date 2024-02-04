@@ -14,7 +14,7 @@ import Cocoa
 
 class MacApplicationState: ApplicationStateProtocol {
     let application: NSApplication
-    let userDefaults: UserDefaultsWorkerType
+    let userDefaults: UserDefaultsWorkerProtocol
     
     var trackApplicationStateMessage: ((ApplicationStateMessage) -> Void) = { _  in }
     var refreshSessionIfNeeded: (() -> Void) = { }
@@ -22,7 +22,7 @@ class MacApplicationState: ApplicationStateProtocol {
     @ReadWriteLock private var didFinishLaunching = false
     @ReadWriteLock private var fromBackground = false
 
-    init(application: NSApplication, userDefaults: UserDefaultsWorkerType) {
+    init(application: NSApplication, userDefaults: UserDefaultsWorkerProtocol) {
         self.application = application
         self.userDefaults = userDefaults
     }
@@ -144,7 +144,7 @@ extension ApplicationState {
     static func current(
         notificationCenter: NotificationCenter,
         application: NSApplication = NSApplication.shared,
-        userDefaults: UserDefaultsWorkerType,
+        userDefaults: UserDefaultsWorkerProtocol,
         notifications: [Notification.Name] = [
             NSApplication.didFinishLaunchingNotification,
             NSApplication.didResignActiveNotification,
