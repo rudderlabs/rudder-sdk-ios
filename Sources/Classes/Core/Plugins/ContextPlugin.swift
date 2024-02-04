@@ -11,7 +11,7 @@ import Foundation
 class ContextPlugin: Plugin {
     var type: PluginType = .default
     
-    var client: RSClient? {
+    var client: RSClientProtocol? {
         didSet {
             initialSetup()
         }
@@ -21,11 +21,11 @@ class ContextPlugin: Plugin {
     
     private var staticContext = staticContextData()
     private static var device = Device.current
-    private var userDefaults: UserDefaultsWorkerType?
+    private var userDefaultsWorker: UserDefaultsWorkerProtocol?
     
     func initialSetup() {
         guard let client = self.client else { return }
-        userDefaults = client.controller.userDefaults
+        userDefaultsWorker = client.userDefaultsWorker
     }
     
     func process<T>(message: T?) -> T? where T: Message {
@@ -39,7 +39,7 @@ class ContextPlugin: Plugin {
             context.merge(eventContext) { (new, _) in new }
         }
         workingMessage.context = context
-        client?.controller.sessionStorage.write(.context, value: context)
+        client?.sessionStorage.write(.context, value: context)
         return workingMessage
     }
     
@@ -72,14 +72,14 @@ class ContextPlugin: Plugin {
     }
     
     internal func insertDynamicDeviceInfoData(context: inout [String: Any]) {
-        if let deviceToken: String = client?.controller.sessionStorage.read(.deviceToken) {
+        if let deviceToken: String = client?.sessionStorage.read(.deviceToken) {
             context[keyPath: "device.token"] = deviceToken
         }
-        if let advertisingId: String = client?.controller.sessionStorage.read(.advertisingId), advertisingId.isNotEmpty {
+        if let advertisingId: String = client?.sessionStorage.read(.advertisingId), advertisingId.isNotEmpty {
             context[keyPath: "device.advertisingId"] = advertisingId
             context[keyPath: "device.adTrackingEnabled"] = true
         }
-        let appTrackingConsent: AppTrackingConsent = client?.controller.sessionStorage.read(.appTrackingConsent) ?? .notDetermined
+        let appTrackingConsent: AppTrackingConsent = client?.sessionStorage.read(.appTrackingConsent) ?? .notDetermined
         context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
     }
     
@@ -87,7 +87,7 @@ class ContextPlugin: Plugin {
         // First priority will given to the `option` passed along with the event
         var contextExternalIds = [[String: String]]()
         // Fetch `externalIds` set using identify API.
-        if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
+        if let externalIds: [[String: String]] = userDefaultsWorker?.read(.externalId) {
             contextExternalIds.append(contentsOf: externalIds)
         }
         

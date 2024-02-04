@@ -168,22 +168,10 @@
 		ED8ED1BB2B51486E00DAE613 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1B92B51486E00DAE613 /* Storage.swift */; };
 		ED8ED1BC2B51486E00DAE613 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1B92B51486E00DAE613 /* Storage.swift */; };
 		ED8ED1BD2B51486E00DAE613 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1B92B51486E00DAE613 /* Storage.swift */; };
-		ED8ED1BF2B514B4C00DAE613 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */; };
-		ED8ED1C02B514B4C00DAE613 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */; };
-		ED8ED1C12B514B4C00DAE613 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */; };
-		ED8ED1C22B514B4C00DAE613 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */; };
-		ED8ED1C42B514B6A00DAE613 /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */; };
-		ED8ED1C52B514B6A00DAE613 /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */; };
-		ED8ED1C62B514B6A00DAE613 /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */; };
-		ED8ED1C72B514B6A00DAE613 /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */; };
 		ED8ED1C92B514B8D00DAE613 /* StorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */; };
 		ED8ED1CA2B514B8D00DAE613 /* StorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */; };
 		ED8ED1CB2B514B8D00DAE613 /* StorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */; };
 		ED8ED1CC2B514B8D00DAE613 /* StorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */; };
-		ED8ED1D92B53B9F600DAE613 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1D82B53B9F600DAE613 /* Controller.swift */; };
-		ED8ED1DA2B53B9F600DAE613 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1D82B53B9F600DAE613 /* Controller.swift */; };
-		ED8ED1DB2B53B9F600DAE613 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1D82B53B9F600DAE613 /* Controller.swift */; };
-		ED8ED1DC2B53B9F600DAE613 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1D82B53B9F600DAE613 /* Controller.swift */; };
 		ED8ED1DE2B55361900DAE613 /* StoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1DD2B55361900DAE613 /* StoragePlugin.swift */; };
 		ED8ED1DF2B55361900DAE613 /* StoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1DD2B55361900DAE613 /* StoragePlugin.swift */; };
 		ED8ED1E02B55361900DAE613 /* StoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED1DD2B55361900DAE613 /* StoragePlugin.swift */; };
@@ -280,7 +268,6 @@
 		EDA7EF842739119600E73142 /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF452739119600E73142 /* UserDefaultsWorker.swift */; };
 		EDA7EF862739119600E73142 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF482739119600E73142 /* String+Ext.swift */; };
 		EDA7EF8B2739119600E73142 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA7EF4F2739119600E73142 /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDA7EF922739119600E73142 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* Config.swift */; };
 		EDC1327C27D614C400AFD833 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* ClientTests.swift */; };
 		EDC132A227D7D61D00AFD833 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC132A127D7D61D00AFD833 /* JSON.swift */; };
 		EDC1BBCB2B0DD87D00211F24 /* Rudder.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA7EF4F2739119600E73142 /* Rudder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -290,7 +277,6 @@
 		EDC1BBDD2B0DD87D00211F24 /* ReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* ReplayQueuePlugin.swift */; };
 		EDC1BBDF2B0DD87D00211F24 /* EventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* EventsAndKeys.swift */; };
 		EDC1BBE02B0DD87D00211F24 /* IntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* IntegrationPlugin.swift */; };
-		EDC1BBE42B0DD87D00211F24 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* Config.swift */; };
 		EDC1BBE62B0DD87D00211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
 		EDC1BBE82B0DD87D00211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
 		EDC1BBF32B0DD87D00211F24 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* TypeAlias.swift */; };
@@ -307,7 +293,6 @@
 		EDC1BC222B0DD88A00211F24 /* ReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* ReplayQueuePlugin.swift */; };
 		EDC1BC242B0DD88A00211F24 /* EventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* EventsAndKeys.swift */; };
 		EDC1BC252B0DD88A00211F24 /* IntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* IntegrationPlugin.swift */; };
-		EDC1BC292B0DD88A00211F24 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* Config.swift */; };
 		EDC1BC2B2B0DD88A00211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
 		EDC1BC2D2B0DD88A00211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
 		EDC1BC382B0DD88A00211F24 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* TypeAlias.swift */; };
@@ -324,7 +309,6 @@
 		EDC1BC672B0DD89400211F24 /* ReplayQueuePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227A27A3F0C100EC8366 /* ReplayQueuePlugin.swift */; };
 		EDC1BC692B0DD89400211F24 /* EventsAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED277FA027421B06002A8FEA /* EventsAndKeys.swift */; };
 		EDC1BC6A2B0DD89400211F24 /* IntegrationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED157C4427CFD99700F22202 /* IntegrationPlugin.swift */; };
-		EDC1BC6E2B0DD89400211F24 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF592739119600E73142 /* Config.swift */; };
 		EDC1BC702B0DD89400211F24 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7EF332739119600E73142 /* API.swift */; };
 		EDC1BC722B0DD89400211F24 /* RSVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05631E291BEB0400BAEE65 /* RSVersion.swift */; };
 		EDC1BC7D2B0DD89400211F24 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D22BD27A45B6500EC8366 /* TypeAlias.swift */; };
@@ -335,17 +319,110 @@
 		EDC1BC892B0DD89400211F24 /* ContextPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D227C27A3F0C100EC8366 /* ContextPlugin.swift */; };
 		EDC1BC8A2B0DD89400211F24 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560388288316C2004B5BEC /* Data+Ext.swift */; };
 		EDC1BCA52B146A2D00211F24 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* ClientTests.swift */; };
-		EDC1BCAC2B146A2D00211F24 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageTests.swift */; };
+		EDC1BCAC2B146A2D00211F24 /* StorageWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageWorkerTests.swift */; };
 		EDC1BCB92B146A3800211F24 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* ClientTests.swift */; };
-		EDC1BCC02B146A3800211F24 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageTests.swift */; };
+		EDC1BCC02B146A3800211F24 /* StorageWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageWorkerTests.swift */; };
 		EDC1BCCD2B146A4E00211F24 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1327B27D614C400AFD833 /* ClientTests.swift */; };
-		EDC1BCD42B146A4E00211F24 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageTests.swift */; };
+		EDC1BCD42B146A4E00211F24 /* StorageWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageWorkerTests.swift */; };
 		EDC1BCDE2B14738F00211F24 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BCDD2B14738F00211F24 /* Logger.swift */; };
 		EDC1BCDF2B14738F00211F24 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BCDD2B14738F00211F24 /* Logger.swift */; };
 		EDC1BCE02B14738F00211F24 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BCDD2B14738F00211F24 /* Logger.swift */; };
 		EDC1BCE12B14738F00211F24 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC1BCDD2B14738F00211F24 /* Logger.swift */; };
-		EDD0C9672829199200470E88 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageTests.swift */; };
+		EDD0C9672829199200470E88 /* StorageWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0C9662829199200470E88 /* StorageWorkerTests.swift */; };
 		EDD3AA3627C659C80048E61E /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD3AA3527C659C80048E61E /* ReadWriteLock.swift */; };
+		EDEDC1332B6A02E70082C7E2 /* ClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */; };
+		EDEDC1342B6A02E70082C7E2 /* ClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */; };
+		EDEDC1352B6A02E70082C7E2 /* ClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */; };
+		EDEDC1362B6A02E70082C7E2 /* ClientRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */; };
+		EDEDC13A2B6B65C10082C7E2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1392B6B65C10082C7E2 /* Configuration.swift */; };
+		EDEDC13B2B6B65C10082C7E2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1392B6B65C10082C7E2 /* Configuration.swift */; };
+		EDEDC13C2B6B65C10082C7E2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1392B6B65C10082C7E2 /* Configuration.swift */; };
+		EDEDC13D2B6B65C10082C7E2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1392B6B65C10082C7E2 /* Configuration.swift */; };
+		EDEDC13F2B6B72AA0082C7E2 /* RSClientCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */; };
+		EDEDC1402B6B72AA0082C7E2 /* RSClientCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */; };
+		EDEDC1412B6B72AA0082C7E2 /* RSClientCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */; };
+		EDEDC1422B6B72AA0082C7E2 /* RSClientCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */; };
+		EDEDC1452B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */; };
+		EDEDC1462B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */; };
+		EDEDC1472B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */; };
+		EDEDC1482B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */; };
+		EDEDC1502B6CFC900082C7E2 /* StorageMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */; };
+		EDEDC1512B6CFC900082C7E2 /* StorageMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */; };
+		EDEDC1522B6CFC900082C7E2 /* StorageMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */; };
+		EDEDC1532B6CFC900082C7E2 /* StorageMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */; };
+		EDEDC1552B6D34D10082C7E2 /* StorageMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */; };
+		EDEDC1602B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */; };
+		EDEDC1612B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */; };
+		EDEDC1622B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */; };
+		EDEDC1632B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */; };
+		EDEDC1652B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */; };
+		EDEDC1662B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */; };
+		EDEDC1672B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */; };
+		EDEDC1682B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */; };
+		EDEDC16F2B6F667E0082C7E2 /* SQLiteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */; };
+		EDEDC1712B6FDFE20082C7E2 /* StorageMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */; };
+		EDEDC1722B6FDFE20082C7E2 /* StorageMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */; };
+		EDEDC1732B6FDFE30082C7E2 /* StorageMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */; };
+		EDEDC1742B6FDFEA0082C7E2 /* SQLiteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */; };
+		EDEDC1752B6FDFEA0082C7E2 /* SQLiteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */; };
+		EDEDC1762B6FDFEB0082C7E2 /* SQLiteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */; };
+		EDEDC1772B6FE0040082C7E2 /* URLSessionClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8ED14E2B4C2E5900DAE613 /* URLSessionClientTests.swift */; };
+		EDEDC17F2B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */; };
+		EDEDC1802B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */; };
+		EDEDC1812B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */; };
+		EDEDC1822B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */; };
+		EDEDC1882B70BCD90082C7E2 /* SQLiteDatabaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */; };
+		EDEDC1892B70BCDA0082C7E2 /* SQLiteDatabaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */; };
+		EDEDC18A2B70BCDA0082C7E2 /* SQLiteDatabaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */; };
+		EDEDC18B2B70BCDB0082C7E2 /* SQLiteDatabaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */; };
+		EDEDC18E2B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */; };
+		EDEDC18F2B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */; };
+		EDEDC1902B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */; };
+		EDEDC1912B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */; };
+		EDEDC1942B7212100082C7E2 /* RSClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */; };
+		EDEDC1952B7212100082C7E2 /* RSClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */; };
+		EDEDC1962B7212100082C7E2 /* RSClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */; };
+		EDEDC1972B7212100082C7E2 /* RSClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */; };
+		EDEDC19D2B721AFD0082C7E2 /* RSClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */; };
+		EDEDC19E2B721AFD0082C7E2 /* RSClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */; };
+		EDEDC19F2B721AFE0082C7E2 /* RSClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */; };
+		EDEDC1A02B721AFE0082C7E2 /* RSClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */; };
+		EDEDC1A62B722F060082C7E2 /* SessionStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */; };
+		EDEDC1A72B722F070082C7E2 /* SessionStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */; };
+		EDEDC1A82B722F070082C7E2 /* SessionStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */; };
+		EDEDC1A92B722F080082C7E2 /* SessionStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */; };
+		EDEDC1AC2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */; };
+		EDEDC1AD2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */; };
+		EDEDC1AE2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */; };
+		EDEDC1AF2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */; };
+		EDEDC1B12B7262270082C7E2 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B02B7262270082C7E2 /* LogLevel.swift */; };
+		EDEDC1B22B7262270082C7E2 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B02B7262270082C7E2 /* LogLevel.swift */; };
+		EDEDC1B32B7262270082C7E2 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B02B7262270082C7E2 /* LogLevel.swift */; };
+		EDEDC1B42B7262270082C7E2 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B02B7262270082C7E2 /* LogLevel.swift */; };
+		EDEDC1B62B7268060082C7E2 /* EventFilteringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */; };
+		EDEDC1B72B7268060082C7E2 /* EventFilteringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */; };
+		EDEDC1B82B7268060082C7E2 /* EventFilteringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */; };
+		EDEDC1B92B7268060082C7E2 /* EventFilteringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */; };
+		EDEDC1BB2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */; };
+		EDEDC1BC2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */; };
+		EDEDC1BD2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */; };
+		EDEDC1BE2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */; };
+		EDEDC1C12B7363230082C7E2 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */; };
+		EDEDC1C22B7363230082C7E2 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */; };
+		EDEDC1C32B7363230082C7E2 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */; };
+		EDEDC1C42B7363230082C7E2 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */; };
+		EDEDC1C62B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */; };
+		EDEDC1C72B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */; };
+		EDEDC1C82B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */; };
+		EDEDC1C92B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */; };
+		EDEDC1CB2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */; };
+		EDEDC1CC2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */; };
+		EDEDC1CD2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */; };
+		EDEDC1CE2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */; };
+		EDEDC1D02B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */; };
+		EDEDC1D12B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */; };
+		EDEDC1D22B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */; };
+		EDEDC1D32B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -435,10 +512,7 @@
 		ED8ED1562B4D1D2300DAE613 /* DataResidencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED8ED1B42B51483900DAE613 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		ED8ED1B92B51486E00DAE613 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDatabase.swift; sourceTree = "<group>"; };
-		ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultStorage.swift; sourceTree = "<group>"; };
 		ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageWorker.swift; sourceTree = "<group>"; };
-		ED8ED1D82B53B9F600DAE613 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		ED8ED1DD2B55361900DAE613 /* StoragePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePlugin.swift; sourceTree = "<group>"; };
 		ED8ED1EC2B55577F00DAE613 /* DataUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUpload.swift; sourceTree = "<group>"; };
 		ED8ED1F12B55585F00DAE613 /* DataUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUploader.swift; sourceTree = "<group>"; };
@@ -472,7 +546,6 @@
 		EDA7EF452739119600E73142 /* UserDefaultsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsWorker.swift; sourceTree = "<group>"; };
 		EDA7EF482739119600E73142 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		EDA7EF4F2739119600E73142 /* Rudder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rudder.h; sourceTree = "<group>"; };
-		EDA7EF592739119600E73142 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDC1327B27D614C400AFD833 /* ClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientTests.swift; sourceTree = "<group>"; };
 		EDC132A127D7D61D00AFD833 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		EDC1BC0D2B0DD87D00211F24 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -483,8 +556,32 @@
 		EDC1BCC82B146A3800211F24 /* RudderTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC1BCDC2B146A4E00211F24 /* RudderTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RudderTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC1BCDD2B14738F00211F24 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		EDD0C9662829199200470E88 /* StorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
+		EDD0C9662829199200470E88 /* StorageWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageWorkerTests.swift; sourceTree = "<group>"; };
 		EDD3AA3527C659C80048E61E /* ReadWriteLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
+		EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistry.swift; sourceTree = "<group>"; };
+		EDEDC1392B6B65C10082C7E2 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSClientCore.swift; sourceTree = "<group>"; };
+		EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMigrator.swift; sourceTree = "<group>"; };
+		EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMigration.swift; sourceTree = "<group>"; };
+		EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMigratorTests.swift; sourceTree = "<group>"; };
+		EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
+		EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteStorage.swift; sourceTree = "<group>"; };
+		EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteStorageTests.swift; sourceTree = "<group>"; };
+		EDEDC1792B7095D30082C7E2 /* ObjCRSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjCRSClient.swift; sourceTree = "<group>"; };
+		EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleInstanceTests.swift; sourceTree = "<group>"; };
+		EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabaseMock.swift; sourceTree = "<group>"; };
+		EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionPluginTests.swift; sourceTree = "<group>"; };
+		EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSClientProtocol.swift; sourceTree = "<group>"; };
+		EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSClientMock.swift; sourceTree = "<group>"; };
+		EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorageMock.swift; sourceTree = "<group>"; };
+		EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
+		EDEDC1B02B7262270082C7E2 /* LogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
+		EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFilteringTests.swift; sourceTree = "<group>"; };
+		EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayQueuePluginTests.swift; sourceTree = "<group>"; };
+		EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
+		EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLoggerTests.swift; sourceTree = "<group>"; };
+		EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLoggerMock.swift; sourceTree = "<group>"; };
+		EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintFunctionMock.swift; sourceTree = "<group>"; };
 		EDF7B3F927A80320001C0688 /* SampleBatchPayload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleBatchPayload.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -640,11 +737,16 @@
 		ED4082972B610CE1001F371F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				ED40829E2B610F1F001F371F /* CoreMocks.swift */,
-				ED4082AE2B61FEC2001F371F /* SourceConfigMock.swift */,
 				ED4082BD2B62404D001F371F /* APIClientMock.swift */,
-				ED40823B2B5E7615001F371F /* StorageMock.swift */,
+				EDEDC1CA2B736BEF0082C7E2 /* ConsoleLoggerMock.swift */,
+				ED40829E2B610F1F001F371F /* CoreMocks.swift */,
 				ED4082402B5E79A6001F371F /* NOLogger.swift */,
+				EDEDC1CF2B7373BC0082C7E2 /* PrintFunctionMock.swift */,
+				EDEDC1982B721AF80082C7E2 /* RSClientMock.swift */,
+				EDEDC1A12B7220660082C7E2 /* SessionStorageMock.swift */,
+				ED4082AE2B61FEC2001F371F /* SourceConfigMock.swift */,
+				EDEDC1832B70BCCA0082C7E2 /* SQLiteDatabaseMock.swift */,
+				ED40823B2B5E7615001F371F /* StorageMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -689,8 +791,11 @@
 			children = (
 				EDC1327B27D614C400AFD833 /* ClientTests.swift */,
 				ED8ED1562B4D1D2300DAE613 /* DataResidencyTests.swift */,
+				EDEDC17E2B70B08F0082C7E2 /* MultipleInstanceTests.swift */,
 				ED4082D42B63E1D8001F371F /* DataUpload */,
+				EDEDC1BF2B7362FC0082C7E2 /* Logger */,
 				ED4082F02B6663D1001F371F /* Networking */,
+				EDEDC18C2B7113810082C7E2 /* Plugins */,
 				ED4082D12B63E004001F371F /* Policies */,
 				ED4082DA2B656577001F371F /* SourceConfigDownload */,
 				ED4082EF2B6663CA001F371F /* Storage */,
@@ -720,7 +825,9 @@
 		ED4082EF2B6663CA001F371F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				EDD0C9662829199200470E88 /* StorageTests.swift */,
+				EDEDC16E2B6F667E0082C7E2 /* SQLiteStorageTests.swift */,
+				EDEDC1542B6D34D10082C7E2 /* StorageMigratorTests.swift */,
+				EDD0C9662829199200470E88 /* StorageWorkerTests.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -748,9 +855,9 @@
 		ED8ED19F2B4FCA3C00DAE613 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				ED8ED1B42B51483900DAE613 /* Database.swift */,
-				ED8ED1BE2B514B4B00DAE613 /* DefaultDatabase.swift */,
-				ED8ED1C32B514B6A00DAE613 /* DefaultStorage.swift */,
+				EDEDC1702B6F8D980082C7E2 /* Database */,
+				EDEDC14E2B6CFB2B0082C7E2 /* Migration */,
+				EDEDC1642B6E5A830082C7E2 /* SQLiteStorage.swift */,
 				ED8ED1B92B51486E00DAE613 /* Storage.swift */,
 				ED8ED1C82B514B8C00DAE613 /* StorageWorker.swift */,
 			);
@@ -761,19 +868,23 @@
 			isa = PBXGroup;
 			children = (
 				ED3D226227A3F0C100EC8366 /* RSClient.swift */,
-				ED8ED1D82B53B9F600DAE613 /* Controller.swift */,
+				EDEDC13E2B6B72AA0082C7E2 /* RSClientCore.swift */,
+				EDEDC1932B7212100082C7E2 /* RSClientProtocol.swift */,
+				EDEDC1322B6A02E70082C7E2 /* ClientRegistry.swift */,
 				ED8ED27F2B5A9AF300DAE613 /* Message.swift */,
 				ED8ED2372B590D3D00DAE613 /* PushNotifications.swift */,
 				ED4083142B67CE92001F371F /* ScreenRecording.swift */,
+				ED4083002B6772BE001F371F /* ApplicationState */,
 				EDD3AA3827C75ECF0048E61E /* Common */,
 				ED8ED1EB2B55573600DAE613 /* DataUpload */,
 				EDD3AA1727C656F90048E61E /* Domain */,
-				ED8ED1E82B55525600DAE613 /* SourceConfigDownload */,
 				EDD3AA3927C75F250048E61E /* Helpers */,
+				EDEDC1AA2B7261B80082C7E2 /* Logger */,
 				EDA7EF2E2739119600E73142 /* Networking */,
-				ED4083002B6772BE001F371F /* ApplicationState */,
+				EDEDC1782B7095B50082C7E2 /* ObjC */,
 				ED3D226327A3F0C100EC8366 /* Plugins */,
 				ED40822A2B5CEB53001F371F /* Policies */,
+				ED8ED1E82B55525600DAE613 /* SourceConfigDownload */,
 				ED8ED19F2B4FCA3C00DAE613 /* Storage */,
 			);
 			path = Core;
@@ -885,7 +996,7 @@
 		EDD3AA3727C659D20048E61E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EDA7EF592739119600E73142 /* Config.swift */,
+				EDEDC1392B6B65C10082C7E2 /* Configuration.swift */,
 				ED8ED2702B5A954200DAE613 /* Context.swift */,
 				ED8ED26B2B5A950B00DAE613 /* Option.swift */,
 				ED8ED27A2B5A99A400DAE613 /* StorageMessage.swift */,
@@ -910,7 +1021,6 @@
 				ED8ED23C2B590E8E00DAE613 /* Device.swift */,
 				EDC132A127D7D61D00AFD833 /* JSON.swift */,
 				ED8ED2522B5A348A00DAE613 /* KeyPath.swift */,
-				EDC1BCDD2B14738F00211F24 /* Logger.swift */,
 				ED8ED2052B5569B800DAE613 /* Reachability.swift */,
 				EDD3AA3527C659C80048E61E /* ReadWriteLock.swift */,
 				ED8ED2572B5A3BC200DAE613 /* SessionStorage.swift */,
@@ -918,6 +1028,61 @@
 				ED8ED2662B5A3D9D00DAE613 /* Utility.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		EDEDC14E2B6CFB2B0082C7E2 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				EDEDC14F2B6CFC900082C7E2 /* StorageMigration.swift */,
+				EDEDC1442B6CC90E0082C7E2 /* StorageMigrator.swift */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
+		EDEDC1702B6F8D980082C7E2 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				ED8ED1B42B51483900DAE613 /* Database.swift */,
+				EDEDC15F2B6E5A310082C7E2 /* SQLiteDatabase.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		EDEDC1782B7095B50082C7E2 /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				EDEDC1792B7095D30082C7E2 /* ObjCRSClient.swift */,
+			);
+			path = ObjC;
+			sourceTree = "<group>";
+		};
+		EDEDC18C2B7113810082C7E2 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				EDEDC1B52B7268060082C7E2 /* EventFilteringTests.swift */,
+				EDEDC18D2B71139F0082C7E2 /* UserSessionPluginTests.swift */,
+				EDEDC1BA2B728F600082C7E2 /* ReplayQueuePluginTests.swift */,
+			);
+			path = Plugins;
+			sourceTree = "<group>";
+		};
+		EDEDC1AA2B7261B80082C7E2 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				EDEDC1AB2B7261E50082C7E2 /* ConsoleLogger.swift */,
+				EDC1BCDD2B14738F00211F24 /* Logger.swift */,
+				EDEDC1B02B7262270082C7E2 /* LogLevel.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		EDEDC1BF2B7362FC0082C7E2 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				EDEDC1C52B7365B90082C7E2 /* ConsoleLoggerTests.swift */,
+				EDEDC1C02B7363230082C7E2 /* LoggerTests.swift */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1297,6 +1462,7 @@
 				ED8ED2582B5A3BC200DAE613 /* SessionStorage.swift in Sources */,
 				ED8ED1ED2B55577F00DAE613 /* DataUpload.swift in Sources */,
 				ED5372462B1613CE00D794EB /* LogMessages.swift in Sources */,
+				EDEDC1332B6A02E70082C7E2 /* ClientRegistry.swift in Sources */,
 				ED8ED1DE2B55361900DAE613 /* StoragePlugin.swift in Sources */,
 				ED8ED2062B5569B800DAE613 /* Reachability.swift in Sources */,
 				ED4083022B6772E6001F371F /* WatchApplicationState.swift in Sources */,
@@ -1309,11 +1475,12 @@
 				ED8ED14A2B456C4F00DAE613 /* Data+Gzip.swift in Sources */,
 				EDD3AA3627C659C80048E61E /* ReadWriteLock.swift in Sources */,
 				ED3D22A427A3F0C100EC8366 /* ReplayQueuePlugin.swift in Sources */,
-				ED8ED1C42B514B6A00DAE613 /* DefaultStorage.swift in Sources */,
+				EDEDC1652B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */,
 				ED277FA127421B06002A8FEA /* EventsAndKeys.swift in Sources */,
 				ED8ED2292B590C0900DAE613 /* InternalErrors.swift in Sources */,
 				ED4082312B5E601C001F371F /* EventFiltering.swift in Sources */,
 				ED8ED23D2B590E8E00DAE613 /* Device.swift in Sources */,
+				EDEDC13F2B6B72AA0082C7E2 /* RSClientCore.swift in Sources */,
 				ED4082A52B6150FE001F371F /* RetryPreset.swift in Sources */,
 				ED8ED26C2B5A950B00DAE613 /* Option.swift in Sources */,
 				ED40825D2B5EE968001F371F /* DestinationDefinition.swift in Sources */,
@@ -1321,18 +1488,20 @@
 				ED8ED2382B590D3D00DAE613 /* PushNotifications.swift in Sources */,
 				ED40825B2B5EE8DB001F371F /* Destination.swift in Sources */,
 				ED4082AA2B615147001F371F /* DownloadUploadRetryStrategy.swift in Sources */,
+				EDEDC1602B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */,
 				ED8ED1BA2B51486E00DAE613 /* Storage.swift in Sources */,
 				ED157C4527CFD99700F22202 /* IntegrationPlugin.swift in Sources */,
 				ED8ED2802B5A9AF300DAE613 /* Message.swift in Sources */,
 				ED4082882B60E25C001F371F /* Constants.swift in Sources */,
-				EDA7EF922739119600E73142 /* Config.swift in Sources */,
 				ED4082FC2B676B43001F371F /* PhoneApplicationState.swift in Sources */,
+				EDEDC1942B7212100082C7E2 /* RSClientProtocol.swift in Sources */,
 				EDA7EF752739119600E73142 /* API.swift in Sources */,
 				ED4082672B5FB736001F371F /* DataResidency.swift in Sources */,
 				ED8ED2712B5A954200DAE613 /* Context.swift in Sources */,
 				ED4082572B5EE8D3001F371F /* SourceConfig.swift in Sources */,
 				ED4082262B5BBBB4001F371F /* RetryPolicy.swift in Sources */,
 				ED05631F291BEB0400BAEE65 /* RSVersion.swift in Sources */,
+				EDEDC13A2B6B65C10082C7E2 /* Configuration.swift in Sources */,
 				ED8ED2762B5A987500DAE613 /* UserInfo.swift in Sources */,
 				ED8ED21A2B581E8700DAE613 /* SourceConfigDownloader.swift in Sources */,
 				ED3D22BE27A45B6500EC8366 /* TypeAlias.swift in Sources */,
@@ -1340,15 +1509,17 @@
 				ED8ED2242B58E76200DAE613 /* SourceConfigDownloadWorker.swift in Sources */,
 				EDA7EF842739119600E73142 /* UserDefaultsWorker.swift in Sources */,
 				ED8ED2012B55689300DAE613 /* DownloadUploadBlockers.swift in Sources */,
+				EDEDC1502B6CFC900082C7E2 /* StorageMigration.swift in Sources */,
 				EDA7EF862739119600E73142 /* String+Ext.swift in Sources */,
 				ED3D22AB27A3F0C100EC8366 /* Plugins.swift in Sources */,
-				ED8ED1D92B53B9F600DAE613 /* Controller.swift in Sources */,
+				EDEDC1452B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */,
 				ED4082E12B66058E001F371F /* SourceConfigDownload.swift in Sources */,
+				EDEDC1B12B7262270082C7E2 /* LogLevel.swift in Sources */,
 				ED3D229427A3F0C100EC8366 /* RSClient.swift in Sources */,
-				ED8ED1BF2B514B4C00DAE613 /* DefaultDatabase.swift in Sources */,
 				ED4083152B67CE92001F371F /* ScreenRecording.swift in Sources */,
 				EDC1BCDE2B14738F00211F24 /* Logger.swift in Sources */,
 				ED3D22A627A3F0C100EC8366 /* ContextPlugin.swift in Sources */,
+				EDEDC1AC2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */,
 				ED4082F72B6767FF001F371F /* ApplicationState.swift in Sources */,
 				ED8ED1F22B55585F00DAE613 /* DataUploader.swift in Sources */,
 				ED560389288316C2004B5BEC /* Data+Ext.swift in Sources */,
@@ -1363,21 +1534,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED4082DC2B6565C0001F371F /* SourceConfigDownloadWorkerTests.swift in Sources */,
+				EDEDC1C62B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */,
+				EDEDC18E2B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */,
 				ED4082AF2B61FEC2001F371F /* SourceConfigMock.swift in Sources */,
 				EDC1327C27D614C400AFD833 /* ClientTests.swift in Sources */,
 				ED40823C2B5E7615001F371F /* StorageMock.swift in Sources */,
 				ED4082412B5E79A6001F371F /* NOLogger.swift in Sources */,
 				ED40829A2B610E9E001F371F /* Mocks.swift in Sources */,
+				EDEDC17F2B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */,
+				EDEDC1CB2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */,
 				ED8ED1882B4D24A100DAE613 /* TestUtils.swift in Sources */,
 				ED4082F22B666936001F371F /* ServiceManagerTests.swift in Sources */,
 				ED4082CD2B63A384001F371F /* RetryPolicyTests.swift in Sources */,
+				EDEDC1BB2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */,
+				EDEDC19D2B721AFD0082C7E2 /* RSClientMock.swift in Sources */,
 				ED4082BE2B62404D001F371F /* APIClientMock.swift in Sources */,
+				EDEDC1B62B7268060082C7E2 /* EventFilteringTests.swift in Sources */,
 				ED4082E62B663015001F371F /* SourceConfigDownloaderTests.swift in Sources */,
+				EDEDC1A62B722F060082C7E2 /* SessionStorageMock.swift in Sources */,
 				ED4082C32B624E58001F371F /* DataUploadWorkerTests.swift in Sources */,
 				ED8ED14F2B4C2E5900DAE613 /* URLSessionClientTests.swift in Sources */,
+				EDEDC1C12B7363230082C7E2 /* LoggerTests.swift in Sources */,
+				EDEDC1882B70BCD90082C7E2 /* SQLiteDatabaseMock.swift in Sources */,
+				EDEDC16F2B6F667E0082C7E2 /* SQLiteStorageTests.swift in Sources */,
+				EDEDC1552B6D34D10082C7E2 /* StorageMigratorTests.swift in Sources */,
 				ED40826F2B5FC0C3001F371F /* DataResidencyTests.swift in Sources */,
-				EDD0C9672829199200470E88 /* StorageTests.swift in Sources */,
+				EDD0C9672829199200470E88 /* StorageWorkerTests.swift in Sources */,
 				ED4082EB2B663A41001F371F /* SourceConfigDownloadTests.swift in Sources */,
+				EDEDC1D02B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */,
 				ED40829F2B610F20001F371F /* CoreMocks.swift in Sources */,
 				ED4082D62B63E253001F371F /* DataUploaderTests.swift in Sources */,
 			);
@@ -1394,6 +1578,7 @@
 				EDC1BBCE2B0DD87D00211F24 /* JSON.swift in Sources */,
 				ED8ED25B2B5A3BC200DAE613 /* SessionStorage.swift in Sources */,
 				ED8ED1F02B55577F00DAE613 /* DataUpload.swift in Sources */,
+				EDEDC1362B6A02E70082C7E2 /* ClientRegistry.swift in Sources */,
 				ED5372492B1613CE00D794EB /* LogMessages.swift in Sources */,
 				ED8ED1E12B55361900DAE613 /* StoragePlugin.swift in Sources */,
 				ED8ED2092B5569B800DAE613 /* Reachability.swift in Sources */,
@@ -1406,11 +1591,12 @@
 				ED8ED2182B580B6A00DAE613 /* FlushPolicy.swift in Sources */,
 				ED8ED14D2B456C4F00DAE613 /* Data+Gzip.swift in Sources */,
 				ED40830A2B6772F4001F371F /* MacApplicationState.swift in Sources */,
+				EDEDC1682B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */,
 				EDC1BBDC2B0DD87D00211F24 /* ReadWriteLock.swift in Sources */,
 				EDC1BBDD2B0DD87D00211F24 /* ReplayQueuePlugin.swift in Sources */,
-				ED8ED1C72B514B6A00DAE613 /* DefaultStorage.swift in Sources */,
 				EDC1BBDF2B0DD87D00211F24 /* EventsAndKeys.swift in Sources */,
 				ED8ED22C2B590C0900DAE613 /* InternalErrors.swift in Sources */,
+				EDEDC1422B6B72AA0082C7E2 /* RSClientCore.swift in Sources */,
 				ED4082342B5E601C001F371F /* EventFiltering.swift in Sources */,
 				ED8ED2402B590E8E00DAE613 /* Device.swift in Sources */,
 				ED4082A82B6150FE001F371F /* RetryPreset.swift in Sources */,
@@ -1418,18 +1604,20 @@
 				ED4082602B5EE968001F371F /* DestinationDefinition.swift in Sources */,
 				ED8ED27E2B5A99A400DAE613 /* StorageMessage.swift in Sources */,
 				ED8ED23B2B590D3D00DAE613 /* PushNotifications.swift in Sources */,
+				EDEDC1632B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */,
 				ED4082582B5EE8D9001F371F /* Destination.swift in Sources */,
 				ED4082AD2B615147001F371F /* DownloadUploadRetryStrategy.swift in Sources */,
 				ED8ED1BD2B51486E00DAE613 /* Storage.swift in Sources */,
 				EDC1BBE02B0DD87D00211F24 /* IntegrationPlugin.swift in Sources */,
 				ED8ED2832B5A9AF300DAE613 /* Message.swift in Sources */,
+				EDEDC1972B7212100082C7E2 /* RSClientProtocol.swift in Sources */,
 				ED40828B2B60E25C001F371F /* Constants.swift in Sources */,
-				EDC1BBE42B0DD87D00211F24 /* Config.swift in Sources */,
 				EDC1BBE62B0DD87D00211F24 /* API.swift in Sources */,
 				ED40826A2B5FB736001F371F /* DataResidency.swift in Sources */,
 				ED8ED2742B5A954200DAE613 /* Context.swift in Sources */,
 				ED4082542B5EE8D1001F371F /* SourceConfig.swift in Sources */,
 				ED4082292B5BBBB4001F371F /* RetryPolicy.swift in Sources */,
+				EDEDC13D2B6B65C10082C7E2 /* Configuration.swift in Sources */,
 				EDC1BBE82B0DD87D00211F24 /* RSVersion.swift in Sources */,
 				ED8ED2792B5A987500DAE613 /* UserInfo.swift in Sources */,
 				ED8ED21D2B581E8700DAE613 /* SourceConfigDownloader.swift in Sources */,
@@ -1437,15 +1625,17 @@
 				ED8ED2272B58E76200DAE613 /* SourceConfigDownloadWorker.swift in Sources */,
 				EDC1BBF52B0DD87D00211F24 /* UserDefaultsWorker.swift in Sources */,
 				ED8ED2042B55689300DAE613 /* DownloadUploadBlockers.swift in Sources */,
+				EDEDC1532B6CFC900082C7E2 /* StorageMigration.swift in Sources */,
 				EDC1BBF92B0DD87D00211F24 /* String+Ext.swift in Sources */,
 				EDC1BBFA2B0DD87D00211F24 /* Plugins.swift in Sources */,
-				ED8ED1DC2B53B9F600DAE613 /* Controller.swift in Sources */,
+				EDEDC1482B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */,
 				ED4082E42B66058E001F371F /* SourceConfigDownload.swift in Sources */,
+				EDEDC1B42B7262270082C7E2 /* LogLevel.swift in Sources */,
 				EDC1BBFC2B0DD87D00211F24 /* RSClient.swift in Sources */,
-				ED8ED1C22B514B4C00DAE613 /* DefaultDatabase.swift in Sources */,
 				ED4083182B67CE92001F371F /* ScreenRecording.swift in Sources */,
 				EDC1BCE12B14738F00211F24 /* Logger.swift in Sources */,
 				EDC1BBFF2B0DD87D00211F24 /* ContextPlugin.swift in Sources */,
+				EDEDC1AF2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */,
 				ED4082FA2B6767FF001F371F /* ApplicationState.swift in Sources */,
 				ED8ED1F52B55585F00DAE613 /* DataUploader.swift in Sources */,
 				EDC1BC002B0DD87D00211F24 /* Data+Ext.swift in Sources */,
@@ -1466,6 +1656,7 @@
 				EDC1BC132B0DD88A00211F24 /* JSON.swift in Sources */,
 				ED8ED2592B5A3BC200DAE613 /* SessionStorage.swift in Sources */,
 				ED8ED1EE2B55577F00DAE613 /* DataUpload.swift in Sources */,
+				EDEDC1342B6A02E70082C7E2 /* ClientRegistry.swift in Sources */,
 				ED5372472B1613CE00D794EB /* LogMessages.swift in Sources */,
 				ED8ED1DF2B55361900DAE613 /* StoragePlugin.swift in Sources */,
 				ED8ED2072B5569B800DAE613 /* Reachability.swift in Sources */,
@@ -1478,11 +1669,12 @@
 				ED8ED2162B580B6A00DAE613 /* FlushPolicy.swift in Sources */,
 				ED8ED14B2B456C4F00DAE613 /* Data+Gzip.swift in Sources */,
 				ED4083082B6772F4001F371F /* MacApplicationState.swift in Sources */,
+				EDEDC1662B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */,
 				EDC1BC212B0DD88A00211F24 /* ReadWriteLock.swift in Sources */,
 				EDC1BC222B0DD88A00211F24 /* ReplayQueuePlugin.swift in Sources */,
-				ED8ED1C52B514B6A00DAE613 /* DefaultStorage.swift in Sources */,
 				EDC1BC242B0DD88A00211F24 /* EventsAndKeys.swift in Sources */,
 				ED8ED22A2B590C0900DAE613 /* InternalErrors.swift in Sources */,
+				EDEDC1402B6B72AA0082C7E2 /* RSClientCore.swift in Sources */,
 				ED4082322B5E601C001F371F /* EventFiltering.swift in Sources */,
 				ED8ED23E2B590E8E00DAE613 /* Device.swift in Sources */,
 				ED4082A62B6150FE001F371F /* RetryPreset.swift in Sources */,
@@ -1490,18 +1682,20 @@
 				ED40825E2B5EE968001F371F /* DestinationDefinition.swift in Sources */,
 				ED8ED27C2B5A99A400DAE613 /* StorageMessage.swift in Sources */,
 				ED8ED2392B590D3D00DAE613 /* PushNotifications.swift in Sources */,
+				EDEDC1612B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */,
 				ED40825A2B5EE8DA001F371F /* Destination.swift in Sources */,
 				ED4082AB2B615147001F371F /* DownloadUploadRetryStrategy.swift in Sources */,
 				ED8ED1BB2B51486E00DAE613 /* Storage.swift in Sources */,
 				EDC1BC252B0DD88A00211F24 /* IntegrationPlugin.swift in Sources */,
 				ED8ED2812B5A9AF300DAE613 /* Message.swift in Sources */,
+				EDEDC1952B7212100082C7E2 /* RSClientProtocol.swift in Sources */,
 				ED4082892B60E25C001F371F /* Constants.swift in Sources */,
-				EDC1BC292B0DD88A00211F24 /* Config.swift in Sources */,
 				EDC1BC2B2B0DD88A00211F24 /* API.swift in Sources */,
 				ED4082682B5FB736001F371F /* DataResidency.swift in Sources */,
 				ED8ED2722B5A954200DAE613 /* Context.swift in Sources */,
 				ED4082562B5EE8D3001F371F /* SourceConfig.swift in Sources */,
 				ED4082272B5BBBB4001F371F /* RetryPolicy.swift in Sources */,
+				EDEDC13B2B6B65C10082C7E2 /* Configuration.swift in Sources */,
 				EDC1BC2D2B0DD88A00211F24 /* RSVersion.swift in Sources */,
 				ED8ED2772B5A987500DAE613 /* UserInfo.swift in Sources */,
 				ED8ED21B2B581E8700DAE613 /* SourceConfigDownloader.swift in Sources */,
@@ -1509,15 +1703,17 @@
 				ED8ED2252B58E76200DAE613 /* SourceConfigDownloadWorker.swift in Sources */,
 				EDC1BC3A2B0DD88A00211F24 /* UserDefaultsWorker.swift in Sources */,
 				ED8ED2022B55689300DAE613 /* DownloadUploadBlockers.swift in Sources */,
+				EDEDC1512B6CFC900082C7E2 /* StorageMigration.swift in Sources */,
 				EDC1BC3E2B0DD88A00211F24 /* String+Ext.swift in Sources */,
 				EDC1BC3F2B0DD88A00211F24 /* Plugins.swift in Sources */,
-				ED8ED1DA2B53B9F600DAE613 /* Controller.swift in Sources */,
+				EDEDC1462B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */,
 				ED4082E22B66058E001F371F /* SourceConfigDownload.swift in Sources */,
+				EDEDC1B22B7262270082C7E2 /* LogLevel.swift in Sources */,
 				EDC1BC412B0DD88A00211F24 /* RSClient.swift in Sources */,
-				ED8ED1C02B514B4C00DAE613 /* DefaultDatabase.swift in Sources */,
 				ED4083162B67CE92001F371F /* ScreenRecording.swift in Sources */,
 				EDC1BCDF2B14738F00211F24 /* Logger.swift in Sources */,
 				EDC1BC442B0DD88A00211F24 /* ContextPlugin.swift in Sources */,
+				EDEDC1AD2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */,
 				ED4082F82B6767FF001F371F /* ApplicationState.swift in Sources */,
 				ED8ED1F32B55585F00DAE613 /* DataUploader.swift in Sources */,
 				EDC1BC452B0DD88A00211F24 /* Data+Ext.swift in Sources */,
@@ -1538,6 +1734,7 @@
 				EDC1BC582B0DD89400211F24 /* JSON.swift in Sources */,
 				ED8ED25A2B5A3BC200DAE613 /* SessionStorage.swift in Sources */,
 				ED8ED1EF2B55577F00DAE613 /* DataUpload.swift in Sources */,
+				EDEDC1352B6A02E70082C7E2 /* ClientRegistry.swift in Sources */,
 				ED5372482B1613CE00D794EB /* LogMessages.swift in Sources */,
 				ED8ED1E02B55361900DAE613 /* StoragePlugin.swift in Sources */,
 				ED8ED2082B5569B800DAE613 /* Reachability.swift in Sources */,
@@ -1550,11 +1747,12 @@
 				ED8ED2172B580B6A00DAE613 /* FlushPolicy.swift in Sources */,
 				ED8ED14C2B456C4F00DAE613 /* Data+Gzip.swift in Sources */,
 				ED4083092B6772F4001F371F /* MacApplicationState.swift in Sources */,
+				EDEDC1672B6E5A830082C7E2 /* SQLiteStorage.swift in Sources */,
 				EDC1BC662B0DD89400211F24 /* ReadWriteLock.swift in Sources */,
 				EDC1BC672B0DD89400211F24 /* ReplayQueuePlugin.swift in Sources */,
-				ED8ED1C62B514B6A00DAE613 /* DefaultStorage.swift in Sources */,
 				EDC1BC692B0DD89400211F24 /* EventsAndKeys.swift in Sources */,
 				ED8ED22B2B590C0900DAE613 /* InternalErrors.swift in Sources */,
+				EDEDC1412B6B72AA0082C7E2 /* RSClientCore.swift in Sources */,
 				ED4082332B5E601C001F371F /* EventFiltering.swift in Sources */,
 				ED8ED23F2B590E8E00DAE613 /* Device.swift in Sources */,
 				ED4082A72B6150FE001F371F /* RetryPreset.swift in Sources */,
@@ -1562,18 +1760,20 @@
 				ED40825F2B5EE968001F371F /* DestinationDefinition.swift in Sources */,
 				ED8ED27D2B5A99A400DAE613 /* StorageMessage.swift in Sources */,
 				ED8ED23A2B590D3D00DAE613 /* PushNotifications.swift in Sources */,
+				EDEDC1622B6E5A310082C7E2 /* SQLiteDatabase.swift in Sources */,
 				ED4082592B5EE8D9001F371F /* Destination.swift in Sources */,
 				ED4082AC2B615147001F371F /* DownloadUploadRetryStrategy.swift in Sources */,
 				ED8ED1BC2B51486E00DAE613 /* Storage.swift in Sources */,
 				EDC1BC6A2B0DD89400211F24 /* IntegrationPlugin.swift in Sources */,
 				ED8ED2822B5A9AF300DAE613 /* Message.swift in Sources */,
+				EDEDC1962B7212100082C7E2 /* RSClientProtocol.swift in Sources */,
 				ED40828A2B60E25C001F371F /* Constants.swift in Sources */,
-				EDC1BC6E2B0DD89400211F24 /* Config.swift in Sources */,
 				EDC1BC702B0DD89400211F24 /* API.swift in Sources */,
 				ED4082692B5FB736001F371F /* DataResidency.swift in Sources */,
 				ED8ED2732B5A954200DAE613 /* Context.swift in Sources */,
 				ED4082552B5EE8D2001F371F /* SourceConfig.swift in Sources */,
 				ED4082282B5BBBB4001F371F /* RetryPolicy.swift in Sources */,
+				EDEDC13C2B6B65C10082C7E2 /* Configuration.swift in Sources */,
 				EDC1BC722B0DD89400211F24 /* RSVersion.swift in Sources */,
 				ED8ED2782B5A987500DAE613 /* UserInfo.swift in Sources */,
 				ED8ED21C2B581E8700DAE613 /* SourceConfigDownloader.swift in Sources */,
@@ -1581,15 +1781,17 @@
 				ED8ED2262B58E76200DAE613 /* SourceConfigDownloadWorker.swift in Sources */,
 				EDC1BC7F2B0DD89400211F24 /* UserDefaultsWorker.swift in Sources */,
 				ED8ED2032B55689300DAE613 /* DownloadUploadBlockers.swift in Sources */,
+				EDEDC1522B6CFC900082C7E2 /* StorageMigration.swift in Sources */,
 				EDC1BC832B0DD89400211F24 /* String+Ext.swift in Sources */,
 				EDC1BC842B0DD89400211F24 /* Plugins.swift in Sources */,
-				ED8ED1DB2B53B9F600DAE613 /* Controller.swift in Sources */,
+				EDEDC1472B6CC90E0082C7E2 /* StorageMigrator.swift in Sources */,
 				ED4082E32B66058E001F371F /* SourceConfigDownload.swift in Sources */,
+				EDEDC1B32B7262270082C7E2 /* LogLevel.swift in Sources */,
 				EDC1BC862B0DD89400211F24 /* RSClient.swift in Sources */,
-				ED8ED1C12B514B4C00DAE613 /* DefaultDatabase.swift in Sources */,
 				ED4083172B67CE92001F371F /* ScreenRecording.swift in Sources */,
 				EDC1BCE02B14738F00211F24 /* Logger.swift in Sources */,
 				EDC1BC892B0DD89400211F24 /* ContextPlugin.swift in Sources */,
+				EDEDC1AE2B7261E50082C7E2 /* ConsoleLogger.swift in Sources */,
 				ED4082F92B6767FF001F371F /* ApplicationState.swift in Sources */,
 				ED8ED1F42B55585F00DAE613 /* DataUploader.swift in Sources */,
 				EDC1BC8A2B0DD89400211F24 /* Data+Ext.swift in Sources */,
@@ -1604,20 +1806,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDC1BCA52B146A2D00211F24 /* ClientTests.swift in Sources */,
+				EDEDC1C82B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */,
+				EDEDC1902B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */,
 				ED40823E2B5E7615001F371F /* StorageMock.swift in Sources */,
 				ED4082CF2B63A384001F371F /* RetryPolicyTests.swift in Sources */,
 				ED4082432B5E79A6001F371F /* NOLogger.swift in Sources */,
 				ED4082ED2B663A41001F371F /* SourceConfigDownloadTests.swift in Sources */,
 				ED4082A12B610F20001F371F /* CoreMocks.swift in Sources */,
+				EDEDC1812B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */,
+				EDEDC1CD2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */,
+				EDEDC1752B6FDFEA0082C7E2 /* SQLiteStorageTests.swift in Sources */,
 				ED4082DE2B6565C0001F371F /* SourceConfigDownloadWorkerTests.swift in Sources */,
 				ED4082F42B666936001F371F /* ServiceManagerTests.swift in Sources */,
+				EDEDC1BD2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */,
+				EDEDC19F2B721AFE0082C7E2 /* RSClientMock.swift in Sources */,
 				ED4082B12B61FEC2001F371F /* SourceConfigMock.swift in Sources */,
+				EDEDC1B82B7268060082C7E2 /* EventFilteringTests.swift in Sources */,
 				ED4082E82B663015001F371F /* SourceConfigDownloaderTests.swift in Sources */,
+				EDEDC1A82B722F070082C7E2 /* SessionStorageMock.swift in Sources */,
+				EDEDC1722B6FDFE20082C7E2 /* StorageMigratorTests.swift in Sources */,
 				ED8ED18A2B4D24A200DAE613 /* TestUtils.swift in Sources */,
+				EDEDC1C32B7363230082C7E2 /* LoggerTests.swift in Sources */,
+				EDEDC18A2B70BCDA0082C7E2 /* SQLiteDatabaseMock.swift in Sources */,
 				ED4082712B5FC0C4001F371F /* DataResidencyTests.swift in Sources */,
 				ED4082C02B62404D001F371F /* APIClientMock.swift in Sources */,
+				EDEDC1772B6FE0040082C7E2 /* URLSessionClientTests.swift in Sources */,
 				ED4082D82B63E253001F371F /* DataUploaderTests.swift in Sources */,
-				EDC1BCAC2B146A2D00211F24 /* StorageTests.swift in Sources */,
+				EDC1BCAC2B146A2D00211F24 /* StorageWorkerTests.swift in Sources */,
+				EDEDC1D22B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */,
 				ED40829C2B610E9E001F371F /* Mocks.swift in Sources */,
 				ED4082C52B624E58001F371F /* DataUploadWorkerTests.swift in Sources */,
 			);
@@ -1628,21 +1844,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED4082DD2B6565C0001F371F /* SourceConfigDownloadWorkerTests.swift in Sources */,
+				EDEDC1C72B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */,
+				EDEDC18F2B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */,
 				ED4082B02B61FEC2001F371F /* SourceConfigMock.swift in Sources */,
 				EDC1BCB92B146A3800211F24 /* ClientTests.swift in Sources */,
 				ED40823D2B5E7615001F371F /* StorageMock.swift in Sources */,
 				ED4082422B5E79A6001F371F /* NOLogger.swift in Sources */,
 				ED40829B2B610E9E001F371F /* Mocks.swift in Sources */,
+				EDEDC1802B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */,
+				EDEDC1CC2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */,
 				ED8ED1892B4D24A200DAE613 /* TestUtils.swift in Sources */,
 				ED4082F32B666936001F371F /* ServiceManagerTests.swift in Sources */,
 				ED4082CE2B63A384001F371F /* RetryPolicyTests.swift in Sources */,
+				EDEDC1BC2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */,
+				EDEDC19E2B721AFD0082C7E2 /* RSClientMock.swift in Sources */,
 				ED4082BF2B62404D001F371F /* APIClientMock.swift in Sources */,
+				EDEDC1B72B7268060082C7E2 /* EventFilteringTests.swift in Sources */,
 				ED4082E72B663015001F371F /* SourceConfigDownloaderTests.swift in Sources */,
+				EDEDC1A72B722F070082C7E2 /* SessionStorageMock.swift in Sources */,
 				ED4082C42B624E58001F371F /* DataUploadWorkerTests.swift in Sources */,
 				ED8ED1502B4C2E5900DAE613 /* URLSessionClientTests.swift in Sources */,
+				EDEDC1C22B7363230082C7E2 /* LoggerTests.swift in Sources */,
+				EDEDC1892B70BCDA0082C7E2 /* SQLiteDatabaseMock.swift in Sources */,
+				EDEDC1742B6FDFEA0082C7E2 /* SQLiteStorageTests.swift in Sources */,
 				ED4082702B5FC0C3001F371F /* DataResidencyTests.swift in Sources */,
-				EDC1BCC02B146A3800211F24 /* StorageTests.swift in Sources */,
+				EDC1BCC02B146A3800211F24 /* StorageWorkerTests.swift in Sources */,
+				EDEDC1712B6FDFE20082C7E2 /* StorageMigratorTests.swift in Sources */,
 				ED4082EC2B663A41001F371F /* SourceConfigDownloadTests.swift in Sources */,
+				EDEDC1D12B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */,
 				ED4082A02B610F20001F371F /* CoreMocks.swift in Sources */,
 				ED4082D72B63E253001F371F /* DataUploaderTests.swift in Sources */,
 			);
@@ -1653,21 +1882,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDC1BCCD2B146A4E00211F24 /* ClientTests.swift in Sources */,
+				EDEDC1C92B7365B90082C7E2 /* ConsoleLoggerTests.swift in Sources */,
+				EDEDC1912B71139F0082C7E2 /* UserSessionPluginTests.swift in Sources */,
 				ED40823F2B5E7615001F371F /* StorageMock.swift in Sources */,
 				ED4082D02B63A384001F371F /* RetryPolicyTests.swift in Sources */,
 				ED4082442B5E79A6001F371F /* NOLogger.swift in Sources */,
 				ED4082C62B624E58001F371F /* DataUploadWorkerTests.swift in Sources */,
 				ED4082E92B663015001F371F /* SourceConfigDownloaderTests.swift in Sources */,
+				EDEDC1822B70B08F0082C7E2 /* MultipleInstanceTests.swift in Sources */,
+				EDEDC1CE2B736BEF0082C7E2 /* ConsoleLoggerMock.swift in Sources */,
 				ED8ED18B2B4D24A300DAE613 /* TestUtils.swift in Sources */,
 				ED4082722B5FC0C4001F371F /* DataResidencyTests.swift in Sources */,
 				ED4082C12B62404D001F371F /* APIClientMock.swift in Sources */,
+				EDEDC1BE2B728F600082C7E2 /* ReplayQueuePluginTests.swift in Sources */,
+				EDEDC1A02B721AFE0082C7E2 /* RSClientMock.swift in Sources */,
 				ED4082EE2B663A41001F371F /* SourceConfigDownloadTests.swift in Sources */,
+				EDEDC1B92B7268060082C7E2 /* EventFilteringTests.swift in Sources */,
 				ED4082B22B61FEC2001F371F /* SourceConfigMock.swift in Sources */,
+				EDEDC1A92B722F080082C7E2 /* SessionStorageMock.swift in Sources */,
 				ED40829D2B610E9E001F371F /* Mocks.swift in Sources */,
 				ED8ED1512B4C2E5900DAE613 /* URLSessionClientTests.swift in Sources */,
-				EDC1BCD42B146A4E00211F24 /* StorageTests.swift in Sources */,
+				EDEDC1C42B7363230082C7E2 /* LoggerTests.swift in Sources */,
+				EDEDC18B2B70BCDB0082C7E2 /* SQLiteDatabaseMock.swift in Sources */,
+				EDEDC1762B6FDFEB0082C7E2 /* SQLiteStorageTests.swift in Sources */,
+				EDC1BCD42B146A4E00211F24 /* StorageWorkerTests.swift in Sources */,
 				ED4082F52B666936001F371F /* ServiceManagerTests.swift in Sources */,
+				EDEDC1732B6FDFE30082C7E2 /* StorageMigratorTests.swift in Sources */,
 				ED4082A22B610F20001F371F /* CoreMocks.swift in Sources */,
+				EDEDC1D32B7373BC0082C7E2 /* PrintFunctionMock.swift in Sources */,
 				ED4082DF2B6565C0001F371F /* SourceConfigDownloadWorkerTests.swift in Sources */,
 				ED4082D92B63E253001F371F /* DataUploaderTests.swift in Sources */,
 			);

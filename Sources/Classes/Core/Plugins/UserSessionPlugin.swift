@@ -7,139 +7,183 @@
 
 import Foundation
 
-class UserSessionPlugin: Plugin {
-    var sourceConfig: SourceConfig?
+struct UserSessionPresets {
+    let userDefaultsWorker: UserDefaultsWorkerProtocol
+    let configuration: Configuration
+
+    var isNewSessionStarted = false
     
-    var type: PluginType = .default
-    
-    var client: RSClient? {
-        didSet {
-            setUp()
+    var sessionId: Int? {
+        get {
+            userDefaultsWorker.read(.sessionId)
+        }
+        set {
+            if newValue == nil {
+                userDefaultsWorker.remove(.sessionId)
+            } else {
+                userDefaultsWorker.write(.sessionId, value: newValue)
+            }
         }
     }
     
-    private var userDefaults: UserDefaultsWorkerType?
-    private var sessionTimeOut: Int?
-    private var isNewSessionStarted = false
-    
-    var sessionId: Int? {
-        userDefaults?.read(.sessionId)
+    var lastEventTimeStamp: Int? {
+        get {
+            userDefaultsWorker.read(.lastEventTimeStamp)
+        }
+        set {
+            if newValue == nil {
+                userDefaultsWorker.remove(.lastEventTimeStamp)
+            } else {
+                userDefaultsWorker.write(.lastEventTimeStamp, value: newValue)
+            }
+        }
     }
     
-    private var lastEventTimeStamp: Int? {
-        userDefaults?.read(.lastEventTimeStamp)
+    var automaticSessionTrackingStatus: Bool {
+        get {
+            userDefaultsWorker.read(.automaticSessionTrackingStatus) ?? false
+        }
+        set {
+            userDefaultsWorker.write(.automaticSessionTrackingStatus, value: newValue)
+        }
     }
     
-    private var automaticSessionTrackingStatus: Bool {
-        userDefaults?.read(.automaticSessionTrackingStatus) ?? false
+    var sessionStoppedStatus: Bool {
+        get {
+            userDefaultsWorker.read(.sessionStoppedStatus) ?? false
+        }
+        set {
+            userDefaultsWorker.write(.sessionStoppedStatus, value: newValue)
+        }
     }
     
-    private var sessionStoppedStatus: Bool {
-        userDefaults?.read(.sessionStoppedStatus) ?? false
+    var manualSessionTrackingStatus: Bool {
+        get {
+            userDefaultsWorker.read(.manualSessionTrackingStatus) ?? false
+        }
+        set {
+            userDefaultsWorker.write(.manualSessionTrackingStatus, value: newValue)
+        }
     }
     
-    private var manualSessionTrackingStatus: Bool {
-        userDefaults?.read(.manualSessionTrackingStatus) ?? false
-    }
-    
-    private var isSessionTrackingAllowed: Bool {
+    var isSessionTrackingAllowed: Bool {
         if !sessionStoppedStatus && (manualSessionTrackingStatus || isAutomaticSessionTrackingAllowed) {
             return true
         }
         return false
     }
     
-    private var isAutomaticSessionTrackingAllowed: Bool {
-        guard let config = client?.config, config.trackLifecycleEvents, config.automaticSessionTracking else {
-            return false
-        }
-        return true
+    var isAutomaticSessionTrackingAllowed: Bool {
+        return configuration.trackLifecycleEvents && configuration.automaticSessionTracking
     }
     
+    var isSessionExpired: Bool {
+        guard let lastEventTimeStamp = self.lastEventTimeStamp else {
+            return true
+        }
+        
+        let timeDifference: TimeInterval = TimeInterval(abs(Utility.getTimeStamp() - lastEventTimeStamp))
+        return timeDifference >= Double(configuration.sessionTimeOut / 1000)
+    }
+    
+    init(userDefaultsWorker: UserDefaultsWorkerProtocol, configuration: Configuration) {
+        self.userDefaultsWorker = userDefaultsWorker
+        self.configuration = configuration
+    }
+}
+
+class UserSessionPlugin: Plugin {
+    var sourceConfig: SourceConfig?
+    
+    var type: PluginType = .default
+    
+    var client: RSClientProtocol? {
+        didSet {
+            setUp()
+        }
+    }
+        
+    private var userSessionPresets: UserSessionPresets?
+    var sessionId: Int? {
+        userSessionPresets?.sessionId
+    }
+        
     func setUp() {
         guard let client = self.client else { return }
-        sessionTimeOut = client.config.sessionTimeout
-        userDefaults = client.controller.userDefaults
-        
-        if isAutomaticSessionTrackingAllowed {
-            if isSessionExpired() || !automaticSessionTrackingStatus {
-                startNewSession()
-                userDefaults?.write(.automaticSessionTrackingStatus, value: true)
-                userDefaults?.write(.manualSessionTrackingStatus, value: false)
-                userDefaults?.write(.sessionStoppedStatus, value: false)
-            }
+        userSessionPresets = UserSessionPresets(userDefaultsWorker: client.userDefaultsWorker, configuration: client.configuration)
+        if userSessionPresets?.isAutomaticSessionTrackingAllowed == true &&
+            (userSessionPresets?.isSessionExpired == true ||
+             userSessionPresets?.automaticSessionTrackingStatus == false
+            ) {
+            startNewSession()
+            userSessionPresets?.automaticSessionTrackingStatus = true
+            userSessionPresets?.manualSessionTrackingStatus = false
+            userSessionPresets?.sessionStoppedStatus = false
         } else {
-            userDefaults?.write(.automaticSessionTrackingStatus, value: false)
+            userSessionPresets?.automaticSessionTrackingStatus = false
         }
     }
     
     func process<T>(message: T?) -> T? where T: Message {
         guard var workingMessage = message else { return message }
-        if isSessionTrackingAllowed {
-            if let sessionId = self.sessionId {
+        if userSessionPresets?.isSessionTrackingAllowed == true {
+            if let sessionId = userSessionPresets?.sessionId {
                 workingMessage.sessionId = sessionId
-                if isNewSessionStarted {
+                if userSessionPresets?.isNewSessionStarted == true {
                     workingMessage.sessionStart = true
-                    isNewSessionStarted = false
+                    userSessionPresets?.isNewSessionStarted = false
                 }
             }
-            let currentEventTimeStamp = Utility.getTimeStamp()
-            userDefaults?.write(.lastEventTimeStamp, value: currentEventTimeStamp)
+            userSessionPresets?.lastEventTimeStamp = Utility.getTimeStamp()
         }
         return workingMessage
-    }
-    
-    // This method should be called only when session tracking is allowed
-    private func isSessionExpired() -> Bool {
-        guard let lastEventTimeStamp = self.lastEventTimeStamp, let sessionTimeOut = self.sessionTimeOut else {
-            return true
-        }
-        
-        let timeDifference: TimeInterval = TimeInterval(abs(Utility.getTimeStamp() - lastEventTimeStamp))
-        return timeDifference >= Double(sessionTimeOut / 1000)
-    }
-    
-    func startNewSession(_ sessionId: Int? = nil) {
-        isNewSessionStarted = true
-        userDefaults?.write(.sessionId, value: sessionId ?? Utility.getTimeStamp())
-        client?.logDebug(LogMessages.newSession.description)
     }
 }
     
 extension UserSessionPlugin {
-    func startManualSession(_ sessionId: Int? = nil) {
-        userDefaults?.write(.automaticSessionTrackingStatus, value: false)
-        userDefaults?.write(.manualSessionTrackingStatus, value: true)
-        userDefaults?.write(.sessionStoppedStatus, value: false)
-        userDefaults?.remove(.lastEventTimeStamp)
+    private func startNewSession(_ sessionId: Int? = nil) {
+        userSessionPresets?.isNewSessionStarted = true
+        userSessionPresets?.sessionId = sessionId ?? Utility.getTimeStamp()
+        client?.logger.logDebug(.newSession)
+    }
+    
+    func startSession(_ sessionId: Int? = nil) {
+        userSessionPresets?.automaticSessionTrackingStatus = false
+        userSessionPresets?.manualSessionTrackingStatus = true
+        userSessionPresets?.sessionStoppedStatus = false
+        userSessionPresets?.lastEventTimeStamp = nil
         
         startNewSession(sessionId)
     }
     
     func endSession() {
-        userDefaults?.write(.automaticSessionTrackingStatus, value: false)
-        userDefaults?.write(.manualSessionTrackingStatus, value: false)
-        userDefaults?.write(.sessionStoppedStatus, value: true)
-        userDefaults?.remove(.lastEventTimeStamp)
+        userSessionPresets?.sessionId = nil
+        userSessionPresets?.automaticSessionTrackingStatus = false
+        userSessionPresets?.manualSessionTrackingStatus = false
+        userSessionPresets?.sessionStoppedStatus = true
+        userSessionPresets?.lastEventTimeStamp = nil
     }
     
     func reset() {
-        if isSessionTrackingAllowed {
-            if automaticSessionTrackingStatus {
-                userDefaults?.remove(.lastEventTimeStamp)
+        if userSessionPresets?.isSessionTrackingAllowed == true {
+            if userSessionPresets?.automaticSessionTrackingStatus == true {
+                userSessionPresets?.lastEventTimeStamp = nil
             }
             startNewSession()
         }
     }
     
     func refreshSessionIfNeeded() {
-        if isSessionTrackingAllowed, automaticSessionTrackingStatus, isSessionExpired() {
+        if let userSessionPresets = userSessionPresets,
+           userSessionPresets.isSessionTrackingAllowed,
+           userSessionPresets.automaticSessionTrackingStatus,
+           userSessionPresets.isSessionExpired {
             startNewSession()
         }
     }
 }
 
-extension Controller {
+extension RSClientCore {
     internal func refreshSessionIfNeeded() {
         if let userSessionPlugin = getPlugin(type: UserSessionPlugin.self) {
             userSessionPlugin.refreshSessionIfNeeded()
@@ -150,21 +194,21 @@ extension Controller {
 extension RSClient {
     public func startSession() {
         if let userSessionPlugin = getPlugin(type: UserSessionPlugin.self) {
-            userSessionPlugin.startManualSession()
+            userSessionPlugin.startSession()
         } else {
-            logDebug(LogMessages.sessionCanNotStart.description)
+            logger.logDebug(.sessionCanNotStart)
         }
     }
     
     public func startSession(_ sessionId: Int) {
         guard String(sessionId).count >= 10 else {
-            logError(LogMessages.sessionIdLengthInvalid(sessionId).description)
+            logger.logError(.sessionIdLengthInvalid(sessionId))
             return
         }
         if let userSessionPlugin = getPlugin(type: UserSessionPlugin.self) {
-            userSessionPlugin.startManualSession(sessionId)
+            userSessionPlugin.startSession(sessionId)
         } else {
-            logDebug(LogMessages.sessionCanNotStart.description)
+            logger.logDebug(.sessionCanNotStart)
         }
     }
     

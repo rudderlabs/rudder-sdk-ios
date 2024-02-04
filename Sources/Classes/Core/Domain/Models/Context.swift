@@ -172,7 +172,7 @@ public struct Context: Codable {
         return TimeZone.current.identifier
     }
     
-    static func traits(userDefaults: UserDefaultsWorkerType?) -> JSON? {
+    static func traits(userDefaults: UserDefaultsWorkerProtocol?) -> JSON? {
         let traitsJSON: JSON? = userDefaults?.read(.traits)
         var traitsDict = traitsJSON?.dictionaryValue
         if let userId: String = userDefaults?.read(.userId) {
@@ -187,7 +187,7 @@ public struct Context: Codable {
         return nil
     }
     
-    internal init(userDefaults: UserDefaultsWorkerType?) {
+    internal init(userDefaults: UserDefaultsWorkerProtocol?) {
         _app = AppInfo()
         _device = DeviceInfo()
         _library = LibraryInfo()

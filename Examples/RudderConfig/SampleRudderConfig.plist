@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>MOCK_DATA_PLANE_URL</key>
+	<string></string>
+	<key>MOCK_CONTROL_PLANE_URL</key>
+	<string></string>
 	<key>WRITE_KEY</key>
 	<string></string>
 	<key>PROD_DATA_PLANE_URL</key>

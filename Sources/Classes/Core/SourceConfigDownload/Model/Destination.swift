@@ -73,29 +73,21 @@ public struct Destination: Codable, Equatable {
     }
     
     var blackListedEvents: [String]? {
-        var eventList: [String]?
         if let events = config?.dictionaryValue?["blacklistedEvents"] as? [[String: String]] {
-            eventList = [String]()
-            for event in events {
-                if let eventName = event["eventName"], eventName.isNotEmpty {
-                    eventList?.append(eventName)
-                }
+            return events.compactMap { dict in
+                dict["eventName"]
             }
         }
-        return eventList
+        return nil
     }
     
     var whiteListedEvents: [String]? {
-        var eventList: [String]?
         if let events = config?.dictionaryValue?["whitelistedEvents"] as? [[String: String]] {
-            eventList = [String]()
-            for event in events {
-                if let eventName = event["eventName"], eventName.isNotEmpty {
-                    eventList?.append(eventName)
-                }
+            return events.compactMap { dict in
+                dict["eventName"]
             }
         }
-        return eventList
+        return nil
     }
 
     public let destinationDefinition: DestinationDefinition?

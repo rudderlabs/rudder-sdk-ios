@@ -14,12 +14,13 @@
 		06EABC8F24665E480043D720 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06EABC8E24665E480043D720 /* Assets.xcassets */; };
 		06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06EABC9024665E480043D720 /* LaunchScreen.storyboard */; };
 		1BBDBFA2CA1F65262723A637 /* Pods_SampleSwift_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72016B33854F923C48E9084A /* Pods_SampleSwift_iOS.framework */; };
-		ED333EC62B2358B4003EB0B3 /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED333EC32B2358B4003EB0B3 /* RudderConfig.plist */; };
+		ED333EC62B2358B4003EB0B3 /* RudderConfig_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED333EC32B2358B4003EB0B3 /* RudderConfig_1.plist */; };
 		ED333EC72B2358B4003EB0B3 /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED333EC42B2358B4003EB0B3 /* SampleRudderConfig.plist */; };
 		ED333EC82B2358B4003EB0B3 /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED333EC52B2358B4003EB0B3 /* RudderConfig.swift */; };
 		ED333ECA2B235D8E003EB0B3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED333EC92B235D8E003EB0B3 /* GoogleService-Info.plist */; };
 		ED4EACA127F5718100207AF1 /* RSCustomDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4EACA027F5718100207AF1 /* RSCustomDestination.swift */; };
 		EDC1BBC82B0B2E7D00211F24 /* Configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1BBC72B0B2E7D00211F24 /* Configuration.json */; };
+		EDEDC1382B6A336D0082C7E2 /* RudderConfig_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDEDC1372B6A336D0082C7E2 /* RudderConfig_2.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,12 +35,13 @@
 		6AF9E4CE2308F413BD375A80 /* Pods-SampleSwift-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleSwift-iOS.debug.xcconfig"; path = "Target Support Files/Pods-SampleSwift-iOS/Pods-SampleSwift-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		72016B33854F923C48E9084A /* Pods_SampleSwift_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleSwift_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80FF9E334811B6015D51C152 /* Pods-SampleSwift-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleSwift-iOS.release.xcconfig"; path = "Target Support Files/Pods-SampleSwift-iOS/Pods-SampleSwift-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		ED333EC32B2358B4003EB0B3 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
+		ED333EC32B2358B4003EB0B3 /* RudderConfig_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig_1.plist; sourceTree = "<group>"; };
 		ED333EC42B2358B4003EB0B3 /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED333EC52B2358B4003EB0B3 /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		ED333EC92B235D8E003EB0B3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED4EACA027F5718100207AF1 /* RSCustomDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCustomDestination.swift; sourceTree = "<group>"; };
 		EDC1BBC72B0B2E7D00211F24 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
+		EDEDC1372B6A336D0082C7E2 /* RudderConfig_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig_2.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +113,8 @@
 		ED333EC22B2358B4003EB0B3 /* RudderConfig */ = {
 			isa = PBXGroup;
 			children = (
-				ED333EC32B2358B4003EB0B3 /* RudderConfig.plist */,
+				ED333EC32B2358B4003EB0B3 /* RudderConfig_1.plist */,
+				EDEDC1372B6A336D0082C7E2 /* RudderConfig_2.plist */,
 				ED333EC52B2358B4003EB0B3 /* RudderConfig.swift */,
 				ED333EC42B2358B4003EB0B3 /* SampleRudderConfig.plist */,
 			);
@@ -182,7 +185,8 @@
 				ED333EC72B2358B4003EB0B3 /* SampleRudderConfig.plist in Resources */,
 				06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */,
 				06EABC8F24665E480043D720 /* Assets.xcassets in Resources */,
-				ED333EC62B2358B4003EB0B3 /* RudderConfig.plist in Resources */,
+				EDEDC1382B6A336D0082C7E2 /* RudderConfig_2.plist in Resources */,
+				ED333EC62B2358B4003EB0B3 /* RudderConfig_1.plist in Resources */,
 				EDC1BBC82B0B2E7D00211F24 /* Configuration.json in Resources */,
 				06EABC8D24665E470043D720 /* Main.storyboard in Resources */,
 				ED333ECA2B235D8E003EB0B3 /* GoogleService-Info.plist in Resources */,

@@ -9,6 +9,19 @@
 import Foundation
 
 enum LogMessages {
+    enum API {
+        case flush
+        case sourceConfig
+        
+        var description: String {
+            switch self {
+            case .flush:
+                return "Aborting flush"
+            case .sourceConfig:
+                return "Server config download failed"
+            }
+        }
+    }
     case optOut
     case optOutAndEventDrop
     case tokenNotEmpty
@@ -23,10 +36,6 @@ enum LogMessages {
     case eventNameNotEmpty
     case sourceConfigDownloadSuccess
     case eventsCleared
-    case flushAbortedWithStatusCode(Int)
-    case flushAbortedWithErrorDescription(String)
-    case sourceConfigDownloadFailedWithStatusCode(Int)
-    case sourceConfigDownloadFailedWithErrorDescription(String)
     case newSession
     case sessionCanNotStart
     case sessionIdLengthInvalid(Int)
@@ -45,7 +54,10 @@ enum LogMessages {
     case retryAborted(String, Int)
     case destinationDisabled
     case eventFiltered
-    case noResponse
+    case storageMigrationFailed(StorageError)
+    case storageMigrationSuccess
+    case oldDatabaseNotExists
+    case apiError(API, APIError)
     
     var description: String {
         switch self {
@@ -77,14 +89,6 @@ enum LogMessages {
             return "Source config download successful"
         case .eventsCleared:
             return "Clearing events from storage"
-        case .flushAbortedWithStatusCode(let statusCode):
-            return "Aborting flush. Error code: \(statusCode)"
-        case .flushAbortedWithErrorDescription(let errorDescription):
-            return "Aborting flush. Error: \(errorDescription)"
-        case .sourceConfigDownloadFailedWithStatusCode(let statusCode):
-            return "Server config download failed. Error code: \(statusCode)"
-        case .sourceConfigDownloadFailedWithErrorDescription(let errorDescription):
-            return "Server config download failed. Error: \(errorDescription)"
         case .newSession:
             return "New session is started"
         case .sessionCanNotStart:
@@ -96,7 +100,7 @@ enum LogMessages {
         case .sqlStatement(let statement):
             return "SQL: \(statement)"
         case .statementNotPrepared(let errorDescription):
-            return "Statement is not prepared, reason: \(errorDescription)"
+            return "Statement is not prepared. Reason: \(errorDescription)"
         case .eventInsertionSuccess:
             return "Event inserted"
         case .eventInsertionFailure:
@@ -121,8 +125,21 @@ enum LogMessages {
             return "Destination is not enabled"
         case .eventFiltered:
             return "Message is filtered by Client-side event filtering"
-        case .noResponse:
-            return "No server response"
+        case .storageMigrationFailed(let error):
+            return "Storage migration failed. Reason: \(error.description)"
+        case .storageMigrationSuccess:
+            return "Storage migration is successful"
+        case .oldDatabaseNotExists:
+            return "Old database not exists, hence no migration needed"
+        case .apiError(let api, let error):
+            switch error {
+            case .httpError(let statusCode):
+                return "\(api.description). Error code: \(statusCode)"
+            case .networkError(let error):
+                return "\(api.description). Error: \(error.localizedDescription)"
+            case .noResponse:
+                return "No server response"
+            }
         }
     }
 }

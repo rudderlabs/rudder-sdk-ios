@@ -14,32 +14,58 @@ import Network
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var client: RSClient!
+    var client1: RSClient!
+    var client2: RSClient!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
-              let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
-              let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data) else {
-            return true
-        }
-        
         print(NSHomeDirectory())
         
-        if let config: Config = Config(writeKey: rudderConfig.WRITE_KEY, dataPlaneURL: rudderConfig.DEV_DATA_PLANE_URL)?
-            .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
-//            .dataResidencyServer(.EU)
-//            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
-//            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
-            .loglevel(.verbose)
-            .trackLifecycleEvents(true)
-            .recordScreenViews(true)
-//            .sleepTimeOut(10)
-            .gzipEnabled(false) {
-            
-            client = RSClient(config: config)
+        if let path = Bundle.main.path(forResource: "RudderConfig_1", ofType: "plist"),
+           let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+           let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data)
+        {
+            if let config: Configuration = Configuration(
+                writeKey: rudderConfig.WRITE_KEY,
+                dataPlaneURL: rudderConfig.DEV_DATA_PLANE_URL
+            )?
+                .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+                //            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
+                //            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
+                .logLevel(.verbose)
+                .trackLifecycleEvents(true)
+                .recordScreenViews(true)
+                .sleepTimeOut(5)
+                .gzipEnabled(false)
+                .flushQueueSize(0)
+            {
+                client1 = RSClient.initialize(with: config)
+            }
         }
-            
+        
+        if let path = Bundle.main.path(forResource: "RudderConfig_2", ofType: "plist"),
+           let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+           let rudderConfig = try? PropertyListDecoder().decode(RudderConfig.self, from: data)
+        {
+            if let config: Configuration = Configuration(
+                writeKey: rudderConfig.WRITE_KEY,
+                dataPlaneURL: rudderConfig.DEV_DATA_PLANE_URL
+            )?
+                .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
+                //            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
+                //            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
+                .logLevel(.verbose)
+                .trackLifecycleEvents(false)
+                .recordScreenViews(false)
+                .sleepTimeOut(5)
+                .gzipEnabled(false)
+                .flushQueueSize(0)
+            {
+                client2 = RSClient.initialize(with: config, instanceName: "")
+            }
+        }
+        
+        
         return true
     }
 

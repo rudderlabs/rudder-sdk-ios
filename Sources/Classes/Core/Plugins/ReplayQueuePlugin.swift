@@ -13,19 +13,16 @@ internal class ReplayQueuePlugin: Plugin {
     
     var sourceConfig: SourceConfig? {
         didSet {
-            if oldValue == nil {
-                if let value = oldValue, value.enabled {
-                    running = false
-                }
+            if let value = sourceConfig, value.enabled {
+                running = false
+                replayEvents()
             } else {
-                if let value = sourceConfig {
-                    replayEvents(isSourceEnabled: value.enabled)
-                }
+                running = true
             }
         }
     }
     
-    var client: RSClient?
+    var client: RSClientProtocol?
 
     private let queue: DispatchQueue
     private var queuedMessageList = [Message]()
@@ -38,52 +35,52 @@ internal class ReplayQueuePlugin: Plugin {
     }
         
     func process<T>(message: T?) -> T? where T: Message {
-        if running, let msg = message {
+        guard let message = message else { return message }
+        if running {
             queue.async { [weak self] in
                 guard let self = self else { return }
                 if self.queuedMessageList.count >= self.maxSize {
                     self.queuedMessageList.removeFirst()
                 }
-                self.queuedMessageList.append(msg)
+                self.queuedMessageList.append(message)
             }
+        } else {
+            processToAllDestinations([message])
         }
         return message
     }
 }
 
 extension ReplayQueuePlugin {
-    internal func replayEvents(isSourceEnabled: Bool) {
+    private func replayEvents() {
         queue.async { [weak self] in
             guard let self = self else { return }
-            self.running = false
-            guard isSourceEnabled else {
-                return
-            }
-            if let destinationPlugins = self.client?.controller.getPluginList(by: .destination) {
-                self.queuedMessageList.forEach { message in
-                    destinationPlugins.forEach { plugin in
-                        self.process(message, for: plugin)
-                    }
-                }
-            }
+            self.processToAllDestinations(self.queuedMessageList)
             self.queuedMessageList.removeAll()
         }
     }
     
-    func process(_ message: Message, for plugin: Plugin) {
-        switch message {
-        case let e as TrackMessage:
-            _ = plugin.process(message: e)
-        case let e as IdentifyMessage:
-            _ = plugin.process(message: e)
-        case let e as ScreenMessage:
-            _ = plugin.process(message: e)
-        case let e as GroupMessage:
-            _ = plugin.process(message: e)
-        case let e as AliasMessage:
-            _ = plugin.process(message: e)
-        default:
-            break
+    private func processToAllDestinations(_ messageList: [Message]) {
+        guard let destinationPlugins = client?.getDestinationPlugins(), !destinationPlugins.isEmpty, !messageList.isEmpty else {
+            return
+        }
+        messageList.forEach { message in
+            destinationPlugins.forEach { plugin in
+                switch message {
+                case let e as TrackMessage:
+                    _ = plugin.track(message: e)
+                case let e as IdentifyMessage:
+                    _ = plugin.identify(message: e)
+                case let e as ScreenMessage:
+                    _ = plugin.screen(message: e)
+                case let e as GroupMessage:
+                    _ = plugin.group(message: e)
+                case let e as AliasMessage:
+                    _ = plugin.alias(message: e)
+                default:
+                    break
+                }
+            }
         }
     }
 }

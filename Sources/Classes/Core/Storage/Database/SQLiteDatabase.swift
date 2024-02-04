@@ -1,5 +1,5 @@
 //
-//  DefaultDatabase.swift
+//  SQLiteDatabase.swift
 //  Rudder
 //
 //  Created by Pallab Maiti on 11/01/24.
@@ -9,7 +9,7 @@
 import Foundation
 import SQLite3
 
-class DefaultDatabase: Database {
+class SQLiteDatabase: Database {
     var path: URL
     var name: String
     private var database: OpaquePointer?
@@ -53,5 +53,19 @@ class DefaultDatabase: Database {
     
     func column_text(_ pStmt: OpaquePointer!, _ iCol: Int32) -> UnsafePointer<UInt8>! {
         return sqlite3_column_text(pStmt, iCol)
+    }
+    
+    func exec(_ sql: UnsafePointer<CChar>!,
+              _ callback: (@convention(c) (UnsafeMutableRawPointer?, Int32,
+                                           UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?,
+                                           UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?) -> Int32)!,
+              _ arg: UnsafeMutableRawPointer!,
+              _ errmsg: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>!
+    ) -> Int32 {
+        return sqlite3_exec(database, sql, callback, arg, errmsg)
+    }
+    
+    func close() -> Int32 {
+        return sqlite3_close_v2(database)
     }
 }

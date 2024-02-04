@@ -8,373 +8,386 @@
 
 import Foundation
 
-public class RSClient {
-    let config: Config
-    let controller: Controller
-
-     /**
-      Initialize this instance of RSClient with a given configuration setup.
-      - Parameters:
-      - config: The configuration to use
-      # Example #
-      ```
-      let config: Config = Config(writeKey: WRITE_KEY)
-      .dataPlaneURL(DATA_PLANE_URL)
-      
-      RSClient.sharedInstance().configure(with: config)
-      ```
-      */
+/// An entry point to RudderStack SDK.
+/// 
+/// Initialize the default instance of RudderStack SDK.
+/// 
+/// ```swift
+///  if let configuration: Configuration = Configuration(
+///      writeKey: "<write key>",
+///      dataPlaneURL: "<data plane url>"
+///  ) {
+///      RSClient.initialize(
+///          with: configuration
+///      )
+///  }
+/// ```
+/// 
+public class RSClient: RSClientProtocol {
     
-    public init(
-        config: Config,
+    /// Configuration of RudderStack SDK.
+    public var configuration: Configuration {
+        core.configuration
+    }
+    
+    /// A UserDefaultsWorker instance.
+    public var userDefaultsWorker: UserDefaultsWorkerProtocol {
+        core.userDefaultsWorker
+    }
+    
+    /// StorageWorker instance.
+    public var storageWorker: StorageWorkerProtocol {
+        core.storageWorker
+    }
+    
+    /// SessionStorage instance.
+    public var sessionStorage: SessionStorageProtocol {
+        core.sessionStorage
+    }
+    
+    /// Log information.
+    public var logger: Logger {
+        core.logger
+    }
+    
+    /// Given instance name.
+    public var instanceName: String {
+        core.instanceName
+    }
+    
+    private let core: RSClientCore
+
+    /// Creates a `RSClient` instance.
+    /// - Parameters:
+    ///   - configuration: The SDK configuration.
+    ///   - instanceName: The core instance name. This value will be used for data persistency and differentiate between instances.
+    ///   - database: The developer-choice `SQLite` database. Can be used `SQLCipher` as well.
+    ///   - storage: The developer-choice storage. Can be used file system and any other storage implementation.
+    ///   - userDefaults: The developer-choice `UserDefaults` implementation.
+    ///   - apiClient: The developer-choice networking client. Can be used `Alamofire`, `Moya`, etc....
+    ///   - sourceConfigDownloader: The developer-choice source config download implementation.
+    ///   - dataUploader: The developer-choice source upload data(events) to server implementation.
+    ///   - storageMigrator: The developer-choice storage migration implementation, if any.
+    ///   - logger: The developer-choice logger.
+    required init(
+        configuration: Configuration,
+        instanceName: String,
         database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
         apiClient: APIClient? = nil,
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
         dataUploader: DataUploaderType? = nil,
-        logger: LoggerProtocol? = nil
+        storageMigrator: StorageMigrator? = nil
     ) {
-        self.config = config
-        self.controller = Controller(
-            config: config,
+        core = RSClientCore(
+            configuration: configuration,
+            instanceName: instanceName,
             database: database,
             storage: storage,
             userDefaults: userDefaults,
             sourceConfigDownloader: sourceConfigDownloader,
             dataUploader: dataUploader,
-            apiClient: apiClient,
-            logger: logger
+            apiClient: apiClient
         )
         addPlugins()
+        ClientRegistry.register(self, name: instanceName)
+    }
+    
+    /// Initialize the RudderStack SDK.
+    ///
+    /// Initialize the default instance of RudderStack SDK.
+    ///
+    /// ```swift
+    ///  if let configuration: Configuration = Configuration(
+    ///      writeKey: "<write key>",
+    ///      dataPlaneURL: "<data plane url>"
+    ///  ) {
+    ///      RSClient.initialize(
+    ///          with: configuration
+    ///      )
+    ///  }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - configuration: The SDK configuration.
+    ///   - instanceName: The core instance name. This value will be used for data persistency and differentiate between instances.
+    ///   - database: The developer-choice `SQLite` database implementation, if any.
+    ///   - storage: The developer-choice storage implementation, if any.
+    ///   - userDefaults: The developer-choice `UserDefaults` implementation, if any.
+    ///   - apiClient: The developer-choice networking client implementation, if any.
+    ///   - sourceConfigDownloader: The developer-choice source config download implementation, if any.
+    ///   - dataUploader: The developer-choice source upload data(events) to server implementation, if any.
+    ///   - logger: The developer-choice logger, if any.
+    ///   - storageMigrator: The developer-choice storage migration implementation, if any.
+    /// - Returns: An instance of `RSClient`.
+    ///
+    @discardableResult
+    public static func initialize(
+        with configuration: Configuration,
+        instanceName: String = ClientRegistry.defaultInstanceName,
+        database: Database? = nil,
+        storage: Storage? = nil,
+        userDefaults: UserDefaults? = nil,
+        apiClient: APIClient? = nil,
+        sourceConfigDownloader: SourceConfigDownloaderType? = nil,
+        dataUploader: DataUploaderType? = nil
+    ) -> RSClient {
+        if instanceName.correctified == ClientRegistry.defaultInstanceName, ClientRegistry.isRegistered(instanceName: instanceName.correctified),
+           let instance = ClientRegistry.default {
+                return instance
+        }
+        let instance = self.init(
+            configuration: configuration,
+            instanceName: instanceName.correctified,
+            database: database,
+            storage: storage,
+            userDefaults: userDefaults,
+            apiClient: apiClient,
+            sourceConfigDownloader: sourceConfigDownloader,
+            dataUploader: dataUploader
+        )
+        return instance
+    }
+}
+
+extension RSClient {
+    
+    /// Returns the RudderStack instance for the given name.
+    ///
+    /// - Parameter name: The name of the instance to get.
+    /// - Returns: The instance by the name if exists, otherwise nil.
+    public static func instance(named name: String) -> RSClient? {
+        ClientRegistry.instance(named: name)
+    }
+    
+    /// Returns the default instance if registered.
+    public static var `default`: RSClient? {
+        ClientRegistry.default
+    }
+    
+    /// Check if an instance with specific name is registered.
+    /// - Parameter instanceName: The name of the instance to check.
+    /// - Returns: `true` if an instance with the given name is registered, otherwise `false`.
+    public static func isRegistered(instanceName: String) -> Bool {
+        return ClientRegistry.isRegistered(instanceName: instanceName)
+    }
+    
+    /// Unregister a instance for the given name.
+    /// - Parameter name: The name of the instance to unregister.
+    public static func unregisterInstance(named name: String) {
+        ClientRegistry.unregisterInstance(named: name)
     }
 }
     
 extension RSClient {
+    
+    /// Add a Plugin instance.
+    ///
+    /// - Parameter plugin: The Plugin instance.
     public func addPlugin(_ plugin: Plugin) {
         plugin.client = self
-        controller.addPlugin(plugin)
+        core.addPlugin(plugin)
     }
     
+    /// Remove a Plugin instance.
+    /// - Parameter plugin: The Plugin instance.
     public func removePlugin(_ plugin: Plugin) {
-        controller.removePlugin(plugin)
+        core.removePlugin(plugin)
     }
     
-    public func getPluginList(by pluginType: PluginType) -> [Plugin]? {
-        return controller.getPluginList(by: pluginType)
+    /// Retrieve all Plugin instance list.
+    ///
+    /// - Returns: The list of all Plugins.
+    public func getAllPlugins() -> [Plugin]? {
+        return core.getAllPlugins()
     }
     
+    /// Retrieve all destination Plugin instance list.
+    ///
+    /// - Returns: The list of Plugins if any.
+    public func getDestinationPlugins() -> [DestinationPlugin]? {
+        return core.getDestinationPlugins()
+    }
+    
+    /// Retrieve all default Plugin instance list.
+    ///
+    /// - Returns: The list of default Plugins if any.
+    public func getDefaultPlugins() -> [Plugin]? {
+        return core.getDefaultPlugins()
+    }
+        
+    /// Retrive a Plugin instance by instance type.
+    /// - Parameter type: The Plugin instance type.
+    /// - Returns: The instance of Plugin if any.
     public func getPlugin<T: Plugin>(type: T.Type) -> T? {
-        return controller.getPlugin(type: type)
+        return core.getPlugin(type: type)
     }
     
+    /// Associate a handler to all the Plugin list.
+    ///
+    /// - Parameter handler: The closure which takes a Plugin as a parameter.
     public func associatePlugins(_ handler: (Plugin) -> Void) {
-        controller.associatePlugins(handler)
+        core.associatePlugins(handler)
     }
 }
 
 extension RSClient {
-    /**
-     API for track your event
-     - Parameters:
-        - eventName: Name of the event you want to track
-        - properties: Properties you want to pass with the track call
-        - option: MessageOptions related to this track call
-     # Example #
-     ```
-     RSClient.sharedInstance().track("simple_track_with_props", properties: ["key_1": "value_1", "key_2": "value_2"], option: MessageOption())
-     ```
-     */
     
-    public func track(_ eventName: String, properties: TrackProperties, option: MessageOption) {
-        controller.track(eventName, properties: properties, option: option)
+    /// Record user's activity.
+    ///
+    /// - Parameters:
+    ///   - eventName: The name of the activity.
+    ///   - properties: Extra data properties regarding the event, if any.
+    ///   - option: Extra event options, if any.
+    public func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOption? = nil) {
+        core.track(eventName, properties: properties, option: option)
     }
     
-    public func track(_ eventName: String, properties: TrackProperties) {
-        controller.track(eventName, properties: properties, option: nil)
+    /// Set current user's information
+    ///
+    /// - Parameters:
+    ///   - userId: User's ID.
+    ///   - traits: User's additional information, if any.
+    ///   - option: Event level option, if any.
+    public func identify(_ userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
+        core.identify(userId, traits: traits, option: option)
     }
     
-    public func track(_ eventName: String, option: MessageOption) {
-        controller.track(eventName, properties: nil, option: option)
+    /// Track a screen with name, category.
+    ///
+    /// - Parameters:
+    ///   - screenName: The name of the screen viewed by an user.
+    ///   - category: The category or type of screen, if any.
+    ///   - properties: Extra data properties regarding the screen call, if any.
+    ///   - option: Extra screen event options, if any.
+    public func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOption? = nil) {
+        core.screen(screenName, category: category, properties: properties, option: option)
     }
     
-    public func track(_ eventName: String) {
-        controller.track(eventName, properties: nil, option: nil)
+    /// Associate an user to a company or organization.
+    ///
+    /// - Parameters:
+    ///   - groupId: The company's ID.
+    ///   - traits: Extra information of the company, if any.
+    ///   - option: Event level options, if any.
+    public func group(_ groupId: String, traits: GroupTraits? = nil, option: MessageOption? = nil) {
+        core.group(groupId, traits: traits, option: option)
     }
     
-    /**
-     API for add the user to a group
-     - Parameters:
-        - userId: User id of your user
-        - traits: Other user properties
-        - option: IdentifyOptions related to this identify call
-     # Example #
-     ```
-     RSClient.sharedInstance().identify("user_id", traits: ["email": "abc@def.com"], option: IdentifyOption())
-     ```
-     */
-    
-    public func identify(_ userId: String, traits: IdentifyTraits, option: IdentifyOptionType) {
-        controller.identify(userId, traits: traits, option: option)
-    }
-    
-    public func identify(_ userId: String, traits: IdentifyTraits) {
-        controller.identify(userId, traits: traits, option: nil)
-    }
-    
-    public func identify(_ userId: String, option: IdentifyOptionType) {
-        controller.identify(userId, traits: nil, option: option)
-    }
-    
-    public func identify(_ userId: String) {
-        controller.identify(userId, traits: nil, option: nil)
-    }
-    
-    /**
-     API for record screen
-     - Parameters:
-        - screenName: Name of the screen
-        - properties: Properties you want to pass with the screen call
-        - option: MessageOptions related to this screen call
-     # Example #
-     ```
-     RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1", "key_2": "value_2"], option: MessageOption())
-     ```
-     */
-    
-    public func screen(_ screenName: String, properties: ScreenProperties, option: MessageOption) {
-        controller.screen(screenName, category: nil, properties: properties, option: option)
-    }
-    
-    public func screen(_ screenName: String, properties: ScreenProperties) {
-        controller.screen(screenName, category: nil, properties: properties, option: nil)
-    }
-    
-    public func screen(_ screenName: String, option: MessageOption) {
-        controller.screen(screenName, category: nil, properties: nil, option: option)
-    }
-    
-    public func screen(_ screenName: String, category: String, properties: ScreenProperties, option: MessageOption) {
-        controller.screen(screenName, category: category, properties: properties, option: option)
-    }
-
-    public func screen(_ screenName: String, category: String, properties: ScreenProperties) {
-        controller.screen(screenName, category: category, properties: properties, option: nil)
-    }
-    
-    public func screen(_ screenName: String, category: String, option: MessageOption) {
-        controller.screen(screenName, category: category, properties: nil, option: option)
-    }
-
-    public func screen(_ screenName: String, category: String) {
-        controller.screen(screenName, category: category, properties: nil, option: nil)
-    }
-
-    public func screen(_ screenName: String) {
-        controller.screen(screenName, category: nil, properties: nil, option: nil)
-    }
-    
-    /**
-     API for add the user to a group
-     - Parameters:
-        - groupId: Group ID you want your user to attach to
-        - traits: Traits of the group
-        - option: MessageOptions related to this group call
-     # Example #
-     ```
-     RSClient.sharedInstance().group("sample_group_id", traits: ["key_1": "value_1", "key_2": "value_2"], option: MessageOption())
-     ```
-     */
-    
-    public func group(_ groupId: String, traits: GroupTraits, option: MessageOption) {
-        controller.group(groupId, traits: traits, option: option)
-    }
-    
-    public func group(_ groupId: String, traits: GroupTraits) {
-        controller.group(groupId, traits: traits, option: nil)
-    }
-    
-    public func group(_ groupId: String, option: MessageOption) {
-        controller.group(groupId, traits: nil, option: option)
-    }
-    
-    public func group(_ groupId: String) {
-        controller.group(groupId, traits: nil, option: nil)
-    }
-    
-    /**
-     API for add the user to a group
-     - Parameters:
-        - newId: New userId for the user
-        - option: MessageOptions related to this alias call
-     # Example #
-     ```
-     RSClient.sharedInstance().alias("user_id", option: MessageOption())
-     ```
-     */
-    
-    public func alias(_ newId: String, option: MessageOption) {
-        controller.alias(newId, option: option)
-    }
-    
-    public func alias(_ newId: String) {
-        controller.alias(newId, option: nil)
+    /// Associate the current user to a new identification.
+    ///
+    /// - Parameters:
+    ///   - groupId: User's new ID.
+    ///   - option: Event level options, if any.
+    public func alias(_ newId: String, option: MessageOption? = nil) {
+        core.alias(newId, option: option)
     }
 }
 
 extension RSClient {
-    /**
-     Returns the anonymousId currently in use.
-     */
+
+    /// Returns the anonymousId currently in use.
     public var anonymousId: String? {
-        controller.anonymousId
+        core.anonymousId
     }
     
-    /**
-     Returns the userId that was specified in the last identify call.
-     */
+    /// Returns the userId that was specified in the last identify call.
     public var userId: String? {
-        controller.userId
+        core.userId
     }
     
-    /**
-     Returns the context that were specified in the last call.
-     */
+    /// Returns the context that were specified in the last call.
     public var context: Context? {
-        controller.context
+        core.context
     }
     
-    /**
-     Returns the traits that were specified in the last identify call.
-     */
+    /// Returns the traits that were specified in the last identify call.
     public var traits: IdentifyTraits? {
-        controller.traits
+        core.traits
     }
     
-    /**
-     Returns the version ("BREAKING.FEATURE.FIX" format) of this library in use.
-     */
+    /// Returns the version ("BREAKING.FEATURE.FIX" format) of this library in use.
     public var version: String {
         return RSVersion
     }
     
-    /**
-     Returns the config set by developer while initialisation.
-     */
-    public var configuration: Config? {
-        controller.config
-    }
-    
-    /**
-     Returns id of an active session.
-     */
-    public var sessionId: String? {
-        controller.sessionId
+    /// Returns id of an active session.
+    public var sessionId: Int? {
+        core.sessionId
     }
 }
 
 extension RSClient {
-    /**
-     API for flush any queued events. This command will also be sent to each destination present in the system.
-     */
+    
+    /// API for flush any queued events. This command will also be sent to each destination present in the system.
     public func flush() {
-        controller.flush()
+        core.flush()
     }
     
-    /**
-     API for reset current slate.  Traits, UserID's, anonymousId, etc are all cleared or reset.  This command will also be sent to each destination present in the system.
-     */
+    /// Reset current slate.  Traits, UserID's, anonymousId, etc are all cleared or reset.
+    /// This command will also be sent to each destination present in the system.
+    /// 
+    /// - Parameter refreshAnonymousId: Refresh anonymous ID as well.
     public func reset(and refreshAnonymousId: Bool) {
-        controller.reset(and: refreshAnonymousId)
+        core.reset(and: refreshAnonymousId)
     }
 }
 
 extension RSClient {
-    /**
-     API for setting unique identifier of every call.
-     - Parameters:
-        - anonymousId: Unique identifier of every event
-     # Example #
-     ```
-     RSClient.sharedInstance().setAnonymousId("sample_anonymous_id")
-     ```
-     */
+    /// API for setting unique identifier of every call.
+    ///
+    /// - Parameters:
+    ///   - anonymousId: Unique identifier of every event
     public func setAnonymousId(_ anonymousId: String) {
-        controller.setAnonymousId(anonymousId)
+        core.setAnonymousId(anonymousId)
     }
 
-    /**
-     API for setting enable/disable sending the events across all the event calls made using the SDK to the specified destinations.
-     - Parameters:
-        - option: Options related to every API call
-     # Example #
-     ```
-     let defaultOption = Option()
-     defaultOption.putIntegration("Amplitude", isEnabled: true)
-     
-     RSClient.sharedInstance().setOption(defaultOption)
-     ```
-     */
+    /// API for setting enable/disable sending the events across all the event calls made using the SDK to the specified destinations.
+    ///
+    /// - Parameters:
+    ///   - option: Options related to every API call
     public func setOption(_ option: Option) {
-        controller.setOption(option)
+        core.setOption(option)
     }
 
-    /**
-     API for setting token under context.device.token.
-     - Parameters:
-        - token: Token of the device
-     # Example #
-     ```
-     RSClient.sharedInstance().setDeviceToken("sample_device_token")
-     ```
-     */
+    /// API for setting device token for Push Notifications to the destinations.
+    ///
+    /// - Parameters:
+    ///   - token: Token of the device
     public func setDeviceToken(_ token: String) {
-        controller.setDeviceToken(token)
+        core.setDeviceToken(token)
     }
 
-    /**
-     API for setting identifier under context.device.advertisingId.
-     - Parameters:
-        - advertisingId: IDFA value
-     # Example #
-     ```
-     RSClient.sharedInstance().setAdvertisingId("sample_advertising_id")
-     ```
-     */
+    /// API for setting identifier under context.device.advertisingId.
+    /// - Parameters:
+    ///   - advertisingId: IDFA value
     public func setAdvertisingId(_ advertisingId: String) {
-        controller.setAdvertisingId(advertisingId)
+        core.setAdvertisingId(advertisingId)
     }
 
-    /**
-     API for app tracking consent management.
-     - Parameters:
-        - appTrackingConsent: App tracking consent
-     # Example #
-     ```
-     RSClient.sharedInstance().setAppTrackingConsent(.authorize)
-     ```
-     */
+    /// API for the Data Tracking Consent given by the user of the app.
+    ///
+    /// - Parameters:
+    ///   - appTrackingConsent: The Data Tracking Consent given by the user of the app
     public func setAppTrackingConsent(_ appTrackingConsent: AppTrackingConsent) {
-        controller.setAppTrackingConsent(appTrackingConsent)
+        core.setAppTrackingConsent(appTrackingConsent)
     }
     
-    /**
-     API for enable or disable tracking user activities.
-     - Parameters:
-        - status: Enable or disable tracking
-     # Example #
-     ```
-     RSClient.sharedInstance().setOptOutStatus(false)
-     ```
-     */
+    /// API for enable or disable tracking user activities.
+    ///
+    /// - Parameters:
+    ///   - status: Enable or disable tracking.
     public func setOptOutStatus(_ status: Bool) {
-        controller.setOptOutStatus(status)
+        core.setOptOutStatus(status)
     }
 }
 
 extension RSClient {
+    
+    /// Add the default Plugins.
     private func addPlugins() {
-        addPlugin(ReplayQueuePlugin(queue: DispatchQueue(label: "replayQueuePlugin".queueLabel())))
+        addPlugin(ReplayQueuePlugin(queue: DispatchQueue(label: "replayQueuePlugin".queueLabel(instanceName))))
         addPlugin(IntegrationPlugin())
         addPlugin(UserSessionPlugin())
         addPlugin(ContextPlugin())

@@ -9,16 +9,17 @@
 import Foundation
 import SQLite3
 
-protocol StorageWorker {
+public protocol StorageWorkerProtocol {
     func open()
     func saveMessage(_ message: StorageMessage)
     func clearMessages(_ messages: [StorageMessage])
     func fetchMessages(limit: Int) -> [StorageMessage]?
     func getMessageCount() -> Int?
     func clearAll()
+    func close()
 }
 
-class DefaultStorageWorker: StorageWorker {
+class StorageWorker: StorageWorkerProtocol {
     let storage: Storage
     let queue: DispatchQueue
     
@@ -59,6 +60,12 @@ class DefaultStorageWorker: StorageWorker {
     func clearAll() {
         queue.sync {
             _ = storage.deleteAll()
+        }
+    }
+    
+    func close() {
+        queue.sync {
+            _ = storage.close()
         }
     }
 }

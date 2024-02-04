@@ -12,6 +12,8 @@ import XCTest
 class ClientTests: XCTestCase {
     
     var client: RSClient!
+    var configuration: Configuration!
+    var resultPlugin: ResultPlugin!
     
     override func setUp() {
         super.setUp()
@@ -19,20 +21,29 @@ class ClientTests: XCTestCase {
         let userDefaults = UserDefaults(suiteName: #file)
         userDefaults?.removePersistentDomain(forName: #file)
         
-        if let config = Config(writeKey: WRITE_KEY, dataPlaneURL: DATA_PLANE_URL) {
-            client = RSClient(
-                config: config,
-                storage: StorageMock(),
-                userDefaults: userDefaults,
-                sourceConfigDownloader: SourceConfigDownloaderMock(
-                    downloadStatus: .mockWith(
-                        needsRetry: false,
-                        responseCode: 200
-                    )
-                ),
-                logger: NOLogger()
-            )
-        }
+        configuration = .mockWith(
+            writeKey: "1234567",
+            dataPlaneURL: "https://www.rudder.dataplane.com",
+            flushQueueSize: 12,
+            dbCountThreshold: 20,
+            sleepTimeOut: 15,
+            logLevel: .error,
+            trackLifecycleEvents: true,
+            recordScreenViews: false,
+            controlPlaneURL: "https://www.rudder.controlplane.com",
+            autoSessionTracking: false,
+            sessionTimeOut: 5000,
+            gzipEnabled: false,
+            dataResidencyServer: .EU
+        )
+        
+        client = .mockWith(
+            configuration: configuration,
+            userDefaults: userDefaults
+        )
+        
+        resultPlugin = ResultPlugin()
+        client.addPlugin(resultPlugin)
     }
     
     override func tearDown() {
@@ -41,9 +52,6 @@ class ClientTests: XCTestCase {
     }
     
     func testAlias() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.alias("user_id")
         
         let aliasMessage1 = resultPlugin.lastMessage as? AliasMessage
@@ -64,9 +72,6 @@ class ClientTests: XCTestCase {
     }
     
     func testGroup() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.group("sample_group_id")
         
         let groupMessage = resultPlugin.lastMessage as? GroupMessage
@@ -78,9 +83,6 @@ class ClientTests: XCTestCase {
     }
     
     func testGroupWithTraits() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.group("sample_group_id", traits: ["key_1": "value_1", "key_2": "value_2"])
         
         let groupMessage = resultPlugin.lastMessage as? GroupMessage
@@ -97,9 +99,6 @@ class ClientTests: XCTestCase {
     }
     
     func testIdentify() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.identify("user_id")
         
         let identifyMessage = resultPlugin.lastMessage as? IdentifyMessage
@@ -109,9 +108,6 @@ class ClientTests: XCTestCase {
     }
     
     func testIdentifyWithTraits() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
         let identifyMessage = resultPlugin.lastMessage as? IdentifyMessage
@@ -126,9 +122,6 @@ class ClientTests: XCTestCase {
     }
     
     func testUserIdAndTraitsPersistCorrectly() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
         let identifyMessage = resultPlugin.lastMessage as? IdentifyMessage
@@ -153,9 +146,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.screen("ViewController")
         
         let screenMessage = resultPlugin.lastMessage as? ScreenMessage
@@ -169,9 +159,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen_Properties() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.screen("ViewController", properties: ["key_1": "value_1", "key_2": "value_2"])
         
         let screenMessage = resultPlugin.lastMessage as? ScreenMessage
@@ -188,9 +175,6 @@ class ClientTests: XCTestCase {
     }
 
     func testScreen_Option() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_1", isEnabled: true)
             .putIntegration("Destination_2", isEnabled: false)
@@ -218,9 +202,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen_Option_Properties() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_1", isEnabled: true)
             .putIntegration("Destination_2", isEnabled: false)
@@ -250,9 +231,6 @@ class ClientTests: XCTestCase {
     }
 
     func testScreen_Category() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.screen("ViewController", category: "category_1")
         
         let screenMessage = resultPlugin.lastMessage as? ScreenMessage
@@ -266,9 +244,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen_Category_Properties() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.screen("ViewController", category: "category_1", properties: ["key_3": "value_3", "key_4": "value_4"])
         
         let screenMessage = resultPlugin.lastMessage as? ScreenMessage
@@ -284,9 +259,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen_Category_Option() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_1", isEnabled: true)
             .putIntegration("Destination_2", isEnabled: false)
@@ -314,9 +286,6 @@ class ClientTests: XCTestCase {
     }
     
     func testScreen_Category_Option_Properties() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_1", isEnabled: true)
             .putIntegration("Destination_2", isEnabled: false)
@@ -346,9 +315,6 @@ class ClientTests: XCTestCase {
     }
 
     func testTrack() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         // Track with eventName
         client.track("simple_track")
         
@@ -362,9 +328,6 @@ class ClientTests: XCTestCase {
     
     // Track with eventName and properties
     func testTrack_Properties() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.track("simple_track_with_props", properties: ["key_1": "value_1", "key_2": "value_2"])
         
         let trackMessage = resultPlugin.lastMessage as? TrackMessage
@@ -382,9 +345,6 @@ class ClientTests: XCTestCase {
     
     // Track with eventName and option
     func testTrack_Option() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_1", isEnabled: true)
             .putIntegration("Destination_2", isEnabled: false)
@@ -412,9 +372,6 @@ class ClientTests: XCTestCase {
     
     // Track with eventName, properties and option
     func testTrack_Properties_Option() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         let option = MessageOption()
             .putIntegration("Destination_3", isEnabled: true)
             .putIntegration("Destination_4", isEnabled: false)
@@ -445,44 +402,7 @@ class ClientTests: XCTestCase {
         XCTAssertTrue(context!["key_2"] as! [String: String] == ["n_key_2": "n_value_2"])
     }
     
-    // make sure you have Firebase added & enabled to the source in your RudderStack A/C
-    /*func testDestinationEnabled() {
-        let expectation = XCTestExpectation(description: "Firebase Expectation")
-        let myDestination = FirebaseDestination {
-            expectation.fulfill()
-            return true
-        }
-        
-        client.addDestination(myDestination)
-        
-        
-        
-        client.track("testDestinationEnabled")
-        
-        wait(for: [expectation], timeout: 2.0)
-    }
-        
-    func testDestinationNotEnabled() {
-        let expectation = XCTestExpectation(description: "MyDestination Expectation")
-        let myDestination = MyDestination {
-            expectation.fulfill()
-            return true
-        }
-
-        client.addDestination(myDestination)
-        
-        
-        client.track("testDestinationEnabled")
-
-        XCTExpectFailure {
-            wait(for: [expectation], timeout: 2.0)
-        }
-    }*/
-    
     func testAnonymousId() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.setAnonymousId("anonymous_id")
         
         client.track("test_anonymous_id")
@@ -499,9 +419,6 @@ class ClientTests: XCTestCase {
     }
     
     func testContext() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.track("context check")
         
         let context = resultPlugin.lastMessage?.context
@@ -517,9 +434,6 @@ class ClientTests: XCTestCase {
     }
     
     func testDeviceToken() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-
         client.setDeviceToken("device_token")
         client.track("device token check")
         
@@ -531,9 +445,6 @@ class ClientTests: XCTestCase {
     }
     
     func testTraits() {
-        let resultPlugin = ResultPlugin()
-        client.addPlugin(resultPlugin)
-        
         client.identify("user_id", traits: ["email": "abc@def.com"])
         
         let identifyMessage = resultPlugin.lastMessage as? IdentifyMessage
@@ -557,23 +468,67 @@ class ClientTests: XCTestCase {
     }
     
     func testUserId() {
+        client.identify("user_id", traits: ["email": "abc@def.com"])
         
+        XCTAssertEqual(client.userId, "user_id")
     }
     
     func testConfiguration() {
+        let config = client.configuration
         
+        XCTAssertEqual(config.writeKey, configuration.writeKey)
+        XCTAssertEqual(config.dataPlaneURL, configuration.dataPlaneURL)
+        XCTAssertEqual(config.flushQueueSize, configuration.flushQueueSize)
+        XCTAssertEqual(config.dbCountThreshold, configuration.dbCountThreshold)
+        XCTAssertEqual(config.sleepTimeOut, configuration.sleepTimeOut)
+        XCTAssertEqual(config.logLevel, configuration.logLevel)
+        XCTAssertEqual(config.trackLifecycleEvents, configuration.trackLifecycleEvents)
+        XCTAssertEqual(config.recordScreenViews, configuration.recordScreenViews)
+        XCTAssertEqual(config.controlPlaneURL, configuration.controlPlaneURL)
+        XCTAssertEqual(config.automaticSessionTracking, configuration.automaticSessionTracking)
+        XCTAssertEqual(config.sessionTimeOut, configuration.sessionTimeOut)
+        XCTAssertEqual(config.gzipEnabled, configuration.gzipEnabled)
+        XCTAssertEqual(config.dataResidencyServer, configuration.dataResidencyServer)
     }
     
-    func testOption() {
+    func testOption() throws {
+        let globalOption = Option()
+            .putIntegration("destination_1", isEnabled: true)
+            .putIntegration("destination_2", isEnabled: true)
+            .putIntegration("destination_3", isEnabled: false)
         
+        client.setOption(globalOption)
+        
+        client.track("test_track")
+        
+        let trackMessage = resultPlugin.lastMessage as? TrackMessage
+        
+        let integrations = try XCTUnwrap(trackMessage?.integrations)
+        XCTAssertEqual(integrations["destination_1"], true)
+        XCTAssertEqual(integrations["destination_2"], true)
+        XCTAssertEqual(integrations["destination_3"], false)
     }
     
-    func testAdvertisingId() {
+    func testAdvertisingId() throws {
+        client.setAdvertisingId("advertising_id")
+        client.track("advertising id check")
         
+        let context = resultPlugin.lastMessage?.context
+        let advertisingId = context?[keyPath: "device.advertisingId"] as? String
+        let adTrackingEnabled = try XCTUnwrap(context?[keyPath: "device.adTrackingEnabled"] as? Bool)
+        
+        XCTAssertTrue(advertisingId == "advertising_id")
+        XCTAssertTrue(adTrackingEnabled)
     }
     
-    func testAppTrackingConsent() {
+    func testAppTrackingConsent() throws {
+        client.setAppTrackingConsent(.authorize)
+        client.track("advertising id check")
         
+        let context = resultPlugin.lastMessage?.context
+        let attTrackingStatus = try XCTUnwrap(context?[keyPath: "device.attTrackingStatus"] as? Int)
+        
+        XCTAssertEqual(attTrackingStatus, 3)
     }
     
     func testOptOut() {
@@ -584,7 +539,7 @@ class ClientTests: XCTestCase {
 class ResultPlugin: Plugin {
     var sourceConfig: SourceConfig?
     var type: PluginType = .default
-    var client: RSClient?
+    var client: RSClientProtocol?
     
     var lastMessage: Message?
     var trackList = [TrackMessage]()

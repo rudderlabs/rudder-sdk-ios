@@ -53,7 +53,7 @@ final class SourceConfigDownloadWorkerTests: XCTestCase {
             retryStrategy: retryStrategy
         )
         
-        worker.sourceConfig = { expectedSourceConfig in
+        worker.sourceConfig = { expectedSourceConfig, _ in
             XCTAssertEqual(expectedSourceConfig, sourceConfig)
         }
         
@@ -96,7 +96,7 @@ final class SourceConfigDownloadWorkerTests: XCTestCase {
             retryStrategy: retryStrategy
         )
         
-        worker.sourceConfig = { _ in }
+        worker.sourceConfig = { _, _ in }
         
         wait(for: [expectation], timeout: 6.0)
     }
