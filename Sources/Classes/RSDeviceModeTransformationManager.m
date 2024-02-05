@@ -140,7 +140,7 @@ int deviceModeSleepCount = 0;
     NSMutableArray<NSString *>* messageIds = dbMessage.messageIds;
     for(int i=0; i<messages.count; i++) {
         id object = [RSUtils deserialize:messages[i]];
-        if (object && [object isKindOfClass:[NSDictionary class]]) {
+        if (object != nil && [object isKindOfClass:[NSDictionary class]]) {
             RSMessage* message = [[RSMessage alloc] initWithDict:object];
             NSArray<NSString *>* destinationIds = [self getDestinationIdsWithTransformationsForMessage:message];
             if(destinationIds== nil || [destinationIds count]==0) continue;
