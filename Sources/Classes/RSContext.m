@@ -50,7 +50,7 @@ static dispatch_queue_t queue;
             [self createAndPersistTraits];
         } else {
             NSDictionary *traitsDict = [RSUtils deserialize:traitsJson];
-            if (traitsDict == nil) {
+            if (traitsDict != nil) {
                 _traits = [traitsDict mutableCopy];
                 _traits[@"anonymousId"] = _anonymousId;
                 [self persistTraits];
@@ -64,7 +64,7 @@ static dispatch_queue_t queue;
         NSString *externalIdJson = [preferenceManager getExternalIds];
         if (externalIdJson != nil) {
             NSDictionary *externalIdDict = [RSUtils deserialize:externalIdJson];
-            if (externalIdDict == nil) {
+            if (externalIdDict != nil) {
                 _externalIds = [externalIdDict mutableCopy];
             }
         }
