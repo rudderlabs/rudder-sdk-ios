@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * handling the serialization of special floating point values while serializing any object ([#447](https://github.com/rudderlabs/rudder-sdk-ios/issues/447)) ([50d06a6](https://github.com/rudderlabs/rudder-sdk-ios/commit/50d06a68742c7da0160b398801616dda2662cc3b))
 * nil check errors after de-serialization ([#460](https://github.com/rudderlabs/rudder-sdk-ios/issues/460)) ([abd6dc3](https://github.com/rudderlabs/rudder-sdk-ios/commit/abd6dc3b381d70f048a208dd217f28d51db1654f))
-* sending detailed device model info ([#448](https://github.com/rudderlabs/rudder-sdk-ios/issues/448)) ([ec8e9d3](https://github.com/rudderlabs/rudder-sdk-ios/commit/ec8e9d3c6911c010cbd68130a92ef895d4bde183))
+* sending detailed device model (context.device.model) info in granular detail. Eg: As `iPhone 13,1` for `iPhone 12 Mini` instead of just `iPhone` ([#448](https://github.com/rudderlabs/rudder-sdk-ios/issues/448)) ([ec8e9d3](https://github.com/rudderlabs/rudder-sdk-ios/commit/ec8e9d3c6911c010cbd68130a92ef895d4bde183))
 
 ### [1.24.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.1...v1.24.2) (2024-01-03)
 
