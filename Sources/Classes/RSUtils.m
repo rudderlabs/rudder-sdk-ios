@@ -25,16 +25,14 @@
     return [dateFormatter stringFromDate:date];
 }
 
-+ (NSString*) getStringFromDict:(NSDictionary *) dict {
-    NSData *dictData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-    if(dictData == nil)
-        return @"";
-    NSString *dictString = [[NSString alloc] initWithData:dictData encoding:NSUTF8StringEncoding];
-    return dictString;
-}
-
 + (NSString *)getTimestamp {
     return [self getDateString:[[NSDate alloc] init]];
+}
+
+// returns number of seconds elapsed since 1970
++ (long) getTimeStampLong{
+    NSDate *date = [[NSDate alloc] init];
+    return [date timeIntervalSince1970];
 }
 
 + (NSString *)getFilePath:(NSString *)fileName {
@@ -57,11 +55,6 @@
     return [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 
-// returns number of seconds elapsed since 1970
-+ (long) getTimeStampLong{
-    NSDate *date = [[NSDate alloc] init];
-    return [date timeIntervalSince1970];
-}
 
 + (NSString *) getUniqueId {
     NSUUID *uuid = [NSUUID UUID];
@@ -79,7 +72,7 @@
 }
 
 + (unsigned int) getUTF8LengthForDict:(NSDictionary *)message {
-    NSString* msgString = [self getStringFromDict:message];
+    NSString* msgString = [self serialize:message];
     if(msgString == nil)
         return 0;
     return [self getUTF8Length:msgString];
@@ -89,95 +82,19 @@
     return (unsigned int)[[message dataUsingEncoding:NSUTF8StringEncoding] length];
 }
 
-+ (id) serializeValue: (id) val {
-    if ([val isKindOfClass:[NSString class]] ||
-        [val isKindOfClass:[NSNumber class]] ||
-        [val isKindOfClass:[NSNull class]]
-        ) {
-        return val;
-    } else if ([val isKindOfClass:[NSArray class]]) {
-        // handle array
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        for (id i in val) {
-            [array addObject:[self serializeValue:i]];
-        }
-        return [array copy];
-    } else if ([val isKindOfClass:[NSDictionary class]] ||
-               [val isKindOfClass:[NSMutableDictionary class]]
-               ) {
-        // handle dictionary
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-        NSArray *keys = [val allKeys];
-        for (NSString *key in keys) {
-            id value = [val objectForKey:key];
-            if (![key isKindOfClass:[NSString class]]) {
-                [RSLogger logDebug:@"key should be string. changing it to its description"];
-            }
-            [dict setValue:[self serializeValue:value] forKey:[key description]];
-        }
-        return [dict copy];
-    } else if ([val isKindOfClass:[NSDate class]]) {
-        // handle date // isofy
-        return [self getDateString:val];
-    } else if ([val isKindOfClass:[NSURL class]]) {
-        // handle url
-        return [val absoluteString];
-    }
-    [RSLogger logDebug:@"properties value is not serializable. using description"];
-    return [val description];
-}
-
 + (NSArray<NSNumber *> *) sortArray:(NSMutableArray<NSNumber *>*) arrayOfNumbers inOrder:(ORDER) order {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:order == ASCENDING];
     [arrayOfNumbers sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     return [arrayOfNumbers copy];
 }
 
-+ (NSDictionary<NSString *,id> *)serializeDict:(NSDictionary<NSString*, id>*)dict {
-    // if dict is not null
-    if (dict) {
-        NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
-        NSArray *keys = [dict allKeys];
-        for (NSString* key in keys) {
-            id val = [self serializeValue: [dict objectForKey:key]];
-            [returnDict setValue:val forKey:key];
-        }
-        
-        return [returnDict copy];
-    }
-    return dict;
-}
-
-+ (NSArray*) serializeArray:(NSArray*) array {
-    if (array) {
-        NSMutableArray *returnArray = [[NSMutableArray alloc] init];
-        for (id i in array) {
-            [returnArray addObject:[self serializeValue:i]];
-        }
-        return [returnArray copy];
-    }
-    return array;
-}
-
 +(NSArray<NSString*>*) getArrayFromCSVString: (NSString *) csvString {
     return [csvString componentsSeparatedByString:@","];
 }
 
-+(NSString*) getCSVString:(NSArray*) inputStrings {
++(NSString*) getCSVStringFromArray:(NSArray*) inputStrings {
     return [inputStrings componentsJoinedByString:@","];
 }
-
-+(NSString*) getJSONCSVString:(NSArray*) inputStrings {
-    NSMutableString *JSONCSVString = [[NSMutableString alloc] init];
-    for (int index = 0; index < inputStrings.count; index++) {
-        [JSONCSVString appendFormat:@"\"%@\"", inputStrings[index]];
-        if (index != inputStrings.count -1) {
-            [JSONCSVString appendString:@","];
-        }
-    }
-    return [JSONCSVString copy];
-}
-
 
 + (int) getNumberOfBatches:(RSDBMessage*) dbMessage withFlushQueueSize: (int) queueSize {
     int messageCount = (int)dbMessage.messageIds.count;
@@ -193,17 +110,6 @@
         return messageDetails;
     }
     return [[NSMutableArray alloc] initWithArray:[messageDetails subarrayWithRange:NSMakeRange(0, queueSize)]];
-}
-
-+ (id _Nullable) deSerializeJSONString:(NSString*) jsonString {
-    NSError *error = nil;
-    NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    if(error) {
-        [RSLogger logError:[[NSString alloc] initWithFormat:@"Failed to serialize the given string back to object %@", jsonString]];
-        return nil;
-    }
-    return object;
 }
 
 + (BOOL) isValidURL:(NSURL*) url {
@@ -250,6 +156,107 @@
 
 + (BOOL) isEmptyString:(NSString*)value {
     return (value == nil || value.length == 0);
+}
+
++ (NSString* _Nullable) serialize:(id) object {
+    @try {
+        id sanitizedObject = [self sanitizeObject:object];
+        NSData *objectData = [NSJSONSerialization dataWithJSONObject:sanitizedObject options:0 error:nil];
+        if (objectData != nil) {
+            NSString *objectString = [[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding];
+            return objectString;
+        }
+    } @catch (NSException *exception) {
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: serialize: Failed to serialize the given object due to %@", exception]];
+    }
+    return nil;
+}
+
++ (id _Nullable) deserialize:(NSString*) jsonString {
+    @try {
+        NSError *error = nil;
+        NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if(error) {
+            [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: deserialize: Failed to de-serialize the given string back to an object %@", jsonString]];
+            return nil;
+        }
+        return object;
+    } @catch (NSException *exception) {
+        [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: deserialize: Failed to de-serialize the given string back to an object due to %@", exception]];
+    }
+    return nil;
+}
+
+// will stringify NSDate, NSURL Objects, invalid numbers (INFINITY, -INFINITY, NAN) to strings to ensure serialization doesn't fails
++ (id) sanitizeObject: (id) val {
+    // return immediately if the object is valid
+    if([NSJSONSerialization isValidJSONObject:val]) {
+        return val;
+    }
+    
+    // if the object is invalid, sanitize it
+    if ([val isKindOfClass:[NSString class]] || [val isKindOfClass:[NSNull class]]) {
+        return val;
+    } else if ([val isKindOfClass:[NSNumber class]]) {
+        // convert invalid numbers to strings
+        if ([self isSpecialFloatingNumber:(NSNumber *) val]) {
+            return [self serializeSpecialFloatingNumber:val];
+        }
+        return val;
+    } else if ([val isKindOfClass:[NSDate class]]) {
+        // handle date // isofy
+        return [self getDateString:val];
+    } else if ([val isKindOfClass:[NSURL class]]) {
+        // handle url
+        NSString* urlString = [val absoluteString];
+        return urlString !=nil ? urlString: @"";
+    } else if ([val isKindOfClass:[NSArray class]]) {
+        // handle array
+        return [self sanitizeArray:val];
+    } else if ([val isKindOfClass:[NSDictionary class]] || [val isKindOfClass:[NSMutableDictionary class]]) {
+        // handle dictionary
+        return [self sanitizeDictionary:val];
+    }
+    [RSLogger logDebug:@"properties value is not serializable. using description"];
+    return [val description];
+}
+
++ (NSMutableDictionary *)sanitizeDictionary:(id)val {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    NSArray *keys = [val allKeys];
+    for (NSString *key in keys) {
+        id value = [val objectForKey:key];
+        if (![key isKindOfClass:[NSString class]]) {
+            [RSLogger logDebug:@"key should be string. changing it to its description"];
+        }
+        [dict setValue:[self sanitizeObject:value] forKey:[key description]];
+    }
+    return dict;
+}
+
++ (id)sanitizeArray:(id)val {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (id i in val) {
+        [array addObject:[self sanitizeObject:i]];
+    }
+    return [array copy];
+}
+
++ (BOOL) isSpecialFloatingNumber:(NSNumber *)number {
+    return ([number isEqualToNumber:[NSDecimalNumber notANumber]]
+            || isinf([number doubleValue]));
+}
+
++ (NSString*) serializeSpecialFloatingNumber: (NSNumber *) number {
+    if ([number isEqualToNumber:[NSDecimalNumber notANumber]]) {
+        return @"NaN";
+    } else if ([number isEqualToNumber:[NSNumber numberWithDouble:INFINITY]]) {
+        return @"Infinity";
+    } else if ([number isEqualToNumber:[NSNumber numberWithDouble:-INFINITY]]) {
+        return @"-Infinity";
+    }
+    return [number stringValue];
 }
 
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB

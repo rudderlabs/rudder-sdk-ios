@@ -447,7 +447,7 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
 }
 
 - (void)clearEventsFromDB:(NSMutableArray<NSString *> *)messageIds {
-    NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [RSUtils getCSVString:messageIds]];
+    NSString *deleteSqlString = [[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ IN (%@);", TABLE_EVENTS, COL_ID, [RSUtils getCSVStringFromArray:messageIds]];
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: deleteEventSql: %@", deleteSqlString]];
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
@@ -564,7 +564,7 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
 }
 
 -(void) updateEventsWithIds:(NSArray*) messageIds withStatus:(EVENT_PROCESSING_STATUS) status {
-    NSString *messageIdsCsv = [RSUtils getCSVString:messageIds];
+    NSString *messageIdsCsv = [RSUtils getCSVStringFromArray:messageIds];
     if(messageIdsCsv != nil) {
         NSString* updateEventStatusSQL = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %@ | %d WHERE %@ IN (%@);", TABLE_EVENTS, COL_STATUS, COL_STATUS, status, COL_ID, messageIdsCsv];
         @synchronized (self) {

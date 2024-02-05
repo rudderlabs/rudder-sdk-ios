@@ -79,18 +79,18 @@
         [tempDict setValue:_groupId forKey:@"groupId"];
     }
     if (_traits != nil) {
-        [tempDict setValue:[RSUtils serializeDict:_traits] forKey:@"traits"];
+        [tempDict setValue:_traits forKey:@"traits"];
     }
     [tempDict setValue:_anonymousId forKey:@"anonymousId"];
     if (_userId != nil) {
         [tempDict setValue:_userId forKey:@"userId"];
     }
     if (_properties != nil) {
-        [tempDict setValue:[RSUtils serializeDict:_properties] forKey:@"properties"];
+        [tempDict setValue: _properties forKey:@"properties"];
     }
     [tempDict setValue:_event forKey:@"event"];
     if (_userProperties != nil) {
-        [tempDict setValue:[RSUtils serializeDict:_userProperties] forKey:@"userProperties"];
+        [tempDict setValue:_userProperties forKey:@"userProperties"];
     }
     [tempDict setValue:_integrations forKey:@"integrations"];
     

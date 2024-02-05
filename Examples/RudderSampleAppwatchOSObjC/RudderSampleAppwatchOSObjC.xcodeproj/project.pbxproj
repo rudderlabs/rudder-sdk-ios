@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9FE3D0956553F6943CE0B97E /* Pods_RudderSampleAppwatchOSObjC_WatchKit_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868D4D5936FB0FE3FC86FD07 /* Pods_RudderSampleAppwatchOSObjC_WatchKit_Extension.framework */; };
-		ED0CA6FD2A7D0A3300899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6FA2A7D0A3300899C1C /* RudderConfig.plist */; };
 		ED0CA6FE2A7D0A3300899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6FB2A7D0A3300899C1C /* SampleRudderConfig.plist */; };
 		ED0CA6FF2A7D0A3300899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA6FC2A7D0A3300899C1C /* RudderConfig.swift */; };
 		F6F43B902757417F0036CC12 /* RudderSampleAppwatchOSObjC WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F6F43B8F2757417F0036CC12 /* RudderSampleAppwatchOSObjC WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -69,7 +68,6 @@
 		B2D78A99EAE3F5AD5397B003 /* Pods-RudderSampleAppwatchOSObjC WatchKit Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppwatchOSObjC WatchKit Extension.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppwatchOSObjC WatchKit Extension/Pods-RudderSampleAppwatchOSObjC WatchKit Extension.release.xcconfig"; sourceTree = "<group>"; };
 		EBDE6B2F2AB87F17F98D5D23 /* Pods-RudderSampleAppwatchOSObjC WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppwatchOSObjC WatchKit Extension.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppwatchOSObjC WatchKit Extension/Pods-RudderSampleAppwatchOSObjC WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		ED0CA6F62A7D0A2600899C1C /* RudderSampleAppwatchOSObjC WatchKit Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppwatchOSObjC WatchKit Extension-Bridging-Header.h"; sourceTree = "<group>"; };
-		ED0CA6FA2A7D0A3300899C1C /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6FB2A7D0A3300899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6FC2A7D0A3300899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		F6F43B8B2757417E0036CC12 /* RudderSampleAppwatchOSObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RudderSampleAppwatchOSObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +135,6 @@
 		ED0CA6F92A7D0A3300899C1C /* RudderConfig */ = {
 			isa = PBXGroup;
 			children = (
-				ED0CA6FA2A7D0A3300899C1C /* RudderConfig.plist */,
 				ED0CA6FB2A7D0A3300899C1C /* SampleRudderConfig.plist */,
 				ED0CA6FC2A7D0A3300899C1C /* RudderConfig.swift */,
 			);
@@ -315,7 +312,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED0CA6FD2A7D0A3300899C1C /* RudderConfig.plist in Resources */,
 				F6F43BAF275741820036CC12 /* Assets.xcassets in Resources */,
 				ED0CA6FE2A7D0A3300899C1C /* SampleRudderConfig.plist in Resources */,
 			);
