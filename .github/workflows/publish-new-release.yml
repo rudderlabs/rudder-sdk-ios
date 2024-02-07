@@ -10,7 +10,7 @@ on:
 jobs:
   release:
     name: Publish new release
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     if: (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/')) && github.event.pull_request.merged == true # only merged pull requests must trigger this job
     steps:
       - name: Extract version from branch name (for release branches)
@@ -47,28 +47,6 @@ jobs:
         run: |
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
-      - name: Install xcpretty
-        run: gem install xcpretty
-
-      - name: Install Cocoapods
-        run: gem install cocoapods
-
-      - name: Pod install
-        run: pod install --repo-update
-
-      - name: Generate XCFramework
-        run: |
-          sh ./scripts/generate-xcframework.sh
-
-      - name: Upload Release Artifact
-        run: |
-          zip -r Rudder-xcframeworks.zip xcframeworks
-          shasum -a 256 Rudder-xcframeworks.zip >Rudder-xcframeworks.sha256
-          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
-          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Create pull request into develop
         uses: repo-sync/pull-request@v2
         with:
@@ -94,3 +72,43 @@ jobs:
           branches: "release/*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  xcframework:
+    name: Generate and Upload XCFramework
+    runs-on: macos-latest
+    needs: release
+    steps:
+      - name: Extract version from branch name (for release branches)
+        id: extract-version
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#hotfix-}
+          VERSION=${VERSION#release/}
+          echo "release_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install xcpretty
+        run: gem install xcpretty
+
+      - name: Install Cocoapods
+        run: gem install cocoapods
+
+      - name: Pod install
+        run: pod install --repo-update
+
+      - name: Generate XCFramework
+        run: |
+          sh ./scripts/generate-xcframework.sh
+
+      - name: Upload Release Artifact
+        run: |
+          zip -r Rudder-xcframeworks.zip xcframeworks
+          shasum -a 256 Rudder-xcframeworks.zip >Rudder-xcframeworks.sha256
+          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
+          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
