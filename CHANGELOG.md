@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.0...v1.25.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* correct file name of LICENSE.md file in Podspec ([#465](https://github.com/rudderlabs/rudder-sdk-ios/issues/465)) ([c46edc6](https://github.com/rudderlabs/rudder-sdk-ios/commit/c46edc64ffb39a44bb5e6d4f37247a68c72d3d18))
+
 ## [1.25.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.2...v1.25.0) (2024-02-05)
 
 
