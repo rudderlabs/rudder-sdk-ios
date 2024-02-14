@@ -33,15 +33,15 @@ jobs:
 
       - name: Run tests(iOS)
         run: |
-          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          xcodebuild -project Rudder.xcodeproj -scheme RudderTests-iOS test -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -enableCodeCoverage YES -derivedDataPath build | xcpretty
       
       - name: Run tests(tvOS)
         run: |
-          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-tvOS test -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          xcodebuild -project Rudder.xcodeproj -scheme RudderTests-tvOS test -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV' -enableCodeCoverage YES -derivedDataPath build | xcpretty
       
       - name: Run tests(watchOS)
         run: |
-          xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          xcodebuild -project Rudder.xcodeproj -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
                       
       - name: Collect coverage into one XML report
         run: |

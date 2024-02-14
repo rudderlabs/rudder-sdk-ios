@@ -1,11 +1,14 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7.1
 
 import PackageDescription
 
 let package = Package(
     name: "Rudder",
     platforms: [
-        .iOS("12.0"), .tvOS("11.0"), .macOS("10.13"), .watchOS("7.0")
+        .iOS("12.0"),
+        .tvOS("12.0"),
+        .macOS("10.13"),
+        .watchOS("7.0")
     ],
     products: [
         .library(
@@ -16,12 +19,22 @@ let package = Package(
     targets: [
         .target(
             name: "Rudder",
-            path: "Sources",
-            sources: ["Classes/"]
+            dependencies: [
+                .target(name: "RudderInternal")
+            ],
+            path: "RudderCore/Sources"
         ),
         .testTarget(
-            name: "RudderTests",
-            dependencies: ["Rudder"]
+            name: "RudderCoreTests",
+            dependencies: [
+                .target(name: "Rudder"),
+                .target(name: "RudderInternal")
+            ],
+            path: "RudderCore/Tests"
+        ),
+        .target(
+            name: "RudderInternal",
+            path: "RudderInternal/Sources"
         )
     ]
 )
