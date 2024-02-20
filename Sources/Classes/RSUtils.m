@@ -45,9 +45,22 @@
     return [directory stringByAppendingPathComponent:fileName];
 }
 
++ (NSURL *)getFileURL:(NSString *) fileName {
+    NSString *filePath = [self getFilePath:fileName];
+    return [NSURL fileURLWithPath:filePath isDirectory:NO];
+}
+
 + (BOOL)isFileExists:(NSString *)fileName {
     NSString *path = [self getFilePath:fileName];
     return [[NSFileManager defaultManager] fileExistsAtPath:path];
+}
+
++ (BOOL)doesFileExistsAtURL:(NSURL *)fileURL {
+    NSString* filePath = [fileURL path];
+    if(filePath != nil) {
+        return [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    }
+    return NO;
 }
 
 + (BOOL)removeFile:(NSString *)fileName {
