@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -24,6 +24,9 @@ let package = Package(
             ],
             path: "Sources",
             sources: ["Classes/"],
+            resources: [
+                .copy("PrivacyInfo.xcprivacy")
+            ],
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
                 .headerSearchPath("Classes/Headers/")
