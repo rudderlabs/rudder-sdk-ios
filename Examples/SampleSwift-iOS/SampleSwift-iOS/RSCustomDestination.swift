@@ -8,7 +8,7 @@
 
 import Foundation
 import Rudder
-
+/*
 class RSCustomDestination: RSDestinationPlugin {
     var key: String = "Custom"
     var controller = RSController()
@@ -59,4 +59,4 @@ class CustomDestination: RudderDestination {
         super.init()
         plugin = RSCustomDestination()
     }
-}
+}*/

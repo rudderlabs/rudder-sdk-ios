@@ -21,6 +21,7 @@ struct Task {
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    var client: RSClient!
     
     let taskList: [Task] = [
         Task(name: "Identify with traits"),
@@ -52,6 +53,7 @@ class ViewController: UIViewController {
         Task(name: "Allowlist track"),
         Task(name: "Denylist track"),
         Task(name: "Order done"),
+        Task(name: "Order completed"),
         Task(name: "Multiple Track"),
         Task(name: "Multiple Flush From Background"),
         Task(name: "Multiple Flush and Multiple Track"),
@@ -64,6 +66,8 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        client = (UIApplication.shared.delegate as? AppDelegate)!.client
     }
 }
 
@@ -83,7 +87,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
             case 0:
-                RSClient.sharedInstance().identify("test_user_id", traits: [
+                client.identify("test_user_id", traits: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -94,10 +98,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 1:
-                RSClient.sharedInstance().identify("test_user_id")
+                client.identify("test_user_id")
                 
             case 2:
-                RSClient.sharedInstance().track("single_track_call", properties: [
+                client.track("single_track_call", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -108,86 +112,84 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 3:
-                RSClient.sharedInstance().track("single_track_call")
+                client.track("single_track_call")
             case 4:
-                RSClient.sharedInstance().alias("new_user_id")
+                client.alias("new_user_id")
             case 5:
-                RSClient.sharedInstance().screen("ViewController", properties: ["key_1": "value_1"])
+                client.screen("ViewController", properties: ["key_1": "value_1"])
             case 6:
-                RSClient.sharedInstance().screen("ViewController")
+                client.screen("ViewController")
             case 7:
-                RSClient.sharedInstance().group("test_group_id", traits: ["key_1": "value_1"])
+                client.group("test_group_id", traits: ["key_1": "value_1"])
             case 8:
-                RSClient.sharedInstance().group("test_group_id")
+                client.group("test_group_id")
             case 9:
-                RSClient.sharedInstance().setAnonymousId("anonymous_id_1")
+                client.setAnonymousId("anonymous_id_1")
             case 10:
-                RSClient.sharedInstance().setDeviceToken("device_token_1")
+                client.setDeviceToken("device_token_1")
             case 11:
-                RSClient.sharedInstance().setAdvertisingId("advertising_id_1")
+                client.setAdvertisingId("advertising_id_1")
             case 12:
-                RSClient.sharedInstance().setOptOutStatus(false)
+                client.setOptOutStatus(false)
             case 13:
-                RSClient.sharedInstance().setOptOutStatus(true)
+                client.setOptOutStatus(true)
             case 14:
-                RSClient.sharedInstance().reset()
+                client.reset(and: false)
             case 15:
-                RSClient.sharedInstance().flush()
+                client.flush()
             case 16:
-                RSClient.sharedInstance().setAnonymousId("anonymous_id_2")
+                client.setAnonymousId("anonymous_id_2")
             case 17:
-                RSClient.sharedInstance().setDeviceToken("device_token_2")
+                client.setDeviceToken("device_token_2")
             case 18:
-                RSClient.sharedInstance().setAdvertisingId("advertising_id_2")
+                client.setAdvertisingId("advertising_id_2")
             case 19:
-                let option = RSOption()
+                let option = Option()
                 
                 option.putIntegration("key-5", isEnabled: true)
                 option.putIntegration("key-6", isEnabled: true)
                 option.putIntegration("key-7", isEnabled: true)
                 option.putIntegration("key-8", isEnabled: false)
                 
-                RSClient.sharedInstance().setOption(option)
+                client.setOption(option)
             case 20:
-                let option = RSOption()
-                option.putExternalId("key-1", withId: "value-1")
-                option.putExternalId("key-2", withId: "value-2")
+                let option = IdentifyOption()
+                option.putExternalId("value-1", to: "key-1")
+                option.putExternalId("value-2", to: "key-2")
                 
                 option.putIntegration("key-5", isEnabled: true)
                 option.putIntegration("key-6", isEnabled: true)
                 option.putIntegration("key-7", isEnabled: false)
                 option.putIntegration("key-8", isEnabled: false)
                 
-                option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
-                option.putCustomContext(["Key-02": "value-1"], withKey: "key-10")
-                option.putCustomContext(["Key-03": "value-1"], withKey: "key-11")
-                option.putCustomContext(["Key-04": "value-1"], withKey: "key-12")
-                RSClient.sharedInstance().identify("test_user_id", option: option)
+                option.putCustomContext(["Key-01": "value-1"], for: "key-9")
+                option.putCustomContext(["Key-02": "value-1"], for: "key-10")
+                option.putCustomContext(["Key-03": "value-1"], for: "key-11")
+                option.putCustomContext(["Key-04": "value-1"], for: "key-12")
+                client.identify("test_user_id", option: option)
             case 21:
-                let option = RSOption()
-                option.putExternalId("key-3", withId: "value-3")
-                option.putExternalId("key-4", withId: "value-4")
+                let option = MessageOption()
                 
                 option.putIntegration("key-5", isEnabled: false)
                 option.putIntegration("key-6", isEnabled: true)
                 option.putIntegration("key-7", isEnabled: false)
                 option.putIntegration("key-8", isEnabled: true)
                 
-                option.putCustomContext(["Key-01": "value-1"], withKey: "key-9")
-                option.putCustomContext(["Key-02": "value-2"], withKey: "key-10")
-                RSClient.sharedInstance().track("single_track_call", option: option)
+                option.putCustomContext(["Key-01": "value-1"], for: "key-9")
+                option.putCustomContext(["Key-02": "value-2"], for: "key-10")
+                client.track("single_track_call", option: option)
             case 22:
-                RSClient.sharedInstance().startSession()
+                client.startSession()
             case 23:
-                RSClient.sharedInstance().endSession()
+                client.endSession()
             case 24:
-                RSClient.sharedInstance().startSession(1234567890)
+                client.startSession(1234567890)
             case 25:
-                if let context = RSClient.sharedInstance().context {
-                    print(context.dictionaryValue)
+                if let context = client.context, let dictionaryValue = context.dictionaryValue {
+                    print(dictionaryValue)
                 }
             case 26:
-                RSClient.sharedInstance().track("allow_list_track", properties: [
+                client.track("allow_list_track", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -198,7 +200,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 27:
-                RSClient.sharedInstance().track("deny_list_track", properties: [
+                client.track("deny_list_track", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -209,109 +211,110 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 28:
-                RSClient.sharedInstance().track("Order Done", properties: getProperties())
+                client.track("Order Done", properties: getProperties())
             case 29:
-                RSClient.sharedInstance().track("Order Completed", properties: getProperties())
-        /*case 2:
-            for i in 1...50 {
-                RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
-            }
+                client.track("Order Completed", properties: getProperties())
+            case 30:
+                for i in 1...50 {
+                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                }
+        /*
         case 4:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 2, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 3, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }*/
         /*case 6:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
-                    RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1001...2000 {
                     print("From Thread 2A, Track No. \(i)")
-                    RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 2, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 2001...3000 {
                     print("From Thread 3A, Track No. \(i)")
-                    RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 3, Flush No. \(i)")
-                    RSClient.sharedInstance().flush()
+                    client.flush()
                 }
             }
         case 9:
             DispatchQueue.global(qos: .background).async {
                 for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
-                    RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
             }
                         
             DispatchQueue.global(qos: .background).async {
                 for i in 1001...2000 {
                     print("From Thread 2A, Screen No. \(i)")
-                    RSClient.sharedInstance().screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client.screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
             }
 
             DispatchQueue.global(qos: .background).async {
                 for i in 2001...3000 {
                     print("From Thread 3A, Group No. \(i)")
-                    RSClient.sharedInstance().group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
+                    client.group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
                 }
             }
             
             DispatchQueue.global(qos: .background).async {
                 for i in 3001...4000 {
                     print("From Thread 4A, Alias No. \(i)")
-                    RSClient.sharedInstance().alias("Alias \(i)")
+                    client.alias("Alias \(i)")
                 }
             }
 
             DispatchQueue.global(qos: .background).async {
                 for i in 4001...5000 {
                     print("From Thread 5A, Identify No. \(i)")
-                    RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
+                    client.identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
                 }
             }
         case 10:
@@ -319,9 +322,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 1...1000 {
                     print("From Thread 1A, Track No. \(i)")
                     if i % 2 == 0 {
-                        RSClient.sharedInstance().track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                        client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                     } else {
-                        RSClient.sharedInstance().setAdvertisingId("Advertising Id \(i)")
+                        client.setAdvertisingId("Advertising Id \(i)")
                     }
                 }
             }
@@ -330,9 +333,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 1001...2000 {
                     print("From Thread 2A, Screen No. \(i)")
                     if i % 2 == 0 {
-                        RSClient.sharedInstance().screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
+                        client.screen("Screen \(i)", properties: ["time": Date().timeIntervalSince1970])
                     } else {
-                        RSClient.sharedInstance().setAnonymousId("Anonymous Id \(i)")
+                        client.setAnonymousId("Anonymous Id \(i)")
                     }
                 }
             }
@@ -341,9 +344,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 2001...3000 {
                     print("From Thread 3A, Group No. \(i)")
                     if i % 2 == 0 {
-                        RSClient.sharedInstance().group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
+                        client.group("Group \(i)", traits: ["time": "\(Date().timeIntervalSince1970)"])
                     } else {
-                        RSClient.sharedInstance().setDeviceToken("Device Token \(i)")
+                        client.setDeviceToken("Device Token \(i)")
                     }
                 }
             }
@@ -352,9 +355,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 3001...4000 {
                     print("From Thread 4A, Alias No. \(i)")
                     if i % 2 == 0 {
-                        RSClient.sharedInstance().alias("Alias \(i)")
+                        client.alias("Alias \(i)")
                     } else {
-                        RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+                        client.setAppTrackingConsent(.authorize)
                     }
                 }
             }
@@ -363,10 +366,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 for i in 4001...5000 {
                     print("From Thread 5A, Identify No. \(i)")
                     if i % 2 == 0 {
-                    RSClient.sharedInstance().identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
+                    client.identify("Identify \(i)", traits: ["time": Date().timeIntervalSince1970])
                     } else {
-                        RSClient.sharedInstance().setDeviceToken("Device Token \(i)")
-                        RSClient.sharedInstance().setAppTrackingConsent(.authorize)
+                        client.setDeviceToken("Device Token \(i)")
+                        client.setAppTrackingConsent(.authorize)
                     }
                 }
             }

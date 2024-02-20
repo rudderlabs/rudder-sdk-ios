@@ -18,6 +18,8 @@ class RudderConfig: NSObject, Codable {
     @objc let DEV_CONTROL_PLANE_URL: String
     @objc let STORAGE_LOCATION: String
     @objc let DOMAIN_IDENTIFIER: String
+    @objc let MOCK_DATA_PLANE_URL: String
+    @objc let MOCK_CONTROL_PLANE_URL: String
     
     @objc
     class func create(from url: URL) -> RudderConfig? {

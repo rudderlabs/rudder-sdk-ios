@@ -32,7 +32,7 @@ type_body_length:
     - 400 # error
 # or they can set both explicitly
 file_length:
-    warning: 500
+    warning: 600
     error: 1200
 # naming rules can set warnings/errors for min_length and max_length
 # additionally they can set excluded names
@@ -50,4 +50,7 @@ identifier_name:
     - id
     - URL
     - GlobalAPIKey
+function_body_length:
+    - 75 # warning
+    - 100 # error
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging)

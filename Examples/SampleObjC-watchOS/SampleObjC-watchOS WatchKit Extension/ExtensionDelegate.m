@@ -16,7 +16,7 @@ static NSString *WRITE_KEY = @"1wvsoF3Kx2SczQNlx1dvcqW9ODW";
 
 - (void)applicationDidFinishLaunching {
     // Perform any final initialization of your application.
-    RSConfig *config = [[RSConfig alloc] initWithWriteKey:WRITE_KEY];
+    Config *config = [[Config alloc] initWithWriteKey:WRITE_KEY];
     [config dataPlaneURL:DATA_PLANE_URL];
     [config trackLifecycleEvents:YES];
     [config recordScreenViews:YES];

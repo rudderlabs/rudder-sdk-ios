@@ -10,12 +10,12 @@ import UIKit
 import Rudder
 import AdSupport
 import Network
-import RudderFirebase
-import RudderAmplitude
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var client: RSClient!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         guard let path = Bundle.main.path(forResource: "RudderConfig", ofType: "plist"),
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print(NSHomeDirectory())
         
-        let config: RSConfig = RSConfig(writeKey: rudderConfig.WRITE_KEY, dataPlaneURL: rudderConfig.DEV_DATA_PLANE_URL)
+        if let config: Config = Config(writeKey: rudderConfig.WRITE_KEY, dataPlaneURL: rudderConfig.DEV_DATA_PLANE_URL)?
             .controlPlaneURL(rudderConfig.DEV_CONTROL_PLANE_URL)
 //            .dataResidencyServer(.EU)
 //            .controlPlaneURL("https://e2e6fd4f-c24c-43d6-8ca3-11a11e7cc7d5.mock.pstmn.io") // disabled
@@ -34,14 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .loglevel(.verbose)
             .trackLifecycleEvents(true)
             .recordScreenViews(true)
-            .sleepTimeOut(20)
-            .gzipEnabled(false)
-        
-        RSClient.sharedInstance().configure(with: config)
-        
-        
-        RSClient.sharedInstance().addDestination(RudderAmplitudeDestination())
-        RSClient.sharedInstance().addDestination(RudderFirebaseDestination())
+//            .sleepTimeOut(10)
+            .gzipEnabled(false) {
+            
+            client = RSClient(config: config)
+        }
             
         return true
     }

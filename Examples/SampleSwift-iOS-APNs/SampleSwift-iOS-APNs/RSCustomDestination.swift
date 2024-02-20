@@ -55,7 +55,7 @@ class RSCustomDestination: RSDestinationPlugin {
     }
 }
 
-extension RSCustomDestination: RSPushNotifications {
+extension RSCustomDestination: PushNotifications {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
     }
