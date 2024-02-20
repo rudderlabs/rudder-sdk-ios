@@ -15,35 +15,42 @@ import Cocoa
 
 class MacApplicationState: ApplicationStateProtocol {
     let application: NSApplication
-    let userDefaults: UserDefaultsWorkerProtocol
+    let userDefaultsWorker: UserDefaultsWorkerProtocol
+    let bundle: Bundle
+    
+    var currentVersion: String? {
+        bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+    var currentBuild: String? {
+        bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+    }
+    var previousVersion: String? {
+        userDefaultsWorker.read(.version)
+    }
+    var previousBuild: String? {
+        userDefaultsWorker.read(.build)
+    }
     
     var trackApplicationStateMessage: ((ApplicationStateMessage) -> Void) = { _  in }
     var refreshSessionIfNeeded: (() -> Void) = { }
     
     @ReadWriteLock private var didFinishLaunching = false
-    @ReadWriteLock private var fromBackground = false
-
-    init(application: NSApplication, userDefaults: UserDefaultsWorkerProtocol) {
+    @ReadWriteLock private var isBackgrounded = false
+    
+    init(application: NSApplication, userDefaultsWorker: UserDefaultsWorkerProtocol, bundle: Bundle = Bundle.main) {
         self.application = application
-        self.userDefaults = userDefaults
+        self.userDefaultsWorker = userDefaultsWorker
+        self.bundle = bundle
     }
     
     func didEnterBackground(notification: NSNotification) {
-        fromBackground = true
-        trackApplicationStateMessage(ApplicationStateMessage(
-            state: .backgrounded
-        ))
+        isBackgrounded = true
+        trackApplicationStateMessage(ApplicationStateMessage(state: .backgrounded))
     }
     
     func didFinishLaunching(notification: NSNotification) {
         didFinishLaunching = true
-        
-        let previousVersion: String? = userDefaults.read( .version)
-        let previousBuild: String? = userDefaults.read( .build)
-        
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        
+                
         if previousVersion == nil {
             trackApplicationStateMessage(ApplicationStateMessage(
                 state: .installed,
@@ -64,54 +71,12 @@ class MacApplicationState: ApplicationStateProtocol {
             ))
         }
         
-        trackApplicationStateMessage(ApplicationStateMessage(
-            state: .opened,
-            properties: getLifeCycleProperties(
-                currentVersion: currentVersion,
-                currentBuild: currentBuild,
-                fromBackground: false
-            )
-        ))
-        
-        userDefaults.write(.version, value: currentVersion)
-        userDefaults.write(.build, value: currentBuild)
+        userDefaultsWorker.write(.version, value: currentVersion)
+        userDefaultsWorker.write(.build, value: currentBuild)
     }
     
-    func didBecomeActive(notification: NSNotification) {
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        
-        if !didFinishLaunching {
-            didFinishLaunching = true
-            
-            let previousVersion: String? = userDefaults.read( .version)
-            let previousBuild: String? = userDefaults.read( .build)
-            
-            if previousVersion == nil {
-                trackApplicationStateMessage(ApplicationStateMessage(
-                    state: .installed,
-                    properties: getLifeCycleProperties(
-                        currentVersion: currentVersion,
-                        currentBuild: currentBuild
-                    )
-                ))
-            } else if currentVersion != previousVersion {
-                trackApplicationStateMessage(ApplicationStateMessage(
-                    state: .updated,
-                    properties: getLifeCycleProperties(
-                        previousVersion: previousVersion,
-                        previousBuild: previousBuild,
-                        currentVersion: currentVersion,
-                        currentBuild: currentBuild
-                    )
-                ))
-            }
-            
-            userDefaults.write(.version, value: currentVersion)
-            userDefaults.write(.build, value: currentBuild)
-        }
-        
-        if fromBackground {
+    func willEnterForeground(notification: NSNotification) {
+        if isBackgrounded {
             refreshSessionIfNeeded()
         }
         
@@ -120,9 +85,10 @@ class MacApplicationState: ApplicationStateProtocol {
             properties: getLifeCycleProperties(
                 currentVersion: currentVersion,
                 currentBuild: currentBuild,
-                fromBackground: fromBackground
+                fromBackground: isBackgrounded
             )
         ))
+        isBackgrounded = false
     }
 }
 
@@ -134,7 +100,7 @@ extension Notification.Name {
         case NSApplication.didFinishLaunchingNotification:
             return .didFinishLaunching
         case NSApplication.didBecomeActiveNotification:
-            return .didBecomeActive
+            return .willEnterForeground
         default:
             return .unknown
         }
@@ -145,7 +111,7 @@ extension ApplicationState {
     static func current(
         notificationCenter: NotificationCenter,
         application: NSApplication = NSApplication.shared,
-        userDefaults: UserDefaultsWorkerProtocol,
+        userDefaultsWorker: UserDefaultsWorkerProtocol,
         notifications: [Notification.Name] = [
             NSApplication.didFinishLaunchingNotification,
             NSApplication.didResignActiveNotification,
@@ -156,7 +122,7 @@ extension ApplicationState {
             notificationCenter: notificationCenter,
             application: MacApplicationState(
                 application: application,
-                userDefaults: userDefaults
+                userDefaultsWorker: userDefaultsWorker
             ),
             notifications: notifications
         )

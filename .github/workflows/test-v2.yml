@@ -42,7 +42,11 @@ jobs:
       - name: Run tests(watchOS)
         run: |
           xcodebuild -project Rudder.xcodeproj -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
-                      
+          
+#      - name: Run tests(macOS)
+#        run: |
+#          xcodebuild -project Rudder.xcodeproj -scheme RudderTests-macOS test -destination 'platform=macOS,,arch=x86_64' -enableCodeCoverage YES -derivedDataPath build | xcpretty
+          
       - name: Collect coverage into one XML report
         run: |
           bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml

@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
                 .logLevel(.verbose)
                 .trackLifecycleEvents(true)
-                .recordScreenViews(true)
                 .sleepTimeOut(5)
                 .gzipEnabled(false)
                 .flushQueueSize(0)
@@ -53,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //            .controlPlaneURL("https://98e2b8de-9984-471b-a705-b1bcf3f9f6ba.mock.pstmn.io") // enabled
                 .logLevel(.verbose)
                 .trackLifecycleEvents(false)
-                .recordScreenViews(false)
                 .sleepTimeOut(5)
                 .gzipEnabled(false)
                 .flushQueueSize(0)

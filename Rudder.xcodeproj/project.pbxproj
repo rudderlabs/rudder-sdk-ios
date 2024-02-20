@@ -18,13 +18,38 @@
 		ED11001B2B7A28410007B019 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100182B7A28410007B019 /* UserInfo.swift */; };
 		ED11001C2B7A28410007B019 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100182B7A28410007B019 /* UserInfo.swift */; };
 		ED1100232B7A43240007B019 /* SwiftUIModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100222B7A43240007B019 /* SwiftUIModifier.swift */; };
-		ED1100242B7A4D010007B019 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F8732B78AF050007B019 /* Rudder.framework */; };
 		ED1100282B7A4D0D0007B019 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F8672B78AEF20007B019 /* Rudder.framework */; };
 		ED11002C2B7A4D3B0007B019 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F87F2B78AF160007B019 /* Rudder.framework */; };
 		ED1100312B7B56930007B019 /* FlushPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100302B7B56930007B019 /* FlushPolicyTests.swift */; };
 		ED1100322B7B56930007B019 /* FlushPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100302B7B56930007B019 /* FlushPolicyTests.swift */; };
 		ED1100332B7B56930007B019 /* FlushPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100302B7B56930007B019 /* FlushPolicyTests.swift */; };
 		ED1100342B7B56930007B019 /* FlushPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100302B7B56930007B019 /* FlushPolicyTests.swift */; };
+		ED1100382B7CA9380007B019 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100372B7CA9380007B019 /* BackgroundTask.swift */; };
+		ED1100392B7CA9380007B019 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100372B7CA9380007B019 /* BackgroundTask.swift */; };
+		ED11003A2B7CA9380007B019 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100372B7CA9380007B019 /* BackgroundTask.swift */; };
+		ED11003B2B7CA9380007B019 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100372B7CA9380007B019 /* BackgroundTask.swift */; };
+		ED11003D2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */; };
+		ED11003E2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */; };
+		ED11003F2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */; };
+		ED1100402B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */; };
+		ED1100432B7DFF410007B019 /* PhoneApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */; };
+		ED1100442B8331710007B019 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE172B78DB4E0007B019 /* SceneDelegate.swift */; };
+		ED1100462B835FA60007B019 /* WatchApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */; };
+		ED1100472B8360F20007B019 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F8732B78AF050007B019 /* Rudder.framework */; };
+		ED11004D2B83784A0007B019 /* MacApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */; };
+		ED11004F2B8483130007B019 /* PhoneApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */; };
+		ED1100502B8483220007B019 /* PhoneApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */; };
+		ED1100512B84832D0007B019 /* PhoneApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */; };
+		ED1100522B8483320007B019 /* WatchApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */; };
+		ED1100532B8483320007B019 /* MacApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */; };
+		ED1100542B8483330007B019 /* WatchApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */; };
+		ED1100552B8483340007B019 /* MacApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */; };
+		ED1100562B8483350007B019 /* WatchApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */; };
+		ED1100572B8483350007B019 /* MacApplicationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */; };
+		ED1100592B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */; };
+		ED11005A2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */; };
+		ED11005B2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */; };
+		ED11005C2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */; };
 		ED11FA3F2B78B32B0007B019 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA0F2B78B1790007B019 /* RudderInternal.framework */; };
 		ED11FA442B78B3310007B019 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA1B2B78B18F0007B019 /* RudderInternal.framework */; };
 		ED11FA492B78B33F0007B019 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA272B78B19D0007B019 /* RudderInternal.framework */; };
@@ -273,10 +298,6 @@
 		ED11FD5D2B78CB2B0007B019 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC762B78CB2A0007B019 /* Configuration.swift */; };
 		ED11FD5E2B78CB2B0007B019 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC762B78CB2A0007B019 /* Configuration.swift */; };
 		ED11FD5F2B78CB2B0007B019 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC762B78CB2A0007B019 /* Configuration.swift */; };
-		ED11FD602B78CB2B0007B019 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC782B78CB2A0007B019 /* DataResidency.swift */; };
-		ED11FD612B78CB2B0007B019 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC782B78CB2A0007B019 /* DataResidency.swift */; };
-		ED11FD622B78CB2B0007B019 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC782B78CB2A0007B019 /* DataResidency.swift */; };
-		ED11FD632B78CB2B0007B019 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC782B78CB2A0007B019 /* DataResidency.swift */; };
 		ED11FD642B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */; };
 		ED11FD652B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */; };
 		ED11FD662B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */; };
@@ -316,7 +337,6 @@
 		ED11FE212B78DB760007B019 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE122B78DB4E0007B019 /* Main.storyboard */; };
 		ED11FE222B78DB790007B019 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE142B78DB4E0007B019 /* AppDelegate.swift */; };
 		ED11FE232B78DB7D0007B019 /* RSCustomDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE162B78DB4E0007B019 /* RSCustomDestination.swift */; };
-		ED11FE242B78DB800007B019 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE172B78DB4E0007B019 /* SceneDelegate.swift */; };
 		ED11FE252B78DB980007B019 /* RudderConfig_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE192B78DB4E0007B019 /* RudderConfig_2.plist */; };
 		ED11FE262B78DB980007B019 /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE1C2B78DB4E0007B019 /* RudderConfig.swift */; };
 		ED11FE272B78DB980007B019 /* RudderConfig_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE1A2B78DB4E0007B019 /* RudderConfig_1.plist */; };
@@ -375,10 +395,6 @@
 		ED11FEE82B78DDFA0007B019 /* SourceConfigDownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE882B78DDFA0007B019 /* SourceConfigDownloadTests.swift */; };
 		ED11FEE92B78DDFA0007B019 /* SourceConfigDownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE882B78DDFA0007B019 /* SourceConfigDownloadTests.swift */; };
 		ED11FEEA2B78DDFA0007B019 /* SourceConfigDownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE882B78DDFA0007B019 /* SourceConfigDownloadTests.swift */; };
-		ED11FEEC2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */; };
-		ED11FEED2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */; };
-		ED11FEEE2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */; };
-		ED11FEEF2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */; };
 		ED11FEF12B78DDFA0007B019 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE8B2B78DDFA0007B019 /* LoggerTests.swift */; };
 		ED11FEF22B78DDFA0007B019 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE8B2B78DDFA0007B019 /* LoggerTests.swift */; };
 		ED11FEF32B78DDFA0007B019 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE8B2B78DDFA0007B019 /* LoggerTests.swift */; };
@@ -527,13 +543,6 @@
 			remoteGlobalIDString = ED11FA322B78B1AA0007B019;
 			remoteInfo = "RudderInternal-tvOS";
 		};
-		ED1100262B7A4D020007B019 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ED11F82F2B78A8BC0007B019 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = ED11F8722B78AF050007B019;
-			remoteInfo = "Rudder-watchOS";
-		};
 		ED11002A2B7A4D0D0007B019 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ED11F82F2B78A8BC0007B019 /* Project object */;
@@ -547,6 +556,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = ED11F87E2B78AF160007B019;
 			remoteInfo = "Rudder-tvOS";
+		};
+		ED1100492B8360F20007B019 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED11F82F2B78A8BC0007B019 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED11F8722B78AF050007B019;
+			remoteInfo = "Rudder-watchOS";
 		};
 		ED11FA412B78B32B0007B019 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -677,6 +693,12 @@
 		ED1100182B7A28410007B019 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		ED1100222B7A43240007B019 /* SwiftUIModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftUIModifier.swift; path = Examples/Task/SwiftUIModifier.swift; sourceTree = SOURCE_ROOT; };
 		ED1100302B7B56930007B019 /* FlushPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlushPolicyTests.swift; sourceTree = "<group>"; };
+		ED1100372B7CA9380007B019 /* BackgroundTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTask.swift; sourceTree = "<group>"; };
+		ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitBackgroundTaskPlannerTests.swift; sourceTree = "<group>"; };
+		ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneApplicationStateTests.swift; sourceTree = "<group>"; };
+		ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchApplicationStateTests.swift; sourceTree = "<group>"; };
+		ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacApplicationStateTests.swift; sourceTree = "<group>"; };
+		ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchKitBackgroundTaskPlannerTests.swift; sourceTree = "<group>"; };
 		ED11F8382B78A8BC0007B019 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED11F8672B78AEF20007B019 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED11F8732B78AF050007B019 /* Rudder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rudder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -746,7 +768,6 @@
 		ED11FC742B78CB2A0007B019 /* StorageMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMessage.swift; sourceTree = "<group>"; };
 		ED11FC752B78CB2A0007B019 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		ED11FC762B78CB2A0007B019 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		ED11FC782B78CB2A0007B019 /* DataResidency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidency.swift; sourceTree = "<group>"; };
 		ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsWorker.swift; sourceTree = "<group>"; };
 		ED11FC7A2B78CB2A0007B019 /* SessionStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		ED11FC7B2B78CB2A0007B019 /* RSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSClient.swift; path = Sources/RSClient.swift; sourceTree = "<group>"; };
@@ -789,7 +810,6 @@
 		ED11FE862B78DDFA0007B019 /* SourceConfigDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceConfigDownloaderTests.swift; sourceTree = "<group>"; };
 		ED11FE872B78DDFA0007B019 /* SourceConfigDownloadWorkerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceConfigDownloadWorkerTests.swift; sourceTree = "<group>"; };
 		ED11FE882B78DDFA0007B019 /* SourceConfigDownloadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceConfigDownloadTests.swift; sourceTree = "<group>"; };
-		ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResidencyTests.swift; sourceTree = "<group>"; };
 		ED11FE8B2B78DDFA0007B019 /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
 		ED11FE8C2B78DDFA0007B019 /* ConsoleLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleLoggerTests.swift; sourceTree = "<group>"; };
 		ED11FE8E2B78DDFA0007B019 /* ReplayQueuePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplayQueuePluginTests.swift; sourceTree = "<group>"; };
@@ -935,7 +955,7 @@
 			files = (
 				ED1100012B7A0EEB0007B019 /* RudderInternal.framework in Frameworks */,
 				ED1100122B7A0FC70007B019 /* RudderInternal.framework in Frameworks */,
-				ED1100242B7A4D010007B019 /* Rudder.framework in Frameworks */,
+				ED1100472B8360F20007B019 /* Rudder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +997,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED1100412B7DF5C40007B019 /* ApplicationState */ = {
+			isa = PBXGroup;
+			children = (
+				ED11004C2B83784A0007B019 /* MacApplicationStateTests.swift */,
+				ED1100422B7DFF410007B019 /* PhoneApplicationStateTests.swift */,
+				ED1100452B835FA60007B019 /* WatchApplicationStateTests.swift */,
+			);
+			path = ApplicationState;
+			sourceTree = "<group>";
+		};
 		ED11F82E2B78A8BC0007B019 = {
 			isa = PBXGroup;
 			children = (
@@ -1210,6 +1240,7 @@
 		ED11FC682B78CB2A0007B019 /* DataUpload */ = {
 			isa = PBXGroup;
 			children = (
+				ED1100372B7CA9380007B019 /* BackgroundTask.swift */,
 				ED11FC692B78CB2A0007B019 /* DataUpload.swift */,
 				ED11FC6A2B78CB2A0007B019 /* DataUploader.swift */,
 				ED11FC6B2B78CB2A0007B019 /* DataUploadWorker.swift */,
@@ -1220,7 +1251,6 @@
 		ED11FC772B78CB2A0007B019 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				ED11FC782B78CB2A0007B019 /* DataResidency.swift */,
 				ED11FC7A2B78CB2A0007B019 /* SessionStorage.swift */,
 				ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */,
 			);
@@ -1327,8 +1357,8 @@
 			isa = PBXGroup;
 			children = (
 				ED11FE922B78DDFA0007B019 /* ClientTests.swift */,
-				ED11FE892B78DDFA0007B019 /* DataResidencyTests.swift */,
 				ED11FE9E2B78DDFA0007B019 /* MultipleInstanceTests.swift */,
+				ED1100412B7DF5C40007B019 /* ApplicationState */,
 				ED11FE9F2B78DDFA0007B019 /* DataUpload */,
 				ED11FE8A2B78DDFA0007B019 /* Logger */,
 				ED11FE932B78DDFA0007B019 /* Networking */,
@@ -1410,6 +1440,8 @@
 			children = (
 				ED11FEA12B78DDFA0007B019 /* DataUploaderTests.swift */,
 				ED11FEA02B78DDFA0007B019 /* DataUploadWorkerTests.swift */,
+				ED11003C2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift */,
+				ED1100582B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift */,
 			);
 			path = DataUpload;
 			sourceTree = "<group>";
@@ -1789,7 +1821,7 @@
 			dependencies = (
 				ED1100042B7A0EEB0007B019 /* PBXTargetDependency */,
 				ED1100142B7A0FC70007B019 /* PBXTargetDependency */,
-				ED1100272B7A4D020007B019 /* PBXTargetDependency */,
+				ED11004A2B8360F20007B019 /* PBXTargetDependency */,
 			);
 			name = "RudderTests-watchOS";
 			productName = "RudderTests-watchOS";
@@ -2228,6 +2260,7 @@
 				ED11FCC42B78CB2B0007B019 /* APIStatus.swift in Sources */,
 				ED11FD002B78CB2B0007B019 /* RetryPolicy.swift in Sources */,
 				ED11FD642B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */,
+				ED1100382B7CA9380007B019 /* BackgroundTask.swift in Sources */,
 				ED11FD102B78CB2B0007B019 /* SQLiteStorage.swift in Sources */,
 				ED11FCB82B78CB2B0007B019 /* StoragePlugin.swift in Sources */,
 				ED11FCB42B78CB2B0007B019 /* UserSessionPlugin.swift in Sources */,
@@ -2247,7 +2280,6 @@
 				ED11FD282B78CB2B0007B019 /* RSVersion.swift in Sources */,
 				ED11FCCC2B78CB2B0007B019 /* DownloadUploadBlockers.swift in Sources */,
 				ED11FC8C2B78CB2A0007B019 /* DestinationConfig.swift in Sources */,
-				ED11FD602B78CB2B0007B019 /* DataResidency.swift in Sources */,
 				ED11FBBF2B78C95C0007B019 /* ObjCRSClient.swift in Sources */,
 				ED11FCA42B78CB2A0007B019 /* ConsoleLogger.swift in Sources */,
 				ED11FD722B78CB3B0007B019 /* RudderRegistry.swift in Sources */,
@@ -2296,6 +2328,7 @@
 				ED11FCC52B78CB2B0007B019 /* APIStatus.swift in Sources */,
 				ED11FD012B78CB2B0007B019 /* RetryPolicy.swift in Sources */,
 				ED11FD652B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */,
+				ED1100392B7CA9380007B019 /* BackgroundTask.swift in Sources */,
 				ED11FD112B78CB2B0007B019 /* SQLiteStorage.swift in Sources */,
 				ED11FCB92B78CB2B0007B019 /* StoragePlugin.swift in Sources */,
 				ED11FCB52B78CB2B0007B019 /* UserSessionPlugin.swift in Sources */,
@@ -2315,7 +2348,6 @@
 				ED11FD292B78CB2B0007B019 /* RSVersion.swift in Sources */,
 				ED11FCCD2B78CB2B0007B019 /* DownloadUploadBlockers.swift in Sources */,
 				ED11FC8D2B78CB2A0007B019 /* DestinationConfig.swift in Sources */,
-				ED11FD612B78CB2B0007B019 /* DataResidency.swift in Sources */,
 				ED11FBC02B78C95C0007B019 /* ObjCRSClient.swift in Sources */,
 				ED11FCA52B78CB2A0007B019 /* ConsoleLogger.swift in Sources */,
 				ED11FD732B78CB3B0007B019 /* RudderRegistry.swift in Sources */,
@@ -2364,6 +2396,7 @@
 				ED11FCC62B78CB2B0007B019 /* APIStatus.swift in Sources */,
 				ED11FD022B78CB2B0007B019 /* RetryPolicy.swift in Sources */,
 				ED11FD662B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */,
+				ED11003A2B7CA9380007B019 /* BackgroundTask.swift in Sources */,
 				ED11FD122B78CB2B0007B019 /* SQLiteStorage.swift in Sources */,
 				ED11FCBA2B78CB2B0007B019 /* StoragePlugin.swift in Sources */,
 				ED11FCB62B78CB2B0007B019 /* UserSessionPlugin.swift in Sources */,
@@ -2383,7 +2416,6 @@
 				ED11FD2A2B78CB2B0007B019 /* RSVersion.swift in Sources */,
 				ED11FCCE2B78CB2B0007B019 /* DownloadUploadBlockers.swift in Sources */,
 				ED11FC8E2B78CB2A0007B019 /* DestinationConfig.swift in Sources */,
-				ED11FD622B78CB2B0007B019 /* DataResidency.swift in Sources */,
 				ED11FBC12B78C95C0007B019 /* ObjCRSClient.swift in Sources */,
 				ED11FCA62B78CB2A0007B019 /* ConsoleLogger.swift in Sources */,
 				ED11FD742B78CB3B0007B019 /* RudderRegistry.swift in Sources */,
@@ -2432,6 +2464,7 @@
 				ED11FCC72B78CB2B0007B019 /* APIStatus.swift in Sources */,
 				ED11FD032B78CB2B0007B019 /* RetryPolicy.swift in Sources */,
 				ED11FD672B78CB2B0007B019 /* UserDefaultsWorker.swift in Sources */,
+				ED11003B2B7CA9380007B019 /* BackgroundTask.swift in Sources */,
 				ED11FD132B78CB2B0007B019 /* SQLiteStorage.swift in Sources */,
 				ED11FCBB2B78CB2B0007B019 /* StoragePlugin.swift in Sources */,
 				ED11FCB72B78CB2B0007B019 /* UserSessionPlugin.swift in Sources */,
@@ -2451,7 +2484,6 @@
 				ED11FD2B2B78CB2B0007B019 /* RSVersion.swift in Sources */,
 				ED11FCCF2B78CB2B0007B019 /* DownloadUploadBlockers.swift in Sources */,
 				ED11FC8F2B78CB2A0007B019 /* DestinationConfig.swift in Sources */,
-				ED11FD632B78CB2B0007B019 /* DataResidency.swift in Sources */,
 				ED11FBC22B78C95C0007B019 /* ObjCRSClient.swift in Sources */,
 				ED11FCA72B78CB2A0007B019 /* ConsoleLogger.swift in Sources */,
 				ED11FD752B78CB3B0007B019 /* RudderRegistry.swift in Sources */,
@@ -2540,6 +2572,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED1100442B8331710007B019 /* SceneDelegate.swift in Sources */,
 				ED11FE222B78DB790007B019 /* AppDelegate.swift in Sources */,
 				ED11FE262B78DB980007B019 /* RudderConfig.swift in Sources */,
 				ED11FE1D2B78DB600007B019 /* ViewController.swift in Sources */,
@@ -2555,7 +2588,6 @@
 				ED11FE022B78DA800007B019 /* ContentView.swift in Sources */,
 				ED11FE282B78DBC40007B019 /* RudderConfig.swift in Sources */,
 				ED11FE002B78DA800007B019 /* SwiftUI_iOSApp.swift in Sources */,
-				ED11FE242B78DB800007B019 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2563,9 +2595,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED11003E2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEC02B78DDFA0007B019 /* SourceConfigMock.swift in Sources */,
 				ED11FF332B78DDFA0007B019 /* StorageWorkerTests.swift in Sources */,
 				ED11FF422B78DDFA0007B019 /* DataUploaderTests.swift in Sources */,
+				ED1100542B8483330007B019 /* WatchApplicationStateTests.swift in Sources */,
 				ED11FEA72B78DDFA0007B019 /* APIClientMock.swift in Sources */,
 				ED11FEAC2B78DDFA0007B019 /* PrintFunctionMock.swift in Sources */,
 				ED11FF062B78DDFA0007B019 /* UserSessionPluginTests.swift in Sources */,
@@ -2573,12 +2607,13 @@
 				ED11FF292B78DDFA0007B019 /* SQLiteStorageTests.swift in Sources */,
 				ED11FEDE2B78DDFA0007B019 /* SourceConfigDownloaderTests.swift in Sources */,
 				ED11FF102B78DDFA0007B019 /* ClientTests.swift in Sources */,
+				ED11004F2B8483130007B019 /* PhoneApplicationStateTests.swift in Sources */,
 				ED11FEC52B78DDFA0007B019 /* SQLiteDatabaseMock.swift in Sources */,
 				ED11FF2E2B78DDFA0007B019 /* StorageMigratorTests.swift in Sources */,
 				ED11FECF2B78DDFA0007B019 /* CoreMocks.swift in Sources */,
+				ED11005A2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEB62B78DDFA0007B019 /* ConsoleLoggerMock.swift in Sources */,
 				ED11FF242B78DDFA0007B019 /* RetryPolicyTests.swift in Sources */,
-				ED11FEED2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */,
 				ED11FEF72B78DDFA0007B019 /* ConsoleLoggerTests.swift in Sources */,
 				ED11FEFC2B78DDFA0007B019 /* ReplayQueuePluginTests.swift in Sources */,
 				ED11FEE32B78DDFA0007B019 /* SourceConfigDownloadWorkerTests.swift in Sources */,
@@ -2588,6 +2623,7 @@
 				ED1100322B7B56930007B019 /* FlushPolicyTests.swift in Sources */,
 				ED11FECA2B78DDFA0007B019 /* SessionStorageMock.swift in Sources */,
 				ED11FF1A2B78DDFA0007B019 /* ServiceManagerTests.swift in Sources */,
+				ED11004D2B83784A0007B019 /* MacApplicationStateTests.swift in Sources */,
 				ED11FF012B78DDFA0007B019 /* EventFilteringTests.swift in Sources */,
 				ED11FEBB2B78DDFA0007B019 /* NOLogger.swift in Sources */,
 				ED11FF382B78DDFA0007B019 /* MultipleInstanceTests.swift in Sources */,
@@ -2602,6 +2638,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED11003D2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEBF2B78DDFA0007B019 /* SourceConfigMock.swift in Sources */,
 				ED11FF322B78DDFA0007B019 /* StorageWorkerTests.swift in Sources */,
 				ED11FF412B78DDFA0007B019 /* DataUploaderTests.swift in Sources */,
@@ -2611,13 +2648,15 @@
 				ED11FEB02B78DDFA0007B019 /* RSClientMock.swift in Sources */,
 				ED11FF282B78DDFA0007B019 /* SQLiteStorageTests.swift in Sources */,
 				ED11FEDD2B78DDFA0007B019 /* SourceConfigDownloaderTests.swift in Sources */,
+				ED1100532B8483320007B019 /* MacApplicationStateTests.swift in Sources */,
 				ED11FF0F2B78DDFA0007B019 /* ClientTests.swift in Sources */,
 				ED11FEC42B78DDFA0007B019 /* SQLiteDatabaseMock.swift in Sources */,
 				ED11FF2D2B78DDFA0007B019 /* StorageMigratorTests.swift in Sources */,
 				ED11FECE2B78DDFA0007B019 /* CoreMocks.swift in Sources */,
+				ED1100522B8483320007B019 /* WatchApplicationStateTests.swift in Sources */,
+				ED1100592B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEB52B78DDFA0007B019 /* ConsoleLoggerMock.swift in Sources */,
 				ED11FF232B78DDFA0007B019 /* RetryPolicyTests.swift in Sources */,
-				ED11FEEC2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */,
 				ED11FEF62B78DDFA0007B019 /* ConsoleLoggerTests.swift in Sources */,
 				ED11FEFB2B78DDFA0007B019 /* ReplayQueuePluginTests.swift in Sources */,
 				ED11FEE22B78DDFA0007B019 /* SourceConfigDownloadWorkerTests.swift in Sources */,
@@ -2629,6 +2668,7 @@
 				ED11FF192B78DDFA0007B019 /* ServiceManagerTests.swift in Sources */,
 				ED11FF002B78DDFA0007B019 /* EventFilteringTests.swift in Sources */,
 				ED11FEBA2B78DDFA0007B019 /* NOLogger.swift in Sources */,
+				ED1100432B7DFF410007B019 /* PhoneApplicationStateTests.swift in Sources */,
 				ED11FF372B78DDFA0007B019 /* MultipleInstanceTests.swift in Sources */,
 				ED11FEE72B78DDFA0007B019 /* SourceConfigDownloadTests.swift in Sources */,
 				ED11FF142B78DDFA0007B019 /* URLSessionClientTests.swift in Sources */,
@@ -2641,22 +2681,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED11003F2B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEC12B78DDFA0007B019 /* SourceConfigMock.swift in Sources */,
 				ED11FF342B78DDFA0007B019 /* StorageWorkerTests.swift in Sources */,
 				ED11FF432B78DDFA0007B019 /* DataUploaderTests.swift in Sources */,
+				ED1100462B835FA60007B019 /* WatchApplicationStateTests.swift in Sources */,
 				ED11FEA82B78DDFA0007B019 /* APIClientMock.swift in Sources */,
 				ED11FEAD2B78DDFA0007B019 /* PrintFunctionMock.swift in Sources */,
 				ED11FF072B78DDFA0007B019 /* UserSessionPluginTests.swift in Sources */,
 				ED11FEB22B78DDFA0007B019 /* RSClientMock.swift in Sources */,
 				ED11FF2A2B78DDFA0007B019 /* SQLiteStorageTests.swift in Sources */,
+				ED1100552B8483340007B019 /* MacApplicationStateTests.swift in Sources */,
 				ED11FEDF2B78DDFA0007B019 /* SourceConfigDownloaderTests.swift in Sources */,
+				ED1100512B84832D0007B019 /* PhoneApplicationStateTests.swift in Sources */,
 				ED11FF112B78DDFA0007B019 /* ClientTests.swift in Sources */,
 				ED11FEC62B78DDFA0007B019 /* SQLiteDatabaseMock.swift in Sources */,
 				ED11FF2F2B78DDFA0007B019 /* StorageMigratorTests.swift in Sources */,
+				ED11005B2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FED02B78DDFA0007B019 /* CoreMocks.swift in Sources */,
 				ED11FEB72B78DDFA0007B019 /* ConsoleLoggerMock.swift in Sources */,
 				ED11FF252B78DDFA0007B019 /* RetryPolicyTests.swift in Sources */,
-				ED11FEEE2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */,
 				ED11FEF82B78DDFA0007B019 /* ConsoleLoggerTests.swift in Sources */,
 				ED11FEFD2B78DDFA0007B019 /* ReplayQueuePluginTests.swift in Sources */,
 				ED11FEE42B78DDFA0007B019 /* SourceConfigDownloadWorkerTests.swift in Sources */,
@@ -2680,6 +2724,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED1100402B7CD32A0007B019 /* UIKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEC22B78DDFA0007B019 /* SourceConfigMock.swift in Sources */,
 				ED11FF352B78DDFA0007B019 /* StorageWorkerTests.swift in Sources */,
 				ED11FF442B78DDFA0007B019 /* DataUploaderTests.swift in Sources */,
@@ -2689,13 +2734,15 @@
 				ED11FEB32B78DDFA0007B019 /* RSClientMock.swift in Sources */,
 				ED11FF2B2B78DDFA0007B019 /* SQLiteStorageTests.swift in Sources */,
 				ED11FEE02B78DDFA0007B019 /* SourceConfigDownloaderTests.swift in Sources */,
+				ED1100572B8483350007B019 /* MacApplicationStateTests.swift in Sources */,
 				ED11FF122B78DDFA0007B019 /* ClientTests.swift in Sources */,
 				ED11FEC72B78DDFA0007B019 /* SQLiteDatabaseMock.swift in Sources */,
 				ED11FF302B78DDFA0007B019 /* StorageMigratorTests.swift in Sources */,
 				ED11FED12B78DDFA0007B019 /* CoreMocks.swift in Sources */,
+				ED1100562B8483350007B019 /* WatchApplicationStateTests.swift in Sources */,
+				ED11005C2B85E2B30007B019 /* WatchKitBackgroundTaskPlannerTests.swift in Sources */,
 				ED11FEB82B78DDFA0007B019 /* ConsoleLoggerMock.swift in Sources */,
 				ED11FF262B78DDFA0007B019 /* RetryPolicyTests.swift in Sources */,
-				ED11FEEF2B78DDFA0007B019 /* DataResidencyTests.swift in Sources */,
 				ED11FEF92B78DDFA0007B019 /* ConsoleLoggerTests.swift in Sources */,
 				ED11FEFE2B78DDFA0007B019 /* ReplayQueuePluginTests.swift in Sources */,
 				ED11FEE52B78DDFA0007B019 /* SourceConfigDownloadWorkerTests.swift in Sources */,
@@ -2707,6 +2754,7 @@
 				ED11FF1C2B78DDFA0007B019 /* ServiceManagerTests.swift in Sources */,
 				ED11FF032B78DDFA0007B019 /* EventFilteringTests.swift in Sources */,
 				ED11FEBD2B78DDFA0007B019 /* NOLogger.swift in Sources */,
+				ED1100502B8483220007B019 /* PhoneApplicationStateTests.swift in Sources */,
 				ED11FF3A2B78DDFA0007B019 /* MultipleInstanceTests.swift in Sources */,
 				ED11FEEA2B78DDFA0007B019 /* SourceConfigDownloadTests.swift in Sources */,
 				ED11FF172B78DDFA0007B019 /* URLSessionClientTests.swift in Sources */,
@@ -2780,11 +2828,6 @@
 			target = ED11FA322B78B1AA0007B019 /* RudderInternal-tvOS */;
 			targetProxy = ED1100162B7A0FCC0007B019 /* PBXContainerItemProxy */;
 		};
-		ED1100272B7A4D020007B019 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = ED11F8722B78AF050007B019 /* Rudder-watchOS */;
-			targetProxy = ED1100262B7A4D020007B019 /* PBXContainerItemProxy */;
-		};
 		ED11002B2B7A4D0D0007B019 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ED11F8662B78AEF20007B019 /* Rudder-macOS */;
@@ -2794,6 +2837,11 @@
 			isa = PBXTargetDependency;
 			target = ED11F87E2B78AF160007B019 /* Rudder-tvOS */;
 			targetProxy = ED11002E2B7A4D3B0007B019 /* PBXContainerItemProxy */;
+		};
+		ED11004A2B8360F20007B019 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED11F8722B78AF050007B019 /* Rudder-watchOS */;
+			targetProxy = ED1100492B8360F20007B019 /* PBXContainerItemProxy */;
 		};
 		ED11FA422B78B32B0007B019 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
