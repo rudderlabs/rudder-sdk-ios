@@ -17,6 +17,7 @@
 #import "RSElementCache.h"
 #import "RSCloudModeManager.h"
 #import "RSDeviceModeManager.h"
+#import "RSDefaultsPersistence.h"
 #import "RSPreferenceManager.h"
 #import "RSDBPersistentManager.h"
 #import "RSDataResidencyManager.h"
@@ -37,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     RSDataResidencyManager* dataResidencyManager;
     RSServerConfigManager* configManager;
     RSNetworkManager* networkManager;
+    RSDefaultsPersistence* defaultsPersistence;
     RSPreferenceManager *preferenceManager;
     RSCloudModeManager *cloudModeManager;
     RSDeviceModeManager *deviceModeManager;

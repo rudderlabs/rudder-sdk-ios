@@ -1,11 +1,12 @@
 //
 //  RSPreferenceManager.h
-//  Pods-DummyTestProject
+//  Rudder
 //
 //  Created by Arnab Pal on 27/01/20.
 //
 
 #import <Foundation/Foundation.h>
+#import "RSDefaultsPersistence.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +26,7 @@ extern NSString *const RSLastActiveTimestamp;
 extern NSString *const RSSessionAutoTrackStatus;
 
 + (instancetype) getInstance;
++ (NSArray *) getPreferenceKeys;
 
 - (void) updateLastUpdatedTime: (long) updatedTime;
 - (long) getLastUpdatedTime;
@@ -41,6 +43,7 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) deleteBuildVersionCode;
 
 - (void) performMigration;
+- (void) restoreMissingDefaultsFromPersistence;
 
 - (NSString* __nullable) getBuildNumber;
 - (void) saveBuildNumber: (NSString* __nonnull) buildNumber;
