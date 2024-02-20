@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.1...v1.25.2) (2024-02-20)
+
+
+### Bug Fixes
+
+* added a persistence layer over keys stored in standard defaults by rudderstack ([#454](https://github.com/rudderlabs/rudder-sdk-ios/issues/454)) ([1c52a07](https://github.com/rudderlabs/rudder-sdk-ios/commit/1c52a078790ac12f40a54aec4b62a6aa26c05bc0))
+
 ### [1.25.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.0...v1.25.1) (2024-02-07)
 
 
