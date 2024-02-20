@@ -78,7 +78,7 @@
     @synchronized (tempDict) {
         tempDict = [[NSMutableDictionary alloc] init];
         if(_carrier.count !=0) {
-            [tempDict setValue:[RSUtils getCSVString:_carrier] forKey:@"carrier"];
+            [tempDict setValue:[RSUtils getCSVStringFromArray:_carrier] forKey:@"carrier"];
         }
 #if !TARGET_OS_WATCH
             [tempDict setValue:[NSNumber numberWithBool:_wifi] forKey:@"wifi"];

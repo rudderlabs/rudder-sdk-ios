@@ -235,15 +235,19 @@ static RSEventRepository* _instance;
     message = [self applyConsents:message];
     [self applySession:message withUserSession:userSession andRudderConfig:config];
     
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dict] options:0 error:nil];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
+    NSString * jsonString = [RSUtils serialize: [message dict]];
+    if(jsonString == nil) {
+        [RSLogger logError:@"dump: Event is not a valid JSON object, discarding the event"];
+        return;
+    }
+    
     unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
         [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MSG_SIZE_INVALID} andValue:1];
         return;
     }
+    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
     NSNumber* rowId = [self->dbpersistenceManager saveEvent:jsonString];
     [self->deviceModeManager makeFactoryDump: message FromHistory:NO withRowId:rowId];
 }

@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.0...v1.25.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* correct file name of LICENSE.md file in Podspec ([#465](https://github.com/rudderlabs/rudder-sdk-ios/issues/465)) ([c46edc6](https://github.com/rudderlabs/rudder-sdk-ios/commit/c46edc64ffb39a44bb5e6d4f37247a68c72d3d18))
+
+## [1.25.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.2...v1.25.0) (2024-02-05)
+
+
+### Features
+
+* add privacy manifest file to ios sdk ([#453](https://github.com/rudderlabs/rudder-sdk-ios/issues/453)) ([0b1b207](https://github.com/rudderlabs/rudder-sdk-ios/commit/0b1b2077ffc00bdfa34082e1d4b5ac1b48569b15))
+
+
+### Bug Fixes
+
+* handling the serialization of special floating point values while serializing any object ([#447](https://github.com/rudderlabs/rudder-sdk-ios/issues/447)) ([50d06a6](https://github.com/rudderlabs/rudder-sdk-ios/commit/50d06a68742c7da0160b398801616dda2662cc3b))
+* nil check errors after de-serialization ([#460](https://github.com/rudderlabs/rudder-sdk-ios/issues/460)) ([abd6dc3](https://github.com/rudderlabs/rudder-sdk-ios/commit/abd6dc3b381d70f048a208dd217f28d51db1654f))
+* sending detailed device model (context.device.model) info in granular detail. Eg: As `iPhone 13,1` for `iPhone 12 Mini` instead of just `iPhone` ([#448](https://github.com/rudderlabs/rudder-sdk-ios/issues/448)) ([ec8e9d3](https://github.com/rudderlabs/rudder-sdk-ios/commit/ec8e9d3c6911c010cbd68130a92ef895d4bde183))
+
+### [1.24.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.1...v1.24.2) (2024-01-03)
+
+
+### Bug Fixes
+
+* updated version of MetricsReporter in package.swift ([#433](https://github.com/rudderlabs/rudder-sdk-ios/issues/433)) ([8870ccd](https://github.com/rudderlabs/rudder-sdk-ios/commit/8870ccd41e3341e75edd8882fa2c12b33283ba9f))
+
 ### [1.24.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.24.0...v1.24.1) (2023-12-20)
 
 ## [1.24.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.23.1...v1.24.0) (2023-12-18)

@@ -3,7 +3,7 @@ PODS:
     - RSCrashReporter (= 1.0.1)
     - RudderKit (= 1.4.0)
   - RSCrashReporter (1.0.1)
-  - Rudder (1.24.1):
+  - Rudder (1.25.0):
     - MetricsReporter (= 1.2.1)
   - RudderKit (1.4.0)
   - SQLCipher (4.5.4):
