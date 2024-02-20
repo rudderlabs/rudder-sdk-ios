@@ -21,7 +21,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     private let uploadsQueue = DispatchQueue(label: "uploadsQueue.rudder.com")
     private var flushTimer: RSRepeatingTimer?
     
-    private var databaseManager: RSDatabaseManager?
+    private var storageWorker: StorageWorkerType?
     private var serviceManager: RSServiceType?
     private var config: RSConfig?
     private var userDefaults: RSUserDefaults?
@@ -35,7 +35,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
         guard let client = self.client else { return }
         config = client.config
         userDefaults = client.userDefaults
-        databaseManager = client.databaseManager
+        storageWorker = client.storageWorker
         serviceManager = client.serviceManager
     }
         
@@ -85,7 +85,7 @@ class RudderDestinationPlugin: RSDestinationPlugin {
                     self.flushTimer?.suspend()
                     return
                 }
-                guard let recordCount = self.databaseManager?.getDBRecordCount(), let config = self.config else {
+                guard let recordCount = self.storageWorker?.getMessageCount(), let config = self.config else {
                     return
                 }
                 if recordCount >= config.dbCountThreshold || sleepCount >= config.sleepTimeOut {
@@ -119,8 +119,15 @@ class RudderDestinationPlugin: RSDestinationPlugin {
     }
     
     private func saveEvent<T: RSMessage>(message: T) {
-        guard let databaseManager = self.databaseManager else { return }
-        databaseManager.write(message)
+        guard let storageWorker = self.storageWorker else { return }
+        do {
+            let messageString = try message.toString.get()
+            // we are assigning random UUID string
+            // for DefaultDatabase we don't need the id as the table is auto incremented
+            storageWorker.saveMessage(RSMessageEntity(id: UUID().uuidString, message: messageString))
+        } catch {
+            Logger.logError((error as? RSInternalErrors)?.description)
+        }
     }
 }
 
@@ -128,10 +135,10 @@ extension RudderDestinationPlugin {
     
     func flush() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self, let databaseManager = self.databaseManager, let config = self.config else {
+            guard let self = self, let storageWorker = self.storageWorker, let config = self.config else {
                 return
             }
-            let totalBatchCount = RSUtils.getNumberOfBatch(from: databaseManager.getDBRecordCount(), and: config.flushQueueSize)
+            let totalBatchCount = RSUtils.getNumberOfBatch(from: storageWorker.getMessageCount() ?? 0, and: config.flushQueueSize)
             self.flushBatch(index: 0, totalBatchCount: totalBatchCount)
         }
     }
@@ -208,42 +215,38 @@ extension RudderDestinationPlugin {
 
     private func flushEventsToServer(_ completion: Handler<Bool>? = nil) {
         lock.lock()
-        guard let databaseManager = databaseManager, let config = config else {
+        guard let databaseManager = storageWorker, let config = config else {
             completion?(.failure(NSError(code: .UNKNOWN)))
             return
         }
-        let recordCount = databaseManager.getDBRecordCount()
+        let recordCount = databaseManager.getMessageCount() ?? 0
         Logger.log(message: "DBRecordCount \(recordCount)", logLevel: .debug)
         if recordCount > config.dbCountThreshold {
             Logger.log(message: "Old DBRecordCount \(recordCount - config.dbCountThreshold)", logLevel: .debug)
-            let dbMessage = databaseManager.getEvents(recordCount - config.dbCountThreshold)
-            if let messageIds = dbMessage?.messageIds {
-                databaseManager.removeEvents(messageIds)
+            let dbMessage = databaseManager.fetchMessages(by: recordCount - config.dbCountThreshold)
+            if let messageIds = dbMessage?.compactMap({ $0.id }) {
+                databaseManager.clearMessages(for: messageIds)
             }
         }
         Logger.log(message: "Fetching events to flush to sever", logLevel: .debug)
-        guard let dbMessage = databaseManager.getEvents(config.flushQueueSize) else {
+        guard let dbMessage = databaseManager.fetchMessages(by: config.flushQueueSize) else {
             completion?(.failure(NSError(code: .UNKNOWN)))
             return
         }
-        if !dbMessage.messages.isEmpty {
-            let params = dbMessage.toJSONString()
-            Logger.log(message: "Payload: \(params)", logLevel: .debug)
-            Logger.log(message: "EventCount: \(dbMessage.messages.count)", logLevel: .debug)
-            if !params.isEmpty {
-                serviceManager?.flushEvents(params: params, { result in
-                    switch result {
-                    case .success:
-                        Logger.log(message: "clearing events from DB", logLevel: .debug)
-                        databaseManager.removeEvents(dbMessage.messageIds)
-                        completion?(.success(true))
-                    case .failure(let error):
-                        completion?(.failure(error))
-                    }
-                })
-            } else {
-                completion?(.failure(NSError(code: .UNKNOWN)))
-            }
+        let params = dbMessage.toJSONString()
+        Logger.log(message: "Payload: \(params)", logLevel: .debug)
+        Logger.log(message: "EventCount: \(dbMessage.count)", logLevel: .debug)
+        if !params.isEmpty {
+            serviceManager?.flushEvents(params: params, { result in
+                switch result {
+                case .success:
+                    Logger.log(message: "clearing events from DB", logLevel: .debug)
+                        databaseManager.clearMessages(for: dbMessage.compactMap({ $0.id }))
+                    completion?(.success(true))
+                case .failure(let error):
+                    completion?(.failure(error))
+                }
+            })
         } else {
             completion?(.failure(NSError(code: .UNKNOWN)))
         }

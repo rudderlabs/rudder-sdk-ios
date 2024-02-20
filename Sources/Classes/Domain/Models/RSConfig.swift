@@ -92,6 +92,21 @@ open class RSConfig: NSObject {
         return _downloadServerConfig
     }
     
+    private var _storage: Storage?
+    public var storage: Storage? {
+        return _storage
+    }
+    
+    private var _database: Database?
+    public var database: Database? {
+        return _database
+    }
+    
+    private var _storageWorker: StorageWorkerType?
+    public var storageWorker: StorageWorkerType? {
+        return _storageWorker
+    }
+    
     @objc
     public init(writeKey: String, dataPlaneURL: String) {
         _writeKey = writeKey
@@ -186,6 +201,24 @@ open class RSConfig: NSObject {
     @discardableResult @objc
     public func dataResidencyServer(_ dataResidencyServer: RSDataResidencyServer) -> RSConfig {
         _dataResidencyServer = dataResidencyServer
+        return self
+    }
+    
+    @discardableResult
+    public func storage(_ storage: Storage) -> RSConfig {
+        _storage = storage
+        return self
+    }
+    
+    @discardableResult
+    public func database(_ database: Database) -> RSConfig {
+        _database = database
+        return self
+    }
+    
+    @discardableResult
+    public func storageWorker(_ storageWorker: StorageWorkerType) -> RSConfig {
+        _storageWorker = storageWorker
         return self
     }
     

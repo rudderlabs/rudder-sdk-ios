@@ -235,4 +235,53 @@ extension RSMessage {
         }
         return dict
     }
+    
+    var toString: Result<String, Error> {
+        guard let jsonObject = RSUtils.handleUrlAndDateTypes(dictionaryValue), JSONSerialization.isValidJSONObject(jsonObject) else {
+            return .failure(RSInternalErrors.invalidJSON)
+        }
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+            guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+                return .failure(RSInternalErrors.invalidJSON)
+            }
+            
+            guard jsonString.getUTF8Length() <= MAX_EVENT_SIZE else {
+                return .failure(RSInternalErrors.maxBatchSize)
+            }
+            return .success(jsonString)
+        } catch {
+            return .failure(RSInternalErrors.failedJSONSerialization(error))
+        }
+    }
+}
+
+extension RSUtils {
+    static func handleUrlAndDateTypes(_ message: [String: Any]?) -> [String: Any]? {
+        if var workingMessage = message {
+            for (key, value) in workingMessage {
+                if var dictValue = value as? [String: Any] {
+                    convertIntoString(&dictValue)
+                    workingMessage[key] = dictValue
+                }
+            }
+            return workingMessage
+        }
+        return nil
+    }
+    
+    static func convertIntoString(_ dictValue: inout [String: Any]) {
+        for (key, value) in dictValue {
+            if var nestedDictValue = value as? [String: Any] {
+                convertIntoString(&nestedDictValue)
+                dictValue[key] = nestedDictValue
+            } else if let dateValue = value as? Date {
+                let dateFormatter = ISO8601DateFormatter()
+                dictValue[key] = dateFormatter.string(from: dateValue)
+            } else if let urlValue = value as? URL {
+                dictValue[key] = urlValue.absoluteString
+            }
+        }
+    }
 }

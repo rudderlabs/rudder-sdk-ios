@@ -71,6 +71,10 @@ internal class Vendor {
         return "unavailable"
     }
     
+    var directory: FileManager.SearchPathDirectory {
+        return .libraryDirectory
+    }
+    
     static var current: Vendor = {
         #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
         return PhoneVendor()
