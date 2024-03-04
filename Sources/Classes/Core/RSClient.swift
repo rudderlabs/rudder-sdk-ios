@@ -67,7 +67,6 @@ public class RSClient: RSClientProtocol {
     ///   - apiClient: The developer-choice networking client. Can be used `Alamofire`, `Moya`, etc....
     ///   - sourceConfigDownloader: The developer-choice source config download implementation.
     ///   - dataUploader: The developer-choice source upload data(events) to server implementation.
-    ///   - storageMigrator: The developer-choice storage migration implementation, if any.
     ///   - logger: The developer-choice logger.
     required init(
         configuration: Configuration,
@@ -77,8 +76,7 @@ public class RSClient: RSClientProtocol {
         userDefaults: UserDefaults? = nil,
         apiClient: APIClient? = nil,
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
-        dataUploader: DataUploaderType? = nil,
-        storageMigrator: StorageMigrator? = nil
+        dataUploader: DataUploaderType? = nil
     ) {
         core = RSClientCore(
             configuration: configuration,
@@ -119,7 +117,6 @@ public class RSClient: RSClientProtocol {
     ///   - sourceConfigDownloader: The developer-choice source config download implementation, if any.
     ///   - dataUploader: The developer-choice source upload data(events) to server implementation, if any.
     ///   - logger: The developer-choice logger, if any.
-    ///   - storageMigrator: The developer-choice storage migration implementation, if any.
     /// - Returns: An instance of `RSClient`.
     ///
     @discardableResult

@@ -25,8 +25,6 @@ class RSClientCore {
     var dataUpload: DataUpload?
     var dataUploader: DataUploaderType?
     var sourceConfigDownload: SourceConfigDownload?
-    var storageMigration: StorageMigration?
-    var storageMigrator: StorageMigrator?
     var flushPolicies: [FlushPolicy]
     @ReadWriteLock var pluginList: [PluginType: [Plugin]] = [
         .default: [Plugin](),
@@ -53,8 +51,7 @@ class RSClientCore {
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
         dataUploader: DataUploaderType? = nil,
         apiClient: APIClient? = nil,
-        applicationState: ApplicationState? = nil,
-        storageMigrator: StorageMigrator? = nil
+        applicationState: ApplicationState? = nil
     ) {
         self.configuration = configuration
         self.instanceName = instanceName
@@ -107,7 +104,6 @@ class RSClientCore {
         if !configuration.flushPolicies.isEmpty {
             self.flushPolicies.append(contentsOf: configuration.flushPolicies)
         }
-        self.storageMigrator = storageMigrator
         trackApplicationState()
         recordScreenViews()
         fetchSourceConfig()

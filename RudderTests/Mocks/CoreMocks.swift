@@ -348,11 +348,3 @@ extension RSClient {
         )
     }
 }
-
-class StorageMigratorMock: StorageMigrator {
-    var currentStorage: Storage = StorageMock()
-    
-    func migrate() throws {
-        
-    }
-}
