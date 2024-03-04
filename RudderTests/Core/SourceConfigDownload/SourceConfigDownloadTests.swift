@@ -64,7 +64,7 @@ final class SourceConfigDownloadTests: XCTestCase {
         
         // Then
         var count = 0
-        download.sourceConfig = { sourceConfig, _ in
+        download.sourceConfig = { sourceConfig in
             expectation.fulfill()
             if count == 0 {
                 XCTAssertEqual(cachedSourceConfig, sourceConfig)
@@ -116,7 +116,7 @@ final class SourceConfigDownloadTests: XCTestCase {
         let download = SourceConfigDownload(downloader: worker)
         
         // Then
-        download.sourceConfig = { sourceConfig, _ in
+        download.sourceConfig = { sourceConfig in
             expectation.fulfill()
             XCTAssertEqual(downloadedSourceConfig, sourceConfig)
         }

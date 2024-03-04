@@ -168,7 +168,7 @@ extension RSClientCore {
         
         sourceConfigDownload = SourceConfigDownload(downloader: downloader)
         
-        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig, needsDatabaseMigration in
+        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig in
             guard let self = self else { return }
             if needsDatabaseMigration {
                 self.migrateStorage()
