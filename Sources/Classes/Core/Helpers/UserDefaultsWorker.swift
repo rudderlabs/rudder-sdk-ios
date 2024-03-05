@@ -13,6 +13,7 @@ public enum UserDefaultsKeys: String {
     case traits = "rs_traits"
     case anonymousId = "rs_anonymous_id"
     case sourceConfig = "rs_server_config"
+    case legacySourceConfig = "rl_server_config"
     case optStatus = "rs_opt_status"
     case optInTime = "rs_opt_in_time"
     case optOutTime = "rs_opt_out_time"
