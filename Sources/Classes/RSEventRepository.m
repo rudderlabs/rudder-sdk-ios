@@ -271,11 +271,11 @@ static RSEventRepository* _instance;
     
     // Merge local customContext (message.customContexts) with global customContext (defaultOption.customContexts) giving preference to local one.
     if (defaultOption) {
-        NSMutableDictionary<NSString*, NSDictionary<NSString*, id>*>* mergedCustomContextValues = [NSMutableDictionary dictionaryWithDictionary:message.customContexts];
+        NSMutableDictionary<NSString*, NSDictionary<NSString*, id>*>* mergedCustomContextValues = [NSMutableDictionary dictionaryWithDictionary:[message.customContexts mutableCopy]];
         
         for (NSString* key in defaultOption.customContexts) {
             if (!mergedCustomContextValues[key]) {
-                mergedCustomContextValues[key] = defaultOption.customContexts[key];
+                mergedCustomContextValues[key] = [defaultOption.customContexts[key] mutableCopy];
             }
         }
         
