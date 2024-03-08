@@ -268,6 +268,19 @@ static RSEventRepository* _instance;
         [mutableIntegrations setObject:@YES forKey:@"All"];
         message.integrations = mutableIntegrations;
     }
+    
+    // Merge local customContext (message.customContexts) with global customContext (defaultOption.customContexts) giving preference to local one.
+    if (defaultOption) {
+        NSMutableDictionary<NSString*, NSDictionary<NSString*, id>*>* mergedCustomContextValues = [NSMutableDictionary dictionaryWithDictionary:message.customContexts];
+        
+        for (NSString* key in defaultOption.customContexts) {
+            if (!mergedCustomContextValues[key]) {
+                mergedCustomContextValues[key] = defaultOption.customContexts[key];
+            }
+        }
+        
+        message.customContexts = mergedCustomContextValues;
+    }
 }
 
 - (RSMessage *)applyConsents:(RSMessage *)message {
