@@ -300,6 +300,11 @@ static RSEventRepository* _instance;
 }
 
 -(void) reset {
+    if (self->defaultOptions != nil && self->defaultOptions.customContexts != nil) {
+        // Since the reset operation is intended to reset user-level fields, we clear the globalOptions->customContext field.
+        // The globalOptions->integrations field is a workspace-level setting and should not be cleared.
+        [self->defaultOptions.customContexts removeAllObjects];
+    }
     if([self->userSession getSessionId] != nil) {
         [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
