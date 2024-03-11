@@ -189,7 +189,7 @@
     @try {
         NSError *error = nil;
         NSData* data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-        id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        id object = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error) {
             [RSLogger logError:[[NSString alloc] initWithFormat:@"RSUtils: deserialize: Failed to de-serialize the given string back to an object %@", jsonString]];
             return nil;

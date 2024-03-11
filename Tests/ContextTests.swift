@@ -169,6 +169,19 @@ class ContextTests: XCTestCase {
         XCTAssertEqual(context.externalIds, finalExternalIds)
     }
     
+    // This test case verifies the scenario when someone has made an identify call with some externalId and then app is stopped.
+    // At next app launch, externalId is read from the preferenceManager and then RSUtils.deserialize() returns the mutable externalId object.
+    // Now, if someone makes an indentify call with the same userId and externalId-type then externalId must be merged properly without any exception.
+    func test_updateExternalIds_simulatingAppRelaunche() {
+        guard let externalIdString = RSUtils.serialize(externalIds1) else { return XCTAssertThrowsError("externalIdString cannot be null") }
+        preferenceManager.saveExternalIds(externalIdString)
+        context = RSContext(config: RSConfig())
+        
+        context.updateExternalIds(externalIds2)
+        
+        XCTAssertEqual(context.externalIds, finalExternalIds)
+    }
+    
     func test_persistExternalIds() {
         context.updateExternalIds(externalIds1)
         context.persistExternalIds()
