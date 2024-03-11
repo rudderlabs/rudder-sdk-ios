@@ -174,13 +174,24 @@ static dispatch_queue_t queue;
     dispatch_sync(queue, ^{
         if( idfa != nil && [idfa length] != 0) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
+            [[RSPreferenceManager getInstance] saveAdvertisingId:idfa];
             BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
             self->_device.adTrackingEnabled = adTrackingEnabled;
             
             if (adTrackingEnabled) {
                 self->_device.advertisingId = idfa;
             }
+        } else {
+            [RSLogger logError:@"RSContext: putAdvertisementId: Invalid value passed as advertisingId, hence dropping it"];
         }
+    });
+}
+
+- (void) clearAdvertisingId {
+    dispatch_sync(queue, ^{
+        [[RSPreferenceManager getInstance] clearAdvertisingId];
+        self->_device.adTrackingEnabled = nil;
+        self->_device.advertisingId = nil;
     });
 }
 

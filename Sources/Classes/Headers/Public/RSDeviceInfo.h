@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) NSString* type;
 @property (nonatomic, readwrite) NSString* token;
 @property (nonatomic, readwrite) BOOL adTrackingEnabled;
-@property (nonatomic, readwrite) NSString* advertisingId;
+@property (nonatomic, readwrite, nullable) NSString* advertisingId;
 @property (nonatomic, readwrite) int attTrackingStatus;
 
 @end

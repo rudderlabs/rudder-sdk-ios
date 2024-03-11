@@ -28,6 +28,7 @@ NSString *const RSOptStatus = @"rl_opt_status";
 NSString *const RSOptInTimeKey = @"rl_opt_in_time";
 NSString *const RSOptOutTimeKey = @"rl_opt_out_time";
 NSString *const RSSessionIdKey = @"rl_session_id";
+NSString *const RSAdvertisingIdKey = @"rl_advertising_id";
 NSString *const RSLastActiveTimestamp = @"rl_last_event_time_stamp";
 NSString *const RSSessionAutoTrackStatus = @"rl_session_auto_track_status";
 NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
@@ -293,6 +294,18 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
         return serverSourceConfig.isMetricsCollectionEnabled;
     }
     return NO;
+}
+
+- (void) saveAdvertisingId:(NSString *) advertisingId {
+    [self writeObject:advertisingId forKey:RSAdvertisingIdKey];
+}
+
+- (NSString*) getAdvertisingId {
+    return [self readObjectForKey:RSAdvertisingIdKey];
+}
+
+- (void) clearAdvertisingId {
+    [self removeObjectForKey:RSAdvertisingIdKey];
 }
 
 - (RSServerConfigSource * __nullable)getServerSourceConfig {
