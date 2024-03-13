@@ -192,7 +192,7 @@ static dispatch_queue_t queue;
         
         NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, NSObject *> *> *mergedValues = [NSMutableDictionary dictionary];
         
-        for (NSMutableDictionary<NSString *, NSObject *> *externalId in self->_externalIds) {
+        for (NSMutableDictionary<NSString *, NSObject *> *externalId in self.externalIds) {
             NSString *type = [NSString stringWithFormat:@"%@", externalId[@"type"]];
             mergedValues[type] = [externalId mutableCopy];
         }
@@ -211,7 +211,7 @@ static dispatch_queue_t queue;
             }
         }
         
-        self->_externalIds = [[mergedValues allValues] mutableCopy];
+        self.externalIds = [[mergedValues allValues] mutableCopy];
     });
 }
 
