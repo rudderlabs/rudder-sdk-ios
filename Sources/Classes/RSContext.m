@@ -184,34 +184,31 @@ static dispatch_queue_t queue;
     });
 }
 
-- (void)updateExternalIds:(NSMutableArray *)newExternalIds {
+- (void)updateExternalIds:(NSMutableArray *)externalIds {
     dispatch_sync(queue, ^{
-        if(self->_externalIds == nil){
+        if(self->_externalIds == nil)
+        {
             self->_externalIds = [[NSMutableArray alloc] init];
         }
         
-        NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, NSObject *> *> *mergedValues = [NSMutableDictionary dictionary];
-        
-        for (NSMutableDictionary<NSString *, NSObject *> *externalId in self.externalIds) {
-            NSString *type = [NSString stringWithFormat:@"%@", externalId[@"type"]];
-            mergedValues[type] = [externalId mutableCopy];
-        }
-        
-        // Merge new externalIds into the existing merged values
-        for (NSMutableDictionary<NSString *, NSObject *> *newExternalId in newExternalIds) {
-            NSString *type = [NSString stringWithFormat:@"%@", newExternalId[@"type"]];
-            NSMutableDictionary<NSString *, NSObject *> *existingMergedValue = mergedValues[type];
-            
-            if (existingMergedValue) {
-                // Merge values for the same "type"
-                [existingMergedValue addEntriesFromDictionary:newExternalId];
-            } else {
-                // No existing merged value for this "type," add a copy of the newExternalId
-                mergedValues[type] = [newExternalId mutableCopy];
+        NSMutableArray *newExternalIds = [externalIds mutableCopy];
+        if (self->_externalIds.count > 0) {
+            NSMutableArray *repeatingExternalIds = [[NSMutableArray alloc] init];
+            for (NSMutableDictionary *newExternalId in newExternalIds) {
+                for (NSMutableDictionary *externalId in self->_externalIds) {
+                    if ([externalId[@"type"] isEqualToString:newExternalId[@"type"]]){
+                        externalId[@"id"] = newExternalId[@"id"];
+                        [repeatingExternalIds addObject:newExternalId];
+                        break;
+                    }
+                }
             }
+            [newExternalIds removeObjectsInArray:repeatingExternalIds];
         }
         
-        self.externalIds = [[mergedValues allValues] mutableCopy];
+        if ([newExternalIds count]) {
+            [self->_externalIds addObjectsFromArray: newExternalIds];
+        }
     });
 }
 
