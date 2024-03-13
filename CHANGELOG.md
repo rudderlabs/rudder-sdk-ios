@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.2...v1.25.3) (2024-03-11)
+
+
+### Bug Fixes
+
+* create mutable copy of JSON serialisation object ([#479](https://github.com/rudderlabs/rudder-sdk-ios/issues/479)) ([95704e1](https://github.com/rudderlabs/rudder-sdk-ios/commit/95704e10d4dfc28d854178befe7e073464bf1ac1))
+
 ### [1.25.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.1...v1.25.2) (2024-02-20)
 
 
