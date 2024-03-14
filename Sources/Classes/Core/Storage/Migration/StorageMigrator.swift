@@ -32,19 +32,6 @@ class StorageMigratorV1V2: StorageMigrator {
     
     func migrate() {
         if isMigrationNeeded() {
-    func migrate() throws {
-        let databasePath = oldSQLiteStorage.database.path.appendingPathComponent(oldSQLiteStorage.database.name).path
-        guard FileManager.default.fileExists(atPath: databasePath) else {
-            throw StorageError.databaseNotExists
-        }
-        let result = oldSQLiteStorage.objects(limit: .max)
-        switch result {
-        case .success(let list):
-            list.forEach({ _ = currentStorage.save($0) })
-            _ = oldSQLiteStorage.close()
-            try FileManager.default.removeItem(atPath: databasePath)
-        case .failure(let error):
-            throw error
             let legacyDatabase = SQLiteDatabase(path: Device.current.directoryPath, name:legacyDatabaseName)
             let legacyStorage = SQLiteStorage(database: legacyDatabase, logger: logger)
             legacyStorage.open()
