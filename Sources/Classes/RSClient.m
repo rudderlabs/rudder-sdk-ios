@@ -56,7 +56,7 @@ static NSString* _advertisingId = nil;
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [_instance.context putDeviceToken:_deviceToken];
             }
-            if(_advertisingId != nil && [_advertisingId length] != 0) {
+            if([RSUtils isValidIDFA:_advertisingId]) {
                 [_instance.context putAdvertisementId:_advertisingId];
             }
         });
@@ -485,7 +485,7 @@ static NSString* _advertisingId = nil;
 }
 
 + (void)putAdvertisingId:(NSString *_Nonnull) advertisingId {
-    if(advertisingId != nil && [advertisingId length] !=0) {
+    if([RSUtils isValidIDFA:advertisingId]) {
         RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
         if([preferenceManager getOptStatus]) {
             [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the advertising Id"];

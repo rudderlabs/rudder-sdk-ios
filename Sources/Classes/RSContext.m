@@ -172,15 +172,11 @@ static dispatch_queue_t queue;
     // This isn't ideal.  We're doing this because we can't actually check if IDFA is enabled on
     // the customer device.  Apple docs and tests show that if it is disabled, one gets back all 0's.
     dispatch_sync(queue, ^{
-        if( idfa != nil && [idfa length] != 0) {
+        if([RSUtils isValidIDFA:idfa]) {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"IDFA: %@", idfa]];
             [[RSPreferenceManager getInstance] saveAdvertisingId:idfa];
-            BOOL adTrackingEnabled = (![idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
-            self->_device.adTrackingEnabled = adTrackingEnabled;
-            
-            if (adTrackingEnabled) {
-                self->_device.advertisingId = idfa;
-            }
+            self->_device.adTrackingEnabled = YES;
+            self->_device.advertisingId = idfa;
         } else {
             [RSLogger logError:@"RSContext: putAdvertisementId: Invalid value passed as advertisingId, hence dropping it"];
         }
