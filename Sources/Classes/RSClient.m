@@ -19,6 +19,7 @@ static RSEventRepository *_repository = nil;
 static RSUserSession *_userSession = nil;
 static RSOption* _defaultOptions = nil;
 static NSString* _deviceToken = nil;
+static NSString* _advertisingId = nil;
 
 @implementation RSClient
 
@@ -54,6 +55,9 @@ static NSString* _deviceToken = nil;
             _repository = [RSEventRepository initiate:writeKey config:_config client:_instance options:options];
             if(_deviceToken != nil && [_deviceToken length] != 0) {
                 [_instance.context putDeviceToken:_deviceToken];
+            }
+            if([RSUtils isValidIDFA:_advertisingId]) {
+                [_instance.context putAdvertisementId:_advertisingId];
             }
         });
     }
@@ -478,6 +482,27 @@ static NSString* _deviceToken = nil;
             [preferenceManager saveAuthToken:base64EncodedAuthToken];
         }
     }
+}
+
++ (void)putAdvertisingId:(NSString *_Nonnull) advertisingId {
+    if([RSUtils isValidIDFA:advertisingId]) {
+        RSPreferenceManager *preferenceManager = [RSPreferenceManager getInstance];
+        if([preferenceManager getOptStatus]) {
+            [RSLogger logDebug:@"User Opted out for tracking the activity, hence dropping the advertising Id"];
+            return;
+        }
+        if(_instance == nil) {
+            _advertisingId = advertisingId;
+            return;
+        }
+        [_instance.context putAdvertisementId:advertisingId];
+    } else {
+        [RSLogger logError:@"RSClient: putAdvertisingId: Invalid value passed for advertisingId, hence dropping it"];
+    }
+}
+
+- (void) clearAdvertisingId {
+    [_instance.context clearAdvertisingId];
 }
 
 #pragma mark - Session Tracking

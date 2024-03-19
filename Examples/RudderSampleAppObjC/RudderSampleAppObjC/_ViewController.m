@@ -27,6 +27,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)initializeSDK:(id)sender {
+    [_AppDelegate initializeSDK];
+}
 - (IBAction)sendIdentify:(id)sender {
     [_AppDelegate sendIdentify];
 }
@@ -45,5 +48,12 @@
 - (IBAction)sendReset:(id)sender {
     [_AppDelegate sendReset];
 }
+- (IBAction)putAdvertisingId:(id)sender {
+    [_AppDelegate putAdvertisingId];
+}
+- (IBAction)clearAdvertisingId:(id)sender {
+    [_AppDelegate clearAdvertisingId];
+}
+
 
 @end

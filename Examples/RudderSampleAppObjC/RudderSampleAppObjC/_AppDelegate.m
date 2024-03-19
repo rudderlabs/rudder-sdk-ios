@@ -23,6 +23,11 @@ static int screenCount = 1;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [_AppDelegate initializeSDK];
+    return YES;
+}
+
++ (void) initializeSDK {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"RudderConfig" ofType:@"plist"];
     if (path != nil) {
         NSURL *url = [NSURL fileURLWithPath:path];
@@ -34,13 +39,11 @@ static int screenCount = 1;
             [builder withTrackLifecycleEvens:YES];
             [builder withCollectDeviceId:NO];
             [builder withRecordScreenViews:YES];
-            [builder withDataPlaneUrl:rudderConfig.DEV_DATA_PLANE_URL];
-            [builder withControlPlaneUrl:rudderConfig.DEV_CONTROL_PLANE_URL];
+            [builder withDataPlaneUrl:rudderConfig.PROD_DATA_PLANE_URL];
             [builder withDBEncryption:[[RSDBEncryption alloc] initWithKey:@"test1234" enable:NO databaseProvider:[EncryptedDatabaseProvider new]]];
             [RSClient getInstance:rudderConfig.WRITE_KEY config:[builder build]];
         }
     }
-    return YES;
 }
 
 + (void) sendIdentify {
@@ -87,6 +90,14 @@ static int screenCount = 1;
 
 + (void) sendReset {
     [[RSClient sharedInstance] reset:YES];
+}
+
++ (void) putAdvertisingId {
+    [RSClient putAdvertisingId:@"desuAdvertId"];
+}
+
++ (void) clearAdvertisingId {
+    [[RSClient sharedInstance] clearAdvertisingId];
 }
 
 @end

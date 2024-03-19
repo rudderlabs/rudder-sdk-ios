@@ -33,6 +33,10 @@
         _model = [self getDeviceModel];
         _manufacturer = @"Apple";
         _attTrackingStatus = RSATTNotDetermined;
+        _advertisingId = [[RSPreferenceManager getInstance] getAdvertisingId];
+        if(_advertisingId != nil) {
+            _adTrackingEnabled = YES;
+        }
     }
     return self;
 }
