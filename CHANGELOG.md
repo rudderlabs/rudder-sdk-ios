@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.3...v1.26.0) (2024-03-19)
+
+
+### Features
+
+* add support for global customContext option ([#485](https://github.com/rudderlabs/rudder-sdk-ios/issues/485)) ([27f21b9](https://github.com/rudderlabs/rudder-sdk-ios/commit/27f21b9274fee6f80da6f25b3b73d4491e4f9925))
+* added support for setting advertisingId before sdk init and also persisting it ([#481](https://github.com/rudderlabs/rudder-sdk-ios/issues/481)) ([2075910](https://github.com/rudderlabs/rudder-sdk-ios/commit/2075910109d17c41da1d2800936aaa8d0ae03b97))
+
 ### [1.25.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.2...v1.25.3) (2024-03-11)
 
 

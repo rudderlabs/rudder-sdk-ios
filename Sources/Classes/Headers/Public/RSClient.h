@@ -77,6 +77,7 @@ typedef void (^Callback)(NSObject *_Nullable);
 + (void) putAnonymousId: (NSString *_Nonnull) anonymousId;
 + (void) putDeviceToken: (NSString *_Nonnull) deviceToken;
 + (void) putAuthToken: (NSString *_Nonnull) authToken;
++ (void) putAdvertisingId: (NSString *_Nonnull) advertisingId;
 
 + (void) setAnonymousId: (NSString *__nullable) anonymousId __attribute((deprecated("Discontinuing support. Use putAnonymousId method instead.")));;
 
@@ -90,6 +91,7 @@ typedef void (^Callback)(NSObject *_Nullable);
 - (RSContext *) getContext __attribute((deprecated("This method will be deprecated soon. Use instance property(context) instead.")));
 
 - (void) onIntegrationReady:(id<RSIntegrationFactory>)factory withCallback:(Callback)callback;
+- (void) clearAdvertisingId;
 
 @property (strong, nonatomic, readonly) NSNumber* _Nullable sessionId;
 @property (strong, nonatomic, readonly) NSString* _Nullable anonymousId;

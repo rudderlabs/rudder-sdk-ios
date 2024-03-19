@@ -56,6 +56,7 @@ extern int const RSATTAuthorize;
 - (void) updateTraitsAnonymousId;
 - (void) putDeviceToken: (NSString*) deviceToken;
 - (void) putAdvertisementId: (NSString *_Nonnull) idfa;
+- (void) clearAdvertisingId;
 - (void) putAppTrackingConsent: (int) att;
 - (void) updateExternalIds: (NSMutableArray* __nullable) externalIds;
 - (void) resetExternalIdsOnQueue;
