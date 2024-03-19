@@ -268,6 +268,19 @@ static RSEventRepository* _instance;
         [mutableIntegrations setObject:@YES forKey:@"All"];
         message.integrations = mutableIntegrations;
     }
+    
+    // Merge local customContext (message.customContexts) with global customContext (defaultOption.customContexts) giving preference to local one.
+    if (defaultOption) {
+        NSMutableDictionary<NSString*, NSDictionary<NSString*, id>*>* mergedCustomContextValues = [NSMutableDictionary dictionaryWithDictionary:[message.customContexts mutableCopy]];
+        
+        for (NSString* key in defaultOption.customContexts) {
+            if (!mergedCustomContextValues[key]) {
+                mergedCustomContextValues[key] = [defaultOption.customContexts[key] mutableCopy];
+            }
+        }
+        
+        message.customContexts = mergedCustomContextValues;
+    }
 }
 
 - (RSMessage *)applyConsents:(RSMessage *)message {
@@ -287,6 +300,11 @@ static RSEventRepository* _instance;
 }
 
 -(void) reset {
+    if (self->defaultOptions != nil && self->defaultOptions.customContexts != nil) {
+        // Since the reset operation is intended to reset user-level fields, we clear the globalOptions->customContext field.
+        // The globalOptions->integrations field is a workspace-level setting and should not be cleared.
+        [self->defaultOptions.customContexts removeAllObjects];
+    }
     if([self->userSession getSessionId] != nil) {
         [RSLogger logDebug: @"EventRepository: reset: Refreshing the session as the reset is triggered"];
         [self->userSession refreshSession];
