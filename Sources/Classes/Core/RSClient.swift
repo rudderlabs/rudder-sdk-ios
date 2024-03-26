@@ -61,6 +61,7 @@ public class RSClient: RSClientProtocol {
     /// - Parameters:
     ///   - configuration: The SDK configuration.
     ///   - instanceName: The core instance name. This value will be used for data persistency and differentiate between instances.
+    ///   - globalOption: The GlobalOptionType instance which is to be applied for all the events made.
     ///   - database: The developer-choice `SQLite` database. Can be used `SQLCipher` as well.
     ///   - storage: The developer-choice storage. Can be used file system and any other storage implementation.
     ///   - userDefaults: The developer-choice `UserDefaults` implementation.
@@ -72,6 +73,7 @@ public class RSClient: RSClientProtocol {
     required init(
         configuration: Configuration,
         instanceName: String,
+        globalOption: GlobalOptionType? = nil,
         database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
@@ -83,6 +85,7 @@ public class RSClient: RSClientProtocol {
         core = RSClientCore(
             configuration: configuration,
             instanceName: instanceName,
+            globalOption: globalOption,
             database: database,
             storage: storage,
             userDefaults: userDefaults,
@@ -126,6 +129,7 @@ public class RSClient: RSClientProtocol {
     public static func initialize(
         with configuration: Configuration,
         instanceName: String = ClientRegistry.defaultInstanceName,
+        globalOption: GlobalOptionType? = nil,
         database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
@@ -140,6 +144,7 @@ public class RSClient: RSClientProtocol {
         let instance = self.init(
             configuration: configuration,
             instanceName: instanceName.correctified,
+            globalOption: globalOption,
             database: database,
             storage: storage,
             userDefaults: userDefaults,
@@ -240,7 +245,7 @@ extension RSClient {
     ///   - eventName: The name of the activity.
     ///   - properties: Extra data properties regarding the event, if any.
     ///   - option: Extra event options, if any.
-    public func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOption? = nil) {
+    public func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOptionType? = nil) {
         core.track(eventName, properties: properties, option: option)
     }
     
@@ -250,7 +255,7 @@ extension RSClient {
     ///   - userId: User's ID.
     ///   - traits: User's additional information, if any.
     ///   - option: Event level option, if any.
-    public func identify(_ userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
+    public func identify(_ userId: String, traits: IdentifyTraits? = nil, option: MessageOptionType? = nil) {
         core.identify(userId, traits: traits, option: option)
     }
     
@@ -261,7 +266,7 @@ extension RSClient {
     ///   - category: The category or type of screen, if any.
     ///   - properties: Extra data properties regarding the screen call, if any.
     ///   - option: Extra screen event options, if any.
-    public func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOption? = nil) {
+    public func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOptionType? = nil) {
         core.screen(screenName, category: category, properties: properties, option: option)
     }
     
@@ -271,7 +276,7 @@ extension RSClient {
     ///   - groupId: The company's ID.
     ///   - traits: Extra information of the company, if any.
     ///   - option: Event level options, if any.
-    public func group(_ groupId: String, traits: GroupTraits? = nil, option: MessageOption? = nil) {
+    public func group(_ groupId: String, traits: GroupTraits? = nil, option: MessageOptionType? = nil) {
         core.group(groupId, traits: traits, option: option)
     }
     
@@ -280,7 +285,7 @@ extension RSClient {
     /// - Parameters:
     ///   - groupId: User's new ID.
     ///   - option: Event level options, if any.
-    public func alias(_ newId: String, option: MessageOption? = nil) {
+    public func alias(_ newId: String, option: MessageOptionType? = nil) {
         core.alias(newId, option: option)
     }
 }
@@ -347,8 +352,8 @@ extension RSClient {
     ///
     /// - Parameters:
     ///   - option: Options related to every API call
-    public func setOption(_ option: Option) {
-        core.setOption(option)
+    public func setGlobalOption(_ globalOption: GlobalOptionType) {
+        core.setGlobalOption(globalOption)
     }
 
     /// API for setting device token for Push Notifications to the destinations.
