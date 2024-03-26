@@ -59,7 +59,7 @@ class RSwatchOSLifeCycleEventTests: XCTestCase {
         waitUntilStarted(client: client)
         waitUntilServerConfigDownloaded(client: client)
         
-        RSUserDefaults.saveApplicationVersion("2.0.0")
+        RSUserDefaults.saveApplicationVersion("2.0.0-beta")
         RSUserDefaults.saveApplicationBuild("2")
         
         // This is a hack that needs to be dealt with
