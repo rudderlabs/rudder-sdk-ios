@@ -21,7 +21,8 @@ struct Task {
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var client: RSClient!
+    var client1: RSClient!
+    var client2: RSClient!
     
     let taskList: [Task] = [
         Task(name: "Identify with traits"),
@@ -67,7 +68,8 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        client = (UIApplication.shared.delegate as? AppDelegate)!.client
+        client1 = (UIApplication.shared.delegate as? AppDelegate)!.client1
+        client2 = (UIApplication.shared.delegate as? AppDelegate)!.client2
     }
 }
 
@@ -87,7 +89,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
             case 0:
-                client.identify("test_user_id", traits: [
+                client1.identify("test_user_id", traits: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -98,10 +100,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 1:
-                client.identify("test_user_id")
+                client1.identify("test_user_id")
                 
             case 2:
-                client.track("single_track_call", properties: [
+                client1.track("single_track_call", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -112,37 +114,38 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 3:
-                client.track("single_track_call")
+                client1.track("single_track_call")
+                client2.track("single_track_call")
             case 4:
-                client.alias("new_user_id")
+                client1.alias("new_user_id")
             case 5:
-                client.screen("ViewController", properties: ["key_1": "value_1"])
+                client1.screen("ViewController", properties: ["key_1": "value_1"])
             case 6:
-                client.screen("ViewController")
+                client1.screen("ViewController")
             case 7:
-                client.group("test_group_id", traits: ["key_1": "value_1"])
+                client1.group("test_group_id", traits: ["key_1": "value_1"])
             case 8:
-                client.group("test_group_id")
+                client1.group("test_group_id")
             case 9:
-                client.setAnonymousId("anonymous_id_1")
+                client1.setAnonymousId("anonymous_id_1")
             case 10:
-                client.setDeviceToken("device_token_1")
+                client1.setDeviceToken("device_token_1")
             case 11:
-                client.setAdvertisingId("advertising_id_1")
+                client1.setAdvertisingId("advertising_id_1")
             case 12:
-                client.setOptOutStatus(false)
+                client1.setOptOutStatus(false)
             case 13:
-                client.setOptOutStatus(true)
+                client1.setOptOutStatus(true)
             case 14:
-                client.reset(and: false)
+                client1.reset(and: false)
             case 15:
-                client.flush()
+                client1.flush()
             case 16:
-                client.setAnonymousId("anonymous_id_2")
+                client1.setAnonymousId("anonymous_id_2")
             case 17:
-                client.setDeviceToken("device_token_2")
+                client1.setDeviceToken("device_token_2")
             case 18:
-                client.setAdvertisingId("advertising_id_2")
+                client1.setAdvertisingId("advertising_id_2")
             case 19:
                 let option = Option()
                 
@@ -151,7 +154,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 option.putIntegration("key-7", isEnabled: true)
                 option.putIntegration("key-8", isEnabled: false)
                 
-                client.setOption(option)
+                client1.setOption(option)
             case 20:
                 let option = IdentifyOption()
                 option.putExternalId("value-1", to: "key-1")
@@ -166,9 +169,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 option.putCustomContext(["Key-02": "value-1"], for: "key-10")
                 option.putCustomContext(["Key-03": "value-1"], for: "key-11")
                 option.putCustomContext(["Key-04": "value-1"], for: "key-12")
-                client.identify("test_user_id", option: option)
+                client1.identify("test_user_id", option: option)
             case 21:
                 let option = MessageOption()
+                    .putCustomContext([:], for: "")
+                    .putIntegration("", isEnabled: true)
                 
                 option.putIntegration("key-5", isEnabled: false)
                 option.putIntegration("key-6", isEnabled: true)
@@ -177,19 +182,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 option.putCustomContext(["Key-01": "value-1"], for: "key-9")
                 option.putCustomContext(["Key-02": "value-2"], for: "key-10")
-                client.track("single_track_call", option: option)
+                client1.track("single_track_call", option: option)
             case 22:
-                client.startSession()
+                client1.startSession()
             case 23:
-                client.endSession()
+                client1.endSession()
             case 24:
-                client.startSession(1234567890)
+                client1.startSession(1234567890)
             case 25:
-                if let context = client.context, let dictionaryValue = context.dictionaryValue {
+                if let context = client1.context, let dictionaryValue = context.dictionaryValue {
                     print(dictionaryValue)
                 }
             case 26:
-                client.track("allow_list_track", properties: [
+                client1.track("allow_list_track", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -200,7 +205,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 27:
-                client.track("deny_list_track", properties: [
+                client1.track("deny_list_track", properties: [
                     "integerValue": 42,
                     "stringValue": "Hello, World!",
                     "boolValue": true,
@@ -211,12 +216,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     "dateValue": Date()
                 ])
             case 28:
-                client.track("Order Done", properties: getProperties())
+                client1.track("Order Done", properties: getProperties())
             case 29:
-                client.track("Order Completed", properties: getProperties())
+                client1.track("Order Completed", properties: getProperties())
             case 30:
                 for i in 1...50 {
-                    client.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
+                    client1.track("Track \(i)", properties: ["time": Date().timeIntervalSince1970])
                 }
         /*
         case 4:

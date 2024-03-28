@@ -14,7 +14,7 @@ import UIKit
 
 class PhoneApplicationState: ApplicationStateProtocol {
     let application: UIApplication
-    let userDefaults: UserDefaultsWorkerType
+    let userDefaults: UserDefaultsWorkerProtocol
     
     var trackApplicationStateMessage: ((ApplicationStateMessage) -> Void) = { _  in }
     var refreshSessionIfNeeded: (() -> Void) = { }
@@ -22,7 +22,7 @@ class PhoneApplicationState: ApplicationStateProtocol {
     @ReadWriteLock private var isFirstTimeLaunch: Bool = true
     @ReadWriteLock private var didFinishLaunching = false
 
-    init(application: UIApplication, userDefaults: UserDefaultsWorkerType) {
+    init(application: UIApplication, userDefaults: UserDefaultsWorkerProtocol) {
         self.application = application
         self.userDefaults = userDefaults
     }
@@ -124,7 +124,7 @@ extension ApplicationState {
     static func current(
         notificationCenter: NotificationCenter,
         application: UIApplication = UIApplication.shared,
-        userDefaults: UserDefaultsWorkerType,
+        userDefaults: UserDefaultsWorkerProtocol,
         notifications: [Notification.Name] = [
             UIApplication.didEnterBackgroundNotification,
             UIApplication.willEnterForegroundNotification,

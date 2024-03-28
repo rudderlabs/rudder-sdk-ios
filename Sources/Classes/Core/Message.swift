@@ -58,7 +58,7 @@ public struct TrackMessage: Message {
         dictionary["properties"] = properties
     }
     
-    init(event: String, properties: TrackProperties?, option: MessageOptionType? = nil) {
+    init(event: String, properties: TrackProperties? = nil, option: MessageOptionType? = nil) {
         self.event = event
         self.properties = properties
         self.option = option
@@ -90,7 +90,7 @@ public struct IdentifyMessage: Message {
         dictionary["event"] = "identify"
     }
     
-    init(userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
+    init(userId: String, traits: IdentifyTraits? = nil, option: MessageOptionType? = nil) {
         self.userId = userId
         self.traits = traits
         self.option = option
@@ -194,7 +194,7 @@ public struct AliasMessage: Message {
         dictionary["previousId"] = previousId
     }
         
-    init(newId: String, previousId: String?, option: MessageOptionType? = nil) {
+    init(newId: String, previousId: String? = nil, option: MessageOptionType? = nil) {
         self.userId = newId
         self.previousId = previousId
         self.option = option

@@ -10,13 +10,16 @@ import Foundation
 
 public typealias Results<T> = Result<T, StorageError>
 
-public enum StorageError: Error {
+public enum StorageError: Error, Equatable {
     case storageError(String)
+    case databaseNotExists
     
     var description: String {
         switch self {
         case .storageError(let string):
             return string
+        case .databaseNotExists:
+            return "Old database not exists, hence no migration needed"
         }
     }
 }
@@ -28,4 +31,5 @@ public protocol Storage {
     @discardableResult func delete(_ objects: [StorageMessage]) -> Results<Bool>
     @discardableResult func deleteAll() -> Results<Bool>
     func count() -> Results<Int>
+    @discardableResult func close() -> Results<Bool>
 }

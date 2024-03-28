@@ -16,7 +16,7 @@ final class DataResidencyTests: XCTestCase {
      
     func testWithBothResidenciesInSourceConfig_1() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultTrue
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -25,7 +25,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_2() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -34,7 +34,7 @@ final class DataResidencyTests: XCTestCase {
      
     func testWithBothResidenciesInSourceConfig_3() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -43,7 +43,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_DefaultFalse_1() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultFalse
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -51,7 +51,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_DefaultFalse_2() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -59,7 +59,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_DefaultFalse_3() {
         let sourceConfig: SourceConfig = MultiDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -67,7 +67,7 @@ final class DataResidencyTests: XCTestCase {
 
     func testWithBothResidenciesInSourceConfig_USTrue_1() {
         let sourceConfig: SourceConfig = MultiDataResidency.USTrue
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -76,7 +76,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_USTrue_2() {
         let sourceConfig: SourceConfig = MultiDataResidency.USTrue
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -84,7 +84,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_USTrue_3() {
         let sourceConfig: SourceConfig = MultiDataResidency.USTrue
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -93,7 +93,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_EUTrue_1() {
         let sourceConfig: SourceConfig = MultiDataResidency.EUTrue
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -101,7 +101,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_EUTrue_2() {
         let sourceConfig: SourceConfig = MultiDataResidency.EUTrue
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -110,7 +110,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithBothResidenciesInSourceConfig_EUTrue_3() {
         let sourceConfig: SourceConfig = MultiDataResidency.EUTrue
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -118,7 +118,7 @@ final class DataResidencyTests: XCTestCase {
 
     func testWithOnlyUSInSourceConfig_1() {
         let sourceConfig: SourceConfig = USDataResidency.defaultTrue
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -127,7 +127,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyUSInSourceConfig_2() {
         let sourceConfig: SourceConfig = USDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -136,7 +136,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyUSInSourceConfig_3() {
         let sourceConfig: SourceConfig = USDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -145,7 +145,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyUSInSourceConfig_DefaultFalse_1() {
         let sourceConfig: SourceConfig = USDataResidency.defaultFalse
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -153,7 +153,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyUSInSourceConfig_DefaultFalse_2() {
         let sourceConfig: SourceConfig = USDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -161,7 +161,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyUSInSourceConfig_DefaultFalse_3() {
         let sourceConfig: SourceConfig = USDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -169,7 +169,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_1() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultTrue
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -177,7 +177,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_2() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNotNil(dataResidency.dataPlaneUrl)
@@ -186,7 +186,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_3() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultTrue
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -194,7 +194,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_DefaultFalse_1() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultFalse
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -202,7 +202,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_DefaultFalse_2() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -210,7 +210,7 @@ final class DataResidencyTests: XCTestCase {
     
     func testWithOnlyEUInSourceConfig_DefaultFalse_3() {
         let sourceConfig: SourceConfig = EUDataResidency.defaultFalse
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -222,7 +222,7 @@ final class DataResidencyTests: XCTestCase {
                 dataPlanes: nil
             )
         )
-        let config: Config = .mockWith()
+        let config: Configuration = .mockWith()
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -234,7 +234,7 @@ final class DataResidencyTests: XCTestCase {
                 dataPlanes: nil
             )
         )
-        let config: Config = .mockWith(dataResidencyServer: .EU)
+        let config: Configuration = .mockWith(dataResidencyServer: .EU)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
@@ -246,14 +246,14 @@ final class DataResidencyTests: XCTestCase {
                 dataPlanes: nil
             )
         )
-        let config: Config = .mockWith(dataResidencyServer: .US)
+        let config: Configuration = .mockWith(dataResidencyServer: .US)
         let dataResidency = DataResidency(dataResidencyServer: config.dataResidencyServer, sourceConfig: sourceConfig)
         
         XCTAssertNil(dataResidency.dataPlaneUrl)
     }
         
     func testWhenNoUrlInSourceConfig_4() {
-        let config: Config? = Config(writeKey: WRITE_KEY, dataPlaneURL: "https::/dataplanerudderstackcom")
+        let config: Configuration? = Configuration(writeKey: WRITE_KEY, dataPlaneURL: "https::/dataplanerudderstackcom")
         XCTAssertNil(config)
     }
 }

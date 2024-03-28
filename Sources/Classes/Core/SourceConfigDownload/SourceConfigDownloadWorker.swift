@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias NeedsDatabaseMigration = Bool
+
 protocol SourceConfigDownloadWorkerType {
     var sourceConfig: ((SourceConfig) -> Void) { get set }
 }
@@ -17,10 +19,12 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
     
     let sourceConfigDownloader: SourceConfigDownloaderType
     let downloadBlockers: DownloadUploadBlockersProtocol
-    let userDefaults: UserDefaultsWorkerType
+    let userDefaults: UserDefaultsWorkerProtocol
     let queue: DispatchQueue
     let logger: Logger
     let retryStrategy: DownloadUploadRetryStrategy
+    
+    var cachedSourceConfig: SourceConfig?
     
     @ReadWriteLock
     var readWorkItem: DispatchWorkItem?
@@ -31,7 +35,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
     init(
         sourceConfigDownloader: SourceConfigDownloaderType,
         downloadBlockers: DownloadUploadBlockersProtocol,
-        userDefaults: UserDefaultsWorkerType,
+        userDefaults: UserDefaultsWorkerProtocol,
         queue: DispatchQueue,
         logger: Logger,
         retryStrategy: DownloadUploadRetryStrategy
@@ -45,6 +49,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
         self.readWorkItem = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             if let sourceConfig: SourceConfig = userDefaults.read(.sourceConfig) {
+                self.cachedSourceConfig = sourceConfig
                 self.sourceConfig(sourceConfig)
             }
             let blockersForDownload = downloadBlockers.get()
@@ -78,14 +83,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
                 return
             }
             if let error = downloadStatus.error {
-                switch error {
-                case .httpError(let statusCode):
-                    self.logger.logError(.sourceConfigDownloadFailedWithStatusCode(statusCode))
-                case .networkError(let error):
-                    self.logger.logError(.sourceConfigDownloadFailedWithErrorDescription(error.localizedDescription))
-                case .noResponse:
-                    self.logger.logError(.noResponse)
-                }
+                self.logger.logError(.apiError(.sourceConfig, error))
             }
         }
         self.downloadWorkItem = workItem

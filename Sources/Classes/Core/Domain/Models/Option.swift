@@ -8,60 +8,71 @@
 
 import Foundation
 
-public protocol OptionType {
-    var integrations: [String: Bool] { get }
+
+public struct ExternalId: Codable {
+    let type: String
+    let id: String
 }
 
-public protocol MessageOptionType: OptionType {
+public protocol GlobalOptionType {
+    /**
+        ``integrationsStatus`` object is used to enable/disable sending events to any destination from the Client Side
+        Eg: `["Amplitude" : true, "Adjust": false]`
+        The above example would mean that the destination `Amplitude` is enabled and the destination `Adjust` is disabled.
+        If the above example value is passed as part of ``GlobalOptionType``, it would be applied to all the events made in a session of SDK initialization, unless overridden by the ``MessageOptionType`` at an event level.
+           
+         If ``integrationsStatus`` is passed as part of ``MessageOptionType``, it would be applied only for that particular message.
+     */
+    
+    var integrationsStatus: [String: Bool]? { get }
+    
+    /**
+        ``customContexts`` helps you to set an object which can be added to `context` object of the payload generated for all the types of events. If this is passed as part of ``GlobalOptionType`` this would be applied to all the events made in a session of SDK initialization, unless overridden by the ``MessageOptionType`` at an event level.
+     
+         If ``customContexts``  is passed as part of ``MessageOptionType``, it would be applied only for that particular message.
+     */
     var customContexts: [String: Any]? { get }
 }
 
-public protocol IdentifyOptionType: MessageOptionType {
-    var externalIds: [[String: String]]? { get }
+public protocol MessageOptionType: GlobalOptionType {
+    /**
+         ``externalIds`` are sometimes used to add new identifiers to the current user which can be used by the Cloud mode destinations.
+          -  These values can be passed only via an event level API and cannot be passed with SDK initialization.
+          -  If ``externalIds`` are passed as part of `Identify` event, they are persisted and attached along with every event made until the user logs out by calling `Reset`
+          -  If ``externalIds`` are passed as part of any other event, then they are applied only for that particular event, and if any persisted externalIds exists from any previous `Identify` call, they are overriden just for the current event.
+     */
+    var externalIds: [ExternalId]? { get }
 }
 
-public class Option: OptionType {
-    private var _integrations: [String: Bool] = [String: Bool]()
-    public var integrations: [String: Bool] {
-        _integrations
-    }
+public class GlobalOption: GlobalOptionType {
     
-    public init() { }
+    public init() {}
     
-    @discardableResult
-    public func putIntegration(_ name: String, isEnabled: Bool) -> Option {
-        guard name.isNotEmpty else {
-            return self
-        }
-        _integrations[name] = isEnabled
-        return self
-    }
-}
-
-public class MessageOption: OptionType, MessageOptionType {
-    private var _integrations: [String: Bool] = [String: Bool]()
+    private var _integrationsStatus: [String: Bool]?
     private var _customContexts: [String: Any]?
     
-    public var integrations: [String: Bool] {
-        _integrations
+    public var integrationsStatus: [String: Bool]? {
+        _integrationsStatus
     }
+    
     public var customContexts: [String: Any]? {
         _customContexts
     }
     
-    public init() { }
-    
     @discardableResult
-    public func putIntegration(_ name: String, isEnabled: Bool) -> MessageOption {
+    public func putIntegrationStatus(_ name: String, isEnabled: Bool) -> Self {
         guard name.isNotEmpty else {
             return self
         }
-        _integrations[name] = isEnabled
+        if _integrationsStatus == nil {
+            _integrationsStatus = [String: Bool]()
+        }
+        _integrationsStatus?[name] = isEnabled
         return self
     }
     
     @discardableResult
-    public func putCustomContext(_ context: [String: Any], for key: String) -> MessageOption {
+    public func putCustomContext(_ context: [String: Any], for key: String) -> Self {
         guard key.isNotEmpty else {
             return self
         }
@@ -73,61 +84,45 @@ public class MessageOption: OptionType, MessageOptionType {
     }
 }
 
-public class IdentifyOption: OptionType, MessageOptionType, IdentifyOptionType {
-    private var _integrations: [String: Bool] = [String: Bool]()
-    private var _customContexts: [String: Any]?
-    private var _externalIds: [[String: String]]?
+public class MessageOption: GlobalOption, MessageOptionType {
     
-    public var integrations: [String: Bool] {
-        _integrations
-    }
-    public var customContexts: [String: Any]? {
-        _customContexts
-    }
+    public override init() {}
     
-    public var externalIds: [[String: String]]? {
+    private var _externalIds: [ExternalId]?
+    
+    public var externalIds: [ExternalId]? {
         _externalIds
     }
-    
-    public init() { }
-    
+
     @discardableResult
-    public func putIntegration(_ name: String, isEnabled: Bool) -> IdentifyOption {
-        guard name.isNotEmpty else {
-            return self
-        }
-        _integrations[name] = isEnabled
-        return self
-    }
-    
-    @discardableResult
-    public func putCustomContext(_ context: [String: Any], for key: String) -> IdentifyOption {
-        guard key.isNotEmpty else {
-            return self
-        }
-        if _customContexts == nil {
-            _customContexts = [String: Any]()
-        }
-        _customContexts?[key] = context
-        return self
-    }
-    
-    @discardableResult
-    public func putExternalId(_ id: String, to type: String) -> IdentifyOption {
+    public func putExternalId(_ id: String, to type: String) -> MessageOption {
         guard type.isNotEmpty, id.isNotEmpty else {
             return self
         }
         if _externalIds == nil {
-            _externalIds = [[String: String]]()
+            _externalIds = [ExternalId]()
         }
-        if let index = _externalIds?.firstIndex(where: { dict in
-            return dict["type"] == type
-        }) {
-            _externalIds?[index]["id"] = id
-        } else {
-            let dict = ["type": type, "id": id]
-            _externalIds?.append(dict)
-        }
+        
+        _externalIds?.add(ExternalId(type: type, id: id))
         return self
+    }
+}
+
+
+extension [ExternalId] {
+    mutating func add(_ externalId: ExternalId) {
+        if let index = self.firstIndex(where: { $0.type == externalId.type }) {
+            // Update the externalId, if an externalId with the same type already exists
+            self[index] = externalId
+        } else {
+            // Append the new externalId to the array
+            self.append(externalId)
+        }
+    }
+    
+    mutating func add(_ externalIds: [ExternalId]) {
+        for externalId in externalIds {
+            add(externalId)
+        }
     }
 }

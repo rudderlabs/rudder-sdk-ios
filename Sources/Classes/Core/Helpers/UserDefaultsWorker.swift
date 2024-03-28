@@ -8,11 +8,12 @@
 
 import Foundation
 
-enum UserDefaultsKeys: String {
+public enum UserDefaultsKeys: String {
     case userId = "rs_user_id"
     case traits = "rs_traits"
     case anonymousId = "rs_anonymous_id"
     case sourceConfig = "rs_server_config"
+    case legacySourceConfig = "rl_server_config"
     case optStatus = "rs_opt_status"
     case optInTime = "rs_opt_in_time"
     case optOutTime = "rs_opt_out_time"
@@ -26,13 +27,13 @@ enum UserDefaultsKeys: String {
     case build = "rs_application_build_key"
 }
 
-protocol UserDefaultsWorkerType {
+public protocol UserDefaultsWorkerProtocol {
     func write<T: Codable>(_ key: UserDefaultsKeys, value: T?)
     func read<T: Codable>(_ key: UserDefaultsKeys) -> T?
     func remove(_ key: UserDefaultsKeys)
 }
 
-class UserDefaultsWorker: UserDefaultsWorkerType {
+class UserDefaultsWorker: UserDefaultsWorkerProtocol {
     let queue: DispatchQueue
     let userDefaults: UserDefaults?
     

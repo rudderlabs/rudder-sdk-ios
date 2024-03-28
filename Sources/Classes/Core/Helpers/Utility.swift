@@ -30,18 +30,6 @@ class Utility {
         return NSUUID().uuidString.lowercased()
     }
 
-    static func getLocale() -> String {
-        let locale = Locale.current
-        if #available(iOS 10.0, *) {
-            return String(format: "%@-%@", locale.languageCode!, locale.regionCode!)
-        }
-        return "NA"
-    }
-    
-    static func getNumberOfBatch(from totalEventsCount: Int, and flushQueueSize: Int) -> Int {
-        return (totalEventsCount % flushQueueSize == 0) ? (totalEventsCount / flushQueueSize) : ((totalEventsCount / flushQueueSize) + 1)
-    }
-    
     static func getLifeCycleProperties(previousVersion: String? = nil,
                                        previousBuild: String? = nil,
                                        currentVersion: String? = nil,
@@ -73,9 +61,4 @@ class Utility {
         }
         return properties
     }
-    
-    static func getPath(from directory: FileManager.SearchPathDirectory) -> URL {
-        return FileManager.default.urls(for: directory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
-    }
-
 }

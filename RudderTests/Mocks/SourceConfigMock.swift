@@ -1,6 +1,6 @@
 //
 //  SourceConfigMock.swift
-//  Rudder
+//  RudderStackTests
 //
 //  Created by Pallab Maiti on 25/01/24.
 //  Copyright © 2024 Rudder Labs India Pvt Ltd. All rights reserved.

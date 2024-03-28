@@ -75,12 +75,12 @@ extension DestinationPlugin {
     
     private func filter<T: Message>(_ message: T) -> T? {
         guard isDestinationEnabled(message: message) else {
-            client?.logDebug(LogMessages.destinationDisabled.description)
+            client?.logger.logDebug(.destinationDisabled)
             return nil
         }
         
         guard shouldAllow(message: message) else {
-            client?.logDebug(LogMessages.eventFiltered.description)
+            client?.logger.logDebug(.eventFiltered)
             return nil
         }
         

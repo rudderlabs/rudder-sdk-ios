@@ -15,12 +15,12 @@ public protocol FlushPolicy {
 }
 
 class CountBasedFlushPolicy: FlushPolicy {
-    let config: Config
+    let config: Configuration
     
     @ReadWriteLock
     var count = 0
 
-    init(config: Config) {
+    init(config: Configuration) {
         self.config = config
     }
     

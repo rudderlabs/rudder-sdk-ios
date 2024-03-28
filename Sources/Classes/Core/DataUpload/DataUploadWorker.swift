@@ -16,8 +16,8 @@ protocol DataUploadWorkerType {
 class DataUploadWorker: DataUploadWorkerType {
     let dataUploader: DataUploaderType
     let dataUploadBlockers: DownloadUploadBlockersProtocol
-    let storageWorker: StorageWorker
-    let config: Config
+    let storageWorker: StorageWorkerProtocol
+    let config: Configuration
     let queue: DispatchQueue
     let logger: Logger
     let retryStrategy: DownloadUploadRetryStrategy
@@ -31,8 +31,8 @@ class DataUploadWorker: DataUploadWorkerType {
     init(
         dataUploader: DataUploaderType,
         dataUploadBlockers: DownloadUploadBlockersProtocol,
-        storageWorker: StorageWorker,
-        config: Config,
+        storageWorker: StorageWorkerProtocol,
+        config: Configuration,
         queue: DispatchQueue,
         logger: Logger,
         retryStrategy: DownloadUploadRetryStrategy
@@ -76,14 +76,7 @@ class DataUploadWorker: DataUploadWorkerType {
                 self.storageWorker.clearMessages(messageList)
             }
             if let error = uploadStatus.error {
-                switch error {
-                case .httpError(let statusCode):
-                    self.logger.logError(.flushAbortedWithStatusCode(statusCode))
-                case .networkError(let error):
-                    self.logger.logError(.flushAbortedWithErrorDescription(error.localizedDescription))
-                case .noResponse:
-                    self.logger.logError(.noResponse)
-                }
+                self.logger.logError(.apiError(.flush, error))
             }
             self.flushNextBatch()
         }
@@ -101,15 +94,17 @@ class DataUploadWorker: DataUploadWorkerType {
     func flushSynchronously() {
         queue.sync { [weak self] in
             guard let self = self,
-                  let messageList = storageWorker.fetchMessages(limit: config.dbCountThreshold),
-                  let batches = getBatches(messageList: messageList) else {
+                  let messageList = self.storageWorker.fetchMessages(limit: self.config.dbCountThreshold),
+                  let batches = self.getBatches(messageList: messageList) else {
                 return
             }
             for batch in batches {
-                defer {
+                let uploadStatus = self.dataUploader.upload(messages: batch.messages)
+                if let error = uploadStatus.error {
+                    self.logger.logDebug(.apiError(.flush, error))
+                } else {
                     self.storageWorker.clearMessages(batch.messages)
                 }
-                _ = self.dataUploader.upload(messages: batch.messages)
             }
         }
     }

@@ -14,12 +14,12 @@ import WatchKit
 
 class WatchApplicationState: ApplicationStateProtocol {
     let wkExtension: WKExtension
-    let userDefaults: UserDefaultsWorkerType
+    let userDefaults: UserDefaultsWorkerProtocol
 
     var trackApplicationStateMessage: ((ApplicationStateMessage) -> Void) = { _  in }
     var refreshSessionIfNeeded: (() -> Void) = { }
 
-    init(wkExtension: WKExtension, userDefaults: UserDefaultsWorkerType) {
+    init(wkExtension: WKExtension, userDefaults: UserDefaultsWorkerProtocol) {
         self.wkExtension = wkExtension
         self.userDefaults = userDefaults
     }
@@ -102,7 +102,7 @@ extension ApplicationState {
     static func current(
         notificationCenter: NotificationCenter,
         wkExtension: WKExtension = WKExtension.shared(),
-        userDefaults: UserDefaultsWorkerType,
+        userDefaults: UserDefaultsWorkerProtocol,
         notifications: [Notification.Name] = [
             WKExtension.applicationDidFinishLaunchingNotification,
             WKExtension.applicationWillEnterForegroundNotification,

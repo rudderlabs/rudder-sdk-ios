@@ -11,10 +11,12 @@ import Foundation
 public struct StorageMessage {
     public let id: String
     public let message: String
+    public let updated: Int
     
-    init(id: String, message: String) {
+    public init(id: String, message: String, updated: Int) {
         self.id = id
         self.message = message
+        self.updated = updated
     }
 }
 

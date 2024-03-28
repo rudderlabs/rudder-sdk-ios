@@ -11,7 +11,7 @@ import Foundation
 class ContextPlugin: Plugin {
     var type: PluginType = .default
     
-    var client: RSClient? {
+    var client: RSClientProtocol? {
         didSet {
             initialSetup()
         }
@@ -21,11 +21,11 @@ class ContextPlugin: Plugin {
     
     private var staticContext = staticContextData()
     private static var device = Device.current
-    private var userDefaults: UserDefaultsWorkerType?
+    private var userDefaultsWorker: UserDefaultsWorkerProtocol?
     
     func initialSetup() {
         guard let client = self.client else { return }
-        userDefaults = client.controller.userDefaults
+        userDefaultsWorker = client.userDefaultsWorker
     }
     
     func process<T>(message: T?) -> T? where T: Message {
@@ -39,7 +39,7 @@ class ContextPlugin: Plugin {
             context.merge(eventContext) { (new, _) in new }
         }
         workingMessage.context = context
-        client?.controller.sessionStorage.write(.context, value: context)
+        client?.sessionStorage.write(.context, value: context)
         return workingMessage
     }
     
@@ -65,45 +65,65 @@ class ContextPlugin: Plugin {
         // timezone
         context["timezone"] = Context.timezone()
     }
-
+    
     internal func insertDynamicPlatformContextData(context: inout [String: Any]) {
         // network connectivity
         context["network"] = Context.NetworkInfo().dictionary
     }
     
     internal func insertDynamicDeviceInfoData(context: inout [String: Any]) {
-        if let deviceToken: String = client?.controller.sessionStorage.read(.deviceToken) {
+        if let deviceToken: String = client?.sessionStorage.read(.deviceToken) {
             context[keyPath: "device.token"] = deviceToken
         }
-        if let advertisingId: String = client?.controller.sessionStorage.read(.advertisingId), advertisingId.isNotEmpty {
+        if let advertisingId: String = client?.sessionStorage.read(.advertisingId), advertisingId.isNotEmpty {
             context[keyPath: "device.advertisingId"] = advertisingId
             context[keyPath: "device.adTrackingEnabled"] = true
         }
-        let appTrackingConsent: AppTrackingConsent = client?.controller.sessionStorage.read(.appTrackingConsent) ?? .notDetermined
+        let appTrackingConsent: AppTrackingConsent = client?.sessionStorage.read(.appTrackingConsent) ?? .notDetermined
         context[keyPath: "device.attTrackingStatus"] = appTrackingConsent.rawValue
     }
     
     func insertDynamicOptionData(message: Message, context: inout [String: Any]) {
-        // First priority will given to the `option` passed along with the event
-        var contextExternalIds = [[String: String]]()
-        // Fetch `externalIds` set using identify API.
-        if let externalIds: [[String: String]] = userDefaults?.read(.externalId) {
-            contextExternalIds.append(contentsOf: externalIds)
+        insertExternalIds(message: message, context: &context)
+        insertCustomContext(message: message, context: &context)
+    }
+    
+    func insertExternalIds(message: Message, context: inout [String: Any]) {
+        var mergedExternalIds = [ExternalId]()
+        /// Merging the externalIds from the persistence if there were any, as a result of previous identify calls.
+        if let externalIdsFromPersistence: [ExternalId] = userDefaultsWorker?.read(.externalId) {
+            mergedExternalIds.add(externalIdsFromPersistence)
         }
-        
-        if let option = message.option {
-            // We will merge the external ids for other event calls
-            if let option = option as? IdentifyOption, let externalIds = option.externalIds {
-                contextExternalIds.append(contentsOf: externalIds)
-            }
-            if let customContexts = option.customContexts {
-                for (key, value) in customContexts {
-                    context[key] = value
-                }
+        /// Merging the externalIds from the `option` object of the current message if it is not an identify, if any duplicates found, we will override it.
+        /// We are not merging the message level `externalIds` in case of Identify Message, because they are already written to the UserDefaults.
+        if message.type != .identify,  let option = message.option as? MessageOption, let externalIdsFromMessage = option.externalIds {
+            mergedExternalIds.add(externalIdsFromMessage)
+        }
+        /// Setting the merged externalIds into the context object.
+        if !mergedExternalIds.isEmpty {
+            context["externalId"] = mergedExternalIds.array
+        }
+    }
+    
+    func insertCustomContext(message: Message, context: inout [String: Any]) {
+        var mergedCustomContexts = [String: Any]()
+        /// Merging the custom context from the `defaultOption` object passed while initializing the SDK
+        if let globalOption: GlobalOptionType = client?.sessionStorage.read(.globalOption), let globalCustomContexts = globalOption.customContexts  {
+            mergedCustomContexts.merge(globalCustomContexts) { _, incoming in
+                incoming
             }
         }
-        if !contextExternalIds.isEmpty {
-            context["externalId"] = contextExternalIds
+        /// Merging the custom context from the `option` object of the current message, if any duplicate keys found, we will override it.
+        if let option = message.option as? MessageOption, let customContextsFromMessage = option.customContexts {
+            mergedCustomContexts.merge(customContextsFromMessage) { _, incoming in
+                incoming
+            }
+        }
+        /// Setting the merged custom context into the context object.
+        if !mergedCustomContexts.isEmpty {
+            for (key, value) in mergedCustomContexts {
+                context[key] = value
+            }
         }
     }
     
