@@ -30,11 +30,15 @@ RSMetricsClient * _Nullable _metricsClient;
 - (instancetype)initWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config {
     self = [super init];
     if (self) {
-        RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
-        [configuration dbCountThreshold:config.dbCountThreshold];
-        _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
-        _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
-        _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+        if (preferenceManager.isMetricsCollectionEnabled || preferenceManager.isErrorsCollectionEnabled) {
+            RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
+            [configuration dbCountThreshold:config.dbCountThreshold];
+            _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
+            _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
+            _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+        } else {
+            [RSLogger logWarn:@"RSMetricsReporter: Metrics and Errors collection is disabled."]; 
+        }
     }
     return self;
 }

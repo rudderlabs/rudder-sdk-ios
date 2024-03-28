@@ -13,11 +13,14 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
++ (void) initializeSDK;
 + (void) sendIdentify;
 + (void) sendTrack;
 + (void) sendScreen;
 + (void) sendGroup;
 + (void) sendAlias;
 + (void) sendReset;
++ (void) putAdvertisingId;
++ (void) clearAdvertisingId;
 
 @end

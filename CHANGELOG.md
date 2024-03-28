@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.26.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.0...v1.26.1) (2024-03-28)
+
+
+### Bug Fixes
+
+* initializing MetricsReporter and CrashReporter only if it's enabled for a customer ([#491](https://github.com/rudderlabs/rudder-sdk-ios/issues/491)) ([48c4ae1](https://github.com/rudderlabs/rudder-sdk-ios/commit/48c4ae18354d66cae9b14f039c6826a7bbb72d50))
+
+## [1.26.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.3...v1.26.0) (2024-03-19)
+
+
+### Features
+
+* add support for global customContext option ([#485](https://github.com/rudderlabs/rudder-sdk-ios/issues/485)) ([27f21b9](https://github.com/rudderlabs/rudder-sdk-ios/commit/27f21b9274fee6f80da6f25b3b73d4491e4f9925))
+* added support for setting advertisingId before sdk init and also persisting it ([#481](https://github.com/rudderlabs/rudder-sdk-ios/issues/481)) ([2075910](https://github.com/rudderlabs/rudder-sdk-ios/commit/2075910109d17c41da1d2800936aaa8d0ae03b97))
+
+### [1.25.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.2...v1.25.3) (2024-03-11)
+
+
+### Bug Fixes
+
+* create mutable copy of JSON serialisation object ([#479](https://github.com/rudderlabs/rudder-sdk-ios/issues/479)) ([95704e1](https://github.com/rudderlabs/rudder-sdk-ios/commit/95704e10d4dfc28d854178befe7e073464bf1ac1))
+
 ### [1.25.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.1...v1.25.2) (2024-02-20)
 
 

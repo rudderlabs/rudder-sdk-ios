@@ -83,6 +83,10 @@ extern NSString *const RSSessionAutoTrackStatus;
 - (void) saveAutoTrackingStatus: (BOOL) autoTrackingStatus;
 - (BOOL) getAutoTrackingStatus;
 
+- (void) saveAdvertisingId: (NSString *) advertisingId;
+- (NSString*) getAdvertisingId;
+- (void) clearAdvertisingId;
+
 @property (nonatomic, readwrite) BOOL isMetricsCollectionEnabled;
 @property (nonatomic, readwrite) BOOL isErrorsCollectionEnabled;
 

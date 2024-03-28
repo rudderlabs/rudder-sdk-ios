@@ -24,7 +24,7 @@
 		ED761A062727E28800B086F4 /* CustomFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FC2727E28800B086F4 /* CustomFactory.m */; };
 		ED761A072727E28800B086F4 /* _AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619FD2727E28800B086F4 /* _AppDelegate.m */; };
 		ED8738CE2AB363A80076D24A /* EncryptedDatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */; };
-		F6149CC52B32FBC2006995B7 /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6149CC42B32FBC2006995B7 /* RudderConfig.plist */; };
+		F6A9BB0A2B9F30CA0076FE23 /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6A9BB092B9F30CA0076FE23 /* RudderConfig.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,7 +57,8 @@
 		ED7619FD2727E28800B086F4 /* _AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AppDelegate.m; sourceTree = "<group>"; };
 		ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptedDatabaseProvider.h; sourceTree = "<group>"; };
 		ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptedDatabaseProvider.m; sourceTree = "<group>"; };
-		F6149CC42B32FBC2006995B7 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
+		F6A9BB092B9F30CA0076FE23 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
+
 		F928F8A942558010CC7088BF /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +122,7 @@
 		ED0CA6D92A7D049E00899C1C /* RudderConfig */ = {
 			isa = PBXGroup;
 			children = (
+				F6A9BB092B9F30CA0076FE23 /* RudderConfig.plist */,
 				ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */,
 				ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */,
 			);
@@ -137,7 +139,6 @@
 				ED7619FD2727E28800B086F4 /* _AppDelegate.m */,
 				ED7619F02727E28700B086F4 /* _ViewController.h */,
 				ED7619F92727E28800B086F4 /* _ViewController.m */,
-				F6149CC42B32FBC2006995B7 /* RudderConfig.plist */,
 				ED7619F22727E28700B086F4 /* CustomFactory.h */,
 				ED7619FC2727E28800B086F4 /* CustomFactory.m */,
 				ED7619FB2727E28800B086F4 /* CustomIntegration.h */,
@@ -217,9 +218,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6A9BB0A2B9F30CA0076FE23 /* RudderConfig.plist in Resources */,
 				ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */,
 				ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */,
-				F6149CC52B32FBC2006995B7 /* RudderConfig.plist in Resources */,
 				ED761A052727E28800B086F4 /* Images.xcassets in Resources */,
 				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
 				ED761A022727E28800B086F4 /* Main.storyboard in Resources */,
