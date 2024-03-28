@@ -42,7 +42,12 @@ extension UIViewController {
     
     @objc
     func rsViewDidAppear(_ animated: Bool) {
-        var name = NSStringFromClass(type(of: self))
+        var name = String(describing: type(of: self))
+        if name.starts(with: "UIHostingController") {
+            name.removeFirst("UIHostingController".count + 1) // Remove `UIHostingController<`
+            if name.hasSuffix(">") { name.removeLast(1) } // Remove last `>`
+        }
+
         name = name.replacingOccurrences(of: "ViewController", with: "")
         let screenMessage = ScreenMessage(title: name, properties: ["automatic": true, "name": name])
         UIViewController.client?.process(message: screenMessage)
