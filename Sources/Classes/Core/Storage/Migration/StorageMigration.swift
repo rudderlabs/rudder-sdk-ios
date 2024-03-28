@@ -15,7 +15,7 @@ class StorageMigration {
         self.storageMigrator = storageMigrator
     }
     
-    func migrate() throws {
-        try storageMigrator.migrate()
+    func migrate() {
+        storageMigrator.migrate()
     }
 }

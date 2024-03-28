@@ -25,8 +25,6 @@ class RSClientCore {
     var dataUpload: DataUpload?
     var dataUploader: DataUploaderType?
     var sourceConfigDownload: SourceConfigDownload?
-    var storageMigration: StorageMigration?
-    var storageMigrator: StorageMigrator?
     var flushPolicies: [FlushPolicy]
     @ReadWriteLock var pluginList: [PluginType: [Plugin]] = [
         .default: [Plugin](),
@@ -53,8 +51,7 @@ class RSClientCore {
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
         dataUploader: DataUploaderType? = nil,
         apiClient: APIClient? = nil,
-        applicationState: ApplicationState? = nil,
-        storageMigrator: StorageMigrator? = nil
+        applicationState: ApplicationState? = nil
     ) {
         self.configuration = configuration
         self.instanceName = instanceName
@@ -107,7 +104,6 @@ class RSClientCore {
         if !configuration.flushPolicies.isEmpty {
             self.flushPolicies.append(contentsOf: configuration.flushPolicies)
         }
-        self.storageMigrator = storageMigrator
         trackApplicationState()
         recordScreenViews()
         fetchSourceConfig()
@@ -168,11 +164,9 @@ extension RSClientCore {
         
         sourceConfigDownload = SourceConfigDownload(downloader: downloader)
         
-        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig, needsDatabaseMigration in
+        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig in
             guard let self = self else { return }
-            if needsDatabaseMigration {
-                self.migrateStorage()
-            }
+            self.migrateStorage(currentSourceConfig: sourceConfig)
             self.isEnable = sourceConfig.enabled
             self.updateSourceConfig(sourceConfig)
             self.userDefaultsWorker.write(.sourceConfig, value: sourceConfig)
@@ -199,7 +193,7 @@ extension RSClientCore {
                     gzipEnabled: self.configuration.gzipEnabled,
                     dataPlaneUrl: dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL
                 )
-
+                
                 let uploader = DataUploadWorker(
                     dataUploader: dataUploader,
                     dataUploadBlockers: self.downloadUploadBlockers,
@@ -231,29 +225,10 @@ extension RSClientCore {
         configuration.configValidationErrorList.forEach({ logger.logWarning(LogMessages.customMessage($0.description)) })
     }
     
-    private func migrateStorage() {
-        if let storageMigrator = storageMigrator {
-            storageMigration = StorageMigration(storageMigrator: storageMigrator)
-        } else {
-            let oldDatabase = SQLiteDatabase(path: Device.current.directoryPath, name: "rl_persistence.sqlite")
-            let oldSQLiteStorage = SQLiteStorage(database: oldDatabase, logger: logger)
-            let storageMigrator = StorageMigratorV1V2(oldSQLiteStorage: oldSQLiteStorage, currentStorage: storage)
-            storageMigration = StorageMigration(storageMigrator: storageMigrator)
-        }
-        do {
-            try storageMigration?.migrate()
-            logger.logDebug(.storageMigrationSuccess)
-        } catch {
-            if let error = error as? StorageError {
-                if error == .databaseNotExists {
-                    logger.logDebug(.customMessage(error.description))
-                } else {
-                    logger.logError(.storageMigrationFailed(error))
-                }
-            } else {
-                logger.logDebug(.customMessage(error.localizedDescription))
-            }
-        }
+    private func migrateStorage(currentSourceConfig: SourceConfig) {    
+        let storageMigrator = StorageMigratorV1V2(currentStorage: storage, currentSourceConfig: currentSourceConfig, logger: logger)
+        let storageMigration = StorageMigration(storageMigrator: storageMigrator)
+        storageMigration.migrate()
     }
 }
 
@@ -596,7 +571,7 @@ extension RSClientCore {
         userDefaultsWorker.write(.optStatus, value: status)
         logger.logDebug(.userOptOut(status))
     }
-
+    
 }
 
 extension RSClientCore {
