@@ -45,6 +45,7 @@ class RSClientCore {
     init(
         configuration: Configuration,
         instanceName: String,
+        globalOption: GlobalOptionType? = nil,
         database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
@@ -87,6 +88,12 @@ class RSClientCore {
         } else {
             self.userDefaultsWorker = UserDefaultsWorker(suiteName: "defaultUserDefaults".userDefaultsSuitName(instanceName), queue: userDefaultsQueue)
         }
+        
+        let userOptedOut: Bool = userDefaultsWorker.read(.optStatus) ?? false
+        if !userOptedOut, let globalOption = globalOption {
+            sessionStorage.write(.globalOption, value: globalOption)
+        }
+
         self.serviceManager = ServiceManager(
             apiClient: apiClient ?? URLSessionClient(
                 session: URLSession.defaultSession()
@@ -240,7 +247,7 @@ extension RSClientCore {
             }
         }
     }
-    #warning("add sync queue")
+#warning("add sync queue")
     func addPlugin(_ plugin: Plugin) {
         if var list = pluginList[plugin.type] {
             list.addPlugin(plugin)
@@ -300,8 +307,8 @@ extension RSClientCore {
 }
 
 extension RSClientCore {
-    func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -313,8 +320,8 @@ extension RSClientCore {
         process(message: message)
     }
     
-    func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -331,8 +338,8 @@ extension RSClientCore {
         process(message: message)
     }
     
-    func group(_ groupId: String, traits: [String: String]? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func group(_ groupId: String, traits: [String: String]? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -344,8 +351,8 @@ extension RSClientCore {
         process(message: message)
     }
     
-    func alias(_ newId: String, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func alias(_ newId: String, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -364,8 +371,8 @@ extension RSClientCore {
         process(message: message)
     }
     
-    func identify(_ userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func identify(_ userId: String, traits: IdentifyTraits? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -373,14 +380,24 @@ extension RSClientCore {
             logger.logWarning(.userIdNotEmpty)
             return
         }
+        
+        if let existingUserId: String = userDefaultsWorker.read(.userId), existingUserId != userId {
+            reset()
+        }
+        
         userDefaultsWorker.write(.userId, value: userId)
         
         if let traits = traits {
             userDefaultsWorker.write(.traits, value: try? JSON(traits))
         }
         
-        if let externalIds = option?.externalIds {
-            userDefaultsWorker.write(.externalId, value: try? JSON(externalIds))
+        /// merging the current externalIds with the persisted externalIds and in case of duplicates current externalIds will be considered
+        if var currrentExternalIds = option?.externalIds {
+            if var persistedExternalIds: [ExternalId] = userDefaultsWorker.read(.externalId) {
+                persistedExternalIds.add(currrentExternalIds)
+                currrentExternalIds = persistedExternalIds
+            }
+            userDefaultsWorker.write(.externalId, value: currrentExternalIds)
         }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
         process(message: message)
@@ -434,7 +451,7 @@ extension RSClientCore {
 
 extension RSClientCore {
     var anonymousId: String? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -442,7 +459,7 @@ extension RSClientCore {
     }
     
     var userId: String? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -450,7 +467,7 @@ extension RSClientCore {
     }
     
     var context: Context? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -461,7 +478,7 @@ extension RSClientCore {
     }
     
     var traits: IdentifyTraits? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -474,7 +491,7 @@ extension RSClientCore {
     }
     
     var sessionId: Int? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -514,7 +531,7 @@ extension RSClientCore {
 
 extension RSClientCore {
     func setAnonymousId(_ anonymousId: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -525,16 +542,16 @@ extension RSClientCore {
         userDefaultsWorker.write(.anonymousId, value: anonymousId)
     }
     
-    func setOption(_ option: Option) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func setGlobalOption(_ globalOption: GlobalOptionType) {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
-        sessionStorage.write(.defaultOption, value: option)
+        sessionStorage.write(.globalOption, value: globalOption)
     }
     
     func setDeviceToken(_ token: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -546,7 +563,7 @@ extension RSClientCore {
     }
     
     func setAdvertisingId(_ advertisingId: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -560,7 +577,7 @@ extension RSClientCore {
     }
     
     func setAppTrackingConsent(_ appTrackingConsent: AppTrackingConsent) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -579,6 +596,13 @@ extension RSClientCore {
         userDefaultsWorker.remove(.traits)
         userDefaultsWorker.remove(.externalId)
         userDefaultsWorker.remove(.userId)
+    }
+    
+    func isUserOptedOut() -> Bool {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus) {
+            return optOutStatus
+        }
+        return false
     }
 }
 

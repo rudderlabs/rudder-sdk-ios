@@ -138,8 +138,8 @@ public struct Context: Codable {
         _traits?.dictionaryValue
     }
     
-    private let _externalIds: [[String: String]]?
-    public var externalIds: [[String: String]]? {
+    private let _externalIds: [ExternalId]?
+    public var externalIds: [ExternalId]? {
         _externalIds
     }
     
@@ -205,5 +205,11 @@ public extension Encodable {
     var dictionary: [String: Any]? {
         guard let data = try? JSONEncoder().encode(self) else { return nil }
         return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
+    }
+}
+
+public extension [ExternalId] {
+    var array: [[String:Any]?]? {
+        self.map{$0.dictionary}
     }
 }
