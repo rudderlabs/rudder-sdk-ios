@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.26.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.0...v1.26.1) (2024-03-28)
+
+
+### Bug Fixes
+
+* initializing MetricsReporter and CrashReporter only if it's enabled for a customer ([#491](https://github.com/rudderlabs/rudder-sdk-ios/issues/491)) ([48c4ae1](https://github.com/rudderlabs/rudder-sdk-ios/commit/48c4ae18354d66cae9b14f039c6826a7bbb72d50))
+
 ## [1.26.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.25.3...v1.26.0) (2024-03-19)
 
 
