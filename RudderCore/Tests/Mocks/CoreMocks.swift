@@ -27,7 +27,6 @@ extension Configuration {
         autoSessionTracking: Bool = .random(),
         sessionTimeOut: Int = .mockRandom(),
         gzipEnabled: Bool = .random(),
-        dataResidencyServer: DataResidencyServer = .US,
         flushPolicies: [FlushPolicy] = [FlushPolicy](),
         dataUploadRetryPolicy: RetryPolicy? = nil,
         sourceConfigDownloadRetryPolicy: RetryPolicy? = nil,
@@ -43,7 +42,6 @@ extension Configuration {
         .autoSessionTracking(autoSessionTracking)
         .sessionTimeOut(sessionTimeOut)
         .gzipEnabled(gzipEnabled)
-        .dataResidencyServer(dataResidencyServer)
         .flushPolicies(flushPolicies)
         .dataUploadRetryPolicy(dataUploadRetryPolicy)
         .sourceConfigDownloadRetryPolicy(sourceConfigDownloadRetryPolicy)
@@ -66,7 +64,6 @@ class DataUploaderMock: DataUploaderType {
     func upload(messages: [StorageMessage]) -> APIStatus {
         uploadedMessages += messages
         onUpload?()
-        print("123456")
         return uploadStatus
     }
 }

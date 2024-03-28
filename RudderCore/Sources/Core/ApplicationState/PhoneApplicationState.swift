@@ -15,55 +15,53 @@ import UIKit
 
 class PhoneApplicationState: ApplicationStateProtocol {
     let application: UIApplication
-    let userDefaults: UserDefaultsWorkerProtocol
+    let userDefaultsWorker: UserDefaultsWorkerProtocol
+    let bundle: Bundle
+    
+    var currentVersion: String? {
+        bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+    var currentBuild: String? {
+        bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+    }
+    var previousVersion: String? {
+        userDefaultsWorker.read(.version)
+    }
+    var previousBuild: String? {
+        userDefaultsWorker.read(.build)
+    }
     
     var trackApplicationStateMessage: ((ApplicationStateMessage) -> Void) = { _  in }
     var refreshSessionIfNeeded: (() -> Void) = { }
     
-    @ReadWriteLock private var isFirstTimeLaunch: Bool = true
-    @ReadWriteLock private var didFinishLaunching = false
+    @ReadWriteLock private var isBackgrounded = false
 
-    init(application: UIApplication, userDefaults: UserDefaultsWorkerProtocol) {
+    init(application: UIApplication, userDefaultsWorker: UserDefaultsWorkerProtocol, bundle: Bundle = Bundle.main) {
         self.application = application
-        self.userDefaults = userDefaults
+        self.userDefaultsWorker = userDefaultsWorker
+        self.bundle = bundle
     }
     
     func didEnterBackground(notification: NSNotification) {
+        isBackgrounded = true
         trackApplicationStateMessage(ApplicationStateMessage(state: .backgrounded))
     }
     
     func willEnterForeground(notification: NSNotification) {
-        #if !os(tvOS)
-        // If app is launched first time then the Application Opened event will not be sent again.
-        if self.isFirstTimeLaunch {
-            self.isFirstTimeLaunch = false
-            return
-        }
-        #endif
         refreshSessionIfNeeded()
-        
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         
         trackApplicationStateMessage(ApplicationStateMessage(
             state: .opened,
             properties: getLifeCycleProperties(
                 currentVersion: currentVersion,
                 currentBuild: currentBuild,
-                fromBackground: true
+                fromBackground: isBackgrounded
             )
         ))
+        isBackgrounded = false
     }
     
     func didFinishLaunching(notification: NSNotification) {
-        didFinishLaunching = true
-        
-        let previousVersion: String? = userDefaults.read(.version)
-        let previousBuild: String? = userDefaults.read(.build)
-        
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        
         if previousVersion == nil {
             trackApplicationStateMessage(ApplicationStateMessage(
                 state: .installed,
@@ -84,23 +82,8 @@ class PhoneApplicationState: ApplicationStateProtocol {
             ))
         }
         
-        trackApplicationStateMessage(ApplicationStateMessage(
-            state: .opened,
-            properties: getLifeCycleProperties(
-                currentVersion: currentVersion,
-                currentBuild: currentBuild,
-                fromBackground: false
-            )
-        ))
-        
-        userDefaults.write(.version, value: currentVersion)
-        userDefaults.write(.build, value: currentBuild)
-    }
-    
-    func didBecomeActive(notification: NSNotification) {
-        if !didFinishLaunching {
-            didFinishLaunching(notification: notification)
-        }
+        userDefaultsWorker.write(.version, value: currentVersion)
+        userDefaultsWorker.write(.build, value: currentBuild)
     }
 }
 
@@ -113,8 +96,6 @@ extension Notification.Name {
             return .willEnterForeground
         case UIApplication.didFinishLaunchingNotification:
             return .didFinishLaunching
-        case UIApplication.didBecomeActiveNotification:
-            return .didBecomeActive
         default:
             return .unknown
         }
@@ -125,19 +106,18 @@ extension ApplicationState {
     static func current(
         notificationCenter: NotificationCenter,
         application: UIApplication = UIApplication.shared,
-        userDefaults: UserDefaultsWorkerProtocol,
+        userDefaultsWorker: UserDefaultsWorkerProtocol,
         notifications: [Notification.Name] = [
             UIApplication.didEnterBackgroundNotification,
             UIApplication.willEnterForegroundNotification,
-            UIApplication.didFinishLaunchingNotification,
-            UIApplication.didBecomeActiveNotification
+            UIApplication.didFinishLaunchingNotification
         ]
     ) -> Self {
         self.init(
             notificationCenter: notificationCenter,
             application: PhoneApplicationState(
                 application: application,
-                userDefaults: userDefaults
+                userDefaultsWorker: userDefaultsWorker
             ),
             notifications: notifications
         )

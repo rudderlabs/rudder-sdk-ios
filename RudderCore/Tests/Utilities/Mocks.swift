@@ -303,3 +303,44 @@ extension URLRequest: AnyMockable {
         return request
     }
 }
+
+class BundleMock: Bundle {
+    fileprivate var _bundlePath: String = .mockAny()
+    fileprivate var _bundleIdentifier: String? = nil
+    fileprivate var _CFBundleVersion: String? = nil
+    fileprivate var _CFBundleShortVersionString: String? = nil
+    fileprivate var _CFBundleExecutable: String? = nil
+    
+    override var bundlePath: String { _bundlePath }
+    override var bundleIdentifier: String? { _bundleIdentifier }
+    override func object(forInfoDictionaryKey key: String) -> Any? {
+        switch key {
+            case "CFBundleVersion": return _CFBundleVersion
+            case "CFBundleShortVersionString": return _CFBundleShortVersionString
+            case "CFBundleExecutable": return _CFBundleExecutable
+            default: return super.object(forInfoDictionaryKey: key)
+        }
+    }
+}
+
+extension Bundle {
+    static func mockAny() -> Bundle {
+        return mockWith()
+    }
+    
+    static func mockWith(
+        bundlePath: String = .mockAny(),
+        bundleIdentifier: String? = .mockAny(),
+        CFBundleVersion: String? = .mockAny(),
+        CFBundleShortVersionString: String? = .mockAny(),
+        CFBundleExecutable: String? = .mockAny()
+    ) -> Bundle {
+        let mock = BundleMock()
+        mock._bundlePath = bundlePath
+        mock._bundleIdentifier = bundleIdentifier
+        mock._CFBundleVersion = CFBundleVersion
+        mock._CFBundleShortVersionString = CFBundleShortVersionString
+        mock._CFBundleExecutable = CFBundleExecutable
+        return mock
+    }
+}

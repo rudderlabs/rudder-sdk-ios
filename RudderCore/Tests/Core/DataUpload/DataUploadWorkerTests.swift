@@ -53,7 +53,7 @@ final class DataUploadWorkerTests: XCTestCase {
             dataUploader: dataUploader,
             dataUploadBlockers: NoBlockersMock(),
             storageWorker: storageWorker,
-            config: .mockWith(flushQueueSize: 5),
+            configuration: .mockWith(flushQueueSize: 5),
             queue: queue,
             logger: logger,
             retryStrategy: retryStrategy
@@ -109,7 +109,7 @@ final class DataUploadWorkerTests: XCTestCase {
             dataUploader: dataUploader,
             dataUploadBlockers: NoBlockersMock(),
             storageWorker: storageWorker,
-            config: .mockWith(flushQueueSize: 5),
+            configuration: .mockWith(flushQueueSize: 5),
             queue: queue,
             logger: logger,
             retryStrategy: retryStrategy
@@ -149,7 +149,7 @@ final class DataUploadWorkerTests: XCTestCase {
             dataUploader: dataUploader,
             dataUploadBlockers: NoBlockersMock(),
             storageWorker: storageWorker,
-            config: .mockWith(flushQueueSize: 2),
+            configuration: .mockWith(flushQueueSize: 2),
             queue: queue,
             logger: logger,
             retryStrategy: retryStrategy

@@ -18,10 +18,10 @@ class RudderCore {
     let sourceConfigDownloader: SourceConfigDownloaderType
     let logger: Logger
     let instanceName: String
+    var applicationSate: ApplicationState
     let downloadUploadBlockers: DownloadUploadBlockers = DownloadUploadBlockers()
     let sessionStorage: SessionStorageProtocol = SessionStorage()
     var database: Database?
-    var applicationSate: ApplicationState?
     var dataUpload: DataUpload?
     var dataUploader: DataUploaderType?
     var sourceConfigDownload: SourceConfigDownload?
@@ -108,27 +108,36 @@ class RudderCore {
             self.flushPolicies.append(contentsOf: configuration.flushPolicies)
         }
         self.storageMigrator = storageMigrator
-        trackApplicationState()
-        fetchSourceConfig()
-        logConfigValidationErrors()
-    }
-    
-}
-
-extension RudderCore {
-    private func trackApplicationState() {
-        applicationSate = ApplicationState.current(
+        self.applicationSate = ApplicationState.current(
             notificationCenter: NotificationCenter.default,
-            userDefaults: self.userDefaultsWorker
+            userDefaultsWorker: self.userDefaultsWorker
         )
-        applicationSate?.observeNotifications()
-        applicationSate?.trackApplicationStateMessage = { [weak self] applicationStateMessage in
+        self.applicationSate.observeNotifications()
+        self.applicationSate.trackApplicationStateMessage = { [weak self] applicationStateMessage in
             guard let self = self, self.configuration.trackLifecycleEvents else { return }
             self.track(applicationStateMessage.state.eventName, properties: applicationStateMessage.properties)
         }
-        applicationSate?.refreshSessionIfNeeded = { [weak self] in
+        self.applicationSate.refreshSessionIfNeeded = { [weak self] in
             guard let self = self, self.configuration.trackLifecycleEvents else { return }
             self.refreshSessionIfNeeded()
+        }
+        observeNotifications()
+        fetchSourceConfig()
+        logConfigValidationErrors()
+    }
+}
+
+extension RudderCore {
+    private func observeNotifications() {
+        NotificationName.allCases.forEach({
+            NotificationCenter.default.addObserver(self, selector: #selector(observe(notification:)), name: Notification.Name(notificationName: $0), object: nil)
+        })
+    }
+    
+    @objc
+    private func observe(notification: NSNotification) {
+        if notification.name.rawValue == NotificationName.didEnterBackground.rawValue {
+            flush()
         }
     }
     
@@ -179,23 +188,18 @@ extension RudderCore {
                     retryFactors: dataUploadRetryFactors
                 )
                 
-                let dataResidency = DataResidency(
-                    dataResidencyServer: self.configuration.dataResidencyServer,
-                    sourceConfig: sourceConfig
-                )
-                
                 let dataUploader = self.dataUploader ?? DataUploader(
                     serviceManager: self.serviceManager,
                     anonymousId: self.userDefaultsWorker.read(.anonymousId) ?? "",
                     gzipEnabled: self.configuration.gzipEnabled,
-                    dataPlaneUrl: dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL
+                    dataPlaneUrl: self.configuration.dataPlaneURL
                 )
 
                 let uploader = DataUploadWorker(
                     dataUploader: dataUploader,
                     dataUploadBlockers: self.downloadUploadBlockers,
                     storageWorker: self.storageWorker,
-                    config: self.configuration,
+                    configuration: self.configuration,
                     queue: DispatchQueue(
                         label: "dataUploadWorker".queueLabel(self.instanceName),
                         autoreleaseFrequency: .workItem,
@@ -210,9 +214,6 @@ extension RudderCore {
             } else {
                 if !sourceConfig.enabled {
                     self.dataUpload?.cancel()
-                } else {
-                    let dataResidency = DataResidency(dataResidencyServer: self.configuration.dataResidencyServer, sourceConfig: sourceConfig)
-                    self.dataUploader?.updateDataPlaneUrl(dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL)
                 }
             }
         }

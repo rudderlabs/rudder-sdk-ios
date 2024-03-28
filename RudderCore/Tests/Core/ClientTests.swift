@@ -32,8 +32,7 @@ class ClientTests: XCTestCase {
             controlPlaneURL: "https://www.rudder.controlplane.com",
             autoSessionTracking: false,
             sessionTimeOut: 5000,
-            gzipEnabled: false,
-            dataResidencyServer: .EU
+            gzipEnabled: false
         )
         
         client = .mockWith(
@@ -486,7 +485,6 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(config.automaticSessionTracking, configuration.automaticSessionTracking)
         XCTAssertEqual(config.sessionTimeOut, configuration.sessionTimeOut)
         XCTAssertEqual(config.gzipEnabled, configuration.gzipEnabled)
-        XCTAssertEqual(config.dataResidencyServer, configuration.dataResidencyServer)
     }
     
     func testOption() throws {

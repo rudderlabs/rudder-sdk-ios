@@ -20,7 +20,6 @@ public class Constants {
     static let recordScreenViews = RecordScreenViews()
     static let autoSessionTracking = AutoSessionTracking()
     static let gzipEnabled = GzipEnabled()
-    static let residencyServer = ResidencyServer()
 }
 
 protocol DefaultValue {
@@ -83,8 +82,4 @@ struct AutoSessionTracking: DefaultValue {
 
 struct GzipEnabled: DefaultValue {
     var `default`: Bool = true
-}
-
-struct ResidencyServer: DefaultValue {
-    var `default`: DataResidencyServer = .US
 }

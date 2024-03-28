@@ -25,7 +25,7 @@ extension ApplicationStateProtocol {
     func didBecomeActive(notification: NSNotification) { }
 }
 
-enum NotificationName {
+enum NotificationName: String, CaseIterable {
     case didEnterBackground
     case willEnterForeground
     case didFinishLaunching
@@ -96,12 +96,16 @@ class ApplicationState {
         switch notification.name.convert() {
         case .didEnterBackground:
             application.didEnterBackground(notification: notification)
+            notificationCenter.post(name: NSNotification.Name(notificationName: .didEnterBackground), object: notification)
         case .willEnterForeground:
             application.willEnterForeground(notification: notification)
+            notificationCenter.post(name: NSNotification.Name(notificationName: .willEnterForeground), object: notification)
         case .didFinishLaunching:
             application.didFinishLaunching(notification: notification)
+            notificationCenter.post(name: NSNotification.Name(notificationName: .didFinishLaunching), object: notification)
         case .didBecomeActive:
             application.didBecomeActive(notification: notification)
+            notificationCenter.post(name: NSNotification.Name(notificationName: .didBecomeActive), object: notification)
         case .unknown:
             break
         }
@@ -113,9 +117,7 @@ extension ApplicationStateProtocol {
                                 previousBuild: String? = nil,
                                 currentVersion: String? = nil,
                                 currentBuild: String? = nil,
-                                fromBackground: Bool? = nil,
-                                referringApplication: Any? = nil,
-                                url: Any? = nil) -> [String: Any] {
+                                fromBackground: Bool? = nil) -> [String: Any] {
         var properties = [String: Any]()
         if let previousVersion = previousVersion, previousVersion.isNotEmpty {
             properties["previous_version"] = previousVersion
@@ -132,12 +134,12 @@ extension ApplicationStateProtocol {
         if let fromBackground = fromBackground {
             properties["from_background"] = fromBackground
         }
-        if let referringApplication = referringApplication {
-            properties["referring_application"] = referringApplication
-        }
-        if let url = url {
-            properties["url"] = url
-        }
         return properties
+    }
+}
+
+extension Notification.Name {
+    init(notificationName: NotificationName) {
+        self.init(notificationName.rawValue)
     }
 }
