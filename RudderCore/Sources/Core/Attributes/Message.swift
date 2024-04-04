@@ -91,7 +91,7 @@ public struct IdentifyMessage: Message {
         dictionary["event"] = "identify"
     }
     
-    init(userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
+    init(userId: String, traits: IdentifyTraits? = nil, option: MessageOptionType? = nil) {
         self.userId = userId
         self.traits = traits
         self.option = option

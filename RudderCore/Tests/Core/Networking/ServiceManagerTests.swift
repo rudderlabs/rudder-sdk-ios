@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Rudder
+@testable import RudderInternal
 
 final class ServiceManagerTests: XCTestCase {
     

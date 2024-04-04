@@ -9,14 +9,12 @@
 import Foundation
 import RudderInternal
 
-typealias NeedsDatabaseMigration = Bool
-
 protocol SourceConfigDownloadWorkerType {
-    var sourceConfig: ((SourceConfig, NeedsDatabaseMigration) -> Void) { get set }
+    var sourceConfig: ((SourceConfig) -> Void) { get set }
 }
 
 class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
-    var sourceConfig: ((SourceConfig, NeedsDatabaseMigration) -> Void) = { _, _ in }
+    var sourceConfig: ((SourceConfig) -> Void) = { _ in }
     
     let sourceConfigDownloader: SourceConfigDownloaderType
     let downloadBlockers: DownloadUploadBlockersProtocol
@@ -51,7 +49,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
             guard let self = self else { return }
             if let sourceConfig: SourceConfig = userDefaults.read(.sourceConfig) {
                 self.cachedSourceConfig = sourceConfig
-                self.sourceConfig(sourceConfig, false)
+                self.sourceConfig(sourceConfig)
             }
             let blockersForDownload = downloadBlockers.get()
             if blockersForDownload.isEmpty {
@@ -70,7 +68,7 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
             if let sourceConfig = response.sourceConfig {
                 self.retryStrategy.reset()
                 self.logger.logDebug(.sourceConfigDownloadSuccess)
-                self.sourceConfig(sourceConfig, self.needsMigration(freshSourceConfig: sourceConfig))
+                self.sourceConfig(sourceConfig)
             }
             let downloadStatus = response.status
             if downloadStatus.needsRetry {
@@ -96,14 +94,5 @@ class SourceConfigDownloadWorker: SourceConfigDownloadWorkerType {
             return
         }
         queue.asyncAfter(deadline: .now() + retryStrategy.current, execute: readWorkItem)
-    }
-}
-
-extension SourceConfigDownloadWorker {
-    func needsMigration(freshSourceConfig: SourceConfig) -> Bool {
-        guard let cachedSourceConfig = cachedSourceConfig else {
-            return false
-        }
-        return freshSourceConfig.id == cachedSourceConfig.id
     }
 }

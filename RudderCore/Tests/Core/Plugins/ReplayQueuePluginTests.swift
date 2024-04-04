@@ -263,7 +263,7 @@ class ReplayQueueTestDestination: DestinationPlugin {
     var name: String = "test_destination"
     var plugins: [Rudder.Plugin] = []
     var type: Rudder.PluginType = .destination
-    var client: Rudder.RudderProtocol?
+    var client: RudderProtocol?
     var sourceConfig: Rudder.SourceConfig? {
         didSet {
             onUpdateSourceConfig?()

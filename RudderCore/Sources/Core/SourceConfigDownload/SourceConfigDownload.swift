@@ -10,12 +10,12 @@ import Foundation
 
 class SourceConfigDownload {
     private var downloader: SourceConfigDownloadWorkerType
-    var sourceConfig: ((SourceConfig, NeedsDatabaseMigration) -> Void) = { _, _ in }
+    var sourceConfig: ((SourceConfig) -> Void) = { _ in }
     
     init(downloader: SourceConfigDownloadWorkerType) {
         self.downloader = downloader
-        self.downloader.sourceConfig = { sourceConfig, needsDatabaseMigration in
-            self.sourceConfig(sourceConfig, needsDatabaseMigration)
+        self.downloader.sourceConfig = { sourceConfig in
+            self.sourceConfig(sourceConfig)
         }
     }
 }

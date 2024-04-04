@@ -11,27 +11,27 @@ import RudderInternal
 @testable import Rudder
 
 class RSClientMock: RudderProtocol {
-    func track(_ eventName: String, properties: Rudder.TrackProperties?, option: Rudder.MessageOption?) {
+    func track(_ eventName: String, properties: Rudder.TrackProperties?, option: MessageOptionType?) {
         let message = TrackMessage(event: eventName, properties: properties, option: option)
         process(message: message)
     }
     
-    func identify(_ userId: String, traits: Rudder.IdentifyTraits?, option: Rudder.IdentifyOptionType?) {
+    func identify(_ userId: String, traits: Rudder.IdentifyTraits?, option: MessageOptionType?) {
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
         process(message: message)
     }
     
-    func screen(_ screenName: String, category: String?, properties: Rudder.ScreenProperties?, option: Rudder.MessageOption?) {
+    func screen(_ screenName: String, category: String?, properties: Rudder.ScreenProperties?, option: MessageOptionType?) {
         let message = ScreenMessage(title: screenName, category: category, properties: properties, option: option)
         process(message: message)
     }
     
-    func group(_ groupId: String, traits: Rudder.GroupTraits?, option: Rudder.MessageOption?) {
+    func group(_ groupId: String, traits: Rudder.GroupTraits?, option: MessageOptionType?) {
         let message = GroupMessage(groupId: groupId, traits: traits, option: option)
         process(message: message)
     }
     
-    func alias(_ newId: String, option: Rudder.MessageOption?) {
+    func alias(_ newId: String, option: MessageOptionType?) {
         let message = AliasMessage(newId: newId, option: option)
         process(message: message)
     }

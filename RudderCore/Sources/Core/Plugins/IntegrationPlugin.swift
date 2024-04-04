@@ -16,16 +16,20 @@ class IntegrationPlugin: Plugin {
         
     func process<T>(message: T?) -> T? where T: Message {
         guard var workingMessage = message else { return message }
-        let messageIntegrations = workingMessage.option?.integrations ?? [:]
-        let globalOption: Option? = client?.sessionStorage.read(.defaultOption)
-        let globalOptionIntegrations = globalOption?.integrations ?? [:]
+       /// Retrieving the integrations status passed using `globalOption` object passed while initializing the SDK
+        let globalOption: GlobalOptionType? = client?.sessionStorage.read(.globalOption)
+        let globalOptionIntegrationsStatus = globalOption?.integrationsStatus ?? [:]
         
-        var integrations = messageIntegrations.merging(globalOptionIntegrations) { (current, _) in current }
+        /// Retrieving the integrations status passed using `option` object from the current message.
+        let messageIntegrationsStatus = workingMessage.option?.integrationsStatus ?? [:]
         
-        if integrations["All"] == nil {
-            integrations["All"] = true
+        /// Merging the integrations status from global `option` object with the ones from the message level `option` object and if there are any duplicate integrations in both the `option` objects, we are considering the integration status passed from `message level option` object.
+        var mergedIntegrationsStatus = globalOptionIntegrationsStatus.merging(messageIntegrationsStatus) { (_, incoming) in incoming }
+        
+        if mergedIntegrationsStatus["All"] == nil {
+            mergedIntegrationsStatus["All"] = true
         }
-        workingMessage.integrations = integrations
+        workingMessage.integrations = mergedIntegrationsStatus
         return workingMessage
     }
 }

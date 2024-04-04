@@ -9,6 +9,7 @@
 import Foundation
 import RudderInternal
 
+
 class RudderCore {
     let configuration: Configuration
     let storage: Storage
@@ -18,7 +19,7 @@ class RudderCore {
     let sourceConfigDownloader: SourceConfigDownloaderType
     let logger: Logger
     let instanceName: String
-    var applicationSate: ApplicationState
+    var applicationSate: ApplicationState?
     let downloadUploadBlockers: DownloadUploadBlockers = DownloadUploadBlockers()
     let sessionStorage: SessionStorageProtocol = SessionStorage()
     var database: Database?
@@ -47,14 +48,14 @@ class RudderCore {
     init(
         configuration: Configuration,
         instanceName: String,
+        globalOption: GlobalOptionType? = nil,
         database: Database? = nil,
         storage: Storage? = nil,
         userDefaults: UserDefaults? = nil,
         sourceConfigDownloader: SourceConfigDownloaderType? = nil,
         dataUploader: DataUploaderType? = nil,
         apiClient: APIClient? = nil,
-        applicationState: ApplicationState? = nil,
-        storageMigrator: StorageMigrator? = nil
+        applicationState: ApplicationState? = nil
     ) {
         self.configuration = configuration
         self.instanceName = instanceName
@@ -90,6 +91,12 @@ class RudderCore {
         } else {
             self.userDefaultsWorker = UserDefaultsWorker(suiteName: "defaultUserDefaults".userDefaultsSuitName(instanceName), queue: userDefaultsQueue)
         }
+        
+        let userOptedOut: Bool = userDefaultsWorker.read(.optStatus) ?? false
+        if !userOptedOut, let globalOption = globalOption {
+            sessionStorage.write(.globalOption, value: globalOption)
+        }
+
         self.serviceManager = ServiceManager(
             apiClient: apiClient ?? URLSessionClient(
                 session: URLSession.defaultSession()
@@ -107,27 +114,34 @@ class RudderCore {
         if !configuration.flushPolicies.isEmpty {
             self.flushPolicies.append(contentsOf: configuration.flushPolicies)
         }
-        self.storageMigrator = storageMigrator
-        self.applicationSate = ApplicationState.current(
-            notificationCenter: NotificationCenter.default,
-            userDefaultsWorker: self.userDefaultsWorker
-        )
-        self.applicationSate.observeNotifications()
-        self.applicationSate.trackApplicationStateMessage = { [weak self] applicationStateMessage in
-            guard let self = self, self.configuration.trackLifecycleEvents else { return }
-            self.track(applicationStateMessage.state.eventName, properties: applicationStateMessage.properties)
-        }
-        self.applicationSate.refreshSessionIfNeeded = { [weak self] in
-            guard let self = self, self.configuration.trackLifecycleEvents else { return }
-            self.refreshSessionIfNeeded()
-        }
+
+        trackApplicationState()
         observeNotifications()
         fetchSourceConfig()
         logConfigValidationErrors()
     }
+    
 }
 
+
 extension RudderCore {
+    
+    private func trackApplicationState() {
+        applicationSate = ApplicationState.current(
+            notificationCenter: NotificationCenter.default,
+            userDefaultsWorker: self.userDefaultsWorker
+        )
+        applicationSate?.observeNotifications()
+        applicationSate?.trackApplicationStateMessage = { [weak self] applicationStateMessage in
+            guard let self = self, self.configuration.trackLifecycleEvents else { return }
+            self.track(applicationStateMessage.state.eventName, properties: applicationStateMessage.properties)
+        }
+        applicationSate?.refreshSessionIfNeeded = { [weak self] in
+            guard let self = self, self.configuration.trackLifecycleEvents else { return }
+            self.refreshSessionIfNeeded()
+        }
+    }
+
     private func observeNotifications() {
         NotificationName.allCases.forEach({
             NotificationCenter.default.addObserver(self, selector: #selector(observe(notification:)), name: Notification.Name(notificationName: $0), object: nil)
@@ -168,11 +182,9 @@ extension RudderCore {
         
         sourceConfigDownload = SourceConfigDownload(downloader: downloader)
         
-        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig, needsDatabaseMigration in
+        sourceConfigDownload?.sourceConfig = { [weak self] sourceConfig in
             guard let self = self else { return }
-            if needsDatabaseMigration {
-                self.migrateStorage()
-            }
+            self.migrateStorage(currentSourceConfig: sourceConfig)
             self.isEnable = sourceConfig.enabled
             self.updateSourceConfig(sourceConfig)
             self.userDefaultsWorker.write(.sourceConfig, value: sourceConfig)
@@ -188,13 +200,18 @@ extension RudderCore {
                     retryFactors: dataUploadRetryFactors
                 )
                 
+                let dataResidency = DataResidency(
+                    dataResidencyServer: self.configuration.dataResidencyServer,
+                    sourceConfig: sourceConfig
+                )
+
                 let dataUploader = self.dataUploader ?? DataUploader(
                     serviceManager: self.serviceManager,
                     anonymousId: self.userDefaultsWorker.read(.anonymousId) ?? "",
                     gzipEnabled: self.configuration.gzipEnabled,
-                    dataPlaneUrl: self.configuration.dataPlaneURL
+                    dataPlaneUrl: dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL
                 )
-
+                
                 let uploader = DataUploadWorker(
                     dataUploader: dataUploader,
                     dataUploadBlockers: self.downloadUploadBlockers,
@@ -214,6 +231,9 @@ extension RudderCore {
             } else {
                 if !sourceConfig.enabled {
                     self.dataUpload?.cancel()
+                } else {
+                    let dataResidency = DataResidency(dataResidencyServer: self.configuration.dataResidencyServer, sourceConfig: sourceConfig)
+                    self.dataUploader?.updateDataPlaneUrl(dataResidency.dataPlaneUrl ?? self.configuration.dataPlaneURL)
                 }
             }
         }
@@ -223,33 +243,12 @@ extension RudderCore {
         configuration.configValidationErrorList.forEach({ logger.logWarning(LogMessages.customMessage($0.description)) })
     }
     
-    private func migrateStorage() {
-        if let storageMigrator = storageMigrator {
-            storageMigration = StorageMigration(storageMigrator: storageMigrator)
-        } else {
-            let oldDatabase = SQLiteDatabase(path: Device.current.directoryPath, name: "rl_persistence.sqlite")
-            let oldSQLiteStorage = SQLiteStorage(database: oldDatabase, logger: logger)
-            let storageMigrator = StorageMigratorV1V2(oldSQLiteStorage: oldSQLiteStorage, currentStorage: storage)
-            storageMigration = StorageMigration(storageMigrator: storageMigrator)
-        }
-        do {
-            try storageMigration?.migrate()
-            logger.logDebug(.storageMigrationSuccess)
-        } catch {
-            if let error = error as? StorageError {
-                if error == .databaseNotExists {
-                    logger.logDebug(.customMessage(error.description))
-                } else {
-                    logger.logError(.storageMigrationFailed(error))
-                }
-            } else {
-                logger.logDebug(.customMessage(error.localizedDescription))
-            }
-        }
+    private func migrateStorage(currentSourceConfig: SourceConfig) {    
+        let storageMigrator = StorageMigratorV1V2(currentStorage: storage, currentSourceConfig: currentSourceConfig, logger: logger)
+        let storageMigration = StorageMigration(storageMigrator: storageMigrator)
+        storageMigration.migrate()
     }
-}
 
-extension RudderCore {
     func updateSourceConfig(_ sourceConfig: SourceConfig) {
         pluginList.forEach { (_, value) in
             value.forEach { plugin in
@@ -258,6 +257,7 @@ extension RudderCore {
         }
     }
 
+    #warning("add sync queue")
     func addPlugin(_ plugin: Plugin) {
         if var list = pluginList[plugin.type] {
             list.addPlugin(plugin)
@@ -316,9 +316,10 @@ extension RudderCore {
     }
 }
 
+
 extension RudderCore {
-    func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func track(_ eventName: String, properties: TrackProperties? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -330,8 +331,8 @@ extension RudderCore {
         process(message: message)
     }
     
-    func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+    func screen(_ screenName: String, category: String? = nil, properties: ScreenProperties? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -347,9 +348,9 @@ extension RudderCore {
         let message = ScreenMessage(title: screenName, category: category, properties: screenProperties, option: option)
         process(message: message)
     }
-    
-    func group(_ groupId: String, traits: [String: String]? = nil, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+
+    func group(_ groupId: String, traits: [String: String]? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -360,9 +361,9 @@ extension RudderCore {
         let message = GroupMessage(groupId: groupId, traits: traits, option: option)
         process(message: message)
     }
-    
-    func alias(_ newId: String, option: MessageOption? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+
+    func alias(_ newId: String, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -380,9 +381,9 @@ extension RudderCore {
         let message = AliasMessage(newId: newId, previousId: previousId, option: option)
         process(message: message)
     }
-    
-    func identify(_ userId: String, traits: IdentifyTraits? = nil, option: IdentifyOptionType? = nil) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+
+    func identify(_ userId: String, traits: IdentifyTraits? = nil, option: MessageOptionType? = nil) {
+        if isUserOptedOut() {
             logger.logDebug(.optOutAndEventDrop)
             return
         }
@@ -390,14 +391,24 @@ extension RudderCore {
             logger.logWarning(.userIdNotEmpty)
             return
         }
+        
+        if let existingUserId: String = userDefaultsWorker.read(.userId), existingUserId != userId {
+            reset()
+        }
+        
         userDefaultsWorker.write(.userId, value: userId)
         
         if let traits = traits {
             userDefaultsWorker.write(.traits, value: try? JSON(traits))
         }
         
-        if let externalIds = option?.externalIds {
-            userDefaultsWorker.write(.externalId, value: try? JSON(externalIds))
+        /// merging the current externalIds with the persisted externalIds and in case of duplicates current externalIds will be considered
+        if var currrentExternalIds = option?.externalIds {
+            if var persistedExternalIds: [ExternalId] = userDefaultsWorker.read(.externalId) {
+                persistedExternalIds.add(currrentExternalIds)
+                currrentExternalIds = persistedExternalIds
+            }
+            userDefaultsWorker.write(.externalId, value: currrentExternalIds)
         }
         let message = IdentifyMessage(userId: userId, traits: traits, option: option)
         process(message: message)
@@ -449,9 +460,10 @@ extension RudderCore {
     }
 }
 
+
 extension RudderCore {
     var anonymousId: String? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -459,7 +471,7 @@ extension RudderCore {
     }
     
     var userId: String? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -467,7 +479,7 @@ extension RudderCore {
     }
     
     var context: Context? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -478,7 +490,7 @@ extension RudderCore {
     }
     
     var traits: IdentifyTraits? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -491,7 +503,7 @@ extension RudderCore {
     }
     
     var sessionId: Int? {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return nil
         }
@@ -530,9 +542,10 @@ extension RudderCore {
     }
 }
 
+
 extension RudderCore {
     func setAnonymousId(_ anonymousId: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -542,17 +555,17 @@ extension RudderCore {
         }
         userDefaultsWorker.write(.anonymousId, value: anonymousId)
     }
-    
-    func setOption(_ option: Option) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+
+    func setGlobalOption(_ globalOption: GlobalOptionType) {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
-        sessionStorage.write(.defaultOption, value: option)
+        sessionStorage.write(.globalOption, value: globalOption)
     }
     
     func setDeviceToken(_ token: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -564,7 +577,7 @@ extension RudderCore {
     }
     
     func setAdvertisingId(_ advertisingId: String) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -578,7 +591,7 @@ extension RudderCore {
     }
     
     func setAppTrackingConsent(_ appTrackingConsent: AppTrackingConsent) {
-        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus), optOutStatus {
+        if isUserOptedOut() {
             logger.logDebug(.optOut)
             return
         }
@@ -589,7 +602,7 @@ extension RudderCore {
         userDefaultsWorker.write(.optStatus, value: status)
         logger.logDebug(.userOptOut(status))
     }
-
+    
 }
 
 extension RudderCore {
@@ -597,6 +610,13 @@ extension RudderCore {
         userDefaultsWorker.remove(.traits)
         userDefaultsWorker.remove(.externalId)
         userDefaultsWorker.remove(.userId)
+    }
+    
+    func isUserOptedOut() -> Bool {
+        if let optOutStatus: Bool = userDefaultsWorker.read(.optStatus) {
+            return optOutStatus
+        }
+        return false
     }
 }
 

@@ -66,7 +66,7 @@ class ContextPlugin: Plugin {
         // timezone
         context["timezone"] = Context.timezone()
     }
-
+    
     internal func insertDynamicPlatformContextData(context: inout [String: Any]) {
         // network connectivity
         context["network"] = Context.NetworkInfo().dictionary
@@ -85,26 +85,46 @@ class ContextPlugin: Plugin {
     }
     
     func insertDynamicOptionData(message: Message, context: inout [String: Any]) {
-        // First priority will given to the `option` passed along with the event
-        var contextExternalIds = [[String: String]]()
-        // Fetch `externalIds` set using identify API.
-        if let externalIds: [[String: String]] = userDefaultsWorker?.read(.externalId) {
-            contextExternalIds.append(contentsOf: externalIds)
+        insertExternalIds(message: message, context: &context)
+        insertCustomContext(message: message, context: &context)
+    }
+    
+    func insertExternalIds(message: Message, context: inout [String: Any]) {
+        var mergedExternalIds = [ExternalId]()
+        /// Merging the externalIds from the persistence if there were any, as a result of previous identify calls.
+        if let externalIdsFromPersistence: [ExternalId] = userDefaultsWorker?.read(.externalId) {
+            mergedExternalIds.add(externalIdsFromPersistence)
         }
-        
-        if let option = message.option {
-            // We will merge the external ids for other event calls
-            if let option = option as? IdentifyOption, let externalIds = option.externalIds {
-                contextExternalIds.append(contentsOf: externalIds)
-            }
-            if let customContexts = option.customContexts {
-                for (key, value) in customContexts {
-                    context[key] = value
-                }
+        /// Merging the externalIds from the `option` object of the current message if it is not an identify, if any duplicates found, we will override it.
+        /// We are not merging the message level `externalIds` in case of Identify Message, because they are already written to the UserDefaults.
+        if message.type != .identify,  let option = message.option as? MessageOption, let externalIdsFromMessage = option.externalIds {
+            mergedExternalIds.add(externalIdsFromMessage)
+        }
+        /// Setting the merged externalIds into the context object.
+        if !mergedExternalIds.isEmpty {
+            context["externalId"] = mergedExternalIds.array
+        }
+    }
+    
+    func insertCustomContext(message: Message, context: inout [String: Any]) {
+        var mergedCustomContexts = [String: Any]()
+        /// Merging the custom context from the `defaultOption` object passed while initializing the SDK
+        if let globalOption: GlobalOptionType = client?.sessionStorage.read(.globalOption), let globalCustomContexts = globalOption.customContexts  {
+            mergedCustomContexts.merge(globalCustomContexts) { _, incoming in
+                incoming
             }
         }
-        if !contextExternalIds.isEmpty {
-            context["externalId"] = contextExternalIds
+        /// Merging the custom context from the `option` object of the current message, if any duplicate keys found, we will override it.
+        if let option = message.option as? MessageOption, let customContextsFromMessage = option.customContexts {
+            mergedCustomContexts.merge(customContextsFromMessage) { _, incoming in
+                incoming
+            }
+        }
+        /// Setting the merged custom context into the context object.
+        if !mergedCustomContexts.isEmpty {
+            for (key, value) in mergedCustomContexts {
+                context[key] = value
+            }
         }
     }
     

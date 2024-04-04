@@ -113,7 +113,7 @@ final class UserSessionPluginTests: XCTestCase {
         XCTAssertFalse(trackMessage_2?.sessionStart ?? false)
         XCTAssertEqual(trackMessage?.sessionId, trackMessage_2?.sessionId)
         
-        sleep(bySeconds: 2)
+        usleep(2000000)
         
         // When
         userSessionPlugin.startSession()
@@ -233,7 +233,7 @@ final class UserSessionPluginTests: XCTestCase {
         XCTAssertNotNil(trackMessage?.sessionId)
         XCTAssertTrue(trackMessage?.sessionStart ?? false)
         
-        sleep(bySeconds: 2)
+        usleep(2000000)
         
         // When
         userSessionPlugin.refreshSessionIfNeeded()
@@ -264,7 +264,7 @@ final class UserSessionPluginTests: XCTestCase {
         XCTAssertTrue(trackMessage?.sessionStart ?? false)
                 
         // When
-        sleep(bySeconds: 2)
+        usleep(2000000)
         userSessionPlugin.reset()
         
         let trackMessage_2 = userSessionPlugin.process(message: TrackMessage(event: "test_session_2"))
@@ -297,7 +297,7 @@ final class UserSessionPluginTests: XCTestCase {
         XCTAssertNotNil(trackMessage_2?.sessionId)
         XCTAssertTrue(trackMessage_2?.sessionStart ?? false)
         
-        sleep(bySeconds: 2)
+        usleep(2000000)
 
         // When
         userSessionPlugin.reset()

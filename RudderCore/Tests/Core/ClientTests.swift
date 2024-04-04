@@ -32,7 +32,8 @@ class ClientTests: XCTestCase {
             controlPlaneURL: "https://www.rudder.controlplane.com",
             autoSessionTracking: false,
             sessionTimeOut: 5000,
-            gzipEnabled: false
+            gzipEnabled: false,
+            dataResidencyServer: .EU
         )
         
         client = .mockWith(
@@ -174,8 +175,8 @@ class ClientTests: XCTestCase {
 
     func testScreen_Option() {
         let option = MessageOption()
-            .putIntegration("Destination_1", isEnabled: true)
-            .putIntegration("Destination_2", isEnabled: false)
+            .putIntegrationStatus("Destination_1", isEnabled: true)
+            .putIntegrationStatus("Destination_2", isEnabled: false)
             .putCustomContext(["n_key_1": "n_value_1"], for: "key_1")
 
         client.screen("ViewController", option: option)
@@ -201,8 +202,8 @@ class ClientTests: XCTestCase {
     
     func testScreen_Option_Properties() {
         let option = MessageOption()
-            .putIntegration("Destination_1", isEnabled: true)
-            .putIntegration("Destination_2", isEnabled: false)
+            .putIntegrationStatus("Destination_1", isEnabled: true)
+            .putIntegrationStatus("Destination_2", isEnabled: false)
             .putCustomContext(["n_key_1": "n_value_1"], for: "key_1")
         
         client.screen("ViewController", properties: ["key_3": "value_3", "key_4": "value_4"], option: option)
@@ -258,8 +259,8 @@ class ClientTests: XCTestCase {
     
     func testScreen_Category_Option() {
         let option = MessageOption()
-            .putIntegration("Destination_1", isEnabled: true)
-            .putIntegration("Destination_2", isEnabled: false)
+            .putIntegrationStatus("Destination_1", isEnabled: true)
+            .putIntegrationStatus("Destination_2", isEnabled: false)
             .putCustomContext(["n_key_1": "n_value_1"], for: "key_1")
         
         client.screen("ViewController", category: "category_1", option: option)
@@ -285,8 +286,8 @@ class ClientTests: XCTestCase {
     
     func testScreen_Category_Option_Properties() {
         let option = MessageOption()
-            .putIntegration("Destination_1", isEnabled: true)
-            .putIntegration("Destination_2", isEnabled: false)
+            .putIntegrationStatus("Destination_1", isEnabled: true)
+            .putIntegrationStatus("Destination_2", isEnabled: false)
             .putCustomContext(["n_key_1": "n_value_1"], for: "key_1")
         
         client.screen("ViewController", category: "category_1", properties: ["key_3": "value_3", "key_4": "value_4"], option: option)
@@ -344,8 +345,8 @@ class ClientTests: XCTestCase {
     // Track with eventName and option
     func testTrack_Option() {
         let option = MessageOption()
-            .putIntegration("Destination_1", isEnabled: true)
-            .putIntegration("Destination_2", isEnabled: false)
+            .putIntegrationStatus("Destination_1", isEnabled: true)
+            .putIntegrationStatus("Destination_2", isEnabled: false)
             .putCustomContext(["n_key_1": "n_value_1"], for: "key_1")
         
         client.track("simple_track_with_option", option: option)
@@ -371,8 +372,8 @@ class ClientTests: XCTestCase {
     // Track with eventName, properties and option
     func testTrack_Properties_Option() {
         let option = MessageOption()
-            .putIntegration("Destination_3", isEnabled: true)
-            .putIntegration("Destination_4", isEnabled: false)
+            .putIntegrationStatus("Destination_3", isEnabled: true)
+            .putIntegrationStatus("Destination_4", isEnabled: false)
             .putCustomContext(["n_key_2": "n_value_2"], for: "key_2")
 
         client.track("simple_track_with_props_and_option", properties: ["key_3": "value_3", "key_4": "value_4"], option: option)
@@ -485,15 +486,16 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(config.automaticSessionTracking, configuration.automaticSessionTracking)
         XCTAssertEqual(config.sessionTimeOut, configuration.sessionTimeOut)
         XCTAssertEqual(config.gzipEnabled, configuration.gzipEnabled)
+        XCTAssertEqual(config.dataResidencyServer, configuration.dataResidencyServer)
     }
     
     func testOption() throws {
-        let globalOption = Option()
-            .putIntegration("destination_1", isEnabled: true)
-            .putIntegration("destination_2", isEnabled: true)
-            .putIntegration("destination_3", isEnabled: false)
-        
-        client.setOption(globalOption)
+        let globalOption = MessageOption()
+            .putIntegrationStatus("destination_1", isEnabled: true)
+            .putIntegrationStatus("destination_2", isEnabled: true)
+            .putIntegrationStatus("destination_3", isEnabled: false)
+            
+        client.setGlobalOption(globalOption)
         
         client.track("test_track")
         

@@ -57,7 +57,9 @@ enum LogMessages {
     case eventFiltered
     case storageMigrationFailed(StorageError)
     case storageMigrationSuccess
-    case oldDatabaseNotExists
+    case legacyDatabaseDoesNotExists
+    case storageMigrationFailedToReadSourceConfig
+    case failedToDeleteLegacyDatabase(String)
     case apiError(API, APIError)
     case internalErrors(InternalErrors)
     
@@ -130,9 +132,13 @@ enum LogMessages {
         case .storageMigrationFailed(let error):
             return "Storage migration failed. Reason: \(error.description)"
         case .storageMigrationSuccess:
-            return "Storage migration is successful"
-        case .oldDatabaseNotExists:
-            return "Old database not exists, hence no migration needed"
+            return "Successfully migrated data from legacy storage and deleted the legacy database."
+        case .legacyDatabaseDoesNotExists:
+            return "Legacy database does not exists, hence no migration needed"
+        case .storageMigrationFailedToReadSourceConfig:
+            return "Legacy database exists, but failed to read legacy SourceConfig, so cannot migrate data, hence deleting the legacy database"
+        case .failedToDeleteLegacyDatabase(let reason):
+            return "Failed to delete legacy database due to \(reason)"
         case .apiError(let api, let error):
             switch error {
             case .httpError(let statusCode):

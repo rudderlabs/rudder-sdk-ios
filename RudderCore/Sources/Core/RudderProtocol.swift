@@ -1,5 +1,5 @@
 //
-//  RSClientProtocol.swift
+//  RudderProtocol.swift
 //  Rudder
 //
 //  Created by Pallab Maiti on 06/02/24.
@@ -69,7 +69,7 @@ public protocol RudderProtocol: AnyObject {
     ///   - eventName: The name of the activity.
     ///   - properties: Extra data properties regarding the event, if any.
     ///   - option: Extra event options, if any.
-    func track(_ eventName: String, properties: TrackProperties?, option: MessageOption?)
+    func track(_ eventName: String, properties: TrackProperties?, option: MessageOptionType?)
     
     /// Set current user's information
     ///
@@ -77,7 +77,7 @@ public protocol RudderProtocol: AnyObject {
     ///   - userId: User's ID.
     ///   - traits: User's additional information, if any.
     ///   - option: Event level option, if any.
-    func identify(_ userId: String, traits: IdentifyTraits?, option: IdentifyOptionType?)
+    func identify(_ userId: String, traits: IdentifyTraits?, option: MessageOptionType?)
     
     /// Track a screen with name, category.
     ///
@@ -86,7 +86,7 @@ public protocol RudderProtocol: AnyObject {
     ///   - category: The category or type of screen, if any.
     ///   - properties: Extra data properties regarding the screen call, if any.
     ///   - option: Extra screen event options, if any.
-    func screen(_ screenName: String, category: String?, properties: ScreenProperties?, option: MessageOption?)
+    func screen(_ screenName: String, category: String?, properties: ScreenProperties?, option: MessageOptionType?)
     
     /// Associate an user to a company or organization.
     ///
@@ -94,12 +94,12 @@ public protocol RudderProtocol: AnyObject {
     ///   - groupId: The company's ID.
     ///   - traits: Extra information of the company, if any.
     ///   - option: Event level options, if any.
-    func group(_ groupId: String, traits: GroupTraits?, option: MessageOption?)
+    func group(_ groupId: String, traits: GroupTraits?, option: MessageOptionType?)
     
     /// Associate the current user to a new identification.
     ///
     /// - Parameters:
     ///   - groupId: User's new ID.
     ///   - option: Event level options, if any.
-    func alias(_ newId: String, option: MessageOption?)
+    func alias(_ newId: String, option: MessageOptionType?)
 }

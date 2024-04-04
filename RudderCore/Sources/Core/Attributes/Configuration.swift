@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum DataResidencyServer {
+    case US
+    case EU
+}
+
 enum ConfigValidationError: Error {
     case flushQueueSize
     case dbCountThreshold
@@ -87,6 +92,11 @@ public class Configuration {
         return _gzipEnabled
     }
     
+    private var _dataResidencyServer: DataResidencyServer = Constants.residencyServer.default
+    public var dataResidencyServer: DataResidencyServer {
+        return _dataResidencyServer
+    }
+    
     private var _flushPolicies = [FlushPolicy]()
     public var flushPolicies: [FlushPolicy] {
         _flushPolicies
@@ -106,7 +116,7 @@ public class Configuration {
     public var logger: LoggerProtocol? {
         _logger
     }
-        
+    
     var configValidationErrorList = [ConfigValidationError]()
     
     required public init?(writeKey: String, dataPlaneURL: String) {
@@ -188,6 +198,12 @@ public class Configuration {
     @discardableResult
     public func gzipEnabled(_ gzipEnabled: Bool) -> Configuration {
         _gzipEnabled = gzipEnabled
+        return self
+    }
+    
+    @discardableResult
+    public func dataResidencyServer(_ dataResidencyServer: DataResidencyServer) -> Configuration {
+        _dataResidencyServer = dataResidencyServer
         return self
     }
     

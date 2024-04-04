@@ -30,7 +30,8 @@ extension Configuration {
         flushPolicies: [FlushPolicy] = [FlushPolicy](),
         dataUploadRetryPolicy: RetryPolicy? = nil,
         sourceConfigDownloadRetryPolicy: RetryPolicy? = nil,
-        logger: LoggerProtocol? = NOLogger()
+        logger: LoggerProtocol? = NOLogger(),
+        dataResidencyServer: DataResidencyServer = Constants.residencyServer.default
     ) -> Configuration {
         .init(writeKey: writeKey, dataPlaneURL: dataPlaneURL)!
         .flushQueueSize(flushQueueSize)
@@ -46,6 +47,7 @@ extension Configuration {
         .dataUploadRetryPolicy(dataUploadRetryPolicy)
         .sourceConfigDownloadRetryPolicy(sourceConfigDownloadRetryPolicy)
         .logger(logger)
+        .dataResidencyServer(dataResidencyServer)
     }
 }
 
@@ -349,7 +351,7 @@ extension RSClient {
 class StorageMigratorMock: StorageMigrator {
     var currentStorage: Storage = StorageMock()
     
-    func migrate() throws {
+    func migrate() {
         
     }
 }

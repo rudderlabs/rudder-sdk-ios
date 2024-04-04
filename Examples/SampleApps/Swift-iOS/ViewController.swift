@@ -146,23 +146,23 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             case 18:
                 client1.setAdvertisingId("advertising_id_2")
             case 19:
-                let option = Option()
+                let option = GlobalOption()
                 
-                option.putIntegration("key-5", isEnabled: true)
-                option.putIntegration("key-6", isEnabled: true)
-                option.putIntegration("key-7", isEnabled: true)
-                option.putIntegration("key-8", isEnabled: false)
+                option.putIntegrationStatus("key-5", isEnabled: true)
+                option.putIntegrationStatus("key-6", isEnabled: true)
+                option.putIntegrationStatus("key-7", isEnabled: true)
+                option.putIntegrationStatus("key-8", isEnabled: false)
                 
-                client1.setOption(option)
+                client1.setGlobalOption(option)
             case 20:
-                let option = IdentifyOption()
+                let option = MessageOption()
                 option.putExternalId("value-1", to: "key-1")
                 option.putExternalId("value-2", to: "key-2")
                 
-                option.putIntegration("key-5", isEnabled: true)
-                option.putIntegration("key-6", isEnabled: true)
-                option.putIntegration("key-7", isEnabled: false)
-                option.putIntegration("key-8", isEnabled: false)
+                option.putIntegrationStatus("key-5", isEnabled: true)
+                option.putIntegrationStatus("key-6", isEnabled: true)
+                option.putIntegrationStatus("key-7", isEnabled: false)
+                option.putIntegrationStatus("key-8", isEnabled: false)
                 
                 option.putCustomContext(["Key-01": "value-1"], for: "key-9")
                 option.putCustomContext(["Key-02": "value-1"], for: "key-10")
@@ -172,12 +172,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             case 21:
                 let option = MessageOption()
                     .putCustomContext([:], for: "")
-                    .putIntegration("", isEnabled: true)
+                    .putIntegrationStatus("", isEnabled: true)
                 
-                option.putIntegration("key-5", isEnabled: false)
-                option.putIntegration("key-6", isEnabled: true)
-                option.putIntegration("key-7", isEnabled: false)
-                option.putIntegration("key-8", isEnabled: true)
+                option.putIntegrationStatus("key-5", isEnabled: false)
+                option.putIntegrationStatus("key-6", isEnabled: true)
+                option.putIntegrationStatus("key-7", isEnabled: false)
+                option.putIntegrationStatus("key-8", isEnabled: true)
                 
                 option.putCustomContext(["Key-01": "value-1"], for: "key-9")
                 option.putCustomContext(["Key-02": "value-2"], for: "key-10")

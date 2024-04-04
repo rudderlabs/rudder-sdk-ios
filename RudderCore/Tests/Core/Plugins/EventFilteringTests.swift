@@ -7,8 +7,8 @@
 //
 
 import XCTest
-import RudderInternal
 @testable import Rudder
+@testable import RudderInternal
 
 final class EventFilteringTests: XCTestCase {
     func test_whiteListEvent() throws {
@@ -128,7 +128,7 @@ class EventFilteringTestDestination: DestinationPlugin {
     var name: String = "test_destination"
     var plugins: [Rudder.Plugin] = []
     var type: Rudder.PluginType = .destination
-    var client: Rudder.RudderProtocol?
+    var client: RudderProtocol?
     var sourceConfig: Rudder.SourceConfig?
     
     var lastMessage: TrackMessage?
