@@ -92,6 +92,11 @@ public class Configuration {
         return _gzipEnabled
     }
     
+    private var _dataResidencyServer: DataResidencyServer = Constants.residencyServer.default
+    public var dataResidencyServer: DataResidencyServer {
+        return _dataResidencyServer
+    }
+    
     private var _flushPolicies = [FlushPolicy]()
     public var flushPolicies: [FlushPolicy] {
         _flushPolicies

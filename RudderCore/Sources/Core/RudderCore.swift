@@ -19,7 +19,7 @@ class RudderCore {
     let sourceConfigDownloader: SourceConfigDownloaderType
     let logger: Logger
     let instanceName: String
-    var applicationSate: ApplicationState
+    var applicationSate: ApplicationState?
     let downloadUploadBlockers: DownloadUploadBlockers = DownloadUploadBlockers()
     let sessionStorage: SessionStorageProtocol = SessionStorage()
     var database: Database?
@@ -129,7 +129,7 @@ extension RudderCore {
     private func trackApplicationState() {
         applicationSate = ApplicationState.current(
             notificationCenter: NotificationCenter.default,
-            userDefaults: self.userDefaultsWorker
+            userDefaultsWorker: self.userDefaultsWorker
         )
         applicationSate?.observeNotifications()
         applicationSate?.trackApplicationStateMessage = { [weak self] applicationStateMessage in
@@ -664,7 +664,7 @@ extension String {
 
 extension String {
     var correctified: String {
-        return self.isEmpty ? ClientRegistry.defaultInstanceName : self
+        return self.isEmpty ? RudderRegistry.defaultInstanceName : self
     }
 }
 

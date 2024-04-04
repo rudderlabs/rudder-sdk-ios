@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Rudder
+@testable import RudderInternal
 
 final class StorageMigratorTests: XCTestCase {
     
@@ -100,7 +101,7 @@ final class StorageMigratorTests: XCTestCase {
     
     func addDummyEventsToStorage(storage: SQLiteStorage, count: Int) {
         for i in 1...count {
-            storage.save(StorageMessage(id: "", message: "message_\(storage.database.name)_\(i)", updated: Utility.getTimeStamp()))
+            storage.save(StorageMessage(id: "", message: "message_\(storage.database.name)_\(i)", updated: .getTimeStamp()))
         }
     }
     

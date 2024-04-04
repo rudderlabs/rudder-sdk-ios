@@ -61,6 +61,7 @@ enum LogMessages {
     case storageMigrationFailedToReadSourceConfig
     case failedToDeleteLegacyDatabase(String)
     case apiError(API, APIError)
+    case internalErrors(InternalErrors)
     
     var description: String {
         switch self {
@@ -147,6 +148,8 @@ enum LogMessages {
             case .noResponse:
                 return "No server response"
             }
+        case .internalErrors(let error):
+            return error.description
         }
     }
 }

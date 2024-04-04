@@ -332,7 +332,6 @@
 		ED11FE072B78DA810007B019 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE062B78DA810007B019 /* Preview Assets.xcassets */; };
 		ED11FE1D2B78DB600007B019 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE0D2B78DB4E0007B019 /* ViewController.swift */; };
 		ED11FE1E2B78DB650007B019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE0E2B78DB4E0007B019 /* Assets.xcassets */; };
-		ED11FE1F2B78DB680007B019 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE0F2B78DB4E0007B019 /* GoogleService-Info.plist */; };
 		ED11FE202B78DB720007B019 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE102B78DB4E0007B019 /* LaunchScreen.storyboard */; };
 		ED11FE212B78DB760007B019 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE122B78DB4E0007B019 /* Main.storyboard */; };
 		ED11FE222B78DB790007B019 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED11FE142B78DB4E0007B019 /* AppDelegate.swift */; };
@@ -498,6 +497,14 @@
 		ED11FFF32B7932150007B019 /* RudderConfig_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED11FE1A2B78DB4E0007B019 /* RudderConfig_1.plist */; };
 		ED11FFF72B7A0ED60007B019 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA0F2B78B1790007B019 /* RudderInternal.framework */; };
 		ED11FFFC2B7A0EE10007B019 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA1B2B78B18F0007B019 /* RudderInternal.framework */; };
+		F6D7A76F2BBEDD160086DFA6 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */; };
+		F6D7A7702BBEDD160086DFA6 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */; };
+		F6D7A7712BBEDD160086DFA6 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */; };
+		F6D7A7722BBEDD160086DFA6 /* DataResidency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */; };
+		F6D7A7732BBEE2810086DFA6 /* Rudder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F8382B78A8BC0007B019 /* Rudder.framework */; };
+		F6D7A7742BBEE2810086DFA6 /* Rudder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED11F8382B78A8BC0007B019 /* Rudder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F6D7A7772BBEE2810086DFA6 /* RudderInternal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA0F2B78B1790007B019 /* RudderInternal.framework */; };
+		F6D7A7782BBEE2810086DFA6 /* RudderInternal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED11FA0F2B78B1790007B019 /* RudderInternal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -648,6 +655,20 @@
 			remoteGlobalIDString = ED11FA1A2B78B18F0007B019;
 			remoteInfo = "RudderInternal-macOS";
 		};
+		F6D7A7752BBEE2810086DFA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED11F82F2B78A8BC0007B019 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED11F8372B78A8BC0007B019;
+			remoteInfo = "Rudder-iOS";
+		};
+		F6D7A7792BBEE2810086DFA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED11F82F2B78A8BC0007B019 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED11FA0E2B78B1780007B019;
+			remoteInfo = "RudderInternal-iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -683,6 +704,18 @@
 			files = (
 				ED11FFE62B792A900007B019 /* Rudder.framework in Embed Frameworks */,
 				ED11FFEA2B792A900007B019 /* RudderInternal.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6D7A77B2BBEE2810086DFA6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F6D7A7742BBEE2810086DFA6 /* Rudder.framework in Embed Frameworks */,
+				F6D7A7782BBEE2810086DFA6 /* RudderInternal.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -782,7 +815,6 @@
 		ED11FE062B78DA810007B019 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ED11FE0D2B78DB4E0007B019 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED11FE0E2B78DB4E0007B019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ED11FE0F2B78DB4E0007B019 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED11FE112B78DB4E0007B019 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED11FE132B78DB4E0007B019 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED11FE142B78DB4E0007B019 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -851,6 +883,7 @@
 		ED11FFD32B7929D70007B019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED11FFD62B7929D70007B019 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED11FFD82B7929D70007B019 /* Swift_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Swift_macOS.entitlements; sourceTree = "<group>"; };
+		F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResidency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -927,6 +960,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6D7A7732BBEE2810086DFA6 /* Rudder.framework in Frameworks */,
+				F6D7A7772BBEE2810086DFA6 /* RudderInternal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1253,6 +1288,7 @@
 			children = (
 				ED11FC7A2B78CB2A0007B019 /* SessionStorage.swift */,
 				ED11FC792B78CB2A0007B019 /* UserDefaultsWorker.swift */,
+				F6D7A76E2BBEDD160086DFA6 /* DataResidency.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1303,7 +1339,6 @@
 			children = (
 				ED11FE142B78DB4E0007B019 /* AppDelegate.swift */,
 				ED11FE0E2B78DB4E0007B019 /* Assets.xcassets */,
-				ED11FE0F2B78DB4E0007B019 /* GoogleService-Info.plist */,
 				ED11FE152B78DB4E0007B019 /* Info.plist */,
 				ED11FE102B78DB4E0007B019 /* LaunchScreen.storyboard */,
 				ED11FE122B78DB4E0007B019 /* Main.storyboard */,
@@ -1759,10 +1794,13 @@
 				ED11FDF92B78DA800007B019 /* Sources */,
 				ED11FDFA2B78DA800007B019 /* Frameworks */,
 				ED11FDFB2B78DA800007B019 /* Resources */,
+				F6D7A77B2BBEE2810086DFA6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F6D7A7762BBEE2810086DFA6 /* PBXTargetDependency */,
+				F6D7A77A2BBEE2810086DFA6 /* PBXTargetDependency */,
 			);
 			name = "SwiftUI-iOS";
 			productName = "SwiftUI-iOS";
@@ -2075,7 +2113,6 @@
 				ED11FE1E2B78DB650007B019 /* Assets.xcassets in Resources */,
 				ED11FE272B78DB980007B019 /* RudderConfig_1.plist in Resources */,
 				ED11FE252B78DB980007B019 /* RudderConfig_2.plist in Resources */,
-				ED11FE1F2B78DB680007B019 /* GoogleService-Info.plist in Resources */,
 				ED11FE212B78DB760007B019 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2244,6 +2281,7 @@
 				ED11FC942B78CB2A0007B019 /* SourceConfigDownloadWorker.swift in Sources */,
 				ED11FD402B78CB2B0007B019 /* DataUploadWorker.swift in Sources */,
 				ED11FC7C2B78CB2A0007B019 /* SourceConfigDownload.swift in Sources */,
+				F6D7A76F2BBEDD160086DFA6 /* DataResidency.swift in Sources */,
 				ED11FCDC2B78CB2B0007B019 /* PhoneApplicationState.swift in Sources */,
 				ED11FD382B78CB2B0007B019 /* DataUpload.swift in Sources */,
 				ED11FD082B78CB2B0007B019 /* SQLiteDatabase.swift in Sources */,
@@ -2312,6 +2350,7 @@
 				ED11FC952B78CB2A0007B019 /* SourceConfigDownloadWorker.swift in Sources */,
 				ED11FD412B78CB2B0007B019 /* DataUploadWorker.swift in Sources */,
 				ED11FC7D2B78CB2A0007B019 /* SourceConfigDownload.swift in Sources */,
+				F6D7A7702BBEDD160086DFA6 /* DataResidency.swift in Sources */,
 				ED11FCDD2B78CB2B0007B019 /* PhoneApplicationState.swift in Sources */,
 				ED11FD392B78CB2B0007B019 /* DataUpload.swift in Sources */,
 				ED11FD092B78CB2B0007B019 /* SQLiteDatabase.swift in Sources */,
@@ -2380,6 +2419,7 @@
 				ED11FC962B78CB2A0007B019 /* SourceConfigDownloadWorker.swift in Sources */,
 				ED11FD422B78CB2B0007B019 /* DataUploadWorker.swift in Sources */,
 				ED11FC7E2B78CB2A0007B019 /* SourceConfigDownload.swift in Sources */,
+				F6D7A7712BBEDD160086DFA6 /* DataResidency.swift in Sources */,
 				ED11FCDE2B78CB2B0007B019 /* PhoneApplicationState.swift in Sources */,
 				ED11FD3A2B78CB2B0007B019 /* DataUpload.swift in Sources */,
 				ED11FD0A2B78CB2B0007B019 /* SQLiteDatabase.swift in Sources */,
@@ -2448,6 +2488,7 @@
 				ED11FC972B78CB2A0007B019 /* SourceConfigDownloadWorker.swift in Sources */,
 				ED11FD432B78CB2B0007B019 /* DataUploadWorker.swift in Sources */,
 				ED11FC7F2B78CB2A0007B019 /* SourceConfigDownload.swift in Sources */,
+				F6D7A7722BBEDD160086DFA6 /* DataResidency.swift in Sources */,
 				ED11FCDF2B78CB2B0007B019 /* PhoneApplicationState.swift in Sources */,
 				ED11FD3B2B78CB2B0007B019 /* DataUpload.swift in Sources */,
 				ED11FD0B2B78CB2B0007B019 /* SQLiteDatabase.swift in Sources */,
@@ -2902,6 +2943,16 @@
 			isa = PBXTargetDependency;
 			target = ED11FA1A2B78B18F0007B019 /* RudderInternal-macOS */;
 			targetProxy = ED11FFFE2B7A0EE10007B019 /* PBXContainerItemProxy */;
+		};
+		F6D7A7762BBEE2810086DFA6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED11F8372B78A8BC0007B019 /* Rudder-iOS */;
+			targetProxy = F6D7A7752BBEE2810086DFA6 /* PBXContainerItemProxy */;
+		};
+		F6D7A77A2BBEE2810086DFA6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED11FA0E2B78B1780007B019 /* RudderInternal-iOS */;
+			targetProxy = F6D7A7792BBEE2810086DFA6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RudderInternal
 
 protocol StorageMigrator {
     var currentStorage: Storage { get set }
