@@ -1,5 +1,5 @@
 //
-//  RSClientProtocol.swift
+//  RudderProtocol.swift
 //  Rudder
 //
 //  Created by Pallab Maiti on 06/02/24.
