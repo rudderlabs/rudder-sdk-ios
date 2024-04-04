@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1500"
+   LastUpgradeVersion = "1510"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,11 @@
       shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDC1BCB52B146A3800211F24"
+               BlueprintIdentifier = "ED11FE662B78DD860007B019"
                BuildableName = "RudderTests-tvOS.xctest"
                BlueprintName = "RudderTests-tvOS"
                ReferencedContainer = "container:Rudder.xcodeproj">

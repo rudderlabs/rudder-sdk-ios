@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1500"
+   LastUpgradeVersion = "1510"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDC1BC0E2B0DD88A00211F24"
+               BlueprintIdentifier = "ED11F87E2B78AF160007B019"
                BuildableName = "Rudder.framework"
                BlueprintName = "Rudder-tvOS"
                ReferencedContainer = "container:Rudder.xcodeproj">
@@ -49,7 +49,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EDC1BC0E2B0DD88A00211F24"
+            BlueprintIdentifier = "ED11F87E2B78AF160007B019"
             BuildableName = "Rudder.framework"
             BlueprintName = "Rudder-tvOS"
             ReferencedContainer = "container:Rudder.xcodeproj">
