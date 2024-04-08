@@ -94,7 +94,7 @@
 	</array>
 	<key>NSPrivacyTrackingDomains</key>
 	<array>
-		<string>rudderstack.com</string>
+		<string>rudderstack.com/</string>
 	</array>
 </dict>
 </plist>
