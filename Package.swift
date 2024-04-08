@@ -25,7 +25,7 @@ let package = Package(
             path: "Sources",
             sources: ["Classes/"],
             resources: [
-                .copy("PrivacyInfo.xcprivacy")
+                .copy("Resources/PrivacyInfo.xcprivacy")
             ],
             publicHeadersPath: "Classes/Headers/Public/",
             cSettings: [
