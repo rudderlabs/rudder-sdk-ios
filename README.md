@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://cocoapods.org/pods/Rudder">
-    <img src="https://img.shields.io/static/v1?label=pod&message=v2.4.4&color=blue&style=flat">
+    <img src="https://img.shields.io/static/v1?label=pod&message=v2.4.4-beta&color=blue&style=flat">
     </a>
 </p>
 
@@ -47,7 +47,7 @@ The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Cart
 To install the SDK, simply add the following line to your Podfile:
 
 ```xcode
-pod 'Rudder', '2.4.4'
+pod 'Rudder', '2.4.4-beta'
 ```
 
 ### Carthage
@@ -55,7 +55,7 @@ pod 'Rudder', '2.4.4'
 For Carthage support, add the following line to your `Cartfile`:
 
 ```xcode
-github "rudderlabs/rudder-sdk-ios" "v2.4.4"
+github "rudderlabs/rudder-sdk-ios" "v2.4.4-beta"
 ```
 
 > Remember to include the following code where you want to refer to or use the RudderStack SDK classes, as shown:
@@ -86,7 +86,7 @@ You can also add the RudderStack SDK using the Swift Package Mangaer in one of t
 ![Adding a package](https://user-images.githubusercontent.com/59817155/140903027-286a1d64-f5d5-4041-9827-47b6cef76a46.png)
 
 2. Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
-3. In **Dependency Rule**, select **Up to Next Major Version**, and enter `2.4.4` as the value, as shown:
+3. In **Dependency Rule**, select **Up to Next Major Version**, and enter `2.4.4-beta` as the value, as shown:
 
 ![Setting the dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
 
@@ -113,7 +113,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "2.4.4")
+        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "2.4.4-beta")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
