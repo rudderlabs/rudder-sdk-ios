@@ -1,7 +1,6 @@
 name: Draft new release
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   draft-new-release:
@@ -18,7 +17,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 16
-          
+
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
       - name: Initialize mandatory git config
@@ -39,7 +38,7 @@ jobs:
           git fetch --tags origin
           git merge origin/master
           current_version=$(jq -r .version package.json)
-          
+
           npx standard-version --skip.commit --skip.tag --skip.changelog
           new_version=$(jq -r .version package.json)
           git reset --hard
@@ -53,7 +52,7 @@ jobs:
           echo "New release branch name is $branch_name"
           git checkout -b "$branch_name"
           git push --set-upstream origin "$branch_name"
-          
+
           echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
@@ -84,8 +83,8 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           source_branch: ${{ steps.create-release.outputs.branch_name }}
-          destination_branch: 'master'
+          destination_branch: "master"
           github_token: ${{ secrets.PAT }}
           pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into master"
           pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
-          pr_reviewer: 'pallabmaiti'
+          pr_reviewer: "@rudderlabs/sdk-ios"
