@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.26.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.1...v1.26.2) (2024-04-08)
+
+
+### Bug Fixes
+
+* resolve issue with privacy manifest file not being generated when consumed through SPM ([#499](https://github.com/rudderlabs/rudder-sdk-ios/issues/499)) ([1d6761f](https://github.com/rudderlabs/rudder-sdk-ios/commit/1d6761f1d236caf141b6c1e7d7265d589f64664e))
+
 ### [1.26.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.0...v1.26.1) (2024-03-28)
 
 
