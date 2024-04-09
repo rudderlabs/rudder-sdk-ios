@@ -17,7 +17,10 @@ let package = Package(
         .target(
             name: "Rudder",
             path: "Sources",
-            sources: ["Classes/"]
+            sources: ["Classes/"],
+            resources: [
+                .copy("Resources/PrivacyInfo.xcprivacy")
+            ]
         ),
         .testTarget(
             name: "RudderTests",

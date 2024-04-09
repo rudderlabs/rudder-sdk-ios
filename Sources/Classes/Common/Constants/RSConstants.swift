@@ -8,11 +8,11 @@
 
 import Foundation
 
-public let RSDataPlaneUrl = "https://hosted.rudderlabs.com"
+public let RSDataPlaneUrl = "https://hosted.rudderstack.com"
 public let RSFlushQueueSize: Int = 30
 public let RSDBCountThreshold: Int = 10000
 public let RSSleepTimeout: Int = 10
-public let RSControlPlaneUrl = "https://api.rudderlabs.com"
+public let RSControlPlaneUrl = "https://api.rudderstack.com"
 public let RSTrackLifeCycleEvents = true
 public let RSRecordScreenViews = false
 let RETRY_FLUSH_COUNT = 3
