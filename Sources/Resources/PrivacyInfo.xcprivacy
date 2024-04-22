@@ -92,9 +92,5 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSPrivacyTrackingDomains</key>
-	<array>
-		<string>rudderstack.com/</string>
-	</array>
 </dict>
 </plist>
