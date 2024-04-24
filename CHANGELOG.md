@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.26.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.2...v1.26.3) (2024-04-22)
+
+
+### Bug Fixes
+
+* remove tracking domain url from Privacy Manifest file ([#509](https://github.com/rudderlabs/rudder-sdk-ios/issues/509)) ([759a9f3](https://github.com/rudderlabs/rudder-sdk-ios/commit/759a9f35d658c54ce801207dc4f9a09a04f63903))
+
 ### [1.26.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.1...v1.26.2) (2024-04-08)
 
 
