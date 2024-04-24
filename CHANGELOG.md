@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.5.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.5.0-beta...v2.5.0) (2024-04-24)
+## [2.5.1-beta](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.5.0-beta...v2.5.1-beta) (2024-04-24)
 
 
 ### Bug Fixes
