@@ -541,4 +541,17 @@ static NSString* _advertisingId = nil;
     }
 }
 
+#pragma mark - Deep Link Track
+
+- (void)openURL:(NSURL *)url options:(NSDictionary *)options refAppname:(NSString *)appname
+{
+
+    NSString *urlString = url.absoluteString;
+    NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:options.count + 2];
+    [properties addEntriesFromDictionary:options];
+    properties[@"url"] = urlString;
+    properties[@"referring_application"] = appname;
+    [self track:@"Deep Link Opened" properties:[properties copy]];
+}
+
 @end
