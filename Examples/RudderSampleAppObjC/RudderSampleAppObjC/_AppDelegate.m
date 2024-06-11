@@ -46,6 +46,7 @@ static int screenCount = 1;
     }
 }
 
+
 + (void) sendIdentify {
     NSString* userId = [[NSString alloc] initWithFormat:@"User %d",userCount];
     NSString* userEmail = [[NSString alloc] initWithFormat:@"User%d@gmail.com",userCount];
@@ -99,5 +100,18 @@ static int screenCount = 1;
 + (void) clearAdvertisingId {
     [[RSClient sharedInstance] clearAdvertisingId];
 }
+
+// call will be trigger when user clicks deep link in browser
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    
+    if ([[url scheme] isEqualToString:@"com.ruddertestapp"]) {
+        // Call your custom function with the URL
+        NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+        [[RSClient sharedInstance]openURL:url options:options refAppname:appName];
+        
+    }
+        return YES;
+    }
 
 @end
