@@ -101,7 +101,7 @@ static int screenCount = 1;
     [[RSClient sharedInstance] clearAdvertisingId];
 }
 
-// call will be trigger when user clicks deep link in browser
+//  This deep link API will be triggered on devices having iOS version 12 and below
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
     

@@ -555,12 +555,16 @@ static NSString* _advertisingId = nil;
     if (paramArray.count > 0) {
         // Iterate through the query items
         for (NSURLQueryItem *item in paramArray) {
-            NSLog(@"Parameter name: %@, value: %@", item.name, item.value);
+            [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"Parameter name: %@, value: %@", item.name, item.value]];
             properties[item.name] = item.value;
         }
     }
     properties[@"url"] = urlString;
-    properties[@"options"] = options;
+    if (options != nil) {
+            for (NSString *key in options) {
+                properties[@"options"] = options;
+            }
+        }
     [self track:@"Deep Link Opened" properties:[properties copy]];
 }
 
