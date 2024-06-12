@@ -543,7 +543,7 @@ static NSString* _advertisingId = nil;
 
 #pragma mark - Deep Link Track
 
-- (void)openURL:(NSURL *)url options:(NSDictionary *)options refAppname:(NSString *)appname
+- (void)openURL:(NSURL *)url options:(NSDictionary *)options
 {
     if ([RSClient getOptStatus]) {
             [self reportDiscardedEvent];
@@ -560,7 +560,26 @@ static NSString* _advertisingId = nil;
         }
     }
     properties[@"url"] = urlString;
-    properties[@"referring_application"] = appname;
+    [self track:@"Deep Link Opened" properties:[properties copy]];
+}
+
+- (void)openURL:(NSURL *)url
+{
+    if ([RSClient getOptStatus]) {
+            [self reportDiscardedEvent];
+            return;
+    }
+    NSString *urlString = url.absoluteString;
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc]init];
+    NSMutableArray *paramArray = [RSUtils extractParamFromURL:url];
+    if (paramArray.count > 0) {
+        // Iterate through the query items
+        for (NSURLQueryItem *item in paramArray) {
+            NSLog(@"Parameter name: %@, value: %@", item.name, item.value);
+            properties[item.name] = item.value;
+        }
+    }
+    properties[@"url"] = urlString;
     [self track:@"Deep Link Opened" properties:[properties copy]];
 }
 

@@ -106,9 +106,8 @@ static int screenCount = 1;
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
     
     if ([[url scheme] isEqualToString:@"com.ruddertestapp"]) {
-        // Call your custom function with the URL
-        NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
-        [[RSClient sharedInstance]openURL:url options:options refAppname:appName];
+        // Call your custom function with the URLz
+        [[RSClient sharedInstance]openURL:url options:options];
         
     }
         return YES;

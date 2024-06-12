@@ -17,12 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     internal func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let urlContext = URLContexts.first else { return }
         let url = urlContext.url
-        //let options = urlContext.options
-        
-        // Handle the URL
-        let appName = Bundle.main.infoDictionary?[kCFBundleNameKey as String]
-        let options = [String: String]()
-        RSClient.sharedInstance()?.open(url, options: options, refAppname: appName as! String)
+        RSClient.sharedInstance()?.open(url)
     }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

@@ -15,9 +15,7 @@
 		06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06EABC9024665E480043D720 /* LaunchScreen.storyboard */; };
 		DFDD9226B8A80360A231BD44 /* Pods_RudderSampleAppSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D50A9B077957B1C39E075D10 /* Pods_RudderSampleAppSwift.framework */; };
 		ED00467228A64DE50007206F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00467128A64DE50007206F /* SessionViewController.swift */; };
-		ED0CA6D52A7AAC5600899C1C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */; };
 		ED0CA7042A7D0B2B00899C1C /* RudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */; };
-		ED0CA7052A7D0B2B00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */; };
 		ED0CA7062A7D0B2B00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */; };
 		ED8738D02AB36C230076D24A /* EncryptedDatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8738CF2AB36C230076D24A /* EncryptedDatabaseProvider.swift */; };
 		EDEAEBC7299CB30200D537C3 /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */; };
@@ -35,9 +33,7 @@
 		D50A9B077957B1C39E075D10 /* Pods_RudderSampleAppSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E32C35F6B909BB22A7F0553E /* Pods-RudderSampleAppSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppSwift.release.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppSwift/Pods-RudderSampleAppSwift.release.xcconfig"; sourceTree = "<group>"; };
 		ED00467128A64DE50007206F /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
-		ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
-		ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		ED8738CF2AB36C230076D24A /* EncryptedDatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedDatabaseProvider.swift; sourceTree = "<group>"; };
 		ED8738D82AB41F520076D24A /* RudderSampleAppSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppSwift-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -79,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				ED0CA7002A7D0B2B00899C1C /* RudderConfig */,
-				ED0CA6D42A7AAC5600899C1C /* GoogleService-Info.plist */,
 				06EABC8524665E470043D720 /* AppDelegate.swift */,
 				EDEAEBC6299CB30200D537C3 /* CustomFilter.swift */,
 				06EABC8724665E470043D720 /* SceneDelegate.swift */,
@@ -117,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				ED0CA7012A7D0B2B00899C1C /* RudderConfig.plist */,
-				ED0CA7022A7D0B2B00899C1C /* SampleRudderConfig.plist */,
 				ED0CA7032A7D0B2B00899C1C /* RudderConfig.swift */,
 			);
 			name = RudderConfig;
@@ -186,10 +180,8 @@
 			files = (
 				06EABC9224665E480043D720 /* LaunchScreen.storyboard in Resources */,
 				ED0CA7042A7D0B2B00899C1C /* RudderConfig.plist in Resources */,
-				ED0CA7052A7D0B2B00899C1C /* SampleRudderConfig.plist in Resources */,
 				06EABC8F24665E480043D720 /* Assets.xcassets in Resources */,
 				06EABC8D24665E470043D720 /* Main.storyboard in Resources */,
-				ED0CA6D52A7AAC5600899C1C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
