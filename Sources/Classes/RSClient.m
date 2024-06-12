@@ -551,7 +551,7 @@ static NSString* _advertisingId = nil;
     }
     NSString *urlString = url.absoluteString;
     NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:options.count + 2];
-    NSMutableArray *paramArray = [RSUtils extractParamFromURL:url];
+    NSArray *paramArray = [RSUtils extractParamFromURL:url];
     if (paramArray.count > 0) {
         // Iterate through the query items
         for (NSURLQueryItem *item in paramArray) {
