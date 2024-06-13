@@ -12,9 +12,7 @@
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		D7658499F5E99A9FFCBCFD5E /* Pods_RudderSampleAppObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D86F781FF516ED3B29744C /* Pods_RudderSampleAppObjC.framework */; };
-		ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */; };
 		ED0CA6DF2A7D049E00899C1C /* RudderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */; };
-		ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED7619ED2727E28700B086F4 /* InfoPlist.strings */; };
 		ED761A002727E28800B086F4 /* CustomIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7619EF2727E28700B086F4 /* CustomIntegration.m */; };
 		ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */; };
 		ED761A022727E28800B086F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED7619F52727E28700B086F4 /* Main.storyboard */; };
@@ -37,11 +35,9 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B7D86F781FF516ED3B29744C /* Pods_RudderSampleAppObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderSampleAppObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0CA6D62A7D048D00899C1C /* RudderSampleAppObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RudderSampleAppObjC-Bridging-Header.h"; sourceTree = "<group>"; };
-		ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SampleRudderConfig.plist; sourceTree = "<group>"; };
 		ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RudderConfig.swift; sourceTree = "<group>"; };
 		ED3B022F272A67AB000893AA /* RudderSampleAppObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RudderSampleAppObjC.entitlements; sourceTree = "<group>"; };
 		ED7619EC2727E28700B086F4 /* RudderSampleAppObjC-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RudderSampleAppObjC-Info.plist"; sourceTree = "<group>"; };
-		ED7619EE2727E28700B086F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ED7619EF2727E28700B086F4 /* CustomIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIntegration.m; sourceTree = "<group>"; };
 		ED7619F02727E28700B086F4 /* _ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ViewController.h; sourceTree = "<group>"; };
 		ED7619F12727E28700B086F4 /* _AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AppDelegate.h; sourceTree = "<group>"; };
@@ -58,7 +54,6 @@
 		ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptedDatabaseProvider.h; sourceTree = "<group>"; };
 		ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptedDatabaseProvider.m; sourceTree = "<group>"; };
 		F6A9BB092B9F30CA0076FE23 /* RudderConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RudderConfig.plist; sourceTree = "<group>"; };
-
 		F928F8A942558010CC7088BF /* Pods-RudderSampleAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderSampleAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-RudderSampleAppObjC/Pods-RudderSampleAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				F6A9BB092B9F30CA0076FE23 /* RudderConfig.plist */,
-				ED0CA6DB2A7D049E00899C1C /* SampleRudderConfig.plist */,
 				ED0CA6DC2A7D049E00899C1C /* RudderConfig.swift */,
 			);
 			name = RudderConfig;
@@ -146,7 +140,6 @@
 				ED8738CA2AB363A80076D24A /* EncryptedDatabaseProvider.h */,
 				ED8738CC2AB363A80076D24A /* EncryptedDatabaseProvider.m */,
 				ED7619FA2727E28800B086F4 /* Images.xcassets */,
-				ED7619ED2727E28700B086F4 /* InfoPlist.strings */,
 				ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */,
 				ED7619F82727E28700B086F4 /* main.m */,
 				ED7619F52727E28700B086F4 /* Main.storyboard */,
@@ -220,9 +213,7 @@
 			files = (
 				F6A9BB0A2B9F30CA0076FE23 /* RudderConfig.plist in Resources */,
 				ED761A012727E28800B086F4 /* LaunchScreen.storyboard in Resources */,
-				ED0CA6DE2A7D049E00899C1C /* SampleRudderConfig.plist in Resources */,
 				ED761A052727E28800B086F4 /* Images.xcassets in Resources */,
-				ED7619FF2727E28800B086F4 /* InfoPlist.strings in Resources */,
 				ED761A022727E28800B086F4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,14 +289,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		ED7619ED2727E28700B086F4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ED7619EE2727E28700B086F4 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		ED7619F32727E28700B086F4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
