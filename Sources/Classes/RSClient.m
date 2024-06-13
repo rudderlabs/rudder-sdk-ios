@@ -541,4 +541,37 @@ static NSString* _advertisingId = nil;
     }
 }
 
+#pragma mark - Deep Link Track
+
+- (void)openURL:(NSURL *)url options:(NSDictionary<NSString *,NSObject *> *)options
+{
+    if ([RSClient getOptStatus]) {
+            [self reportDiscardedEvent];
+            return;
+    }
+    NSString *urlString = url.absoluteString;
+    NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:options.count + 2];
+    NSArray *paramArray = [RSUtils extractParamFromURL:url];
+    if (paramArray.count > 0) {
+        // Iterate through the query items
+        for (NSURLQueryItem *item in paramArray) {
+            [RSLogger logVerbose:[[NSString alloc] initWithFormat:@"Parameter name: %@, value: %@", item.name, item.value]];
+            properties[item.name] = item.value;
+        }
+    }
+    properties[@"url"] = urlString;
+    if (options != nil) {
+            for (NSString *key in options) {
+                properties[key] = options[key];
+            }
+        }
+    [self track:@"Deep Link Opened" properties:[properties copy]];
+}
+
+- (void)openURL:(NSURL *)url
+{
+    NSDictionary *options = [[NSDictionary alloc] init];
+    [self openURL:url options:options];
+}
+
 @end

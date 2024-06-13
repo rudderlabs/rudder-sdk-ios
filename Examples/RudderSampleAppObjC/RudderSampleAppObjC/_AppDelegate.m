@@ -46,6 +46,7 @@ static int screenCount = 1;
     }
 }
 
+
 + (void) sendIdentify {
     NSString* userId = [[NSString alloc] initWithFormat:@"User %d",userCount];
     NSString* userEmail = [[NSString alloc] initWithFormat:@"User%d@gmail.com",userCount];
@@ -99,5 +100,17 @@ static int screenCount = 1;
 + (void) clearAdvertisingId {
     [[RSClient sharedInstance] clearAdvertisingId];
 }
+
+//  This deep link API will be triggered on devices having iOS version 12 and below
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    
+    if ([[url scheme] isEqualToString:@"com.ruddertestapp"]) {
+        // Call your custom function with the URLz
+        [[RSClient sharedInstance]openURL:url options:options];
+        
+    }
+        return YES;
+    }
 
 @end

@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL) isEmptyString:(NSString *)value;
 + (BOOL) isValidIDFA:(NSString*)idfa;
 + (BOOL) isSpecialFloatingNumber:(NSNumber *)number;
-
++(NSArray*) extractParamFromURL: (NSURL*) deepLinkURL;
 extern unsigned int MAX_EVENT_SIZE;
 extern unsigned int MAX_BATCH_SIZE;
 
