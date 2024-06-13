@@ -543,7 +543,7 @@ static NSString* _advertisingId = nil;
 
 #pragma mark - Deep Link Track
 
-- (void)openURL:(NSURL *)url options:(NSDictionary *)options
+- (void)openURL:(NSURL *)url options:(NSDictionary<NSString *,NSObject *> *)options
 {
     if ([RSClient getOptStatus]) {
             [self reportDiscardedEvent];
@@ -562,7 +562,7 @@ static NSString* _advertisingId = nil;
     properties[@"url"] = urlString;
     if (options != nil) {
             for (NSString *key in options) {
-                properties[@"options"] = options;
+                properties[key] = options[key];
             }
         }
     [self track:@"Deep Link Opened" properties:[properties copy]];

@@ -93,8 +93,10 @@ typedef void (^Callback)(NSObject *_Nullable);
 - (void) onIntegrationReady:(id<RSIntegrationFactory>)factory withCallback:(Callback)callback;
 - (void) clearAdvertisingId;
 
-- (void)openURL:(NSURL *)url options:(NSDictionary *)options;
+
+- (void)openURL:(NSURL *)url options:(NSDictionary<NSString*, id>*)options;
 - (void)openURL:(NSURL *)url;
+
 @property (strong, nonatomic, readonly) NSNumber* _Nullable sessionId;
 @property (strong, nonatomic, readonly) NSString* _Nullable anonymousId;
 @property (strong, nonatomic, readonly) RSConfig* _Nullable config;
