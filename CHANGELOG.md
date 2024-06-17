@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.2...v1.27.0) (2024-06-13)
+
+
+### Features
+
+* add support for deep link tracking ([#520](https://github.com/rudderlabs/rudder-sdk-ios/issues/520)) ([e9ad05b](https://github.com/rudderlabs/rudder-sdk-ios/commit/e9ad05b6778823f09645ef53d1d706de54c4ef6d))
+
 ### [1.26.3](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.2...v1.26.3) (2024-04-22)
 
 
