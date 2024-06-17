@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "BUG : <Title>"
 labels: bug, open source
-assignees: pallabmaiti
+assignees: "@rudderlabs/sdk-ios"
 ---
 
 **Describe the bug**
