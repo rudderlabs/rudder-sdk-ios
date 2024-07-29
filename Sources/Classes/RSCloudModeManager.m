@@ -12,9 +12,11 @@
 #import "RSNetworkManager.h"
 #import "RSNetworkResponse.h"
 #import "RSMetricsReporter.h"
+#import "RSExponentialBackOff.h"
 
-@implementation RSCloudModeManager
-
+@implementation RSCloudModeManager {
+    RSExponentialBackOff *backOff;
+}
 
 - (instancetype)initWithConfig:(RSConfig *) config andDBPersistentManager:(RSDBPersistentManager *) dbPersistentManager andNetworkManager:(RSNetworkManager *) networkManager andLock: (NSLock *) lock {
     self = [super init];
@@ -24,6 +26,7 @@
         self->config = config;
         self->lock = lock;
         self->cloud_mode_processor_queue = dispatch_queue_create("com.rudder.RSCloudModeManager", NULL);
+        self->backOff = [[RSExponentialBackOff alloc] initWithMaximumDelay:5 * 60];
     }
     return self;
 }
@@ -60,8 +63,9 @@
             [strongSelf->lock unlock];
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: cloudModeSleepCount: %d", sleepCount]];
             sleepCount += 1;
+            
             if(response == nil) {
-                usleep(1000000);
+                sleep(1);
             } else if (response.state == WRONG_WRITE_KEY) {
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
                 break;
@@ -69,11 +73,14 @@
                 [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DATA_PLANE_URL_INVALID} andValue:1];
                 break;
-            }
-            else if (response.state == NETWORK_ERROR) {
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %d s", abs(sleepCount - strongSelf->config.sleepTimeout)]];
+            } else if (response.state == NETWORK_ERROR) {
+                int delay = (int)[self->backOff nextDelay];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %@", [self delayToString:delay]]];
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
-                usleep(abs(sleepCount - strongSelf->config.sleepTimeout) * 1000000);
+                sleep(delay);
+            } else { // To handle the status code RESOURCE_NOT_FOUND(404) & BAD_REQUEST(400)
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: 1s"]];
+                sleep(1);
             }
         }
     });

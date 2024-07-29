@@ -291,4 +291,12 @@
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 
++ (NSString *)delayToString:(int) delay {
+    int min = delay / 60;
+    int sec = min > 0 ? (delay - (min * 60)) : delay;
+    NSString *finalString = min > 0 ? [NSString stringWithFormat:@"%d min, %d sec", min, sec] : [NSString stringWithFormat:@"%d sec", sec];
+    NSLog(@"SK--->>%@", finalString);
+    return finalString;
+}
+
 @end
