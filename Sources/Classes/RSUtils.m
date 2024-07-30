@@ -277,7 +277,7 @@
 }
 
 +(NSArray*) extractParamFromURL: (NSURL*) deepLinkURL{
-    NSMutableArray<NSURLQueryItem *> *queryItems;
+    NSArray<NSURLQueryItem *> *queryItems;
     if (deepLinkURL) {
         // Create NSURLComponents object
         NSURLComponents *components = [NSURLComponents componentsWithURL:deepLinkURL resolvingAgainstBaseURL:NO];
@@ -290,7 +290,7 @@
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 
-+ (NSString *)delayToString:(int) delay {
++ (NSString *)secondsToString:(int) delay {
     int min = delay / 60;
     int sec = min > 0 ? (delay - (min * 60)) : delay;
     NSString *finalString = min > 0 ? [NSString stringWithFormat:@"%dm, %ds", min, sec] : [NSString stringWithFormat:@"%ds", sec];
