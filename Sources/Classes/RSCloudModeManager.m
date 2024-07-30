@@ -74,8 +74,9 @@
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DATA_PLANE_URL_INVALID} andValue:1];
                 break;
             } else if (response.state == NETWORK_ERROR) {
-                int delay = (int)[self->backOff nextDelay];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %@", [self delayToString:delay]]];
+                int delay = [self->backOff nextDelay];
+                NSString *timeString = [RSUtils delayToString:delay];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %@", timeString]];
                 [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
                 sleep(delay);
             } else { // To handle the status code RESOURCE_NOT_FOUND(404) & BAD_REQUEST(400)

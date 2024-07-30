@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return Next delay value in seconds
  */
-- (NSInteger)nextDelay;
+- (int)nextDelay;
 
 /**
  * Function will resets the attempts.

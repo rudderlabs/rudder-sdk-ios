@@ -34,11 +34,11 @@
 /**
  * Function will calculate the next delay value in seconds
  */
-- (NSInteger)nextDelay {
-    NSInteger delay = (NSInteger)pow(2, _attempt++);
-    NSInteger jitter = arc4random_uniform((uint32_t)(delay + 1));
+- (int)nextDelay {
+    int delay = pow(2, _attempt++);
+    int jitter = arc4random_uniform((delay + 1));
     
-    NSInteger exponentialDelay = _initialDelay + delay + jitter;
+    int exponentialDelay = _initialDelay + delay + jitter;
     exponentialDelay = MIN(exponentialDelay, _maximumDelay);
     
     if (exponentialDelay >= _maximumDelay) {
