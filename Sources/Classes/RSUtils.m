@@ -277,7 +277,7 @@
 }
 
 +(NSArray*) extractParamFromURL: (NSURL*) deepLinkURL{
-    NSArray<NSURLQueryItem *> *queryItems;
+    NSMutableArray<NSURLQueryItem *> *queryItems = [NSMutableArray array];
     if (deepLinkURL) {
         // Create NSURLComponents object
         NSURLComponents *components = [NSURLComponents componentsWithURL:deepLinkURL resolvingAgainstBaseURL:NO];
@@ -286,7 +286,7 @@
         queryItems = components.queryItems;
       
     }
-    return  queryItems;
+    return queryItems;
 }
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
