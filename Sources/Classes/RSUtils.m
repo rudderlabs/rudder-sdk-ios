@@ -283,10 +283,9 @@
         NSURLComponents *components = [NSURLComponents componentsWithURL:deepLinkURL resolvingAgainstBaseURL:NO];
         
         // Get the query items
-        if (components.queryItems) {
+        if (components.queryItems != nil) {
             queryItems = components.queryItems;
         }
-      
     }
     return queryItems;
 }
