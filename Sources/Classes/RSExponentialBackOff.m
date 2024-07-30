@@ -10,9 +10,9 @@
 #pragma mark - RSExponentialBackOff
 
 @interface RSExponentialBackOff()
-@property (nonatomic, assign) NSInteger attempt;
-@property (nonatomic, assign) NSInteger maximumDelay;
-@property (nonatomic, assign) NSInteger initialDelay;
+@property (nonatomic, assign) int attempt;
+@property (nonatomic, assign) int maximumDelay;
+@property (nonatomic, assign) int initialDelay;
 @end
 
 @implementation RSExponentialBackOff
@@ -35,7 +35,7 @@
  * Function will calculate the next delay value in seconds
  */
 - (int)nextDelay {
-    int delay = pow(2, _attempt++);
+    int delay = (int)pow(2, _attempt++);
     int jitter = arc4random_uniform((delay + 1));
     
     int exponentialDelay = _initialDelay + delay + jitter;
