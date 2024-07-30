@@ -35,7 +35,9 @@
  * Function will calculate the next delay value in seconds
  */
 - (int)nextDelay {
-    int delay = (int)pow(2, _attempt++);
+    int delay = (int)pow(2, _attempt);
+    _attempt = _attempt + 1;
+    
     int jitter = arc4random_uniform((delay + 1));
     
     int exponentialDelay = _initialDelay + delay + jitter;
