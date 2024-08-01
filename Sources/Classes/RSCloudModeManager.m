@@ -13,6 +13,7 @@
 #import "RSNetworkResponse.h"
 #import "RSMetricsReporter.h"
 #import "RSExponentialBackOff.h"
+#import "RSConstants.h"
 
 @implementation RSCloudModeManager {
     RSExponentialBackOff *backOff;
@@ -26,7 +27,7 @@
         self->config = config;
         self->lock = lock;
         self->cloud_mode_processor_queue = dispatch_queue_create("com.rudder.RSCloudModeManager", NULL);
-        self->backOff = [[RSExponentialBackOff alloc] initWithMaximumDelay:5 * 60];
+        self->backOff = [[RSExponentialBackOff alloc] initWithMaximumDelay:RSExponentialBackOff_MinimumDelay];
     }
     return self;
 }
@@ -57,6 +58,7 @@
                         [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
                         [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
                         sleepCount = 0;
+                        [self->backOff reset];
                     }
                 }
             }

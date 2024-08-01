@@ -292,7 +292,7 @@ unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
 
 + (NSString *)secondsToString:(int) delay {
     int min = delay / 60;
-    int sec = min > 0 ? (delay - (min * 60)) : delay;
+    int sec = delay % 60;
     NSString *finalString = min > 0 ? [NSString stringWithFormat:@"%dm, %ds", min, sec] : [NSString stringWithFormat:@"%ds", sec];
     return finalString;
 }

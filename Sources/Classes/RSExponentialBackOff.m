@@ -6,7 +6,7 @@
 //
 
 #import "RSExponentialBackOff.h"
-
+#import "RSConstants.h"
 #pragma mark - RSExponentialBackOff
 
 @interface RSExponentialBackOff()
@@ -25,7 +25,7 @@
     if (self) {
         _maximumDelay = seconds;
         _attempt = 0;
-        _initialDelay = 3;
+        _initialDelay = RSExponentialBackOff_InitialDelay;
     }
     
     return self;
@@ -35,16 +35,16 @@
  * Function will calculate the next delay value in seconds
  */
 - (int)nextDelay {
-    int delay = (int)pow(2, _attempt);
+    int delay = _initialDelay * (int)pow(2, _attempt);
     _attempt = _attempt + 1;
     
     int jitter = arc4random_uniform((delay + 1));
     
-    int exponentialDelay = _initialDelay + delay + jitter;
+    int exponentialDelay = delay + jitter;
     exponentialDelay = MIN(exponentialDelay, _maximumDelay);
     
-    if (exponentialDelay >= _maximumDelay) {
-        _attempt = 0;
+    if (exponentialDelay == _maximumDelay) {
+        [self reset];
     }
     
     return exponentialDelay;
