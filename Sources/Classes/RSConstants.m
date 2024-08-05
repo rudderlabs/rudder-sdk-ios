@@ -39,4 +39,7 @@ int const RSATTRestricted = 1;
 int const RSATTDenied = 2;
 int const RSATTAuthorize = 3;
 
+int const RSExponentialBackOff_MinimumDelay = 5 * 60; //in seconds..
+int const RSExponentialBackOff_InitialDelay = 3; //in seconds..
+
 @end

@@ -10,6 +10,12 @@
 		06CABC332630C6B00097BEFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC322630C6B00097BEFF /* Foundation.framework */; };
 		06CABC352630C6D30097BEFF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CABC2E2630C6660097BEFF /* UIKit.framework */; };
 		2FA4A3E2DF0696E8D68B640A /* Pods_Rudder_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F631D98DB26309EFE5E0A24 /* Pods_Rudder_watchOS.framework */; };
+		535778972C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */; };
+		535778982C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */ = {isa = PBXBuildFile; fileRef = 535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		535778992C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */ = {isa = PBXBuildFile; fileRef = 535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5357789A2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */; };
+		5357789B2C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */ = {isa = PBXBuildFile; fileRef = 535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5357789C2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */; };
 		5C11F10C96D80DF73DBED732 /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447958A767B9B6F9BB3AC36A /* Pods_Rudder_iOS.framework */; };
 		60DF93A1FA405B16F4D273AB /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F00C6B89DB926A1271D979A /* Pods_RudderTests_iOS.framework */; };
 		7275AF62B3887AFD09CF49CF /* Pods_RudderTests_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E0F163A9A54245F87BB53E /* Pods_RudderTests_watchOS.framework */; };
@@ -762,6 +768,8 @@
 		3C44A9E8F4B06BD7D1881CC6 /* Pods-RudderTests-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RudderTests-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-RudderTests-watchOS/Pods-RudderTests-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3F00C6B89DB926A1271D979A /* Pods_RudderTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RudderTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		447958A767B9B6F9BB3AC36A /* Pods_Rudder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSExponentialBackOff.h; sourceTree = "<group>"; };
+		535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSExponentialBackOff.m; sourceTree = "<group>"; };
 		767A0EEE9A76F43CF631573B /* Pods-Rudder-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		83C9949585CD3C274CCE6A27 /* Pods-Rudder-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		9B4BB7D91351507AD413A9B4 /* Pods-Rudder-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -1198,6 +1206,7 @@
 				F6B4B53529C8237D00344864 /* RSBackGroundModeManager.m */,
 				ED7DFD8F298C091800ED5A8E /* RSClient.m */,
 				F6B4B53929C8237D00344864 /* RSCloudModeManager.m */,
+				535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */,
 				ED7DFD89298C091800ED5A8E /* RSConfig.m */,
 				ED7DFDCE298C091800ED5A8E /* RSConfigBuilder.m */,
 				ED8DB01D298E206900907EC4 /* RSConsentFilterHandler.m */,
@@ -1261,6 +1270,7 @@
 				F6B4B51E29C8236100344864 /* RSBackGroundModeManager.h */,
 				ED7DFDB9298C091800ED5A8E /* RSClient.h */,
 				F6B4B51D29C8236100344864 /* RSCloudModeManager.h */,
+				535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */,
 				ED7DFDB4298C091800ED5A8E /* RSConfig.h */,
 				ED7DFDA5298C091800ED5A8E /* RSConfigBuilder.h */,
 				ED7DFDAD298C091800ED5A8E /* RSConsentFilter.h */,
@@ -1555,6 +1565,7 @@
 				ED7DFE70298C091800ED5A8E /* RSServerDestination.h in Headers */,
 				ED7DFED9298C091800ED5A8E /* RSProductClickedEvent.h in Headers */,
 				ED7DFE82298C091800ED5A8E /* RSECommerceCartBuilder.h in Headers */,
+				535778982C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */,
 				ED99908E2A6926E000031B06 /* RSMetricsReporter.h in Headers */,
 				ED7DFE58298C091800ED5A8E /* RSPreferenceManager.h in Headers */,
 				ED7DFEB7298C091800ED5A8E /* RSPaymentInfoEnteredEvent.h in Headers */,
@@ -1673,6 +1684,7 @@
 				ED998E682A69003600031B06 /* RSECommerceCartBuilder.h in Headers */,
 				ED99908F2A6926E000031B06 /* RSMetricsReporter.h in Headers */,
 				ED998E692A69003600031B06 /* RSPreferenceManager.h in Headers */,
+				535778992C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */,
 				ED998E6A2A69003600031B06 /* RSPaymentInfoEnteredEvent.h in Headers */,
 				ED998E6B2A69003600031B06 /* RSCartSharedEvent.h in Headers */,
 				ED998E6C2A69003600031B06 /* RSECommerceEvents.h in Headers */,
@@ -1791,6 +1803,7 @@
 				ED998F382A69024E00031B06 /* RSECommerceCartBuilder.h in Headers */,
 				ED9990902A6926E000031B06 /* RSMetricsReporter.h in Headers */,
 				ED998F392A69024E00031B06 /* RSPreferenceManager.h in Headers */,
+				5357789B2C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */,
 				ED998F3A2A69024E00031B06 /* RSPaymentInfoEnteredEvent.h in Headers */,
 				ED998F3B2A69024E00031B06 /* RSCartSharedEvent.h in Headers */,
 				ED998F3C2A69024E00031B06 /* RSECommerceEvents.h in Headers */,
@@ -2378,6 +2391,7 @@
 				ED7DFE8F298C091800ED5A8E /* RSECommerceSortBuilder.m in Sources */,
 				ED7DFE3F298C091800ED5A8E /* RSServerDestination.m in Sources */,
 				ED7DFEB6298C091800ED5A8E /* RSOrderRefundedEvent.m in Sources */,
+				535778972C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */,
 				F64116022B68EC4B0015CB42 /* RSDefaultsPersistence.m in Sources */,
 				ED7DFEC2298C091800ED5A8E /* RSCouponEnteredEvent.m in Sources */,
 				ED7DFE3E298C091800ED5A8E /* RSApp.m in Sources */,
@@ -2488,6 +2502,7 @@
 				ED998EEF2A69003600031B06 /* WKInterfaceController+RSScreen.m in Sources */,
 				ED998EF02A69003600031B06 /* RSECommerceSortBuilder.m in Sources */,
 				ED998EF12A69003600031B06 /* RSServerDestination.m in Sources */,
+				5357789A2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */,
 				F64116032B68EC4B0015CB42 /* RSDefaultsPersistence.m in Sources */,
 				ED998EF22A69003600031B06 /* RSOrderRefundedEvent.m in Sources */,
 				ED998EF32A69003600031B06 /* RSCouponEnteredEvent.m in Sources */,
@@ -2598,6 +2613,7 @@
 				ED998FBF2A69024E00031B06 /* WKInterfaceController+RSScreen.m in Sources */,
 				ED998FC02A69024E00031B06 /* RSECommerceSortBuilder.m in Sources */,
 				ED998FC12A69024E00031B06 /* RSServerDestination.m in Sources */,
+				5357789C2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */,
 				F64116042B68EC4B0015CB42 /* RSDefaultsPersistence.m in Sources */,
 				ED998FC22A69024E00031B06 /* RSOrderRefundedEvent.m in Sources */,
 				ED998FC32A69024E00031B06 /* RSCouponEnteredEvent.m in Sources */,
