@@ -128,6 +128,7 @@ static dispatch_queue_t queue;
         if(existingId!=nil && userId!=nil && ![existingId isEqual:userId])
         {
             self->_traits = [[traits dict] mutableCopy];
+            self->_traits[@"anonymousId"] = [self->preferenceManager getAnonymousId];
             [self resetExternalIds];
             return;
         }

@@ -284,11 +284,17 @@
         
         // Get the query items
         queryItems = components.queryItems;
-      
     }
-    return  queryItems;
+    return queryItems != nil ? queryItems : [NSArray array];
 }
 unsigned int MAX_EVENT_SIZE = 32 * 1024; // 32 KB
 unsigned int MAX_BATCH_SIZE = 500 * 1024; // 500 KB
+
++ (NSString *)secondsToString:(int) delay {
+    int min = delay / 60;
+    int sec = delay % 60;
+    NSString *finalString = min > 0 ? [NSString stringWithFormat:@"%dm, %ds", min, sec] : [NSString stringWithFormat:@"%ds", sec];
+    return finalString;
+}
 
 @end
