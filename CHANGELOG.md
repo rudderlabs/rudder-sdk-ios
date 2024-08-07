@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.27.0...v1.28.0) (2024-08-07)
+
+
+### Features
+
+* implement exponential retry mechanism for handling network errors ([#525](https://github.com/rudderlabs/rudder-sdk-ios/issues/525)) ([8bf2900](https://github.com/rudderlabs/rudder-sdk-ios/commit/8bf2900710f06e6c9f268bd6fa4e405bcaa417ed))
+
+
+### Bug Fixes
+
+* set anonymousId in traits when second Identify event is made ([#526](https://github.com/rudderlabs/rudder-sdk-ios/issues/526)) ([b52251b](https://github.com/rudderlabs/rudder-sdk-ios/commit/b52251b8b5afeef8994a9f711c634b429659ac26))
+
 ## [1.27.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.26.2...v1.27.0) (2024-06-13)
 
 
