@@ -30,21 +30,19 @@ RSMetricsClient * _Nullable _metricsClient;
 - (instancetype)initWithWriteKey:(NSString *)writeKey preferenceManager:(RSPreferenceManager *)preferenceManager andConfig:(RSConfig *)config {
     self = [super init];
     if (self) {
-        NSString *dataPlaneUrl = config.dataPlaneUrl;
-        
-        if (config.dataPlaneUrl == nil || config.dataPlaneUrl.length == 0) {
-            [RSLogger logWarn:@"RSMetricsReporter: Data plane url cannot be nil or empty."];
-            return self;
-        }
-        
         if (preferenceManager.isMetricsCollectionEnabled || preferenceManager.isErrorsCollectionEnabled) {
-            RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:dataPlaneUrl];
-            [configuration dbCountThreshold:config.dbCountThreshold];
-            _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
-            _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
-            _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+            NSString *dataPlaneUrl = config.dataPlaneUrl ?: @"";
+            if (dataPlaneUrl.length > 0) {
+                RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:dataPlaneUrl];
+                [configuration dbCountThreshold:config.dbCountThreshold];
+                _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
+                _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
+                _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+            } else {
+                [RSLogger logWarn:@"RSMetricsReporter: Data plane url cannot be nil or empty."];
+            }
         } else {
-            [RSLogger logWarn:@"RSMetricsReporter: Metrics and Errors collection is disabled."]; 
+            [RSLogger logWarn:@"RSMetricsReporter: Metrics and Errors collection is disabled."];
         }
     }
     return self;
