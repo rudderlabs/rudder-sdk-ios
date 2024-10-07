@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.29.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.29.0...v1.29.1) (2024-10-07)
+
+
+### Bug Fixes
+
+* memory issue crash happening on CloudModeProcessor ([ddc2d05](https://github.com/rudderlabs/rudder-sdk-ios/commit/ddc2d057a7d43b4e62ded7ee561bb4779c35e2d6))
+
 ## [1.29.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.28.1...v1.29.0) (2024-09-05)
 
 
