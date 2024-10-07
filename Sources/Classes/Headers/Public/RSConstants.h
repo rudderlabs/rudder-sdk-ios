@@ -64,6 +64,9 @@ extern int const RSATTRestricted;
 extern int const RSATTDenied;
 extern int const RSATTAuthorize;
 
+extern int const RSExponentialBackOff_InitialDelay;
+extern int const RSExponentialBackOff_MinimumDelay;
+
 @end
 
 NS_ASSUME_NONNULL_END

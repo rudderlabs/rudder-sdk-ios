@@ -31,13 +31,18 @@ RSMetricsClient * _Nullable _metricsClient;
     self = [super init];
     if (self) {
         if (preferenceManager.isMetricsCollectionEnabled || preferenceManager.isErrorsCollectionEnabled) {
-            RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION];
-            [configuration dbCountThreshold:config.dbCountThreshold];
-            _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
-            _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
-            _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+            NSString *dataPlaneUrl = config.dataPlaneUrl ?: @"";
+            if (dataPlaneUrl.length > 0) {
+                RSMetricConfiguration *configuration = [[RSMetricConfiguration alloc] initWithLogLevel:config.logLevel writeKey:writeKey sdkVersion:RS_VERSION sdkMetricsUrl:dataPlaneUrl];
+                [configuration dbCountThreshold:config.dbCountThreshold];
+                _metricsClient = [[RSMetricsClient alloc] initWithConfiguration:configuration];
+                _metricsClient.isMetricsCollectionEnabled = preferenceManager.isMetricsCollectionEnabled;
+                _metricsClient.isErrorsCollectionEnabled = preferenceManager.isErrorsCollectionEnabled;
+            } else {
+                [RSLogger logWarn:@"RSMetricsReporter: Data plane url cannot be nil or empty."];
+            }
         } else {
-            [RSLogger logWarn:@"RSMetricsReporter: Metrics and Errors collection is disabled."]; 
+            [RSLogger logWarn:@"RSMetricsReporter: Metrics and Errors collection is disabled."];
         }
     }
     return self;
