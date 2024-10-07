@@ -86,7 +86,9 @@
                 }
             }
             @catch (NSException *exception) {
+                [strongSelf->lock unlock];
                 [RSLogger logError:[NSString stringWithFormat:@"RSCloudModeManager: CloudModeProcessor: Failed to flush current batch, reason: %@", exception.reason]];
+                sleep(1);
             }
         }
     });
