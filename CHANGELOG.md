@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.28.1...v1.29.0) (2024-09-05)
+
+
+### Features
+
+* update url to the metrics reporter sdk ([#535](https://github.com/rudderlabs/rudder-sdk-ios/issues/535)) ([b6cb20e](https://github.com/rudderlabs/rudder-sdk-ios/commit/b6cb20eb59b703c589f554c7bd6e66548711c84a))
+
 ### [1.28.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.28.0...v1.28.1) (2024-09-02)
 
 
