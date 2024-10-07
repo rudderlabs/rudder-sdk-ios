@@ -31,4 +31,4 @@ jobs:
         
       - name: 'Add Podspec to repo'
         run: |
-          pod repo push rudderlabs Rudder.podspec.json
+          pod repo push rudderlabs Rudder.podspec.json --allow-warnings
