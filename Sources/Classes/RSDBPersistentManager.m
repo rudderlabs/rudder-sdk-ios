@@ -490,48 +490,54 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
 }
 
 - (RSDBMessage *) getEventsFromDB :(NSString*) querySQLString {
-    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getEventsFromDB: fetchEventSql: %@", querySQLString]];
-    
-    const char* querySQL = [querySQLString UTF8String];
-    NSMutableArray<NSString *> *messageIds = [NSMutableArray array];
-    NSMutableArray<NSString *> *messages = [NSMutableArray array];
-    NSMutableArray<NSNumber *> *statusList = [NSMutableArray array];
-    NSMutableArray<NSNumber *> *dmProcessedList = [NSMutableArray array];
-    
-    @synchronized (self) {
-        sqlite3_stmt *queryStmt = nil;
-        if ([database prepare_v2:querySQL nBytes:-1 ppStmt:&queryStmt pzTail:NULL] == SQLITE_OK) {
-            [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: Successfully fetched events from DB"];
-            while ([database step:queryStmt] == SQLITE_ROW) {
-                @autoreleasepool {
-                    int messageId = [database column_int:queryStmt i:0];
-                    const unsigned char* queryResultCol1 = [database column_text:queryStmt i:1];
-                    NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
-                    int status = [database column_int:queryStmt i:3];
-                    int dmProcessed = [database column_int:queryStmt i:4];
-                    
-                    [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
-                    [messages addObject:message];
-                    [statusList addObject:[NSNumber numberWithInt:status]];
-                    [dmProcessedList addObject:[NSNumber numberWithInt:dmProcessed]];
+    @try {
+        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDBPersistentManager: getEventsFromDB: fetchEventSql: %@", querySQLString]];
+        
+        const char* querySQL = [querySQLString UTF8String];
+        NSMutableArray<NSString *> *messageIds = [NSMutableArray array];
+        NSMutableArray<NSString *> *messages = [NSMutableArray array];
+        NSMutableArray<NSNumber *> *statusList = [NSMutableArray array];
+        NSMutableArray<NSNumber *> *dmProcessedList = [NSMutableArray array];
+        
+        @synchronized (self) {
+            sqlite3_stmt *queryStmt = nil;
+            if ([database prepare_v2:querySQL nBytes:-1 ppStmt:&queryStmt pzTail:NULL] == SQLITE_OK) {
+                [RSLogger logDebug:@"RSDBPersistentManager: getEventsFromDB: Successfully fetched events from DB"];
+                while ([database step:queryStmt] == SQLITE_ROW) {
+                    @autoreleasepool {
+                        int messageId = [database column_int:queryStmt i:0];
+                        const unsigned char* queryResultCol1 = [database column_text:queryStmt i:1];
+                        NSString *message = [[NSString alloc] initWithUTF8String:(char *)queryResultCol1];
+                        int status = [database column_int:queryStmt i:3];
+                        int dmProcessed = [database column_int:queryStmt i:4];
+                        
+                        [messageIds addObject:[[NSString alloc] initWithFormat:@"%d", messageId]];
+                        [messages addObject:message];
+                        [statusList addObject:[NSNumber numberWithInt:status]];
+                        [dmProcessedList addObject:[NSNumber numberWithInt:dmProcessed]];
+                    }
                 }
+            } else {
+                [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
             }
-        } else {
-            [RSLogger logError:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB"];
+            
+            // Finalize the SQL statement to free resources
+            if (queryStmt != nil) {
+                [database finalize:queryStmt];
+            }
         }
         
-        // Finalize the SQL statement to free resources
-        if (queryStmt != nil) {
-            [database finalize:queryStmt];
-        }
+        RSDBMessage *dbMessage = [[RSDBMessage alloc] init];
+        dbMessage.messageIds = messageIds;
+        dbMessage.messages = messages;
+        dbMessage.statusList = statusList;
+        dbMessage.dmProcessed = dmProcessedList;
+        return dbMessage;
+        
+    } @catch (NSException *exception) {
+        [RSLogger logError:[NSString stringWithFormat:@"RSDBPersistentManager: getEventsFromDB: Failed to fetch events from DB, reason: %@", exception.reason]];
+        return nil;
     }
-    
-    RSDBMessage *dbMessage = [[RSDBMessage alloc] init];
-    dbMessage.messageIds = messageIds;
-    dbMessage.messages = messages;
-    dbMessage.statusList = statusList;
-    dbMessage.dmProcessed = dmProcessedList;
-    return dbMessage;
 }
 
 // If mode is passed as DEVICEMODE, this function would return the total number of events which were waiting for the Device Mode Processing to be done
