@@ -7,6 +7,7 @@ jobs:
   deploy-cocoapods-beta:
     name: Beta deploy to Cocoapods
     runs-on: macOS-latest
+    if: startsWith(github.ref, 'refs/heads/beta-release/')
     steps:
       - name: Checkout source branch
         uses: actions/checkout@v4
