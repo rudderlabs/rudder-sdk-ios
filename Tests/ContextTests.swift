@@ -154,10 +154,11 @@ class ContextTests: XCTestCase {
     }
     
     func test_putAdvertisementId() {
-        context.putAdvertisementId("00000000-0000-0000-0000-000000000000")
-        XCTAssertEqual(context.device.advertisingId, "");
-        XCTAssertFalse(context.device.adTrackingEnabled)
         context.putAdvertisementId("some-random-uuid");
+        XCTAssertEqual(context.device.advertisingId, "some-random-uuid");
+        XCTAssertTrue(context.device.adTrackingEnabled)
+        
+        context.putAdvertisementId("00000000-0000-0000-0000-000000000000")
         XCTAssertEqual(context.device.advertisingId, "some-random-uuid");
         XCTAssertTrue(context.device.adTrackingEnabled)
     }

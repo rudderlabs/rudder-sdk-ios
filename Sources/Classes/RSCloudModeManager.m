@@ -39,55 +39,48 @@
         [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Starting the Cloud Mode Processor"];
         int sleepCount = 0;
         while (YES) {
-            @try {
-                [strongSelf->lock lock];
-                RSNetworkResponse* response = nil;
-                [strongSelf->dbPersistentManager clearOldEventsWithThreshold: strongSelf->config.dbCountThreshold];
-                [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Fetching events to flush to server"];
-                RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
-                if ((dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
-                    NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
-                    [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
-                    [RSMetricsReporter report:SDKMETRICS_CM_EVENT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MESSAGES} andValue:(float)dbMessage.messages.count];
-                    if (payload != nil) {
-                        response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
-                        if (response.state == NETWORK_SUCCESS) {
-                            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVStringFromArray:dbMessage.messageIds]]];
-                            [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
-                            [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
-                            [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
-                            sleepCount = 0;
-                            [self->backOff reset];
-                        }
+            [strongSelf->lock lock];
+            RSNetworkResponse* response = nil;
+            [strongSelf->dbPersistentManager clearOldEventsWithThreshold: strongSelf->config.dbCountThreshold];
+            [RSLogger logDebug:@"RSCloudModeManager: CloudModeProcessor: Fetching events to flush to server"];
+            RSDBMessage* dbMessage = [strongSelf->dbPersistentManager fetchEventsFromDB:(strongSelf->config.flushQueueSize) ForMode:CLOUDMODE];
+            if ((dbMessage.messages.count >= strongSelf->config.flushQueueSize) || (dbMessage.messages.count > 0 && (sleepCount >= strongSelf->config.sleepTimeout))) {
+                NSString* payload = [RSCloudModeManager getPayloadFromMessages:dbMessage];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Payload: %@", payload]];
+                [RSLogger logInfo:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: EventCount: %lu", (unsigned long)dbMessage.messageIds.count]];
+                [RSMetricsReporter report:SDKMETRICS_CM_EVENT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MESSAGES} andValue:(float)dbMessage.messages.count];
+                if (payload != nil) {
+                    response = [strongSelf->networkManager sendNetworkRequest:payload toEndpoint:BATCH_ENDPOINT withRequestMethod:POST];
+                    if (response.state == NETWORK_SUCCESS) {
+                        [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Updating status as CLOUDMODEPROCESSING DONE for events (%@)",[RSUtils getCSVStringFromArray:dbMessage.messageIds]]];
+                        [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:(float)dbMessage.messages.count];
+                        [strongSelf->dbPersistentManager updateEventsWithIds:dbMessage.messageIds withStatus:CLOUD_MODE_PROCESSING_DONE];
+                        [strongSelf->dbPersistentManager clearProcessedEventsFromDB];
+                        sleepCount = 0;
+                        [self->backOff reset];
                     }
                 }
-                [strongSelf->lock unlock];
-                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: cloudModeSleepCount: %d", sleepCount]];
-                sleepCount += 1;
-                
-                if(response == nil) {
-                    sleep(1);
-                } else if (response.state == WRONG_WRITE_KEY) {
-                    [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
-                    break;
-                } else if (response.state == INVALID_URL) {
-                    [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
-                    [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DATA_PLANE_URL_INVALID} andValue:1];
-                    break;
-                } else if (response.state == NETWORK_ERROR) {
-                    int delay = [self->backOff nextDelay];
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %@", [RSUtils secondsToString:delay]]];
-                    [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
-                    sleep(delay);
-                } else { // To handle the status code RESOURCE_NOT_FOUND(404) & BAD_REQUEST(400)
-                    [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: 1s"]];
-                    sleep(1);
-                }
             }
-            @catch (NSException *exception) {
-                [strongSelf->lock unlock];
-                [RSLogger logError:[NSString stringWithFormat:@"RSCloudModeManager: CloudModeProcessor: Failed to flush current batch, reason: %@", exception.reason]];
+            [strongSelf->lock unlock];
+            [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: cloudModeSleepCount: %d", sleepCount]];
+            sleepCount += 1;
+            
+            if(response == nil) {
+                sleep(1);
+            } else if (response.state == WRONG_WRITE_KEY) {
+                [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Wrong WriteKey. Aborting the Cloud Mode Processor"];
+                break;
+            } else if (response.state == INVALID_URL) {
+                [RSLogger logError:@"RSCloudModeManager: CloudModeProcessor: Invalid Data Plane URL. Aborting the Cloud Mode Processor"];
+                [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DATA_PLANE_URL_INVALID} andValue:1];
+                break;
+            } else if (response.state == NETWORK_ERROR) {
+                int delay = [self->backOff nextDelay];
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: %@", [RSUtils secondsToString:delay]]];
+                [RSMetricsReporter report:SDKMETRICS_CM_ATTEMPT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
+                sleep(delay);
+            } else { // To handle the status code RESOURCE_NOT_FOUND(404) & BAD_REQUEST(400)
+                [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSCloudModeManager: CloudModeProcessor: Retrying in: 1s"]];
                 sleep(1);
             }
         }
