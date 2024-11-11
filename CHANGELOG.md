@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.30.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.29.1...v1.30.0) (2024-11-11)
+
+
+### Features
+
+* upgrade the maximum event size limit ([#548](https://github.com/rudderlabs/rudder-sdk-ios/issues/548)) ([892892d](https://github.com/rudderlabs/rudder-sdk-ios/commit/892892ddf234b7d76abc4fa9ad2f629bb08517f7))
+
+
+### Bug Fixes
+
+* memory issue crash happening on CloudModeProcessor ([#544](https://github.com/rudderlabs/rudder-sdk-ios/issues/544)) ([a71ac44](https://github.com/rudderlabs/rudder-sdk-ios/commit/a71ac444393b750a9dcbe5dd094924e72f60799f))
+
 ### [1.29.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.29.0...v1.29.1) (2024-10-07)
 
 
