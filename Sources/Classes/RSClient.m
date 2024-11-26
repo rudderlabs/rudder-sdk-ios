@@ -240,6 +240,9 @@ static NSString* _advertisingId = nil;
     if(prevId == nil) {
         prevId =[traits objectForKey:@"id"];
     }
+    if (prevId == nil) {
+        prevId = self.anonymousId;
+    }
     
     traits[@"id"] = newId;
     traits[@"userId"] = newId;
