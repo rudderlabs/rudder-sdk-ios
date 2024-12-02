@@ -240,18 +240,7 @@ static NSString* _advertisingId = nil;
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
     
-    NSObject *prevId = nil;
-    if (previousId != nil) {
-        prevId = previousId;
-    } else {
-        prevId = [traits objectForKey:@"userId"];
-        if(prevId == nil) {
-            prevId =[traits objectForKey:@"id"];
-        }
-        if (prevId == nil) {
-            prevId = self.anonymousId;
-        }
-    }
+    NSObject *prevId = previousId ?: [traits objectForKey:@"userId"] ?: [traits objectForKey:@"id"] ?: self.anonymousId;
     
     traits[@"id"] = newId;
     traits[@"userId"] = newId;
