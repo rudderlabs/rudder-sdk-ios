@@ -55,6 +55,7 @@
 #import "RSEnums.h"
 #import "RSEventFilteringPlugin.h"
 #import "RSEventRepository.h"
+#import "RSExponentialBackOff.h"
 #import "RSFlushManager.h"
 #import "RSIntegration.h"
 #import "RSIntegrationFactory.h"
