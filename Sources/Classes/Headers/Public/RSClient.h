@@ -51,6 +51,7 @@ typedef void (^Callback)(NSObject *_Nullable);
 - (void) group:(NSString *)groupId traits:(NSDictionary<NSString*, id>*)traits;
 - (void) group:(NSString *)groupId;
 
+- (void) alias:(NSString *)newId previousId:(NSString * _Nullable)previousId options:(RSOption * _Nullable) options;
 - (void) alias:(NSString *)newId options:(RSOption * _Nullable) options;
 - (void) alias:(NSString *)newId;
 
