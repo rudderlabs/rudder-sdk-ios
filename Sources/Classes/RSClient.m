@@ -225,14 +225,14 @@ static NSString* _advertisingId = nil;
         [self reportDiscardedEvent];
         return;
     }
-    [self alias:newId options:nil previousId:nil];
+    [self alias:newId previousId:nil options:nil];
 }
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
-    [self alias:newId options:options previousId:nil];
+    [self alias:newId previousId:nil options:options];
 }
 
-- (void) alias:(NSString *)newId options:(RSOption *) options previousId:(NSString *)previousId {
+- (void) alias:(NSString *)newId previousId:(NSString *)previousId options:(RSOption *) options {
     if ([RSClient getOptStatus]) {
         [self reportDiscardedEvent];
         return;
