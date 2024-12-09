@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.30.0...v1.31.0) (2024-12-09)
+
+
+### Features
+
+* add alias api with previousId support ([#554](https://github.com/rudderlabs/rudder-sdk-ios/issues/554)) ([6c68a3d](https://github.com/rudderlabs/rudder-sdk-ios/commit/6c68a3da2760be92573d493216a7cbcc23493dc0))
+
+
+### Bug Fixes
+
+* set anonymousId as previousId in alias API if userId is not present ([#553](https://github.com/rudderlabs/rudder-sdk-ios/issues/553)) ([67c6715](https://github.com/rudderlabs/rudder-sdk-ios/commit/67c671561a57d8ee16253af51cbb3958e02b1fcc))
+
 ## [1.30.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.29.1...v1.30.0) (2024-11-11)
 
 
