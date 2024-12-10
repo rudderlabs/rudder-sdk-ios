@@ -225,10 +225,14 @@ static NSString* _advertisingId = nil;
         [self reportDiscardedEvent];
         return;
     }
-    [self alias:newId options:nil];
+    [self alias:newId previousId:nil options:nil];
 }
 
 - (void) alias:(NSString *)newId options:(RSOption *) options {
+    [self alias:newId previousId:nil options:options];
+}
+
+- (void) alias:(NSString *)newId previousId:(NSString *)previousId options:(RSOption *) options {
     if ([RSClient getOptStatus]) {
         [self reportDiscardedEvent];
         return;
@@ -236,10 +240,7 @@ static NSString* _advertisingId = nil;
     RSContext *rc = [RSElementCache getContext];
     NSMutableDictionary<NSString*,NSObject*>* traits = [rc.traits mutableCopy];
     
-    NSObject *prevId = [traits objectForKey:@"userId"];
-    if(prevId == nil) {
-        prevId =[traits objectForKey:@"id"];
-    }
+    NSObject *prevId = previousId ?: [traits objectForKey:@"userId"] ?: [traits objectForKey:@"id"] ?: self.anonymousId;
     
     traits[@"id"] = newId;
     traits[@"userId"] = newId;
