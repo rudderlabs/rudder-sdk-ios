@@ -43,8 +43,8 @@ extension UIViewController {
     @objc
     func rsViewDidAppear(_ animated: Bool) {
         var name = String(describing: type(of: self))
-        if name.starts(with: "UIHostingController") {
-            name.removeFirst("UIHostingController".count + 1) // Remove `UIHostingController<`
+        if name.starts(with: "UIHostingController<") {
+            name.removeFirst("UIHostingController<".count) // Remove `UIHostingController<`
             if name.hasSuffix(">") { name.removeLast(1) } // Remove last `>`
         }
 
