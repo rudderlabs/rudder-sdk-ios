@@ -53,7 +53,7 @@ jobs:
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
       - name: Create pull request into develop
-        uses: repo-sync/pull-request@v2
+        uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 #v2
         with:
           source_branch: 'master-v2'
           destination_branch: 'develop-v2'

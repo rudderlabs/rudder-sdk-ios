@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync Github PRs to Notion
-        uses: sivashanmukh/github-notion-pr-sync@1.0.0
+        uses: sivashanmukh/github-notion-pr-sync@3967330238449a8550b06f6e1d6b83e1af569876 #v1.0.0
         with:
           notionKey: ${{ secrets.NOTION_BOT_KEY }}
           notionDatabaseId: ${{ secrets.NOTION_PR_DB_ID }}

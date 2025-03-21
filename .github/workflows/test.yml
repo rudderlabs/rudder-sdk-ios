@@ -12,7 +12,7 @@ jobs:
     name: 'Cancel previous Tests & Coverage'
     runs-on: ubuntu-latest
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
+      - uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 # v2
         with:
           workflow_id: ${{ github.event.workflow.id }}
           
