@@ -40,7 +40,7 @@
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
-    [self isDeviceModeFactoriesNotPresent];
+    [self checkAndSetDeviceModeFactoriesNotPresent];
     [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
     // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
@@ -84,7 +84,7 @@
 }
 
 - (void) handleCaseWhenNoDeviceModeFactoryIsPresent {
-    [self isDeviceModeFactoriesNotPresent];
+    [self checkAndSetDeviceModeFactoriesNotPresent];
     [self replayMessageQueue];
 }
 
@@ -156,7 +156,7 @@
     }
 }
 
-- (void) isDeviceModeFactoriesNotPresent {
+- (void) checkAndSetDeviceModeFactoriesNotPresent {
     if ([self->integrationOperationMap count] == 0) {
         self->isDeviceModeFactoriesNotPresent = YES;
     }
