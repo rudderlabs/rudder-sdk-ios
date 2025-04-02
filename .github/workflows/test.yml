@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@v2
+        uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 #v2
         
       - name: Install xcpretty
         run: gem install xcpretty
