@@ -46,9 +46,9 @@ jobs:
         run: |
           xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
           
-      - name: Collect coverage into one XML report
-        run: |
-          bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
+      # - name: Collect coverage into one XML report
+      #   run: |
+      #     bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
               
       - name: SonarCloud Scan
         env:
