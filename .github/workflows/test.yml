@@ -18,8 +18,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 #v2
+      # - name: Install sonar-scanner and build-wrapper
+      #   uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 #v2
         
       - name: Install xcpretty
         run: gem install xcpretty
@@ -50,8 +50,8 @@ jobs:
       #   run: |
       #     bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
               
-      - name: SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner -Dsonar.host.url=https://sonarcloud.io
+      # - name: SonarCloud Scan
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     sonar-scanner -Dsonar.host.url=https://sonarcloud.io
