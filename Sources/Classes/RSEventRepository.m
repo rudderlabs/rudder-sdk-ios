@@ -199,6 +199,9 @@ static RSEventRepository* _instance;
                         if(consentedDestinations != nil && consentedDestinations.count > 0 ) {
                             [self->deviceModeManager startDeviceModeProcessor:consentedDestinations withConfigManager:strongSelf->configManager];
                         }
+                    } else if(self->config != nil && self->config.customFactories != nil && self->config.customFactories.count != 0) {
+                        [self->deviceModeManager handleCaseWhenOnlyCustomFactoryIsPresent];
+                        [RSLogger logDebug:@"EventRepository: Only Custom Factory is present"];
                     } else {
                         [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];

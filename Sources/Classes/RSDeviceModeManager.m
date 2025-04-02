@@ -40,6 +40,7 @@
     // this might fail if serverConfig is nil, need to handle
     [RSLogger logDebug:@"RSDeviceModeManager: DeviceModeProcessor: Initializing the Custom Factories"];
     [self initiateCustomFactories];
+    [self checkAndSetDeviceModeFactoriesNotPresent];
     [self replayMessageQueue];
     self->areFactoriesInitialized = YES;
     // initaiting the transformation processor only if there are any factories passed have a device mode transformation connected to them on control plane
@@ -76,20 +77,24 @@
     }
 }
 
+- (void) handleCaseWhenOnlyCustomFactoryIsPresent {
+    [self initiateCustomFactories];
+    self->areFactoriesInitialized = YES;
+    [self replayMessageQueue];
+}
+
 - (void) handleCaseWhenNoDeviceModeFactoryIsPresent {
-    self->isDeviceModeFactoriesNotPresent = YES;
+    [self checkAndSetDeviceModeFactoriesNotPresent];
     [self replayMessageQueue];
 }
 
 - (void) initiateFactories : (NSArray*) destinations {
     if (![self areFactoriesPassedInConfig]) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK is found in the config"];
-        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     if (destinations.count == 0) {
         [RSLogger logInfo:@"RSDeviceModeManager: initiateFactories: No native SDK factory is found in the server config"];
-        self->isDeviceModeFactoriesNotPresent = YES;
         return;
     }
     RSClient* client = [RSClient sharedInstance];
@@ -148,6 +153,12 @@
         @catch(NSException* e){
             [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateCustomFactories: Exception while initiating custom Factory %@ due to %@", factory.key,e.reason]];
         }
+    }
+}
+
+- (void) checkAndSetDeviceModeFactoriesNotPresent {
+    if ([self->integrationOperationMap count] == 0) {
+        self->isDeviceModeFactoriesNotPresent = YES;
     }
 }
 
@@ -345,6 +356,9 @@
 
 - (BOOL) isEvent:(RSMessage *) message allowedForDestination: (NSString *) destinationName {
     BOOL isDestinationEnabledInMessage = [self isDestination:destinationName enabledInMessage:message];
+    if (self->eventFilteringPlugin == nil) {
+        return isDestinationEnabledInMessage;
+    }
     BOOL isEventAllowedByDestination = [self->eventFilteringPlugin isEventAllowed:message byDestination:destinationName];
     return isDestinationEnabledInMessage && isEventAllowedByDestination;
 }
