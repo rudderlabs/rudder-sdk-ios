@@ -8,17 +8,9 @@ on:
     types: ['opened', 'reopened', 'synchronize']
 
 jobs:
-  cancel_previous:
-    name: 'Cancel previous Tests & Coverage'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 # v2
-        with:
-          workflow_id: ${{ github.event.workflow.id }}
           
   build:
     name: 'Tests & Coverage'
-    needs: cancel_previous
     runs-on: macos-latest-large
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
