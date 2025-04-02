@@ -8,17 +8,9 @@ on:
     types: ['opened', 'reopened', 'synchronize']
 
 jobs:
-  cancel_previous:
-    name: 'Cancel previous Tests & Coverage'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 # v2
-        with:
-          workflow_id: ${{ github.event.workflow.id }}
           
   build:
     name: 'Tests & Coverage'
-    needs: cancel_previous
     runs-on: macos-latest-large
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
@@ -26,8 +18,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@v2
+      # - name: Install sonar-scanner and build-wrapper
+      #   uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 #v2
         
       - name: Install xcpretty
         run: gem install xcpretty
@@ -54,12 +46,12 @@ jobs:
         run: |
           xcodebuild -workspace Rudder.xcworkspace -scheme RudderTests-watchOS test -sdk watchsimulator -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 (45mm)' -enableCodeCoverage YES -derivedDataPath build | xcpretty
           
-      - name: Collect coverage into one XML report
-        run: |
-          bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
+      # - name: Collect coverage into one XML report
+      #   run: |
+      #     bash xccov-to-generic.sh build/Logs/Test/*.xcresult/ > generic-coverage.xml
               
-      - name: SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner -Dsonar.host.url=https://sonarcloud.io
+      # - name: SonarCloud Scan
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     sonar-scanner -Dsonar.host.url=https://sonarcloud.io
