@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.31.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.0...v1.31.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* custom factory issue ([#560](https://github.com/rudderlabs/rudder-sdk-ios/issues/560)) ([0522d5c](https://github.com/rudderlabs/rudder-sdk-ios/commit/0522d5c2dbc94e55db4e906862ef25aa69090ba5))
+
 ## [1.31.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.30.0...v1.31.0) (2024-12-09)
 
 
