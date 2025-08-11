@@ -9,7 +9,7 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/develop-v2') || startsWith(github.ref, 'refs/heads/hotfix-v2/')
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
