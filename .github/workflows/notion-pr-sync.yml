@@ -47,6 +47,11 @@ jobs:
   request:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
+        with:
+          egress-policy: audit
+
       - name: Sync Github PRs to Notion
         uses: sivashanmukh/github-notion-pr-sync@3967330238449a8550b06f6e1d6b83e1af569876 #v1.0.0
         with:
