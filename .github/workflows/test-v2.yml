@@ -7,6 +7,9 @@ on:
     branches: ['master-v2', 'develop-v2']
     types: ['opened', 'reopened', 'synchronize']
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: 'Tests & Coverage(v2)'
@@ -19,7 +22,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       
       - name: Install xcpretty
         run: gem install xcpretty
