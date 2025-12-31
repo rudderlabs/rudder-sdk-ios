@@ -32,7 +32,7 @@
 > - **Repository**: https://github.com/rudderlabs/rudder-sdk-swift
 > - **Documentation**: https://www.rudderstack.com/docs/sources/event-streams/sdks/swift-sdk/
 >
-> This v2 SDK remains available for legacy support only. No new features will be added. 
+> This version of the SDK will be sunset soon. So, migrate to the newer SDK as soon as possible.
 
 ---
 
