@@ -16,8 +16,6 @@
   <b>
     <a href="https://rudderstack.com">Website</a>
     ·
-    <a href="https://www.rudderstack.com/docs/sources/event-streams/sdks/">Documentation</a>
-    ·
     <a href="https://rudderstack.com/join-rudderstack-slack-community">Community Slack</a>
   </b>
 </p>
@@ -29,8 +27,8 @@
 > **This SDK is deprecated and no longer actively maintained.**
 >
 > Please use the newer **Swift-based iOS SDK** instead:
-> - **Repository**: https://github.com/rudderlabs/rudder-sdk-swift
-> - **Documentation**: https://www.rudderstack.com/docs/sources/event-streams/sdks/swift-sdk/
+> - **Repository**: <https://github.com/rudderlabs/rudder-sdk-swift>
+> - **Documentation**: <https://www.rudderstack.com/docs/sources/event-streams/sdks/swift-sdk/>
 >
 > This version of the SDK will be sunset soon. So, migrate to the newer SDK as soon as possible.
 
@@ -39,9 +37,6 @@
 # RudderStack iOS SDK
 
 The RudderStack iOS SDK lets you track event data from your **iOS**, **tvOS**, **watchOS** and **macOS** applications. After integrating the SDK, you will also be able to send these events to your to your specified destinations via RudderStack.
-
-| For more information on the RudderStack iOS SDK, refer to the [**SDK documentation**](https://www.rudderstack.com/docs/sources/event-streams/sdks/). |
-| :--|
 
 ## What's new in v2
 
