@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.31.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.1...v1.31.2) (2026-01-20)
+
+
+### Bug Fixes
+
+* address license warning on pod install ([#577](https://github.com/rudderlabs/rudder-sdk-ios/issues/577)) ([42f7a92](https://github.com/rudderlabs/rudder-sdk-ios/commit/42f7a9276c52fcb8be17fbd9566a147a3d320720))
+
 ### [1.31.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.0...v1.31.1) (2025-04-02)
 
 

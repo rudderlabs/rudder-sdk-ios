@@ -4,11 +4,21 @@ on:
     branches: ['master', 'develop']
     types: ['opened', 'reopened', 'synchronize']
 
+permissions:
+  contents: read
+
 jobs:
   cancel_previous:
+    permissions:
+      actions: write  # for styfle/cancel-workflow-action to cancel/stop running workflows
     name: 'Cancel previous Code Quality Checks'
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          egress-policy: audit
+
       - uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa #v0.12.1
         with:
           workflow_id: ${{ github.event.workflow.id }}
@@ -19,8 +29,13 @@ jobs:
     runs-on: macOS-latest
     
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          egress-policy: audit
+
       - name: Checkout source branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       
       - name: Install xcpretty
         run: gem install xcpretty
