@@ -19,7 +19,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa #v0.12.1
+      - uses: styfle/cancel-workflow-action@3155a141048f8f89c06b4cdae32e7853e97536bc #v0.13.0
         with:
           workflow_id: ${{ github.event.workflow.id }}
           
