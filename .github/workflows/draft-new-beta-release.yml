@@ -43,13 +43,6 @@ jobs:
         with:
           node-version: 16
           
-      # In order to make a commit, we need to initialize a user.
-      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
-      - name: Initialize mandatory git config
-        run: |
-          git config user.name "GitHub actions"
-          git config user.email noreply@github.com
-
       # Calculate the next release version based on conventional semantic release
       - name: Create release branch
         id: create-release
@@ -91,16 +84,20 @@ jobs:
           echo "Current version: $CURRENT_VERSION_VALUE"
           echo "New version: $NEW_VERSION_VALUE"
           npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE Sources/Classes/Headers/RSVersion.h package.json
-          git add Sources/Classes/Headers/RSVersion.h package.json
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          git commit -m "chore(beta-relase): $NEW_VERSION_VALUE"
-          git tag -a "v$NEW_VERSION_VALUE" -m "chore: release v$NEW_VERSION_VALUE"
-          git push origin "v$NEW_VERSION_VALUE"
 
-      - name: Push new version in release branch & tag
-        run: |
-          git push
+      - name: Create verified commit via API
+        uses: ryancyq/github-signed-commit@e9f3b28c80da7be66d24b8f501a5abe82a6b855f # v1.2.0
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        with:
+          branch-name: ${{ steps.create-release.outputs.branch_name }}
+          commit-message: 'chore(beta-release): v${{ env.NEW_VERSION_VALUE }}'
+          files: |
+            Sources/Classes/Headers/RSVersion.h
+            package.json
+          tag: 'v${{ env.NEW_VERSION_VALUE }}'
 
       - name: 'Checkout'
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
