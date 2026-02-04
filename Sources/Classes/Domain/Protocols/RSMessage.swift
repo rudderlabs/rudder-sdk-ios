@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public protocol RSMessage {
     var type: RSMessageType { get set }
     var anonymousId: String? { get set }
@@ -21,6 +22,7 @@ public protocol RSMessage {
     var dictionaryValue: [String: Any] { get }
 }
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public struct TrackMessage: RSMessage {
     public var type: RSMessageType = .track
     public var anonymousId: String?
@@ -53,6 +55,7 @@ public struct TrackMessage: RSMessage {
     }
 }
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public struct IdentifyMessage: RSMessage {
     public var type: RSMessageType = .identify
     public var anonymousId: String?
@@ -83,6 +86,7 @@ public struct IdentifyMessage: RSMessage {
     }
 }
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public struct ScreenMessage: RSMessage {
     public var type: RSMessageType = .screen
     public var anonymousId: String?
@@ -118,6 +122,7 @@ public struct ScreenMessage: RSMessage {
     }
 }
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public struct GroupMessage: RSMessage {
     public var type: RSMessageType = .group
     public var anonymousId: String?
@@ -150,6 +155,7 @@ public struct GroupMessage: RSMessage {
     }
 }
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 public struct AliasMessage: RSMessage {
     public var type: RSMessageType = .alias
     public var anonymousId: String?
