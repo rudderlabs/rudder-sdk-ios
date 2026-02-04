@@ -44,6 +44,7 @@ open class RSClient: NSObject {
     @objc
     public func configure(with config: RSConfig) {
         self.config = config
+        self.printDeprecationWarning()
         addPlugins()
     }
     
@@ -380,5 +381,32 @@ extension RSClient {
         default:
             break
         }
+    }
+}
+
+extension RSClient {
+    private func printDeprecationWarning() {
+        let warning = """
+        ┌────────────────────────────────────────────────────────────────────┐
+        │                     ⚠️ DEPRECATION WARNING                         │
+        ├────────────────────────────────────────────────────────────────────┤
+        │ This version of the RudderStack iOS SDK is deprecated and is       │
+        │ no longer actively maintained.                                     │
+        │                                                                    │
+        │ Please migrate to the newer Swift-based iOS SDK for continued      │
+        │ support, bug fixes, and new features.                              │
+        │                                                                    │
+        │ Swift SDK Repository:                                              │
+        │ https://github.com/rudderlabs/rudder-sdk-swift                     │
+        │                                                                    │
+        │ Documentation:                                                     │
+        │ https://www.rudderstack.com/docs/sources/event-streams/sdks/       │
+        │ swift-sdk/                                                         │
+        │                                                                    │
+        │ This SDK will be sunset in the near future. We strongly            │
+        │ recommend migrating as soon as possible.                           │
+        └────────────────────────────────────────────────────────────────────┘
+        """
+        print(warning)
     }
 }
