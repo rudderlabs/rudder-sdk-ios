@@ -403,11 +403,11 @@ extension RSClient {
         │ Documentation:                                                     │
         │ https://www.rudderstack.com/docs/sources/event-streams/sdks/       │
         │ swift-sdk/                                                         │
-        │                                                                    |
-        | Migration Documentation:                                           |
-        | https://www.rudderstack.com/docs/sources/event-streams             |
-        | /sdks/swift-sdk/breaking-changes/ios-v2/migration-guide/           |
-        |                                                                    |
+        │                                                                    │
+        │ Migration Documentation:                                           │
+        │ https://www.rudderstack.com/docs/sources/event-streams             │
+        │ /sdks/swift-sdk/breaking-changes/ios-v2/migration-guide/           │
+        │                                                                    │
         │ This SDK will be sunset in the near future. We strongly            │
         │ recommend migrating as soon as possible.                           │
         └────────────────────────────────────────────────────────────────────┘
