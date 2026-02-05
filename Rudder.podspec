@@ -35,8 +35,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = { s.name => 'Sources/Resources/PrivacyInfo.xcprivacy' }
 
   s.deprecated = true
-  s.deprecated_in_favor_of = "rudder-sdk-swift"
-  
+
   s.swift_version = '5.3'
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '11.0'
