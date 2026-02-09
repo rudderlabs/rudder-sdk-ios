@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 @objc
 open class RSOption: NSObject {
     var externalIds: [[String: String]]?
