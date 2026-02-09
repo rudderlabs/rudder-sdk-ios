@@ -29,6 +29,7 @@ jobs:
         with:
           app-id: ${{ vars.RELEASE_APP_ID }}
           private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          repositories: rudder-sdk-ios,Specs
           permission-contents: write # to push to private Specs repo
 
       - name: 'Checkout'
