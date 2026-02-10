@@ -87,7 +87,7 @@ internal class PhoneVendor: Vendor {
     func retrieveCarrierNames() -> String? {
         let systemVersion = UIDevice.current.systemVersion
         let versionComponents = systemVersion.split(separator: ".").compactMap { Int($0) }
-        if versionComponents.count > 0 {
+        if !versionComponents.isEmpty {
             let majorVersion = versionComponents[0]
             
             if majorVersion >= 16 {
