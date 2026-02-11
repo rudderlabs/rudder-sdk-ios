@@ -1,0 +1,30 @@
+name: Manually deploy to Cocoapods(v2)
+
+on:
+  workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-cocoapods-manual:
+    name: Manually deploy to Cocoapods(v2)
+    runs-on: macOS-latest
+    if: startsWith(github.ref, 'refs/heads/master-v2')
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          egress-policy: audit
+
+      - name: Checkout source branch
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Install Cocoapods
+        run: gem install cocoapods
+
+      - name: Publish to CocoaPod
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push --allow-warnings
