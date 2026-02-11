@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.5.1-beta...v2.6.0) (2026-02-11)
+
+
+### Features
+
+* add comprehensive deprecation notices for iOS SDK v2.x ([#584](https://github.com/rudderlabs/rudder-sdk-ios/issues/584)) ([d7956cc](https://github.com/rudderlabs/rudder-sdk-ios/commit/d7956ccf175a7a91491f3c41d5fab66c381480c9))
+
+
+### Bug Fixes
+
+* resolve SwiftLint empty_count violation in AppleUtils ([#585](https://github.com/rudderlabs/rudder-sdk-ios/issues/585)) ([4df73b1](https://github.com/rudderlabs/rudder-sdk-ios/commit/4df73b16887139fc7a70d8ba586d9d4f3c88f021))
+
 ## [2.5.1-beta](https://github.com/rudderlabs/rudder-sdk-ios/compare/v2.5.0-beta...v2.5.1-beta) (2024-04-24)
 
 

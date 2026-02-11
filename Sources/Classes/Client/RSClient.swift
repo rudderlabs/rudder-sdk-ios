@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "This version of the RudderStack iOS SDK is deprecated and is no longer actively maintained. We strongly recommend migrating to our new Swift SDK as soon as possible.")
 @objc
 open class RSClient: NSObject {
     var config: RSConfig?
@@ -44,6 +45,7 @@ open class RSClient: NSObject {
     @objc
     public func configure(with config: RSConfig) {
         self.config = config
+        self.printDeprecationWarning()
         addPlugins()
     }
     
@@ -380,5 +382,36 @@ extension RSClient {
         default:
             break
         }
+    }
+}
+
+extension RSClient {
+    private func printDeprecationWarning() {
+        let warning = """
+        ┌────────────────────────────────────────────────────────────────────┐
+        │                     ⚠️ DEPRECATION WARNING                         │
+        ├────────────────────────────────────────────────────────────────────┤
+        │ This version of the RudderStack iOS SDK is deprecated and is       │
+        │ no longer actively maintained.                                     │
+        │                                                                    │
+        │ Please migrate to the newer Swift-based iOS SDK for continued      │
+        │ support, bug fixes, and new features.                              │
+        │                                                                    │
+        │ Swift SDK Repository:                                              │
+        │ https://github.com/rudderlabs/rudder-sdk-swift                     │
+        │                                                                    │
+        │ Documentation:                                                     │
+        │ https://www.rudderstack.com/docs/sources/event-streams/sdks/       │
+        │ swift-sdk/                                                         │
+        │                                                                    │
+        │ Migration Documentation:                                           │
+        │ https://www.rudderstack.com/docs/sources/event-streams             │
+        │ /sdks/swift-sdk/breaking-changes/ios-v2/migration-guide/           │
+        │                                                                    │
+        │ This SDK will be sunset in the near future. We strongly            │
+        │ recommend migrating as soon as possible.                           │
+        └────────────────────────────────────────────────────────────────────┘
+        """
+        print(warning)
     }
 }
