@@ -192,3 +192,4 @@ More information on RudderStack can be found [**here**](https://github.com/rudde
 ## Contact us
 
 For more information on using the RudderStack iOS SDK, you can [**contact us**](https://rudderstack.com/contact/) or start a conversation on our [**Slack**](https://rudderstack.com/join-rudderstack-slack-community) channel.
+# Documentation update
