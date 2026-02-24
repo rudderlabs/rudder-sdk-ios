@@ -70,9 +70,4 @@ typedef enum {
     GROUP
 } MESSAGE_TYPE;
 
-typedef enum {
-    COUNT,
-    GAUGE
-} METRIC_TYPE;
-
 #endif /* RSEnums_h */
