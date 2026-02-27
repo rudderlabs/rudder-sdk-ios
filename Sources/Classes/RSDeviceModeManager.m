@@ -11,7 +11,6 @@
 #import "RSServerDestination.h"
 #import "RSDeviceModeManager.h"
 #import "RSDeviceModeTransformationManager.h"
-#import "RSMetricsReporter.h"
 
 @implementation RSDeviceModeManager
 
@@ -127,7 +126,6 @@
             }
         } else {
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: initiateFactories: %@ factory is disabled", factory.key]];
-            [RSMetricsReporter report:SDKMETRICS_DM_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_DM_DISABLED, SDKMETRICS_INTEGRATION: destination.destinationDefinition.displayName} andValue:1];
         }
     }
 }
@@ -284,7 +282,6 @@
             }
             RSMessage* transformedMessage = [[RSMessage alloc] initWithDict:transformedPayload[@"event"]];
             [self dumpEvent:transformedMessage toDestinations:@[destinationName] withLogTag:@"dumpTransformedEvents"];
-            [RSMetricsReporter report: SDKMETRICS_DMT_SUCCESS forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: transformedMessage.type} andValue:1];
             continue;
         }
         NSNumber* orderNo = [NSNumber numberWithInt:[transformedPayload[@"orderNo"] intValue]];
@@ -308,7 +305,6 @@
             @try {
                 [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: dumping event %@ to factory %@", logTag, message.event, destination]];
                 [integration dump:message];
-                [RSMetricsReporter report:SDKMETRICS_DM_EVENT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: message.type, SDKMETRICS_INTEGRATION: destination} andValue:1];
             } @catch(NSException *e) {
                 [RSLogger logError:[[NSString alloc] initWithFormat:@"RSDeviceModeManager: %@: Exception while dumping %@ to factory %@ due to %@", logTag, message.event, destination, e.reason]];
             }

@@ -12,7 +12,6 @@
 #import "RSElementCache.h"
 #import "RSMessageType.h"
 #import "RSLogger.h"
-#import "RSMetricsReporter.h"
 
 static RSClient *_instance = nil;
 static RSEventRepository *_repository = nil;
@@ -66,7 +65,6 @@ static NSString* _advertisingId = nil;
 
 - (void) trackMessage:(RSMessage *)message {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self dumpInternal:message type:RSTrack];
@@ -82,7 +80,6 @@ static NSString* _advertisingId = nil;
 
 - (void)trackWithBuilder:(RSMessageBuilder *)builder{
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self dumpInternal:[builder build] type:RSTrack];
@@ -90,7 +87,6 @@ static NSString* _advertisingId = nil;
 
 - (void)track:(NSString *)eventName {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -100,7 +96,6 @@ static NSString* _advertisingId = nil;
 
 - (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -111,7 +106,6 @@ static NSString* _advertisingId = nil;
 
 - (void)track:(NSString *)eventName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -123,7 +117,6 @@ static NSString* _advertisingId = nil;
 
 - (void) screenWithMessage:(RSMessage *)message {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self dumpInternal:message type:RSScreen];
@@ -131,7 +124,6 @@ static NSString* _advertisingId = nil;
 
 - (void)screenWithBuilder:(RSMessageBuilder *)builder {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self dumpInternal:[builder build] type:RSScreen];
@@ -139,7 +131,6 @@ static NSString* _advertisingId = nil;
 
 - (void)screen:(NSString *)screenName {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -152,7 +143,6 @@ static NSString* _advertisingId = nil;
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -170,7 +160,6 @@ static NSString* _advertisingId = nil;
 
 - (void)screen:(NSString *)screenName properties:(NSDictionary<NSString *,NSObject *> *)properties options:(RSOption *)options {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -189,7 +178,6 @@ static NSString* _advertisingId = nil;
 
 - (void)group:(NSString *)groupId{
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -199,7 +187,6 @@ static NSString* _advertisingId = nil;
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -210,7 +197,6 @@ static NSString* _advertisingId = nil;
 
 - (void)group:(NSString *)groupId traits:(NSDictionary *)traits options:(RSOption *)options {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSMessageBuilder *builder = [[RSMessageBuilder alloc] init];
@@ -222,7 +208,6 @@ static NSString* _advertisingId = nil;
 
 - (void)alias:(NSString *)newId {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self alias:newId previousId:nil options:nil];
@@ -234,7 +219,6 @@ static NSString* _advertisingId = nil;
 
 - (void) alias:(NSString *)newId previousId:(NSString *)previousId options:(RSOption *) options {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSContext *rc = [RSElementCache getContext];
@@ -266,7 +250,6 @@ static NSString* _advertisingId = nil;
 
 - (void) identifyWithMessage:(RSMessage *)message {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self dumpInternal:message type:RSIdentify];
@@ -274,7 +257,6 @@ static NSString* _advertisingId = nil;
 
 - (void)identifyWithBuilder:(RSMessageBuilder *)builder {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     [self identifyWithMessage:[builder build]];
@@ -282,7 +264,6 @@ static NSString* _advertisingId = nil;
 
 - (void)identify:(NSString*)userId {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     RSTraits* traitsCopy = [[RSTraits alloc] init];
@@ -296,7 +277,6 @@ static NSString* _advertisingId = nil;
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     traits = [traits mutableCopy];
@@ -311,7 +291,6 @@ static NSString* _advertisingId = nil;
 
 - (void)identify:(NSString *)userId traits:(NSDictionary *)traits options:(RSOption *)options {
     if ([RSClient getOptStatus]) {
-        [self reportDiscardedEvent];
         return;
     }
     traits = [traits mutableCopy];
@@ -370,10 +349,6 @@ static NSString* _advertisingId = nil;
     else {
         [RSLogger logError:@"SDK is not initialised. Hence aborting optOut API call"];
     }
-}
-
-- (void)reportDiscardedEvent {
-    [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_OPT_OUT} andValue:1];
 }
 
 - (void)shutdown {
@@ -547,7 +522,6 @@ static NSString* _advertisingId = nil;
 - (void)openURL:(NSURL *)url options:(NSDictionary<NSString *,NSObject *> *)options
 {
     if ([RSClient getOptStatus]) {
-            [self reportDiscardedEvent];
             return;
     }
     NSString *urlString = url.absoluteString;
