@@ -7,7 +7,6 @@
 //
 
 #import "RSDeviceModeTransformationManager.h"
-#import "RSMetricsReporter.h"
 
 int const DMT_BATCH_SIZE = 12;
 int const MAX_RETRIES = 2;  // Maximum number of retries
@@ -65,7 +64,6 @@ int deviceModeSleepCount = 0;
                 NSString* responsePayload = response.responsePayload;
                 if (response.state == WRONG_WRITE_KEY) {
                     [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Wrong WriteKey. Aborting the TransformationProcessor."];
-                    [RSMetricsReporter report:SDKMETRICS_DMT_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_WRITEKEY_INVALID} andValue:1];
                     break;
                 } else if (response.state == INVALID_URL) {
                     [RSLogger logDebug:@"RSDeviceModeTransformationManager: TransformationProcessor: Invalid Data Plane URL. Aborting the TransformationProcessor"];
@@ -75,7 +73,6 @@ int deviceModeSleepCount = 0;
                     break;
                 } else if (response.state == BAD_REQUEST) {
                     [RSLogger logWarn:@"RSDeviceModeTransformationManager: TransformationProcessor: Bad Request, dumping back the original events to the factories"];
-                    [RSMetricsReporter report:SDKMETRICS_DMT_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_BAD_REQUEST} andValue:1];
                     [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationError:request.batch];
                     [strongSelf completeDeviceModeEventProcessing:dbMessage];
                 }
@@ -85,16 +82,13 @@ int deviceModeSleepCount = 0;
                         retryCount = 0;
                         deviceModeSleepCount = 0;
                         [RSLogger logWarn:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Failed to transform events even after %d retries, hence dumping back the original events to the factories", MAX_RETRIES]];
-                        [RSMetricsReporter report:SDKMETRICS_DMT_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MAX_RETRIES_EXHAUSTED} andValue:1];
                         [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationError:request.batch];
                         [strongSelf completeDeviceModeEventProcessing:dbMessage];
                     } else {
                         [RSLogger logDebug:[NSString stringWithFormat:@"RSDeviceModeTransformationManager: TransformationProcessor: Network Error, Retrying again in %.2f s", (NSTimeInterval)delay/1000]];
-                        [RSMetricsReporter report:SDKMETRICS_DMT_RETRY forMetricType:COUNT withProperties:nil andValue:1];
                         usleep((useconds_t)delay* 1000);
                     }
                 } else if (response.state == RESOURCE_NOT_FOUND) {  // So when the customer is not eligible for Device Mode Transformations, we get RESOURCE_NOT_FOUND, and in this case we will dump the original methods itself to the factories.
-                    [RSMetricsReporter report:SDKMETRICS_DMT_DISCARD forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_RESOURCE_NOT_FOUND} andValue:1];
                     deviceModeSleepCount = 0;
                     [strongSelf->deviceModeManager dumpOriginalEventsOnTransformationsFeatureDisabled:request.batch];
                     [strongSelf completeDeviceModeEventProcessing:dbMessage];
@@ -149,7 +143,6 @@ int deviceModeSleepCount = 0;
             transformationEvent.destinationIds = destinationIds;
             transformationEvent.orderNo = [NSNumber numberWithInt:[messageIds[i] intValue]];
             [request.batch addObject:transformationEvent];
-            [RSMetricsReporter report:SDKMETRICS_DMT_SUBMITTED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: message.type} andValue:1];
         }
     }
     return request;

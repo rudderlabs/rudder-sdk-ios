@@ -7,20 +7,32 @@ permissions:
 
 jobs:
   draft-new-release:
-    permissions:
-      contents: write  # for Git to git push
     name: Draft a new release(v2)
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/heads/develop-v2') || startsWith(github.ref, 'refs/heads/hotfix-v2/')
+    permissions:
+      contents: read # GITHUB_TOKEN only needs read access
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
         with:
           egress-policy: audit
 
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          repositories: rudder-sdk-ios
+          permission-contents: write # to create commits, tags, and push branches
+          permission-pull-requests: write # to create and update PRs
+          permission-members: read # to request team reviewers on PRs
+
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
       - name: Set Node 16
@@ -28,15 +40,8 @@ jobs:
         with:
           node-version: 16
 
-      # In order to make a commit, we need to initialize a user.
-      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
-      - name: Initialize mandatory git config
-        run: |
-          git config user.name "GitHub actions"
-          git config user.email noreply@github.com
-
       # Calculate the next release version based on conventional semantic release
-      - name: Create release branch
+      - name: Calculate release version
         id: create-release
         env:
           HUSKY: 0
@@ -60,14 +65,22 @@ jobs:
           echo "Release type is $release_type"
           echo "New version is $new_version"
           echo "New release branch name is $branch_name"
-          git checkout -b "$branch_name"
-          git push --set-upstream origin "$branch_name"
 
           echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
           echo "CURRENT_VERSION_VALUE=$current_version" >> $GITHUB_ENV
           echo "NEW_VERSION_VALUE=$new_version" >> $GITHUB_ENV
+
+      - name: Create release branch via GitHub API
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          BASE_SHA=$(git rev-parse origin/master-v2)
+          gh api repos/${{ github.repository }}/git/refs \
+            --method POST \
+            -f ref="refs/heads/${{ steps.create-release.outputs.branch_name }}" \
+            -f sha="$BASE_SHA"
 
       - name: Update changelog & bump version
         id: finish-release
@@ -80,21 +93,31 @@ jobs:
           echo "Current version: $CURRENT_VERSION_VALUE"
           echo "New version: $NEW_VERSION_VALUE"
           npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md Sources/Classes/Common/Constants/RSVersion.swift sonar-project.properties
-          git add README.md Sources/Classes/Common/Constants/RSVersion.swift sonar-project.properties
           echo ${{ steps.create-release.outputs.new_version }}
           echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          npx standard-version -a --skip.tag
+          # Run standard-version to generate CHANGELOG.md and package.json updates (skip commit/tag)
+          npx standard-version --skip.commit --skip.tag
 
-      - name: Push new version in release branch & tag
-        run: |
-          git push
+      - name: Create verified commit via API
+        uses: ryancyq/github-signed-commit@e9f3b28c80da7be66d24b8f501a5abe82a6b855f # v1.2.0
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        with:
+          branch-name: ${{ steps.create-release.outputs.branch_name }}
+          commit-message: 'chore(release): v${{ steps.create-release.outputs.new_version }}'
+          files: |
+            CHANGELOG.md
+            package.json
+            README.md
+            Sources/Classes/Common/Constants/RSVersion.swift
+            sonar-project.properties
 
       - name: Create pull request into master
         uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 #v2
         with:
           source_branch: ${{ steps.create-release.outputs.branch_name }}
           destination_branch: "master-v2"
-          github_token: ${{ secrets.PAT }}
+          github_token: ${{ steps.generate-token.outputs.token }}
           pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into master"
           pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
           pr_reviewer: "@rudderlabs/sdk-ios"

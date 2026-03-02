@@ -13,15 +13,9 @@ let package = Package(
             targets: ["Rudder"]
         )
     ],
-    dependencies: [
-        .package(name: "MetricsReporter", url: "https://github.com/rudderlabs/metrics-reporter-ios", .exact("2.0.1")),
-    ],
     targets: [
         .target(
             name: "Rudder",
-            dependencies: [
-                .product(name: "MetricsReporter", package: "MetricsReporter"),
-            ],
             path: "Sources",
             sources: ["Classes/"],
             resources: [
@@ -34,7 +28,7 @@ let package = Package(
         ),
         .testTarget(
             name: "RudderTests",
-            dependencies: ["Rudder", "MetricsReporter"],
+            dependencies: ["Rudder"],
             path: "Tests"
         ),
     ]

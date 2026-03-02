@@ -12,11 +12,24 @@ jobs:
     name: Publish new release
     runs-on: ubuntu-latest
     if: (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/')) && github.event.pull_request.merged == true # only merged pull requests must trigger this job
+    permissions:
+      contents: read # GITHUB_TOKEN only needs read access
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
         with:
           egress-policy: audit
+
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          repositories: rudder-sdk-ios
+          permission-contents: write # to create releases and tags
+          permission-pull-requests: write # to create and update PRs
+          permission-members: read # to request team reviewers on PRs
 
       - name: Extract version from branch name (for release branches)
         id: extract-version
@@ -29,6 +42,7 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
       - name: Set Node 16
@@ -36,19 +50,12 @@ jobs:
         with:
           node-version: 16
 
-      # In order to make a commit, we need to initialize a user.
-      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
-      - name: Initialize mandatory git config
-        run: |
-          git config user.name "GitHub actions"
-          git config user.email noreply@github.com
-
       - name: Create Github Release
         id: create_release
         env:
           HUSKY: 0
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
@@ -57,7 +64,7 @@ jobs:
         with:
           source_branch: "master"
           destination_branch: "develop"
-          github_token: ${{ secrets.PAT }}
+          github_token: ${{ steps.generate-token.outputs.token }}
           pr_title: "chore(release): pulling master into develop post release v${{ steps.extract-version.outputs.release_version }}"
           pr_body: ":crown: *An automated PR*"
           pr_reviewer: "@rudderlabs/sdk-ios"
@@ -82,11 +89,22 @@ jobs:
     name: Generate and Upload XCFramework
     runs-on: macos-latest
     needs: release
+    permissions:
+      contents: read # GITHUB_TOKEN only needs read access
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
         with:
           egress-policy: audit
+
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          repositories: rudder-sdk-ios
+          permission-contents: write # to upload release assets
 
       - name: Extract version from branch name (for release branches)
         id: extract-version
@@ -99,6 +117,7 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
       - name: Install xcpretty
@@ -115,10 +134,10 @@ jobs:
           sh ./scripts/generate-xcframework.sh
 
       - name: Upload Release Artifact
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           zip -r Rudder-xcframeworks.zip xcframeworks
           shasum -a 256 Rudder-xcframeworks.zip >Rudder-xcframeworks.sha256
           gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
           gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
-        env:
-          GH_TOKEN: ${{ secrets.PAT }}
