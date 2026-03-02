@@ -43,6 +43,9 @@ on:
         auto_merge_disabled,
       ]
 
+permissions:
+  contents: read
+
 jobs:
   request:
     runs-on: ubuntu-latest
