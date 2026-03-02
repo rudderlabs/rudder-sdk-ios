@@ -7,7 +7,6 @@
 //
 
 #import "RSEventRepository.h"
-#import "RSMetricsReporter.h"
 
 static RSEventRepository* _instance;
 @implementation RSEventRepository
@@ -87,9 +86,6 @@ static RSEventRepository* _instance;
         
         [RSLogger logDebug:@"EventRepository: Initiating RSServerConfigManager"];
         self->configManager = [[RSServerConfigManager alloc] init:writeKey rudderConfig:config andNetworkManager:self->networkManager];
-        
-        [RSLogger logDebug:@"EventRepository: Initiating RSMetricsReporter"];
-        [RSMetricsReporter initiateWithWriteKey:_writeKey preferenceManager:self->preferenceManager andConfig:_config];
         
         [RSLogger logDebug:@"EventRepository: Initiating RSDBPersistentManager"];
         self->dbpersistenceManager = [[RSDBPersistentManager alloc] initWithDBEncryption:_config.dbEncryption];
@@ -173,8 +169,6 @@ static RSEventRepository* _instance;
             RSServerConfigSource *serverConfig = [strongSelf->configManager getConfig];
             int receivedError = [strongSelf->configManager getError];
             if (serverConfig != nil) {
-                [RSMetricsReporter setMetricsCollectionEnabled:serverConfig.isMetricsCollectionEnabled];
-                [RSMetricsReporter setErrorsCollectionEnabled:serverConfig.isErrorsCollectionEnabled];
                 // initiate the processor if the source is enabled
                 dispatch_sync(strongSelf->repositoryQueue, ^{
                     strongSelf->isSDKEnabled = serverConfig.isSourceEnabled;
@@ -206,10 +200,8 @@ static RSEventRepository* _instance;
                         [self->deviceModeManager handleCaseWhenNoDeviceModeFactoryIsPresent];
                         [RSLogger logDebug:@"EventRepository: no device mode present"];
                     }
-                    [RSMetricsReporter report:SDKMETRICS_SC_ATTEMPT_SUCCESS forMetricType:COUNT withProperties:nil andValue:1];
                 } else {
                     [RSLogger logDebug:@"EventRepository: source is disabled in your Dashboard"];
-                    [RSMetricsReporter report:SDKMETRICS_SC_ATTEMPT_ABORT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_SOURCE_DISABLED} andValue:1];
                     [strongSelf->dbpersistenceManager flushEventsFromDB];
                 }
                 strongSelf->isSDKInitialized = YES;
@@ -226,11 +218,9 @@ static RSEventRepository* _instance;
 }
 
 - (void) dump:(RSMessage *)message {
-    [RSMetricsReporter report:SDKMETRICS_SUBMITTED_EVENTS forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: message.type} andValue:1];
     dispatch_sync(repositoryQueue, ^{
         if (message == nil || !self->isSDKEnabled) {
             if (!self->isSDKEnabled)
-                [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_SDK_DISABLED} andValue:1];
             return;
         }
     });
@@ -247,7 +237,6 @@ static RSEventRepository* _instance;
     unsigned int messageSize = [RSUtils getUTF8Length:jsonString];
     if (messageSize > MAX_EVENT_SIZE) {
         [RSLogger logError:[NSString stringWithFormat:@"dump: Event size exceeds the maximum permitted event size(%iu)", MAX_EVENT_SIZE]];
-        [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_MSG_SIZE_INVALID} andValue:1];
         return;
     }
     [RSLogger logDebug:[[NSString alloc] initWithFormat:@"dump: %@", jsonString]];
@@ -281,7 +270,6 @@ static RSEventRepository* _instance;
                 mergedCustomContextValues[key] = [defaultOption.customContexts[key] mutableCopy];
             }
         }
-        
         message.customContexts = mergedCustomContextValues;
     }
 }

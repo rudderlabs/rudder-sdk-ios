@@ -8,7 +8,6 @@
 
 #import "RSDBPersistentManager.h"
 #import "RSLogger.h"
-#import "RSMetricsReporter.h"
 #import <sqlite3.h>
 #import "RSDatabase.h"
 #import "RSDatabaseProvider.h"
@@ -56,7 +55,6 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
     if (dbEncryption == nil) {
         return [RSDefaultDatabaseProvider new];
     } else {
-        [RSMetricsReporter report:SDKMETRICS_DB_ENCRYPT forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_CREATED} andValue:1];
         return dbEncryption.databaseProvider;
     }
 }
@@ -452,7 +450,6 @@ NSString* _Nonnull const SQLCIPHER_TEST_DB_NAME = @"rl_sqlcipher_test_db.sqlite"
     @synchronized (self) {
         if([self execSQL:deleteSqlString]) {
             [RSLogger logDebug:@"RSDBPersistentManager: clearEventsFromDB: Successfully deleted events from DB"];
-            [RSMetricsReporter report:SDKMETRICS_EVENTS_DISCARDED forMetricType:COUNT withProperties:@{SDKMETRICS_TYPE: SDKMETRICS_OUT_OF_MEMORY} andValue:(float)messageIds.count];
             return;
         }
         [RSLogger logError:@"RSDBPersistentManager: clearEventsFromDB: Failed to delete events from DB"];
