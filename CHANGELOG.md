@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.2...v1.32.0) (2026-03-02)
+
+
+### Features
+
+* remove MetricsReporter, RudderKit, and RSCrashReporter dependencies from iOS v1 ([#592](https://github.com/rudderlabs/rudder-sdk-ios/issues/592)) ([b5edba1](https://github.com/rudderlabs/rudder-sdk-ios/commit/b5edba1a555c9491a64ea9b434f21da796dc0f72))
+
 ### [1.31.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.1...v1.31.2) (2026-01-20)
 
 
