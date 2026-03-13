@@ -12,6 +12,8 @@
     </a>
 </p>
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/rudderlabs/rudder-sdk-ios)
+
 <p align="center">
   <b>
     <a href="https://rudderstack.com">Website</a>
