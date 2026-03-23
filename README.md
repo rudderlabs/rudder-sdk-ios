@@ -9,7 +9,10 @@
 <p align="center">
   <a href="https://cocoapods.org/pods/Rudder">
     <img src="https://img.shields.io/static/v1?label=pod&message=v1.32.0&color=blue&style=flat">
-    </a>
+  </a>
+  <a href="https://deepwiki.com/rudderlabs/rudder-sdk-ios">
+    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
+  </a>
 </p>
 
 <p align="center">
