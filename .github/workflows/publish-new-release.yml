@@ -33,10 +33,11 @@ jobs:
 
       - name: Extract version from branch name (for release branches)
         id: extract-version
+        env:
+          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
         run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          VERSION=${BRANCH_NAME#hotfix-}
-          VERSION=${VERSION#release/}
+          VERSION="${BRANCH_NAME#hotfix-}"
+          VERSION="${VERSION#release/}"
           echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout source branch
@@ -108,10 +109,11 @@ jobs:
 
       - name: Extract version from branch name (for release branches)
         id: extract-version
+        env:
+          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
         run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          VERSION=${BRANCH_NAME#hotfix-}
-          VERSION=${VERSION#release/}
+          VERSION="${BRANCH_NAME#hotfix-}"
+          VERSION="${VERSION#release/}"
           echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout source branch
@@ -136,8 +138,9 @@ jobs:
       - name: Upload Release Artifact
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          RELEASE_VERSION: ${{ steps.extract-version.outputs.release_version }}
         run: |
           zip -r Rudder-xcframeworks.zip xcframeworks
           shasum -a 256 Rudder-xcframeworks.zip >Rudder-xcframeworks.sha256
-          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.zip
-          gh release upload v${{ steps.extract-version.outputs.release_version }} Rudder-xcframeworks.sha256
+          gh release upload "v${RELEASE_VERSION}" Rudder-xcframeworks.zip
+          gh release upload "v${RELEASE_VERSION}" Rudder-xcframeworks.sha256
