@@ -43,11 +43,15 @@ on:
         auto_merge_disabled,
       ]
 
+permissions:
+  contents: read
+
 jobs:
   request:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read # to read PR metadata for Notion sync
+      issues: read
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
