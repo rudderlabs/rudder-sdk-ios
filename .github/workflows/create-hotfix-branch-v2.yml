@@ -7,11 +7,16 @@ on:
         description: Hotfix branch name
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   create-branch:
     name: Create new branch
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master-v2'
+    permissions:
+      contents: write
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
