@@ -16,7 +16,7 @@ jobs:
       contents: read # GITHUB_TOKEN only needs read access
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
         with:
           egress-policy: audit
 
@@ -32,10 +32,11 @@ jobs:
 
       - name: Extract version from branch name (for release branches)
         id: extract-version
+        env:
+          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
         run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
-          VERSION=${BRANCH_NAME#hotfix-}
-          VERSION=${VERSION#release/}
+          VERSION="${BRANCH_NAME#hotfix-}"
+          VERSION="${VERSION#release/}"
           echo "release_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout source branch
@@ -55,12 +56,13 @@ jobs:
           HUSKY: 0
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ steps.generate-token.outputs.token }}
+          RELEASE_VERSION: ${{ steps.extract-version.outputs.release_version }}
         run: |
           git for-each-ref refs/tags
-          git tag --delete ${{ steps.extract-version.outputs.release_version }}
-          git push --delete origin ${{ steps.extract-version.outputs.release_version }}
-          git tag -a v${{ steps.extract-version.outputs.release_version }} -m "chore: release v${{ steps.extract-version.outputs.release_version }}"
-          git push origin refs/tags/v${{ steps.extract-version.outputs.release_version }}
+          git tag --delete "$RELEASE_VERSION"
+          git push --delete origin "$RELEASE_VERSION"
+          git tag -a "v${RELEASE_VERSION}" -m "chore: release v${RELEASE_VERSION}"
+          git push origin "refs/tags/v${RELEASE_VERSION}"
           DEBUG=conventional-github-releaser npx conventional-github-releaser -p angular --config github-release.config.js
 
       - name: Create pull request into develop
