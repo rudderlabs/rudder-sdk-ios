@@ -60,33 +60,4 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          set -euo pipefail
-
-          pod_version="$(jq -r .version package.json)"
-          pr_title="deploy: Rudder ${pod_version}"
-          specs_repo="${HOME}/.cocoapods/repos/rudderlabs"
-
-          cd "$specs_repo"
-
-          if ! git diff --quiet origin/master...HEAD; then
-            existing_pr="$(gh pr list --repo rudderlabs/Specs --state open --json title,url | jq -r --arg title "$pr_title" '.[] | select(.title == $title) | .url' | head -n 1)"
-            if [ -n "$existing_pr" ]; then
-              echo "A Specs PR already exists for Rudder ${pod_version}: $existing_pr"
-              exit 0
-            fi
-
-            branch_name="deploy/rudder-${pod_version}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-            git checkout -B "$branch_name"
-            git push origin "HEAD:refs/heads/${branch_name}"
-
-            gh pr create \
-              --repo rudderlabs/Specs \
-              --base master \
-              --head "$branch_name" \
-              --title "$pr_title" \
-              --body "Adds Rudder ${pod_version} to the private CocoaPods Specs repo.
-
-          Created by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}. A human review is required by the Specs repository ruleset before merge."
-          else
-            echo "No private Specs changes detected for Rudder ${pod_version}."
-          fi
+          bash Scripts/create-private-specs-pr.sh
