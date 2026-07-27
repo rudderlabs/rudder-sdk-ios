@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.32.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.32.1...v1.32.2) (2026-07-27)
+
+
+### Bug Fixes
+
+* **ci:** publish private podspecs via Specs PR ([#608](https://github.com/rudderlabs/rudder-sdk-ios/issues/608)) ([c7596b5](https://github.com/rudderlabs/rudder-sdk-ios/commit/c7596b5cc68210395c77c56e1a103b55b85f6ef7))
+* **persistence:** move preference disk writes off the main thread ([#611](https://github.com/rudderlabs/rudder-sdk-ios/issues/611)) ([f485a47](https://github.com/rudderlabs/rudder-sdk-ios/commit/f485a47e662d907cfe01bfb3c79828d196343ec7))
+
 ### [1.32.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.32.0...v1.32.1) (2026-06-01)
 
 
