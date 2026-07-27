@@ -126,6 +126,9 @@ class DefaultsPersistenceTests: XCTestCase {
         XCTAssertLessThan(elapsed, 0.5, "100 main-thread writes took \(elapsed)s — writes are blocking on disk I/O")
     }
 
+    // RSDefaultsPersistence registers the lifecycle observers only outside TARGET_OS_WATCH, so these
+    // notification-driven flush tests apply on iOS/tvOS but not watchOS.
+#if !os(watchOS)
     /// THE FIX (lifecycle net). Posting the terminate notification must synchronously drain the write
     /// queue to disk (`flushToDisk:` → `writeToFileSync`). We read the plist FILE directly with NO
     /// sleep: `writeToFileSync` does a `dispatch_sync` on the same serial queue, so it waits behind
@@ -150,6 +153,7 @@ class DefaultsPersistenceTests: XCTestCase {
         let onDisk = NSDictionary(contentsOf: url)
         XCTAssertNil(onDisk?["rl_rm"], "removal was not flushed to disk on background")
     }
+#endif
 
     /// THE FIX (RSPreferenceManager). Removing the deprecated `NSUserDefaults synchronize` must not
     /// break persistence — the value is still readable and lands in standard defaults (the OS persists
