@@ -68,7 +68,7 @@ jobs:
           github_token: ${{ steps.generate-token.outputs.token }}
           pr_title: "chore(release): pulling master into develop post release v${{ steps.extract-version.outputs.release_version }}"
           pr_body: ":crown: *An automated PR*"
-          pr_reviewer: "@rudderlabs/sdk-ios"
+          pr_reviewer: "@rudderlabs/sdk_team"
 
       - name: Delete hotfix release branch
         uses: koj-co/delete-merged-action@63a03c35810a8a7d4840d18793c0f68ff8b59450 # master

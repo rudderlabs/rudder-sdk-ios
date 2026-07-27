@@ -126,6 +126,12 @@ jobs:
         run: |
           pod repo add rudderlabs https://x-access-token:${GH_TOKEN}@github.com/rudderlabs/Specs.git
 
-      - name: 'Add Podspec to repo'
+      - name: 'Add Podspec to local private Spec repo'
         run: |
-          pod repo push rudderlabs Rudder.podspec.json
+          pod repo push rudderlabs Rudder.podspec.json --allow-warnings --local-only
+
+      - name: 'Create private Specs PR'
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          bash Scripts/create-private-specs-pr.sh

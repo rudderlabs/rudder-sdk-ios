@@ -30,7 +30,8 @@ jobs:
           app-id: ${{ vars.RELEASE_APP_ID }}
           private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
           repositories: rudder-sdk-ios,Specs
-          permission-contents: write # to push to private Specs repo
+          permission-contents: write # to push branches in private Specs repo
+          permission-pull-requests: write # to create PRs in private Specs repo
 
       - name: 'Checkout'
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -51,6 +52,12 @@ jobs:
         run: |
           pod repo add rudderlabs https://x-access-token:${GH_TOKEN}@github.com/rudderlabs/Specs.git
         
-      - name: 'Add Podspec to repo'
+      - name: 'Add Podspec to local private Spec repo'
         run: |
-          pod repo push rudderlabs Rudder.podspec.json --allow-warnings
+          pod repo push rudderlabs Rudder.podspec.json --allow-warnings --local-only
+
+      - name: 'Create private Specs PR'
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          bash Scripts/create-private-specs-pr.sh
