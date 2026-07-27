@@ -6,6 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#if !TARGET_OS_WATCH
+#import <UIKit/UIKit.h>
+#endif
 #import "RSUtils.h"
 #import "RSLogger.h"
 #import "RSDefaultsPersistence.h"
@@ -32,8 +35,24 @@ static NSString * const standardDefaultsCopied = @"standardDefaultsCopied";
         fileURL = [RSUtils getFileURL:@"rsDefaultsPersistence.plist"];
         dataAccessQueue = dispatch_queue_create("com.rudderstack.defaultspersistence", DISPATCH_QUEUE_SERIAL);
         [self loadFromFile];
+        [self registerForLifecycleFlush];
     }
     return self;
+}
+
+// Disk writes are performed asynchronously to avoid blocking the calling thread (the SDK is
+// frequently initialised on the main thread). To make sure a pending write is not lost if the
+// app is suspended or terminated, we flush synchronously on background/terminate.
+- (void)registerForLifecycleFlush {
+#if !TARGET_OS_WATCH
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(flushToDisk) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(flushToDisk) name:UIApplicationWillTerminateNotification object:nil];
+#endif
+}
+
+- (void)flushToDisk {
+    [self writeToFileSync];
 }
 
 - (void)loadFromFile {
@@ -80,7 +99,7 @@ static NSString * const standardDefaultsCopied = @"standardDefaultsCopied";
 }
 
 - (void)writeObject:(id)object forKey:(NSString *)key {
-    dispatch_sync(dataAccessQueue, ^{
+    dispatch_async(dataAccessQueue, ^{
         if (object && key) {
             data[key] = object;
             [self writeToFile];
@@ -98,7 +117,7 @@ static NSString * const standardDefaultsCopied = @"standardDefaultsCopied";
 }
 
 - (void)removeObjectForKey:(NSString *)key {
-    dispatch_sync(dataAccessQueue, ^{
+    dispatch_async(dataAccessQueue, ^{
         [data removeObjectForKey:key];
         [self writeToFile];
     });

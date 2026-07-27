@@ -46,9 +46,9 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void)writeObject:(id)object forKey:(NSString *)key {
+    // synchronize is deprecated since iOS 12 and forces a blocking disk write on the calling thread; the OS persists automatically
     [[NSUserDefaults standardUserDefaults] setValue:object forKey:key];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     // writing the values to persistence layer as well
     [[RSDefaultsPersistence sharedInstance] writeObject:object forKey:key];
 }
@@ -81,9 +81,9 @@ NSString *const RSEventDeletionStatus = @"rl_event_deletion_status";
 }
 
 - (void)removeObjectForKey:(NSString *)key {
+    // synchronize is deprecated since iOS 12 and forces a blocking disk write on the calling thread; the OS persists automatically
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     // deleting the values from persistence layer as well
     [[RSDefaultsPersistence sharedInstance] removeObjectForKey:key];
 }
