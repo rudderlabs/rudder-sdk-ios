@@ -46,12 +46,12 @@ static NSString * const standardDefaultsCopied = @"standardDefaultsCopied";
 - (void)registerForLifecycleFlush {
 #if !TARGET_OS_WATCH
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(flushToDisk) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [notificationCenter addObserver:self selector:@selector(flushToDisk) name:UIApplicationWillTerminateNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(flushToDisk:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [notificationCenter addObserver:self selector:@selector(flushToDisk:) name:UIApplicationWillTerminateNotification object:nil];
 #endif
 }
 
-- (void)flushToDisk {
+- (void)flushToDisk:(NSNotification *)notification {
     [self writeToFileSync];
 }
 
