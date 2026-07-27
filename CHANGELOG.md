@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.32.1](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.32.0...v1.32.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* **podspec:** enable DEFINES_MODULE on Rudder.podspec ([#604](https://github.com/rudderlabs/rudder-sdk-ios/issues/604)) ([c66dd84](https://github.com/rudderlabs/rudder-sdk-ios/commit/c66dd847e8e2cbba2213e9b76669b2c0a408ff47))
+
 ## [1.32.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.31.2...v1.32.0) (2026-03-02)
 
 
