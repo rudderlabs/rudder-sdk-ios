@@ -2,14 +2,44 @@ name: Deploy to Cocoapods
 
 on:
   release:
-    types: [created]
+    types: [published]
     
 permissions:
   contents: read
 
 jobs:
+  validate:
+    name: Validate v1 release
+    runs-on: ubuntu-latest
+    outputs:
+      is-v1: ${{ steps.release.outputs.is-v1 }}
+    steps:
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+      with:
+        egress-policy: audit
+    - name: Checkout master
+      uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      with:
+        ref: master
+        fetch-depth: 0
+    - name: Check tag ancestry
+      id: release
+      env:
+        TAG: ${{ github.event.release.tag_name }}
+      run: |
+        git fetch --force origin "refs/tags/${TAG}:refs/tags/${TAG}"
+        if [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]] &&
+           git merge-base --is-ancestor "${TAG}^{commit}" HEAD; then
+          echo "is-v1=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "is-v1=false" >> "$GITHUB_OUTPUT"
+        fi
+
   build:
     name: Deploy to Cocoapods
+    needs: validate
+    if: needs.validate.outputs.is-v1 == 'true'
     runs-on: macOS-latest
     steps:
     - name: Harden the runner (Audit all outbound calls)
@@ -19,6 +49,8 @@ jobs:
 
     - name: Checkout source branch
       uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      with:
+        ref: ${{ github.event.release.tag_name }}
       
     - name: Install Cocoapods
       run: gem install cocoapods

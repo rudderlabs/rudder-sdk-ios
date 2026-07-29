@@ -1,3 +1,4 @@
+<!-- x-release-please-start-version -->
 <p align="center">
   <a href="https://rudderstack.com/">
     <img src="https://user-images.githubusercontent.com/59817155/121357083-1c571300-c94f-11eb-8cc7-ce6df13855c9.png">
@@ -103,6 +104,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.32.2")
+        // x-release-please-end
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

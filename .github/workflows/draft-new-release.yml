@@ -1,4 +1,7 @@
-name: Draft new release
+# The active v1 SDK preserves develop -> master -> develop.
+# This workflow promotes code only; release-please owns versioning and releases.
+
+name: Promote v1 Release Candidate
 
 on: workflow_dispatch
 
@@ -6,119 +9,78 @@ permissions:
   contents: read
 
 jobs:
-  draft-new-release:
-    name: Draft a new release
+  promote-release-candidate:
+    name: Promote v1 release candidate to master
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/heads/develop') || startsWith(github.ref, 'refs/heads/hotfix/')
-    permissions:
-      contents: read # GITHUB_TOKEN only needs read access
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
         with:
           egress-policy: audit
 
-      - name: Generate GitHub App Token
+      - name: Generate GitHub App token
         id: generate-token
-        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ vars.RELEASE_APP_ID }}
           private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
-          repositories: rudder-sdk-ios
-          permission-contents: write # to create commits, tags, and push branches
-          permission-pull-requests: write # to create and update PRs
-          permission-members: read # to request team reviewers on PRs
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
 
       - name: Checkout source branch
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Set Node 16
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 16
-
-      # Calculate the next release version based on conventional semantic release
-      - name: Calculate release version
-        id: create-release
-        env:
-          HUSKY: 0
+      - name: Validate releasable changes
         run: |
-          source_branch_name=${GITHUB_REF##*/}
-          release_type=release
-          grep -q "hotfix/" <<< "${GITHUB_REF}" && release_type=hotfix-release
-          git fetch origin master
-          git fetch --tags origin
-          git merge origin/master
-          current_version=$(jq -r .version package.json)
+          git fetch --no-tags origin master
+          if ! git merge-base --is-ancestor origin/master HEAD; then
+            echo "${GITHUB_REF_NAME} does not contain the current master branch."
+            exit 1
+          fi
 
-          npx standard-version --skip.commit --skip.tag --skip.changelog
-          new_version=$(jq -r .version package.json)
-          git reset --hard
+          commit_count=$(git rev-list --count origin/master..HEAD)
+          if [[ "$commit_count" -eq 0 ]]; then
+            echo "No commits are available to promote."
+            exit 1
+          fi
 
-          branch_name="${release_type}/${new_version}"
-
-          echo "Source branch for new release is $source_branch_name"
-          echo "Current version is $current_version"
-          echo "Release type is $release_type"
-          echo "New version is $new_version"
-          echo "New release branch name is $branch_name"
-
-          echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
-          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
-          echo "new_version=$new_version" >> $GITHUB_OUTPUT
-          echo "CURRENT_VERSION_VALUE=$current_version" >> $GITHUB_ENV
-          echo "NEW_VERSION_VALUE=$new_version" >> $GITHUB_ENV
-
-      - name: Create release branch via GitHub API
+      - name: Create promotion branch and pull request
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          BASE_SHA=$(git rev-parse origin/master)
-          gh api repos/${{ github.repository }}/git/refs \
-            --method POST \
-            -f ref="refs/heads/${{ steps.create-release.outputs.branch_name }}" \
-            -f sha="$BASE_SHA"
+          branch_type=release
+          if [[ "$GITHUB_REF_NAME" == hotfix/* ]]; then
+            branch_type=hotfix
+          fi
 
-      - name: Update changelog & bump version
-        id: finish-release
-        env:
-          HUSKY: 0
-        run: |
-          npm i -g conventional-changelog-cli@2.2.2
-          SUMMARY=$(((npx conventional-changelog -u) 2>&1) | sed "s/*/<br> */g" | sed "s/#/ /g" | tr -d '\n' || true)
-          echo $SUMMARY
-          echo "Current version: $CURRENT_VERSION_VALUE"
-          echo "New version: $NEW_VERSION_VALUE"
-          npx replace $CURRENT_VERSION_VALUE $NEW_VERSION_VALUE README.md Sources/Classes/Headers/RSVersion.h sonar-project.properties
-          echo ${{ steps.create-release.outputs.new_version }}
-          echo "commit_summary=$SUMMARY" >> $GITHUB_OUTPUT
-          # Run standard-version to generate CHANGELOG.md and package.json updates (skip commit/tag)
-          npx standard-version --skip.commit --skip.tag
+          branch_name="${branch_type}/candidate-${GITHUB_RUN_ID}"
+          source_sha=$(git rev-parse HEAD)
+          if ! gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/${branch_name}" >/dev/null 2>&1; then
+            gh api "repos/${GITHUB_REPOSITORY}/git/refs" \
+              --method POST \
+              -f ref="refs/heads/${branch_name}" \
+              -f sha="$source_sha"
+          fi
 
-      - name: Create verified commit via API
-        uses: ryancyq/github-signed-commit@e9f3b28c80da7be66d24b8f501a5abe82a6b855f # v1.2.0
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        with:
-          branch-name: ${{ steps.create-release.outputs.branch_name }}
-          commit-message: 'chore(release): v${{ steps.create-release.outputs.new_version }}'
-          files: |
-            CHANGELOG.md
-            package.json
-            README.md
-            Sources/Classes/Headers/RSVersion.h
-            sonar-project.properties
-          tag: 'v${{ steps.create-release.outputs.new_version }}'
+          existing_pr=$(gh pr list \
+            --base master \
+            --head "$branch_name" \
+            --state all \
+            --json number \
+            --jq '.[0].number // empty')
+          if [[ -n "$existing_pr" ]]; then
+            echo "Promotion PR #${existing_pr} already exists."
+            exit 0
+          fi
 
-      - name: Create pull request into master
-        uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5 #v2
-        with:
-          source_branch: ${{ steps.create-release.outputs.branch_name }}
-          destination_branch: "master"
-          github_token: ${{ steps.generate-token.outputs.token }}
-          pr_title: "chore(release): pulling ${{ steps.create-release.outputs.branch_name }} into master"
-          pr_body: ":crown: *An automated PR*\n\n${{ steps.finish-release.outputs.commit_summary }}"
-          pr_reviewer: "@rudderlabs/sdk_team"
+          gh pr create \
+            --base master \
+            --head "$branch_name" \
+            --title "chore(release): promote ${GITHUB_REF_NAME} to master" \
+            --body "Promotes the v1 release candidate without changing versions or creating tags. release-please will maintain the version/changelog PR after merge."

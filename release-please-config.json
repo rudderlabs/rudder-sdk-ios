@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "last-release-sha": "d92d2a7e4a4ce5945fda97cfd8f7cafa6f1cf639",
+  "release-type": "node",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "pull-request-title-pattern": "chore: release ${version}",
+  "always-update": true,
+  "packages": {
+    ".": {
+      "package-name": "rudder-sdk-ios",
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        { "type": "generic", "path": "README.md" },
+        { "type": "generic", "path": "Sources/Classes/Headers/RSVersion.h" },
+        { "type": "generic", "path": "sonar-project.properties" }
+      ]
+    }
+  }
+}

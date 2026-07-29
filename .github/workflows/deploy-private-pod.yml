@@ -1,63 +1,78 @@
-name: Deploy to Private Pod
+name: Deploy v1 to Private Pod
 
 on:
-  pull_request:
-    branches:
-      - master
-    types:
-      - opened
-  
+  release:
+    types: [published]
+
 permissions:
   contents: read
 
 jobs:
-  deploy_private_pod:
-    name: Deploy to Private Pod
-    runs-on: macOS-latest
-    if: (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix-release/'))
-    permissions:
-      contents: read # GITHUB_TOKEN only needs read access
+  validate:
+    name: Validate v1 release
+    runs-on: ubuntu-latest
+    outputs:
+      is-v1: ${{ steps.release.outputs.is-v1 }}
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
         with:
           egress-policy: audit
 
-      - name: Generate GitHub App Token
+      - name: Checkout master
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Check tag ancestry
+        id: release
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          git fetch --force origin "refs/tags/${TAG}:refs/tags/${TAG}"
+          if [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]] &&
+             git merge-base --is-ancestor "${TAG}^{commit}" HEAD; then
+            echo "is-v1=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is-v1=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy-private-pod:
+    name: Create private Specs PR
+    needs: validate
+    if: needs.validate.outputs.is-v1 == 'true'
+    runs-on: macos-latest
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - name: Generate GitHub App token
         id: generate-token
-        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ vars.RELEASE_APP_ID }}
           private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
           repositories: rudder-sdk-ios,Specs
-          permission-contents: write # to push branches in private Specs repo
-          permission-pull-requests: write # to create PRs in private Specs repo
+          permission-contents: write
+          permission-pull-requests: write
 
-      - name: 'Checkout'
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - name: Checkout release tag
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           token: ${{ steps.generate-token.outputs.token }}
-          ref: '${{ github.event.pull_request.head.ref }}'
-    
-      - name: 'Install Cocoapods'
-        run: gem install cocoapods
-        
-      - name: 'Convert podspec to podspec.json'
-        run: |
-          pod ipc spec Rudder.podspec > Rudder.podspec.json
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
 
-      - name: 'Add Private Spec Repo to CocoaPods installation'
+      - run: gem install cocoapods
+      - run: pod ipc spec Rudder.podspec > Rudder.podspec.json
+
+      - name: Prepare private Specs change
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          pod repo add rudderlabs https://x-access-token:${GH_TOKEN}@github.com/rudderlabs/Specs.git
-        
-      - name: 'Add Podspec to local private Spec repo'
-        run: |
+          pod repo add rudderlabs "https://x-access-token:${GH_TOKEN}@github.com/rudderlabs/Specs.git"
           pod repo push rudderlabs Rudder.podspec.json --allow-warnings --local-only
-
-      - name: 'Create private Specs PR'
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
           bash Scripts/create-private-specs-pr.sh
