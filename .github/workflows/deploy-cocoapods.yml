@@ -23,6 +23,7 @@ jobs:
       with:
         ref: master
         fetch-depth: 0
+        persist-credentials: false
     - name: Check tag ancestry
       id: release
       env:
@@ -51,6 +52,7 @@ jobs:
       uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       with:
         ref: ${{ github.event.release.tag_name }}
+        persist-credentials: false
       
     - name: Install Cocoapods
       run: gem install cocoapods
