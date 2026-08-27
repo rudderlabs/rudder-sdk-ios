@@ -10,7 +10,7 @@ import XCTest
 
 class NetworkManagerTests: XCTestCase {
 
-    private static let dummyHost = "dummy.dataplane.rudderstack.com"
+    fileprivate static let dummyHost = "dummy.dataplane.rudderstack.com"
 
     var networkManager: RSNetworkManager!
 
@@ -156,7 +156,7 @@ final class StubURLProtocol: URLProtocol {
     }
 
     override class func canInit(with request: URLRequest) -> Bool {
-        return request.url?.host == "dummy.dataplane.rudderstack.com"
+        return request.url?.host == NetworkManagerTests.dummyHost
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
