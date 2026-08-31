@@ -16,6 +16,9 @@
 		5357789A2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */; };
 		5357789B2C4F8E0000E8CE9B /* RSExponentialBackOff.h in Headers */ = {isa = PBXBuildFile; fileRef = 535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5357789C2C4F8E0000E8CE9B /* RSExponentialBackOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */; };
+		539658483038A9CA008A8845 /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539658473038A9CA008A8845 /* NetworkManagerTests.swift */; };
+		539658493038A9CA008A8845 /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539658473038A9CA008A8845 /* NetworkManagerTests.swift */; };
+		5396584A3038A9CA008A8845 /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539658473038A9CA008A8845 /* NetworkManagerTests.swift */; };
 		5C11F10C96D80DF73DBED732 /* Pods_Rudder_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447958A767B9B6F9BB3AC36A /* Pods_Rudder_iOS.framework */; };
 		60DF93A1FA405B16F4D273AB /* Pods_RudderTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F00C6B89DB926A1271D979A /* Pods_RudderTests_iOS.framework */; };
 		7275AF62B3887AFD09CF49CF /* Pods_RudderTests_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E0F163A9A54245F87BB53E /* Pods_RudderTests_watchOS.framework */; };
@@ -764,6 +767,7 @@
 		447958A767B9B6F9BB3AC36A /* Pods_Rudder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rudder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		535778952C4F8E0000E8CE9B /* RSExponentialBackOff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSExponentialBackOff.h; sourceTree = "<group>"; };
 		535778962C4F8E0000E8CE9B /* RSExponentialBackOff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSExponentialBackOff.m; sourceTree = "<group>"; };
+		539658473038A9CA008A8845 /* NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTests.swift; sourceTree = "<group>"; };
 		767A0EEE9A76F43CF631573B /* Pods-Rudder-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-watchOS.debug.xcconfig"; path = "Target Support Files/Pods-Rudder-watchOS/Pods-Rudder-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		83C9949585CD3C274CCE6A27 /* Pods-Rudder-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-iOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-iOS/Pods-Rudder-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		9B4BB7D91351507AD413A9B4 /* Pods-Rudder-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rudder-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Rudder-tvOS/Pods-Rudder-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -1183,6 +1187,7 @@
 				ED38D37C29CB01A0003A7544 /* ServerConfigManagerTests.swift */,
 				ED38D37D29CB01A0003A7544 /* TestUtils.swift */,
 				ED252CF52AA8780600B17ACF /* UserSessionTests.swift */,
+				539658473038A9CA008A8845 /* NetworkManagerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -2581,6 +2586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539658493038A9CA008A8845 /* NetworkManagerTests.swift in Sources */,
 				ED9990752A69109000031B06 /* EventRepositoryTests.swift in Sources */,
 				ED99906E2A69109000031B06 /* ConserFilterHandlerTests.swift in Sources */,
 				ED9990732A69109000031B06 /* DataResidencyTests.swift in Sources */,
@@ -2599,6 +2605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539658483038A9CA008A8845 /* NetworkManagerTests.swift in Sources */,
 				ED99907E2A69109100031B06 /* EventRepositoryTests.swift in Sources */,
 				ED9990772A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */,
 				ED99907C2A69109100031B06 /* DataResidencyTests.swift in Sources */,
@@ -2617,6 +2624,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5396584A3038A9CA008A8845 /* NetworkManagerTests.swift in Sources */,
 				ED9990872A69109100031B06 /* EventRepositoryTests.swift in Sources */,
 				ED9990802A69109100031B06 /* ConserFilterHandlerTests.swift in Sources */,
 				ED9990852A69109100031B06 /* DataResidencyTests.swift in Sources */,
