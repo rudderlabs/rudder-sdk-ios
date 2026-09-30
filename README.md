@@ -1,6 +1,9 @@
 <p align="center">
   <a href="https://rudderstack.com/">
-    <img src="https://user-images.githubusercontent.com/59817155/121357083-1c571300-c94f-11eb-8cc7-ce6df13855c9.png">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://cdn.rudderlabs.com/brand/logo_watermark_dark.png">
+      <img alt="RudderStack" width="512" src="https://cdn.rudderlabs.com/brand/logo_watermark_light.png">
+    </picture>
   </a>
 </p>
 
@@ -8,7 +11,7 @@
 
 <p align="center">
   <a href="https://cocoapods.org/pods/Rudder">
-    <img src="https://img.shields.io/static/v1?label=pod&message=v1.32.2&color=blue&style=flat">
+    <img src="https://img.shields.io/static/v1?label=pod&message=v1.33.0&color=blue&style=flat">
   </a>
   <a href="https://deepwiki.com/rudderlabs/rudder-sdk-ios">
     <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
@@ -42,7 +45,7 @@ The iOS SDK is available through [**CocoaPods**](https://cocoapods.org), [**Cart
 To install the SDK, simply add the following line to your Podfile:
 
 ```xcode
-pod 'Rudder', '1.32.2'
+pod 'Rudder', '1.33.0'
 ```
 
 ### Carthage
@@ -50,7 +53,7 @@ pod 'Rudder', '1.32.2'
 For Carthage support, add the following line to your `Cartfile`:
 
 ```xcode
-github "rudderlabs/rudder-sdk-ios" "v1.32.2"
+github "rudderlabs/rudder-sdk-ios" "v1.33.0"
 ```
 
 > Remember to include the following code in all `.m` and `.h` files where you want to refer to or use the RudderStack SDK classes, as shown:
@@ -74,7 +77,7 @@ You can also add the RudderStack iOS SDK via Swift Package Mangaer, via one of t
 
 * Enter the package repository (`git@github.com:rudderlabs/rudder-sdk-ios.git`) in the search bar.
 
-* In **Dependency Rule**, select **Up to Next Major Version** and enter `1.32.2` as the value, as shown:
+* In **Dependency Rule**, select **Up to Next Major Version** and enter `1.33.0` as the value, as shown:
 
 ![Setting dependency](https://user-images.githubusercontent.com/59817155/145574696-8c849749-13e0-40d5-aacb-3fccb5c8e67d.png)
 
@@ -102,7 +105,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.32.2")
+        .package(url: "git@github.com:rudderlabs/rudder-sdk-ios.git", from: "1.33.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

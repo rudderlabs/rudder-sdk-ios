@@ -60,7 +60,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F6F43B8E2757417F0036CC12"
             BuildableName = "RudderSampleAppwatchOSObjC WatchKit App.app"
-            BlueprintName = "RudderSampleAppwatchOSObjC WatchKit App"
             ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -78,7 +77,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F6F43B8E2757417F0036CC12"
             BuildableName = "RudderSampleAppwatchOSObjC WatchKit App.app"
-            BlueprintName = "RudderSampleAppwatchOSObjC WatchKit App"
             ReferencedContainer = "container:RudderSampleAppwatchOSObjC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -14,6 +14,9 @@
 NSString* const STATUS = @"STATUS";
 NSString* const RESPONSE = @"RESPONSE";
 
+// Logged at most once per offline stretch; re-armed when a request completes with a response
+static BOOL isConnectionUnavailableLogged = NO;
+
 - (instancetype)initWithConfig:(RSConfig *) config andAuthToken:(NSString *) authToken andAnonymousIdToken:(NSString *) anonymousIdToken andDataResidencyManager:(RSDataResidencyManager *) dataResidencyManager {
     self = [super init];
     if(self){
@@ -69,7 +72,12 @@ NSString* const RESPONSE = @"RESPONSE";
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if(error && error.domain == NSURLErrorDomain && error.code == NSURLErrorNotConnectedToInternet) {
             weakResult.state = NETWORK_UNAVAILABLE;
+            if (!isConnectionUnavailableLogged) {
+                [RSLogger logWarn:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed as the device is not connected to the internet", requestEndPoint]];
+                isConnectionUnavailableLogged = YES;
+            }
         } else {
+            isConnectionUnavailableLogged = NO;
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             weakResult.statusCode = (long)httpResponse.statusCode;
             [RSLogger logDebug:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ is successful with statusCode %ld",requestEndPoint, weakResult.statusCode ]];
@@ -93,8 +101,11 @@ NSString* const RESPONSE = @"RESPONSE";
                 }
                 [RSLogger logError:[[NSString alloc] initWithFormat:@"RSNetworkManager: sendNetworkRequest: Request to url %@ failed with statusCode %ld due to %@", requestEndPoint, weakResult.statusCode, weakResult.errorPayload]];
             }
-            dispatch_semaphore_signal(semaphore);
-        }}];
+        }
+        // Signal on every completion path; a missed signal leaves the caller
+        // blocked forever on the semaphore while holding networkLock
+        dispatch_semaphore_signal(semaphore);
+    }];
     [networkLock lock];
     [dataTask resume];
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);

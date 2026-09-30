@@ -1,5 +1,5 @@
 PODS:
-  - Rudder (1.32.0)
+  - Rudder (1.32.2)
   - SQLCipher (4.10.0):
     - SQLCipher/standard (= 4.10.0)
   - SQLCipher/common (4.10.0)
@@ -19,9 +19,9 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  Rudder: 5befe9893f52e7c387f929037bd4a96ba026e25a
+  Rudder: 3249922b84ddb83046952aac2f395876ecff63ba
   SQLCipher: eb79c64049cb002b4e9fcb30edb7979bf4706dfc
 
-PODFILE CHECKSUM: c942a175e75dbaae30985c65a6a158144db54d47
+PODFILE CHECKSUM: f1dcb1355a3936983e6dfe128605c03ab445b82f
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0

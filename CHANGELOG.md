@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.32.2...v1.33.0) (2026-09-30)
+
+
+### Features
+
+* **platform:** raise minimum deployment targets for xcode 26 compatibility ([#620](https://github.com/rudderlabs/rudder-sdk-ios/issues/620)) ([a6ff43a](https://github.com/rudderlabs/rudder-sdk-ios/commit/a6ff43a0c82877f9c15597d783405bb6fc9b8e5f))
+
+
+### Bug Fixes
+
+* prevent upload deadlock when device is offline ([#617](https://github.com/rudderlabs/rudder-sdk-ios/issues/617)) ([c4d29b5](https://github.com/rudderlabs/rudder-sdk-ios/commit/c4d29b5c89386d403faf3d979a8fb6931075d363)), closes [#616](https://github.com/rudderlabs/rudder-sdk-ios/issues/616)
+
 ### [1.32.2](https://github.com/rudderlabs/rudder-sdk-ios/compare/v1.32.1...v1.32.2) (2026-07-27)
 
 
