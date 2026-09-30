@@ -122,4 +122,35 @@ static int screenCount = 1;
 @end
 
 @implementation _SceneDelegate
+
+// Under the UIScene lifecycle, URLs arrive here instead of the app delegate's
+// application:openURL:options: — forward them to RSClient the same way.
+- (void)handleURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    for (UIOpenURLContext *context in URLContexts) {
+        NSURL *url = context.URL;
+        if (![[url scheme] isEqualToString:@"com.ruddertestapp"]) {
+            continue;
+        }
+        NSMutableDictionary<UIApplicationOpenURLOptionsKey, id> *options = [[NSMutableDictionary alloc] init];
+        if (context.options.sourceApplication != nil) {
+            options[UIApplicationOpenURLOptionsSourceApplicationKey] = context.options.sourceApplication;
+        }
+        if (context.options.annotation != nil) {
+            options[UIApplicationOpenURLOptionsAnnotationKey] = context.options.annotation;
+        }
+        options[UIApplicationOpenURLOptionsOpenInPlaceKey] = @(context.options.openInPlace);
+        [[RSClient sharedInstance] openURL:url options:options];
+    }
+}
+
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
+    if (connectionOptions.URLContexts.count > 0) {
+        [self handleURLContexts:connectionOptions.URLContexts];
+    }
+}
+
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    [self handleURLContexts:URLContexts];
+}
+
 @end
