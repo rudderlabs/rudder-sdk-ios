@@ -114,3 +114,12 @@ static int screenCount = 1;
     }
 
 @end
+
+#pragma mark - UIScene lifecycle
+
+@interface _SceneDelegate : UIResponder <UIWindowSceneDelegate>
+@property (strong, nonatomic) UIWindow *window;
+@end
+
+@implementation _SceneDelegate
+@end
