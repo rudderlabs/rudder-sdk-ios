@@ -7,6 +7,8 @@ on:
     types:
       - closed
 
+permissions: {}
+
 jobs:
   release:
     name: Publish new release
@@ -43,6 +45,7 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          persist-credentials: false
           token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
@@ -119,6 +122,7 @@ jobs:
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          persist-credentials: false
           token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
