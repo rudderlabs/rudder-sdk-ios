@@ -3,14 +3,15 @@ name: Manually deploy to Cocoapods(v2)
 on:
   workflow_dispatch
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   deploy-cocoapods-manual:
     name: Manually deploy to Cocoapods(v2)
     runs-on: macOS-latest
     if: startsWith(github.ref, 'refs/heads/master-v2')
+    permissions:
+      contents: read # actions/checkout
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
@@ -19,6 +20,8 @@ jobs:
 
       - name: Checkout source branch
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          persist-credentials: false
 
       - name: Install Cocoapods
         run: gem install cocoapods
