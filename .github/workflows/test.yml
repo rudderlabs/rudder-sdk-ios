@@ -7,8 +7,7 @@ on:
     branches: ['master', 'develop']
     types: ['opened', 'reopened', 'synchronize']
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
           
@@ -17,6 +16,8 @@ jobs:
     runs-on: macos-latest-large
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+    permissions:
+      contents: read # actions/checkout
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
@@ -25,6 +26,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          persist-credentials: false
       
       # - name: Install sonar-scanner and build-wrapper
       #   uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 #v2

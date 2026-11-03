@@ -7,8 +7,7 @@ on:
     types:
       - opened
   
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   deploy_private_pod:
@@ -36,6 +35,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
+          persist-credentials: false
           token: ${{ steps.generate-token.outputs.token }}
           ref: '${{ github.event.pull_request.head.ref }}'
     
